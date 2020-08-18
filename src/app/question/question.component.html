@@ -1,0 +1,8 @@
+<h2>My Questions</h2>
+<ul class="questions">
+  <li *ngFor="let question of tstQuestions">
+    <h2>{{question.Name | uppercase}} Details</h2>
+    <div><span>Id: </span>{{question.Id}}</div>
+    <div><span>Name: </span>{{question.RNXT__Question__c}}</div>
+  </li>
+</ul>
