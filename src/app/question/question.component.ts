@@ -3,7 +3,10 @@ import { ActivatedRoute, Params } from '@angular/router';
 
 import { SalesforceService } from '../../services/salesforce.service';
 import { Question, QuestionBook, AnswerBook } from '../wrapper';
-import { TESTQUESTION, TESTQUESTIONS } from '../../mock/sample';
+import { TESTQUESTION,
+         DTQUESTION,
+         FILEQUESTION,
+         TAQUESTION } from '../../mock/sample';
 
 @Component({
   selector: 'app-question',
@@ -13,8 +16,22 @@ import { TESTQUESTION, TESTQUESTIONS } from '../../mock/sample';
 
 export class QuestionComponent implements OnInit {
   params: Params;
-  tstQuestions = TESTQUESTIONS;
-  questionItem = TESTQUESTION; // Question;
+  public questionItem: Question;
+
+  // CONDITIONAL TYPES
+  public radioFlag: boolean = false;
+  public checkboxFlag: boolean = false;
+  public dataFlag: boolean = false;
+
+  // OPTIONONLY TYPES
+  public dropdownFlag: boolean = false;
+
+  // UNCONDITIONAL TYPES
+  public textFlag: boolean = false;
+  public taFlag: boolean = false;
+  public dtFlag: boolean = false;
+  public fileFlag: boolean = false;
+  public bookFlag: boolean = false;
 
   constructor(private sfService: SalesforceService, private route: ActivatedRoute) {
 
@@ -26,6 +43,17 @@ export class QuestionComponent implements OnInit {
       console.log('App params', params);
       console.log('id', params['id']);
     });
+
+    this.questionItem = FILEQUESTION;
+    if(this.questionItem.RNXT__Type__c == 'Text') {
+      this.textFlag = true;
+    } else if(this.questionItem.RNXT__Type__c == 'File') {
+      this.fileFlag = true;
+    } else if(this.questionItem.RNXT__Type__c == 'DateTime') {
+      this.dtFlag = true;
+    } else if(this.questionItem.RNXT__Type__c == 'TextArea') {
+      this.taFlag = true;
+    }
   }
 
   public getQuestionBook = () => this.sfService.remoteAction('NxtController.process',
