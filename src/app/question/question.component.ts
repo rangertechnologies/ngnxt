@@ -16,6 +16,7 @@ import { TESTQUESTION,
 
 export class QuestionComponent implements OnInit {
   params: Params;
+  uuid: String;
   public questionItem: Question;
 
   // CONDITIONAL TYPES
@@ -42,9 +43,40 @@ export class QuestionComponent implements OnInit {
       this.params = params;
       console.log('App params', params);
       console.log('id', params['id']);
+      this.uuid = params['id'];
     });
 
     this.questionItem = FILEQUESTION;
+    if(this.uuid) {
+      this.readQuestionBook(uuid);
+    }
+
+    this.processQuestion();
+  }
+
+  private readQuestionBook = (uuid: string) => this.sfService.remoteAction('NxtController.process',
+    ['QuestionBook', 'read', uuid],
+    this.successRead,
+    this.failureRead)
+  ;
+
+  private readQuestion = (uuid: string) => this.sfService.remoteAction('NxtController.process',
+    ['Question', 'read', uuid],
+    this.successRead,
+    this.failureRead)
+  ;
+
+  private successRead = (response) => {
+    this.questionItem = response;
+    this.processQuestion();
+  }
+
+  private failureRead = (response) => {
+
+  }
+
+  private processQuestion = () => {
+    // Set the Flags
     if(this.questionItem.RNXT__Type__c == 'Text') {
       this.textFlag = true;
     } else if(this.questionItem.RNXT__Type__c == 'File') {
@@ -54,25 +86,5 @@ export class QuestionComponent implements OnInit {
     } else if(this.questionItem.RNXT__Type__c == 'TextArea') {
       this.taFlag = true;
     }
-  }
-
-  public getQuestionBook = () => this.sfService.remoteAction('NxtController.process',
-    ['QuestionBook', 'read', ''],
-    this.successGet,
-    this.failureGet)
-  ;
-
-  public getQuestion = () => this.sfService.remoteAction('NxtController.process',
-    ['Question', 'read', ''],
-    this.successGet,
-    this.failureGet)
-  ;
-
-  private successGet = (response) => {
-
-  }
-
-  private failureGet = (response) => {
-
   }
 }
