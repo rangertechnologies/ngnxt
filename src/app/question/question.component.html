@@ -1,8 +1,27 @@
-<h2>My Questions</h2>
-<ul class="questions">
-  <li *ngFor="let question of tstQuestions">
-    <h2>{{question.Name | uppercase}} Details</h2>
-    <div><span>Id: </span>{{question.Id}}</div>
-    <div><span>Name: </span>{{question.RNXT__Question__c}}</div>
-  </li>
-</ul>
+<article class="slds-card">
+  <div class="slds-card__header slds-grid">
+    <header class="slds-media slds-media_center slds-has-flexi-truncate">
+      <div class="slds-media__body">
+        <h2 class="slds-card__header-title">
+          <a href="javascript:void(0);" class="slds-card__header-link slds-truncate">
+            <span>{{questionItem.RNXT__Question_No__c}}</span>
+          </a>
+        </h2>
+      </div>
+    </header>
+  </div>
+  <div class="slds-p-horizontal_small">
+    <h2>{{questionItem.Name | uppercase}} Details</h2>
+    <div><span>Id: </span>{{questionItem.Id}}</div>
+    <div><span>Name: </span>{{questionItem.RNXT__Question__c}}</div>
+  </div>
+</article>
+
+<div class="slds-clearfix">
+  <div class="slds-float_left">
+    <button class="slds-button slds-button_brand">Back</button>
+  </div>
+  <div class="slds-float_right">
+    <button class="slds-button slds-button_brand">Next</button>
+  </div>
+</div>

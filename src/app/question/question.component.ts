@@ -3,7 +3,7 @@ import { ActivatedRoute, Params } from '@angular/router';
 
 import { SalesforceService } from '../../services/salesforce.service';
 import { Question, QuestionBook, AnswerBook } from '../wrapper';
-import { TESTQUESTIONS } from '../../mock/sample';
+import { TESTQUESTION, TESTQUESTIONS } from '../../mock/sample';
 
 @Component({
   selector: 'app-question',
@@ -14,6 +14,7 @@ import { TESTQUESTIONS } from '../../mock/sample';
 export class QuestionComponent implements OnInit {
   params: Params;
   tstQuestions = TESTQUESTIONS;
+  questionItem = TESTQUESTION; // Question;
 
   constructor(private sfService: SalesforceService, private route: ActivatedRoute) {
 

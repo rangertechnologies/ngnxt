@@ -9,6 +9,21 @@ export const TESTQUESTIONS: Question[] = [
 ];
 */
 
+export const TESTQUESTION: Question = {
+  Id: '11',
+  Name: 'QN-00003',
+  RNXT__Type__c: 'Text',
+  RNXT__Question__c: 'What is your Name?',
+  RNXT__Next_Question__c: 'a013t000013SS89AAG',
+  RNXT__Is_Optional__c: false,
+  RNXT__Group__c: 'Basic',
+  RNXT__Question_No__c: '1',
+  RecordType: {
+    Id: 'UNCONDITIONAL',
+    Name: '0123t000000VJ94AAG'
+  }
+}
+
 export const TESTQUESTIONS: Question[] = [
   { Id: '11',
     Name: 'QN-00003',
