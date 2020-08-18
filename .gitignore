@@ -1,9 +1,13 @@
 # See http://help.github.com/ignore-files/ for more about ignoring files.
 
+# SLDS local files
+/src/assets
+
 # compiled output
 /dist
 /tmp
 /out-tsc
+/package
 # Only exists if Bazel was run
 /bazel-out
 

@@ -16,7 +16,7 @@ import { TESTQUESTION,
 
 export class QuestionComponent implements OnInit {
   params: Params;
-  uuid: String;
+  uuid: string;
   public questionItem: Question;
 
   // CONDITIONAL TYPES
@@ -48,7 +48,7 @@ export class QuestionComponent implements OnInit {
 
     this.questionItem = FILEQUESTION;
     if(this.uuid) {
-      this.readQuestionBook(uuid);
+      this.readQuestionBook(this.uuid);
     }
 
     this.processQuestion();
