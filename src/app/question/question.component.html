@@ -1,52 +1,58 @@
-<article class="slds-card">
+<article class="slds-card" *ngIf="questionItem?.Question_No__c">
   <div class="slds-card__header slds-grid">
     <header class="slds-media slds-media_center slds-has-flexi-truncate">
       <div class="slds-media__body">
         <h2 class="slds-card__header-title">
           <a href="javascript:void(0);" class="slds-card__header-link slds-truncate">
-            <span>{{questionItem.RNXT__Question_No__c}}</span>
+            <span>{{questionItem.Question_No__c}}</span>
           </a>
         </h2>
       </div>
     </header>
   </div>
+
   <div class="slds-p-horizontal_small">
     <h2>{{questionItem.Name | uppercase}} Details</h2>
     <div><span>Id: </span>{{questionItem.Id}}</div>
-    <div><span>Name: </span>{{questionItem.RNXT__Question__c}}</div>
+    <div><span>Name: </span>{{questionItem.Question__c}}</div>
+
+    <div *ngIf="radioFlag || dropdownFlag || dataFlag" class="slds-form-element">
+      <div *ngFor="let opt of questionItem.Question_Options__r" class="slds-form-element__control">
+        <label>
+          <input type="radio" [id]="opt.Id" ng-model="inpValue" name="inpValue" (change)="optionChange(opt.Name)"/>
+          {{opt.Name}}
+        </label>
+      </div>
+    </div>
 
     <div *ngIf="textFlag" class="slds-form-element">
-      <label class="slds-form-element__label" for="text-input-id">
-        <abbr class="slds-required" title="required">* </abbr>Input Label</label>
       <div class="slds-form-element__control">
-        <input type="text" id="text-input-id" placeholder="Placeholder Text" required="" class="slds-input" />
+        <input type="text" [(ngModel)]="inpValue" id="text-input-id" placeholder="Placeholder Text" required="" class="slds-input" />
       </div>
     </div>
 
     <div *ngIf="taFlag" class="slds-form-element">
-      <label class="slds-form-element__label" for="ta-input-id">
-        <abbr class="slds-required" title="required">* </abbr>Input Label</label>
       <div class="slds-form-element__control">
-        <textarea id="ta-input-id" class="slds-textarea" placeholder="Placeholder Text"></textarea>
+        <textarea id="ta-input-id" [(ngModel)]="inpValue"  class="slds-textarea" placeholder="Placeholder Text"></textarea>
       </div>
     </div>
 
     <div *ngIf="dtFlag" class="slds-form-element">
-      <label class="slds-form-element__label" for="datetime-input-id">
-        <abbr class="slds-required" title="required">* </abbr>Datetime</label>
       <div class="slds-form-element__control">
         <input type="datetime-local" id="datetime-input-id"
+               [(ngModel)]="inpValue"
                pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}"
                placeholder="Placeholder Date" required="" class="slds-input" />
       </div>
     </div>
 
     <div *ngIf="fileFlag" class="slds-form-element">
-      <span class="slds-form-element__label" id="file-selector-primary-label">Attachment</span>
       <div class="slds-form-element__control">
         <div class="slds-file-selector slds-file-selector_files">
           <div class="slds-file-selector__dropzone">
-            <input type="file" class="slds-file-selector__input slds-assistive-text" accept="image/png" id="file-upload-input-01" aria-labelledby="file-selector-primary-label file-selector-secondary-label" />
+            <input type="file" class="slds-file-selector__input slds-assistive-text"
+                   accept=".pdf, .png, .jpg, .application/pdf"
+                   id="file-upload-input-01" aria-labelledby="file-selector-primary-label file-selector-secondary-label" />
             <label class="slds-file-selector__body" for="file-upload-input-01" id="file-selector-secondary-label">
           <span class="slds-file-selector__button slds-button slds-button_neutral">
             <svg class="slds-button__icon slds-button__icon_left" aria-hidden="true">
@@ -63,9 +69,9 @@
 
 <div class="slds-clearfix">
   <div class="slds-float_left">
-    <button class="slds-button slds-button_brand">Back</button>
+    <button class="slds-button slds-button_brand" (click)="handleBackClick()">Back</button>
   </div>
   <div class="slds-float_right">
-    <button class="slds-button slds-button_brand">Next</button>
+    <button class="slds-button slds-button_brand" (click)="handleNextClick()">Next</button>
   </div>
 </div>
