@@ -23,7 +23,6 @@
     "@angular/platform-browser": "~8.2.9",
     "@angular/platform-browser-dynamic": "~8.2.9",
     "@angular/router": "~8.2.9",
-    "@salesforce-ux/design-system": "^2.12.2",
     "dotenv": "^8.2.0",
     "git-describe": "^4.0.4",
     "gulp": "^4.0.2",
