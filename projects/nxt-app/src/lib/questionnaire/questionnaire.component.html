@@ -1,0 +1,14 @@
+<div>
+  <h2>{{questionItem.Name}} Details</h2>
+  <div><span>Id: </span>{{questionItem.Id}}</div>
+  <div><span>Name: </span>{{questionItem.Question__c}}</div>
+</div>
+
+<div class="slds-clearfix">
+  <div class="slds-float_left">
+    <button class="slds-button slds-button_brand" (click)="handleBackClick()">Back</button>
+  </div>
+  <div class="slds-float_right">
+    <button class="slds-button slds-button_brand" (click)="handleNextClick()">Next</button>
+  </div>
+</div>

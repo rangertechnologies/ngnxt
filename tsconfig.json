@@ -17,7 +17,15 @@
     "lib": [
       "es2018",
       "dom"
-    ]
+    ],
+    "paths": {
+      "nxt-app": [
+        "dist/nxt-app"
+      ],
+      "nxt-app/*": [
+        "dist/nxt-app/*"
+      ]
+    }
   },
   "angularCompilerOptions": {
     "fullTemplateTypeCheck": true,

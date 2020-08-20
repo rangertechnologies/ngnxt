@@ -6,10 +6,14 @@ import { FormsModule } from '@angular/forms';
 import { AppComponent } from './app.component';
 import { QuestionComponent } from './question/question.component';
 
+import { NxtAppComponent, QuestionnaireComponent } from 'nxt-app';
+
 @NgModule({
   declarations: [
     AppComponent,
-    QuestionComponent
+    QuestionComponent,
+    NxtAppComponent,
+    QuestionnaireComponent
   ],
   imports: [
     BrowserModule,

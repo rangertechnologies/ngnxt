@@ -120,6 +120,42 @@
           }
         }
       }
-    }},
+    },
+    "nxt-app": {
+      "projectType": "library",
+      "root": "projects/nxt-app",
+      "sourceRoot": "projects/nxt-app/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "projects/nxt-app/tsconfig.lib.json",
+            "project": "projects/nxt-app/ng-package.json"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/nxt-app/src/test.ts",
+            "tsConfig": "projects/nxt-app/tsconfig.spec.json",
+            "karmaConfig": "projects/nxt-app/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/nxt-app/tsconfig.lib.json",
+              "projects/nxt-app/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    }
+  },
   "defaultProject": "ngNxt"
 }
