@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 
 import { SalesforceService } from '../services/salesforce.service';
@@ -14,9 +14,11 @@ import { TESTQUESTION,
   templateUrl: './questionnaire.component.html',
   styleUrls: ['./questionnaire.component.css']
 })
+
 export class QuestionnaireComponent implements OnInit {
+  @Input() qbId: string;
+
   params: Params;
-  qbId: string;
   public abItem: AnswerBook;
   public qbItem: QuestionBook;
   public questionItem: Question;
@@ -45,23 +47,16 @@ export class QuestionnaireComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.route.queryParams.subscribe((params: Params) => {
-      this.params = params;
-      console.log('App params', params);
-      console.log('id', params['id']);
-      this.qbId = params['id'];
-
-      if(this.qbId) {
-        if(this.qbId.length == 18) {
-          console.log('Before Calling readQuestionBook() using ' + this.qbId);
-          this.readQuestionBook(this.qbId);
-        } else {
-          console.log('Setting the Question Directly for testing');
-          this.questionItem = RADIOQUESTION;
-          this.processQuestion();
-        }
+    if(this.qbId) {
+      if(this.qbId.length == 18) {
+        console.log('Before Calling readQuestionBook() using ' + this.qbId);
+        this.readQuestionBook(this.qbId);
+      } else {
+        console.log('Setting the Question Directly for testing');
+        this.questionItem = RADIOQUESTION;
+        this.processQuestion();
       }
-    });
+    }
   }
 
   handleNextClick() {
