@@ -17,11 +17,11 @@
     <div><span>Name: </span>{{questionItem.Question__c}}</div>
 
     <div class="col-md-12" *ngIf="radioFlag || dropdownFlag || dataFlag" style="display: inline-block;">
-      <div *ngFor="let opt of questionItem.Question_Options__r" class="radio col-md-6" style="padding: 10px; float: left; width: 50%;">
+      <div *ngFor="let opt of questionItem.Question_Options__r.records" class="radio col-md-6" style="padding: 10px; float: left; width: 50%;">
         <div style="padding-top: 10px; padding-left: 10px; background-color: lightblue">
-          <label>
-            <input type="radio" [id]="opt.Id" ng-model="inpValue" name="inpValue" (change)="optionChange(opt.Name)"/>
-          {{opt.Name}}
+          <label class="container">
+            <input type="radio" [id]="opt.Id" ng-model="inpValue" name="inpValue" (change)="optionChange(opt.Value__c)">
+            <span class="checkmark">{{opt.Value__c}}</span>
           </label>
         </div>
       </div>

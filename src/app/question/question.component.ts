@@ -84,7 +84,7 @@ export class QuestionComponent implements OnInit {
 
     // CONDITIONAL vs OPTIONONLY & UNCONDITIONAL
     if(cQuestion.RecordType.Name == 'CONDITIONAL') {
-      for(var cOpt of cQuestion.Question_Options__r) {
+      for(var cOpt of cQuestion.Question_Options__r.records) {
         //console.log(cOpt);
         //console.log('Option => ' + cOpt.Value__c + ' matching with ' + ansVal);
         if(cOpt.Value__c == this.inpValue) {
