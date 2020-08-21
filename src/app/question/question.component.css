@@ -1,0 +1,33 @@
+.container
+{
+border: 1px solid none;
+border-radius: .3em;
+background-color:#D3DBE7;
+color:#00356F;
+padding: 0.3em ;
+align-items: center;
+margin-bottom: 2em;
+text-align: justify;
+font-family:Univers Condensed;
+cursor: pointer;
+margin-right: 1em;
+display: flex;
+}
+
+label{
+    align-items: center;
+    cursor: pointer;
+    padding: 10px;
+    align-items: center;
+   
+}
+
+span{
+    padding: 10px; 
+}
+
+input[type=radio] {
+    border: 0px;
+    width: 5%;
+    height: 1.3em;
+   }
