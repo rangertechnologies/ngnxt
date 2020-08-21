@@ -78,11 +78,12 @@ export class QuestionnaireComponent implements OnInit {
 
     // CONDITIONAL vs OPTIONONLY & UNCONDITIONAL
     if(cQuestion.RecordType.Name == 'CONDITIONAL') {
-      for(var cOpt of cQuestion.Question_Options__r) {
-        //console.log(cOpt);
-        //console.log('Option => ' + cOpt.Value__c + ' matching with ' + ansVal);
+      console.log('inside conditional record type');
+      for(var cOpt of cQuestion.Question_Options__r.records) {
+        // console.log(cOpt);
+        // console.log('Option => ' + cOpt.Value__c + ' matching with ' + this.answerWrap.ansValue);
         if(cOpt.Value__c == this.inpValue) {
-          //console.log('Match Found using ' + cOpt.Next_Question__c);
+          console.log('Match Found using ' + cOpt.Next_Question__c);
           recordId = cOpt.Next_Question__c;
         }
       }
@@ -101,7 +102,7 @@ export class QuestionnaireComponent implements OnInit {
     this.answerWrap = new AnswerWrapper();
 
     if(recordId) {
-      console.log('Before Calling readQuestionBook() using ' + recordId);
+      console.log('Before Calling readQuestion() using ' + recordId);
       this.readQuestion(recordId);
     } else {
       // Show Confirmation
@@ -121,6 +122,8 @@ export class QuestionnaireComponent implements OnInit {
 
   private successReadBook = (response) => {
     console.log(response);
+    //var respStr = JSON.stringify(response);
+    //var respJSON = JSON.parse(respStr.replace(this.sfNamespace, ''));
     this.qbItem = response.questionbook;
     this.abItem = response.answerbook;
 
@@ -139,6 +142,8 @@ export class QuestionnaireComponent implements OnInit {
 
   private successRead = (response) => {
     console.log(response);
+    //var respStr = JSON.stringify(response);
+    //var respJSON = JSON.parse(respStr.replace(this.sfNamespace, ''));
     this.questionItem = response.question;
     this.processQuestion();
   }
@@ -156,6 +161,9 @@ export class QuestionnaireComponent implements OnInit {
   private successSave = (response) => {
     console.log('inside successSave');
     console.log(response);
+    //var respStr = JSON.stringify(response);
+    //var respJSON = JSON.parse(respStr.replace(this.sfNamespace, ''));
+
     this.abItem = response.answerbook;
   }
 
@@ -182,6 +190,8 @@ export class QuestionnaireComponent implements OnInit {
         this.taFlag = true;
       } else if(typ == 'Radio') {
         this.radioFlag = true;
+      } else if(typ == 'Dropdown') {
+        this.dropdownFlag = true;
       }
     }
   }
@@ -199,6 +209,8 @@ export class QuestionnaireComponent implements OnInit {
         this.taFlag = false;
       } else if(typ == 'Radio') {
         this.radioFlag = false;
+      } else if(typ == 'Dropdown') {
+        this.dropdownFlag = false;
       }
     }
   }

@@ -11,7 +11,8 @@ dotenv.config();
 // define variables from process.env
 const pageName = process.env.PAGE_NAME;
 const apiVersion = process.env.API_VERSION;
-const resources = process.env.RESOURCE_NAME;
+const dev_resources = process.env.DEV_RESOURCE_NAME;
+const pkg_resources = process.env.PKG_RESOURCE_NAME;
 const baseHref = process.env.BASE_HREF;
 const devResources = process.env.DEV_RESOURCES_URL;
 const distPath = process.env.DIST_PATH || 'dist/ngNxt';
@@ -58,10 +59,17 @@ gulp.task('create-package', function () {
     .pipe(gulp.dest('package/'));
 });
 
-gulp.task('staticresources', function () {
+gulp.task('dev-staticresources', function () {
   return gulp.src('./'+distPath+'/**')
-    .pipe(zip(`${resources}.resource`))
-    .pipe(file(`${resources}.resource-meta.xml`, resourcesMetaXML))
+    .pipe(zip(`${dev_resources}.resource`))
+    .pipe(file(`${dev_resources}.resource-meta.xml`, resourcesMetaXML))
+    .pipe(gulp.dest('package/staticresources/'));
+});
+
+gulp.task('pkg-staticresources', function () {
+  return gulp.src('./'+distPath+'/**')
+    .pipe(zip(`${pkg_resources}.resource`))
+    .pipe(file(`${pkg_resources}.resource-meta.xml`, resourcesMetaXML))
     .pipe(gulp.dest('package/staticresources/'));
 });
 
@@ -85,4 +93,5 @@ gulp.task('pkg-deploy', function () {
     }))
 });
 
-gulp.task('build-static', gulp.series('create-package', 'staticresources'))
+gulp.task('build-dev-static', gulp.series('create-package', 'dev-staticresources'))
+gulp.task('build-pkg-static', gulp.series('create-package', 'pkg-staticresources'))

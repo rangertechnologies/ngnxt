@@ -7,7 +7,7 @@ export class Question {
   Is_Optional__c: boolean;
   Group__c: string;
   Question_No__c: string;
-  Question_Options__r?: Option[];
+  Question_Options__r?: OptionR;
   RecordType: {
     Id: string;
     Name: string;
@@ -21,6 +21,10 @@ export class QuestionBook {
   First_Question__c: string;
   Title__c: string;
   Total_Questions__c: number;
+}
+
+export class OptionR {
+  records?: Option[];
 }
 
 export class Option {

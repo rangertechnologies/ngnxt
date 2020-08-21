@@ -11,6 +11,9 @@ declare class Visualforce {
 
 export class SalesforceService {
     public getSFResource = (path: string) => `${window['_VfResources']}${path}`;
+    public getSfdcNamespace = () => `${window['_sfdcNamespace']}`;
+
+    ns = this.getSfdcNamespace();
 
     public remoteAction(methodName: string,
                         params: string[],
@@ -19,8 +22,11 @@ export class SalesforceService {
                         config?: any) {
       // console.log('inside SalesforceService.remoteAction for ' + methodName);
       const self = this;
+      var nsMethodName = this.ns + '.' + methodName;
+      console.log('method name in lib = ' + nsMethodName);
+
       Visualforce.remoting.Manager.invokeAction(
-        methodName,
+        nsMethodName,
         ...params,
         function (result, event) {
           try {

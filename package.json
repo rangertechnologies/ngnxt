@@ -9,8 +9,8 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "devstatic": "ng build --prod --output-hashing none && gulp rm && gulp rmmap && gulp build-static && gulp dev-deploy",
-    "pkgstatic": "ng build --prod --output-hashing none && gulp rm && gulp rmmap && gulp build-static && gulp pkg-deploy",
+    "devstatic": "ng build --prod --output-hashing none && gulp rm && gulp rmmap && gulp build-dev-static && gulp dev-deploy",
+    "pkgstatic": "ng build --prod --output-hashing none && gulp rm && gulp rmmap && gulp build-pkg-static && gulp pkg-deploy",
     "postinstall": "node src/version.js"
   },
   "private": true,

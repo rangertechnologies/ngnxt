@@ -87,24 +87,26 @@ export const RADIOQUESTION: Question = {
     Id: 'UNCONDITIONAL',
     Name: '0123t000000VJ94AAG'
   },
-  Question_Options__r: [
-    {
-      Id: '121',
-      Name: '121N',
-      Value__c: '121V',
-      Next_Question__c: '',
-    },
-    {
-      Id: '122',
-      Name: '122N',
-      Value__c: '122V',
-      Next_Question__c: '',
-    },
-    {
-      Id: '123',
-      Name: '123N',
-      Value__c: '123V',
-      Next_Question__c: '',
-    }
-  ]
+  Question_Options__r: {
+    records: [
+                 {
+                   Id: '121',
+                   Name: '121N',
+                   Value__c: '121V',
+                   Next_Question__c: '',
+                 },
+                 {
+                   Id: '122',
+                   Name: '122N',
+                   Value__c: '122V',
+                   Next_Question__c: '',
+                 },
+                 {
+                   Id: '123',
+                   Name: '123N',
+                   Value__c: '123V',
+                   Next_Question__c: '',
+                 }
+               ]
+  }
 };
