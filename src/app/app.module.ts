@@ -6,14 +6,17 @@ import { FormsModule } from '@angular/forms';
 import { AppComponent } from './app.component';
 import { QuestionComponent } from './question/question.component';
 
+import { NxtAppModule } from 'nxt-app';
+
 @NgModule({
   declarations: [
     AppComponent,
-    QuestionComponent
+    QuestionComponent,
   ],
   imports: [
     BrowserModule,
     FormsModule,
+    NxtAppModule,
     RouterModule.forRoot([
       {path: '**', component: AppComponent}
     ])

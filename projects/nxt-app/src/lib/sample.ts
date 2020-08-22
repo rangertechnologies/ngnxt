@@ -1,4 +1,4 @@
-import { Question, QuestionBook, AnswerBook } from '../app/wrapper';
+import { Question, QuestionBook, AnswerBook } from './wrapper';
 
 /*
 export const TESTQUESTIONS: Question[] = [

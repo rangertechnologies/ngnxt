@@ -1,23 +1,24 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 
-import { SalesforceService } from '../../services/salesforce.service';
+import { SalesforceService } from '../services/salesforce.service';
 import { Question, QuestionBook, AnswerBook, AnswerWrapper } from '../wrapper';
 import { TESTQUESTION,
          DTQUESTION,
          FILEQUESTION,
          TAQUESTION,
-         RADIOQUESTION } from '../../mock/sample';
+         RADIOQUESTION } from '../sample';
 
 @Component({
-  selector: 'app-question',
-  templateUrl: './question.component.html',
-  styleUrls: ['./question.component.css']
+  selector: 'lib-questionnaire',
+  templateUrl: './questionnaire.component.html',
+  styleUrls: ['./questionnaire.component.css']
 })
 
-export class QuestionComponent implements OnInit {
+export class QuestionnaireComponent implements OnInit {
+  @Input() qbId: string;
+
   params: Params;
-  qbId: string;
   public abItem: AnswerBook;
   public qbItem: QuestionBook;
   public questionItem: Question;
@@ -46,23 +47,16 @@ export class QuestionComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.route.queryParams.subscribe((params: Params) => {
-      this.params = params;
-      console.log('App params', params);
-      console.log('id', params['id']);
-      this.qbId = params['id'];
-
-      if(this.qbId) {
-        if(this.qbId.length == 18) {
-          console.log('Before Calling readQuestionBook() using ' + this.qbId);
-          this.readQuestionBook(this.qbId);
-        } else {
-          console.log('Setting the Question Directly for testing');
-          this.questionItem = RADIOQUESTION;
-          this.processQuestion();
-        }
+    if(this.qbId) {
+      if(this.qbId.length == 18) {
+        console.log('Before Calling readQuestionBook() using ' + this.qbId);
+        this.readQuestionBook(this.qbId);
+      } else {
+        console.log('Setting the Question Directly for testing');
+        this.questionItem = RADIOQUESTION;
+        this.processQuestion();
       }
-    });
+    }
   }
 
   handleNextClick() {
@@ -84,11 +78,12 @@ export class QuestionComponent implements OnInit {
 
     // CONDITIONAL vs OPTIONONLY & UNCONDITIONAL
     if(cQuestion.RecordType.Name == 'CONDITIONAL') {
+      console.log('inside conditional record type');
       for(var cOpt of cQuestion.Question_Options__r.records) {
-        //console.log(cOpt);
-        //console.log('Option => ' + cOpt.Value__c + ' matching with ' + ansVal);
+        // console.log(cOpt);
+        // console.log('Option => ' + cOpt.Value__c + ' matching with ' + this.answerWrap.ansValue);
         if(cOpt.Value__c == this.inpValue) {
-          //console.log('Match Found using ' + cOpt.Next_Question__c);
+          console.log('Match Found using ' + cOpt.Next_Question__c);
           recordId = cOpt.Next_Question__c;
         }
       }
@@ -107,7 +102,7 @@ export class QuestionComponent implements OnInit {
     this.answerWrap = new AnswerWrapper();
 
     if(recordId) {
-      console.log('Before Calling readQuestionBook() using ' + recordId);
+      console.log('Before Calling readQuestion() using ' + recordId);
       this.readQuestion(recordId);
     } else {
       // Show Confirmation
@@ -127,6 +122,8 @@ export class QuestionComponent implements OnInit {
 
   private successReadBook = (response) => {
     console.log(response);
+    //var respStr = JSON.stringify(response);
+    //var respJSON = JSON.parse(respStr.replace(this.sfNamespace, ''));
     this.qbItem = response.questionbook;
     this.abItem = response.answerbook;
 
@@ -145,6 +142,8 @@ export class QuestionComponent implements OnInit {
 
   private successRead = (response) => {
     console.log(response);
+    //var respStr = JSON.stringify(response);
+    //var respJSON = JSON.parse(respStr.replace(this.sfNamespace, ''));
     this.questionItem = response.question;
     this.processQuestion();
   }
@@ -162,6 +161,9 @@ export class QuestionComponent implements OnInit {
   private successSave = (response) => {
     console.log('inside successSave');
     console.log(response);
+    //var respStr = JSON.stringify(response);
+    //var respJSON = JSON.parse(respStr.replace(this.sfNamespace, ''));
+
     this.abItem = response.answerbook;
   }
 
@@ -188,6 +190,8 @@ export class QuestionComponent implements OnInit {
         this.taFlag = true;
       } else if(typ == 'Radio') {
         this.radioFlag = true;
+      } else if(typ == 'Dropdown') {
+        this.dropdownFlag = true;
       }
     }
   }
@@ -205,6 +209,8 @@ export class QuestionComponent implements OnInit {
         this.taFlag = false;
       } else if(typ == 'Radio') {
         this.radioFlag = false;
+      } else if(typ == 'Dropdown') {
+        this.dropdownFlag = false;
       }
     }
   }
