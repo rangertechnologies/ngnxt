@@ -13,7 +13,7 @@ ngNxt is the Angular Library for NXT (Salesforce Appexchange) App. This library 
 npm install <local of the .tgz extension file>
 ```
 
-##Usage of the Library in the Angular App
+## Usage of the Library in the Angular App
 - app.module.ts
 ```
 import { NxtAppModule } from 'nxt-app';
