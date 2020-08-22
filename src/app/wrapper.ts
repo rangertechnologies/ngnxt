@@ -32,6 +32,15 @@ export class Option {
   Name: string;
   Value__c: string;
   Next_Question__c: string;
+  checked?: boolean;
+}
+
+export class OptionValue {
+  Id: string;
+  Name: string;
+  Value__c: string;
+  Next_Question__c: string;
+  checked: boolean;
 }
 
 export class AnswerBook {

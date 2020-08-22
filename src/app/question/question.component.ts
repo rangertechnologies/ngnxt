@@ -2,12 +2,19 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 
 import { SalesforceService } from '../../services/salesforce.service';
-import { Question, QuestionBook, AnswerBook, AnswerWrapper } from '../wrapper';
+import { Question,
+         QuestionBook,
+         AnswerBook,
+         AnswerWrapper,
+         Option,
+         OptionValue } from '../wrapper';
+
 import { TESTQUESTION,
          DTQUESTION,
          FILEQUESTION,
          TAQUESTION,
-         RADIOQUESTION } from '../../mock/sample';
+         RADIOQUESTION,
+         CHECKQUESTION } from '../../mock/sample';
 
 @Component({
   selector: 'app-question',
@@ -38,7 +45,7 @@ export class QuestionComponent implements OnInit {
   public fileFlag: boolean = false;
   public bookFlag: boolean = false;
 
-  public optionValues: string[];
+  public optionValues: OptionValue[] = [];
   public inpValue: string;
 
   constructor(private sfService: SalesforceService, private route: ActivatedRoute) {
@@ -58,7 +65,7 @@ export class QuestionComponent implements OnInit {
           this.readQuestionBook(this.qbId);
         } else {
           console.log('Setting the Question Directly for testing');
-          this.questionItem = RADIOQUESTION;
+          this.questionItem = CHECKQUESTION;
           this.processQuestion();
         }
       }
@@ -85,11 +92,16 @@ export class QuestionComponent implements OnInit {
     // CONDITIONAL vs OPTIONONLY & UNCONDITIONAL
     if(cQuestion.RecordType.Name == 'CONDITIONAL') {
       for(var cOpt of cQuestion.Question_Options__r.records) {
-        //console.log(cOpt);
-        //console.log('Option => ' + cOpt.Value__c + ' matching with ' + ansVal);
-        if(cOpt.Value__c == this.inpValue) {
-          //console.log('Match Found using ' + cOpt.Next_Question__c);
-          recordId = cOpt.Next_Question__c;
+        if(this.optionValues) {
+        // Checkbox
+
+        } else {
+        // Radio / Data
+          //console.log('Option => ' + cOpt.Value__c + ' matching with ' + ansVal);
+          if(cOpt.Value__c == this.inpValue) {
+            //console.log('Match Found using ' + cOpt.Next_Question__c);
+            recordId = cOpt.Next_Question__c;
+          }
         }
       }
 
@@ -173,9 +185,14 @@ export class QuestionComponent implements OnInit {
   private processQuestion = () => {
     console.log('processing question => ' + JSON.stringify(this.questionItem));
     this.setFlag(this.questionItem.Type__c);
+    if(this.checkboxFlag) {
+      this.setOptions(this.questionItem.Question_Options__r.records);
+    }
   }
 
   setFlag(typ) {
+    console.log('inside setFlag for ' + typ);
+
     if(typ) {
       // Set the Flags
       if(typ == 'Text') {
@@ -188,6 +205,10 @@ export class QuestionComponent implements OnInit {
         this.taFlag = true;
       } else if(typ == 'Radio') {
         this.radioFlag = true;
+      } else if(typ == 'Dropdown') {
+        this.dropdownFlag = true;
+      } else if(typ == 'Checkbox') {
+        this.checkboxFlag = true;
       }
     }
   }
@@ -205,7 +226,28 @@ export class QuestionComponent implements OnInit {
         this.taFlag = false;
       } else if(typ == 'Radio') {
         this.radioFlag = false;
+      } else if(typ == 'Dropdown') {
+        this.dropdownFlag = false;
+      } else if(typ == 'Checkbox') {
+        this.checkboxFlag = false;
       }
+    }
+  }
+
+  setOptions(records) {
+    // console.log('inside setOptions');
+
+    for(var opt of records) {
+      // console.log('adding option ' + JSON.stringify(opt));
+
+      var ov = new OptionValue();
+      ov.Id = opt.Id;
+      ov.Name = opt.Name;
+      ov.Value__c = opt.Value__c + 'O';
+      ov.Next_Question__c = opt.Next_Question__c;
+      ov.checked = false;
+
+      this.optionValues.push(ov);
     }
   }
 

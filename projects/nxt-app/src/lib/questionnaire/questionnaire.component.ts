@@ -7,7 +7,8 @@ import { TESTQUESTION,
          DTQUESTION,
          FILEQUESTION,
          TAQUESTION,
-         RADIOQUESTION } from '../sample';
+         RADIOQUESTION,
+         CHECKQUESTION } from '../sample';
 
 @Component({
   selector: 'lib-questionnaire',
@@ -53,7 +54,7 @@ export class QuestionnaireComponent implements OnInit {
         this.readQuestionBook(this.qbId);
       } else {
         console.log('Setting the Question Directly for testing');
-        this.questionItem = RADIOQUESTION;
+        this.questionItem = CHECKQUESTION;
         this.processQuestion();
       }
     }
@@ -192,6 +193,8 @@ export class QuestionnaireComponent implements OnInit {
         this.radioFlag = true;
       } else if(typ == 'Dropdown') {
         this.dropdownFlag = true;
+      } else if(typ == 'Checkbox') {
+        this.checkboxFlag = true;
       }
     }
   }
@@ -211,6 +214,8 @@ export class QuestionnaireComponent implements OnInit {
         this.radioFlag = false;
       } else if(typ == 'Dropdown') {
         this.dropdownFlag = false;
+      } else if(typ == 'Checkbox') {
+        this.checkboxFlag = false;
       }
     }
   }

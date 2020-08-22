@@ -12,6 +12,15 @@
     </div>
   </div>
 
+  <div *ngIf="checkboxFlag" style="display: inline-block; width: 100%; padding-left: 5px; padding-right: 5px;">
+    <div *ngFor="let item of optionValues" class="radio col-md-6" style="padding: 10px; float: left;">
+      <label class="container">
+        <input type="checkbox" [id]="item.Id" [(ngModel)]="item.checked">
+        <span>{{item.Value__c}}</span>
+      </label>
+    </div>
+  </div>
+
   <div *ngIf="textFlag">
     <div class="col-md-12">
       <input type="text" [(ngModel)]="inpValue" id="text-input-id" required="" />

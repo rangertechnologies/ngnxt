@@ -34,6 +34,14 @@ export class Option {
   Next_Question__c: string;
 }
 
+export class OptionValue {
+  Id: string;
+  Name: string;
+  Value__c: string;
+  Next_Question__c: string;
+  checked: boolean;
+}
+
 export class AnswerBook {
   Id: string;
   Question_Book__c: string;
