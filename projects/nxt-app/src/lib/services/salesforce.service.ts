@@ -26,7 +26,8 @@ export class SalesforceService {
       console.log('method name in lib = ' + nsMethodName);
 
       Visualforce.remoting.Manager.invokeAction(
-        nsMethodName,
+        'UINxtExtension.process',
+        //`{!$RemoteAction.NxtController.process}`,
         ...params,
         function (result, event) {
           try {

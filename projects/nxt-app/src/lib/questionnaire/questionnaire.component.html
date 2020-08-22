@@ -1,16 +1,14 @@
 <div *ngIf="questionItem" style="padding-left: 25px; padding-right: 25px;">
-  <h2 style="padding-top: 25px; padding-bottom: 10px;">
+  <h2 style="padding-top: 25px; padding-bottom: 10px; padding-left: 15px; color: #00356f;">
     {{questionItem.Question__c}}
   </h2>
 
-  <div class="col-md-12" *ngIf="radioFlag || dropdownFlag || dataFlag" style="display: inline-block;">
-    <div *ngFor="let opt of questionItem.Question_Options__r.records" class="radio col-md-6" style="padding: 10px; float: left; width: 50%;">
-      <div style="padding-top: 10px; padding-left: 10px; background-color: lightblue">
-        <label class="container">
-          <input type="radio" [id]="opt.Id" ng-model="inpValue" name="inpValue" (change)="optionChange(opt.Value__c)">
-          <span class="checkmark">{{opt.Value__c}}</span>
-        </label>
-      </div>
+  <div *ngIf="radioFlag || dropdownFlag || dataFlag" style="display: inline-block; width: 100%; padding-left: 5px; padding-right: 5px;">
+    <div *ngFor="let opt of questionItem.Question_Options__r.records" class="radio col-md-6" style="padding: 10px; float: left;">
+      <label class="container">
+        <input type="radio" [id]="opt.Id" ng-model="inpValue" name="inpValue" (change)="optionChange(opt.Value__c)">
+        <span class="checkmark">{{opt.Value__c}}</span>
+      </label>
     </div>
   </div>
 
@@ -22,7 +20,7 @@
 
   <div *ngIf="taFlag">
     <div class="col-md-12">
-      <textarea style="height: 100px;" id="ta-input-id" [(ngModel)]="inpValue" ></textarea>
+      <textarea style="height: 100px; width: 100%;" id="ta-input-id" [(ngModel)]="inpValue" ></textarea>
     </div>
   </div>
 
@@ -46,7 +44,7 @@
     </div>
   </div>
 
-  <div class="" style="display: flex;">
+  <div class="" style="display: flex; padding-top: 20px;">
     <div class="col-md-6">
       <button class="btn btn-primary btn-lg btn-block" style="background-color: #00356f;" (click)="handleBackClick()">Back</button>
     </div>

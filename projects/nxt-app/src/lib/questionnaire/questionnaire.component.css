@@ -13,10 +13,6 @@
   display: flex;
 }
 
-.question {
-  padding: 15px;
-}
-
 label {
   align-items: center;
   cursor: pointer;
