@@ -1,7 +1,14 @@
 <div *ngIf="questionItem" style="padding-left: 25px; padding-right: 25px;">
-  <h2 style="padding-top: 25px; padding-bottom: 10px; padding-left: 15px; color: #00356f;">
-    {{questionItem.Question__c}}
-  </h2>
+  <div style="padding-top: 25px; padding-bottom: 10px; padding-left: 15px; color: #00356f;">
+    <div *ngIf="isTitle">
+      <h2>
+        {{questionItem.Question__c}}
+      </h2>
+    </div>
+    <div *ngIf="!isTitle" style="font-size: 1rem;">
+        {{questionItem.Question__c}}
+    </div>
+  </div>
 
   <div *ngIf="radioFlag || dropdownFlag || dataFlag" style="display: inline-block; width: 100%; padding-left: 5px; padding-right: 5px;">
     <div *ngFor="let opt of questionItem.Question_Options__r.records" class="radio col-md-6" style="padding: 10px; float: left;">
@@ -13,7 +20,7 @@
   </div>
 
   <div *ngIf="checkboxFlag" style="display: inline-block; width: 100%; padding-left: 5px; padding-right: 5px;">
-    <div *ngFor="let item of optionValues" class="radio col-md-6" style="padding: 10px; float: left;">
+    <div *ngFor="let item of optionValues" class="radio col-md-12" style="padding: 10px; float: left;">
       <label class="container">
         <input type="checkbox" [id]="item.Id" [(ngModel)]="item.checked">
         <span>{{item.Value__c}}</span>
@@ -50,6 +57,17 @@
         <span>Upload Files</span>
         <span>or Drop Files</span>
       </label>
+    </div>
+  </div>
+
+  <div *ngIf="bookFlag">
+    <div *ngFor="let ques of questionItem.Questions__r.records" class="col-md-12">
+      <div class="col-md-12">
+        <span>{{ques.Question__c}}</span>
+      </div>
+      <div class="col-md-12">
+        <input type="text" [(ngModel)]="ques.input" [id]="ques.Id" required="" />
+      </div>
     </div>
   </div>
 
