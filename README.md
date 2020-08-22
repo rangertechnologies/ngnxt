@@ -1,6 +1,31 @@
 # NgNxt
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.3.9.
+ngNxt is the Angular Library for NXT (Salesforce Appexchange) App. This library is built to include the Questionnaire flow in the existing Angular App.
+
+## Steps to build and create package
+
+1. Clone the repository in your local machine
+2. Build the nxt-app using `ng build nxt-app` command
+3. Change directory from repository folder to dist/nxt-app folder
+4. Create package using `npm pack` command
+5. The above created package can be installed in and Angular app by below command
+```
+npm install <local of the .tgz extension file>
+```
+
+## Usage of the Library in the Angular App
+- app.module.ts
+```
+import { NxtAppModule } from 'nxt-app';
+
+imports: [
+    ...,
+    NxtAppModule,
+    ...
+],
+```
+- include the library as mentioned below in the component template file
+`<lib-questionnaire [qbId]="<Salesforce Id of the Question Book>"></lib-questionnaire>`
 
 ## Development server
 
@@ -10,10 +35,6 @@ Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app w
 
 Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
 
-## Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
-
 ## Running unit tests
 
 Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
@@ -21,7 +42,3 @@ Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.
 ## Running end-to-end tests
 
 Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
