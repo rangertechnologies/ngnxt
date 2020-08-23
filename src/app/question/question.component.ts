@@ -207,19 +207,10 @@ export class QuestionComponent implements OnInit {
     // Set the Answer Number based on the Question Stack Length
     this.answerWrap.ansNumber = this.questionStack.length + 1;
 
-    // Check whether the question was already answered
-    if(this.answerMap.has(this.questionItem.Id)) {
-      this.answerWrap.ansId = this.answerMap.get(this.questionItem.Id).ansId;
-      this.sfService.remoteAction('NxtController.process',
-          ['Answer', 'update', JSON.stringify(this.answerWrap)],
-          this.successSave,
-          this.failureSave);
-    } else {
-      this.sfService.remoteAction('NxtController.process',
-          ['Answer', 'create', JSON.stringify(this.answerWrap)],
-          this.successSave,
-          this.failureSave);
-    }
+    this.sfService.remoteAction('NxtController.process',
+        ['Answer', 'create', JSON.stringify(this.answerWrap)],
+        this.successSave,
+        this.failureSave);
   }
 
   private successSave = (response) => {
