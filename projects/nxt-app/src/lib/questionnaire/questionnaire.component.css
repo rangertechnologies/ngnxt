@@ -1,15 +1,13 @@
-.container {
+.radiocontainer {
   border: 1px solid none;
   border-radius: .3em;
   background-color:#D3DBE7;
   color:#00356F;
   padding: 0.3em ;
   align-items: center;
-  margin-bottom: 2em;
   text-align: justify;
   font-family:Univers Condensed;
   cursor: pointer;
-  margin-right: 1em;
   display: flex;
 }
 

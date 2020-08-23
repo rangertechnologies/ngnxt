@@ -20,8 +20,7 @@ export const TESTQUESTION: Question = {
   Group__c: 'Basic',
   Question_No__c: '1',
   RecordType: {
-    Id: 'UNCONDITIONAL',
-    Name: '0123t000000VJ94AAG'
+    Name: 'UNCONDITIONAL'
   },
 };
 
@@ -36,8 +35,7 @@ export const DTQUESTION: Question = {
   Group__c: 'Basic',
   Question_No__c: '1',
   RecordType: {
-    Id: 'UNCONDITIONAL',
-    Name: '0123t000000VJ94AAG'
+    Name: 'UNCONDITIONAL'
   },
 };
 
@@ -52,8 +50,7 @@ export const FILEQUESTION: Question = {
   Group__c: 'Basic',
   Question_No__c: '1',
   RecordType: {
-    Id: 'UNCONDITIONAL',
-    Name: '0123t000000VJ94AAG'
+    Name: 'UNCONDITIONAL'
   },
 };
 
@@ -68,8 +65,7 @@ export const TAQUESTION: Question = {
   Group__c: 'Basic',
   Question_No__c: '1',
   RecordType: {
-    Id: 'UNCONDITIONAL',
-    Name: '0123t000000VJ94AAG'
+    Name: 'UNCONDITIONAL'
   },
 };
 
@@ -84,8 +80,7 @@ export const RADIOQUESTION: Question = {
   Group__c: 'Basic',
   Question_No__c: '5',
   RecordType: {
-    Id: 'CONDITIONAL',
-    Name: '0123t000000VJ94AAG'
+    Name: 'UNCONDITIONAL'
   },
   Question_Options__r: {
     records: [
@@ -122,8 +117,7 @@ export const CHECKQUESTION: Question = {
   Group__c: 'Basic',
   Question_No__c: '6',
   RecordType: {
-    Id: 'CONDITIONAL',
-    Name: '0123t000000VJ94AAG'
+    Name: 'CONDITIONAL'
   },
   Question_Options__r: {
     records: [
@@ -147,4 +141,45 @@ export const CHECKQUESTION: Question = {
                  }
                ]
   }
+};
+
+// Book Question
+export const BOOKQUESTION: Question = {
+  Id: '17',
+  Name: 'QN-00007',
+  Type__c: 'Book',
+  Question__c: 'Provide your Address',
+  Next_Question__c: '',
+  Is_Optional__c: false,
+  Group__c: 'Basic',
+  Question_No__c: '7',
+  Questions__r: {
+    records: [
+      {
+        Id: '171',
+        Name: 'QN-000071',
+        Type__c: 'Text',
+        Question__c: 'House Number',
+        Is_Optional__c: false,
+        Group__c: 'Basic',
+        RecordType: {
+          Name: 'CONDITIONAL'
+        }
+      },
+      {
+        Id: '172',
+        Name: 'QN-000072',
+        Type__c: 'TextArea',
+        Question__c: 'Street, City, Country',
+        Is_Optional__c: false,
+        Group__c: 'Basic',
+        RecordType: {
+          Name: 'CONDITIONAL'
+        }
+      },
+    ]
+  },
+  RecordType: {
+    Name: 'CONDITIONAL'
+  },
 };

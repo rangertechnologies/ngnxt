@@ -24,8 +24,8 @@ import { TESTQUESTION,
 })
 
 export class QuestionComponent implements OnInit {
-  params: Params;
   qbId: string;
+  params: Params;
 
   public abItem: AnswerBook;
   public qbItem: QuestionBook;

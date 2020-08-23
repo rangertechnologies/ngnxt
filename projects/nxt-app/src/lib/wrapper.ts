@@ -1,20 +1,3 @@
-export class Question {
-  Id: string;
-  Name: string;
-  Question__c: string;
-  Type__c: string;
-  Next_Question__c: string;
-  Is_Optional__c: boolean;
-  Group__c: string;
-  Question_No__c: string;
-  Question_Options__r?: OptionR;
-  RecordType: {
-    Id: string;
-    Name: string;
-  };
-  input?: string;
-}
-
 export class QuestionBook {
   Id: number;
   Name: string;
@@ -22,6 +5,27 @@ export class QuestionBook {
   First_Question__c: string;
   Title__c: string;
   Total_Questions__c: number;
+}
+
+export class Question {
+  Id: string;
+  Name: string;
+  Question__c: string;
+  Type__c: string;
+  Next_Question__c?: string;
+  Is_Optional__c: boolean;
+  Group__c: string;
+  Question_No__c?: string;
+  Question_Options__r?: OptionR;
+  Questions__r?: QuestionR;
+  RecordType: {
+    Name: string;
+  };
+  input?: string;
+}
+
+export class QuestionR {
+  records?: Question[];
 }
 
 export class OptionR {
@@ -32,14 +36,14 @@ export class Option {
   Id: string;
   Name: string;
   Value__c: string;
-  Next_Question__c: string;
+  Next_Question__c?: string;
 }
 
 export class OptionValue {
   Id: string;
   Name: string;
   Value__c: string;
-  Next_Question__c: string;
+  Next_Question__c?: string;
   checked: boolean;
 }
 
