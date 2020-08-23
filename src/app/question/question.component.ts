@@ -26,6 +26,7 @@ import { TESTQUESTION,
 export class QuestionComponent implements OnInit {
   params: Params;
   qbId: string;
+
   public abItem: AnswerBook;
   public qbItem: QuestionBook;
   public questionItem: Question;
@@ -46,11 +47,13 @@ export class QuestionComponent implements OnInit {
   public fileFlag: boolean = false;
   public bookFlag: boolean = false;
 
-  public questionList: Question[] = [];
-  public optionValues: OptionValue[] = [];
-  public inpValue: string;
-
   public isTitle: boolean = true;
+
+  public optionValues: OptionValue[] = [];
+  public subQuestions: Question[] = [];
+  public inpValue: string;
+  public answerMap = new Map();
+  public questionStack = [];
 
   constructor(private sfService: SalesforceService, private route: ActivatedRoute) {
 
@@ -83,6 +86,7 @@ export class QuestionComponent implements OnInit {
     var typ = cQuestion.Type__c;
     var quesValue = '';
 
+    // Process Inputs
     if(this.checkboxFlag) {
       this.inpValue = '@@##$$';
       // Save all the selected options in the inpValue
@@ -112,6 +116,7 @@ export class QuestionComponent implements OnInit {
     this.answerWrap.ansValue = this.inpValue;
 
     this.saveAnswer();
+    this.questionStack.push(cQuestion.Id);
 
     // CONDITIONAL vs OPTIONONLY & UNCONDITIONAL
     if(cQuestion.RecordType.Name == 'CONDITIONAL') {
@@ -133,11 +138,12 @@ export class QuestionComponent implements OnInit {
     }
 
     // Reset the Variables
+    this.isTitle = false;
     this.inpValue = '';
     this.resetFlag(typ);
     this.answerWrap = new AnswerWrapper();
     this.optionValues = [];
-    this.questionList = [];
+    this.subQuestions = [];
 
     if(recordId) {
       console.log('Before Calling readQuestion() using ' + recordId);
@@ -151,6 +157,16 @@ export class QuestionComponent implements OnInit {
   }
 
   handleBackClick() {
+    // Reset the Variables
+    this.isTitle = false;
+    this.inpValue = '';
+    this.resetFlag(this.questionItem.Type__c);
+    this.answerWrap = new AnswerWrapper();
+    this.optionValues = [];
+    this.subQuestions = [];
+
+    // Read the previous question from DB
+    this.readQuestion(this.questionStack.pop());
   }
 
   private readQuestionBook = (uuid: string) => this.sfService.remoteAction('NxtController.process',
@@ -187,15 +203,30 @@ export class QuestionComponent implements OnInit {
     console.log(response);
   }
 
-  private saveAnswer = () => this.sfService.remoteAction('NxtController.process',
-    ['Answer', 'create', JSON.stringify(this.answerWrap)],
-    this.successSave,
-    this.failureSave);
+  private saveAnswer = () => {
+    // Set the Answer Number based on the Question Stack Length
+    this.answerWrap.ansNumber = this.questionStack.length + 1;
+
+    // Check whether the question was already answered
+    if(this.answerMap.has(this.questionItem.Id)) {
+      this.answerWrap.ansId = this.answerMap.get(this.questionItem.Id).Id;
+      this.sfService.remoteAction('NxtController.process',
+          ['Answer', 'update', JSON.stringify(this.answerWrap)],
+          this.successSave,
+          this.failureSave);
+    } else {
+      this.sfService.remoteAction('NxtController.process',
+          ['Answer', 'create', JSON.stringify(this.answerWrap)],
+          this.successSave,
+          this.failureSave);
+    }
+  }
 
   private successSave = (response) => {
     console.log('inside successSave');
     console.log(response);
-    this.abItem = response.answerbook;
+    //this.abItem = response.answerbook;
+    this.answerMap.set(response.answer.quesId, response.answer);
   }
 
   private failureSave = (response) => {
@@ -204,14 +235,28 @@ export class QuestionComponent implements OnInit {
   }
 
   private processQuestion = () => {
-    console.log('processing question => ' + JSON.stringify(this.questionItem));
+    console.log('processing question ' + this.questionItem.Name + ' existing answers are ' + this.answerMap.size); // => ' + JSON.stringify(this.questionItem));
+
+    // Handling of the Question Title based on the length
+    if(this.questionItem.Question__c.length > 250) {
+      this.isTitle = false;
+    }
+
+    // Set the Flags to show right fields
     this.setFlag(this.questionItem.Type__c);
+
+    // Check the existing answer from answerMap
+    if(this.answerMap.has(this.questionItem.Id)) {
+      var eAnswer = this.answerMap.get(this.questionItem.Id);
+      // Get the existing answer from the Map
+      this.inpValue = eAnswer.ansValue;
+    }
+
+    // Set the Options for Checkbox
     if(this.checkboxFlag) {
       this.setOptions(this.questionItem.Question_Options__r.records);
-      // Handling of the Question Title based on the length
-      if(this.questionItem.Question__c.length > 250) {
-        this.isTitle = false;
-      }
+    } else if(this.bookFlag) {
+      this.setSubQuestions(this.questionItem.Questions__r.records);
     }
   }
 
@@ -272,11 +317,48 @@ export class QuestionComponent implements OnInit {
       var ov = new OptionValue();
       ov.Id = opt.Id;
       ov.Name = opt.Name;
-      ov.Value__c = opt.Value__c + 'O';
+      ov.Value__c = opt.Value__c;
       ov.Next_Question__c = opt.Next_Question__c;
       ov.checked = false;
 
+      if(this.inpValue && this.inpValue.split('@@##$$').includes(opt.Value__c)) {
+        ov.checked = true;
+      }
+
       this.optionValues.push(ov);
+    }
+  }
+
+  setSubQuestions(records) {
+    console.log('inside setSubQuestions');
+
+    var qaMap = new Map();
+    if(this.inpValue) {
+      var aIndex = 0;
+      for(var ansStr of this.inpValue.split('@@##$$')) {
+        aIndex++;
+        qaMap.set(aIndex, ansStr);
+        console.log('Setting the qaMap for ' + aIndex + ' with ' + ansStr);
+      }
+    }
+
+    for(var ques of records) {
+      var sQues = new Question();
+      sQues.Id = ques.Id;
+      sQues.Name = ques.Name;
+      sQues.Question__c = ques.Question__c;
+      sQues.Type__c = ques.Type__c;
+      sQues.Next_Question__c = ques.Next_Question__c;
+      sQues.Is_Optional__c = ques.Is_Optional__c;
+      sQues.Group__c = ques.Group__c;
+      sQues.Question_No__c = ques.Question_No__c;
+
+      if(qaMap.has(ques.Question_No__c)) {
+        console.log('Setting input for the subQuestion ' + ques.Question_No__c + ' with ' + ansStr);
+        ques.input = qaMap.get(ques.Question_No__c);
+      }
+
+      this.subQuestions.push(ques);
     }
   }
 

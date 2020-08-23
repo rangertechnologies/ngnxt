@@ -12,6 +12,7 @@ export class Question {
     Id: string;
     Name: string;
   };
+  input?: string;
 }
 
 export class QuestionBook {
@@ -50,6 +51,8 @@ export class AnswerBook {
 }
 
 export class AnswerWrapper {
+  ansId?: string;
+  ansNumber?: number;
   abId: string;
   quesId: string;
   quesValue: string;

@@ -55,6 +55,8 @@ export class AnswerBook {
 }
 
 export class AnswerWrapper {
+  ansId?: string;
+  ansNumber?: number;
   abId: string;
   quesId: string;
   quesValue: string;
