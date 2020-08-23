@@ -81,15 +81,15 @@ export class QuestionnaireComponent implements OnInit {
 
     // Process Inputs
     if(this.checkboxFlag) {
-      this.inpValue = '@@##$$';
+      this.inpValue = '';
       // Save all the selected options in the inpValue
       for(var ov of this.optionValues.filter(item => item.checked)) {
         this.inpValue += ov.Value__c + '@@##$$';
         recordId = ov.Next_Question__c;
       }
     } else if(this.bookFlag) {
-      quesValue = '@@##$$';
-      this.inpValue = '@@##$$';
+      quesValue = '';
+      this.inpValue = '';
       for(var item of this.questionItem.Questions__r.records) {
         quesValue += item.Question__c + '@@##$$';
         this.inpValue += item.input + '@@##$$';
@@ -131,7 +131,7 @@ export class QuestionnaireComponent implements OnInit {
     }
 
     // Reset the Variables
-    this.isTitle = false;
+    this.isTitle = true;
     this.inpValue = '';
     this.resetFlag(typ);
     this.answerWrap = new AnswerWrapper();
@@ -151,7 +151,7 @@ export class QuestionnaireComponent implements OnInit {
 
   handleBackClick() {
     // Reset the Variables
-    this.isTitle = false;
+    this.isTitle = true;
     this.inpValue = '';
     this.resetFlag(this.questionItem.Type__c);
     this.answerWrap = new AnswerWrapper();
@@ -202,7 +202,7 @@ export class QuestionnaireComponent implements OnInit {
 
     // Check whether the question was already answered
     if(this.answerMap.has(this.questionItem.Id)) {
-      this.answerWrap.ansId = this.answerMap.get(this.questionItem.Id).Id;
+      this.answerWrap.ansId = this.answerMap.get(this.questionItem.Id).ansId;
       this.sfService.remoteAction('NxtController.process',
           ['Answer', 'update', JSON.stringify(this.answerWrap)],
           this.successSave,
