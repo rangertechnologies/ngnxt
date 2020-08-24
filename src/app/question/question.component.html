@@ -59,7 +59,8 @@
       </label>
     </div>
   </div>
-
+  <input [ngxTimepicker]="picker">
+  <ngx-material-timepicker #picker></ngx-material-timepicker>
   <div *ngIf="bookFlag">
     <div *ngFor="let ques of subQuestions" class="col-md-12">
       <div class="col-md-12">
