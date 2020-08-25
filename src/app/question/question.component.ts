@@ -60,7 +60,21 @@ export class QuestionComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.route.queryParams.subscribe((params: Params) => {
+    this.questionItem = {
+      Id: '12',
+      Name: 'QN-00002',
+      Type__c: 'DateTime',
+      Question__c: 'When did the incident happen?',
+      Next_Question__c: 'a013t000013SS89AAG',
+      Is_Optional__c: false,
+      Group__c: 'Basic',
+      Question_No__c: '1',
+      RecordType: {
+        Name: 'UNCONDITIONAL'
+      },
+    };
+    this.dtFlag = true;
+    /*this.route.queryParams.subscribe((params: Params) => {
       this.params = params;
       console.log('App params', params);
       console.log('id', params['id']);
@@ -76,7 +90,7 @@ export class QuestionComponent implements OnInit {
           this.processQuestion();
         }
       }
-    });
+    });*/
   }
 
   handleNextClick() {
