@@ -13,8 +13,6 @@ export class SalesforceService {
     public getSFResource = (path: string) => `${window['_VfResources']}${path}`;
     public getRNXTMethodName = () => `${window['_rnxtMethodName']}`;
 
-    ns = this.getSfdcNamespace();
-
     public remoteAction(methodName: string,
                         params: string[],
                         resolve,
@@ -26,9 +24,6 @@ export class SalesforceService {
       console.log('method name in lib = ' + nsMethodName);
 
       Visualforce.remoting.Manager.invokeAction(
-        nsMethodName,
-        //'NxtController.process',
-        //`{!$RemoteAction.NxtController.process}`,
         nsMethodName,
         ...params,
         function (result, event) {

@@ -6,6 +6,7 @@ import { Question,
          QuestionBook,
          AnswerBook,
          AnswerWrapper,
+         ErrorWrapper,
          Option,
          OptionValue } from '../wrapper';
 
@@ -84,7 +85,7 @@ export class QuestionComponent implements OnInit {
     var cQuestion: Question = new Question();
     cQuestion = this.questionItem;
     var typ = cQuestion.Type__c;
-    var quesValue = '';
+    var quesValue = cQuestion.Question__c;
 
     // Process Inputs
     if(this.checkboxFlag) {
@@ -95,28 +96,39 @@ export class QuestionComponent implements OnInit {
         recordId = ov.Next_Question__c;
       }
     } else if(this.bookFlag) {
-      quesValue = '';
+      quesValue = '@@##$$';
       this.inpValue = '';
+      var hasMissingInput = false;
       for(var item of this.questionItem.Questions__r.records) {
+        if(!item.Is_Optional__c && !item.input) {
+          item.error = new ErrorWrapper();
+          hasMissingInput = true;
+        }
         quesValue += item.Question__c + '@@##$$';
         this.inpValue += item.input + '@@##$$';
       }
 
-      cQuestion.Question__c += quesValue;
+      if(hasMissingInput) { return; }
     }
 
     console.log('before calling saveAnswer with ' + this.inpValue);
+
+    // Check for the answer before saving to the DB
+    if(!this.questionItem.Is_Optional__c && !this.inpValue) {
+      // Show error that the question must be answered
+      this.questionItem.error = new ErrorWrapper();
+      return;
+    }
 
     // Save the Answer in the DB
     this.answerWrap = new AnswerWrapper();
     this.answerWrap.abId = this.abItem.Id;
     this.answerWrap.quesId = cQuestion.Id;
-    this.answerWrap.quesValue = cQuestion.Question__c;
+    this.answerWrap.quesValue = quesValue;
     this.answerWrap.qTyp = typ;
     this.answerWrap.ansValue = this.inpValue;
 
     this.saveAnswer();
-
     this.questionStack.push(cQuestion.Id);
 
     // CONDITIONAL vs OPTIONONLY & UNCONDITIONAL
@@ -357,7 +369,25 @@ export class QuestionComponent implements OnInit {
   }
 
   optionChange(selValue) {
+    this.clearError();
     // console.log('inside optionChange using ' + selValue);
     this.inpValue = selValue;
+  }
+
+  clearError() {
+    if(this.questionItem.error) {
+      this.questionItem.error = null;
+    }
+  }
+
+  clearSQError(quesId) {
+    var sqList = this.subQuestions.filter(item => item.Id == quesId);
+    for(var sq of sqList){
+      sq.error = null;
+    }
+  }
+
+  uploadFile() {
+    this.clearError();
   }
 }
