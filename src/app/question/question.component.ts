@@ -116,6 +116,7 @@ export class QuestionComponent implements OnInit {
     this.answerWrap.ansValue = this.inpValue;
 
     this.saveAnswer();
+
     this.questionStack.push(cQuestion.Id);
 
     // CONDITIONAL vs OPTIONONLY & UNCONDITIONAL
@@ -238,9 +239,11 @@ export class QuestionComponent implements OnInit {
 
     // Check the existing answer from answerMap
     if(this.answerMap.has(this.questionItem.Id)) {
+      console.log('existing answer found for this.questionItem.Name');
       var eAnswer = this.answerMap.get(this.questionItem.Id);
       // Get the existing answer from the Map
       this.inpValue = eAnswer.ansValue;
+      console.log('inpValue has been set to ' + this.inpValue);
     }
 
     // Set the Options for Checkbox

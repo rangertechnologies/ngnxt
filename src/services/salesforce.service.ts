@@ -22,13 +22,18 @@ export class SalesforceService {
                         config?: any) {
       // console.log('inside SalesforceService.remoteAction for ' + methodName);
       const self = this;
-      var nsMethodName = this.ns + '.' + methodName;
+      var nsMethodName = methodName;
+
+      if(this.ns && this.ns.length > 0) {
+        nsMethodName = this.ns + '.' + methodName;
+      }
+
       console.log('method name in app = ' + nsMethodName);
 
       Visualforce.remoting.Manager.invokeAction(
-        'NxtController.process',
+        //'NxtController.process',
         //`{!$RemoteAction.NxtController.process}`,
-        //nsMethodName,
+        nsMethodName,
         ...params,
         function (result, event) {
           try {

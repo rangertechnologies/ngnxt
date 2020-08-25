@@ -13,7 +13,7 @@
   <div *ngIf="radioFlag || dropdownFlag || dataFlag" style="display: inline-block; width: 100%; padding-left: 5px; padding-right: 5px;">
     <div *ngFor="let opt of questionItem.Question_Options__r.records" class="radio col-md-6" style="padding: 10px; float: left;">
       <label class="radiocontainer">
-        <input type="radio" [id]="opt.Id" ng-model="inpValue" name="inpValue" (change)="optionChange(opt.Value__c)">
+        <input type="radio" [id]="opt.Id" [(ngModel)]="inpValue" name="inpValue" value="{{opt.Value__c}}" (change)="optionChange(opt.Value__c)">
         <span class="checkmark">{{opt.Value__c}}</span>
       </label>
     </div>
