@@ -78,19 +78,25 @@
       </div>
     </div>
   </div>
-</div>
 
-<div class="" style="display: flex; padding-top: 20px; padding-left: 25px; padding-right: 25px;">
-  <div class="col-md-6" *ngIf="questionStack.length > 0">
-    <button class="btn btn-primary btn-lg btn-block" style="background-color: #00356f;" (click)="handleBackClick()">Back</button>
+  <div class="" style="display: flex; padding-top: 20px; padding-left: 25px; padding-right: 25px;">
+    <div class="col-md-6" *ngIf="questionStack.length > 0">
+      <button class="btn btn-primary btn-lg btn-block" style="background-color: #00356f;" (click)="handleBackClick()">Back</button>
+    </div>
+    <div class="col-md-6">
+      <button class="btn btn-primary btn-lg btn-block" style="background-color: #00356f;" (click)="handleNextClick()">Next</button>
+    </div>
   </div>
-  <div class="col-md-6">
-    <button class="btn btn-primary btn-lg btn-block" style="background-color: #00356f;" (click)="handleNextClick()">Next</button>
-  </div>
-</div>
 
-<div>
-  <br/><br/><br/>
-  <span>Question # and Name for Reference: </span>
-  {{questionItem.Question_No__c}} and {{questionItem.Name}}
+  <div>
+    <br/><br/><br/>
+    <span>Question # and Name for Reference: </span>
+    {{questionItem.Question_No__c}} and {{questionItem.Name}}
+
+    <div *ngIf="questionItem.error">
+      <br/>{{questionItem.error.errorCode}}
+      <br/>{{questionItem.error.errorMsg}}
+      <br/>{{questionItem.error.errorDetails}}
+    </div>
+  </div>
 </div>
