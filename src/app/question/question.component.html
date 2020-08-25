@@ -71,22 +71,30 @@
 
 
 
-   
+
 
 <div class="" style="display: flex;">
-       <div class="col-md-6">
-       <label class="container">
-        <input type="radio" checked="checked" name="radio">
-        <span class="checkmark">Genaue Adresse bekannt (straße und Ort)</span>
-      </label>
-    </div>
-    <div class="col-md-6">
-      <label class="container">
-        <input type="radio" checked="checked" name="radio">
-        <span class="checkmark">Schadenort ohne genaue Adresse (z.B. auf dem Sportplatz, im Wald)</span>
-      </label>
-    </div>
+  <div class="col-md-6">
+    <label class="container">
+  <div class="custom-control custom-radio custom-control-inline">
+    <input type="radio" class="custom-control-input" id="defaultInline1" name="inlineDefaultRadiosExample">
+    <label class="custom-control-label" for="defaultInline1">Genaue Adresse bekannt (straße und Ort)</label>
+ 
+  </div>
+</label>
 </div>
+  
+  <div class="col-md-6">
+    <label class="container">
+    <div class="custom-control custom-radio custom-control-inline">
+    <input type="radio" class="custom-control-input" id="defaultInline2" name="inlineDefaultRadiosExample">
+    <label class="custom-control-label" for="defaultInline2"> Schadenort ohne genaue Adresse (z.B. auf dem Sportplatz, im Wald)</label>
+ 
+  </div>
+</label>
+</div>
+  </div>
+
 
 
 
@@ -98,9 +106,6 @@
     <button class="btn btn-primary btn-lg btn-block" style="background-color: #00356f;" (click)="handleNextClick()">Weiter</button>
   </div>
 </div>
-
-
-
 
 
 

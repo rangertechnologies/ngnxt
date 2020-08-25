@@ -12,22 +12,26 @@ font-family:Univers Condensed;
 cursor: pointer;
 margin-right: 1em;
 display: flex;
+position: none;
+line-height: auto;
+padding-top: 1em;
+padding-bottom: 1em;
+
 }
 
-label{
-    align-items: center;
+.custom-control-label{
+
     cursor: pointer;
-    padding: 10px;
-    align-items: center;
-   
 }
 
-span{
-    padding: 10px; 
-}
+.custom-control-input:checked~.custom-control-label::before {
+background-color:#6984A9 ;
 
-input[type=radio] {
-    border: 0px;
-    width: 5%;
-    height: 1.3em;
+} 
+
+.custom-control-label::after {
+    position: fixed;
    }
+
+
+
