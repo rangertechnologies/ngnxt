@@ -14,6 +14,7 @@ export class Question {
   Type__c: string;
   Next_Question__c?: string;
   Is_Optional__c: boolean;
+  Is_Title__c: boolean;
   Group__c: string;
   Question_No__c?: string;
   Question_Options__r?: OptionR;
@@ -22,6 +23,7 @@ export class Question {
     Name: string;
   };
   input?: string;
+  error?: ErrorWrapper;
 }
 
 export class QuestionR {
@@ -62,4 +64,10 @@ export class AnswerWrapper {
   quesValue: string;
   qTyp: string;
   ansValue: string;
+}
+
+export class ErrorWrapper {
+  errorCode: string;
+  errorMsg: string;
+  errorDetails: string;
 }

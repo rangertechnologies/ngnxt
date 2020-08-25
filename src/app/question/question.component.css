@@ -27,7 +27,3 @@ input[type=radio] {
   width: 5%;
   height: 1.3em;
 }
-
-errorStyle {
-  border-color: red;
-}
