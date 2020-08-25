@@ -11,10 +11,7 @@ declare class Visualforce {
 
 export class SalesforceService {
     public getSFResource = (path: string) => `${window['_VfResources']}${path}`;
-    public getSfdcNamespace = () => `${window['_sfdcNamespace']}`;
     public getRNXTMethodName = () => `${window['_rnxtMethodName']}`;
-
-    ns = this.getSfdcNamespace();
 
     public remoteAction(methodName: string,
                         params: string[],
