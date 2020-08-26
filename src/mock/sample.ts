@@ -17,6 +17,7 @@ export const TESTQUESTION: Question = {
   Question__c: 'What is your Name?',
   Next_Question__c: 'a013t000013SS89AAG',
   Is_Optional__c: false,
+  Is_Title__c: true,
   Group__c: 'Basic',
   Question_No__c: '1',
   RecordType: {
@@ -32,6 +33,7 @@ export const DTQUESTION: Question = {
   Question__c: 'When did the incident happen?',
   Next_Question__c: 'a013t000013SS89AAG',
   Is_Optional__c: false,
+  Is_Title__c: true,
   Group__c: 'Basic',
   Question_No__c: '1',
   RecordType: {
@@ -47,6 +49,7 @@ export const FILEQUESTION: Question = {
   Question__c: 'Upload the Incident Report/Images?',
   Next_Question__c: 'a013t000013SS89AAG',
   Is_Optional__c: false,
+  Is_Title__c: true,
   Group__c: 'Basic',
   Question_No__c: '1',
   RecordType: {
@@ -62,6 +65,7 @@ export const TAQUESTION: Question = {
   Question__c: 'Explain the particulars of the Incident?',
   Next_Question__c: 'a013t000013SS89AAG',
   Is_Optional__c: false,
+  Is_Title__c: true,
   Group__c: 'Basic',
   Question_No__c: '1',
   RecordType: {
@@ -77,6 +81,7 @@ export const RADIOQUESTION: Question = {
   Question__c: 'Choose your favorite role',
   Next_Question__c: '',
   Is_Optional__c: false,
+  Is_Title__c: true,
   Group__c: 'Basic',
   Question_No__c: '5',
   RecordType: {
@@ -114,6 +119,7 @@ export const CHECKQUESTION: Question = {
   Question__c: 'Choose your favorite spots',
   Next_Question__c: '',
   Is_Optional__c: false,
+  Is_Title__c: false,
   Group__c: 'Basic',
   Question_No__c: '6',
   RecordType: {
@@ -151,6 +157,7 @@ export const BOOKQUESTION: Question = {
   Question__c: 'Provide your Address',
   Next_Question__c: '',
   Is_Optional__c: false,
+  Is_Title__c: true,
   Group__c: 'Basic',
   Question_No__c: '7',
   Questions__r: {
@@ -161,6 +168,7 @@ export const BOOKQUESTION: Question = {
         Type__c: 'Text',
         Question__c: 'House Number',
         Is_Optional__c: false,
+        Is_Title__c: true,
         Group__c: 'Basic',
         RecordType: {
           Name: 'CONDITIONAL'
@@ -172,6 +180,7 @@ export const BOOKQUESTION: Question = {
         Type__c: 'TextArea',
         Question__c: 'Street, City, Country',
         Is_Optional__c: false,
+        Is_Title__c: true,
         Group__c: 'Basic',
         RecordType: {
           Name: 'CONDITIONAL'

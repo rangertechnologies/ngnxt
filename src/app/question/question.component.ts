@@ -6,6 +6,7 @@ import { Question,
          QuestionBook,
          AnswerBook,
          AnswerWrapper,
+         ErrorWrapper,
          Option,
          OptionValue } from '../wrapper';
 
@@ -47,8 +48,6 @@ export class QuestionComponent implements OnInit {
   public fileFlag: boolean = false;
   public bookFlag: boolean = false;
 
-  public isTitle: boolean = true;
-
   public optionValues: OptionValue[] = [];
   public subQuestions: Question[] = [];
   public inpValue: string;
@@ -80,11 +79,13 @@ export class QuestionComponent implements OnInit {
   }
 
   handleNextClick() {
+    this.clearError();
+
     var recordId = null;
     var cQuestion: Question = new Question();
     cQuestion = this.questionItem;
     var typ = cQuestion.Type__c;
-    var quesValue = '';
+    var quesValue = cQuestion.Question__c;
 
     // Process Inputs
     if(this.checkboxFlag) {
@@ -95,27 +96,42 @@ export class QuestionComponent implements OnInit {
         recordId = ov.Next_Question__c;
       }
     } else if(this.bookFlag) {
-      quesValue = '';
+      quesValue = '@@##$$';
       this.inpValue = '';
+      var hasMissingInput = false;
       for(var item of this.questionItem.Questions__r.records) {
+        if(!item.Is_Optional__c && !item.input) {
+          item.error = new ErrorWrapper();
+          hasMissingInput = true;
+        }
         quesValue += item.Question__c + '@@##$$';
         this.inpValue += item.input + '@@##$$';
       }
 
-      cQuestion.Question__c += quesValue;
+      if(hasMissingInput) { return; }
     }
 
     console.log('before calling saveAnswer with ' + this.inpValue);
+
+    // Check for the answer before saving to the DB
+    if(!this.questionItem.Is_Optional__c && !this.inpValue) {
+      // Show error that the question must be answered
+      this.questionItem.error = new ErrorWrapper();
+      return;
+    }
 
     // Save the Answer in the DB
     this.answerWrap = new AnswerWrapper();
     this.answerWrap.abId = this.abItem.Id;
     this.answerWrap.quesId = cQuestion.Id;
-    this.answerWrap.quesValue = cQuestion.Question__c;
+    this.answerWrap.quesValue = quesValue;
     this.answerWrap.qTyp = typ;
     this.answerWrap.ansValue = this.inpValue;
 
     this.saveAnswer();
+    // If no error then move to next steps
+    if(this.questionItem.error) { return; }
+
     this.questionStack.push(cQuestion.Id);
 
     // CONDITIONAL vs OPTIONONLY & UNCONDITIONAL
@@ -137,19 +153,18 @@ export class QuestionComponent implements OnInit {
       recordId = cQuestion.Next_Question__c;
     }
 
-    // Reset the Variables
-    this.isTitle = true;
-    this.inpValue = '';
-    this.resetFlag(typ);
-    this.answerWrap = new AnswerWrapper();
-    this.optionValues = [];
-    this.subQuestions = [];
-
     if(recordId) {
       console.log('Before Calling readQuestion() using ' + recordId);
       this.readQuestion(recordId);
     } else {
       // Show Confirmation
+
+      // Reset the Variables
+      this.inpValue = '';
+      this.answerWrap = new AnswerWrapper();
+      this.optionValues = [];
+      this.subQuestions = [];
+      this.resetFlag(typ);
       this.questionItem = new Question();
 
       // Show Thank you Note
@@ -157,14 +172,6 @@ export class QuestionComponent implements OnInit {
   }
 
   handleBackClick() {
-    // Reset the Variables
-    this.isTitle = true;
-    this.inpValue = '';
-    this.resetFlag(this.questionItem.Type__c);
-    this.answerWrap = new AnswerWrapper();
-    this.optionValues = [];
-    this.subQuestions = [];
-
     // Read the previous question from DB
     this.readQuestion(this.questionStack.pop());
   }
@@ -194,7 +201,16 @@ export class QuestionComponent implements OnInit {
 
   private successRead = (response) => {
     console.log(response);
+    // Reset the Variables
+    if(this.questionItem) {
+      this.inpValue = '';
+      this.answerWrap = new AnswerWrapper();
+      this.optionValues = [];
+      this.subQuestions = [];
+      this.resetFlag(this.questionItem.Type__c);
+    }
     this.questionItem = response.question;
+
     this.processQuestion();
   }
 
@@ -216,8 +232,13 @@ export class QuestionComponent implements OnInit {
   private successSave = (response) => {
     console.log('inside successSave');
     console.log(response);
-    //this.abItem = response.answerbook;
-    this.answerMap.set(response.answer.quesId, response.answer);
+    if(response.status == 'success') {
+      //this.abItem = response.answerbook;
+      this.answerMap.set(response.answer.quesId, response.answer);
+    } else {
+      this.questionItem.error = new ErrorWrapper();
+      this.questionItem.error.errorMsg = response.error.errorMsg;
+    }
   }
 
   private failureSave = (response) => {
@@ -228,19 +249,16 @@ export class QuestionComponent implements OnInit {
   private processQuestion = () => {
     console.log('processing question ' + this.questionItem.Name + ' existing answers are ' + this.answerMap.size); // => ' + JSON.stringify(this.questionItem));
 
-    // Handling of the Question Title based on the length
-    if(this.questionItem.Question__c.length > 250) {
-      this.isTitle = false;
-    }
-
     // Set the Flags to show right fields
     this.setFlag(this.questionItem.Type__c);
 
     // Check the existing answer from answerMap
     if(this.answerMap.has(this.questionItem.Id)) {
+      console.log('existing answer found for this.questionItem.Name');
       var eAnswer = this.answerMap.get(this.questionItem.Id);
       // Get the existing answer from the Map
       this.inpValue = eAnswer.ansValue;
+      console.log('inpValue has been set to ' + this.inpValue);
     }
 
     // Set the Options for Checkbox
@@ -354,7 +372,25 @@ export class QuestionComponent implements OnInit {
   }
 
   optionChange(selValue) {
+    this.clearError();
     // console.log('inside optionChange using ' + selValue);
     this.inpValue = selValue;
+  }
+
+  clearError() {
+    if(this.questionItem.error) {
+      this.questionItem.error = null;
+    }
+  }
+
+  clearSQError(quesId) {
+    var sqList = this.subQuestions.filter(item => item.Id == quesId);
+    for(var sq of sqList){
+      sq.error = null;
+    }
+  }
+
+  uploadFile() {
+    this.clearError();
   }
 }
