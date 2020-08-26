@@ -4,11 +4,11 @@
   background-color:#D3DBE7;
   color:#00356F;
   padding: 0.3em ;
+  padding-top: 1em;
   align-items: center;
   text-align: justify;
   font-family:Univers Condensed;
   cursor: pointer;
-  display: flex;
 }
 
 label {

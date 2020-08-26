@@ -1,1 +1,9 @@
 /* You can add global styles to this file, and also import other style files */
+
+body {
+    font-family: Univers Condensed;
+}
+
+.progress-bar-style {
+    background-color: #99B5CE;
+}

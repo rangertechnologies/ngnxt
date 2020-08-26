@@ -5,7 +5,6 @@ import { FormsModule } from '@angular/forms';
 
 import { AppComponent } from './app.component';
 import { QuestionComponent } from './question/question.component';
-import {NgxMaterialTimepickerModule} from 'ngx-material-timepicker';
 import { NxtAppModule } from 'nxt-app';
 
 @NgModule({
@@ -17,7 +16,6 @@ import { NxtAppModule } from 'nxt-app';
     BrowserModule,
     FormsModule,
     NxtAppModule,
-    NgxMaterialTimepickerModule,
     RouterModule.forRoot([
       {path: '**', component: AppComponent}
     ])

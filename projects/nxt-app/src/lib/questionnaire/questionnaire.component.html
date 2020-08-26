@@ -9,7 +9,26 @@
       {{questionItem.Question__c}}
     </div>
   </div>
-
+  <div style="display:flex">
+    <div class="col-md-4">
+      <h2>Progress Bar With Label</h2>
+      <div class="progress">
+        <div class="progress-bar progress-bar-style" style="width:70%;">70%</div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <h2>Progress Bar With Label</h2>
+      <div class="progress">
+        <div class="progress-bar progress-bar-style" style="width:70%">70%</div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <h2>Progress Bar With Label</h2>
+      <div class="progress">
+        <div class="progress-bar progress-bar-style" style="width:70%">70%</div>
+      </div>
+    </div>
+  </div>
   <div *ngIf="radioFlag || dropdownFlag || dataFlag" style="display: inline-block; width: 100%; padding-left: 5px; padding-right: 5px;">
     <div *ngIf="this.questionItem.error" style="color: red; font-weight: bold;">Please select an option</div>
     <div *ngFor="let opt of questionItem.Question_Options__r.records" class="radio col-md-6" style="padding: 10px; float: left;">
@@ -78,10 +97,9 @@
       </div>
     </div>
   </div>
-
-  <div class="" style="display: flex; padding-top: 20px; padding-left: 25px; padding-right: 25px;">
-    <div class="col-md-6" *ngIf="questionStack.length > 0">
-      <button class="btn btn-primary btn-lg btn-block" style="background-color: #00356f;" (click)="handleBackClick()">Back</button>
+  <div class="" style="display: flex; padding-top: 20px;">
+    <div class="col-md-6" [style.visibility]="questionStack.length > 0 ? 'visible':'hidden'">
+      <button class="btn btn-primary btn-lg btn-block" style="color: #00356f;background-color:transparent;border-color: transparent;" (click)="handleBackClick()">zurück</button>
     </div>
     <div class="col-md-6">
       <button class="btn btn-primary btn-lg btn-block" style="background-color: #00356f;" (click)="handleNextClick()">Next</button>

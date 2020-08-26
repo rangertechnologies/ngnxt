@@ -32,7 +32,6 @@
     "gulp-rename": "^2.0.0",
     "gulp-replace": "^1.0.0",
     "gulp-zip": "^5.0.2",
-    "ngx-material-timepicker": "^5.5.3",
     "rxjs": "~6.6.2",
     "tslib": "^2.0.0",
     "version": "^0.1.2",
