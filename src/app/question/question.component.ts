@@ -59,7 +59,64 @@ export class QuestionComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.route.queryParams.subscribe((params: Params) => {
+    this.questionItem = {
+      Id: '12',
+      Name: 'QN-00002',
+      Type__c: 'DateTime',
+      Question__c: 'When did the incident happen?',
+      Next_Question__c: 'a013t000013SS89AAG',
+      Is_Optional__c: false,
+      Is_Title__c: true,
+      Group__c: 'Basic',
+      Question_No__c: '1',
+      RecordType: {
+        Name: 'UNCONDITIONAL'
+      },
+    };
+    this.dtFlag = true;
+    
+    
+    /* check box UI validation
+    this.questionItem = {
+      Id: '16',
+      Name: 'QN-00006',
+      Type__c: 'Checkbox',
+      Question__c: 'Choose your favorite spots',
+      Next_Question__c: '',
+      Is_Optional__c: false,
+      Is_Title__c: false,
+      Group__c: 'Basic',
+      Question_No__c: '6',
+      RecordType: {
+        Name: 'CONDITIONAL'
+      },
+      Question_Options__r: {
+        records: [
+                     {
+                       Id: '121',
+                       Name: '121N',
+                       Value__c: '121V',
+                       Next_Question__c: '',
+                     },
+                     {
+                       Id: '122',
+                       Name: '122N',
+                       Value__c: '122V',
+                       Next_Question__c: '',
+                     },
+                     {
+                       Id: '123',
+                       Name: '123N',
+                       Value__c: '123V',
+                       Next_Question__c: '',
+                     }
+                   ]
+      }
+    };
+    this.dataFlag = true;
+    this.checkboxFlag = true; */
+    
+    /*this.route.queryParams.subscribe((params: Params) => {
       this.params = params;
       console.log('App params', params);
       console.log('id', params['id']);
@@ -75,7 +132,7 @@ export class QuestionComponent implements OnInit {
           this.processQuestion();
         }
       }
-    });
+    });*/
   }
 
   handleNextClick() {
