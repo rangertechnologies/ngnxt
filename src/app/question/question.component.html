@@ -40,21 +40,19 @@
     </div>
   </div>
 
-  <div *ngIf="dtFlag">
+  <div *ngIf="dtFlag" style="display: flex;">
     <div class="col-md-6">
-      <input type="datetime-local" id="datetime-input-id"
+      <input type="date" id="date"
              [(ngModel)]="inpValue"
              pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}"
-             placeholder="Placeholder Date" required="" />
+             placeholder="Placeholder Date" required="" style="width: 100%;"/>
     </div>
-
-<!-- write code here-->
-
-
-
-
-
-
+    <div class="col-md-6">
+      <input type="time" id="date"
+             [(ngModel)]="inpValue"
+             pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}"
+             placeholder="Placeholder Date" required="" style="width: 100%;"/>
+    </div>
   </div>
 
   <div *ngIf="fileFlag">
@@ -80,11 +78,11 @@
   </div>
 
   <div class="" style="display: flex; padding-top: 20px;">
-    <div class="col-md-6" *ngIf="questionStack.length > 0">
-      <button class="btn btn-primary btn-lg btn-block" style="background-color: #00356f;" (click)="handleBackClick()">Back</button>
+    <div class="col-md-6" [style.visibility]="questionStack.length > 0 ? 'visible':'visible'">
+      <button class="btn btn-primary btn-lg btn-block" style="color: #00356f;background-color: #ffffff;border-color: #ffffff;" (click)="handleBackClick()">zurück</button>
     </div>
     <div class="col-md-6">
-      <button class="btn btn-primary btn-lg btn-block" style="background-color: #00356f;" (click)="handleNextClick()">Next</button>
+      <button class="btn btn-primary btn-lg btn-block" style="background-color: #00356f;" (click)="handleNextClick()">weiter</button>
     </div>
   </div>
 

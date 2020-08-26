@@ -54,7 +54,7 @@ export class QuestionComponent implements OnInit {
   public inpValue: string;
   public answerMap = new Map();
   public questionStack = [];
-
+  public errorMessage: string = '';
   constructor(private sfService: SalesforceService, private route: ActivatedRoute) {
 
   }
@@ -94,80 +94,85 @@ export class QuestionComponent implements OnInit {
   }
 
   handleNextClick() {
-    var recordId = null;
-    var cQuestion: Question = new Question();
-    cQuestion = this.questionItem;
-    var typ = cQuestion.Type__c;
-    var quesValue = '';
-
-    // Process Inputs
-    if(this.checkboxFlag) {
-      this.inpValue = '';
-      // Save all the selected options in the inpValue
-      for(var ov of this.optionValues.filter(item => item.checked)) {
-        this.inpValue += ov.Value__c + '@@##$$';
-        recordId = ov.Next_Question__c;
-      }
-    } else if(this.bookFlag) {
-      quesValue = '';
-      this.inpValue = '';
-      for(var item of this.questionItem.Questions__r.records) {
-        quesValue += item.Question__c + '@@##$$';
-        this.inpValue += item.input + '@@##$$';
-      }
-
-      cQuestion.Question__c += quesValue;
-    }
-
-    console.log('before calling saveAnswer with ' + this.inpValue);
-
-    // Save the Answer in the DB
-    this.answerWrap = new AnswerWrapper();
-    this.answerWrap.abId = this.abItem.Id;
-    this.answerWrap.quesId = cQuestion.Id;
-    this.answerWrap.quesValue = cQuestion.Question__c;
-    this.answerWrap.qTyp = typ;
-    this.answerWrap.ansValue = this.inpValue;
-
-    this.saveAnswer();
-    this.questionStack.push(cQuestion.Id);
-
-    // CONDITIONAL vs OPTIONONLY & UNCONDITIONAL
-    if(cQuestion.RecordType.Name == 'CONDITIONAL') {
-      for(var cOpt of cQuestion.Question_Options__r.records) {
-        // Radio / Data
-        //console.log('Option => ' + cOpt.Value__c + ' matching with ' + ansVal);
-        if(cOpt.Value__c == this.inpValue) {
-          //console.log('Match Found using ' + cOpt.Next_Question__c);
-          recordId = cOpt.Next_Question__c;
+    if(this.questionItem.Is_Optional__c || (!this.questionItem.Is_Optional__c && this.inpValue != null)){
+      var recordId = null;
+      var cQuestion: Question = new Question();
+      cQuestion = this.questionItem;
+      var typ = cQuestion.Type__c;
+      var quesValue = '';
+  
+      // Process Inputs
+      if(this.checkboxFlag) {
+        this.inpValue = '';
+        // Save all the selected options in the inpValue
+        for(var ov of this.optionValues.filter(item => item.checked)) {
+          this.inpValue += ov.Value__c + '@@##$$';
+          recordId = ov.Next_Question__c;
         }
+      } else if(this.bookFlag) {
+        quesValue = '';
+        this.inpValue = '';
+        for(var item of this.questionItem.Questions__r.records) {
+          quesValue += item.Question__c + '@@##$$';
+          this.inpValue += item.input + '@@##$$';
+        }
+  
+        cQuestion.Question__c += quesValue;
       }
-
-      // Could be of type Data and existing value
-      if(recordId && (typ == 'Data')) {
+  
+      console.log('before calling saveAnswer with ' + this.inpValue);
+  
+      // Save the Answer in the DB
+      this.answerWrap = new AnswerWrapper();
+      this.answerWrap.abId = this.abItem.Id;
+      this.answerWrap.quesId = cQuestion.Id;
+      this.answerWrap.quesValue = cQuestion.Question__c;
+      this.answerWrap.qTyp = typ;
+      this.answerWrap.ansValue = this.inpValue;
+  
+      this.saveAnswer();
+      this.questionStack.push(cQuestion.Id);
+  
+      // CONDITIONAL vs OPTIONONLY & UNCONDITIONAL
+      if(cQuestion.RecordType.Name == 'CONDITIONAL') {
+        for(var cOpt of cQuestion.Question_Options__r.records) {
+          // Radio / Data
+          //console.log('Option => ' + cOpt.Value__c + ' matching with ' + ansVal);
+          if(cOpt.Value__c == this.inpValue) {
+            //console.log('Match Found using ' + cOpt.Next_Question__c);
+            recordId = cOpt.Next_Question__c;
+          }
+        }
+  
+        // Could be of type Data and existing value
+        if(recordId && (typ == 'Data')) {
+          recordId = cQuestion.Next_Question__c;
+        }
+      } else {
         recordId = cQuestion.Next_Question__c;
       }
-    } else {
-      recordId = cQuestion.Next_Question__c;
+  
+      // Reset the Variables
+      this.isTitle = true;
+      this.inpValue = '';
+      this.resetFlag(typ);
+      this.answerWrap = new AnswerWrapper();
+      this.optionValues = [];
+      this.subQuestions = [];
+  
+      if(recordId) {
+        console.log('Before Calling readQuestion() using ' + recordId);
+        this.readQuestion(recordId);
+      } else {
+        // Show Confirmation
+        this.questionItem = new Question();
+  
+        // Show Thank you Note
+      }
+    } else if(this.errorMessage === ''){
+      this.errorMessage = 'Bitte fehlende Angaben ausfüllen.';
     }
-
-    // Reset the Variables
-    this.isTitle = true;
-    this.inpValue = '';
-    this.resetFlag(typ);
-    this.answerWrap = new AnswerWrapper();
-    this.optionValues = [];
-    this.subQuestions = [];
-
-    if(recordId) {
-      console.log('Before Calling readQuestion() using ' + recordId);
-      this.readQuestion(recordId);
-    } else {
-      // Show Confirmation
-      this.questionItem = new Question();
-
-      // Show Thank you Note
-    }
+    
   }
 
   handleBackClick() {

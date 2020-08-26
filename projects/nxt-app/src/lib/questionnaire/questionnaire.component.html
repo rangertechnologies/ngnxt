@@ -1,63 +1,77 @@
 <div *ngIf="questionItem" style="padding-left: 25px; padding-right: 25px;">
   <div style="padding-top: 25px; padding-bottom: 10px; padding-left: 15px; color: #00356f;">
     <div *ngIf="isTitle">
-      <h2>
+      <h2 style="text-align: left;" [style.color]="errorMessage === '' ? 'rgb(190, 28, 28)': ''">
         {{questionItem.Question__c}}
       </h2>
     </div>
     <div *ngIf="!isTitle" style="font-size: 0.7rem;">
       {{questionItem.Question__c}}
     </div>
+    
   </div>
 
   <div *ngIf="radioFlag || dropdownFlag || dataFlag" style="display: inline-block; width: 100%; padding-left: 5px; padding-right: 5px;">
     <div *ngFor="let opt of questionItem.Question_Options__r.records" class="radio col-md-6" style="padding: 10px; float: left;">
       <label class="radiocontainer">
-        <input type="radio" [id]="opt.Id" ng-model="inpValue" name="inpValue" (change)="optionChange(opt.Value__c)">
+        <input type="radio" [id]="opt.Id" ng-model="inpValue" name="inpValue" (change)="optionChange(opt.Value__c)" [style.border-color]="errorMessage === '' ? 'rgb(190, 28, 28)': ''">
         <span class="checkmark">{{opt.Value__c}}</span>
       </label>
     </div>
+    <label style="text-align: left;"> <span *ngIf="errorMessage != ''" style="color:#be1c1c">{{errorMessage}}</span></label>
   </div>
 
   <div *ngIf="checkboxFlag" style="display: inline-block; width: 100%; padding-left: 5px; padding-right: 5px;">
     <div *ngFor="let item of optionValues" class="radio col-md-12" style="padding: 10px; float: left;">
       <label class="radiocontainer">
-        <input type="checkbox" [id]="item.Id" [(ngModel)]="item.checked">
+        <input type="checkbox" [id]="item.Id" [(ngModel)]="item.checked" [style.border-color]="errorMessage === '' ? 'rgb(190, 28, 28)': ''">
         <span>{{item.Value__c}}</span>
       </label>
     </div>
+    <label style="text-align: left;"> <span *ngIf="errorMessage != ''" style="color:#be1c1c">{{errorMessage}}</span></label>
   </div>
 
   <div *ngIf="textFlag">
     <div class="col-md-12">
       <input type="text" [(ngModel)]="inpValue" id="text-input-id" required="" />
     </div>
+    <label style="text-align: left;"> <span *ngIf="errorMessage != ''" style="color:#be1c1c">{{errorMessage}}</span></label>
   </div>
 
   <div *ngIf="taFlag">
     <div class="col-md-12">
-      <textarea style="height: 100px; width: 100%;" id="ta-input-id" [(ngModel)]="inpValue" ></textarea>
+      <textarea style="height: 100px; width: 100%;" id="ta-input-id" [(ngModel)]="inpValue" [style.border-color]="errorMessage === '' ? 'rgb(190, 28, 28)': ''"></textarea>
     </div>
+    <label style="text-align: left;"> <span *ngIf="errorMessage != ''" style="color:#be1c1c">{{errorMessage}}</span></label>
   </div>
 
-  <div *ngIf="dtFlag">
+
+  <div *ngIf="dtFlag" style="display: flex;">
     <div class="col-md-6">
-      <input type="datetime-local" id="datetime-input-id"
+      <input type="date" id="date"
              [(ngModel)]="inpValue"
              pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}"
-             placeholder="Placeholder Date" required="" />
+             placeholder="Placeholder Date" required="" style="width: 100%;" [style.border-color]="errorMessage === '' ? 'rgb(190, 28, 28)': ''"/>
     </div>
+    <div class="col-md-6">
+      <input type="time" id="date"
+             [(ngModel)]="inpValue"
+             pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}"
+             placeholder="Placeholder Date" required="" style="width: 100%;"/>
+    </div>
+    <label style="text-align: left;"> <span *ngIf="errorMessage != ''" style="color:#be1c1c">{{errorMessage}}</span></label>
   </div>
 
   <div *ngIf="fileFlag">
     <div class="col-md-6">
       <input type="file" accept=".pdf, .png, .jpg, .application/pdf"
-             id="file-upload-input-01"/>
+             id="file-upload-input-01" [style.border-color]="errorMessage === '' ? 'rgb(190, 28, 28)': ''"/>
       <label for="file-upload-input-01" id="file-selector-secondary-label">
         <span>Upload Files</span>
         <span>or Drop Files</span>
       </label>
     </div>
+    <label style="text-align: left;"> <span *ngIf="errorMessage != ''" style="color:#be1c1c">{{errorMessage}}</span></label>
   </div>
 
   <div *ngIf="bookFlag">
@@ -66,17 +80,18 @@
         <span>{{ques.Question__c}}</span>
       </div>
       <div class="col-md-12">
-        <input type="text" [(ngModel)]="ques.input" [id]="ques.Id" required="" />
+        <input type="text" [(ngModel)]="ques.input" [id]="ques.Id" required="" [style.border-color]="errorMessage === '' ? 'rgb(190, 28, 28)': ''"/>
       </div>
     </div>
+    <label style="text-align: left;"> <span *ngIf="errorMessage != ''" style="color:#be1c1c">{{errorMessage}}</span></label>
   </div>
 
   <div class="" style="display: flex; padding-top: 20px;">
-    <div class="col-md-6" *ngIf="questionStack.length > 0">
-      <button class="btn btn-primary btn-lg btn-block" style="background-color: #00356f;" (click)="handleBackClick()">Back</button>
+    <div class="col-md-6" [style.visibility]="questionStack.length > 0 ? 'visible':'visible'">
+      <button class="btn btn-primary btn-lg btn-block" style="color: #00356f;background-color:transparent;border-color: transparent;" (click)="handleBackClick()">zurück</button>
     </div>
     <div class="col-md-6">
-      <button class="btn btn-primary btn-lg btn-block" style="background-color: #00356f;" (click)="handleNextClick()">Next</button>
+      <button class="btn btn-primary btn-lg btn-block" style="background-color: #00356f;" (click)="handleNextClick()">weiter</button>
     </div>
   </div>
 
