@@ -206,7 +206,6 @@ export const BOOKQUESTION: Question = {
       },
       {
         Id: '171',
-        Size__c: 1,
         Name: 'QN-000071',
         Type__c: 'Text',
         Size__c:3,

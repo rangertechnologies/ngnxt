@@ -46,6 +46,7 @@ export class QuestionComponent implements OnInit {
   public dtFlag: boolean = false;
   public fileFlag: boolean = false;
   public bookFlag: boolean = false;
+  public showSummary: boolean = false;
 
   public optionValues: OptionValue[] = [];
   public subQuestions: Question[] = [];
@@ -63,7 +64,6 @@ export class QuestionComponent implements OnInit {
       console.log('App params', params);
       console.log('id', params['id']);
       this.qbId = params['id'];
-
       if(this.qbId) {
         if(this.qbId.length == 18) {
           console.log('Before Calling readQuestionBook() using ' + this.qbId);
@@ -75,6 +75,7 @@ export class QuestionComponent implements OnInit {
         }
       }
     });
+    this.showSummary = true;
   }
 
   handleNextClick() {
