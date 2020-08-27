@@ -175,19 +175,25 @@ export class QuestionComponent implements OnInit {
 
       // Show Summary
       for(var q of this.questionStack) {
+        //console.log('Handling Question => ' + q);
+
         var ansWrap = this.answerMap.get(q);
-        if(ansWrap.qTyp == 'Book') {
-          var newStr = '';
-          for(var ansStr of this.inpValue.split('@@##$$')) {
-            if(newStr.length == 0) {
-              newStr = ansStr;
-            } else {
-              newStr += ', ' + ansStr;
+        if(ansWrap) {
+          //console.log('Handling Answer for ' + ansWrap.quesId + ' of type ' + ansWrap.qTyp);
+          if(ansWrap.qTyp == 'Book') {
+            var newStr = '';
+            for(var ansStr of ansWrap.ansValue.split('@@##$$')) {
+              if(newStr.length == 0) {
+                newStr = ansStr;
+              } else {
+                newStr += ', ' + ansStr;
+              }
             }
+            ansWrap.ansValue = newStr;
           }
-          ansWrap.ansValue = newStr;
+
+          this.summary.push(ansWrap);
         }
-        this.summary.push(ansWrap);
       }
 
       // Show Thank you Note
