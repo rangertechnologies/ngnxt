@@ -163,7 +163,43 @@ export const BOOKQUESTION: Question = {
   Questions__r: {
     records: [
       {
+        Id: '170',
+        Size__c: 1,
+        Name: 'QN-000070',
+        Type__c: 'Dropdown',
+        Question__c: 'House Number',
+        Is_Optional__c: false,
+        Is_Title__c: true,
+        Group__c: 'Basic',
+        RecordType: {
+          Name: 'CONDITIONAL'
+        },
+        Question_Options__r: {
+          records: [
+                       {
+                         Id: '121',
+                         Name: '121N',
+                         Value__c: 'A',
+                         Next_Question__c: '',
+                       },
+                       {
+                         Id: '122',
+                         Name: '122N',
+                         Value__c: 'B',
+                         Next_Question__c: '',
+                       },
+                       {
+                         Id: '123',
+                         Name: '123N',
+                         Value__c: 'C',
+                         Next_Question__c: '',
+                       }
+                     ]
+        }
+      },
+      {
         Id: '171',
+        Size__c: 1,
         Name: 'QN-000071',
         Type__c: 'Text',
         Question__c: 'House Number',

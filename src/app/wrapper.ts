@@ -18,6 +18,7 @@ export class Question {
   Group__c: string;
   Question_No__c?: string;
   Question_Options__r?: OptionR;
+  Size__c?: number;
   Questions__r?: QuestionR;
   RecordType: {
     Name: string;

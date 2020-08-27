@@ -71,7 +71,7 @@ export class QuestionComponent implements OnInit {
           this.readQuestionBook(this.qbId);
         } else {
           console.log('Setting the Question Directly for testing');
-          this.questionItem = BOOKQUESTION;
+          this.questionItem = DTQUESTION;
           this.processQuestion();
         }
       }
