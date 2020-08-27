@@ -91,7 +91,7 @@
         <sup style="font-size: unset;">
           Bilder oder PDF Dokumente
         </sup>
-        
+
       </span>
     </div>
     <div class="info-alert" style="margin-top: 1rem;">
@@ -100,7 +100,7 @@
           <i class="fa fa-file-image-o fa-5x" aria-hidden="true" style="color:#99B5CE"></i>
         </span>
         <span style="margin-left: 10rem;position: sticky;margin-bottom: 7rem;" class="fa fa-plus fa-2x picture-upload-child">
-          <i class="" aria-hidden="true"></i> 
+          <i class="" aria-hidden="true"></i>
         </span>
       </label>
     </div>
@@ -112,6 +112,19 @@
         <div [class]="'col-md-' + ques.Size__c" *ngFor="let ques of subQuestions" style="text-align: left;">
           <span [style.font-weight] = "ques.Is_Title__c ? 'bold' : ''" style = "color: #00356f;">{{ques.Question__c}}</span>
           <input type="text" [(ngModel)]="ques.input" [id]="ques.Id" required="" (click)="clearSQError(ques.Id)" style.border-color = "{{ques.error ? 'red' : ''}}" placeholder="{{ques.Question__c}}"/>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="summaryFlag">
+    <h3 style="text-align: left;">
+      {{qbItem.Summary_Text__c}}
+    </h3>
+    <div *ngFor="let ques of questionStack">
+      <div class="summary">
+        <div class="question">
+          {{ques}}
         </div>
       </div>
     </div>

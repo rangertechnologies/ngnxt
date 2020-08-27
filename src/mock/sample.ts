@@ -209,7 +209,6 @@ export const BOOKQUESTION: Question = {
         Size__c: 1,
         Name: 'QN-000071',
         Type__c: 'Text',
-        Size__c:3,
         Question__c: 'PLZ',
         Is_Optional__c: false,
         Is_Title__c: true,

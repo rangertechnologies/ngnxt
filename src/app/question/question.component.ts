@@ -53,6 +53,8 @@ export class QuestionComponent implements OnInit {
   public answerMap = new Map();
   public questionStack = [];
 
+  public summaryFlag: boolean;
+
   constructor(private sfService: SalesforceService, private route: ActivatedRoute) {
 
   }
@@ -156,15 +158,16 @@ export class QuestionComponent implements OnInit {
       console.log('Before Calling readQuestion() using ' + recordId);
       this.readQuestion(recordId);
     } else {
-      // Show Confirmation
-
       // Reset the Variables
       this.inpValue = '';
       this.answerWrap = new AnswerWrapper();
       this.optionValues = [];
       this.subQuestions = [];
       this.resetFlag(typ);
-      this.questionItem = new Question();
+      this.questionItem = null;
+
+      // Show Summary
+
 
       // Show Thank you Note
     }
