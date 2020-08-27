@@ -19,7 +19,7 @@ export const TESTQUESTION: Question = {
   Is_Optional__c: false,
   Is_Title__c: true,
   Group__c: 'Basic',
-  Size:5,
+  Size__c:1,
   Question_No__c: '1',
   RecordType: {
     Name: 'UNCONDITIONAL'
@@ -36,7 +36,7 @@ export const DTQUESTION: Question = {
   Is_Optional__c: false,
   Is_Title__c: true,
   Group__c: 'Basic',
-  Size:5,
+  Size__c:1,
   Question_No__c: '1',
   RecordType: {
     Name: 'UNCONDITIONAL'
@@ -52,8 +52,8 @@ export const FILEQUESTION: Question = {
   Next_Question__c: 'a013t000013SS89AAG',
   Is_Optional__c: false,
   Is_Title__c: true,
-  Size:5,
   Group__c: 'Basic',
+  Size__c:1,
   Question_No__c: '1',
   RecordType: {
     Name: 'UNCONDITIONAL'
@@ -70,7 +70,7 @@ export const TAQUESTION: Question = {
   Is_Optional__c: false,
   Is_Title__c: true,
   Group__c: 'Basic',
-  Size:5,
+  Size__c:1,
   Question_No__c: '1',
   RecordType: {
     Name: 'UNCONDITIONAL'
@@ -87,8 +87,8 @@ export const RADIOQUESTION: Question = {
   Is_Optional__c: false,
   Is_Title__c: true,
   Group__c: 'Basic',
+  Size__c:1,
   Question_No__c: '5',
-  Size:5,
   RecordType: {
     Name: 'UNCONDITIONAL'
   },
@@ -126,8 +126,8 @@ export const CHECKQUESTION: Question = {
   Is_Optional__c: false,
   Is_Title__c: false,
   Group__c: 'Basic',
+  Size__c:1,
   Question_No__c: '6',
-  Size:5,
   RecordType: {
     Name: 'CONDITIONAL'
   },
@@ -165,6 +165,7 @@ export const BOOKQUESTION: Question = {
   Is_Optional__c: false,
   Is_Title__c: true,
   Group__c: 'Basic',
+  Size__c:1,
   Question_No__c: '7',
   Questions__r: {
     records: [
@@ -173,7 +174,7 @@ export const BOOKQUESTION: Question = {
         Name: 'QN-000070',
         Type__c: 'dropdown',
         Question__c: 'land',
-        Size:1,
+        Size__c:1,
         Is_Optional__c: false,
         Is_Title__c: true,
         Group__c: 'Basic',
@@ -185,7 +186,7 @@ export const BOOKQUESTION: Question = {
         Id: '171',
         Name: 'QN-000071',
         Type__c: 'Text',
-        Size: 3,
+        Size__c:3,
         Question__c: 'PLZ',
         Is_Optional__c: false,
         Is_Title__c: true,
@@ -201,7 +202,7 @@ export const BOOKQUESTION: Question = {
         Question__c: 'ORT',
         Is_Optional__c: false,
         Is_Title__c: true,
-        Size: 8,
+        Size__c:8,
         Group__c: 'Basic',
         RecordType: {
           Name: 'CONDITIONAL'
@@ -214,7 +215,7 @@ export const BOOKQUESTION: Question = {
         Question__c: 'StraBe',
         Is_Optional__c: false,
         Is_Title__c: true,
-        Size: 8,
+        Size__c:8,
         Group__c: 'Basic',
         RecordType: {
           Name: 'CONDITIONAL'
@@ -227,7 +228,7 @@ export const BOOKQUESTION: Question = {
         Question__c: 'Hausnummer',
         Is_Optional__c: false,
         Is_Title__c: true,
-        Size: 4,
+        Size__c:4,
         Group__c: 'Basic',
         RecordType: {
           Name: 'CONDITIONAL'
