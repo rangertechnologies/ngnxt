@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
-
 import { SalesforceService } from '../../services/salesforce.service';
 import { Question,
          QuestionBook,
@@ -71,7 +70,7 @@ export class QuestionComponent implements OnInit {
           this.readQuestionBook(this.qbId);
         } else {
           console.log('Setting the Question Directly for testing');
-          this.questionItem = DTQUESTION;
+          this.questionItem = BOOKQUESTION;
           this.processQuestion();
         }
       }
@@ -369,6 +368,7 @@ export class QuestionComponent implements OnInit {
 
       this.subQuestions.push(ques);
     }
+    console.log(this.subQuestions);
   }
 
   optionChange(selValue) {
