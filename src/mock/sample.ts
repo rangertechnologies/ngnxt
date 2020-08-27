@@ -163,10 +163,24 @@ export const BOOKQUESTION: Question = {
   Questions__r: {
     records: [
       {
+        Id: '170',
+        Name: 'QN-000070',
+        Type__c: 'dropdown',
+        Question__c: 'land',
+        Size:1,
+        Is_Optional__c: false,
+        Is_Title__c: true,
+        Group__c: 'Basic',
+        RecordType: {
+          Name: 'CONDITIONAL'
+        }
+      },
+      {
         Id: '171',
         Name: 'QN-000071',
         Type__c: 'Text',
-        Question__c: 'House Number',
+        Size: 3,
+        Question__c: 'PLZ',
         Is_Optional__c: false,
         Is_Title__c: true,
         Group__c: 'Basic',
@@ -177,10 +191,37 @@ export const BOOKQUESTION: Question = {
       {
         Id: '172',
         Name: 'QN-000072',
-        Type__c: 'TextArea',
-        Question__c: 'Street, City, Country',
+        Type__c: 'Text',
+        Question__c: 'ORT',
         Is_Optional__c: false,
         Is_Title__c: true,
+        Size: 8,
+        Group__c: 'Basic',
+        RecordType: {
+          Name: 'CONDITIONAL'
+        }
+      },
+      {
+        Id: '173',
+        Name: 'QN-000073',
+        Type__c: 'Text',
+        Question__c: 'StraBe',
+        Is_Optional__c: false,
+        Is_Title__c: true,
+        Size: 8,
+        Group__c: 'Basic',
+        RecordType: {
+          Name: 'CONDITIONAL'
+        }
+      },
+      {
+        Id: '174',
+        Name: 'QN-000074',
+        Type__c: 'Text',
+        Question__c: 'Hausnummer',
+        Is_Optional__c: false,
+        Is_Title__c: true,
+        Size: 4,
         Group__c: 'Basic',
         RecordType: {
           Name: 'CONDITIONAL'

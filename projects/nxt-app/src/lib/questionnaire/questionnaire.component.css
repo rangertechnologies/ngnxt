@@ -27,3 +27,11 @@ input[type=radio] {
   width: 5%;
   height: 1.3em;
 }
+
+body {
+  font-family: Univers Condensed;
+}
+
+.progress-bar-style {
+  background-color: #99B5CE;
+}

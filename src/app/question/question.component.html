@@ -1,3 +1,23 @@
+<div style="display:flex;padding-left: 25px; padding-right: 25px;">
+  <div class="col-md-4">
+    <h2>Group 1</h2>
+    <div class="progress">
+      <div class="progress-bar progress-bar-style" style="width:70%;">70%</div>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <h2>Group 2</h2>
+    <div class="progress">
+      <div class="progress-bar progress-bar-style" style="width:70%">70%</div>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <h2>Group 3</h2>
+    <div class="progress">
+      <div class="progress-bar progress-bar-style" style="width:70%">70%</div>
+    </div>
+  </div>
+</div>
 <div *ngIf="questionItem" style="padding-left: 25px; padding-right: 25px;">
   <div style="padding-top: 25px; padding-bottom: 10px; padding-left: 15px; color: #00356f;">
     <div *ngIf="questionItem.Is_Title__c">
@@ -7,26 +27,6 @@
     </div>
     <div *ngIf="!questionItem.Is_Title__c" style="font-size: 0.7rem;">
       {{questionItem.Question__c}}
-    </div>
-  </div>
-  <div style="display:flex">
-    <div class="col-md-4">
-      <h2>Group 1</h2>
-      <div class="progress">
-        <div class="progress-bar progress-bar-style" style="width:70%;">70%</div>
-      </div>
-    </div>
-    <div class="col-md-4">
-      <h2>Group 2</h2>
-      <div class="progress">
-        <div class="progress-bar progress-bar-style" style="width:70%">70%</div>
-      </div>
-    </div>
-    <div class="col-md-4">
-      <h2>Group 3</h2>
-      <div class="progress">
-        <div class="progress-bar progress-bar-style" style="width:70%">70%</div>
-      </div>
     </div>
   </div>
   <div *ngIf="radioFlag || dropdownFlag || dataFlag" style="display: inline-block; width: 100%; padding-left: 5px; padding-right: 5px;">
@@ -92,15 +92,12 @@
     </div>
   </div>
   <div *ngIf="bookFlag">
-    <div *ngFor="let ques of subQuestions" class="col-md-12">
-      <div class="col-md-12" style = "color: #00356f;"
-           style.font-weight = "{{ques.Is_Title__c ? 'bold' : ''}}">
-        <span>{{ques.Question__c}}</span>
-      </div>
-      <div class="col-md-12">
-        <input type="text" [(ngModel)]="ques.input" [id]="ques.Id" required=""
-               (click)="clearSQError(ques.Id)"
-               style.border-color = "{{ques.error ? 'red' : ''}}"/>
+    <div  class="form-group col-md-12">
+      <div class="form-row">
+        <div [class]="'col-md-' + ques.Size" *ngFor="let ques of subQuestions" style="text-align: left;">
+          <span [style.font-weight] = "ques.Is_Title__c ? 'bold' : ''" style = "color: #00356f;">{{ques.Question__c}}</span>
+          <input type="text" [(ngModel)]="ques.input" [id]="ques.Id" required="" (click)="clearSQError(ques.Id)" style.border-color = "{{ques.error ? 'red' : ''}}" placeholder="{{ques.Question__c}}"/>
+        </div>
       </div>
     </div>
   </div>
