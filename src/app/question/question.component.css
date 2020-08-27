@@ -27,3 +27,11 @@ input[type=radio] {
   width: 5%;
   height: 1.3em;
 }
+
+.fa-plus:hover {
+  color: #87be1c;
+}
+
+.fa-plus {
+  color: #99B5CE;
+}
