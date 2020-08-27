@@ -53,7 +53,7 @@ export class QuestionComponent implements OnInit {
   public answerMap = new Map();
   public questionStack = [];
 
-  public summaryFlag: boolean;
+  public summary = [];
 
   constructor(private sfService: SalesforceService, private route: ActivatedRoute) {
 
@@ -72,7 +72,7 @@ export class QuestionComponent implements OnInit {
           this.readQuestionBook(this.qbId);
         } else {
           console.log('Setting the Question Directly for testing');
-          this.questionItem = BOOKQUESTION;
+          this.questionItem = DTQUESTION;
           this.processQuestion();
         }
       }
@@ -97,7 +97,7 @@ export class QuestionComponent implements OnInit {
         recordId = ov.Next_Question__c;
       }
     } else if(this.bookFlag) {
-      quesValue = '@@##$$';
+      //quesValue += '@@##$$';
       this.inpValue = '';
       var hasMissingInput = false;
       for(var item of this.questionItem.Questions__r.records) {
@@ -105,11 +105,17 @@ export class QuestionComponent implements OnInit {
           item.error = new ErrorWrapper();
           hasMissingInput = true;
         }
-        quesValue += item.Question__c + '@@##$$';
+        //quesValue += item.Question__c + '@@##$$';
         this.inpValue += item.input + '@@##$$';
       }
 
       if(hasMissingInput) { return; }
+    } else if(this.dtFlag && this.inpValue) {
+      if(this.questionItem.input) {
+        this.inpValue += 'T' + this.questionItem.input;
+      } else {
+        this.inpValue += 'T00:00AM';
+      }
     }
 
     console.log('before calling saveAnswer with ' + this.inpValue);
@@ -158,6 +164,7 @@ export class QuestionComponent implements OnInit {
       console.log('Before Calling readQuestion() using ' + recordId);
       this.readQuestion(recordId);
     } else {
+      console.log('Summary Page Logic ' + recordId);
       // Reset the Variables
       this.inpValue = '';
       this.answerWrap = new AnswerWrapper();
@@ -167,13 +174,31 @@ export class QuestionComponent implements OnInit {
       this.questionItem = null;
 
       // Show Summary
-
+      for(var q of this.questionStack) {
+        var ansWrap = this.answerMap.get(q);
+        if(ansWrap.qTyp == 'Book') {
+          var newStr = '';
+          for(var ansStr of this.inpValue.split('@@##$$')) {
+            if(newStr.length == 0) {
+              newStr = ansStr;
+            } else {
+              newStr += ', ' + ansStr;
+            }
+          }
+          ansWrap.ansValue = newStr;
+        }
+        this.summary.push(ansWrap);
+      }
 
       // Show Thank you Note
     }
   }
 
   handleBackClick() {
+    if(this.summary) {
+      this.summary = [];
+    }
+
     // Read the previous question from DB
     this.readQuestion(this.questionStack.pop());
   }
@@ -263,11 +288,17 @@ export class QuestionComponent implements OnInit {
       console.log('inpValue has been set to ' + this.inpValue);
     }
 
-    // Set the Options for Checkbox
     if(this.checkboxFlag) {
+      // Set the Options for Checkbox
       this.setOptions(this.questionItem.Question_Options__r.records);
     } else if(this.bookFlag) {
+      // Set the SubQuestions
       this.setSubQuestions(this.questionItem.Questions__r.records);
+    } else if(this.dtFlag && this.inpValue) {
+      // Set the Date and Time
+      var dtVal = this.inpValue.split('T');
+      this.inpValue = dtVal[0];
+      this.questionItem.input = dtVal[1];
     }
   }
 
@@ -395,5 +426,11 @@ export class QuestionComponent implements OnInit {
 
   uploadFile() {
     this.clearError();
+  }
+
+  handleSubmitClick() {
+    // Save the answerbook status to completed
+
+    // return back to source url
   }
 }
