@@ -109,7 +109,7 @@
   <div *ngIf="bookFlag">
     <div  class="form-group col-md-12">
       <div class="form-row">
-        <div [class]="'col-md-' + ques.Size" *ngFor="let ques of subQuestions" style="text-align: left;">
+        <div [class]="'col-md-' + ques.Size__c" *ngFor="let ques of subQuestions" style="text-align: left;">
           <span [style.font-weight] = "ques.Is_Title__c ? 'bold' : ''" style = "color: #00356f;">{{ques.Question__c}}</span>
           <input type="text" [(ngModel)]="ques.input" [id]="ques.Id" required="" (click)="clearSQError(ques.Id)" style.border-color = "{{ques.error ? 'red' : ''}}" placeholder="{{ques.Question__c}}"/>
         </div>
