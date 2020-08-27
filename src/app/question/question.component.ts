@@ -59,101 +59,7 @@ export class QuestionComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.questionItem = {
-      Id: '15',
-      Name: 'QN-00005',
-      Type__c: 'Radio',
-      Question__c: 'Choose your favorite role',
-      Next_Question__c: '',
-      Is_Optional__c: false,
-      Is_Title__c: true,
-      Group__c: 'Basic',
-      Question_No__c: '5',
-      RecordType: {
-        Name: 'UNCONDITIONAL'
-      },
-      Question_Options__r: {
-        records: [
-                     {
-                       Id: '121',
-                       Name: '121N',
-                       Value__c: '121V',
-                       Next_Question__c: '',
-                     },
-                     {
-                       Id: '122',
-                       Name: '122N',
-                       Value__c: '122V',
-                       Next_Question__c: '',
-                     },
-                     {
-                       Id: '123',
-                       Name: '123N',
-                       Value__c: '123V',
-                       Next_Question__c: '',
-                     }
-                   ]
-      }
-    };
-    this.radioFlag = true;
-    /*this.questionItem = {
-      Id: '12',
-      Name: 'QN-00002',
-      Type__c: 'DateTime',
-      Question__c: 'When did the incident happen?',
-      Next_Question__c: 'a013t000013SS89AAG',
-      Is_Optional__c: false,
-      Is_Title__c: true,
-      Group__c: 'Basic',
-      Question_No__c: '1',
-      RecordType: {
-        Name: 'UNCONDITIONAL'
-      },
-    };
-    this.dtFlag = true;*/
-    
-    
-     /*check box UI validation
-    this.questionItem = {
-      Id: '16',
-      Name: 'QN-00006',
-      Type__c: 'Checkbox',
-      Question__c: 'Choose your favorite spots',
-      Next_Question__c: '',
-      Is_Optional__c: false,
-      Is_Title__c: false,
-      Group__c: 'Basic',
-      Question_No__c: '6',
-      RecordType: {
-        Name: 'CONDITIONAL'
-      },
-      Question_Options__r: {
-        records: [
-                     {
-                       Id: '121',
-                       Name: '121N',
-                       Value__c: '121V',
-                       Next_Question__c: '',
-                     },
-                     {
-                       Id: '122',
-                       Name: '122N',
-                       Value__c: '122V',
-                       Next_Question__c: '',
-                     },
-                     {
-                       Id: '123',
-                       Name: '123N',
-                       Value__c: '123V',
-                       Next_Question__c: '',
-                     }
-                   ]
-      }
-    };
-    this.dataFlag = true;
-    this.checkboxFlag = true; */
-    
-    /*if(this.qbId) {
+    if(this.qbId) {
       if(this.qbId.length == 18) {
         console.log('Before Calling readQuestionBook() using ' + this.qbId);
         this.readQuestionBook(this.qbId);
@@ -162,7 +68,7 @@ export class QuestionComponent implements OnInit {
         this.questionItem = CHECKQUESTION;
         this.processQuestion();
       }
-    }); */
+    }
   }
 
   handleNextClick() {
