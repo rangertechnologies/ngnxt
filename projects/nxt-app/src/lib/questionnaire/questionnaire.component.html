@@ -85,11 +85,23 @@
   </div>
 
   <div *ngIf="fileFlag">
-    <div class="col-md-6">
-      <input type="file" accept=".pdf, .png, .jpg, .application/pdf"
-             style.background-color = "{{this.questionItem.error ? 'red' : ''}}"
-             id="file-upload-input-01" (click)="uploadFile()"/>
+    <div class="info-alert">
+      <i class="fa fa-info fa-3x" aria-hidden="true" style="color:#99B5CE;margin-left: 3rem;"></i>
+      <span style="padding-left: 2rem;">
+          Bilder oder PDF Dokumente
+      </span>
     </div>
+    <div class="info-alert" style="margin-top: 1rem;">
+      <label class="picture-upload custom-file-upload" for="file-upload" style="background-color: #ffffff;">
+        <span class="picture-upload-child">
+          <i class="fa fa-file-image-o fa-5x" aria-hidden="true" style="color:#99B5CE"></i>
+        </span>
+        <span style="margin-left: 9rem;position: sticky;margin-bottom: 6.5rem;" class="fa fa-plus fa-2x picture-upload-child">
+          <i class="" aria-hidden="true"></i> 
+        </span>
+      </label>
+    </div>
+    <input id="file-upload" type="file" accept=".pdf, .png, .jpg, .application/pdf" style.background-color = "{{this.questionItem.error ? 'red' : ''}}" (click)="uploadFile()"/>
   </div>
 
   <div *ngIf="bookFlag">
