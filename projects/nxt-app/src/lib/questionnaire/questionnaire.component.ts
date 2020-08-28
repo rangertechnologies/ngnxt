@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output } from '@angular/core';
+import { Component, OnInit, Input, Output,EventEmitter } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 
 import { SalesforceService } from '../services/salesforce.service';
@@ -26,7 +26,7 @@ import { TESTQUESTION,
 
 export class QuestionnaireComponent implements OnInit {
   @Input() qbId: string;
-  @Output() backToObjects: boolean = false;
+  @Output() backToObjects = new EventEmitter();
   params: Params;
 
   public abItem: AnswerBook;
@@ -72,6 +72,7 @@ export class QuestionnaireComponent implements OnInit {
         this.processQuestion();
       }
     }
+    console.log('inside ng oninit '+this.backToObjects);
   }
 
   handleNextClick() {
@@ -430,8 +431,6 @@ export class QuestionnaireComponent implements OnInit {
   }
 
   handleSubmitClick() {
-    // Save the answerbook status to completed
-    console.log(this.summary);
-    // return back to source url
+    this.backToObjects.emit(true);
   }
 }
