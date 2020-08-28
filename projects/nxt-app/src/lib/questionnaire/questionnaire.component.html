@@ -11,7 +11,7 @@
   </div>
 
   <div *ngIf="questionItem.Additional_Text__c">
-    <div class="info-alert" style="margin-bottom: 1rem;">
+    <div class="info-alert" style="margin-bottom: 1rem;display: flex;">
       <i class="fa fa-info fa-3x" aria-hidden="true" style="color:#99B5CE;margin-left: 3rem;"></i>
       <span style="padding-left: 2rem;">
         {{questionItem.Additional_Text__c}}
@@ -98,7 +98,6 @@
       </div>
     </div>
   </div>
-
   <div class="" style="display: flex; padding-top: 20px;">
     <div class="col-md-6" [style.visibility]="questionStack.length > 0 ? 'visible':'hidden'">
       <button class="btn btn-primary btn-lg btn-block" style="color: #00356f;background-color: transparent;border-color: transparent;" (click)="handleBackClick()">zurück</button>

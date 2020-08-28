@@ -65,14 +65,13 @@ export class QuestionComponent implements OnInit {
       console.log('App params', params);
       console.log('id', params['id']);
       this.qbId = params['id'];
-
       if(this.qbId) {
         if(this.qbId.length == 18) {
           console.log('Before Calling readQuestionBook() using ' + this.qbId);
           this.readQuestionBook(this.qbId);
         } else {
           console.log('Setting the Question Directly for testing');
-          this.questionItem = DTQUESTION;
+          this.questionItem = FILEQUESTION;
           this.processQuestion();
         }
       }

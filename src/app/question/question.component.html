@@ -1,4 +1,4 @@
-<div style="display:flex;padding-left: 25px; padding-right: 25px;">
+<!--<div style="display:flex;padding-left: 25px; padding-right: 25px;">
   <div class="col-md-4">
     <h2>Group 1</h2>
     <div class="progress">
@@ -17,7 +17,7 @@
       <div class="progress-bar progress-bar-style" style="width:70%">70%</div>
     </div>
   </div>
-</div>
+</div> -->
 
 <div *ngIf="questionItem" style="padding-left: 25px; padding-right: 25px;">
   <div style="padding-top: 25px; padding-bottom: 10px; padding-left: 15px; color: #00356f;">
@@ -32,7 +32,7 @@
   </div>
 
   <div *ngIf="questionItem.Additional_Text__c">
-    <div class="info-alert" style="margin-bottom: 1rem;">
+    <div class="info-alert" style="margin-bottom: 1rem;display: flex;">
       <i class="fa fa-info fa-3x" aria-hidden="true" style="color:#99B5CE;margin-left: 3rem;"></i>
       <span style="padding-left: 2rem;">
         {{questionItem.Additional_Text__c}}
@@ -96,13 +96,17 @@
   </div>
 
   <div *ngIf="fileFlag">
+    <div class="info-alert">
+      <i class="fa fa-info fa-3x" aria-hidden="true" style="color:#99B5CE;margin-left: 3rem;"></i>
+      <span style="padding-left: 2rem;">Bilder oder PDF Dokumente</span>
+    </div>
     <div class="info-alert" style="margin-top: 1rem;">
       <label class="picture-upload custom-file-upload" for="file-upload" style="background-color: #ffffff;">
         <span class="picture-upload-child">
           <i class="fa fa-file-image-o fa-5x" aria-hidden="true" style="color:#99B5CE"></i>
         </span>
         <span style="margin-left: 9rem;position: sticky;margin-bottom: 6.5rem;" class="fa fa-plus fa-2x picture-upload-child">
-          <i class="" aria-hidden="true"></i>
+          <i class="" aria-hidden="true"></i> 
         </span>
       </label>
     </div>
@@ -119,7 +123,6 @@
       </div>
     </div>
   </div>
-
   <div class="" style="display: flex; padding-top: 20px;">
     <div class="col-md-6" [style.visibility]="questionStack.length > 0 ? 'visible':'hidden'">
       <button class="btn btn-primary btn-lg btn-block" style="color: #00356f;background-color: transparent;border-color: transparent;" (click)="handleBackClick()">zurück</button>

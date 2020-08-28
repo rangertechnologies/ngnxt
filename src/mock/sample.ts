@@ -206,12 +206,12 @@ export const BOOKQUESTION: Question = {
       },
       {
         Id: '171',
-        Size__c: 1,
         Name: 'QN-000071',
         Type__c: 'Text',
         Question__c: 'PLZ',
         Is_Optional__c: false,
         Is_Title__c: true,
+        Size__c:4,
         Group__c: 'Basic',
         RecordType: {
           Name: 'CONDITIONAL'

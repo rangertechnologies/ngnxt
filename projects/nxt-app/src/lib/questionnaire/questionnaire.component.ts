@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output,EventEmitter } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 
 import { SalesforceService } from '../services/salesforce.service';
@@ -26,6 +26,7 @@ import { TESTQUESTION,
 
 export class QuestionnaireComponent implements OnInit {
   @Input() qbId: string;
+  @Output() backToObjects = new EventEmitter();
   params: Params;
 
   public abItem: AnswerBook;
@@ -47,7 +48,6 @@ export class QuestionnaireComponent implements OnInit {
   public dtFlag: boolean = false;
   public fileFlag: boolean = false;
   public bookFlag: boolean = false;
-
   public optionValues: OptionValue[] = [];
   public subQuestions: Question[] = [];
   public inpValue: string;
@@ -60,6 +60,7 @@ export class QuestionnaireComponent implements OnInit {
 
   }
 
+
   ngOnInit() {
     if(this.qbId) {
       if(this.qbId.length == 18) {
@@ -71,6 +72,7 @@ export class QuestionnaireComponent implements OnInit {
         this.processQuestion();
       }
     }
+    console.log('inside ng oninit '+this.backToObjects);
   }
 
   handleNextClick() {
@@ -429,8 +431,6 @@ export class QuestionnaireComponent implements OnInit {
   }
 
   handleSubmitClick() {
-    // Save the answerbook status to completed
-
-    // return back to source url
+    this.backToObjects.emit(true);
   }
 }
