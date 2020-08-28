@@ -5,6 +5,8 @@ export class QuestionBook {
   First_Question__c: string;
   Title__c: string;
   Total_Questions__c: number;
+  Summary_Text__c?: string;
+  Questions__r?: QuestionR;
 }
 
 export class Question {
@@ -16,9 +18,10 @@ export class Question {
   Is_Optional__c: boolean;
   Is_Title__c: boolean;
   Group__c: string;
-  Size__c: number;
   Question_No__c?: string;
   Question_Options__r?: OptionR;
+  Size__c: number;
+  Additional_Text__c? : string;
   Questions__r?: QuestionR;
   RecordType: {
     Name: string;
