@@ -46,7 +46,6 @@ export class QuestionComponent implements OnInit {
   public dtFlag: boolean = false;
   public fileFlag: boolean = false;
   public bookFlag: boolean = false;
-  public showSummary: boolean = false;
 
   public optionValues: OptionValue[] = [];
   public subQuestions: Question[] = [];
@@ -72,12 +71,11 @@ export class QuestionComponent implements OnInit {
           this.readQuestionBook(this.qbId);
         } else {
           console.log('Setting the Question Directly for testing');
-          this.questionItem = DTQUESTION;
+          this.questionItem = FILEQUESTION;
           this.processQuestion();
         }
       }
     });
-    this.showSummary = true;
   }
 
   handleNextClick() {

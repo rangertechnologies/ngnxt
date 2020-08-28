@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 
 import { SalesforceService } from '../services/salesforce.service';
@@ -26,6 +26,7 @@ import { TESTQUESTION,
 
 export class QuestionnaireComponent implements OnInit {
   @Input() qbId: string;
+  @Output() backToObjects: boolean = false;
   params: Params;
 
   public abItem: AnswerBook;
@@ -47,7 +48,6 @@ export class QuestionnaireComponent implements OnInit {
   public dtFlag: boolean = false;
   public fileFlag: boolean = false;
   public bookFlag: boolean = false;
-  public showSummary: boolean = false;
   public optionValues: OptionValue[] = [];
   public subQuestions: Question[] = [];
   public inpValue: string;
@@ -61,24 +61,17 @@ export class QuestionnaireComponent implements OnInit {
   }
 
 
-  ngOnInit() {	
-    this.route.queryParams.subscribe((params: Params) => {	
-      this.params = params;	
-      console.log('App params', params);	
-      console.log('id', params['id']);	
-      this.qbId = params['id'];	
-      if(this.qbId) {	
-        if(this.qbId.length == 18) {	
-          console.log('Before Calling readQuestionBook() using ' + this.qbId);	
-          this.readQuestionBook(this.qbId);	
-        } else {	
-          console.log('Setting the Question Directly for testing');	
-          this.questionItem = BOOKQUESTION;	
-          this.processQuestion();	
-        }	
-      }	
-    });	
-    this.showSummary = true;	
+  ngOnInit() {
+    if(this.qbId) {
+      if(this.qbId.length == 18) {
+        console.log('Before Calling readQuestionBook() using ' + this.qbId);
+        this.readQuestionBook(this.qbId);
+      } else {
+        console.log('Setting the Question Directly for testing');
+        this.questionItem = DTQUESTION;
+        this.processQuestion();
+      }
+    }
   }
 
   handleNextClick() {
@@ -438,7 +431,7 @@ export class QuestionnaireComponent implements OnInit {
 
   handleSubmitClick() {
     // Save the answerbook status to completed
-
+    console.log(this.summary);
     // return back to source url
   }
 }

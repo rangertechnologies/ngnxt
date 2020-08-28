@@ -211,6 +211,7 @@ export const BOOKQUESTION: Question = {
         Question__c: 'PLZ',
         Is_Optional__c: false,
         Is_Title__c: true,
+        Size__c:4,
         Group__c: 'Basic',
         RecordType: {
           Name: 'CONDITIONAL'

@@ -1,4 +1,4 @@
-<div style="display:flex;padding-left: 25px; padding-right: 25px;">
+<!--<div style="display:flex;padding-left: 25px; padding-right: 25px;">
   <div class="col-md-4">
     <h2>Group 1</h2>
     <div class="progress">
@@ -17,7 +17,7 @@
       <div class="progress-bar progress-bar-style" style="width:70%">70%</div>
     </div>
   </div>
-</div>
+</div> -->
 
 <div *ngIf="questionItem" style="padding-left: 25px; padding-right: 25px;">
   <div style="padding-top: 25px; padding-bottom: 10px; padding-left: 15px; color: #00356f;">
@@ -32,7 +32,7 @@
   </div>
 
   <div *ngIf="questionItem.Additional_Text__c">
-    <div class="info-alert" style="margin-bottom: 1rem;">
+    <div class="info-alert" style="margin-bottom: 1rem;display: flex;">
       <i class="fa fa-info fa-3x" aria-hidden="true" style="color:#99B5CE;margin-left: 3rem;"></i>
       <span style="padding-left: 2rem;">
         {{questionItem.Additional_Text__c}}
