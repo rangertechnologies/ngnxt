@@ -179,10 +179,12 @@ export class QuestionnaireComponent implements OnInit {
           if(ansWrap.qTyp == 'Book') {
             var newStr = '';
             for(var ansStr of ansWrap.ansValue.split('@@##$$')) {
-              if(newStr.length == 0) {
-                newStr = ansStr;
-              } else {
-                newStr += ', ' + ansStr;
+              if(ansStr.length > 0){
+                if(newStr.length == 0) {
+                  newStr = ansStr;
+                } else {
+                  newStr += ', ' + ansStr;
+                }
               }
             }
             ansWrap.ansValue = newStr;
