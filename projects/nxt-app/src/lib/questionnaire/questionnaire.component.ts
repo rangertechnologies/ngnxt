@@ -53,7 +53,7 @@ export class QuestionnaireComponent implements OnInit {
   public inpValue: string;
   public answerMap = new Map();
   public questionStack = [];
-
+  public localDate:string;
   public summary = [];
 
   constructor(private sfService: SalesforceService, private route: ActivatedRoute) {
@@ -107,6 +107,7 @@ export class QuestionnaireComponent implements OnInit {
 
       if(hasMissingInput) { return; }
     } else if(this.dtFlag && this.inpValue) {
+      this.localDate=this.inpValue;
       if(this.questionItem.input) {
         this.inpValue += 'T' + this.questionItem.input;
       } else {
@@ -136,6 +137,7 @@ export class QuestionnaireComponent implements OnInit {
     if(this.questionItem.error) { return; }
 
     this.questionStack.push(cQuestion.Id);
+    this.inpValue=this.localDate;
 
     // CONDITIONAL vs OPTIONONLY & UNCONDITIONAL
     if(cQuestion.RecordType.Name == 'CONDITIONAL') {
