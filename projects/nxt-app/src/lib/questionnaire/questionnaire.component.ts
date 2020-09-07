@@ -54,6 +54,7 @@ export class QuestionnaireComponent implements OnInit {
   public answerMap = new Map();
   public questionStack = [];
   public localDate:string;
+  public taFocusOut: boolean = false;
   public summary = [];
 
   constructor(private sfService: SalesforceService, private route: ActivatedRoute) {

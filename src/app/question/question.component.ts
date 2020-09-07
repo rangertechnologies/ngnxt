@@ -52,7 +52,7 @@ export class QuestionComponent implements OnInit {
   public inpValue: string;
   public answerMap = new Map();
   public questionStack = [];
-
+  public taFocusOut: boolean = false;
   public summary = [];
 
   constructor(private sfService: SalesforceService, private route: ActivatedRoute) {
