@@ -38,39 +38,40 @@
       </label>
     </div>
   </div>
-
   <div *ngIf="textFlag">
-    <div class="col-md-12">
+    <div class="col-md-12" style="display: flex;">
       <input type="text" [(ngModel)]="inpValue" id="text-input-id" required=""
              (click)="clearError()"
-             style.border-color = "{{this.questionItem.error ? 'red' : ''}}"/>
+             style.border-color = "{{this.questionItem.error ? 'red' : (inpValue?.length > 0 ? '#87be1c' : '')}}"/>
+      <i class="fa fa-check" aria-hidden="true" style="color:#87be1c;margin-left: -2rem;z-index: 1;padding: 5px;" *ngIf="inpValue?.length > 0"></i>
     </div>
   </div>
-
   <div *ngIf="taFlag">
-    <div class="col-md-12">
-      <textarea style="height: 100px; width: 100%;" id="ta-input-id" [(ngModel)]="inpValue"
+    <div class="col-md-12" style="display: flex;">
+      <textarea style="height: 100px; width: 100%;border-radius: 5px;" id="ta-input-id" [(ngModel)]="inpValue"
                 (click)="clearError()"
-                style.border-color = "{{this.questionItem.error ? 'red' : ''}}"></textarea>
+                style.border-color = "{{this.questionItem.error ? 'red' : (inpValue?.length > 0 && taFocusOut ? '#87be1c' : '')}}" (focusout)="taFocusOut = true"></textarea>
+      <i class="fa fa-check" aria-hidden="true" style="color:#87be1c;margin-left: -2rem;z-index: 1;padding: 5px;" *ngIf="inpValue?.length > 0 && taFocusOut"></i>
     </div>
   </div>
-
   <div *ngIf="dtFlag" style="display: flex;">
-    <div class="col-md-6">
+    <div class="col-md-6" style="display: flex;">
       <input type="date" id="date"
              [(ngModel)]="inpValue"
              (click)="clearError()"
              pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}"
-             [style.border-color] = "questionItem.error ? 'red' : ''"
-             placeholder="Placeholder Date" required="" style="width: 100%;"/>
+             [style.border-color] = "questionItem.error ? 'red' : (inpValue?.length > 0 ? '#87be1c' : '')"
+             placeholder="Placeholder Date" required="" style="width: 100%;border-radius: 5px;"/>
+      <i class="fa fa-check" aria-hidden="true" style="color:#87be1c;margin-left: -4rem;z-index: 1;margin-top: 1rem;" *ngIf="inpValue?.length > 0"></i>
     </div>
-    <div class="col-md-6">
+    <div class="col-md-6" style="display: flex;">
       <input type="time" id="time"
              [(ngModel)]="questionItem.input"
              (click)="clearError()"
              pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}"
-             [style.border-color] = "questionItem.error ? 'red' : ''"
+             [style.border-color] = "questionItem.error ? 'red' : (questionItem?.input?.length > 0 ? '#87be1c' : '')"
              placeholder="Placeholder Date" required="" style="width: 100%;"/>
+      <i class="fa fa-check" aria-hidden="true" style="color:#87be1c;margin-left: -4rem;z-index: 1;margin-top: 1rem;" *ngIf="questionItem?.input?.length > 0"></i>
     </div>
   </div>
 
@@ -96,6 +97,7 @@
         <div [class]="'col-md-' + ques.Size__c" *ngFor="let ques of subQuestions" style="text-align: left;">
           <span [style.font-weight] = "ques.Is_Title__c ? 'bold' : ''" style = "color: #00356f;">{{ques.Question__c}}</span>
           <input type="text" [(ngModel)]="ques.input" [id]="ques.Id" required="" (click)="clearSQError(ques.Id)" style.border-color = "{{ques.error ? 'red' : ''}}" placeholder="{{ques.Question__c}}"/>
+          <i class="fa fa-check" aria-hidden="true" style="color:#87be1c;margin-left: -3rem;z-index: 1;padding: 5px;" *ngIf="questionItem?.input?.length > 0"></i>
         </div>
       </div>
     </div>

@@ -61,6 +61,7 @@ export class QuestionnaireComponent implements OnInit {
   public fileExceededLimit: boolean = false;
   public fileTypeIncorrect: boolean = false;
   public localDate:string;
+  public taFocusOut: boolean = false;
   public summary = [];
 
   constructor(private sfService: SalesforceService, private route: ActivatedRoute) {

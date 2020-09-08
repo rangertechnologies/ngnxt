@@ -52,6 +52,7 @@ export class QuestionComponent implements OnInit {
   public inpValue: string;
   public answerMap = new Map();
   public questionStack = [];
+  public taFocusOut: boolean = false;
   public attachments: any [] = [];
   public attachmentIdList: any [] = [];
   public attachmentId: string = '';
