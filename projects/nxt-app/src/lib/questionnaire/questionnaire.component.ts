@@ -60,6 +60,7 @@ export class QuestionnaireComponent implements OnInit {
   public fileContents: any;
   public fileExceededLimit: boolean = false;
   public fileTypeIncorrect: boolean = false;
+  public localDate:string;
   public summary = [];
 
   constructor(private sfService: SalesforceService, private route: ActivatedRoute) {
@@ -113,6 +114,7 @@ export class QuestionnaireComponent implements OnInit {
 
       if(hasMissingInput) { return; }
     } else if(this.dtFlag && this.inpValue) {
+      this.localDate=this.inpValue;
       if(this.questionItem.input) {
         this.inpValue += 'T' + this.questionItem.input;
       } else {
@@ -146,6 +148,7 @@ export class QuestionnaireComponent implements OnInit {
     if(this.questionItem.error) { return; }
 
     this.questionStack.push(cQuestion.Id);
+    this.inpValue=this.localDate;
 
     // CONDITIONAL vs OPTIONONLY & UNCONDITIONAL
     if(cQuestion.RecordType.Name == 'CONDITIONAL') {
@@ -189,10 +192,12 @@ export class QuestionnaireComponent implements OnInit {
           if(ansWrap.qTyp == 'Book') {
             var newStr = '';
             for(var ansStr of ansWrap.ansValue.split('@@##$$')) {
-              if(newStr.length == 0) {
-                newStr = ansStr;
-              } else {
-                newStr += ', ' + ansStr;
+              if(ansStr.length > 0){
+                if(newStr.length == 0) {
+                  newStr = ansStr;
+                } else {
+                  newStr += ', ' + ansStr;
+                }
               }
             }
             ansWrap.ansValue = newStr;
