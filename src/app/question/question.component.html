@@ -110,9 +110,11 @@
         </span>
       </label>
     </div>
-    <input id="file-upload" type="file" accept=".pdf, .png, .jpg, .application/pdf" style.background-color = "{{this.questionItem.error ? 'red' : ''}}" (click)="uploadFile()"/>
+    <input id="file-upload" type="file" accept=".pdf, .png, .jpg, .application/pdf" style.background-color = "{{this.questionItem.error ? 'red' : ''}}" (change)="uploadFile($event)"/>
   </div>
-
+  <ul *ngIf="attachments?.length > 0 && fileFlag" style="list-style-type:none;margin-left:0;margin-bottom:0.7rem" class="col-md-12">
+    <li *ngFor="let attachment of attachments" style="text-align:left;">{{getFileName(attachment)}}<span style="float:right;cursor:pointer;padding: 0px;" (click)="deleteAttachment(attachment)">X</span></li>
+  </ul>
   <div *ngIf="bookFlag">
     <div  class="form-group col-md-12">
       <div class="form-row">
