@@ -52,7 +52,13 @@ export class QuestionComponent implements OnInit {
   public inpValue: string;
   public answerMap = new Map();
   public questionStack = [];
-
+  public attachments: any [] = [];
+  public attachmentIdList: any [] = [];
+  public attachmentId: string = '';
+  public attachment: any;
+  public fileContents: any;
+  public fileExceededLimit: boolean = false;
+  public fileTypeIncorrect: boolean = false;
   public summary = [];
 
   constructor(private sfService: SalesforceService, private route: ActivatedRoute) {
@@ -115,6 +121,10 @@ export class QuestionComponent implements OnInit {
       } else {
         this.inpValue += 'T00:00AM';
       }
+    } else if(this.fileFlag){
+      console.log('inside file attachment')
+      this.inpValue = '';
+      this.inpValue = this.attachment.name + '@@##$$' +   this.fileContents;
     }
 
     console.log('before calling saveAnswer with ' + this.inpValue);
@@ -429,13 +439,47 @@ export class QuestionComponent implements OnInit {
     }
   }
 
-  uploadFile() {
+  uploadFile(event) {
+    console.log('inside upload');
     this.clearError();
+    this.fileTypeIncorrect = false;
+    var local = this;
+    local.attachments = [];
+    local.attachment = event.target.files[0];
+    // Validate the file extension
+    console.log(local.attachment);
+    let fileNameWithType: string = local.attachment && local.attachment.name.toLowerCase();
+    if (!fileNameWithType.endsWith('.jpg') && !fileNameWithType.endsWith('.png') && !fileNameWithType.endsWith('.pdf')) {
+      local.fileTypeIncorrect = true;
+    }
+    // Return when the file type is incorrect
+    if (local.fileTypeIncorrect) { return; }
+    let fileContent: any;
+    var reader = new FileReader();
+    reader.onload = function() {
+      fileContent = reader.result;
+      local.fileExceededLimit = local.attachment.size > 3242880; //Validating file size
+      // Upload the file to Salesforce when the limit is within range
+      if (!local.fileExceededLimit) {
+        local.attachments.push('dummy'+'::::'+local.attachment.name);
+        local.fileContents = fileContent;
+      }
+    }
+    reader.readAsDataURL(event.target.files[0]);
   }
 
   handleSubmitClick() {
     // Save the answerbook status to completed
 
     // return back to source url
+  }
+
+  deleteAttachment(attachment: any) {
+    this.attachments = [];
+  }
+
+  getFileName(fileNamewithIdandType) {  //truncate file path
+    var fileNameWithType = fileNamewithIdandType.substr(fileNamewithIdandType.indexOf('::::') + 4);
+    return fileNameWithType; //fileNameWithType.replace(/^(.*(\/|\\))(.+)$/, '$3');
   }
 }
