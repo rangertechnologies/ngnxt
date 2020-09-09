@@ -67,7 +67,7 @@ export class QuestionComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.route.queryParams.subscribe((params: Params) => {
+    /*this.route.queryParams.subscribe((params: Params) => {
       this.params = params;
       console.log('App params', params);
       console.log('id', params['id']);
@@ -82,7 +82,11 @@ export class QuestionComponent implements OnInit {
           this.processQuestion();
         }
       }
-    });
+    });*/
+      this.questionItem=BOOKQUESTION;
+      this.bookFlag=true;
+      this.processQuestion();
+
   }
 
   handleNextClick() {
@@ -107,6 +111,7 @@ export class QuestionComponent implements OnInit {
       this.inpValue = '';
       var hasMissingInput = false;
       for(var item of this.questionItem.Questions__r.records) {
+        console.log(item);
         if(!item.Is_Optional__c && !item.input) {
           item.error = new ErrorWrapper();
           hasMissingInput = true;
