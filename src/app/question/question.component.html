@@ -129,7 +129,7 @@
           <span [style.font-weight] = "ques.Is_Title__c ? 'bold' : ''" style = "color: #00356f;">{{ques.Question__c}}</span>
           <span *ngIf="ques.Type__c != 'dropdown'"><input type="text" [(ngModel)]="ques.input" [id]="ques.Id" required="" (click)="clearSQError(ques.Id)" style.border-color = "{{ques.error ? 'red' : ''}}" placeholder="{{ques.Question__c}}"/></span>
           <span *ngIf="ques.Type__c === 'dropdown'">
-            <select class="custom-select mr-sm-2" >
+            <select class="custom-select mr-sm-2" [(ngModel)]="ques.input">
               <option *ngFor="let opt of ques.Question_Options__r.records" value="{{opt.Name}}" >{{opt.Name}} </option>
             </select>
           </span>

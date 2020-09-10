@@ -111,7 +111,6 @@ export class QuestionComponent implements OnInit {
       this.inpValue = '';
       var hasMissingInput = false;
       for(var item of this.questionItem.Questions__r.records) {
-        console.log(item);
         if(!item.Is_Optional__c && !item.input) {
           item.error = new ErrorWrapper();
           hasMissingInput = true;
@@ -119,7 +118,6 @@ export class QuestionComponent implements OnInit {
         //quesValue += item.Question__c + '@@##$$';
         this.inpValue += item.input + '@@##$$';
       }
-
       if(hasMissingInput) { return; }
     } else if(this.dtFlag && this.inpValue) {
       if(this.questionItem.input) {
