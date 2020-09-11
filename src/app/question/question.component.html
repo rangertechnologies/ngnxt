@@ -134,8 +134,8 @@
       <div class="form-row">
         <div [class]="'col-md-' + ques.Size__c" *ngFor="let ques of subQuestions" style="text-align: left;">
           <span [style.font-weight] = "ques.Is_Title__c ? 'bold' : ''" style = "color: #00356f;">{{ques.Question__c}}</span>
-          <span *ngIf="ques.Type__c != 'dropdown'"><input type="text" [(ngModel)]="ques.input" [id]="ques.Id" required="" (click)="clearSQError(ques.Id)" style.border-color = "{{ques.error ? 'red' : ''}}" placeholder="{{ques.Question__c}}"/></span>
-          <span *ngIf="ques.Type__c === 'dropdown'">
+          <span *ngIf="ques.Question__c != 'Land'"><input type="text" [(ngModel)]="ques.input" [id]="ques.Id" required="" (click)="clearSQError(ques.Id)" style.border-color = "{{ques.error ? 'red' : ''}}" placeholder="{{ques.Question__c}}"/></span>
+          <span *ngIf="ques.Question__c === 'Land'">
             <select class="custom-select mr-sm-2" [(ngModel)]="ques.input">
               <option *ngFor="let opt of ques.Question_Options__r.records" value="{{opt.Name}}" >{{opt.Name}} </option>
             </select>
