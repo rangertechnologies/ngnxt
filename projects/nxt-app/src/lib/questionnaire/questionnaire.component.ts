@@ -115,7 +115,6 @@ export class QuestionnaireComponent implements OnInit {
 
       if(hasMissingInput) { return; }
     } else if(this.dtFlag && this.inpValue) {
-      this.localDate=this.inpValue;
       if(this.questionItem.input) {
         this.inpValue += 'T' + this.questionItem.input;
       } else {
@@ -149,7 +148,6 @@ export class QuestionnaireComponent implements OnInit {
     if(this.questionItem.error) { return; }
 
     this.questionStack.push(cQuestion.Id);
-    this.inpValue=this.localDate;
 
     // CONDITIONAL vs OPTIONONLY & UNCONDITIONAL
     if(cQuestion.RecordType.Name == 'CONDITIONAL') {
@@ -469,7 +467,7 @@ export class QuestionnaireComponent implements OnInit {
       }
     }
     reader.readAsDataURL(event.target.files[0]);
-  } 
+  }
 
   handleSubmitClick() {
     this.backToObjects.emit(true);
