@@ -80,7 +80,6 @@ export class QuestionnaireComponent implements OnInit {
         this.processQuestion();
       }
     }
-    console.log('inside ng oninit '+this.backToObjects);
   }
 
   handleNextClick() {
