@@ -99,7 +99,8 @@
     <li *ngFor="let attachment of attachments" style="text-align:left;">{{getFileName(attachment)}}<span style="float:right;cursor:pointer;padding: 0px;" (click)="deleteAttachment(attachment)">X</span></li>
   </ul>
  
-  <div *ngIf="bookFlag">
+  <!-- once dropdown changes yet to come from backend once done we can use the below code
+    <div *ngIf="bookFlag">
     <div  class="form-group col-md-12">
       <div class="form-row">
         <div [class]="'col-md-' + ques.Size__c" *ngFor="let ques of subQuestions" style="text-align: left;">
@@ -110,6 +111,17 @@
               <option *ngFor="let opt of ques.Question_Options__r.records" value="{{opt.Name}}" >{{opt.Name}} </option>
             </select>
           </span>
+        </div>
+      </div>
+    </div>
+  </div> -->
+  <div *ngIf="bookFlag">
+    <div  class="form-group col-md-12">
+      <div class="form-row">
+        <div [class]="'col-md-' + ques.Size__c" *ngFor="let ques of subQuestions" style="text-align: left;">
+          <span [style.font-weight] = "ques.Is_Title__c ? 'bold' : ''" style = "color: #00356f;">{{ques.Question__c}}</span>
+          <input type="text" [(ngModel)]="ques.input" [id]="ques.Id" required="" (click)="clearSQError(ques.Id)" style.border-color = "{{ques.error ? 'red' : ''}}" placeholder="{{ques.Question__c}}"/>
+          <i class="fa fa-check" aria-hidden="true" style="color:#87be1c;margin-left: -3rem;z-index: 1;padding: 5px;" *ngIf="questionItem?.input?.length > 0"></i>
         </div>
       </div>
     </div>
