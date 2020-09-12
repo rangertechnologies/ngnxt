@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output,EventEmitter } from '@angular/core';
+import { Component, OnInit, OnChanges, Input, Output,EventEmitter } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 
 import { SalesforceService } from '../services/salesforce.service';
@@ -68,8 +68,17 @@ export class QuestionnaireComponent implements OnInit {
 
   }
 
-
   ngOnInit() {
+    console.log('inside Questionnaire ngOnInit');
+    this.processQB();
+  }
+
+  ngOnChanges() {
+    console.log('inside Questionnaire ngOnChanges');
+    this.processQB();
+  }
+
+  processQB() {
     if(this.qbId) {
       if(this.qbId.length == 18) {
         console.log('Before Calling readQuestionBook() using ' + this.qbId);

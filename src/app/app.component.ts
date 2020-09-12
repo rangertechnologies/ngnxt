@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Params } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -9,29 +10,16 @@ import { Component } from '@angular/core';
 export class AppComponent {
   title = 'Questionaire App';
   qbId = 'a033t00000Ta1FjAAJ123';
-}
 
-/*
-  constructor(private sfService: SalesforceService) {
-    console.log('inside constructor');
-  }
-
-  public getQuestionBook = () => this.sfService.remoteAction('NxtController.process',
-    ['QuestionBook', 'read', ''],
-    this.successGet,
-    this.failureGet)
-
-  public getQuestion = () => this.sfService.remoteAction('NxtController.process',
-    ['Question', 'read', ''],
-    this.successGet,
-    this.failureGet)
-
-  private successGet = (response) => {
+  constructor(private route: ActivatedRoute) {
 
   }
 
-  private failureGet = (response) => {
-
+  ngOnInit() {
+    this.route.queryParams.subscribe((params: Params) => {
+      console.log('App params', params);
+      console.log('id', params['id']);
+      this.qbId = params['id'];
+    });
   }
 }
-*/
