@@ -172,14 +172,36 @@ export const BOOKQUESTION: Question = {
       {
         Id: '170',
         Name: 'QN-000070',
-        Type__c: 'dropdown',
-        Question__c: 'land',
+        Type__c: 'Dropdown',
+        Question__c: 'Land',
         Size__c:1,
         Is_Optional__c: false,
         Is_Title__c: true,
         Group__c: 'Basic',
         RecordType: {
-          Name: 'CONDITIONAL'
+          Name: 'UNCONDITIONAL'
+        },
+        Question_Options__r: {
+          records: [
+             {
+               Id: '1',
+               Name: 'D',
+               Value__c: 'D',
+               Next_Question__c: '',
+             },
+             {
+               Id: '2',
+               Name: 'CH',
+               Value__c: 'CH',
+               Next_Question__c: '',
+             },
+             {
+               Id: '3',
+               Name: 'UK',
+               Value__c: 'UK',
+               Next_Question__c: '',
+             }
+           ]
         }
       },
       {
@@ -192,7 +214,7 @@ export const BOOKQUESTION: Question = {
         Is_Title__c: true,
         Group__c: 'Basic',
         RecordType: {
-          Name: 'CONDITIONAL'
+          Name: 'UNCONDITIONAL'
         }
       },
       {
@@ -205,7 +227,7 @@ export const BOOKQUESTION: Question = {
         Size__c:8,
         Group__c: 'Basic',
         RecordType: {
-          Name: 'CONDITIONAL'
+          Name: 'UNCONDITIONAL'
         }
       },
       {
@@ -218,7 +240,7 @@ export const BOOKQUESTION: Question = {
         Size__c:8,
         Group__c: 'Basic',
         RecordType: {
-          Name: 'CONDITIONAL'
+          Name: 'UNCONDITIONAL'
         }
       },
       {
@@ -231,7 +253,7 @@ export const BOOKQUESTION: Question = {
         Size__c:4,
         Group__c: 'Basic',
         RecordType: {
-          Name: 'CONDITIONAL'
+          Name: 'UNCONDITIONAL'
         }
       },
     ]

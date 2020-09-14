@@ -103,15 +103,15 @@
       <div class="form-row">
         <div [class]="'col-md-' + ques.Size__c" *ngFor="let ques of subQuestions" style="text-align: left;">
           <span [style.font-weight] = "ques.Is_Title__c ? 'bold' : ''" style = "color: #00356f;">{{ques.Question__c}}</span>
-          <span *ngIf="ques.Question__c != 'dropdown'">
+          <div *ngIf="ques.Type__c === 'Text'">
             <input type="text" [(ngModel)]="ques.input" [id]="ques.Id" required="" (click)="clearSQError(ques.Id)"
                    style.border-color = "{{ques.error ? 'red' : ''}}" placeholder="{{ques.Question__c}}"/>
-          </span>
-          <span *ngIf="ques.Question__c === 'dropdown'">
-            <select class="custom-select mr-sm-2" [(ngModel)]="ques.input">
-              <option *ngFor="let opt of ques.Question_Options__r.records" value="{{opt.Name}}" >{{opt.Name}} </option>
+          </div>
+          <div *ngIf="ques.Type__c === 'Dropdown'">
+            <select class="custom-select mr-sm-2" [(ngModel)]="ques.input" style="height: 3.45556rem;">
+              <option *ngFor="let opt of ques.Question_Options__r.records" value="{{opt.Value__c}}" >{{opt.Value__c}} </option>
             </select>
-          </span>
+          </div>
           <i class="fa fa-check" aria-hidden="true" style="color:#87be1c;margin-left: -3rem;z-index: 1;padding: 5px;" *ngIf="questionItem?.input?.length > 0"></i>
         </div>
       </div>

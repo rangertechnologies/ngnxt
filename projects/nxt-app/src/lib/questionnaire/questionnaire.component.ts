@@ -52,6 +52,7 @@ export class QuestionnaireComponent implements OnInit {
   public subQuestions: Question[] = [];
   public inpValue: string;
   public answerMap = new Map();
+  public sqOptions = new Map();
   public questionStack = [];
   public attachments: any [] = [];
   public attachmentIdList: any [] = [];
@@ -85,7 +86,7 @@ export class QuestionnaireComponent implements OnInit {
         this.readQuestionBook(this.qbId);
       } else {
         console.log('Setting the Question Directly for testing');
-        this.questionItem = DTQUESTION;
+        this.questionItem = BOOKQUESTION;
         this.processQuestion();
       }
     }
@@ -261,6 +262,20 @@ export class QuestionnaireComponent implements OnInit {
       this.resetFlag(this.questionItem.Type__c);
     }
     this.questionItem = response.question;
+    // Handle the subQuestion options
+    if(response.sqOptions) {
+      //var newRecords = [];
+      for(var q of this.questionItem.Questions__r.records) {
+        //console.log(q.Name);
+        var sq = response.sqOptions[q.Id];
+        if(sq) {
+          //console.log('found options for subquestion ' + q.Name);
+          if(!q.Question_Options__r) {
+            q.Question_Options__r = sq.Question_Options__r;
+          }
+        }
+      }
+    }
 
     this.processQuestion();
   }
