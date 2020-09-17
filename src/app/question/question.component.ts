@@ -1,7 +1,6 @@
-import { Component, OnInit, Input, Output,EventEmitter } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
-
-import { SalesforceService } from '../services/salesforce.service';
+import { SalesforceService } from '../../services/salesforce.service';
 import { Question,
          QuestionBook,
          AnswerBook,
@@ -16,17 +15,16 @@ import { TESTQUESTION,
          TAQUESTION,
          RADIOQUESTION,
          CHECKQUESTION,
-         BOOKQUESTION } from '../sample';
+         BOOKQUESTION } from '../../mock/sample';
 
 @Component({
-  selector: 'lib-questionnaire',
-  templateUrl: './questionnaire.component.html',
-  styleUrls: ['./questionnaire.component.css']
+  selector: 'app-question',
+  templateUrl: './question.component.html',
+  styleUrls: ['./question.component.css']
 })
 
-export class QuestionnaireComponent implements OnInit {
-  @Input() qbId: string;
-  @Output() backToObjects = new EventEmitter();
+export class QuestionComponent implements OnInit {
+  qbId: string;
   params: Params;
 
   public abItem: AnswerBook;
@@ -48,11 +46,13 @@ export class QuestionnaireComponent implements OnInit {
   public dtFlag: boolean = false;
   public fileFlag: boolean = false;
   public bookFlag: boolean = false;
+
   public optionValues: OptionValue[] = [];
   public subQuestions: Question[] = [];
   public inpValue: string;
   public answerMap = new Map();
   public questionStack = [];
+  public taFocusOut: boolean = false;
   public attachments: any [] = [];
   public attachmentIdList: any [] = [];
   public attachmentId: string = '';
@@ -60,27 +60,29 @@ export class QuestionnaireComponent implements OnInit {
   public fileContents: any;
   public fileExceededLimit: boolean = false;
   public fileTypeIncorrect: boolean = false;
-  public localDate:string;
-  public taFocusOut: boolean = false;
   public summary = [];
 
   constructor(private sfService: SalesforceService, private route: ActivatedRoute) {
 
   }
 
-
   ngOnInit() {
-    if(this.qbId) {
-      if(this.qbId.length == 18) {
-        console.log('Before Calling readQuestionBook() using ' + this.qbId);
-        this.readQuestionBook(this.qbId);
-      } else {
-        console.log('Setting the Question Directly for testing');
-        this.questionItem = DTQUESTION;
-        this.processQuestion();
+    this.route.queryParams.subscribe((params: Params) => {
+      this.params = params;
+      console.log('App params', params);
+      console.log('id', params['id']);
+      this.qbId = params['id'];
+      if(this.qbId) {
+        if(this.qbId.length == 18) {
+          console.log('Before Calling readQuestionBook() using ' + this.qbId);
+          this.readQuestionBook(this.qbId);
+        } else {
+          console.log('Setting the Question Directly for testing');
+          this.questionItem = FILEQUESTION;
+          this.processQuestion();
+        }
       }
-    }
-    console.log('inside ng oninit '+this.backToObjects);
+    });
   }
 
   handleNextClick() {
@@ -115,7 +117,6 @@ export class QuestionnaireComponent implements OnInit {
 
       if(hasMissingInput) { return; }
     } else if(this.dtFlag && this.inpValue) {
-      this.localDate=this.inpValue;
       if(this.questionItem.input) {
         this.inpValue += 'T' + this.questionItem.input;
       } else {
@@ -149,7 +150,6 @@ export class QuestionnaireComponent implements OnInit {
     if(this.questionItem.error) { return; }
 
     this.questionStack.push(cQuestion.Id);
-    this.inpValue=this.localDate;
 
     // CONDITIONAL vs OPTIONONLY & UNCONDITIONAL
     if(cQuestion.RecordType.Name == 'CONDITIONAL') {
@@ -174,7 +174,7 @@ export class QuestionnaireComponent implements OnInit {
       console.log('Before Calling readQuestion() using ' + recordId);
       this.readQuestion(recordId);
     } else {
-      console.log('Summary Page Logic');
+      console.log('Summary Page Logic ' + recordId);
       // Reset the Variables
       this.inpValue = '';
       this.answerWrap = new AnswerWrapper();
@@ -193,12 +193,10 @@ export class QuestionnaireComponent implements OnInit {
           if(ansWrap.qTyp == 'Book') {
             var newStr = '';
             for(var ansStr of ansWrap.ansValue.split('@@##$$')) {
-              if(ansStr.length > 0){
-                if(newStr.length == 0) {
-                  newStr = ansStr;
-                } else {
-                  newStr += ', ' + ansStr;
-                }
+              if(newStr.length == 0) {
+                newStr = ansStr;
+              } else {
+                newStr += ', ' + ansStr;
               }
             }
             ansWrap.ansValue = newStr;
@@ -469,10 +467,12 @@ export class QuestionnaireComponent implements OnInit {
       }
     }
     reader.readAsDataURL(event.target.files[0]);
-  } 
+  }
 
   handleSubmitClick() {
-    this.backToObjects.emit(true);
+    // Save the answerbook status to completed
+
+    // return back to source url
   }
 
   deleteAttachment(attachment: any) {

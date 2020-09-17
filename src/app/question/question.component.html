@@ -1,3 +1,24 @@
+<!--<div style="display:flex;padding-left: 25px; padding-right: 25px;">
+  <div class="col-md-4">
+    <h2>Group 1</h2>
+    <div class="progress">
+      <div class="progress-bar progress-bar-style" style="width:70%;">70%</div>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <h2>Group 2</h2>
+    <div class="progress">
+      <div class="progress-bar progress-bar-style" style="width:70%">70%</div>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <h2>Group 3</h2>
+    <div class="progress">
+      <div class="progress-bar progress-bar-style" style="width:70%">70%</div>
+    </div>
+  </div>
+</div> -->
+
 <div *ngIf="questionItem" style="padding-left: 25px; padding-right: 25px;">
   <div style="padding-top: 25px; padding-bottom: 10px; padding-left: 15px; color: #00356f;">
     <div *ngIf="questionItem.Is_Title__c">
@@ -38,6 +59,7 @@
       </label>
     </div>
   </div>
+
   <div *ngIf="textFlag">
     <div class="col-md-12" style="display: flex;">
       <input type="text" [(ngModel)]="inpValue" id="text-input-id" required=""
@@ -46,6 +68,7 @@
       <i class="fa fa-check" aria-hidden="true" style="color:#87be1c;margin-left: -2rem;z-index: 1;padding: 5px;" *ngIf="inpValue?.length > 0"></i>
     </div>
   </div>
+
   <div *ngIf="taFlag">
     <div class="col-md-12" style="display: flex;">
       <textarea style="height: 100px; width: 100%;border-radius: 5px;" id="ta-input-id" [(ngModel)]="inpValue"
@@ -54,6 +77,7 @@
       <i class="fa fa-check" aria-hidden="true" style="color:#87be1c;margin-left: -2rem;z-index: 1;padding: 5px;" *ngIf="inpValue?.length > 0 && taFocusOut"></i>
     </div>
   </div>
+
   <div *ngIf="dtFlag" style="display: flex;">
     <div class="col-md-6" style="display: flex;">
       <input type="date" id="date"
@@ -76,13 +100,17 @@
   </div>
 
   <div *ngIf="fileFlag">
+    <div class="info-alert">
+      <i class="fa fa-info fa-3x" aria-hidden="true" style="color:#99B5CE;margin-left: 3rem;"></i>
+      <span style="padding-left: 2rem;">Bilder oder PDF Dokumente</span>
+    </div>
     <div class="info-alert" style="margin-top: 1rem;">
       <label class="picture-upload custom-file-upload" for="file-upload" style="background-color: #ffffff;">
         <span class="picture-upload-child">
           <i class="fa fa-file-image-o fa-5x" aria-hidden="true" style="color:#99B5CE"></i>
         </span>
         <span style="margin-left: 9rem;position: sticky;margin-bottom: 6.5rem;" class="fa fa-plus fa-2x picture-upload-child">
-          <i class="" aria-hidden="true"></i>
+          <i class="" aria-hidden="true"></i> 
         </span>
       </label>
     </div>
@@ -97,7 +125,6 @@
         <div [class]="'col-md-' + ques.Size__c" *ngFor="let ques of subQuestions" style="text-align: left;">
           <span [style.font-weight] = "ques.Is_Title__c ? 'bold' : ''" style = "color: #00356f;">{{ques.Question__c}}</span>
           <input type="text" [(ngModel)]="ques.input" [id]="ques.Id" required="" (click)="clearSQError(ques.Id)" style.border-color = "{{ques.error ? 'red' : ''}}" placeholder="{{ques.Question__c}}"/>
-          <i class="fa fa-check" aria-hidden="true" style="color:#87be1c;margin-left: -3rem;z-index: 1;padding: 5px;" *ngIf="questionItem?.input?.length > 0"></i>
         </div>
       </div>
     </div>

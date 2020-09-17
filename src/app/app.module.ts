@@ -4,11 +4,13 @@ import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 
 import { AppComponent } from './app.component';
+import { QuestionComponent } from './question/question.component';
 import { NxtAppModule } from 'nxt-app';
 
 @NgModule({
   declarations: [
     AppComponent,
+    QuestionComponent,
   ],
   imports: [
     BrowserModule,
