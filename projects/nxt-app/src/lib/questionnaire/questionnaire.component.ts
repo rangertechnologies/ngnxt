@@ -469,11 +469,28 @@ export class QuestionnaireComponent implements OnInit {
       }
     }
     reader.readAsDataURL(event.target.files[0]);
-  } 
+  }
 
   handleSubmitClick() {
+    console.log('Inside the handleSubmitClick');
+    this.updateSFClaim(this.qbId);
+    console.log('After the service call');
     this.backToObjects.emit(true);
   }
+
+  public updateSFClaim = (abId: string) => this.sfService.remoteAction('UINxtExtension.process',
+    ['cosmosclaim', 'update', abId],
+    this.successUpdateClaim,
+    this.failedRA)
+
+  private successUpdateClaim = (response) => {
+    console.log(response);
+    if (response.status === 'success') {
+      console.log('Inside the successUpdateClaim');
+    }
+  }
+
+  private failedRA = (response: any) => { }
 
   deleteAttachment(attachment: any) {
     this.attachments = [];
