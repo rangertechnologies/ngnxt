@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output,EventEmitter } from '@angular/core';
+import { Component, OnInit, OnChanges, Input, Output,EventEmitter } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 
 import { SalesforceService } from '../services/salesforce.service';
@@ -68,8 +68,17 @@ export class QuestionnaireComponent implements OnInit {
 
   }
 
-
   ngOnInit() {
+    console.log('inside Questionnaire ngOnInit');
+    this.processQB();
+  }
+
+  ngOnChanges() {
+    console.log('inside Questionnaire ngOnChanges');
+    this.processQB();
+  }
+
+  processQB() {
     if(this.qbId) {
       if(this.qbId.length == 18) {
         console.log('Before Calling readQuestionBook() using ' + this.qbId);
@@ -80,7 +89,6 @@ export class QuestionnaireComponent implements OnInit {
         this.processQuestion();
       }
     }
-    console.log('inside ng oninit '+this.backToObjects);
   }
 
   handleNextClick() {
@@ -115,7 +123,6 @@ export class QuestionnaireComponent implements OnInit {
 
       if(hasMissingInput) { return; }
     } else if(this.dtFlag && this.inpValue) {
-      this.localDate=this.inpValue;
       if(this.questionItem.input) {
         this.inpValue += 'T' + this.questionItem.input;
       } else {
@@ -149,7 +156,6 @@ export class QuestionnaireComponent implements OnInit {
     if(this.questionItem.error) { return; }
 
     this.questionStack.push(cQuestion.Id);
-    this.inpValue=this.localDate;
 
     // CONDITIONAL vs OPTIONONLY & UNCONDITIONAL
     if(cQuestion.RecordType.Name == 'CONDITIONAL') {
@@ -452,7 +458,8 @@ export class QuestionnaireComponent implements OnInit {
     // Validate the file extension
     console.log(local.attachment);
     let fileNameWithType: string = local.attachment && local.attachment.name.toLowerCase();
-    if (!fileNameWithType.endsWith('.jpg') && !fileNameWithType.endsWith('.png') && !fileNameWithType.endsWith('.pdf')) {
+    if (!fileNameWithType.endsWith('.jpg') && !fileNameWithType.endsWith('.png') && !fileNameWithType.endsWith('.pdf') && !fileNameWithType.endsWith('.jpeg') && !fileNameWithType.endsWith('.heic') && !fileNameWithType.endsWith('.heif') &&
+        !fileNameWithType.endsWith('.JPG') && !fileNameWithType.endsWith('.PNG') && !fileNameWithType.endsWith('.PDF') && !fileNameWithType.endsWith('.JPEG') && !fileNameWithType.endsWith('.HEIC') && !fileNameWithType.endsWith('.HEIF')) {
       local.fileTypeIncorrect = true;
     }
     // Return when the file type is incorrect
@@ -469,7 +476,7 @@ export class QuestionnaireComponent implements OnInit {
       }
     }
     reader.readAsDataURL(event.target.files[0]);
-  } 
+  }
 
   handleSubmitClick() {
     this.backToObjects.emit(true);
