@@ -17,6 +17,7 @@ import { TESTQUESTION,
          RADIOQUESTION,
          CHECKQUESTION,
          BOOKQUESTION } from '../sample';
+        
 
 @Component({
   selector: 'lib-questionnaire',
@@ -48,6 +49,7 @@ export class QuestionnaireComponent implements OnInit {
   public dtFlag: boolean = false;
   public fileFlag: boolean = false;
   public bookFlag: boolean = false;
+  public progressFlag: boolean= false;
   public optionValues: OptionValue[] = [];
   public subQuestions: Question[] = [];
   public inpValue: string;
@@ -64,19 +66,29 @@ export class QuestionnaireComponent implements OnInit {
   public localDate:string;
   public taFocusOut: boolean = false;
   public summary = [];
-
+  public Total_Questions__c: number=10;
+  public answeredquestion:number=0;
+  public progress:number;
+  
+  
+ 
   constructor(private sfService: SalesforceService, private route: ActivatedRoute) {
 
   }
 
   ngOnInit() {
-    console.log('inside Questionnaire ngOnInit');
+    console.log('inside Questionnaire ngOnInit ');
+    this.progressFlag=true;
     this.processQB();
+        
   }
 
+
+  
   ngOnChanges() {
     console.log('inside Questionnaire ngOnChanges');
     this.processQB();
+        
   }
 
   processQB() {
@@ -92,8 +104,16 @@ export class QuestionnaireComponent implements OnInit {
     }
   }
 
+
   handleNextClick() {
     this.clearError();
+    
+      if(this.inpValue){
+        this.answeredquestion=this.answeredquestion+1;
+        this.progress=(this.answeredquestion/this.Total_Questions__c*100);
+       
+    }
+        
 
     var recordId = null;
     var cQuestion: Question = new Question();
@@ -134,6 +154,9 @@ export class QuestionnaireComponent implements OnInit {
       this.inpValue = '';
       this.inpValue = this.attachment.name + '@@##$$' +   this.fileContents;
     }
+      
+         
+       
 
     console.log('before calling saveAnswer with ' + this.inpValue);
 
@@ -219,9 +242,13 @@ export class QuestionnaireComponent implements OnInit {
     }
   }
 
+
+
   handleBackClick() {
     if(this.summary) {
       this.summary = [];
+      this.answeredquestion=this.answeredquestion-1;
+      this.progress=(this.answeredquestion/this.Total_Questions__c*100);
     }
 
     // Read the previous question from DB
