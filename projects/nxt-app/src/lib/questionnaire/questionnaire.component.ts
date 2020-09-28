@@ -254,7 +254,7 @@ export class QuestionnaireComponent implements OnInit {
   private successRead = (response) => {
     console.log(response);
     // Reset the Variables
-    if(this.questionItem) {
+    if(this.questionItem)   {
       this.inpValue = '';
       this.answerWrap = new AnswerWrapper();
       this.optionValues = [];
@@ -416,11 +416,20 @@ export class QuestionnaireComponent implements OnInit {
     var qaMap = new Map();
     if(this.inpValue) {
       var aIndex = 0;
-      for(var ansStr of this.inpValue.split('@@##$$')) {
-        aIndex++;
-        qaMap.set(aIndex, ansStr);
-        console.log('Setting the qaMap for ' + aIndex + ' with ' + ansStr);
+      if(this.inpValue.search('@@##$$') != -1){
+        for(var ansStr of this.inpValue.split('@@##$$')) {
+          aIndex++;
+          qaMap.set(aIndex, ansStr);
+          //console.log('Setting the qaMap for ' + aIndex + ' with ' + ansStr);
+        }
+      } else {
+          for(var ansStr of this.inpValue.split(', ')) {
+            aIndex++;
+            qaMap.set(aIndex, ansStr);
+            //console.log('Setting the qaMap when comes from summary page for ' + aIndex + ' with ' + ansStr);
+          }
       }
+
     }
 
     for(var ques of records) {
