@@ -422,12 +422,14 @@ export class QuestionnaireComponent implements OnInit {
           qaMap.set(aIndex, ansStr);
           //console.log('Setting the qaMap for ' + aIndex + ' with ' + ansStr);
         }
+      } else {
+          for(var ansStr of this.inpValue.split(', ')) {
+            aIndex++;
+            qaMap.set(aIndex, ansStr);
+            //console.log('Setting the qaMap when comes from summary page for ' + aIndex + ' with ' + ansStr);
+          }
       }
-      for(var ansStr of this.inpValue.split(', ')) {
-        aIndex++;
-        qaMap.set(aIndex, ansStr);
-        //console.log('Setting the qaMap when comes from summary page for ' + aIndex + ' with ' + ansStr);
-      }
+
     }
 
     for(var ques of records) {
