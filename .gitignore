@@ -48,3 +48,6 @@ testem.log
 # System Files
 .DS_Store
 Thumbs.db
+
+# Ignore files related to API keys
+.env
