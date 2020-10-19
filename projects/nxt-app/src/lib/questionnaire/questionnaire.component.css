@@ -103,3 +103,8 @@ input[type="file"] {
   margin: 0px !important;
   text-align: left !important;
 }
+
+.btn-color{
+  background-color: #00356f;
+  color: #fff;
+}
