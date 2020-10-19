@@ -124,7 +124,7 @@
   </div>
   <div class="" style="display: flex; padding-top: 20px;">
     <div class="col-md-6" [style.visibility]="questionStack.length > 0 ? 'visible':'hidden'">
-      <button class="btn btn-primary btn-lg btn-block" style="color: #00356f;background-color: transparent;border-color: transparent;" (click)="handleBackClick()">zurück</button>
+      <button class="btn btn-primary btn-lg btn-block btn-back-color" (click)="handleBackClick()">zurück</button>
     </div>
     <div class="col-md-6">
       <button class="btn btn-primary btn-lg btn-block btn-color" (click)="handleNextClick()">weiter</button>
@@ -160,7 +160,7 @@
 
   <div class="" style="display: flex; padding-top: 20px;">
     <div class="col-md-6">
-      <button class="btn btn-primary btn-lg btn-block" style="color: #00356f;background-color: transparent;border-color: transparent;" (click)="handleBackClick()">zurück</button>
+      <button class="btn btn-primary btn-lg btn-block btn-back-color"  (click)="handleBackClick()">zurück</button>
     </div>
     <div class="col-md-6">
       <button class="btn btn-primary btn-lg btn-block btn-color" (click)="handleSubmitClick()">absenden</button>
