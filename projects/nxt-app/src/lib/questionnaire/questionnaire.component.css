@@ -108,3 +108,9 @@ input[type="file"] {
   background-color: #00356f;
   color: #fff;
 }
+
+.btn-back-color{
+  color: #00356f;
+  background-color: transparent;
+  border-color: transparent;
+}
