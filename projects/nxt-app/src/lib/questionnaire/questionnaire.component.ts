@@ -1,7 +1,7 @@
 import { Component, OnInit, OnChanges, Input, Output,EventEmitter } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
-
 import { SalesforceService } from '../services/salesforce.service';
+import { IMyDateModel, IMyDpOptions } from 'mydatepicker';
 import { Question,
          QuestionBook,
          AnswerBook,
@@ -64,9 +64,33 @@ export class QuestionnaireComponent implements OnInit {
   public localDate:string;
   public taFocusOut: boolean = false;
   public summary = [];
+  public selDate: any = {};
+  private today: Date = new Date();
+  private el: HTMLElement;
+
+  public myDatePickerOptions: IMyDpOptions = {
+    dateFormat: 'dd/mm/yyyy',
+    sunHighlight: false,
+    disableDateRanges: [],
+    showClearDateBtn: false,
+    disableSince: {
+      year: this.today.getFullYear(),
+      month: this.today.getMonth() + 1,
+      day: this.today.getDate() + 1
+    },
+    showTodayBtn: false,
+    dayLabels: { su: 'So', mo: 'Mo', tu: 'Di', we: 'Mi', th: 'Do', fr: 'Fr', sa: 'Sa' },
+    monthLabels: { 1: 'Jan', 2: 'Feb', 3: 'Mär', 4: 'Apr', 5: 'Mai', 6: 'Jun', 7: 'Jul', 8: 'Aug', 9: 'Sep', 10: 'Okt', 11: 'Nov', 12: 'Dez' }
+  };
 
   constructor(private sfService: SalesforceService, private route: ActivatedRoute) {
 
+  }
+
+  onDateChanged(event: IMyDateModel) { //to change the border color
+    this.inpValue = event.date.year + '-' + event.date.month + '-' + event.date.day;
+    const htmlElement: HTMLElement = <HTMLElement>this.el.getElementsByClassName('mydp').item(0);
+    htmlElement.style.borderColor = '#87be1c';
   }
 
   ngOnInit() {
