@@ -2,6 +2,10 @@ export class QuestionBook {
   Id: number;
   Name: string;
   Category__c: string;
+  Next__c : string;
+  Cancel__c : string;
+  Back__c : string;
+  Submit__c : string;
   First_Question__c: string;
   Title__c: string;
   Total_Questions__c: number;
@@ -15,10 +19,6 @@ export class Question {
   Question__c: string;
   Type__c: string;
   Next_Question__c?: string;
-  Next__c : string;
-  Cancel__c : string;
-  Back__c : string;
-  Submit__c : string;
   Is_Optional__c: boolean;
   Is_Title__c: boolean;
   Group__c: string;

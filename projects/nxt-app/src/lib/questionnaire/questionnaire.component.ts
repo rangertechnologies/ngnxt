@@ -16,7 +16,8 @@ import { TESTQUESTION,
          TAQUESTION,
          RADIOQUESTION,
          CHECKQUESTION,
-         BOOKQUESTION } from '../sample';
+         BOOKQUESTION, 
+         TESTQB} from '../sample';
 
 @Component({
   selector: 'lib-questionnaire',
@@ -111,6 +112,7 @@ export class QuestionnaireComponent implements OnInit {
       } else {
         console.log('Setting the Question Directly for testing');
         this.questionItem = BOOKQUESTION;
+        this.qbItem = TESTQB;
         this.processQuestion();
       }
     }
