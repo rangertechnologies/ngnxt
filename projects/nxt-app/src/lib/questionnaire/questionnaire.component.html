@@ -124,10 +124,10 @@
   </div>
   <div class="" style="display: flex; padding-top: 20px;">
     <div class="col-md-6" [style.visibility]="questionStack.length > 0 ? 'visible':'hidden'">
-      <button class="btn btn-primary btn-lg btn-block btn-back-color" (click)="handleBackClick()">{{questionItem.Back__c}}</button>
+      <button class="btn btn-primary btn-lg btn-block btn-back-color" (click)="handleBackClick()">{{qbItem.Back__c}}</button>
     </div>
     <div class="col-md-6">
-      <button class="btn btn-primary btn-lg btn-block btn-color" (click)="handleNextClick()">{{questionItem.Next__c}}</button>
+      <button class="btn btn-primary btn-lg btn-block btn-color" (click)="handleNextClick()">{{qbItem.Next__c}}</button>
     </div>
   </div>
 
@@ -160,10 +160,10 @@
 
   <div class="" style="display: flex; padding-top: 20px;">
     <div class="col-md-6">
-      <button class="btn btn-primary btn-lg btn-block btn-back-color"  (click)="handleBackClick()">{{questionItem.Back__c}}</button>
+      <button class="btn btn-primary btn-lg btn-block btn-back-color"  (click)="handleBackClick()">{{qbItem.Back__c}}</button>
     </div>
     <div class="col-md-6">
-      <button class="btn btn-primary btn-lg btn-block btn-color" (click)="handleSubmitClick()">{{questionItem.Submit__c}}</button>
+      <button class="btn btn-primary btn-lg btn-block btn-color" (click)="handleSubmitClick()">{{qbItem.Submit__c}}</button>
     </div>
   </div>
 </div>

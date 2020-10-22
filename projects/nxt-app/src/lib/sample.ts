@@ -9,6 +9,19 @@ export const TESTQUESTIONS: Question[] = [
 ];
 */
 
+// Dynamic Field Changes
+export const TESTQB: QuestionBook = {
+Id: 2,
+Name: 'QB-0000',
+Category__c: 'Simple',
+Next__c : 'weiter',
+Cancel__c :'zurück',
+Back__c : 'zurück',
+Submit__c : 'absenden',
+First_Question__c: '1',
+Title__c: 'Demo Unconditional',
+Total_Questions__c: 3,
+}
 // Text Question
 export const TESTQUESTION: Question = {
 Id: '11',
@@ -20,10 +33,6 @@ Is_Optional__c: false,
 Is_Title__c: true,
 Group__c: 'Basic',
 Size__c:1,
-Next__c : "weiter",
-Back__c : "zurück",
-Cancel__c : "Cancel",
-Submit__c : "absenden",
 Question_No__c: '1',
 RecordType: {
 Name: 'UNCONDITIONAL'
@@ -41,10 +50,6 @@ Is_Optional__c: false,
 Is_Title__c: true,
 Group__c: 'Basic',
 Size__c:1,
-Next__c: "weiter",
-Back__c : "zurück",
-Cancel__c : "Cancel",
-Submit__c : "absenden",
 Question_No__c: '1',
 RecordType: {
 Name: 'UNCONDITIONAL'
@@ -62,10 +67,6 @@ Is_Optional__c: false,
 Is_Title__c: true,
 Group__c: 'Basic',
 Size__c:1,
-Next__c: "weiter",
-Back__c : "zurück",
-Cancel__c : "Cancel",
-Submit__c : "absenden",
 Question_No__c: '1',
 RecordType: {
 Name: 'UNCONDITIONAL'
@@ -83,10 +84,6 @@ Is_Optional__c: false,
 Is_Title__c: true,
 Group__c: 'Basic',
 Size__c:1,
-Next__c: "weiter",
-Back__c : "zurück",
-Cancel__c : "Cancel",
-Submit__c : "absenden",
 Question_No__c: '1',
 RecordType: {
 Name: 'UNCONDITIONAL'
@@ -104,10 +101,6 @@ Is_Optional__c: false,
 Is_Title__c: true,
 Group__c: 'Basic',
 Size__c:1,
-Next__c: "weiter",
-Back__c : "zurück",
-Cancel__c : "Cancel",
-Submit__c : "absenden",
 Question_No__c: '5',
 RecordType: {
 Name: 'UNCONDITIONAL'
@@ -147,10 +140,6 @@ Is_Optional__c: false,
 Is_Title__c: false,
 Group__c: 'Basic',
 Size__c:1,
-Next__c: "weiter",
-Back__c : "zurück",
-Cancel__c : "Cancel",
-Submit__c : "absenden",
 Question_No__c: '6',
 RecordType: {
 Name: 'CONDITIONAL'
@@ -190,10 +179,6 @@ Is_Optional__c: false,
 Is_Title__c: true,
 Group__c: 'Basic',
 Size__c:1,
-Next__c: 'weiter',
-Back__c : "zurück",
-Cancel__c : "Cancel",
-Submit__c : "absenden",
 Question_No__c: '7',
 Questions__r: {
 records: [
@@ -203,10 +188,6 @@ records: [
   Type__c: 'Dropdown',
   Question__c: 'Land',
   Size__c:1,
-  Next__c: "weiter",
-  Back__c : "zurück",
-  Cancel__c : "Cancel",
-  Submit__c : "Submit",
   Is_Optional__c: false,
   Is_Title__c: true,
   Group__c: 'Basic',
@@ -241,10 +222,6 @@ records: [
   Name: 'QN-000071',
   Type__c: 'Text',
   Size__c:3,
-  Next__c: "weiter",
-  Back__c : "zurück",
-  Cancel__c : "Cancel",
-  Submit__c : "absenden",
   Question__c: 'PLZ',
   Is_Optional__c: false,
   Is_Title__c: true,
@@ -261,10 +238,6 @@ records: [
   Is_Optional__c: false,
   Is_Title__c: true,
   Size__c:8,
-  Next__c: "weiter",
-  Back__c : "zurück",
-  Cancel__c : "Cancel",
-  Submit__c : "absenden",
   Group__c: 'Basic',
   RecordType: {
     Name: 'UNCONDITIONAL'
@@ -278,10 +251,6 @@ records: [
   Is_Optional__c: false,
   Is_Title__c: true,
   Size__c:8,
-  Next__c: "weiter",
-  Back__c : "zurück",
-  Cancel__c : "Cancel",
-  Submit__c : "absenden",
   Group__c: 'Basic',
   RecordType: {
     Name: 'UNCONDITIONAL'
@@ -295,10 +264,6 @@ records: [
   Is_Optional__c: false,
   Is_Title__c: true,
   Size__c:4,
-  Next__c: "weiter",
-  Back__c : "zurück",
-  Cancel__c : "Cancel",
-  Submit__c : "absenden",
   Group__c: 'Basic',
   RecordType: {
     Name: 'UNCONDITIONAL'
