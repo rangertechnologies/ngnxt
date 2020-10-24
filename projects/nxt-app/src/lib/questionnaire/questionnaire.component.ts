@@ -111,7 +111,7 @@ export class QuestionnaireComponent implements OnInit {
         this.readQuestionBook(this.qbId);
       } else {
         console.log('Setting the Question Directly for testing');
-        this.questionItem = CHECKQUESTION;
+        this.questionItem = FILEQUESTION;
         this.qbItem = TESTQB;
         this.processQuestion();
       }
@@ -229,7 +229,7 @@ export class QuestionnaireComponent implements OnInit {
         var ansWrap = this.answerMap.get(q);
         if(ansWrap) {
           //console.log('Handling Answer for ' + ansWrap.quesId + ' of type ' + ansWrap.qTyp);
-          if(ansWrap.qTyp == 'Book') {
+          if( ansWrap.qTyp == 'Book') {
             var newStr = '';
             for(var ansStr of ansWrap.ansValue.split('@@##$$')) {
               if(ansStr.length > 0){
@@ -242,7 +242,8 @@ export class QuestionnaireComponent implements OnInit {
             }
             ansWrap.ansValue = newStr;
           } else if(ansWrap.qTyp == 'File'){
-            ansWrap.ansValue = ansWrap.ansValue.split('@@##$$')
+            let localArray: string [] = ansWrap.ansValue.split('@@##$$');
+            ansWrap.ansValue = localArray[0];
           }
           this.summary.push(ansWrap);
         }
