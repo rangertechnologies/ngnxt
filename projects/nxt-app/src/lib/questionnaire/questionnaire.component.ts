@@ -111,13 +111,18 @@ export class QuestionnaireComponent implements OnInit {
         this.readQuestionBook(this.qbId);
       } else {
         console.log('Setting the Question Directly for testing');
-        this.questionItem = BOOKQUESTION;
+        this.questionItem = CHECKQUESTION;
         this.qbItem = TESTQB;
         this.processQuestion();
       }
     }
   }
 
+  trimLastDummy(input: string){
+    return input = input.substring(0,input.length-6);
+  }
+
+  
   handleNextClick() {
     this.clearError();
 
@@ -135,6 +140,7 @@ export class QuestionnaireComponent implements OnInit {
         this.inpValue += ov.Value__c + '@@##$$';
         recordId = ov.Next_Question__c;
       }
+      this.inpValue = this.trimLastDummy(this.inpValue);
     } else if(this.bookFlag) {
       //quesValue += '@@##$$';
       this.inpValue = '';
@@ -147,8 +153,8 @@ export class QuestionnaireComponent implements OnInit {
         //quesValue += item.Question__c + '@@##$$';
         this.inpValue += item.input + '@@##$$';
       }
-
       if(hasMissingInput) { return; }
+      this.inpValue = this.trimLastDummy(this.inpValue);
     } else if(this.dtFlag && this.inpValue) {
       if(this.questionItem.input) {
         this.inpValue += 'T' + this.questionItem.input;
@@ -235,8 +241,9 @@ export class QuestionnaireComponent implements OnInit {
               }
             }
             ansWrap.ansValue = newStr;
+          } else if(ansWrap.qTyp == 'File'){
+            ansWrap.ansValue = ansWrap.ansValue.split('@@##$$')
           }
-
           this.summary.push(ansWrap);
         }
       }
