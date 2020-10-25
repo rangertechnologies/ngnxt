@@ -130,16 +130,18 @@ export class QuestionnaireComponent implements OnInit {
       }
     }
   }
+  
+  trimLastDummy(input: string){
+    return input = input.substring(0,input.length-6);
+  }
 
+  
   getProperTime(def:string,input:string){
     return input === '' ? def : input;
   }
 
   handleNextClick() {
     this.clearError();
-    console.log('this.selectedHour -->'+this.selectedHour + '<--');
-    console.log('this.selectedMinute -->'+this.selectedMinute + '<--');
-    console.log('this.selectedMeridiem -->'+this.selectedMeridiem + '<--');
     var recordId = null;
     var cQuestion: Question = new Question();
     cQuestion = this.questionItem;
@@ -154,6 +156,7 @@ export class QuestionnaireComponent implements OnInit {
         this.inpValue += ov.Value__c + '@@##$$';
         recordId = ov.Next_Question__c;
       }
+      this.inpValue = this.trimLastDummy(this.inpValue);
     } else if(this.bookFlag) {
       //quesValue += '@@##$$';
       this.inpValue = '';
@@ -166,20 +169,14 @@ export class QuestionnaireComponent implements OnInit {
         //quesValue += item.Question__c + '@@##$$';
         this.inpValue += item.input + '@@##$$';
       }
-
       if(hasMissingInput) { return; }
+      this.inpValue = this.trimLastDummy(this.inpValue);
     } else if(this.dtFlag && this.inpValue) {
       this.selectedHour = this.getProperTime('12',this.selectedHour);
       this.selectedMinute = this.getProperTime('00',this.selectedMinute);
       this.selectedMeridiem = this.getProperTime('AM',this.selectedMeridiem);
-      console.log('inside date filled');
-      console.log('this.selectedHour -->'+this.selectedHour + '<--');
-      console.log('this.selectedMinute -->'+this.selectedMinute + '<--');
-      console.log('this.selectedMeridiem -->'+this.selectedMeridiem + '<--');
       this.inpValue = this.inpValue + 'T' + (this.selectedMeridiem === 'PM' && this.selectedHour != '12' ? (Number(this.selectedHour)+12) : this.selectedHour ) + ':' + this.selectedMinute + this.selectedMeridiem; 
-      console.log(this.inpValue);
     } else if(this.fileFlag){
-      console.log('inside file attachment');
       this.inpValue = '';
       if(this.attachments.length > 0) {
         this.inpValue = this.attachment.name + '@@##$$' +   this.fileContents;
@@ -251,7 +248,7 @@ export class QuestionnaireComponent implements OnInit {
         var ansWrap = this.answerMap.get(q);
         if(ansWrap) {
           //console.log('Handling Answer for ' + ansWrap.quesId + ' of type ' + ansWrap.qTyp);
-          if(ansWrap.qTyp == 'Book') {
+          if( ansWrap.qTyp == 'Book') {
             var newStr = '';
             for(var ansStr of ansWrap.ansValue.split('@@##$$')) {
               if(ansStr.length > 0){
@@ -263,8 +260,10 @@ export class QuestionnaireComponent implements OnInit {
               }
             }
             ansWrap.ansValue = newStr;
+          } else if(ansWrap.qTyp == 'File'){
+            let localArray: string [] = ansWrap.ansValue.split('@@##$$');
+            ansWrap.ansValue = localArray[0];
           }
-
           this.summary.push(ansWrap);
         }
       }
