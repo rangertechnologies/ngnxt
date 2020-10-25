@@ -181,7 +181,12 @@ export class QuestionnaireComponent implements OnInit {
     } else if(this.fileFlag){
       console.log('inside file attachment');
       this.inpValue = '';
-      this.inpValue = this.attachment.name + '@@##$$' +   this.fileContents;
+      if(this.attachments.length > 0) {
+        this.inpValue = this.attachment.name + '@@##$$' +   this.fileContents;
+      } else {
+        this.questionItem.error = new ErrorWrapper();
+        return;
+      }
     }
 
     console.log('before calling saveAnswer with ' + this.inpValue);

@@ -89,8 +89,8 @@
   </div>
 
   <div *ngIf="fileFlag">
-    <div class="info-alert" style="margin-top: 1rem;">
-      <label class="picture-upload custom-file-upload" for="file-upload" style="background-color: #ffffff;">
+    <div class="info-alert" style="margin-top: 1rem;" style.border-color = "{{this.questionItem.error ? 'red' : ''}}">
+      <label class="picture-upload custom-file-upload" for="file-upload" style="background-color: #ffffff;" >
         <span class="picture-upload-child">
           <i class="fa fa-file-image-o fa-5x" aria-hidden="true" style="color:#99B5CE"></i>
         </span>
@@ -99,7 +99,7 @@
         </span>
       </label>
     </div>
-    <input id="file-upload" type="file" accept=".pdf, .png, .jpg, .jpeg, .heic, .application/pdf" style.background-color = "{{this.questionItem.error ? 'red' : ''}}" (change)="uploadFile($event)"/>
+    <input id="file-upload" type="file" accept=".pdf, .png, .jpg, .jpeg, .heic, .application/pdf" (change)="uploadFile($event)"/>
   </div>
   <ul *ngIf="attachments?.length > 0 && fileFlag" style="list-style-type:none;margin-left:0;margin-bottom:0.7rem" class="col-md-12">
     <li *ngFor="let attachment of attachments" style="text-align:left;">{{getFileName(attachment)}}<span style="float:right;cursor:pointer;padding: 0px;" (click)="deleteAttachment(attachment)">X</span></li>
