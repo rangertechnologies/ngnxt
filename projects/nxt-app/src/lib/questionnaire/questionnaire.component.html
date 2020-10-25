@@ -68,16 +68,24 @@
     </div>
     <div class="col-md-6" >
       <label [style.color]="questionItem.error ? 'red' : (questionItem?.input?.length > 0 ? '#87be1c' : '')" class="date-time">Zeit</label>
-      <div style="display: flex;">
-        <input type="time" id="time"
-              [(ngModel)]="questionItem.input"
-              (click)="clearError()"
-              pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}"
-              [style.border-color] = "questionItem.error ? 'red' : (questionItem?.input?.length > 0 ? '#87be1c' : '')"
-              placeholder="Time" required="" style="width: 100%;padding: 10px;"/>
-        <i class="fa fa-check" aria-hidden="true" style="color:#87be1c;margin-left: -4rem;z-index: 1;margin-top: 1rem;" *ngIf="questionItem?.input?.length > 0"></i>
-      </div>
-    </div>
+        <div class="dateandTime">
+            <select name="hours" class="datetime showHour" [(ngModel)]="selectedHour" id="hour">
+              <option value="">HH</option>
+              <option [value]="hour" *ngFor="let hour of hours">{{hour}}</option>
+            </select> 
+            <span class="colon"> : </span>
+            <select name="minutes" class="datetime" [(ngModel)]="selectedMinute" id="minute">
+              <option value="">MM</option>
+              <option [value]="minute" *ngFor="let minute of minutes">{{minute}}</option>
+            </select>
+            <span class="colon"> : </span>
+            <select name="AM/PM" class="datetime" [(ngModel)]="selectedMeridiem" id="meridiem">
+              <option value="AM">AM</option>
+              <option value="PM">PM</option>
+            </select> 
+          </div>
+        </div>
+      <i class="fa fa-check" aria-hidden="true" style="color:#87be1c;margin-left: -5rem;z-index: 1;margin-top: 2.5rem;" *ngIf="questionItem?.input?.length > 0"></i>
   </div>
 
   <div *ngIf="fileFlag">
