@@ -79,6 +79,8 @@ export class QuestionnaireComponent implements OnInit {
   public selectedMinute: string = '';
   public selectedMeridiem: string = '';
 
+  public progressStyle: string = 'width:0%';
+
   public myDatePickerOptions: IMyDpOptions = {
     dateFormat: 'dd/mm/yyyy',
     sunHighlight: false,
@@ -227,6 +229,9 @@ export class QuestionnaireComponent implements OnInit {
     } else {
       recordId = cQuestion.Next_Question__c;
     }
+
+    // Calling the progres bar update function
+    this.updateProgress();
 
     if(recordId) {
       console.log('Before Calling readQuestion() using ' + recordId);
@@ -566,5 +571,13 @@ export class QuestionnaireComponent implements OnInit {
   getFileName(fileNamewithIdandType) {  //truncate file path
     var fileNameWithType = fileNamewithIdandType.substr(fileNamewithIdandType.indexOf('::::') + 4);
     return fileNameWithType; //fileNameWithType.replace(/^(.*(\/|\\))(.+)$/, '$3');
+  }
+
+  // Update Function for the Progress Bar
+  updateProgress() {
+    var width = this.answerMap.size / this.qbItem.Total_Questions__c * 100;
+    console.log('Progress bar width => ' + width);
+    this.progressStyle = 'width:' + width + '%';
+    // $('#progress #bar').animate({'width':width + '%'});
   }
 }

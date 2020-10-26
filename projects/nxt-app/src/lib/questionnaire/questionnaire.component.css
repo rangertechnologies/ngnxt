@@ -18,6 +18,17 @@ label {
   align-items: center;
 }
 
+#progress{
+  height:20px;
+  border:solid 1px #000;
+}
+
+#progress #bar{
+  height:20px;
+  width:0%;
+  background:#f00;
+}
+
 span {
   padding: 10px;
 }
