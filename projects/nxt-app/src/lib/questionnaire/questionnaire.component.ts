@@ -166,8 +166,7 @@ export class QuestionnaireComponent implements OnInit {
           item.error = new ErrorWrapper();
           hasMissingInput = true;
         }
-        //quesValue += item.Question__c + '@@##$$';
-        this.inpValue += item.input + '@@##$$';
+        this.inpValue += (item.input != undefined ? item.input : '') + '@@##$$';
       }
       if(hasMissingInput) { return; }
       this.inpValue = this.trimLastDummy(this.inpValue);
