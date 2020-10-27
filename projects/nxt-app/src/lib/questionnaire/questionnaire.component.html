@@ -13,9 +13,9 @@
   <div *ngIf="questionItem.Additional_Text__c">
     <div class="info-alert" style="margin-bottom: 1rem;display: flex;">
       <i class="fa fa-info fa-3x" aria-hidden="true" style="color:#99B5CE;margin-left: 3rem;"></i>
-      <span style="padding-left: 2rem;">
-        {{questionItem.Additional_Text__c}}
-      </span>
+      
+      <p style="padding-left: 2rem;" [innerHTML]="yasar"></p>
+     
     </div>
   </div>
 
@@ -127,7 +127,7 @@
   <div>
     <br/><br/><br/>
     <span>Question # and Name for Reference: </span>
-    {{questionItem.Question_No__c}} and {{questionItem.Name}}
+    {{questionItem.Question_No__c}} and {{questionItem.Name}} 
     <div *ngIf="questionItem.error">
       <br/>{{questionItem.error.errorCode}}
       <br/>{{questionItem.error.errorMsg}}
@@ -159,4 +159,13 @@
       <button class="btn btn-primary btn-lg btn-block btn-color" (click)="handleSubmitClick()">{{questionItem.Submit__c}}</button>
     </div>
   </div>
+  
+    
+      
+  
+  
+    
+     
+    
+  
 </div>

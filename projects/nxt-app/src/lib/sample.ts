@@ -28,6 +28,7 @@ Question_No__c: '1',
 RecordType: {
 Name: 'UNCONDITIONAL'
 },
+Additional_Text__c: '<p>Uns ist es wichtig, die Vorteile der digitalen Kommunikation zu nutzen!</p><p><br></p><p>Verträge schließen wir nach dem sogenannten Antragsmodell, d.h. Sie oder Ihr Vertriebspartner übermitteln uns auf elektronischem Weg über das Onlineportal des Vertriebspartners einen unverbindlichen Antrag.</p><p><br></p><p>Deswegen benötigen wir von Ihnen immer eine aktuelle E-Mail-Adresse.Wir prüfen Ihren Antrag. </p><p><br></p><p>Der Vertrag kommt erst zustande, wenn wir Ihren Antrag annehmen. Annahme oder Ablehnung erfolgen durch eine gesonderte Mitteilung.</p><p><br></p><p>Wir glauben, dass die digitale Kommunikation auch für Sie viele Vorteile bietet!</p><p><br></p><p>Deswegen arbeiten wir mit einer speziell für unsere Versicherungsprodukte entwickelten App (App). Dort erreichen wir Sie und Sie uns schnell und unkompliziert, egal ob im Schadensfall, bei Vertragsänderung oder für Informationen. </p><p><br></p><p>Sie erklären sich damit einverstanden, dass rechtlich bedeutsame Erklärungen – soweit gesetzlich zulässig - digital per E-Mail an die von Ihnen zuletzt genannte E-Mail-Adresse zugestellt werden können.</p>',
 };
 
 // DateTime Question

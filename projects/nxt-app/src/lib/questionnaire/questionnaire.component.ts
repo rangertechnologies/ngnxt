@@ -1,7 +1,7 @@
-import { Component, OnInit, OnChanges, Input, Output,EventEmitter } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { SalesforceService } from '../services/salesforce.service';
 import { IMyDateModel, IMyDpOptions } from 'mydatepicker';
+import { DomSanitizer } from '@angular/platform-browser';
 import { Question,
          QuestionBook,
          AnswerBook,
@@ -16,7 +16,6 @@ import { TESTQUESTION,
          TAQUESTION,
          RADIOQUESTION,
          CHECKQUESTION,
-         BOOKQUESTION } from '../sample';
 
 @Component({
   selector: 'lib-questionnaire',
@@ -31,7 +30,7 @@ export class QuestionnaireComponent implements OnInit {
 
   public abItem: AnswerBook;
   public qbItem: QuestionBook;
-  public questionItem: Question;
+  public questionItem: Question ;
   public answerWrap: AnswerWrapper;
 
   // CONDITIONAL TYPES
@@ -67,6 +66,14 @@ export class QuestionnaireComponent implements OnInit {
   public selDate: any = {};
   private today: Date = new Date();
   private el: HTMLElement;
+  public  yasar:any;
+
+
+
+
+  // progrssspercentage(){
+  //   length=BOOKQUESTION.Question__c.length;
+  // }
 
   public myDatePickerOptions: IMyDpOptions = {
     dateFormat: 'dd/mm/yyyy',
@@ -82,10 +89,22 @@ export class QuestionnaireComponent implements OnInit {
     dayLabels: { su: 'So', mo: 'Mo', tu: 'Di', we: 'Mi', th: 'Do', fr: 'Fr', sa: 'Sa' },
     monthLabels: { 1: 'Jan', 2: 'Feb', 3: 'Mär', 4: 'Apr', 5: 'Mai', 6: 'Jun', 7: 'Jul', 8: 'Aug', 9: 'Sep', 10: 'Okt', 11: 'Nov', 12: 'Dez' }
   };
+ 
 
-  constructor(private sfService: SalesforceService, private route: ActivatedRoute) {
+  
+
+  constructor(private sfService: SalesforceService, private route: ActivatedRoute ,private sanitizer: DomSanitizer) {
+   
+    
+    
 
   }
+ 
+  
+  
+ 
+ 
+  
 
   onDateChanged(event: IMyDateModel) { //to change the border color
     this.inpValue = event.date.year + '-' + event.date.month + '-' + event.date.day;
@@ -96,7 +115,11 @@ export class QuestionnaireComponent implements OnInit {
   ngOnInit() {
     console.log('inside Questionnaire ngOnInit');
     this.processQB();
+   
+    
+    
   }
+ 
 
   ngOnChanges() {
     console.log('inside Questionnaire ngOnChanges');
@@ -109,16 +132,21 @@ export class QuestionnaireComponent implements OnInit {
         console.log('Before Calling readQuestionBook() using ' + this.qbId);
         this.readQuestionBook(this.qbId);
       } else {
-        console.log('Setting the Question Directly for testing');
-        this.questionItem = BOOKQUESTION;
+        console.log( 'Setting the Question Directly for testing');
+        this.questionItem =TESTQUESTION;
+        this.qbItem=TESTQB;
         this.processQuestion();
       }
     }
+    this.yasar=this.sanitizer.bypassSecurityTrustHtml(this.questionItem.Additional_Text__c);
+ 
+    
   }
 
   handleNextClick() {
     this.clearError();
 
+    this.questionItem =DTQUESTION;
     var recordId = null;
     var cQuestion: Question = new Question();
     cQuestion = this.questionItem;
