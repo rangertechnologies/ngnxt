@@ -93,5 +93,15 @@ gulp.task('pkg-deploy', function () {
     }))
 });
 
+gulp.task('prio-deploy', function () {
+  return gulp.src('./package/**', { base: "." })
+    .pipe(zip('package.zip'))
+    .pipe(forceDeploy({
+      username: process.env.PRIO_USERNAME,
+      password: process.env.PRIO_PASSWORD,
+      loginUrl: process.env.PRIO_URL
+    }))
+});
+
 gulp.task('build-dev-static', gulp.series('create-package', 'dev-staticresources'))
-gulp.task('build-pkg-static', gulp.series('create-package', 'pkg-staticresources'))
+gulp.task('build-prod-static', gulp.series('create-package', 'pkg-staticresources'))

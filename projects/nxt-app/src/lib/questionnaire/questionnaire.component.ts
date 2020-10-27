@@ -474,7 +474,7 @@ export class QuestionnaireComponent implements OnInit {
     var qaMap = new Map();
     if(this.inpValue) {
       var aIndex = 0;
-      if(this.inpValue.search('@@##$$') != -1){
+      if(this.inpValue.search(', ') == -1){
         for(var ansStr of this.inpValue.split('@@##$$')) {
           aIndex++;
           qaMap.set(aIndex, ansStr);
@@ -484,10 +484,9 @@ export class QuestionnaireComponent implements OnInit {
           for(var ansStr of this.inpValue.split(', ')) {
             aIndex++;
             qaMap.set(aIndex, ansStr);
-            //console.log('Setting the qaMap when comes from summary page for ' + aIndex + ' with ' + ansStr);
+            //console.log('Setting the qaMap ' + aIndex + ' with ' + ansStr);
           }
-      }
-
+      }  
     }
 
     for(var ques of records) {
