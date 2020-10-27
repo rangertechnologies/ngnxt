@@ -9,7 +9,7 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "devstatic": "ng build --prod --output-hashing none && gulp rm && gulp rmmap && gulp build-prod-static && gulp dev-deploy",
+    "devstatic": "ng build --prod --output-hashing none && gulp rm && gulp rmmap && gulp build-dev-static && gulp dev-deploy",
     "pkgstatic": "ng build --prod --output-hashing none && gulp rm && gulp rmmap && gulp build-prod-static && gulp pkg-deploy",
     "priostatic": "ng build --prod --output-hashing none && gulp rm && gulp rmmap && gulp build-prod-static && gulp prio-deploy",
     "postinstall": "node src/version.js"

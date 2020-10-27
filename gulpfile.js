@@ -59,14 +59,14 @@ gulp.task('create-package', function () {
     .pipe(gulp.dest('package/'));
 });
 
-gulp.task('sandbox-staticresources', function () {
+gulp.task('dev-staticresources', function () {
   return gulp.src('./'+distPath+'/**')
     .pipe(zip(`${dev_resources}.resource`))
     .pipe(file(`${dev_resources}.resource-meta.xml`, resourcesMetaXML))
     .pipe(gulp.dest('package/staticresources/'));
 });
 
-gulp.task('production-staticresources', function () {
+gulp.task('pkg-staticresources', function () {
   return gulp.src('./'+distPath+'/**')
     .pipe(zip(`${pkg_resources}.resource`))
     .pipe(file(`${pkg_resources}.resource-meta.xml`, resourcesMetaXML))
@@ -103,5 +103,5 @@ gulp.task('prio-deploy', function () {
     }))
 });
 
-gulp.task('build-dev-static', gulp.series('create-package', 'sandbox-staticresources'))
-gulp.task('build-prod-static', gulp.series('create-package', 'production-staticresources'))
+gulp.task('build-dev-static', gulp.series('create-package', 'dev-staticresources'))
+gulp.task('build-prod-static', gulp.series('create-package', 'pkg-staticresources'))
