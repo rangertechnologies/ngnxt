@@ -1,5 +1,6 @@
-import { ActivatedRoute, Params } from '@angular/router';
 import { Component, OnInit, OnChanges, Input, Output,EventEmitter} from '@angular/core';
+import { ActivatedRoute, Params } from '@angular/router';
+
 import { SalesforceService } from '../services/salesforce.service';
 import { IMyDateModel, IMyDpOptions } from 'mydatepicker';
 import { DomSanitizer } from '@angular/platform-browser';
@@ -70,6 +71,13 @@ export class QuestionnaireComponent implements OnInit {
   private today: Date = new Date();
   private el: HTMLElement;
   public  yasar:any;
+
+
+
+
+  // progrssspercentage(){
+  //   length=BOOKQUESTION.Question__c.length;
+  // }
   public hours: string[] = ['01','02','03','04','05','06','07','08','09','10','11','12'];
   public minutes: string[] = ['00','01','02','03','04','05','06','07','08','09','10',
                                    '11','12','13','14','15','16','17','18','19','20',
@@ -170,6 +178,7 @@ export class QuestionnaireComponent implements OnInit {
 
   handleNextClick() {
     this.clearError();
+    this.questionItem =DTQUESTION;
     var recordId = null;
     var cQuestion: Question = new Question();
     cQuestion = this.questionItem;
