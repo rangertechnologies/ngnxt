@@ -18,6 +18,7 @@ import { TESTQUESTION,
          CHECKQUESTION,
          BOOKQUESTION, 
          TESTQB} from '../sample';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'lib-questionnaire',
@@ -68,6 +69,7 @@ export class QuestionnaireComponent implements OnInit {
   public selDate: any = {};
   private today: Date = new Date();
   private el: HTMLElement;
+  public innerhtml:any;
   public hours: string[] = ['01','02','03','04','05','06','07','08','09','10','11','12'];
   public minutes: string[] = ['00','01','02','03','04','05','06','07','08','09','10',
                                    '11','12','13','14','15','16','17','18','19','20',
@@ -78,7 +80,6 @@ export class QuestionnaireComponent implements OnInit {
   public selectedHour: string = '';
   public selectedMinute: string = '';
   public selectedMeridiem: string = '';
-
   public myDatePickerOptions: IMyDpOptions = {
     dateFormat: 'dd/mm/yyyy',
     sunHighlight: false,
@@ -94,7 +95,7 @@ export class QuestionnaireComponent implements OnInit {
     monthLabels: { 1: 'Jan', 2: 'Feb', 3: 'Mär', 4: 'Apr', 5: 'Mai', 6: 'Jun', 7: 'Jul', 8: 'Aug', 9: 'Sep', 10: 'Okt', 11: 'Nov', 12: 'Dez' }
   };
 
-  constructor(private sfService: SalesforceService, private route: ActivatedRoute) {
+  constructor(private sfService: SalesforceService, private route: ActivatedRoute ,private sanitizer: DomSanitizer) {
 
   }
 
@@ -330,6 +331,7 @@ export class QuestionnaireComponent implements OnInit {
     }
 
     this.processQuestion();
+    this.innerhtml=this.sanitizer.bypassSecurityTrustHtml(this.questionItem.Additional_Text__c);
   }
 
   private failureRead = (response) => {
