@@ -1,3 +1,4 @@
+import { Component, OnInit, OnChanges, Input, Output,EventEmitter} from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { SalesforceService } from '../services/salesforce.service';
 import { IMyDateModel, IMyDpOptions } from 'mydatepicker';
@@ -16,6 +17,9 @@ import { TESTQUESTION,
          TAQUESTION,
          RADIOQUESTION,
          CHECKQUESTION,
+         BOOKQUESTION, 
+         TESTQB} from '../sample';
+
 
 @Component({
   selector: 'lib-questionnaire',
@@ -74,6 +78,16 @@ export class QuestionnaireComponent implements OnInit {
   // progrssspercentage(){
   //   length=BOOKQUESTION.Question__c.length;
   // }
+  public hours: string[] = ['01','02','03','04','05','06','07','08','09','10','11','12'];
+  public minutes: string[] = ['00','01','02','03','04','05','06','07','08','09','10',
+                                   '11','12','13','14','15','16','17','18','19','20',
+                                   '21','22','23','24','25','26','27','28','29','30',
+                                   '31','32','33','34','35','36','37','38','39','40',
+                                   '41','42','43','44','45','46','47','48','49','50',
+                                   '51','52','53','54','55','56','57','58','59'];
+  public selectedHour: string = '';
+  public selectedMinute: string = '';
+  public selectedMeridiem: string = '';
 
   public myDatePickerOptions: IMyDpOptions = {
     dateFormat: 'dd/mm/yyyy',
@@ -114,6 +128,9 @@ export class QuestionnaireComponent implements OnInit {
 
   ngOnInit() {
     console.log('inside Questionnaire ngOnInit');
+    this.selectedHour = "";
+    this.selectedMinute = "";
+    this.selectedMeridiem = "AM";
     this.processQB();
    
     
@@ -132,9 +149,9 @@ export class QuestionnaireComponent implements OnInit {
         console.log('Before Calling readQuestionBook() using ' + this.qbId);
         this.readQuestionBook(this.qbId);
       } else {
-        console.log( 'Setting the Question Directly for testing');
-        this.questionItem =TESTQUESTION;
-        this.qbItem=TESTQB;
+        console.log('Setting the Question Directly for testing');
+        this.questionItem = DTQUESTION;
+        this.qbItem = TESTQB;
         this.processQuestion();
       }
     }
@@ -142,10 +159,18 @@ export class QuestionnaireComponent implements OnInit {
  
     
   }
+  
+  trimLastDummy(input: string){
+    return input = input.substring(0,input.length-6);
+  }
+
+  
+  getProperTime(def:string,input:string){
+    return input === '' ? def : input;
+  }
 
   handleNextClick() {
     this.clearError();
-
     this.questionItem =DTQUESTION;
     var recordId = null;
     var cQuestion: Question = new Question();
@@ -161,6 +186,7 @@ export class QuestionnaireComponent implements OnInit {
         this.inpValue += ov.Value__c + '@@##$$';
         recordId = ov.Next_Question__c;
       }
+      this.inpValue = this.trimLastDummy(this.inpValue);
     } else if(this.bookFlag) {
       //quesValue += '@@##$$';
       this.inpValue = '';
@@ -173,18 +199,21 @@ export class QuestionnaireComponent implements OnInit {
         //quesValue += item.Question__c + '@@##$$';
         this.inpValue += item.input + '@@##$$';
       }
-
       if(hasMissingInput) { return; }
+      this.inpValue = this.trimLastDummy(this.inpValue);
     } else if(this.dtFlag && this.inpValue) {
-      if(this.questionItem.input) {
-        this.inpValue += 'T' + this.questionItem.input;
-      } else {
-        this.inpValue += 'T00:00AM';
-      }
+      this.selectedHour = this.getProperTime('12',this.selectedHour);
+      this.selectedMinute = this.getProperTime('00',this.selectedMinute);
+      this.selectedMeridiem = this.getProperTime('AM',this.selectedMeridiem);
+      this.inpValue = this.inpValue + 'T' + (this.selectedMeridiem === 'PM' && this.selectedHour != '12' ? (Number(this.selectedHour)+12) : this.selectedHour ) + ':' + this.selectedMinute + this.selectedMeridiem; 
     } else if(this.fileFlag){
-      console.log('inside file attachment')
       this.inpValue = '';
-      this.inpValue = this.attachment.name + '@@##$$' +   this.fileContents;
+      if(this.attachments.length > 0) {
+        this.inpValue = this.attachment.name + '@@##$$' +   this.fileContents;
+      } else {
+        this.questionItem.error = new ErrorWrapper();
+        return;
+      }
     }
 
     console.log('before calling saveAnswer with ' + this.inpValue);
@@ -249,7 +278,7 @@ export class QuestionnaireComponent implements OnInit {
         var ansWrap = this.answerMap.get(q);
         if(ansWrap) {
           //console.log('Handling Answer for ' + ansWrap.quesId + ' of type ' + ansWrap.qTyp);
-          if(ansWrap.qTyp == 'Book') {
+          if( ansWrap.qTyp == 'Book') {
             var newStr = '';
             for(var ansStr of ansWrap.ansValue.split('@@##$$')) {
               if(ansStr.length > 0){
@@ -261,8 +290,10 @@ export class QuestionnaireComponent implements OnInit {
               }
             }
             ansWrap.ansValue = newStr;
+          } else if(ansWrap.qTyp == 'File'){
+            let localArray: string [] = ansWrap.ansValue.split('@@##$$');
+            ansWrap.ansValue = localArray[0];
           }
-
           this.summary.push(ansWrap);
         }
       }
@@ -468,7 +499,7 @@ export class QuestionnaireComponent implements OnInit {
     var qaMap = new Map();
     if(this.inpValue) {
       var aIndex = 0;
-      if(this.inpValue.search('@@##$$') != -1){
+      if(this.inpValue.search(', ') == -1){
         for(var ansStr of this.inpValue.split('@@##$$')) {
           aIndex++;
           qaMap.set(aIndex, ansStr);
@@ -478,10 +509,9 @@ export class QuestionnaireComponent implements OnInit {
           for(var ansStr of this.inpValue.split(', ')) {
             aIndex++;
             qaMap.set(aIndex, ansStr);
-            //console.log('Setting the qaMap when comes from summary page for ' + aIndex + ' with ' + ansStr);
+            //console.log('Setting the qaMap ' + aIndex + ' with ' + ansStr);
           }
-      }
-
+      }  
     }
 
     for(var ques of records) {
