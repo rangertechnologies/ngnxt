@@ -18,16 +18,7 @@ label {
   align-items: center;
 }
 
-#progress{
-  height:20px;
-  border:solid 1px #000;
-}
 
-#progress #bar{
-  height:20px;
-  width:0%;
-  background:#f00;
-}
 
 span {
   padding: 10px;
@@ -122,6 +113,19 @@ input[type="file"] {
 
 .btn-back-color{
   color: #00356f;
-  background-color: transparent;
-  border-color: transparent;
+  color: #fff;
+}
+
+#progress{
+  height:20px;
+  border:solid 1px #000;
+}
+
+#progress #bar{
+  height:20px;
+  width:0%;
+  background:#f00;
+}
+span{
+  padding:10 px;
 }

@@ -2,6 +2,8 @@ import { Component, OnInit, OnChanges, Input, Output,EventEmitter } from '@angul
 import { ActivatedRoute, Params } from '@angular/router';
 import { SalesforceService } from '../services/salesforce.service';
 import { IMyDateModel, IMyDpOptions } from 'mydatepicker';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+
 import { Question,
          QuestionBook,
          AnswerBook,
@@ -79,7 +81,9 @@ export class QuestionnaireComponent implements OnInit {
   public selectedMinute: string = '';
   public selectedMeridiem: string = '';
 
-  public progressStyle: string = 'width:0%';
+  // REQ-01
+  public progressStyle: string = '0%';
+  public answerCount: number = 0;
 
   public myDatePickerOptions: IMyDpOptions = {
     dateFormat: 'dd/mm/yyyy',
@@ -95,9 +99,9 @@ export class QuestionnaireComponent implements OnInit {
     dayLabels: { su: 'So', mo: 'Mo', tu: 'Di', we: 'Mi', th: 'Do', fr: 'Fr', sa: 'Sa' },
     monthLabels: { 1: 'Jan', 2: 'Feb', 3: 'Mär', 4: 'Apr', 5: 'Mai', 6: 'Jun', 7: 'Jul', 8: 'Aug', 9: 'Sep', 10: 'Okt', 11: 'Nov', 12: 'Dez' }
   };
+  innerhtml: any;
 
-  constructor(private sfService: SalesforceService, private route: ActivatedRoute) {
-
+  constructor(private sfService: SalesforceService, private route: ActivatedRoute ,private sanitizer: DomSanitizer) {
   }
 
   onDateChanged(event: IMyDateModel) { //to change the border color
@@ -112,11 +116,15 @@ export class QuestionnaireComponent implements OnInit {
     this.selectedMinute = "";
     this.selectedMeridiem = "AM";
     this.processQB();
+    //this.updateProgress();
+    //this.innerhtml=this.sanitizer.bypassSecurityTrustHtml(this.questionItem.Additional_Text__c);
   }
 
   ngOnChanges() {
     console.log('inside Questionnaire ngOnChanges');
     this.processQB();
+    //this.updateProgress();
+    //this.innerhtml=this.sanitizer.bypassSecurityTrustHtml(this.questionItem.Additional_Text__c);
   }
 
   processQB() {
@@ -124,6 +132,7 @@ export class QuestionnaireComponent implements OnInit {
       if(this.qbId.length == 18) {
         console.log('Before Calling readQuestionBook() using ' + this.qbId);
         this.readQuestionBook(this.qbId);
+        
       } else {
         console.log('Setting the Question Directly for testing');
         this.questionItem = DTQUESTION;
@@ -131,6 +140,7 @@ export class QuestionnaireComponent implements OnInit {
         this.processQuestion();
       }
     }
+
   }
   
   trimLastDummy(input: string){
@@ -206,6 +216,7 @@ export class QuestionnaireComponent implements OnInit {
     this.answerWrap.ansValue = this.inpValue;
 
     this.saveAnswer();
+
     // If no error then move to next steps
     if(this.questionItem.error) { return; }
 
@@ -231,6 +242,7 @@ export class QuestionnaireComponent implements OnInit {
     }
 
     // Calling the progres bar update function
+    this.answerCount++;
     this.updateProgress();
 
     if(recordId) {
@@ -278,6 +290,9 @@ export class QuestionnaireComponent implements OnInit {
   }
 
   handleBackClick() {
+    this.answerCount--;
+    this.updateProgress();
+    //this.updateValue();
     if(this.summary) {
       this.summary = [];
     }
@@ -285,7 +300,7 @@ export class QuestionnaireComponent implements OnInit {
     // Read the previous question from DB
     this.readQuestion(this.questionStack.pop());
   }
-
+  
   private readQuestionBook = (uuid: string) => this.sfService.remoteAction('NxtController.process',
     ['QuestionBook', 'read', uuid],
     this.successReadBook,
@@ -336,6 +351,8 @@ export class QuestionnaireComponent implements OnInit {
     }
 
     this.processQuestion();
+    this.innerhtml=this.sanitizer.bypassSecurityTrustHtml(this.questionItem.Additional_Text__c);
+    
   }
 
   private failureRead = (response) => {
@@ -354,6 +371,7 @@ export class QuestionnaireComponent implements OnInit {
   }
 
   private successSave = (response) => {
+    console.log('size',this.answerMap.size);
     console.log('inside successSave');
     console.log(response);
     if(response.status == 'success') {
@@ -574,9 +592,18 @@ export class QuestionnaireComponent implements OnInit {
 
   // Update Function for the Progress Bar
   updateProgress() {
-    var width = this.answerMap.size / this.qbItem.Total_Questions__c * 100;
+    var width =  (this.answerCount / this.qbItem.Total_Questions__c) * 100;
     console.log('Progress bar width => ' + width);
-    this.progressStyle = 'width:' + width + '%';
+    this.progressStyle =  width + '%';
     // $('#progress #bar').animate({'width':width + '%'});
   }
+  // updateValue() {
+  //   this.updateProgress();
+  //   this.currentAnswer = this.currentAnswer + this.progressStyle ;
+  // }
+  // updateValue1() {
+  //   this.updateProgress();
+  //   this.currentAnswer = Number(this.progressStyle) - Number(this.questionStack)
+  // }
 }
+
