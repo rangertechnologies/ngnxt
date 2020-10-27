@@ -106,6 +106,7 @@ export class QuestionnaireComponent implements OnInit {
 
   ngOnInit() {
     console.log('inside Questionnaire ngOnInit');
+    console.log('test');
     this.selectedHour = "";
     this.selectedMinute = "";
     this.selectedMeridiem = "AM";
