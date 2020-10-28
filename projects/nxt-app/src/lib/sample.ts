@@ -33,7 +33,7 @@ Is_Optional__c: false,
 Is_Title__c: true,
 Group__c: 'Basic',
 Size__c:1,
-Question_No__c: 1,
+Question_No__c: '1',
 RecordType: {
 Name: 'UNCONDITIONAL'
 },
