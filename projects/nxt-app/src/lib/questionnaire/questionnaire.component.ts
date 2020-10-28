@@ -590,8 +590,8 @@ export class QuestionnaireComponent implements OnInit {
   updateProgress() {
     var width =  (this.answerCount / this.qbItem.Total_Questions__c) * 100;
     console.log('Progress bar width => ' + width);
-    this.progressStyle =  width + '%';
-    // $('#progress #bar').animate({'width':width + '%'});
+    this.progressStyle =  Math.round(width) + '%';
+    //$('#progress #bar').animate({'width':width + '%'});
   }
 }
 
