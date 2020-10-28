@@ -348,7 +348,7 @@ export class QuestionnaireComponent implements OnInit {
     }
 
     this.processQuestion();
-    this.innerhtml=this.sanitizer.bypassSecurityTrustHtml(this.questionItem.Additional_Text__c);
+    //this.innerhtml=this.sanitizer.bypassSecurityTrustHtml(this.questionItem.Additional_Text__c);
     
   }
 
