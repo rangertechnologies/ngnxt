@@ -22,7 +22,7 @@ export class Question {
   Is_Optional__c: boolean;
   Is_Title__c: boolean;
   Group__c: string;
-  Question_No__c?: number;
+  Question_No__c?: string;
   Question_Options__r?: OptionR;
   Size__c: number;
   Additional_Text__c? : string;

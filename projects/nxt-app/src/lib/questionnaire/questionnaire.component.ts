@@ -101,7 +101,7 @@ export class QuestionnaireComponent implements OnInit {
   };
   innerhtml: any;
 
-  constructor(private sfService: SalesforceService, private route: ActivatedRoute ,private sanitizer: DomSanitizer) {
+  constructor(private sfService: SalesforceService, private route: ActivatedRoute) {
   }
 
   onDateChanged(event: IMyDateModel) { //to change the border color
@@ -116,15 +116,12 @@ export class QuestionnaireComponent implements OnInit {
     this.selectedMinute = "";
     this.selectedMeridiem = "AM";
     this.processQB();
-    //this.updateProgress();
-    //this.innerhtml=this.sanitizer.bypassSecurityTrustHtml(this.questionItem.Additional_Text__c);
+    
   }
 
   ngOnChanges() {
     console.log('inside Questionnaire ngOnChanges');
     this.processQB();
-    //this.updateProgress();
-    //this.innerhtml=this.sanitizer.bypassSecurityTrustHtml(this.questionItem.Additional_Text__c);
   }
 
   processQB() {
@@ -597,13 +594,5 @@ export class QuestionnaireComponent implements OnInit {
     this.progressStyle =  width + '%';
     // $('#progress #bar').animate({'width':width + '%'});
   }
-  // updateValue() {
-  //   this.updateProgress();
-  //   this.currentAnswer = this.currentAnswer + this.progressStyle ;
-  // }
-  // updateValue1() {
-  //   this.updateProgress();
-  //   this.currentAnswer = Number(this.progressStyle) - Number(this.questionStack)
-  // }
 }
 

@@ -124,7 +124,7 @@ input[type="file"] {
 #progress #bar{
   height:20px;
   width:0%;
-  background:#f00;
+  background:#00356F;
 }
 span{
   padding:10 px;
