@@ -1,5 +1,8 @@
 # See http://help.github.com/ignore-files/ for more about ignoring files.
 
+# remove the env file
+.env
+
 # SLDS local files
 /src/assets
 
