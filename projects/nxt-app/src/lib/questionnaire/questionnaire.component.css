@@ -114,3 +114,6 @@ input[type="file"] {
   background-color: transparent;
   border-color: transparent;
 }
+::ng-deep .innerhtml p {
+  margin-bottom: 0px;
+}
