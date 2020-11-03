@@ -116,4 +116,5 @@ input[type="file"] {
 }
 ::ng-deep .innerhtml p {
   margin-bottom: 0px;
+  text-align: left;
 }
