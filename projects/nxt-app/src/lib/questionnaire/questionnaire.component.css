@@ -115,7 +115,6 @@ input[type="file"] {
   color: #ffffff;
   background-color: transparent;
   border-color: transparent;
-<<<<<<< projects/nxt-app/src/lib/questionnaire/questionnaire.component.css
 
 }
 
@@ -141,10 +140,7 @@ span{
   padding:10 px;
 }
 
-=======
-}
 ::ng-deep .innerhtml p {
   margin-bottom: 0px;
   text-align: left;
 }
->>>>>>> projects/nxt-app/src/lib/questionnaire/questionnaire.component.css
