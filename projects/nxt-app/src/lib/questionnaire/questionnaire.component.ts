@@ -3,6 +3,13 @@ import { ActivatedRoute, Params } from '@angular/router';
 import { SalesforceService } from '../services/salesforce.service';
 import { IMyDateModel, IMyDpOptions } from 'mydatepicker';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
+import {MatNativeDateModule} from '@angular/material/core';
+// import { MatStepperModule} from '@angular/material/stepper';
+// import { MatButtonModule} from '@angular/material/button';
+// import { MatFormFieldModule} from '@angular/material/form-field';
+// import { MatInputModule} from '@angular/material/input';
+// import { MatRippleModule} from '@angular/material/ripple';
 
 import { Question,
          QuestionBook,
@@ -82,9 +89,10 @@ export class QuestionnaireComponent implements OnInit {
   public selectedMinute: string = '';
   public selectedMeridiem: string = '';
 
-  // REQ-01
+  // REQ-01 PROGRESS BAR
   public progressStyle: string = '0%';
   public answerCount: number = 0;
+
 
   public myDatePickerOptions: IMyDpOptions = {
     dateFormat: 'dd/mm/yyyy',
@@ -101,7 +109,7 @@ export class QuestionnaireComponent implements OnInit {
     monthLabels: { 1: 'Jan', 2: 'Feb', 3: 'Mär', 4: 'Apr', 5: 'Mai', 6: 'Jun', 7: 'Jul', 8: 'Aug', 9: 'Sep', 10: 'Okt', 11: 'Nov', 12: 'Dez' }
   };
 
-  constructor(private sfService: SalesforceService, private route: ActivatedRoute ,private sanitizer: DomSanitizer) {
+  constructor(private sfService: SalesforceService, private route: ActivatedRoute ,private sanitizer: DomSanitizer,private _formBuilder: FormBuilder) {
 
   }
 
@@ -125,6 +133,7 @@ export class QuestionnaireComponent implements OnInit {
     this.processQB();
   }
 
+  
   processQB() {
     if(this.qbId) {
       if(this.qbId.length == 18) {
@@ -138,8 +147,13 @@ export class QuestionnaireComponent implements OnInit {
         this.processQuestion();
       }
     }
+    // CATEGORIZATION
+    //this.stepperCateg();
+    
 
   }
+
+  
   
   trimLastDummy(input: string){
     return input = input.substring(0,input.length-6);
@@ -237,10 +251,16 @@ export class QuestionnaireComponent implements OnInit {
     } else {
       recordId = cQuestion.Next_Question__c;
     }
+    
+    // CATEGORIZATION
+    //this.stepperCateg();
 
     // Calling the progres bar update function
     this.answerCount++;
     this.updateProgress();
+
+    // CATEGORIZATION
+    //this.stepperCateg();
 
     if(recordId) {
       console.log('Before Calling readQuestion() using ' + recordId);
@@ -289,7 +309,10 @@ export class QuestionnaireComponent implements OnInit {
   handleBackClick() {
     this.answerCount--;
     this.updateProgress();
-    //this.updateValue();
+    
+    // CATEGORIZATION
+    //this.stepperCateg();
+    
     if(this.summary) {
       this.summary = [];
     }
@@ -586,6 +609,16 @@ export class QuestionnaireComponent implements OnInit {
     return fileNameWithType; //fileNameWithType.replace(/^(.*(\/|\\))(.+)$/, '$3');
   }
 
+  //Update function for categorization
+  // stepperCateg() {
+  //   this.firstFormGroup = this._formBuilder.group({
+  //     firstCtrl: ['', Validators.required]
+  //   });
+  //   this.secondFormGroup = this._formBuilder.group({
+  //     secondCtrl: ['', Validators.required]
+  //   });
+    
+  // }
   // Update Function for the Progress Bar
   updateProgress() {
     var width =  (this.answerCount / this.qbItem.Total_Questions__c) * 100;
@@ -593,5 +626,7 @@ export class QuestionnaireComponent implements OnInit {
     this.progressStyle =  Math.round(width) + '%';
     //$('#progress #bar').animate({'width':width + '%'});
   }
+
+  
 }
 
