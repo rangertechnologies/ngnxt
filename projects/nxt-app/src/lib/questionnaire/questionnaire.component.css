@@ -112,14 +112,14 @@ input[type="file"] {
 }
 
 .btn-back-color{
-  color: #ffffff;
+  color:#00356f;
   background-color: transparent;
   border-color: transparent;
 
 }
 
 #progress{
-  width: 93%;
+  display:flex;
   background-color:rgba(236, 225, 225, 0.664);
   margin-left: 44px;
   margin-right: 44px;
