@@ -2,6 +2,9 @@ import { Component, OnInit, OnChanges, Input, Output,EventEmitter } from '@angul
 import { ActivatedRoute, Params } from '@angular/router';
 import { SalesforceService } from '../services/salesforce.service';
 import { IMyDateModel, IMyDpOptions } from 'mydatepicker';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import {FormBuilder } from '@angular/forms';
+
 import { Question,
          QuestionBook,
          AnswerBook,
@@ -18,7 +21,6 @@ import { TESTQUESTION,
          CHECKQUESTION,
          BOOKQUESTION, 
          TESTQB} from '../sample';
-import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'lib-questionnaire',
@@ -80,6 +82,12 @@ export class QuestionnaireComponent implements OnInit {
   public selectedHour: string = '';
   public selectedMinute: string = '';
   public selectedMeridiem: string = '';
+
+  // REQ-01 PROGRESS BAR
+  public progressStyle: string = '0%';
+  public answerCount: number = 0;
+
+
   public myDatePickerOptions: IMyDpOptions = {
     dateFormat: 'dd/mm/yyyy',
     sunHighlight: false,
@@ -95,7 +103,7 @@ export class QuestionnaireComponent implements OnInit {
     monthLabels: { 1: 'Jan', 2: 'Feb', 3: 'Mär', 4: 'Apr', 5: 'Mai', 6: 'Jun', 7: 'Jul', 8: 'Aug', 9: 'Sep', 10: 'Okt', 11: 'Nov', 12: 'Dez' }
   };
 
-  constructor(private sfService: SalesforceService, private route: ActivatedRoute ,private sanitizer: DomSanitizer) {
+  constructor(private sfService: SalesforceService, private route: ActivatedRoute ,private sanitizer: DomSanitizer,private _formBuilder: FormBuilder) {
 
   }
 
@@ -111,6 +119,7 @@ export class QuestionnaireComponent implements OnInit {
     this.selectedMinute = "";
     this.selectedMeridiem = "AM";
     this.processQB();
+    
   }
 
   ngOnChanges() {
@@ -118,11 +127,13 @@ export class QuestionnaireComponent implements OnInit {
     this.processQB();
   }
 
+  
   processQB() {
     if(this.qbId) {
       if(this.qbId.length == 18) {
         console.log('Before Calling readQuestionBook() using ' + this.qbId);
         this.readQuestionBook(this.qbId);
+        
       } else {
         console.log('Setting the Question Directly for testing');
         this.questionItem = DTQUESTION;
@@ -130,7 +141,13 @@ export class QuestionnaireComponent implements OnInit {
         this.processQuestion();
       }
     }
+    // CATEGORIZATION
+    //this.stepperCateg();
+    
+
   }
+
+  
   
   trimLastDummy(input: string){
     return input = input.substring(0,input.length-6);
@@ -204,6 +221,7 @@ export class QuestionnaireComponent implements OnInit {
     this.answerWrap.ansValue = this.inpValue;
 
     this.saveAnswer();
+
     // If no error then move to next steps
     if(this.questionItem.error) { return; }
 
@@ -227,6 +245,16 @@ export class QuestionnaireComponent implements OnInit {
     } else {
       recordId = cQuestion.Next_Question__c;
     }
+    
+    // CATEGORIZATION
+    //this.stepperCateg();
+
+    // Calling the progres bar update function
+    this.answerCount++;
+    this.updateProgress();
+
+    // CATEGORIZATION
+    //this.stepperCateg();
 
     if(recordId) {
       console.log('Before Calling readQuestion() using ' + recordId);
@@ -273,6 +301,12 @@ export class QuestionnaireComponent implements OnInit {
   }
 
   handleBackClick() {
+    this.answerCount--;
+    this.updateProgress();
+    
+    // CATEGORIZATION
+    //this.stepperCateg();
+    
     if(this.summary) {
       this.summary = [];
     }
@@ -280,7 +314,7 @@ export class QuestionnaireComponent implements OnInit {
     // Read the previous question from DB
     this.readQuestion(this.questionStack.pop());
   }
-
+  
   private readQuestionBook = (uuid: string) => this.sfService.remoteAction('NxtController.process',
     ['QuestionBook', 'read', uuid],
     this.successReadBook,
@@ -350,6 +384,7 @@ export class QuestionnaireComponent implements OnInit {
   }
 
   private successSave = (response) => {
+    console.log('size',this.answerMap.size);
     console.log('inside successSave');
     console.log(response);
     if(response.status == 'success') {
@@ -567,4 +602,25 @@ export class QuestionnaireComponent implements OnInit {
     var fileNameWithType = fileNamewithIdandType.substr(fileNamewithIdandType.indexOf('::::') + 4);
     return fileNameWithType; //fileNameWithType.replace(/^(.*(\/|\\))(.+)$/, '$3');
   }
+
+  //Update function for categorization
+  // stepperCateg() {
+  //   this.firstFormGroup = this._formBuilder.group({
+  //     firstCtrl: ['', Validators.required]
+  //   });
+  //   this.secondFormGroup = this._formBuilder.group({
+  //     secondCtrl: ['', Validators.required]
+  //   });
+    
+  // }
+  // Update Function for the Progress Bar
+  updateProgress() {
+    var width = 100 * (this.answerCount / this.qbItem.Total_Questions__c) ;
+    console.log('Progress bar width => ' + width);
+    this.progressStyle =  Math.round(width) + '%';
+    //$('#progress #bar').animate({'width':width + '%'});
+  }
+
+  
 }
+
