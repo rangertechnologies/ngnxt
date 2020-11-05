@@ -20,9 +20,9 @@
   <div *ngIf="radioFlag || dropdownFlag || dataFlag" style="display: inline-block; width: 100%; padding-left: 5px; padding-right: 5px;">
     <div *ngIf="this.questionItem.error" style="color: red; font-weight: bold;">Bitte treffen Sie eine Auswahl</div>
     <div *ngFor="let opt of questionItem.Question_Options__r.records" class="radio col-md-6" style="padding: 10px; float: left;">
-      <label class="radiocontainer">
+      <label class="radiocontainer labelnxt">
         <input type="radio" [id]="opt.Id" [(ngModel)]="inpValue" name="inpValue" value="{{opt.Value__c}}" (change)="optionChange(opt.Value__c)">
-        <span class="checkmark">{{opt.Value__c}}</span>
+        <span class="checkmark spannxt">{{opt.Value__c}}</span>
       </label>
     </div>
   </div>
@@ -30,9 +30,9 @@
   <div *ngIf="checkboxFlag" style="display: inline-block; width: 100%; padding-left: 5px; padding-right: 5px;">
     <div *ngIf="this.questionItem.error" style="color: red; font-weight: bold;">Bitte treffen Sie eine Auswahl</div>
     <div *ngFor="let item of optionValues" class="radio col-md-12" style="padding: 10px; float: left;">
-      <label class="radiocontainer">
+      <label class="radiocontainer labelnxt">
         <input type="checkbox" [id]="item.Id" [(ngModel)]="item.checked" (click)="clearError()">
-        <span>{{item.Value__c}}</span>
+        <span class="spannxt">{{item.Value__c}}</span>
       </label>
     </div>
   </div>
@@ -53,8 +53,8 @@
     </div>
   </div>
   <div *ngIf="dtFlag" style="display: flex;">
-    <div class="col-md-6">
-      <label [style.color]="questionItem.error ? 'red' : (inpValue?.length > 0 ? '#87be1c' : '')" class="date-time">Datum</label>
+    <div class="col-md-6" >
+      <label class="labelnxt" [style.color]="questionItem.error ? 'red' : (inpValue?.length > 0 ? '#87be1c' : '')" class="date-time">Datum</label>
       <div style="display: flex;">
         <my-date-picker name="mydate" [options]="myDatePickerOptions" 
               (dateChanged)="onDateChanged($event)" [(ngModel)]="selDate" 
@@ -64,19 +64,19 @@
         <i class="fa fa-check" aria-hidden="true" style="color:#87be1c;margin-left: -4rem;z-index: 1;margin-top: 1rem;" *ngIf="inpValue?.length > 0"></i>
       </div>
     </div>
-    <div class="col-md-6" >
-      <label [style.color]="questionItem.error ? 'red' : (questionItem?.input?.length > 0 ? '#87be1c' : '')" class="date-time">Zeit</label>
+    <div class="col-md-6"  >
+      <label [style.color]="questionItem.error ? 'red' : (questionItem?.input?.length > 0 ? '#87be1c' : '')" class="date-time labelnxt">Zeit</label>
         <div class="dateandTime">
             <select name="hours" class="datetime showHour" [(ngModel)]="selectedHour" id="hour">
               <option value="">HH</option>
               <option [value]="hour" *ngFor="let hour of hours">{{hour}}</option>
             </select> 
-            <span class="colon"> : </span>
+            <span class="colon spannxt"> : </span>
             <select name="minutes" class="datetime" [(ngModel)]="selectedMinute" id="minute">
               <option value="">MM</option>
               <option [value]="minute" *ngFor="let minute of minutes">{{minute}}</option>
             </select>
-            <span class="colon"> : </span>
+            <span class="colon spannxt"> : </span>
             <select name="AM/PM" class="datetime" [(ngModel)]="selectedMeridiem" id="meridiem">
               <option value="AM">AM</option>
               <option value="PM">PM</option>
@@ -88,11 +88,11 @@
 
   <div *ngIf="fileFlag">
     <div class="info-alert" style="margin-top: 1rem;" style.border-color = "{{this.questionItem.error ? 'red' : ''}}">
-      <label class="picture-upload custom-file-upload" for="file-upload" style="background-color: #ffffff;" >
-        <span class="picture-upload-child">
+      <label class="picture-upload custom-file-upload labelnxt" for="file-upload" style="background-color: #ffffff;" >
+        <span class="picture-upload-child spannxt">
           <i class="fa fa-file-image-o fa-5x" aria-hidden="true" style="color:#99B5CE"></i>
         </span>
-        <span style="margin-left: 9rem;position: sticky;margin-bottom: 6.5rem;" class="fa fa-plus fa-2x picture-upload-child">
+        <span style="margin-left: 9rem;position: sticky;margin-bottom: 6.5rem;" class="fa fa-plus fa-2x picture-upload-child spannxt">
           <i class="" aria-hidden="true"></i>
         </span>
       </label>
@@ -106,7 +106,7 @@
     <div  class="form-group col-md-12">
       <div class="form-row">
         <div [class]="'col-md-' + ques.Size__c" *ngFor="let ques of subQuestions" style="text-align: left;">
-          <span [style.font-weight] = "ques.Is_Title__c ? 'bold' : ''" style = "color: #00356f;">{{ques.Question__c}}</span>
+          <span class="spannxt" [style.font-weight] = "ques.Is_Title__c ? 'bold' : ''" style = "color: #00356f;">{{ques.Question__c}}</span>
           <div *ngIf="ques.Type__c === 'Text'">
             <input type="text" [(ngModel)]="ques.input" [id]="ques.Id" required="" (click)="clearSQError(ques.Id)"
                    style.border-color = "{{ques.error ? 'red' : ''}}" placeholder="{{ques.Question__c}}"/>
@@ -122,17 +122,17 @@
     </div>
   </div>
   <div class="" style="display: flex; padding-top: 20px;">
-    <div class="col-md-6" [style.visibility]="questionStack.length > 0 ? 'visible':'hidden'">
-      <button class="btn btn-primary btn-lg btn-block btn-back-color" (click)="handleBackClick()">{{qbItem.Back__c}}</button>
+    <div class="col-md-6" [style.visibility]="questionStack.length > 0 ? 'visible':'hidden'" >
+      <button class="btn btn-primary btn-lg btn-block btn-back-color"   (click)="handleBackClick()">{{qbItem.Back__c}}</button>
     </div>
-    <div class="col-md-6">
-      <button class="btn btn-primary btn-lg btn-block btn-color" (click)="handleNextClick()">{{qbItem.Next__c}}</button>
+    <div class="col-md-6" >
+      <button class="btn btn-primary btn-lg btn-block btn-color"  (click)="handleNextClick()">{{qbItem.Next__c}}</button>
     </div>
   </div>
 
   <div>
     <br/><br/><br/>
-    <span>Question # and Name for Reference: </span>
+    <span class="spannxt">Question # and Name for Reference: </span>
     {{questionItem.Question_No__c}} and {{questionItem.Name}}
     <div *ngIf="questionItem.error">
       <br/>{{questionItem.error.errorCode}}
@@ -158,10 +158,10 @@
   </div>
 
   <div class="" style="display: flex; padding-top: 20px;">
-    <div class="col-md-6">
-      <button class="btn btn-primary btn-lg btn-block btn-back-color"  (click)="handleBackClick()">{{qbItem.Back__c}}</button>
+    <div class="col-md-6" >
+      <button class="btn btn-primary btn-lg btn-block btn-back-color"   (click)="handleBackClick()">{{qbItem.Back__c}}</button>
     </div>
-    <div class="col-md-6">
+    <div class="col-md-6" >
       <button class="btn btn-primary btn-lg btn-block btn-color" (click)="handleSubmitClick()">{{qbItem.Submit__c}}</button>
     </div>
   </div>

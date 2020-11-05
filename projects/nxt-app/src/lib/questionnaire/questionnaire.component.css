@@ -11,7 +11,7 @@
   cursor: pointer;
 }
 
-label {
+.labelnxt {
   align-items: center;
   cursor: pointer;
   padding: 10px;
@@ -157,9 +157,13 @@ input[type="file"] {
 
 }
 
- ::after, ::before {
+ /* ::after, ::before {
   box-sizing: border-box;
-}
-.btn:not(:disabled):not(.disabled) {
+} */
+/* .btn:not(:disabled):not(.disabled) {
   cursor: pointer;
+} */
+.col-md-6{
+  width:50%;
+  padding:1%;
 }
