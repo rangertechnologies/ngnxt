@@ -4,13 +4,11 @@ import { QuestionnaireComponent } from './questionnaire/questionnaire.component'
 import { CommonModule } from "@angular/common";
 import { FormsModule,ReactiveFormsModule } from '@angular/forms';
 import { MyDatePickerModule } from 'mydatepicker';
-import {MatNativeDateModule} from '@angular/material/core';
 @NgModule({
   declarations: [NxtAppComponent, QuestionnaireComponent],
   imports: [
     CommonModule, FormsModule,
     MyDatePickerModule,
-    MatNativeDateModule,
     ReactiveFormsModule
   ],
   exports: [NxtAppComponent, QuestionnaireComponent]

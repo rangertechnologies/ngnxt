@@ -4,7 +4,6 @@ import { SalesforceService } from '../services/salesforce.service';
 import { IMyDateModel, IMyDpOptions } from 'mydatepicker';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import {FormBuilder } from '@angular/forms';
-import {MatNativeDateModule} from '@angular/material/core';
 
 import { Question,
          QuestionBook,
@@ -616,7 +615,7 @@ export class QuestionnaireComponent implements OnInit {
   // }
   // Update Function for the Progress Bar
   updateProgress() {
-    var width =  (this.answerCount / this.qbItem.Total_Questions__c) * 100;
+    var width = 100 * (this.answerCount / this.qbItem.Total_Questions__c) ;
     console.log('Progress bar width => ' + width);
     this.progressStyle =  Math.round(width) + '%';
     //$('#progress #bar').animate({'width':width + '%'});
