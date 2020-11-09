@@ -1,6 +1,6 @@
 {
   "name": "ng-nxt",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -13,7 +13,6 @@
     "pkgstatic": "ng build --prod --output-hashing none && gulp rm && gulp rmmap && gulp build-prod-static && gulp pkg-deploy",
     "priostatic": "ng build --prod --output-hashing none && gulp rm && gulp rmmap && gulp build-prod-static && gulp prio-deploy",
     "postinstall": "node src/version.js"
-    
   },
   "private": true,
   "dependencies": {
