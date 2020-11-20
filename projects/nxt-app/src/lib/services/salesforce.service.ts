@@ -21,7 +21,7 @@ export class SalesforceService {
       // console.log('inside SalesforceService.remoteAction for ' + methodName);
       const self = this;
       var nsMethodName = this.getRNXTMethodName();
-      console.log('method name in lib = ' + nsMethodName);
+      //console.log('method name in lib = ' + nsMethodName);
 
       Visualforce.remoting.Manager.invokeAction(
         nsMethodName,
