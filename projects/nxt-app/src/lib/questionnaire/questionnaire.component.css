@@ -10,7 +10,10 @@
   font-family:Univers Condensed;
   cursor: pointer;
 }
-
+.paddingnone{
+padding-top: 0% !important;
+padding-bottom: 0% !important;
+}
 
 label {
   align-items: center;
