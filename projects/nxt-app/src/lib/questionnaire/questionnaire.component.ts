@@ -114,7 +114,7 @@ export class QuestionnaireComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log('inside Questionnaire ngOnInit');
+    //console.log('inside Questionnaire ngOnInit');
     this.selectedHour = "";
     this.selectedMinute = "";
     this.selectedMeridiem = "AM";
@@ -123,7 +123,7 @@ export class QuestionnaireComponent implements OnInit {
   }
 
   ngOnChanges() {
-    console.log('inside Questionnaire ngOnChanges');
+    //console.log('inside Questionnaire ngOnChanges');
     this.processQB();
   }
 
@@ -131,11 +131,11 @@ export class QuestionnaireComponent implements OnInit {
   processQB() {
     if(this.qbId) {
       if(this.qbId.length == 18) {
-        console.log('Before Calling readQuestionBook() using ' + this.qbId);
+        //console.log('Before Calling readQuestionBook() using ' + this.qbId);
         this.readQuestionBook(this.qbId);
         
       } else {
-        console.log('Setting the Question Directly for testing');
+        //console.log('Setting the Question Directly for testing');
         this.questionItem = DTQUESTION;
         this.qbItem = TESTQB;
         this.processQuestion();
@@ -203,7 +203,7 @@ export class QuestionnaireComponent implements OnInit {
       }
     }
 
-    console.log('before calling saveAnswer with ' + this.inpValue);
+    //console.log('before calling saveAnswer with ' + this.inpValue);
 
     // Check for the answer before saving to the DB
     if(!this.questionItem.Is_Optional__c && !this.inpValue) {
@@ -257,10 +257,10 @@ export class QuestionnaireComponent implements OnInit {
     //this.stepperCateg();
 
     if(recordId) {
-      console.log('Before Calling readQuestion() using ' + recordId);
+      //console.log('Before Calling readQuestion() using ' + recordId);
       this.readQuestion(recordId);
     } else {
-      console.log('Summary Page Logic');
+      //console.log('Summary Page Logic');
       // Reset the Variables
       this.inpValue = '';
       this.answerWrap = new AnswerWrapper();
@@ -321,11 +321,11 @@ export class QuestionnaireComponent implements OnInit {
     this.failureReadBook);
 
   private successReadBook = (response) => {
-    console.log(response);
+    //console.log(response);
     this.qbItem = response.questionbook;
     this.abItem = response.answerbook;
 
-    console.log('readingQuestion using ' + this.qbItem.First_Question__c);
+    //console.log('readingQuestion using ' + this.qbItem.First_Question__c);
     this.readQuestion(this.qbItem.First_Question__c);
   }
 
@@ -339,7 +339,7 @@ export class QuestionnaireComponent implements OnInit {
     this.failureRead);
 
   private successRead = (response) => {
-    console.log(response);
+    //console.log(response);
     // Reset the Variables
     if(this.questionItem)   {
       this.inpValue = '';
@@ -369,8 +369,8 @@ export class QuestionnaireComponent implements OnInit {
   }
 
   private failureRead = (response) => {
-    console.log('inside failureread');
-    console.log(response);
+    //console.log('inside failureread');
+    //console.log(response);
   }
 
   private saveAnswer = () => {
@@ -384,9 +384,9 @@ export class QuestionnaireComponent implements OnInit {
   }
 
   private successSave = (response) => {
-    console.log('size',this.answerMap.size);
-    console.log('inside successSave');
-    console.log(response);
+    //console.log('size',this.answerMap.size);
+    //console.log('inside successSave');
+    //console.log(response);
     if(response.status == 'success') {
       //this.abItem = response.answerbook;
       this.answerMap.set(response.answer.quesId, response.answer);
@@ -397,23 +397,23 @@ export class QuestionnaireComponent implements OnInit {
   }
 
   private failureSave = (response) => {
-    console.log('inside failureSave');
-    console.log(response);
+    //console.log('inside failureSave');
+    //console.log(response);
   }
 
   private processQuestion = () => {
-    console.log('processing question ' + this.questionItem.Name + ' existing answers are ' + this.answerMap.size); // => ' + JSON.stringify(this.questionItem));
+    //console.log('processing question ' + this.questionItem.Name + ' existing answers are ' + this.answerMap.size); // => ' + JSON.stringify(this.questionItem));
 
     // Set the Flags to show right fields
     this.setFlag(this.questionItem.Type__c);
 
     // Check the existing answer from answerMap
     if(this.answerMap.has(this.questionItem.Id)) {
-      console.log('existing answer found for this.questionItem.Name');
+      //console.log('existing answer found for this.questionItem.Name');
       var eAnswer = this.answerMap.get(this.questionItem.Id);
       // Get the existing answer from the Map
       this.inpValue = eAnswer.ansValue;
-      console.log('inpValue has been set to ' + this.inpValue);
+      //console.log('inpValue has been set to ' + this.inpValue);
     }
 
     if(this.checkboxFlag) {
@@ -431,7 +431,7 @@ export class QuestionnaireComponent implements OnInit {
   }
 
   setFlag(typ) {
-    console.log('inside setFlag for ' + typ);
+    //console.log('inside setFlag for ' + typ);
 
     if(typ) {
       // Set the Flags
@@ -500,7 +500,7 @@ export class QuestionnaireComponent implements OnInit {
   }
 
   setSubQuestions(records) {
-    console.log('inside setSubQuestions');
+    //console.log('inside setSubQuestions');
 
     var qaMap = new Map();
     if(this.inpValue) {
@@ -532,13 +532,13 @@ export class QuestionnaireComponent implements OnInit {
       sQues.Question_No__c = ques.Question_No__c;
 
       if(qaMap.has(ques.Question_No__c)) {
-        console.log('Setting input for the subQuestion ' + ques.Question_No__c + ' with ' + ansStr);
+        //console.log('Setting input for the subQuestion ' + ques.Question_No__c + ' with ' + ansStr);
         ques.input = qaMap.get(ques.Question_No__c);
       }
 
       this.subQuestions.push(ques);
     }
-    console.log(this.subQuestions);
+    //console.log(this.subQuestions);
   }
 
   optionChange(selValue) {
@@ -561,14 +561,14 @@ export class QuestionnaireComponent implements OnInit {
   }
 
   uploadFile(event) {
-    console.log('inside upload');
+    //console.log('inside upload');
     this.clearError();
     this.fileTypeIncorrect = false;
     var local = this;
     local.attachments = [];
     local.attachment = event.target.files[0];
     // Validate the file extension
-    console.log(local.attachment);
+    //console.log(local.attachment);
     let fileNameWithType: string = local.attachment && local.attachment.name.toLowerCase();
     if (!fileNameWithType.endsWith('.jpg') && !fileNameWithType.endsWith('.png') && !fileNameWithType.endsWith('.pdf') && !fileNameWithType.endsWith('.jpeg') && !fileNameWithType.endsWith('.heic') && !fileNameWithType.endsWith('.heif') &&
         !fileNameWithType.endsWith('.JPG') && !fileNameWithType.endsWith('.PNG') && !fileNameWithType.endsWith('.PDF') && !fileNameWithType.endsWith('.JPEG') && !fileNameWithType.endsWith('.HEIC') && !fileNameWithType.endsWith('.HEIF')) {
@@ -616,7 +616,7 @@ export class QuestionnaireComponent implements OnInit {
   // Update Function for the Progress Bar
   updateProgress() {
     var width = 100 * (this.answerCount / this.qbItem.Total_Questions__c) ;
-    console.log('Progress bar width => ' + width);
+    //console.log('Progress bar width => ' + width);
     this.progressStyle =  Math.round(width) + '%';
     //$('#progress #bar').animate({'width':width + '%'});
   }
