@@ -19,7 +19,7 @@ import { TESTQUESTION,
          TAQUESTION,
          RADIOQUESTION,
          CHECKQUESTION,
-         BOOKQUESTION, 
+         BOOKQUESTION,
          TESTQB} from '../sample';
 
 @Component({
@@ -119,7 +119,7 @@ export class QuestionnaireComponent implements OnInit {
     this.selectedMinute = "";
     this.selectedMeridiem = "AM";
     this.processQB();
-    
+
   }
 
   ngOnChanges() {
@@ -127,13 +127,13 @@ export class QuestionnaireComponent implements OnInit {
     this.processQB();
   }
 
-  
+
   processQB() {
     if(this.qbId) {
       if(this.qbId.length == 18) {
         //console.log('Before Calling readQuestionBook() using ' + this.qbId);
         this.readQuestionBook(this.qbId);
-        
+
       } else {
         //console.log('Setting the Question Directly for testing');
         this.questionItem = DTQUESTION;
@@ -143,17 +143,17 @@ export class QuestionnaireComponent implements OnInit {
     }
     // CATEGORIZATION
     //this.stepperCateg();
-    
+
 
   }
 
-  
-  
+
+
   trimLastDummy(input: string){
     return input = input.substring(0,input.length-6);
   }
 
-  
+
   getProperTime(def:string,input:string){
     return input === '' ? def : input;
   }
@@ -192,7 +192,7 @@ export class QuestionnaireComponent implements OnInit {
       this.selectedHour = this.getProperTime('12',this.selectedHour);
       this.selectedMinute = this.getProperTime('00',this.selectedMinute);
       this.selectedMeridiem = this.getProperTime('AM',this.selectedMeridiem);
-      this.inpValue = this.inpValue + 'T' + (this.selectedMeridiem === 'PM' && this.selectedHour != '12' ? (Number(this.selectedHour)+12) : this.selectedHour ) + ':' + this.selectedMinute + this.selectedMeridiem; 
+      this.inpValue = this.inpValue + 'T' + (this.selectedMeridiem === 'PM' && this.selectedHour != '12' ? (Number(this.selectedHour)+12) : this.selectedHour ) + ':' + this.selectedMinute + this.selectedMeridiem;
     } else if(this.fileFlag){
       this.inpValue = '';
       if(this.attachments.length > 0) {
@@ -245,7 +245,7 @@ export class QuestionnaireComponent implements OnInit {
     } else {
       recordId = cQuestion.Next_Question__c;
     }
-    
+
     // CATEGORIZATION
     //this.stepperCateg();
 
@@ -303,10 +303,10 @@ export class QuestionnaireComponent implements OnInit {
   handleBackClick() {
     this.answerCount--;
     this.updateProgress();
-    
+
     // CATEGORIZATION
     //this.stepperCateg();
-    
+
     if(this.summary) {
       this.summary = [];
     }
@@ -314,7 +314,7 @@ export class QuestionnaireComponent implements OnInit {
     // Read the previous question from DB
     this.readQuestion(this.questionStack.pop());
   }
-  
+
   private readQuestionBook = (uuid: string) => this.sfService.remoteAction('NxtController.process',
     ['QuestionBook', 'read', uuid],
     this.successReadBook,
@@ -517,7 +517,7 @@ export class QuestionnaireComponent implements OnInit {
             qaMap.set(aIndex, ansStr);
             //console.log('Setting the qaMap ' + aIndex + ' with ' + ansStr);
           }
-      }  
+      }
     }
 
     for(var ques of records) {
@@ -583,6 +583,12 @@ export class QuestionnaireComponent implements OnInit {
       local.fileExceededLimit = local.attachment.size > 3242880; //Validating file size
       // Upload the file to Salesforce when the limit is within range
       if (!local.fileExceededLimit) {
+        let fileWrapper: AttachmentWrapper;
+        fileWrapper.parentId = this.abId;
+        fileWrapper.fileName = local.attachment.name;
+        fileWrapper.fileContent = fileContent;
+        createAttachment(fileWrapper);
+
         local.attachments.push('dummy'+'::::'+local.attachment.name);
         local.fileContents = fileContent;
       }
@@ -594,9 +600,19 @@ export class QuestionnaireComponent implements OnInit {
     this.backToObjects.emit(true);
   }
 
+  private createAttachment = (fileWrapper: any) => this.sfService.remoteAction('NxtController.process',
+    ['Attachment', 'create', JSON.stringify(fileWrapper)],
+    this.successAttachmentCreate,
+    this.failureAttachmentCreate);
+
   deleteAttachment(attachment: any) {
     this.attachments = [];
   }
+
+  private deleteAttachment = (fileId: string) => this.sfService.remoteAction('NxtController.process',
+    ['Attachment', 'delete', fileId],
+    this.successAttachmentDelete,
+    this.failureAttachmentDelete);
 
   getFileName(fileNamewithIdandType) {  //truncate file path
     var fileNameWithType = fileNamewithIdandType.substr(fileNamewithIdandType.indexOf('::::') + 4);
@@ -611,7 +627,7 @@ export class QuestionnaireComponent implements OnInit {
   //   this.secondFormGroup = this._formBuilder.group({
   //     secondCtrl: ['', Validators.required]
   //   });
-    
+
   // }
   // Update Function for the Progress Bar
   updateProgress() {
@@ -621,6 +637,6 @@ export class QuestionnaireComponent implements OnInit {
     //$('#progress #bar').animate({'width':width + '%'});
   }
 
-  
+
 }
 

@@ -79,3 +79,9 @@ export class ErrorWrapper {
   errorMsg: string;
   errorDetails: string;
 }
+
+export class AttachmentWrapper {
+  parentId: string;
+  fileName: string;
+  fileContent: string;
+}
