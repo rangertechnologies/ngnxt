@@ -48,7 +48,7 @@
     <div class="col-md-12" style="display: flex;">
       <input type="text" [(ngModel)]="inpValue" id="text-input-id" required=""
              (click)="clearError()"
-             style.border-color = "{{this.questionItem.error ? 'red' : (inpValue?.length > 0 ? '#87be1c' : '')}}"/>
+             style.border-color = "{{this.questionItem.error ? 'red' : (inpValue?.length > 0 ? '#87be1c' : '')}}"  oninput="this.value=this.value.replace(/[^a-zA-Z0-9\s.:;,?]/g,'');"/>
       <i class="fa fa-check" aria-hidden="true" style="color:#87be1c;margin-left: -2rem;z-index: 1;padding: 5px;" *ngIf="inpValue?.length > 0"></i>
     </div>
   </div>
@@ -56,7 +56,7 @@
     <div class="col-md-12" style="display: flex;">
       <textarea style="height: 100px; width: 100%;border-radius: 5px;" id="ta-input-id" [(ngModel)]="inpValue"
                 (click)="clearError()"
-                style.border-color = "{{this.questionItem.error ? 'red' : (inpValue?.length > 0 && taFocusOut ? '#87be1c' : '')}}" (focusout)="taFocusOut = true"></textarea>
+                style.border-color = "{{this.questionItem.error ? 'red' : (inpValue?.length > 0 && taFocusOut ? '#87be1c' : '')}}" (focusout)="taFocusOut = true"  oninput="this.value=this.value.replace(/[^a-zA-Z0-9\s.:;,?]/g,'');"></textarea>
       <i class="fa fa-check" aria-hidden="true" style="color:#87be1c;margin-left: -2rem;z-index: 1;padding: 5px;" *ngIf="inpValue?.length > 0 && taFocusOut"></i>
     </div>
   </div>
@@ -108,7 +108,7 @@
     <input id="file-upload" type="file" accept=".pdf, .png, .jpg, .jpeg, .heic, .application/pdf" (change)="uploadFile($event)"/>
   </div>
   <ul *ngIf="attachments?.length > 0 && fileFlag" style="list-style-type:none;margin-left:0;margin-bottom:0.7rem" class="col-md-12">
-    <li *ngFor="let attachment of attachments" style="text-align:left;">{{getFileName(attachment)}}<span style="float:right;cursor:pointer;padding: 0px;" (click)="deleteAttachment(attachment)">X</span></li>
+    <li *ngFor="let attachment of attachments" style="text-align:left;">{{attachment.attachmentName}}<span style="float:right;cursor:pointer;padding: 0px;" (click)="deleteAttachment(attachment.attachmentId)">X</span></li>
   </ul>
   <div *ngIf="bookFlag">
     <div  class="form-group col-md-12">
@@ -117,7 +117,7 @@
           <span [style.font-weight] = "ques.Is_Title__c ? 'bold' : ''" style = "color: #00356f;">{{ques.Question__c}}</span>
           <div *ngIf="ques.Type__c === 'Text'">
             <input type="text" [(ngModel)]="ques.input" [id]="ques.Id" required="" (click)="clearSQError(ques.Id)"
-                   style.border-color = "{{ques.error ? 'red' : ''}}" placeholder="{{ques.Question__c}}"/>
+                   style.border-color = "{{ques.error ? 'red' : ''}}" placeholder="{{ques.Question__c}}" oninput="this.value=this.value.replace(/[^a-zA-Z0-9\s.:;,?]/g,'');"/>
           </div>
           <div *ngIf="ques.Type__c === 'Dropdown'">
             <select class="custom-select mr-sm-2" [(ngModel)]="ques.input" style="height: 3.45556rem;">

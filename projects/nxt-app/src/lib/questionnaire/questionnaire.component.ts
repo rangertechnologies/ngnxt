@@ -11,7 +11,9 @@ import { Question,
          AnswerWrapper,
          ErrorWrapper,
          Option,
-         OptionValue } from '../wrapper';
+         OptionValue, 
+         AttachmentWrapper,
+         Attachment } from '../wrapper';
 
 import { TESTQUESTION,
          DTQUESTION,
@@ -89,7 +91,7 @@ export class QuestionnaireComponent implements OnInit {
 
 
   public myDatePickerOptions: IMyDpOptions = {
-    dateFormat: 'dd/mm/yyyy',
+    dateFormat: 'dd.mm.yyyy',
     sunHighlight: false,
     disableDateRanges: [],
     showClearDateBtn: false,
@@ -129,6 +131,7 @@ export class QuestionnaireComponent implements OnInit {
 
 
   processQB() {
+    //console.log(this.qbId);
     if(this.qbId) {
       if(this.qbId.length == 18) {
         //console.log('Before Calling readQuestionBook() using ' + this.qbId);
@@ -196,7 +199,11 @@ export class QuestionnaireComponent implements OnInit {
     } else if(this.fileFlag){
       this.inpValue = '';
       if(this.attachments.length > 0) {
-        this.inpValue = this.attachment.name + '@@##$$' +   this.fileContents;
+        let localAttachments: any = [];
+        for(var attachmentItem of this.attachments){
+          localAttachments.push(attachmentItem.attachmentId + '@@##$$' +attachmentItem.attachmentName);
+        }
+        this.inpValue = localAttachments.toString();
       } else {
         this.questionItem.error = new ErrorWrapper();
         return;
@@ -289,9 +296,15 @@ export class QuestionnaireComponent implements OnInit {
             }
             ansWrap.ansValue = newStr;
           } else if(ansWrap.qTyp == 'File'){
-            let localArray: string [] = ansWrap.ansValue.split('@@##$$');
-            ansWrap.ansValue = localArray[0];
+            console.log('inside file type while going to summary');
+            console.log(ansWrap);
+            console.log(this.attachments);
+            for (var attch of this.attachments){
+              ansWrap.ansValue = attch.attachmentName;
+            }
           }
+          console.log('final file in summary');
+          console.log(ansWrap);
           this.summary.push(ansWrap);
         }
       }
@@ -565,7 +578,6 @@ export class QuestionnaireComponent implements OnInit {
     this.clearError();
     this.fileTypeIncorrect = false;
     var local = this;
-    local.attachments = [];
     local.attachment = event.target.files[0];
     // Validate the file extension
     //console.log(local.attachment);
@@ -583,19 +595,40 @@ export class QuestionnaireComponent implements OnInit {
       local.fileExceededLimit = local.attachment.size > 3242880; //Validating file size
       // Upload the file to Salesforce when the limit is within range
       if (!local.fileExceededLimit) {
-        let fileWrapper: AttachmentWrapper;
-        fileWrapper.parentId = this.abId;
+        let fileWrapper = new AttachmentWrapper();
+        fileWrapper.parentId = local.abItem.Id;
         fileWrapper.fileName = local.attachment.name;
         fileWrapper.fileContent = fileContent;
-        createAttachment(fileWrapper);
-
-        local.attachments.push('dummy'+'::::'+local.attachment.name);
-        local.fileContents = fileContent;
+        local.createAttachment(fileWrapper);
       }
     }
     reader.readAsDataURL(event.target.files[0]);
   }
 
+  private successAttachmentCreate = (response) => {
+    let createdAttachment: Attachment = new Attachment(response.attachmentId,response.attachmentName,this.attachment.lastModifiedDate);
+    this.attachmentId = createdAttachment.attachmentId;
+    this.attachments.push(createdAttachment);
+  }
+
+
+  private successAttachmentDelete = (response) => {
+    //console.log('inside successAttachmentDelete');
+    for (let i = 0; i < this.attachments.length; i++) {
+      if (this.attachments[i].attachmentId === this.attachmentId) {
+        this.attachments.splice(i, 1);
+      }
+    }
+  }
+  
+  private failureAttachmentCreate = (response) => {
+    //console.log('inside failureAttachmentCreate');
+  }
+  
+  private failureAttachmentDelete = (response) => {
+    //console.log('inside failureAttachmentDelete');
+  }
+  
   handleSubmitClick() {
     this.backToObjects.emit(true);
   }
@@ -605,11 +638,11 @@ export class QuestionnaireComponent implements OnInit {
     this.successAttachmentCreate,
     this.failureAttachmentCreate);
 
-  deleteAttachment(attachment: any) {
-    this.attachments = [];
+  deleteAttachment(attachmentId: string) {
+    this.deleteSFAttachment(attachmentId);
   }
 
-  private deleteAttachment = (fileId: string) => this.sfService.remoteAction('NxtController.process',
+  private deleteSFAttachment = (fileId: string) => this.sfService.remoteAction('NxtController.process',
     ['Attachment', 'delete', fileId],
     this.successAttachmentDelete,
     this.failureAttachmentDelete);

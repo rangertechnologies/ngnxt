@@ -10555,3 +10555,7 @@ a.text-dark:hover, a.text-dark:focus {
   }
 }
 /*# sourceMappingURL=bootstrap.css.map */
+
+.datetime{
+  min-width: 60px;
+}

@@ -85,3 +85,15 @@ export class AttachmentWrapper {
   fileName: string;
   fileContent: string;
 }
+
+export class Attachment {
+  public attachmentId: string;
+  public attachmentName: string;
+  public attachmentMetaData: any;
+
+  constructor(id: string,name:string,metaData:any){
+      this.attachmentId = id;
+      this.attachmentName = name;
+      this.attachmentMetaData = metaData;
+  }
+}
