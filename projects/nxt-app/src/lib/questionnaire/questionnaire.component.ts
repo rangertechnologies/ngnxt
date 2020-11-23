@@ -296,15 +296,13 @@ export class QuestionnaireComponent implements OnInit {
             }
             ansWrap.ansValue = newStr;
           } else if(ansWrap.qTyp == 'File'){
-            console.log('inside file type while going to summary');
-            console.log(ansWrap);
-            console.log(this.attachments);
+            let attachmentNameArray = [];
             for (var attch of this.attachments){
-              ansWrap.ansValue = attch.attachmentName;
+              attachmentNameArray.push(attch.attachmentName);
             }
+            let finalFileListString = (attachmentNameArray.toString()).replace(',',', ');
+            ansWrap.ansValue = finalFileListString;
           }
-          console.log('final file in summary');
-          console.log(ansWrap);
           this.summary.push(ansWrap);
         }
       }
