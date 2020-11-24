@@ -199,11 +199,10 @@ export class QuestionnaireComponent implements OnInit {
     } else if(this.fileFlag){
       this.inpValue = '';
       if(this.attachments.length > 0) {
-        let localAttachments: any = [];
         for(var attachmentItem of this.attachments){
-          localAttachments.push(attachmentItem.attachmentId + '@@##$$' +attachmentItem.attachmentName);
+          this.inpValue += attachmentItem.attachmentId + '@@##$$' +attachmentItem.attachmentName + ',';
         }
-        this.inpValue = localAttachments.toString();
+        this.inpValue = this.inpValue.substr(0,this.inpValue.length-1);
       } else {
         this.questionItem.error = new ErrorWrapper();
         return;
@@ -605,13 +604,11 @@ export class QuestionnaireComponent implements OnInit {
 
   private successAttachmentCreate = (response) => {
     let createdAttachment: Attachment = new Attachment(response.attachmentId,response.attachmentName,this.attachment.lastModifiedDate);
-    this.attachmentId = createdAttachment.attachmentId;
     this.attachments.push(createdAttachment);
   }
 
 
   private successAttachmentDelete = (response) => {
-    //console.log('inside successAttachmentDelete');
     for (let i = 0; i < this.attachments.length; i++) {
       if (this.attachments[i].attachmentId === this.attachmentId) {
         this.attachments.splice(i, 1);
@@ -637,6 +634,7 @@ export class QuestionnaireComponent implements OnInit {
     this.failureAttachmentCreate);
 
   deleteAttachment(attachmentId: string) {
+    this.attachmentId = attachmentId;
     this.deleteSFAttachment(attachmentId);
   }
 
