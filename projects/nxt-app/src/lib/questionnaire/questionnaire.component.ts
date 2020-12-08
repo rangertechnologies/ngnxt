@@ -64,7 +64,7 @@ export class QuestionnaireComponent implements OnInit {
   public attachmentIdList: any [] = [];
   public attachmentId: string = '';
   public attachment: any;
-  public allowed:any;
+  public allowed: any;
   public fileContents: any;
   public fileExceededLimit: boolean = false;
   public fileTypeIncorrect: boolean = false;
@@ -441,7 +441,7 @@ export class QuestionnaireComponent implements OnInit {
     } else if(this.fileFlag){
       console.log(this.questionItem);
       // logic
-      this.allowed = this.inpValue.split(';');
+      this.allowed = this.questionItem.Allowed_File_Extensions__c.split(';');
       
     }
   }
