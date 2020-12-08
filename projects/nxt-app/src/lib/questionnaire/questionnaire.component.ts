@@ -64,6 +64,7 @@ export class QuestionnaireComponent implements OnInit {
   public attachmentIdList: any [] = [];
   public attachmentId: string = '';
   public attachment: any;
+  public allowed:any;
   public fileContents: any;
   public fileExceededLimit: boolean = false;
   public fileTypeIncorrect: boolean = false;
@@ -349,7 +350,7 @@ export class QuestionnaireComponent implements OnInit {
     this.failureRead);
 
   private successRead = (response) => {
-    //console.log(response);
+    console.log(response);
     // Reset the Variables
     if(this.questionItem)   {
       this.inpValue = '';
@@ -437,6 +438,11 @@ export class QuestionnaireComponent implements OnInit {
       var dtVal = this.inpValue.split('T');
       this.inpValue = dtVal[0];
       this.questionItem.input = dtVal[1];
+    } else if(this.fileFlag){
+      console.log(this.questionItem);
+      // logic
+      this.allowed = this.inpValue.split(';');
+      
     }
   }
 
