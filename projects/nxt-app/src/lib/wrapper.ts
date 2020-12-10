@@ -39,10 +39,6 @@ export class QuestionR {
   records?: Question[];
 }
 
-export class Allowed_File_ExtensionsR {
-  records?: Allowed_File_ExtensionsR[];
-}
-
 export class OptionR {
   records?: Option[];
 }
