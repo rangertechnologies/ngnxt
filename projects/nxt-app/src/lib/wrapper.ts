@@ -16,7 +16,7 @@ export class QuestionBook {
 export class Question {
   Id: string;
   Name: string;
-  Allowed_File_Extensions__c : any;
+  Allowed_File_Extensions__c :string;
   Question__c: string;
   Type__c: string;
   Next_Question__c?: string;
@@ -37,6 +37,10 @@ export class Question {
 
 export class QuestionR {
   records?: Question[];
+}
+
+export class Allowed_File_ExtensionsR {
+  records?: Allowed_File_ExtensionsR[];
 }
 
 export class OptionR {
