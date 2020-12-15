@@ -64,7 +64,7 @@ export class QuestionnaireComponent implements OnInit {
   public attachmentIdList: any [] = [];
   public attachmentId: string = '';
   public attachment: any;
-  public fileContents: any;
+  public allowedFileExtension: string[];
   public fileExceededLimit: boolean = false;
   public fileTypeIncorrect: boolean = false;
   public localDate:string;
@@ -437,9 +437,11 @@ export class QuestionnaireComponent implements OnInit {
       var dtVal = this.inpValue.split('T');
       this.inpValue = dtVal[0];
       this.questionItem.input = dtVal[1];
+    } else if(this.fileFlag){
+      // logic
+      this.allowedFileExtension = this.questionItem.Allowed_File_Extensions__c.split(';');
     }
   }
-
   setFlag(typ) {
     //console.log('inside setFlag for ' + typ);
 
