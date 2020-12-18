@@ -33,6 +33,11 @@ import { TESTQUESTION,
 export class QuestionnaireComponent implements OnInit {
   @Input() qbId: string;
   @Output() backToObjects = new EventEmitter();
+  @Output() nextClickToWebtrekk = new EventEmitter();
+  @Output() backClickToWebtrekk = new EventEmitter();
+  @Output() clearErrorToWebtrekk = new EventEmitter();
+  @Output() clearSQErrorToWebtrekk = new EventEmitter();
+  @Output() deleteAttachmentToWebtrekk = new EventEmitter();
   params: Params;
 
   public abItem: AnswerBook;
@@ -163,6 +168,7 @@ export class QuestionnaireComponent implements OnInit {
 
   handleNextClick() {
     this.clearError();
+    this.nextClickToWebtrekk.emit(true);
     var recordId = null;
     var cQuestion: Question = new Question();
     cQuestion = this.questionItem;
@@ -311,6 +317,7 @@ export class QuestionnaireComponent implements OnInit {
   }
 
   handleBackClick() {
+    this.backClickToWebtrekk.emit(true);
     this.answerCount--;
     this.updateProgress();
 
@@ -563,6 +570,7 @@ export class QuestionnaireComponent implements OnInit {
     if(this.questionItem.error) {
       this.questionItem.error = null;
     }
+    this.clearErrorToWebtrekk.emit(true);
   }
 
   clearSQError(quesId) {
@@ -570,6 +578,7 @@ export class QuestionnaireComponent implements OnInit {
     for(var sq of sqList){
       sq.error = null;
     }
+    this.clearSQErrorToWebtrekk.emit(true);
   }
 
   uploadFile(event) {
@@ -637,6 +646,7 @@ export class QuestionnaireComponent implements OnInit {
 
   deleteAttachment(attachmentId: string) {
     this.attachmentId = attachmentId;
+    this.deleteAttachmentToWebtrekk.emit(true);
     this.deleteSFAttachment(attachmentId);
   }
 
