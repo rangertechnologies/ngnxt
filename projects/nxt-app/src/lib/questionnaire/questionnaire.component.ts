@@ -32,7 +32,7 @@ import { TESTQUESTION,
 
 export class QuestionnaireComponent implements OnInit {
   @Input() qbId: string;
-  @Output() backToObjects = new EventEmitter();
+  @Output() handleEvent = new EventEmitter();
   params: Params;
 
   public abItem: AnswerBook;
@@ -163,6 +163,7 @@ export class QuestionnaireComponent implements OnInit {
 
   handleNextClick() {
     this.clearError();
+    this.handleEvent.emit('nextClickToWebtrekk');
     var recordId = null;
     var cQuestion: Question = new Question();
     cQuestion = this.questionItem;
@@ -311,6 +312,7 @@ export class QuestionnaireComponent implements OnInit {
   }
 
   handleBackClick() {
+    this.handleEvent.emit('backClickToWebtrekk');
     this.answerCount--;
     this.updateProgress();
 
@@ -563,6 +565,7 @@ export class QuestionnaireComponent implements OnInit {
     if(this.questionItem.error) {
       this.questionItem.error = null;
     }
+    this.handleEvent.emit('clearErrorToWebtrekk');
   }
 
   clearSQError(quesId) {
@@ -570,6 +573,7 @@ export class QuestionnaireComponent implements OnInit {
     for(var sq of sqList){
       sq.error = null;
     }
+    this.handleEvent.emit('clearSQErrorToWebtrekk');
   }
 
   uploadFile(event) {
@@ -627,7 +631,7 @@ export class QuestionnaireComponent implements OnInit {
   }
   
   handleSubmitClick() {
-    this.backToObjects.emit(true);
+    this.handleEvent.emit('backToObjects');
   }
 
   private createAttachment = (fileWrapper: any) => this.sfService.remoteAction('NxtController.process',
@@ -637,6 +641,7 @@ export class QuestionnaireComponent implements OnInit {
 
   deleteAttachment(attachmentId: string) {
     this.attachmentId = attachmentId;
+    this.handleEvent.emit('deleteAttachmentToWebtrekk');
     this.deleteSFAttachment(attachmentId);
   }
 
