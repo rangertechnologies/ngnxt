@@ -121,7 +121,7 @@ export class QuestionnaireComponent implements OnInit {
     this.selectedMinute = "";
     this.selectedMeridiem = "AM";
     this.processQB();
-  }
+    }
 
   ngOnChanges() {
     //console.log('inside Questionnaire ngOnChanges');
@@ -160,15 +160,13 @@ export class QuestionnaireComponent implements OnInit {
 
   handleNextClick() {
     this.clearError();
-    this.handleEvent.emit('nextClickToWebtrekk');
+    this.handleEvent.emit(this.qbItem.Next_Tracking_ID__c);
     var recordId = null;
     var cQuestion: Question = new Question();
     cQuestion = this.questionItem;
     var typ = cQuestion.Type__c;
     var quesValue = cQuestion.Question__c;
-    var trackingId = this.qbItem.Next_Tracking_ID__c;
-    var trackId = this.questionItem.Tracking_ID__c;
-    
+     
     // Process Inputs
     if(this.checkboxFlag) {
       this.inpValue = '';
@@ -264,7 +262,7 @@ export class QuestionnaireComponent implements OnInit {
 
     if(recordId) {
       //console.log('Before Calling readQuestion() using ' + recordId);
-      console.log('cancel Id' +recordId);
+      this.readQuestion(recordId);
     } else {
       //console.log('Summary Page Logic');
       // Reset the Variables
@@ -311,12 +309,10 @@ export class QuestionnaireComponent implements OnInit {
   }
 
   handleBackClick() {
-    this.handleEvent.emit('backClickToWebtrekk');
+    this.handleEvent.emit(this.qbItem.Back_Tracking_ID__c);
     this.answerCount--;
     this.updateProgress();
-    var trackingId = this.qbItem.Back_Tracking_ID__c;
-    
-
+   
     // CATEGORIZATION
     //this.stepperCateg();
 
@@ -362,8 +358,7 @@ export class QuestionnaireComponent implements OnInit {
       this.resetFlag(this.questionItem.Type__c);
     }
     this.questionItem = response.question;
-    var qtrackId=this.questionItem.Tracking_ID__c;
-    
+     
     // Handle the subQuestion options
     if(response.sqOptions) {
       //var newRecords = [];
@@ -378,9 +373,17 @@ export class QuestionnaireComponent implements OnInit {
         }
       }
     }
-
     this.processQuestion();
     this.innerhtml=this.sanitizer.bypassSecurityTrustHtml(this.questionItem.Additional_Rich__c);
+    this.trackId();
+
+  }
+  trackId(){
+    console.log('inside track id')
+    var qtrackId=this.questionItem.Tracking_ID__c;
+    console.log('trackId-question'+qtrackId);
+    
+
   }
 
   private failureRead = (response) => {
@@ -498,11 +501,7 @@ export class QuestionnaireComponent implements OnInit {
   }
 
   setOptions(records) {
-    // console.log('inside setOptions');
-
-    for(var opt of records) {
-      // console.log('adding option ' + JSON.stringify(opt));
-
+      for(var opt of records) {
       var ov = new OptionValue();
       ov.Id = opt.Id;
       ov.Name = opt.Name;
@@ -560,7 +559,16 @@ export class QuestionnaireComponent implements OnInit {
     //console.log(this.subQuestions);
   }
 
-  optionChange(selValue) {
+  optionChange(selValue) {   
+     for(var opt of this.questionItem.Question_Options__r.records) {
+       //console.log('optionChange TrackingId'+opt.Tracking_ID__c);
+       if(opt.Value__c == selValue)
+       {
+          console.log('inside if'+opt.Tracking_ID__c)
+       }
+     }
+
+    this.handleEvent.emit(this.questionItem.Tracking_ID__c);
     this.clearError();
     // console.log('inside optionChange using ' + selValue);
     this.inpValue = selValue;
@@ -636,8 +644,7 @@ export class QuestionnaireComponent implements OnInit {
   }
   
   handleSubmitClick() {
-    this.handleEvent.emit('backToObjects');
-    var trackingId = this.qbItem.Submit_Tracking_ID__c;
+    this.handleEvent.emit(this.qbItem.Submit_Tracking_ID__c);
   }
 
   private createAttachment = (fileWrapper: any) => this.sfService.remoteAction('NxtController.process',
