@@ -556,16 +556,18 @@ export class QuestionnaireComponent implements OnInit {
     //console.log(this.subQuestions);
   }
 
-  optionChange(selValue) {   
+  optionChange(selValue) {
+    let radioTrackingId: string = '';
      for(var opt of this.questionItem.Question_Options__r.records) {
        //console.log('optionChange TrackingId'+opt.Tracking_ID__c);
        if(opt.Value__c == selValue)
        {
           console.log('inside if'+opt.Tracking_ID__c)
+          radioTrackingId = opt.Tracking_ID__c;
        }
      }
 
-    this.handleEvent.emit(this.questionItem.Tracking_ID__c);
+    this.handleEvent.emit(radioTrackingId);
     this.clearError();
     // console.log('inside optionChange using ' + selValue);
     this.inpValue = selValue;
