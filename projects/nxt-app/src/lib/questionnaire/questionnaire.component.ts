@@ -575,7 +575,7 @@ export class QuestionnaireComponent implements OnInit {
     if(this.questionItem.error) {
       this.questionItem.error = null;
     }
-    this.handleEvent.emit('clearErrorToWebtrekk');
+    //this.handleEvent.emit('clearErrorToWebtrekk');
   }
 
   clearSQError(quesId) {
@@ -583,7 +583,7 @@ export class QuestionnaireComponent implements OnInit {
     for(var sq of sqList){
       sq.error = null;
     }
-    this.handleEvent.emit('clearSQErrorToWebtrekk');
+    //this.handleEvent.emit('clearSQErrorToWebtrekk');
   }
 
   uploadFile(event) {
