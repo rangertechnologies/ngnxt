@@ -379,12 +379,9 @@ export class QuestionnaireComponent implements OnInit {
 
   }
   trackId(){
-    console.log('inside track id')
     var qtrackId=this.questionItem.Tracking_ID__c;
-    console.log('trackId-question'+qtrackId);
-    
-
-  }
+    //console.log('trackId-question'+qtrackId);
+     }
 
   private failureRead = (response) => {
     //console.log('inside failureread');
