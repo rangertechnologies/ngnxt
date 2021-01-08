@@ -562,7 +562,7 @@ export class QuestionnaireComponent implements OnInit {
        //console.log('optionChange TrackingId'+opt.Tracking_ID__c);
        if(opt.Value__c == selValue)
        {
-          console.log('inside if'+opt.Tracking_ID__c)
+          //console.log('inside if'+opt.Tracking_ID__c)
           radioTrackingId = opt.Tracking_ID__c;
        }
      }
@@ -577,7 +577,6 @@ export class QuestionnaireComponent implements OnInit {
     if(this.questionItem.error) {
       this.questionItem.error = null;
     }
-    //this.handleEvent.emit('clearErrorToWebtrekk');
   }
 
   clearSQError(quesId) {
@@ -585,7 +584,6 @@ export class QuestionnaireComponent implements OnInit {
     for(var sq of sqList){
       sq.error = null;
     }
-    //this.handleEvent.emit('clearSQErrorToWebtrekk');
   }
 
   uploadFile(event) {
@@ -653,7 +651,7 @@ export class QuestionnaireComponent implements OnInit {
 
   deleteAttachment(attachmentId: string) {
     this.attachmentId = attachmentId;
-    this.handleEvent.emit('deleteAttachmentToWebtrekk');
+    this.handleEvent.emit('deleteAttachment');
     this.deleteSFAttachment(attachmentId);
   }
 
