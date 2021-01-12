@@ -8,6 +8,10 @@ export class QuestionBook {
   Submit__c : string;
   First_Question__c: string;
   Title__c: string;
+  Next_Tracking_ID__c: string;
+  Back_Tracking_ID__c: string;
+  Cancel_Tracking_ID__c: string;
+  Submit_Tracking_ID__c: string;
   Total_Questions__c: number;
   Summary_Text__c?: string;
   Questions__r?: QuestionR;
@@ -26,6 +30,7 @@ export class Question {
   Question_No__c?: string;
   Question_Options__r?: OptionR;
   Size__c: number;
+  Tracking_ID__c: string;
   Additional_Rich__c? : string;
   Questions__r?: QuestionR;
   RecordType: {
@@ -47,6 +52,7 @@ export class Option {
   Id: string;
   Name: string;
   Value__c: string;
+  Tracking_ID__c: string;
   Next_Question__c?: string;
 }
 

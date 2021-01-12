@@ -121,12 +121,11 @@ export class QuestionnaireComponent implements OnInit {
     this.selectedMinute = "";
     this.selectedMeridiem = "AM";
     this.processQB();
-
-  }
+    }
 
   ngOnChanges() {
     //console.log('inside Questionnaire ngOnChanges');
-    this.processQB();
+    this.processQB(); 
   }
 
 
@@ -146,8 +145,6 @@ export class QuestionnaireComponent implements OnInit {
     }
     // CATEGORIZATION
     //this.stepperCateg();
-
-
   }
 
 
@@ -163,13 +160,13 @@ export class QuestionnaireComponent implements OnInit {
 
   handleNextClick() {
     this.clearError();
-    this.handleEvent.emit('nextClickToWebtrekk');
+    this.handleEvent.emit(this.qbItem.Next_Tracking_ID__c);
     var recordId = null;
     var cQuestion: Question = new Question();
     cQuestion = this.questionItem;
     var typ = cQuestion.Type__c;
     var quesValue = cQuestion.Question__c;
-
+     
     // Process Inputs
     if(this.checkboxFlag) {
       this.inpValue = '';
@@ -312,10 +309,10 @@ export class QuestionnaireComponent implements OnInit {
   }
 
   handleBackClick() {
-    this.handleEvent.emit('backClickToWebtrekk');
+    this.handleEvent.emit(this.qbItem.Back_Tracking_ID__c);
     this.answerCount--;
     this.updateProgress();
-
+   
     // CATEGORIZATION
     //this.stepperCateg();
 
@@ -361,6 +358,7 @@ export class QuestionnaireComponent implements OnInit {
       this.resetFlag(this.questionItem.Type__c);
     }
     this.questionItem = response.question;
+     
     // Handle the subQuestion options
     if(response.sqOptions) {
       //var newRecords = [];
@@ -375,10 +373,15 @@ export class QuestionnaireComponent implements OnInit {
         }
       }
     }
-
     this.processQuestion();
     this.innerhtml=this.sanitizer.bypassSecurityTrustHtml(this.questionItem.Additional_Rich__c);
+    this.trackId();
+
   }
+  trackId(){
+    var qtrackId=this.questionItem.Tracking_ID__c;
+    //console.log('trackId-question'+qtrackId);
+     }
 
   private failureRead = (response) => {
     //console.log('inside failureread');
@@ -441,7 +444,9 @@ export class QuestionnaireComponent implements OnInit {
       this.questionItem.input = dtVal[1];
     } else if(this.fileFlag){
       // logic
+      
       this.allowedFileExtension = this.questionItem.Allowed_File_Extensions__c.split(';');
+      console.log(this.allowedFileExtension);
     }
   }
   setFlag(typ) {
@@ -493,11 +498,7 @@ export class QuestionnaireComponent implements OnInit {
   }
 
   setOptions(records) {
-    // console.log('inside setOptions');
-
-    for(var opt of records) {
-      // console.log('adding option ' + JSON.stringify(opt));
-
+      for(var opt of records) {
       var ov = new OptionValue();
       ov.Id = opt.Id;
       ov.Name = opt.Name;
@@ -556,6 +557,17 @@ export class QuestionnaireComponent implements OnInit {
   }
 
   optionChange(selValue) {
+    let radioTrackingId: string = '';
+     for(var opt of this.questionItem.Question_Options__r.records) {
+       //console.log('optionChange TrackingId'+opt.Tracking_ID__c);
+       if(opt.Value__c == selValue)
+       {
+          //console.log('inside if'+opt.Tracking_ID__c)
+          radioTrackingId = opt.Tracking_ID__c;
+       }
+     }
+
+    this.handleEvent.emit(radioTrackingId);
     this.clearError();
     // console.log('inside optionChange using ' + selValue);
     this.inpValue = selValue;
@@ -565,7 +577,6 @@ export class QuestionnaireComponent implements OnInit {
     if(this.questionItem.error) {
       this.questionItem.error = null;
     }
-    this.handleEvent.emit('clearErrorToWebtrekk');
   }
 
   clearSQError(quesId) {
@@ -573,7 +584,6 @@ export class QuestionnaireComponent implements OnInit {
     for(var sq of sqList){
       sq.error = null;
     }
-    this.handleEvent.emit('clearSQErrorToWebtrekk');
   }
 
   uploadFile(event) {
@@ -631,7 +641,7 @@ export class QuestionnaireComponent implements OnInit {
   }
   
   handleSubmitClick() {
-    this.handleEvent.emit('backToObjects');
+    this.handleEvent.emit(this.qbItem.Submit_Tracking_ID__c);
   }
 
   private createAttachment = (fileWrapper: any) => this.sfService.remoteAction('NxtController.process',
@@ -641,7 +651,7 @@ export class QuestionnaireComponent implements OnInit {
 
   deleteAttachment(attachmentId: string) {
     this.attachmentId = attachmentId;
-    this.handleEvent.emit('deleteAttachmentToWebtrekk');
+    this.handleEvent.emit('deleteAttachment');
     this.deleteSFAttachment(attachmentId);
   }
 
