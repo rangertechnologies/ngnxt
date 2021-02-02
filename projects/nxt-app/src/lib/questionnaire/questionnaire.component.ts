@@ -88,8 +88,7 @@ export class QuestionnaireComponent implements OnInit {
   // REQ-01 PROGRESS BAR
   public progressStyle: string = '0%';
   public answerCount: number = 0;
-
-
+  
   public myDatePickerOptions: IMyDpOptions = {
     dateFormat: 'dd.mm.yyyy',
     sunHighlight: false,
@@ -156,6 +155,21 @@ export class QuestionnaireComponent implements OnInit {
 
   getProperTime(def:string,input:string){
     return input === '' ? def : input;
+  }
+
+    //Summary Question Clickable Logic
+  summaryOpen(value:string){
+    
+    this.readQuestion(value);
+    //console.log(' in side summaryopen'+ this.summary.length);
+
+    //Assign question stack length from summary part
+    var arrayLength = this.questionStack.length;
+    var lengthValue=this.questionStack.indexOf(value);
+    for (let i = arrayLength;i > lengthValue ;i--){
+      this.questionStack.pop()
+    }
+    this.summary = [];
   }
 
   handleNextClick() {
@@ -278,6 +292,7 @@ export class QuestionnaireComponent implements OnInit {
         //console.log('Handling Question => ' + q);
 
         var ansWrap = this.answerMap.get(q);
+        //console.log(ansWrap);
         if(ansWrap) {
           //console.log('Handling Answer for ' + ansWrap.quesId + ' of type ' + ansWrap.qTyp);
           if( ansWrap.qTyp == 'Book') {
@@ -322,6 +337,7 @@ export class QuestionnaireComponent implements OnInit {
 
     // Read the previous question from DB
     this.readQuestion(this.questionStack.pop());
+    //console.log(this.questionStack);
   }
 
   private readQuestionBook = (uuid: string) => this.sfService.remoteAction('NxtController.process',

@@ -160,9 +160,7 @@
   </h3>
   <div *ngFor="let qa of summary" style="padding-bottom: 15px;">
     <div class="summary">
-      <div class="question">
-        {{qa.quesValue}}
-      </div>
+      <a class="question" (click)="summaryOpen(qa.quesId)" >{{qa.quesValue}}</a>
       <div class="answer">
         {{qa.ansValue}}
       </div>
