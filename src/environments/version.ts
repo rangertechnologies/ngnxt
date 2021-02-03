@@ -2,13 +2,13 @@
 /* tslint:disable */
 export const VERSION = {
     "dirty": true,
-    "raw": "b1dff6b-dirty",
-    "hash": "b1dff6b",
+    "raw": "9e6b251-dirty",
+    "hash": "9e6b251",
     "distance": null,
     "tag": null,
     "semver": null,
-    "suffix": "b1dff6b-dirty",
+    "suffix": "9e6b251-dirty",
     "semverString": null,
-    "version": "2.0.2"
+    "version": "2.0.4"
 };
 /* tslint:enable */
