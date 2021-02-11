@@ -626,7 +626,7 @@ export class QuestionnaireComponent implements OnInit {
   }
 
   uploadFile(event) {
-    console.log('inside upload');
+    //console.log('inside upload');
     this.clearError();
     this.fileTypeIncorrect = false;
     var local = this;
