@@ -22,7 +22,7 @@ import { TESTQUESTION,
          RADIOQUESTION,
          CHECKQUESTION,
          BOOKQUESTION,
-         TESTQB} from '../sample';
+         TESTQB } from '../sample';
 
 @Component({
   selector: 'lib-questionnaire',
@@ -84,6 +84,11 @@ export class QuestionnaireComponent implements OnInit {
   public selectedHour: string = '';
   public selectedMinute: string = '';
   public selectedMeridiem: string = '';
+  public valueName:string='';
+  public valueName1:string='';
+  public bookFlagAccept:string[];
+
+
 
   // REQ-01 PROGRESS BAR
   public progressStyle: string = '0%';
@@ -120,7 +125,7 @@ export class QuestionnaireComponent implements OnInit {
     this.selectedMinute = "";
     this.selectedMeridiem = "AM";
     this.processQB();
-    }
+  }
 
   ngOnChanges() {
     //console.log('inside Questionnaire ngOnChanges');
@@ -130,6 +135,8 @@ export class QuestionnaireComponent implements OnInit {
 
   processQB() {
     //console.log(this.qbId);
+    //console.log('Version in process is 8bf11efa7f91a391d957bf6b5078edc7e656b67c');
+
     if(this.qbId) {
       if(this.qbId.length == 18) {
         //console.log('Before Calling readQuestionBook() using ' + this.qbId);
@@ -173,6 +180,7 @@ export class QuestionnaireComponent implements OnInit {
   }
 
   handleNextClick() {
+    //console.log('one')
     this.clearError();
     this.handleEvent.emit(this.qbItem.Next_Tracking_ID__c);
     var recordId = null;
@@ -180,7 +188,8 @@ export class QuestionnaireComponent implements OnInit {
     cQuestion = this.questionItem;
     var typ = cQuestion.Type__c;
     var quesValue = cQuestion.Question__c;
-     
+
+
     // Process Inputs
     if(this.checkboxFlag) {
       this.inpValue = '';
@@ -192,16 +201,34 @@ export class QuestionnaireComponent implements OnInit {
       this.inpValue = this.trimLastDummy(this.inpValue);
     } else if(this.bookFlag) {
       //quesValue += '@@##$$';
+      //console.log('two')
       this.inpValue = '';
       var hasMissingInput = false;
       for(var item of this.questionItem.Questions__r.records) {
-        if(!item.Is_Optional__c && !item.input) {
+        if(!item.Is_Optional__c && 
+            ((item.Type__c != 'File' && !item.input) ||
+             (item.Type__c == 'File' && this.attachments.length == 0))) {
           item.error = new ErrorWrapper();
           hasMissingInput = true;
         }
-        this.inpValue += (item.input != undefined ? item.input : '') + '@@##$$';
+
+        if(item.Type__c == 'File' && this.attachments.length > 0) {
+          console.log('inside')
+          console.log(this.attachment)
+          for(var attachmentItem of this.attachments){
+            this.inpValue += attachmentItem.attachmentId + '@@##$$' +attachmentItem.attachmentName + ',';
+            if (item.input == this.inpValue) {
+              recordId = cQuestion.Next_Question__c;
+              console.log('inside'+ recordId);
+            }
+          }
+          this.attachments=[];
+        }//item.input == this.inpValue;
+        this.inpValue += (item.input != undefined ? item.input : '') + '@@##$$' ;
+        console.log('inside book1' + this.inpValue)
       }
-      if(hasMissingInput) { return; }
+      if(hasMissingInput) {console.log('file two')
+          return; }
       this.inpValue = this.trimLastDummy(this.inpValue);
     } else if(this.dtFlag && this.inpValue) {
       this.selectedHour = this.getProperTime('12',this.selectedHour);
@@ -209,11 +236,14 @@ export class QuestionnaireComponent implements OnInit {
       this.selectedMeridiem = this.getProperTime('AM',this.selectedMeridiem);
       this.inpValue = this.inpValue + 'T' + (this.selectedMeridiem === 'PM' && this.selectedHour != '12' ? (Number(this.selectedHour)+12) : this.selectedHour ) + ':' + this.selectedMinute + this.selectedMeridiem;
     } else if(this.fileFlag){
+      console.log('four')
       this.inpValue = '';
       if(this.attachments.length > 0) {
         for(var attachmentItem of this.attachments){
+          console.log(this.inpValue);
           this.inpValue += attachmentItem.attachmentId + '@@##$$' +attachmentItem.attachmentName + ',';
         }
+        console.log('inside filesss' +this.inpValue);
         this.inpValue = this.inpValue.substr(0,this.inpValue.length-1);
       } else {
         this.questionItem.error = new ErrorWrapper();
@@ -246,23 +276,48 @@ export class QuestionnaireComponent implements OnInit {
     this.questionStack.push(cQuestion.Id);
 
     // CONDITIONAL vs OPTIONONLY & UNCONDITIONAL
-    if(cQuestion.RecordType.Name == 'CONDITIONAL') {
-      for(var cOpt of cQuestion.Question_Options__r.records) {
+    if (cQuestion.RecordType.Name == "CONDITIONAL") {
+      console.log("six");
+      for (var cOpt of cQuestion.Question_Options__r.records) {
         // Radio / Data
         //console.log('Option => ' + cOpt.Value__c + ' matching with ' + ansVal);
-        if(cOpt.Value__c == this.inpValue) {
+        if (cOpt.Value__c == this.inpValue) {
           //console.log('Match Found using ' + cOpt.Next_Question__c);
           recordId = cOpt.Next_Question__c;
         }
       }
 
       // Could be of type Data and existing value
-      if(recordId && (typ == 'Data')) {
+      if (recordId && typ == "Data") {
         recordId = cQuestion.Next_Question__c;
       }
-    } else {
+    }
+    //  OPTIONONLY logic
+    else if (cQuestion.RecordType.Name == "OPTIONONLY") {
       recordId = cQuestion.Next_Question__c;
     }
+    //Unconditional  logic
+    else if (cQuestion.RecordType.Name == "UNCONDITIONAL") {
+      console.log("inside unconditional");
+      //inside Book Type
+      if (cQuestion.Type__c == "Book") {
+        console.log("inside book");
+        for (let opt of cQuestion.Questions__r.records) {
+          console.log(opt.Type__c);
+          if (opt.Type__c == "Dropdown") {
+            for (var opt1 of opt.Question_Options__r.records) {
+              if (this.valueName == opt1.Value__c) {
+                recordId = opt1.Next_Question__c || cQuestion.Next_Question__c;
+              }
+            }
+          } else {
+            recordId = cQuestion.Next_Question__c;
+          }
+        }
+      } else {
+        recordId = cQuestion.Next_Question__c;
+      }
+    } 
 
     // CATEGORIZATION
     //this.stepperCateg();
@@ -460,9 +515,8 @@ export class QuestionnaireComponent implements OnInit {
       this.questionItem.input = dtVal[1];
     } else if(this.fileFlag){
       // logic
-      
       this.allowedFileExtension = this.questionItem.Allowed_File_Extensions__c.split(';');
-      console.log(this.allowedFileExtension);
+      //console.log(this.allowedFileExtension);
     }
   }
   setFlag(typ) {
@@ -561,14 +615,19 @@ export class QuestionnaireComponent implements OnInit {
       sQues.Is_Optional__c = ques.Is_Optional__c;
       sQues.Group__c = ques.Group__c;
       sQues.Question_No__c = ques.Question_No__c;
+      sQues.Allowed_File_Extensions__c = ques.Allowed_File_Extensions__c;
+      this.valueName1= ques.Allowed_File_Extensions__c;
+       //console.log(this.valueName1);
 
-      if(qaMap.has(ques.Question_No__c)) {
+
+        if(qaMap.has(ques.Question_No__c)) {
         //console.log('Setting input for the subQuestion ' + ques.Question_No__c + ' with ' + ansStr);
         ques.input = qaMap.get(ques.Question_No__c);
       }
 
       this.subQuestions.push(ques);
     }
+    this.bookFlagAccept=this.valueName1.split(';');
     //console.log(this.subQuestions);
   }
 
@@ -601,7 +660,7 @@ export class QuestionnaireComponent implements OnInit {
       sq.error = null;
     }
   }
-
+  
   uploadFile(event) {
     //console.log('inside upload');
     this.clearError();
@@ -701,4 +760,3 @@ export class QuestionnaireComponent implements OnInit {
 
 
 }
-

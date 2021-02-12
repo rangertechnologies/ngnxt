@@ -1,8 +1,8 @@
-
 <!-- Progress Bar-->
 <div id="progress" style="display: none;">
-  <div id="bar" style.width="{{progressStyle}}" >
-    <P style = "padding-left: 45%;padding-right:50%;text-align:center; color:#ebeff1;font-weight:bold ">{{(progressStyle)}}</P>
+  <div id="bar" style.width="{{progressStyle}}">
+    <P style="padding-left: 45%;padding-right:50%;text-align:center; color:#ebeff1;font-weight:bold ">
+      {{(progressStyle)}}</P>
   </div>
 </div>
 
@@ -25,11 +25,14 @@
     </div>
   </div>
 
-  <div *ngIf="radioFlag || dropdownFlag || dataFlag" style="display: inline-block; width: 100%; padding-left: 5px; padding-right: 5px;">
+  <div *ngIf="radioFlag || dropdownFlag || dataFlag"
+    style="display: inline-block; width: 100%; padding-left: 5px; padding-right: 5px;">
     <div *ngIf="this.questionItem.error" style="color: red; font-weight: bold;">Bitte treffen Sie eine Auswahl</div>
-    <div *ngFor="let opt of questionItem.Question_Options__r.records" class="radio col-md-6" style="padding: 10px; float: left;">
+    <div *ngFor="let opt of questionItem.Question_Options__r.records" class="radio col-md-6"
+      style="padding: 10px; float: left;">
       <label class="radiocontainer">
-        <input type="radio" [id]="opt.Id" [(ngModel)]="inpValue" name="inpValue" value="{{opt.Value__c}}" (change)="optionChange(opt.Value__c)">
+        <input type="radio" [id]="opt.Id" [(ngModel)]="inpValue" name="inpValue" value="{{opt.Value__c}}"
+          (change)="optionChange(opt.Value__c)">
         <span class="checkmark">{{opt.Value__c}}</span>
       </label>
     </div>
@@ -46,96 +49,137 @@
   </div>
   <div *ngIf="textFlag">
     <div class="col-md-12" style="display: flex;">
-      <input type="text" [(ngModel)]="inpValue" id="text-input-id" required=""
-             (click)="clearError()"
-             style.border-color = "{{this.questionItem.error ? 'red' : (inpValue?.length > 0 ? '#87be1c' : '')}}"  oninput="this.value=this.value.replace(/[^a-zA-Z0-9\s.:;,?]/g,'');"/>
-      <i class="fa fa-check" aria-hidden="true" style="color:#87be1c;margin-left: -2rem;z-index: 1;padding: 5px;" *ngIf="inpValue?.length > 0"></i>
+      <input type="text" [(ngModel)]="inpValue" id="text-input-id" required="" (click)="clearError()"
+        style.border-color="{{this.questionItem.error ? 'red' : (inpValue?.length > 0 ? '#87be1c' : '')}}"
+        oninput="this.value=this.value.replace(/[^a-zA-Z0-9\s.:;,?]/g,'');" />
+      <i class="fa fa-check" aria-hidden="true" style="color:#87be1c;margin-left: -2rem;z-index: 1;padding: 5px;"
+        *ngIf="inpValue?.length > 0"></i>
     </div>
   </div>
   <div *ngIf="taFlag">
     <div class="col-md-12" style="display: flex;">
       <textarea style="height: 100px; width: 100%;border-radius: 5px;" id="ta-input-id" [(ngModel)]="inpValue"
-                (click)="clearError()"
-                style.border-color = "{{this.questionItem.error ? 'red' : (inpValue?.length > 0 && taFocusOut ? '#87be1c' : '')}}" (focusout)="taFocusOut = true"  oninput="this.value=this.value.replace(/[^a-zA-Z0-9\s.:;,?]/g,'');"></textarea>
-      <i class="fa fa-check" aria-hidden="true" style="color:#87be1c;margin-left: -2rem;z-index: 1;padding: 5px;" *ngIf="inpValue?.length > 0 && taFocusOut"></i>
+        (click)="clearError()"
+        style.border-color="{{this.questionItem.error ? 'red' : (inpValue?.length > 0 && taFocusOut ? '#87be1c' : '')}}"
+        (focusout)="taFocusOut = true" oninput="this.value=this.value.replace(/[^a-zA-Z0-9\s.:;,?]/g,'');"></textarea>
+      <i class="fa fa-check" aria-hidden="true" style="color:#87be1c;margin-left: -2rem;z-index: 1;padding: 5px;"
+        *ngIf="inpValue?.length > 0 && taFocusOut"></i>
     </div>
   </div>
   <div *ngIf="dtFlag" style="display: flex;">
     <div class="col-md-6">
-      <label [style.color]="questionItem.error ? 'red' : (inpValue?.length > 0 ? '#87be1c' : '')" class="date-time">Datum</label>
+      <label [style.color]="questionItem.error ? 'red' : (inpValue?.length > 0 ? '#87be1c' : '')"
+        class="date-time">Datum</label>
       <div style="display: flex;">
-        <my-date-picker name="mydate" [options]="myDatePickerOptions" 
-              (dateChanged)="onDateChanged($event)" [(ngModel)]="selDate" 
-              style="width: 100%;border-radius: 5px;"
-              [style.border-color] = "questionItem.error ? 'red' : (inpValue?.length > 0 ? '#87be1c' : '')">
+        <my-date-picker name="mydate" [options]="myDatePickerOptions" (dateChanged)="onDateChanged($event)"
+          [(ngModel)]="selDate" style="width: 100%;border-radius: 5px;"
+          [style.border-color]="questionItem.error ? 'red' : (inpValue?.length > 0 ? '#87be1c' : '')">
         </my-date-picker>
-        <i class="fa fa-check" aria-hidden="true" style="color:#87be1c;margin-left: -4rem;z-index: 1;margin-top: 1rem;" *ngIf="inpValue?.length > 0"></i>
+        <i class="fa fa-check" aria-hidden="true" style="color:#87be1c;margin-left: -4rem;z-index: 1;margin-top: 1rem;"
+          *ngIf="inpValue?.length > 0"></i>
       </div>
     </div>
-    <div class="col-md-6" >
-      <label [style.color]="questionItem.error ? 'red' : (questionItem?.input?.length > 0 ? '#87be1c' : '')" class="date-time">Zeit</label>
-        <div class="dateandTime">
-            <select name="hours" class="datetime showHour" [(ngModel)]="selectedHour" id="hour">
-              <option value="">HH</option>
-              <option [value]="hour" *ngFor="let hour of hours">{{hour}}</option>
-            </select> 
-            <span class="colon"> : </span>
-            <select name="minutes" class="datetime" [(ngModel)]="selectedMinute" id="minute">
-              <option value="">MM</option>
-              <option [value]="minute" *ngFor="let minute of minutes">{{minute}}</option>
-            </select>
-            <span class="colon"> : </span>
-            <select name="AM/PM" class="datetime" [(ngModel)]="selectedMeridiem" id="meridiem">
-              <option value="AM">AM</option>
-              <option value="PM">PM</option>
-            </select> 
-          </div>
-        </div>
-      <i class="fa fa-check" aria-hidden="true" style="color:#87be1c;margin-left: -5rem;z-index: 1;margin-top: 2.5rem;" *ngIf="questionItem?.input?.length > 0"></i>
+    <div class="col-md-6">
+      <label [style.color]="questionItem.error ? 'red' : (questionItem?.input?.length > 0 ? '#87be1c' : '')"
+        class="date-time">Zeit</label>
+      <div class="dateandTime">
+        <select name="hours" class="datetime showHour" [(ngModel)]="selectedHour" id="hour">
+          <option value="">HH</option>
+          <option [value]="hour" *ngFor="let hour of hours">{{hour}}</option>
+        </select>
+        <span class="colon"> : </span>
+        <select name="minutes" class="datetime" [(ngModel)]="selectedMinute" id="minute">
+          <option value="">MM</option>
+          <option [value]="minute" *ngFor="let minute of minutes">{{minute}}</option>
+        </select>
+        <span class="colon"> : </span>
+        <select name="AM/PM" class="datetime" [(ngModel)]="selectedMeridiem" id="meridiem">
+          <option value="AM">AM</option>
+          <option value="PM">PM</option>
+        </select>
+      </div>
+    </div>
+    <i class="fa fa-check" aria-hidden="true" style="color:#87be1c;margin-left: -5rem;z-index: 1;margin-top: 2.5rem;"
+      *ngIf="questionItem?.input?.length > 0"></i>
   </div>
 
   <div *ngIf="fileFlag">
-    <div class="info-alert" style="margin-top: 1rem;" style.border-color = "{{this.questionItem.error ? 'red' : ''}}">
-      <label class="picture-upload custom-file-upload" for="file-upload" style="background-color: #ffffff;" >
+    <div class="info-alert" style="margin-top: 1rem;" style.border-color="{{this.questionItem.error ? 'red' : ''}}">
+      <label class="picture-upload custom-file-upload" for="file-upload" style="background-color: #ffffff;">
         <span class="picture-upload-child">
           <i class="fa fa-file-image-o fa-5x" aria-hidden="true" style="color:#99B5CE"></i>
         </span>
-        <span style="margin-left: 9rem;position: sticky;margin-bottom: 6.5rem;" class="fa fa-plus fa-2x picture-upload-child">
+        <span style="margin-left: 9rem;position: sticky;margin-bottom: 6.5rem;"
+          class="fa fa-plus fa-2x picture-upload-child">
           <i class="" aria-hidden="true"></i>
         </span>
       </label>
     </div>
-    <input id="file-upload" type="file" accept="{{allowedFileExtension}}" (change)="uploadFile($event)"/>
+    <input id="file-upload" type="file" accept="{{allowedFileExtension}}" (change)="uploadFile($event)" />
   </div>
-  <ul *ngIf="attachments?.length > 0 && fileFlag" style="list-style-type:none;margin-left:0;margin-bottom:0.7rem" class="col-md-12">
-    <li *ngFor="let attachment of attachments" style="text-align:left;">{{attachment.attachmentName}}<span style="float:right;cursor:pointer;padding: 0px;" (click)="deleteAttachment(attachment.attachmentId)">X</span></li>
+  <ul *ngIf="attachments?.length > 0 && fileFlag" style="list-style-type:none;margin-left:0;margin-bottom:0.7rem"
+    class="col-md-12">
+    <li *ngFor="let attachment of attachments" style="text-align:left;">{{attachment.attachmentName}}<span
+        style="float:right;cursor:pointer;padding: 0px;" (click)="deleteAttachment(attachment.attachmentId)">X</span>
+    </li>
   </ul>
   <div *ngIf="bookFlag">
-    <div  class="form-group col-md-12">
+    <div class="form-group col-md-12">
       <div class="form-row">
-        <div [class]="'col-md-' + ques.Size__c + ' paddingnone'" *ngFor="let ques of subQuestions" style="text-align: left;">
-          <span [style.font-weight] = "ques.Is_Title__c ? 'bold' : ''" style = "color: #00356f;">{{ques.Question__c}}</span>
+        <div [class]="'col-md-' + ques.Size__c + ' paddingnone'" *ngFor="let ques of subQuestions"
+          style="text-align: left;">
+          <span [style.font-weight]="ques.Is_Title__c ? 'bold' : ''" style="color: #00356f;">{{ques.Question__c}}</span>
           <div *ngIf="ques.Type__c === 'Text'">
             <input type="text" [(ngModel)]="ques.input" [id]="ques.Id" required="" (click)="clearSQError(ques.Id)"
-                   style.border-color = "{{ques.error ? 'red' : ''}}" placeholder="{{ques.Question__c}}" oninput="this.value=this.value.replace(/[^a-zA-Z0-9\s.:;,?]/g,'');"/>
+              style.border-color="{{ques.error ? 'red' : ''}}" placeholder="{{ques.Question__c}}"
+              oninput="this.value=this.value.replace(/[^a-zA-Z0-9\s.:;,?]/g,'');" />
           </div>
           <div *ngIf="ques.Type__c === 'Email'">
             <input type="email" [(ngModel)]="ques.input" [id]="ques.Id" required="" (click)="clearSQError(ques.Id)"
-                   style.border-color = "{{ques.error ? 'red' : ''}}" placeholder="{{ques.Question__c}}" oninput="this.value=this.value.replace(/[^a-zA-Z0-9!#$%&\'*+\-\/=?^_`{|}~@]/g,'');"/>
+              style.border-color="{{ques.error ? 'red' : ''}}" placeholder="{{ques.Question__c}}"
+              oninput="this.value=this.value.replace(/[^a-zA-Z0-9!#$%&\'*+\-\/=?^_`{|}~@]/g,'');" />
           </div>
+
+          <div *ngIf="ques.Type__c === 'File'">
+            <div>
+
+              <label class="picture-upload custom-file-upload" for="file-upload" style="background-color: #ffffff;">
+                <span class="picture-upload-child">
+                  <i class="fa fa-file-image-o fa-5x" aria-hidden="true" style="color:#99B5CE"></i>
+                </span>
+                <span style="margin-left: 9rem;position: sticky;margin-bottom: 6.5rem;"
+                  class="fa fa-plus fa-2x picture-upload-child">
+                  <i class="" aria-hidden="true"></i>
+                </span>
+              </label>
+
+              <input id="file-upload" type="file" accept="{{bookFlagAccept}}" (change)="uploadFile($event)" />
+            </div>
+          </div>
+          <ul *ngIf="attachments?.length > 0 && ques.Type__c === 'File'"
+            style="list-style-type:none;margin-left:0;margin-bottom:0.7rem" class="col-md-12">
+            <li *ngFor="let attachment of attachments" style="text-align:left;">{{attachment.attachmentName}}<span
+                style="float:right;cursor:pointer;padding: 0px;"
+                (click)="deleteAttachment(attachment.attachmentId)">X</span></li>
+          </ul>
+
           <div *ngIf="ques.Type__c === 'Dropdown'">
-            <select class="custom-select mr-sm-2" [(ngModel)]="ques.input" style="height: 3.45556rem;">
-              <option *ngFor="let opt of ques.Question_Options__r.records" value="{{opt.Value__c}}" >{{opt.Value__c}} </option>
+            <select class="custom-select mr-sm-2" [(ngModel)]="ques.input" (change)="Dropdown($event)"
+              style="height: 3.45556rem;">
+              <option *ngFor="let opt of ques.Question_Options__r.records" value="{{opt.Value__c}}">{{opt.Value__c}}
+              </option>
             </select>
           </div>
-          <i class="fa fa-check" aria-hidden="true" style="color:#87be1c;margin-left: -3rem;z-index: 1;padding: 5px;" *ngIf="questionItem?.input?.length > 0"></i>
+          <i class="fa fa-check" aria-hidden="true" style="color:#87be1c;margin-left: -3rem;z-index: 1;padding: 5px;"
+            *ngIf="questionItem?.input?.length > 0"></i>
         </div>
       </div>
     </div>
   </div>
   <div class="" style="display: flex; padding-top: 20px;">
     <div class="col-md-6" [style.visibility]="questionStack.length > 0 ? 'visible':'hidden'">
-      <button class="btn btn-primary btn-lg btn-block btn-back-color" (click)="handleBackClick()">{{qbItem.Back__c}}</button>
+      <button class="btn btn-primary btn-lg btn-block btn-back-color"
+        (click)="handleBackClick()">{{qbItem.Back__c}}</button>
     </div>
     <div class="col-md-6">
       <button class="btn btn-primary btn-lg btn-block btn-color" (click)="handleNextClick()">{{qbItem.Next__c}}</button>
@@ -143,13 +187,13 @@
   </div>
 
   <div>
-    <br/><br/><br/>
+    <br /><br /><br />
     <span>Question # and Name for Reference: </span>
     {{questionItem.Question_No__c}} and {{questionItem.Name}}
     <div *ngIf="questionItem.error">
-      <br/>{{questionItem.error.errorCode}}
-      <br/>{{questionItem.error.errorMsg}}
-      <br/>{{questionItem.error.errorDetails}}
+      <br />{{questionItem.error.errorCode}}
+      <br />{{questionItem.error.errorMsg}}
+      <br />{{questionItem.error.errorDetails}}
     </div>
   </div>
 </div>
@@ -160,7 +204,7 @@
   </h3>
   <div *ngFor="let qa of summary" style="padding-bottom: 15px;">
     <div class="summary">
-      <a class="question" (click)="summaryOpen(qa.quesId)" >{{qa.quesValue}}</a>
+      <a class="question" (click)="summaryOpen(qa.quesId)">{{qa.quesValue}}</a>
       <div class="answer">
         {{qa.ansValue}}
       </div>
@@ -169,10 +213,12 @@
 
   <div class="" style="display: flex; padding-top: 20px;">
     <div class="col-md-6">
-      <button class="btn btn-primary btn-lg btn-block btn-back-color"  (click)="handleBackClick()">{{qbItem.Back__c}}</button>
+      <button class="btn btn-primary btn-lg btn-block btn-back-color"
+        (click)="handleBackClick()">{{qbItem.Back__c}}</button>
     </div>
     <div class="col-md-6">
-      <button class="btn btn-primary btn-lg btn-block btn-color" (click)="handleSubmitClick()">{{qbItem.Submit__c}}</button>
+      <button class="btn btn-primary btn-lg btn-block btn-color"
+        (click)="handleSubmitClick()">{{qbItem.Submit__c}}</button>
     </div>
   </div>
 </div>
