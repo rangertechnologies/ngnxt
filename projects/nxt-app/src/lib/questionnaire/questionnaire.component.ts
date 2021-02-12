@@ -267,20 +267,21 @@ export class QuestionnaireComponent implements OnInit {
       recordId = cQuestion.Next_Question__c;
      }
          //Unconditional  logic
-     else if(cQuestion.RecordType.Name == 'UNCONDITIONAL'){
-         //inside Book Type
-          if(cQuestion.Type__c == 'Book' ){
-            for(let opt of cQuestion.Questions__r.records){
-           if(opt.Type__c == 'Dropdown'){
-            for(var opt1 of opt.Question_Options__r.records){
-           if (this.valueName == opt1.Value__c){
-                recordId=((opt1.Next_Question__c) || (cQuestion.Next_Question__c));
+      else if(cQuestion.RecordType.Name == 'UNCONDITIONAL'){
+        //inside Book Type
+        if(cQuestion.Type__c == 'Book' ){
+          for(let opt of cQuestion.Questions__r.records){
+            if(opt.Type__c == 'Dropdown'){
+              for(var opt1 of opt.Question_Options__r.records){
+                if (this.valueName == opt1.Value__c){
+                  recordId=((opt1.Next_Question__c) || (cQuestion.Next_Question__c));
+                }
               }
             }
+            else {recordId = cQuestion.Next_Question__c;}
           }
-           else {recordId = cQuestion.Next_Question__c;}
-         }} else {recordId = cQuestion.Next_Question__c;}
-        } 
+        } else {recordId = cQuestion.Next_Question__c;}
+      } 
 
     // CATEGORIZATION
     //this.stepperCateg();
