@@ -1,28 +1,32 @@
-import { Component, OnInit, OnChanges, Input, Output,EventEmitter } from '@angular/core';
+import { Component, OnInit, OnChanges, Input, Output, EventEmitter } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { SalesforceService } from '../services/salesforce.service';
 import { IMyDateModel, IMyDpOptions } from 'mydatepicker';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
-import {FormBuilder } from '@angular/forms';
+import { FormBuilder } from '@angular/forms';
 
-import { Question,
-         QuestionBook,
-         AnswerBook,
-         AnswerWrapper,
-         ErrorWrapper,
-         Option,
-         OptionValue, 
-         AttachmentWrapper,
-         Attachment } from '../wrapper';
+import {
+  Question,
+  QuestionBook,
+  AnswerBook,
+  AnswerWrapper,
+  ErrorWrapper,
+  Option,
+  OptionValue,
+  AttachmentWrapper,
+  Attachment
+} from '../wrapper';
 
-import { TESTQUESTION,
-         DTQUESTION,
-         FILEQUESTION,
-         TAQUESTION,
-         RADIOQUESTION,
-         CHECKQUESTION,
-         BOOKQUESTION,
-         TESTQB } from '../sample';
+import {
+  TESTQUESTION,
+  DTQUESTION,
+  FILEQUESTION,
+  TAQUESTION,
+  RADIOQUESTION,
+  CHECKQUESTION,
+  BOOKQUESTION,
+  TESTQB
+} from '../sample';
 
 @Component({
   selector: 'lib-questionnaire',
@@ -60,40 +64,40 @@ export class QuestionnaireComponent implements OnInit {
   public answerMap = new Map();
   public sqOptions = new Map();
   public questionStack = [];
-  public attachments: any [] = [];
-  public attachmentIdList: any [] = [];
+  public attachments: any[] = [];
+  public attachmentIdList: any[] = [];
   public attachmentId: string = '';
   public attachment: any;
   public allowedFileExtension: string[];
   public fileExceededLimit: boolean = false;
   public fileTypeIncorrect: boolean = false;
-  public localDate:string;
+  public localDate: string;
   public taFocusOut: boolean = false;
   public summary = [];
   public selDate: any = {};
   private today: Date = new Date();
   private el: HTMLElement;
-  public innerhtml:any;
-  public hours: string[] = ['01','02','03','04','05','06','07','08','09','10','11','12'];
-  public minutes: string[] = ['00','01','02','03','04','05','06','07','08','09','10',
-                                   '11','12','13','14','15','16','17','18','19','20',
-                                   '21','22','23','24','25','26','27','28','29','30',
-                                   '31','32','33','34','35','36','37','38','39','40',
-                                   '41','42','43','44','45','46','47','48','49','50',
-                                   '51','52','53','54','55','56','57','58','59'];
+  public innerhtml: any;
+  public hours: string[] = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'];
+  public minutes: string[] = ['00', '01', '02', '03', '04', '05', '06', '07', '08', '09', '10',
+    '11', '12', '13', '14', '15', '16', '17', '18', '19', '20',
+    '21', '22', '23', '24', '25', '26', '27', '28', '29', '30',
+    '31', '32', '33', '34', '35', '36', '37', '38', '39', '40',
+    '41', '42', '43', '44', '45', '46', '47', '48', '49', '50',
+    '51', '52', '53', '54', '55', '56', '57', '58', '59'];
   public selectedHour: string = '';
   public selectedMinute: string = '';
   public selectedMeridiem: string = '';
-  public valueName:string='';
-  public valueName1:string='';
-  public bookFlagAccept:string[];
+  public valueName: string = '';
+  public valueName1: string = '';
+  public bookFlagAccept: string[];
 
 
 
   // REQ-01 PROGRESS BAR
   public progressStyle: string = '0%';
   public answerCount: number = 0;
-  
+
   public myDatePickerOptions: IMyDpOptions = {
     dateFormat: 'dd.mm.yyyy',
     sunHighlight: false,
@@ -109,7 +113,7 @@ export class QuestionnaireComponent implements OnInit {
     monthLabels: { 1: 'Jan', 2: 'Feb', 3: 'Mär', 4: 'Apr', 5: 'Mai', 6: 'Jun', 7: 'Jul', 8: 'Aug', 9: 'Sep', 10: 'Okt', 11: 'Nov', 12: 'Dez' }
   };
 
-  constructor(private sfService: SalesforceService, private route: ActivatedRoute ,private sanitizer: DomSanitizer,private _formBuilder: FormBuilder) {
+  constructor(private sfService: SalesforceService, private route: ActivatedRoute, private sanitizer: DomSanitizer, private _formBuilder: FormBuilder) {
 
   }
 
@@ -129,7 +133,7 @@ export class QuestionnaireComponent implements OnInit {
 
   ngOnChanges() {
     //console.log('inside Questionnaire ngOnChanges');
-    this.processQB(); 
+    this.processQB();
   }
 
 
@@ -137,8 +141,8 @@ export class QuestionnaireComponent implements OnInit {
     //console.log(this.qbId);
     //console.log('Version in process is 8bf11efa7f91a391d957bf6b5078edc7e656b67c');
 
-    if(this.qbId) {
-      if(this.qbId.length == 18) {
+    if (this.qbId) {
+      if (this.qbId.length == 18) {
         //console.log('Before Calling readQuestionBook() using ' + this.qbId);
         this.readQuestionBook(this.qbId);
 
@@ -155,25 +159,25 @@ export class QuestionnaireComponent implements OnInit {
 
 
 
-  trimLastDummy(input: string){
-    return input = input.substring(0,input.length-6);
+  trimLastDummy(input: string) {
+    return input = input.substring(0, input.length - 6);
   }
 
 
-  getProperTime(def:string,input:string){
+  getProperTime(def: string, input: string) {
     return input === '' ? def : input;
   }
 
-    //Summary Question Clickable Logic
-  summaryOpen(value:string){
-    
+  //Summary Question Clickable Logic
+  summaryOpen(value: string) {
+
     this.readQuestion(value);
     //console.log(' in side summaryopen'+ this.summary.length);
 
     //Assign question stack length from summary part
     var arrayLength = this.questionStack.length;
-    var lengthValue=this.questionStack.indexOf(value);
-    for (let i = arrayLength;i > lengthValue ;i--){
+    var lengthValue = this.questionStack.indexOf(value);
+    for (let i = arrayLength; i > lengthValue; i--) {
       this.questionStack.pop()
     }
     this.summary = [];
@@ -191,60 +195,62 @@ export class QuestionnaireComponent implements OnInit {
 
 
     // Process Inputs
-    if(this.checkboxFlag) {
+    if (this.checkboxFlag) {
       this.inpValue = '';
       // Save all the selected options in the inpValue
-      for(var ov of this.optionValues.filter(item => item.checked)) {
+      for (var ov of this.optionValues.filter(item => item.checked)) {
         this.inpValue += ov.Value__c + '@@##$$';
         recordId = ov.Next_Question__c;
       }
       this.inpValue = this.trimLastDummy(this.inpValue);
-    } else if(this.bookFlag) {
+    } else if (this.bookFlag) {
       //quesValue += '@@##$$';
       //console.log('two')
       this.inpValue = '';
       var hasMissingInput = false;
-      for(var item of this.questionItem.Questions__r.records) {
-        if(!item.Is_Optional__c && 
-            ((item.Type__c != 'File' && !item.input) ||
-             (item.Type__c == 'File' && this.attachments.length == 0))) {
+      for (var item of this.questionItem.Questions__r.records) {
+        if (!item.Is_Optional__c &&
+          ((item.Type__c != 'File' && !item.input) ||
+            (item.Type__c == 'File' && this.attachments.length == 0))) {
           item.error = new ErrorWrapper();
           hasMissingInput = true;
         }
 
-        if(item.Type__c == 'File' && this.attachments.length > 0) {
+        if (item.Type__c == 'File' && this.attachments.length > 0) {
           console.log('inside')
           console.log(this.attachment)
-          for(var attachmentItem of this.attachments){
-            this.inpValue += attachmentItem.attachmentId + '@@##$$' +attachmentItem.attachmentName + ',';
+          for (var attachmentItem of this.attachments) {
+            this.inpValue += attachmentItem.attachmentId + '@@##$$' + attachmentItem.attachmentName + ',';
             if (item.input == this.inpValue) {
               recordId = cQuestion.Next_Question__c;
-              console.log('inside'+ recordId);
+              console.log('inside' + recordId);
             }
           }
-          this.attachments=[];
+          this.attachments = [];
         }//item.input == this.inpValue;
-        this.inpValue += (item.input != undefined ? item.input : '') + '@@##$$' ;
+        this.inpValue += (item.input != undefined ? item.input : '') + '@@##$$';
         console.log('inside book1' + this.inpValue)
       }
-      if(hasMissingInput) {console.log('file two')
-          return; }
+      if (hasMissingInput) {
+        console.log('file two')
+        return;
+      }
       this.inpValue = this.trimLastDummy(this.inpValue);
-    } else if(this.dtFlag && this.inpValue) {
-      this.selectedHour = this.getProperTime('12',this.selectedHour);
-      this.selectedMinute = this.getProperTime('00',this.selectedMinute);
-      this.selectedMeridiem = this.getProperTime('AM',this.selectedMeridiem);
-      this.inpValue = this.inpValue + 'T' + (this.selectedMeridiem === 'PM' && this.selectedHour != '12' ? (Number(this.selectedHour)+12) : this.selectedHour ) + ':' + this.selectedMinute + this.selectedMeridiem;
-    } else if(this.fileFlag){
+    } else if (this.dtFlag && this.inpValue) {
+      this.selectedHour = this.getProperTime('12', this.selectedHour);
+      this.selectedMinute = this.getProperTime('00', this.selectedMinute);
+      this.selectedMeridiem = this.getProperTime('AM', this.selectedMeridiem);
+      this.inpValue = this.inpValue + 'T' + (this.selectedMeridiem === 'PM' && this.selectedHour != '12' ? (Number(this.selectedHour) + 12) : this.selectedHour) + ':' + this.selectedMinute + this.selectedMeridiem;
+    } else if (this.fileFlag) {
       console.log('four')
       this.inpValue = '';
-      if(this.attachments.length > 0) {
-        for(var attachmentItem of this.attachments){
+      if (this.attachments.length > 0) {
+        for (var attachmentItem of this.attachments) {
           console.log(this.inpValue);
-          this.inpValue += attachmentItem.attachmentId + '@@##$$' +attachmentItem.attachmentName + ',';
+          this.inpValue += attachmentItem.attachmentId + '@@##$$' + attachmentItem.attachmentName + ',';
         }
-        console.log('inside filesss' +this.inpValue);
-        this.inpValue = this.inpValue.substr(0,this.inpValue.length-1);
+        console.log('inside filesss' + this.inpValue);
+        this.inpValue = this.inpValue.substr(0, this.inpValue.length - 1);
       } else {
         this.questionItem.error = new ErrorWrapper();
         return;
@@ -254,7 +260,7 @@ export class QuestionnaireComponent implements OnInit {
     //console.log('before calling saveAnswer with ' + this.inpValue);
 
     // Check for the answer before saving to the DB
-    if(!this.questionItem.Is_Optional__c && !this.inpValue) {
+    if (!this.questionItem.Is_Optional__c && !this.inpValue) {
       // Show error that the question must be answered
       this.questionItem.error = new ErrorWrapper();
       return;
@@ -271,7 +277,7 @@ export class QuestionnaireComponent implements OnInit {
     this.saveAnswer();
 
     // If no error then move to next steps
-    if(this.questionItem.error) { return; }
+    if (this.questionItem.error) { return; }
 
     this.questionStack.push(cQuestion.Id);
 
@@ -317,7 +323,7 @@ export class QuestionnaireComponent implements OnInit {
       } else {
         recordId = cQuestion.Next_Question__c;
       }
-    } 
+    }
 
     // CATEGORIZATION
     //this.stepperCateg();
@@ -329,7 +335,7 @@ export class QuestionnaireComponent implements OnInit {
     // CATEGORIZATION
     //this.stepperCateg();
 
-    if(recordId) {
+    if (recordId) {
       //console.log('Before Calling readQuestion() using ' + recordId);
       this.readQuestion(recordId);
     } else {
@@ -343,18 +349,18 @@ export class QuestionnaireComponent implements OnInit {
       this.questionItem = null;
 
       // Show Summary
-      for(var q of this.questionStack) {
+      for (var q of this.questionStack) {
         //console.log('Handling Question => ' + q);
 
         var ansWrap = this.answerMap.get(q);
         //console.log(ansWrap);
-        if(ansWrap) {
+        if (ansWrap) {
           //console.log('Handling Answer for ' + ansWrap.quesId + ' of type ' + ansWrap.qTyp);
-          if( ansWrap.qTyp == 'Book') {
+          if (ansWrap.qTyp == 'Book') {
             var newStr = '';
-            for(var ansStr of ansWrap.ansValue.split('@@##$$')) {
-              if(ansStr.length > 0){
-                if(newStr.length == 0) {
+            for (var ansStr of ansWrap.ansValue.split('@@##$$')) {
+              if (ansStr.length > 0) {
+                if (newStr.length == 0) {
                   newStr = ansStr;
                 } else {
                   newStr += ', ' + ansStr;
@@ -362,12 +368,12 @@ export class QuestionnaireComponent implements OnInit {
               }
             }
             ansWrap.ansValue = newStr;
-          } else if(ansWrap.qTyp == 'File'){
+          } else if (ansWrap.qTyp == 'File') {
             let attachmentNameArray = [];
-            for (var attch of this.attachments){
+            for (var attch of this.attachments) {
               attachmentNameArray.push(attch.attachmentName);
             }
-            let finalFileListString = (attachmentNameArray.toString()).replace(',',', ');
+            let finalFileListString = (attachmentNameArray.toString()).replace(',', ', ');
             ansWrap.ansValue = finalFileListString;
           }
           this.summary.push(ansWrap);
@@ -382,11 +388,11 @@ export class QuestionnaireComponent implements OnInit {
     this.handleEvent.emit(this.qbItem.Back_Tracking_ID__c);
     this.answerCount--;
     this.updateProgress();
-   
+
     // CATEGORIZATION
     //this.stepperCateg();
 
-    if(this.summary) {
+    if (this.summary) {
       this.summary = [];
     }
 
@@ -421,7 +427,7 @@ export class QuestionnaireComponent implements OnInit {
   private successRead = (response) => {
     //console.log(response);
     // Reset the Variables
-    if(this.questionItem)   {
+    if (this.questionItem) {
       this.inpValue = '';
       this.answerWrap = new AnswerWrapper();
       this.optionValues = [];
@@ -429,30 +435,30 @@ export class QuestionnaireComponent implements OnInit {
       this.resetFlag(this.questionItem.Type__c);
     }
     this.questionItem = response.question;
-     
+
     // Handle the subQuestion options
-    if(response.sqOptions) {
+    if (response.sqOptions) {
       //var newRecords = [];
-      for(var q of this.questionItem.Questions__r.records) {
+      for (var q of this.questionItem.Questions__r.records) {
         //console.log(q.Name);
         var sq = response.sqOptions[q.Id];
-        if(sq) {
+        if (sq) {
           //console.log('found options for subquestion ' + q.Name);
-          if(!q.Question_Options__r) {
+          if (!q.Question_Options__r) {
             q.Question_Options__r = sq.Question_Options__r;
           }
         }
       }
     }
     this.processQuestion();
-    this.innerhtml=this.sanitizer.bypassSecurityTrustHtml(this.questionItem.Additional_Rich__c);
+    this.innerhtml = this.sanitizer.bypassSecurityTrustHtml(this.questionItem.Additional_Rich__c);
     this.trackId();
 
   }
-  trackId(){
-    var qtrackId=this.questionItem.Tracking_ID__c;
+  trackId() {
+    var qtrackId = this.questionItem.Tracking_ID__c;
     //console.log('trackId-question'+qtrackId);
-     }
+  }
 
   private failureRead = (response) => {
     //console.log('inside failureread');
@@ -464,16 +470,16 @@ export class QuestionnaireComponent implements OnInit {
     this.answerWrap.ansNumber = this.questionStack.length + 1;
 
     this.sfService.remoteAction('NxtController.process',
-        ['Answer', 'create', JSON.stringify(this.answerWrap)],
-        this.successSave,
-        this.failureSave);
+      ['Answer', 'create', JSON.stringify(this.answerWrap)],
+      this.successSave,
+      this.failureSave);
   }
 
   private successSave = (response) => {
     //console.log('size',this.answerMap.size);
     //console.log('inside successSave');
     //console.log(response);
-    if(response.status == 'success') {
+    if (response.status == 'success') {
       //this.abItem = response.answerbook;
       this.answerMap.set(response.answer.quesId, response.answer);
     } else {
@@ -494,7 +500,7 @@ export class QuestionnaireComponent implements OnInit {
     this.setFlag(this.questionItem.Type__c);
 
     // Check the existing answer from answerMap
-    if(this.answerMap.has(this.questionItem.Id)) {
+    if (this.answerMap.has(this.questionItem.Id)) {
       //console.log('existing answer found for this.questionItem.Name');
       var eAnswer = this.answerMap.get(this.questionItem.Id);
       // Get the existing answer from the Map
@@ -502,18 +508,18 @@ export class QuestionnaireComponent implements OnInit {
       //console.log('inpValue has been set to ' + this.inpValue);
     }
 
-    if(this.checkboxFlag) {
+    if (this.checkboxFlag) {
       // Set the Options for Checkbox
       this.setOptions(this.questionItem.Question_Options__r.records);
-    } else if(this.bookFlag) {
+    } else if (this.bookFlag) {
       // Set the SubQuestions
       this.setSubQuestions(this.questionItem.Questions__r.records);
-    } else if(this.dtFlag && this.inpValue) {
+    } else if (this.dtFlag && this.inpValue) {
       // Set the Date and Time
       var dtVal = this.inpValue.split('T');
       this.inpValue = dtVal[0];
       this.questionItem.input = dtVal[1];
-    } else if(this.fileFlag){
+    } else if (this.fileFlag) {
       // logic
       this.allowedFileExtension = this.questionItem.Allowed_File_Extensions__c.split(';');
       //console.log(this.allowedFileExtension);
@@ -522,53 +528,53 @@ export class QuestionnaireComponent implements OnInit {
   setFlag(typ) {
     //console.log('inside setFlag for ' + typ);
 
-    if(typ) {
+    if (typ) {
       // Set the Flags
-      if(typ == 'Text') {
+      if (typ == 'Text') {
         this.textFlag = true;
-      } else if(typ == 'File') {
+      } else if (typ == 'File') {
         this.fileFlag = true;
-      } else if(typ == 'DateTime') {
+      } else if (typ == 'DateTime') {
         this.dtFlag = true;
-      } else if(typ == 'TextArea') {
+      } else if (typ == 'TextArea') {
         this.taFlag = true;
-      } else if(typ == 'Radio') {
+      } else if (typ == 'Radio') {
         this.radioFlag = true;
-      } else if(typ == 'Dropdown') {
+      } else if (typ == 'Dropdown') {
         this.dropdownFlag = true;
-      } else if(typ == 'Checkbox') {
+      } else if (typ == 'Checkbox') {
         this.checkboxFlag = true;
-      } else if(typ == 'Book') {
+      } else if (typ == 'Book') {
         this.bookFlag = true;
       }
     }
   }
 
   resetFlag(typ) {
-    if(typ) {
+    if (typ) {
       // Set the Flags
-      if(typ == 'Text') {
+      if (typ == 'Text') {
         this.textFlag = false;
-      } else if(typ == 'File') {
+      } else if (typ == 'File') {
         this.fileFlag = false;
-      } else if(typ == 'DateTime') {
+      } else if (typ == 'DateTime') {
         this.dtFlag = false;
-      } else if(typ == 'TextArea') {
+      } else if (typ == 'TextArea') {
         this.taFlag = false;
-      } else if(typ == 'Radio') {
+      } else if (typ == 'Radio') {
         this.radioFlag = false;
-      } else if(typ == 'Dropdown') {
+      } else if (typ == 'Dropdown') {
         this.dropdownFlag = false;
-      } else if(typ == 'Checkbox') {
+      } else if (typ == 'Checkbox') {
         this.checkboxFlag = false;
-      } else if(typ == 'Book') {
+      } else if (typ == 'Book') {
         this.bookFlag = false;
       }
     }
   }
 
   setOptions(records) {
-      for(var opt of records) {
+    for (var opt of records) {
       var ov = new OptionValue();
       ov.Id = opt.Id;
       ov.Name = opt.Name;
@@ -576,7 +582,7 @@ export class QuestionnaireComponent implements OnInit {
       ov.Next_Question__c = opt.Next_Question__c;
       ov.checked = false;
 
-      if(this.inpValue && this.inpValue.split('@@##$$').includes(opt.Value__c)) {
+      if (this.inpValue && this.inpValue.split('@@##$$').includes(opt.Value__c)) {
         ov.checked = true;
       }
 
@@ -588,24 +594,24 @@ export class QuestionnaireComponent implements OnInit {
     //console.log('inside setSubQuestions');
 
     var qaMap = new Map();
-    if(this.inpValue) {
+    if (this.inpValue) {
       var aIndex = 0;
-      if(this.inpValue.search(', ') == -1){
-        for(var ansStr of this.inpValue.split('@@##$$')) {
+      if (this.inpValue.search(', ') == -1) {
+        for (var ansStr of this.inpValue.split('@@##$$')) {
           aIndex++;
           qaMap.set(aIndex, ansStr);
           //console.log('Setting the qaMap for ' + aIndex + ' with ' + ansStr);
         }
       } else {
-          for(var ansStr of this.inpValue.split(', ')) {
-            aIndex++;
-            qaMap.set(aIndex, ansStr);
-            //console.log('Setting the qaMap ' + aIndex + ' with ' + ansStr);
-          }
+        for (var ansStr of this.inpValue.split(', ')) {
+          aIndex++;
+          qaMap.set(aIndex, ansStr);
+          //console.log('Setting the qaMap ' + aIndex + ' with ' + ansStr);
+        }
       }
     }
 
-    for(var ques of records) {
+    for (var ques of records) {
       var sQues = new Question();
       sQues.Id = ques.Id;
       sQues.Name = ques.Name;
@@ -616,31 +622,30 @@ export class QuestionnaireComponent implements OnInit {
       sQues.Group__c = ques.Group__c;
       sQues.Question_No__c = ques.Question_No__c;
       sQues.Allowed_File_Extensions__c = ques.Allowed_File_Extensions__c;
-      this.valueName1= ques.Allowed_File_Extensions__c;
-       //console.log(this.valueName1);
+      this.valueName1 = ques.Allowed_File_Extensions__c;
+      //console.log(this.valueName1);
 
 
-        if(qaMap.has(ques.Question_No__c)) {
+      if (qaMap.has(ques.Question_No__c)) {
         //console.log('Setting input for the subQuestion ' + ques.Question_No__c + ' with ' + ansStr);
         ques.input = qaMap.get(ques.Question_No__c);
       }
 
       this.subQuestions.push(ques);
     }
-    this.bookFlagAccept=this.valueName1.split(';');
+    this.bookFlagAccept = this.valueName1.split(';');
     //console.log(this.subQuestions);
   }
 
   optionChange(selValue) {
     let radioTrackingId: string = '';
-     for(var opt of this.questionItem.Question_Options__r.records) {
-       //console.log('optionChange TrackingId'+opt.Tracking_ID__c);
-       if(opt.Value__c == selValue)
-       {
-          //console.log('inside if'+opt.Tracking_ID__c)
-          radioTrackingId = opt.Tracking_ID__c;
-       }
-     }
+    for (var opt of this.questionItem.Question_Options__r.records) {
+      //console.log('optionChange TrackingId'+opt.Tracking_ID__c);
+      if (opt.Value__c == selValue) {
+        //console.log('inside if'+opt.Tracking_ID__c)
+        radioTrackingId = opt.Tracking_ID__c;
+      }
+    }
 
     this.handleEvent.emit(radioTrackingId);
     this.clearError();
@@ -649,18 +654,18 @@ export class QuestionnaireComponent implements OnInit {
   }
 
   clearError() {
-    if(this.questionItem.error) {
+    if (this.questionItem.error) {
       this.questionItem.error = null;
     }
   }
 
   clearSQError(quesId) {
     var sqList = this.subQuestions.filter(item => item.Id == quesId);
-    for(var sq of sqList){
+    for (var sq of sqList) {
       sq.error = null;
     }
   }
-  
+
   uploadFile(event) {
     //console.log('inside upload');
     this.clearError();
@@ -671,14 +676,14 @@ export class QuestionnaireComponent implements OnInit {
     //console.log(local.attachment);
     let fileNameWithType: string = local.attachment && local.attachment.name.toLowerCase();
     if (!fileNameWithType.endsWith('.jpg') && !fileNameWithType.endsWith('.png') && !fileNameWithType.endsWith('.pdf') && !fileNameWithType.endsWith('.jpeg') && !fileNameWithType.endsWith('.heic') && !fileNameWithType.endsWith('.heif') &&
-        !fileNameWithType.endsWith('.JPG') && !fileNameWithType.endsWith('.PNG') && !fileNameWithType.endsWith('.PDF') && !fileNameWithType.endsWith('.JPEG') && !fileNameWithType.endsWith('.HEIC') && !fileNameWithType.endsWith('.HEIF')) {
+      !fileNameWithType.endsWith('.JPG') && !fileNameWithType.endsWith('.PNG') && !fileNameWithType.endsWith('.PDF') && !fileNameWithType.endsWith('.JPEG') && !fileNameWithType.endsWith('.HEIC') && !fileNameWithType.endsWith('.HEIF')) {
       local.fileTypeIncorrect = true;
     }
     // Return when the file type is incorrect
     if (local.fileTypeIncorrect) { return; }
     let fileContent: any;
     var reader = new FileReader();
-    reader.onload = function() {
+    reader.onload = function () {
       fileContent = reader.result;
       local.fileExceededLimit = local.attachment.size > 3242880; //Validating file size
       // Upload the file to Salesforce when the limit is within range
@@ -694,7 +699,7 @@ export class QuestionnaireComponent implements OnInit {
   }
 
   private successAttachmentCreate = (response) => {
-    let createdAttachment: Attachment = new Attachment(response.attachmentId,response.attachmentName,this.attachment.lastModifiedDate);
+    let createdAttachment: Attachment = new Attachment(response.attachmentId, response.attachmentName, this.attachment.lastModifiedDate);
     this.attachments.push(createdAttachment);
   }
 
@@ -706,15 +711,15 @@ export class QuestionnaireComponent implements OnInit {
       }
     }
   }
-  
+
   private failureAttachmentCreate = (response) => {
     //console.log('inside failureAttachmentCreate');
   }
-  
+
   private failureAttachmentDelete = (response) => {
     //console.log('inside failureAttachmentDelete');
   }
-  
+
   handleSubmitClick() {
     this.handleEvent.emit(this.qbItem.Submit_Tracking_ID__c);
   }
@@ -752,9 +757,9 @@ export class QuestionnaireComponent implements OnInit {
   // }
   // Update Function for the Progress Bar
   updateProgress() {
-    var width = 100 * (this.answerCount / this.qbItem.Total_Questions__c) ;
+    var width = 100 * (this.answerCount / this.qbItem.Total_Questions__c);
     //console.log('Progress bar width => ' + width);
-    this.progressStyle =  Math.round(width) + '%';
+    this.progressStyle = Math.round(width) + '%';
     //$('#progress #bar').animate({'width':width + '%'});
   }
 
