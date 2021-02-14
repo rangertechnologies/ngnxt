@@ -84,6 +84,7 @@ export class QuestionnaireComponent implements OnInit {
   public selectedHour: string = '';
   public selectedMinute: string = '';
   public selectedMeridiem: string = '';
+  public valueName:string='';
 
   // REQ-01 PROGRESS BAR
   public progressStyle: string = '0%';
@@ -253,16 +254,34 @@ export class QuestionnaireComponent implements OnInit {
         if(cOpt.Value__c == this.inpValue) {
           //console.log('Match Found using ' + cOpt.Next_Question__c);
           recordId = cOpt.Next_Question__c;
+          //console.log('inside'+ recordId);
         }
       }
-
       // Could be of type Data and existing value
       if(recordId && (typ == 'Data')) {
         recordId = cQuestion.Next_Question__c;
       }
-    } else {
+    } 
+    //  OPTIONONLY logic
+    else if(cQuestion.RecordType.Name == 'OPTIONONLY'){
       recordId = cQuestion.Next_Question__c;
-    }
+     }
+         //Unconditional  logic
+      else if(cQuestion.RecordType.Name == 'UNCONDITIONAL'){
+        //inside Book Type
+        if(cQuestion.Type__c == 'Book' ){
+          for(let opt of cQuestion.Questions__r.records){
+            if(opt.Type__c == 'Dropdown'){
+              for(var opt1 of opt.Question_Options__r.records){
+                if (this.valueName == opt1.Value__c){
+                  recordId=((opt1.Next_Question__c) || (cQuestion.Next_Question__c));
+                }
+              }
+            }
+            else {recordId = cQuestion.Next_Question__c;}
+          }
+        } else {recordId = cQuestion.Next_Question__c;}
+      } 
 
     // CATEGORIZATION
     //this.stepperCateg();
@@ -528,6 +547,11 @@ export class QuestionnaireComponent implements OnInit {
 
       this.optionValues.push(ov);
     }
+  }
+   //Dropdown quesId == inpId
+   Dropdown(event){
+    //console.log(event.target.value);
+    this.valueName=event.target.value;
   }
 
   setSubQuestions(records) {

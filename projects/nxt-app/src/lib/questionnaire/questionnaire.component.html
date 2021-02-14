@@ -124,7 +124,7 @@
                    style.border-color = "{{ques.error ? 'red' : ''}}" placeholder="{{ques.Question__c}}" oninput="this.value=this.value.replace(/[^a-zA-Z0-9!#$%&\'*+\-\/=?^_`{|}~@]/g,'');"/>
           </div>
           <div *ngIf="ques.Type__c === 'Dropdown'">
-            <select class="custom-select mr-sm-2" [(ngModel)]="ques.input" style="height: 3.45556rem;">
+            <select class="custom-select mr-sm-2" [(ngModel)]="ques.input" (change)="Dropdown($event)" style="height: 3.45556rem;">
               <option *ngFor="let opt of ques.Question_Options__r.records" value="{{opt.Value__c}}" >{{opt.Value__c}} </option>
             </select>
           </div>
