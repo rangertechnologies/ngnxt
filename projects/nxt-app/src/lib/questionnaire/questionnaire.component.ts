@@ -290,9 +290,9 @@ export class QuestionnaireComponent implements OnInit {
         if (cOpt.Value__c == this.inpValue) {
           //console.log('Match Found using ' + cOpt.Next_Question__c);
           recordId = cOpt.Next_Question__c;
+          //console.log('inside'+ recordId);
         }
       }
-
       // Could be of type Data and existing value
       if (recordId && typ == "Data") {
         recordId = cQuestion.Next_Question__c;
@@ -588,6 +588,11 @@ export class QuestionnaireComponent implements OnInit {
 
       this.optionValues.push(ov);
     }
+  }
+   //Dropdown quesId == inpId
+   Dropdown(event){
+    //console.log(event.target.value);
+    this.valueName=event.target.value;
   }
 
   setSubQuestions(records) {
