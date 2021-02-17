@@ -217,22 +217,22 @@ export class QuestionnaireComponent implements OnInit {
         }
 
         if (item.Type__c == 'File' && this.attachments.length > 0) {
-          console.log('inside')
-          console.log(this.attachment)
+          //console.log('inside')
+          //console.log(this.attachment)
           for (var attachmentItem of this.attachments) {
             this.inpValue += attachmentItem.attachmentId + '@@##$$' + attachmentItem.attachmentName + ',';
             if (item.input == this.inpValue) {
               recordId = cQuestion.Next_Question__c;
-              console.log('inside' + recordId);
+              //console.log('inside' + recordId);
             }
           }
           this.attachments = [];
         }//item.input == this.inpValue;
         this.inpValue += (item.input != undefined ? item.input : '') + '@@##$$';
-        console.log('inside book1' + this.inpValue)
+        //console.log('inside book1' + this.inpValue)
       }
       if (hasMissingInput) {
-        console.log('file two')
+        //console.log('file two')
         return;
       }
       this.inpValue = this.trimLastDummy(this.inpValue);
@@ -242,14 +242,14 @@ export class QuestionnaireComponent implements OnInit {
       this.selectedMeridiem = this.getProperTime('AM', this.selectedMeridiem);
       this.inpValue = this.inpValue + 'T' + (this.selectedMeridiem === 'PM' && this.selectedHour != '12' ? (Number(this.selectedHour) + 12) : this.selectedHour) + ':' + this.selectedMinute + this.selectedMeridiem;
     } else if (this.fileFlag) {
-      console.log('four')
+      //console.log('four')
       this.inpValue = '';
       if (this.attachments.length > 0) {
         for (var attachmentItem of this.attachments) {
-          console.log(this.inpValue);
+          //console.log(this.inpValue);
           this.inpValue += attachmentItem.attachmentId + '@@##$$' + attachmentItem.attachmentName + ',';
         }
-        console.log('inside filesss' + this.inpValue);
+        //console.log('inside filesss' + this.inpValue);
         this.inpValue = this.inpValue.substr(0, this.inpValue.length - 1);
       } else {
         this.questionItem.error = new ErrorWrapper();
@@ -283,7 +283,6 @@ export class QuestionnaireComponent implements OnInit {
 
     // CONDITIONAL vs OPTIONONLY & UNCONDITIONAL
     if (cQuestion.RecordType.Name == "CONDITIONAL") {
-      console.log("six");
       for (var cOpt of cQuestion.Question_Options__r.records) {
         // Radio / Data
         //console.log('Option => ' + cOpt.Value__c + ' matching with ' + ansVal);
@@ -307,9 +306,9 @@ export class QuestionnaireComponent implements OnInit {
       console.log("inside unconditional");
       //inside Book Type
       if (cQuestion.Type__c == "Book") {
-        console.log("inside book");
+        //console.log("inside book");
         for (let opt of cQuestion.Questions__r.records) {
-          console.log(opt.Type__c);
+          //console.log(opt.Type__c);
           if (opt.Type__c == "Dropdown") {
             for (var opt1 of opt.Question_Options__r.records) {
               if (this.valueName == opt1.Value__c) {
