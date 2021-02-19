@@ -91,7 +91,7 @@ export class QuestionnaireComponent implements OnInit {
   public valueName: string = '';
   public valueName1: string = '';
   public bookFlagAccept: string[];
-
+  public recordId:string;
 
 
   // REQ-01 PROGRESS BAR
@@ -187,7 +187,7 @@ export class QuestionnaireComponent implements OnInit {
     //console.log('one')
     this.clearError();
     this.handleEvent.emit(this.qbItem.Next_Tracking_ID__c);
-    var recordId = null;
+    this.recordId = null;
     var cQuestion: Question = new Question();
     cQuestion = this.questionItem;
     var typ = cQuestion.Type__c;
@@ -200,7 +200,7 @@ export class QuestionnaireComponent implements OnInit {
       // Save all the selected options in the inpValue
       for (var ov of this.optionValues.filter(item => item.checked)) {
         this.inpValue += ov.Value__c + '@@##$$';
-        recordId = ov.Next_Question__c;
+        this.recordId = ov.Next_Question__c;
       }
       this.inpValue = this.trimLastDummy(this.inpValue);
     } else if (this.bookFlag) {
@@ -222,7 +222,7 @@ export class QuestionnaireComponent implements OnInit {
           for (var attachmentItem of this.attachments) {
             this.inpValue += attachmentItem.attachmentId + '@@##$$' + attachmentItem.attachmentName + ',';
             if (item.input == this.inpValue) {
-              recordId = cQuestion.Next_Question__c;
+              this.recordId = cQuestion.Next_Question__c;
               //console.log('inside' + recordId);
             }
           }
@@ -275,6 +275,13 @@ export class QuestionnaireComponent implements OnInit {
     this.answerWrap.ansValue = this.inpValue;
 
     this.saveAnswer();
+  }
+  
+  next(){
+
+    var cQuestion: Question = new Question();
+    cQuestion = this.questionItem;
+    var typ = cQuestion.Type__c;
 
     // If no error then move to next steps
     if (this.questionItem.error) { return; }
@@ -288,18 +295,18 @@ export class QuestionnaireComponent implements OnInit {
         //console.log('Option => ' + cOpt.Value__c + ' matching with ' + ansVal);
         if (cOpt.Value__c == this.inpValue) {
           //console.log('Match Found using ' + cOpt.Next_Question__c);
-          recordId = cOpt.Next_Question__c;
+          this.recordId = cOpt.Next_Question__c;
           //console.log('inside'+ recordId);
         }
       }
       // Could be of type Data and existing value
-      if (recordId && typ == "Data") {
-        recordId = cQuestion.Next_Question__c;
+      if (this.recordId && typ == "Data") {
+        this.recordId = cQuestion.Next_Question__c;
       }
     }
     //  OPTIONONLY logic
     else if (cQuestion.RecordType.Name == "OPTIONONLY") {
-      recordId = cQuestion.Next_Question__c;
+      this.recordId = cQuestion.Next_Question__c;
     }
     //Unconditional  logic
     else if (cQuestion.RecordType.Name == "UNCONDITIONAL") {
@@ -312,15 +319,15 @@ export class QuestionnaireComponent implements OnInit {
           if (opt.Type__c == "Dropdown") {
             for (var opt1 of opt.Question_Options__r.records) {
               if (this.valueName == opt1.Value__c) {
-                recordId = opt1.Next_Question__c || cQuestion.Next_Question__c;
+                this.recordId = opt1.Next_Question__c || cQuestion.Next_Question__c;
               }
             }
           } else {
-            recordId = cQuestion.Next_Question__c;
+            this.recordId = cQuestion.Next_Question__c;
           }
         }
       } else {
-        recordId = cQuestion.Next_Question__c;
+        this.recordId = cQuestion.Next_Question__c;
       }
     }
 
@@ -334,9 +341,9 @@ export class QuestionnaireComponent implements OnInit {
     // CATEGORIZATION
     //this.stepperCateg();
 
-    if (recordId) {
+    if (this.recordId) {
       //console.log('Before Calling readQuestion() using ' + recordId);
-      this.readQuestion(recordId);
+      this.readQuestion(this.recordId);
     } else {
       //console.log('Summary Page Logic');
       // Reset the Variables
@@ -485,6 +492,7 @@ export class QuestionnaireComponent implements OnInit {
       this.questionItem.error = new ErrorWrapper();
       this.questionItem.error.errorMsg = response.error.errorMsg;
     }
+    this.next();
   }
 
   private failureSave = (response) => {
