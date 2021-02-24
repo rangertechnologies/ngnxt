@@ -1,3 +1,139 @@
+/* inline to css */
+
+.questiondiv1{
+  padding-left: 25px;
+  padding-right: 25px;
+}
+.questiondiv2{
+  padding-top: 25px; 
+  padding-bottom: 10px; 
+  padding-left: 15px; 
+  color: #00356f;
+}
+.questionalign{
+  text-align: left;
+}
+.question-f-size{
+  font-size: 0.7rem;
+}
+.ques-alert1{
+  margin-bottom: 1rem;
+  display: flex;
+}
+.ques-alert2{
+  margin-top: 1rem;
+}
+.info-color{
+  color:#99B5CE;
+  margin-left: 3rem;
+}
+.infodiv{
+  padding-left: 2rem;
+}
+.cond-div{
+  display: inline-block; 
+  width: 100%; 
+  padding-left: 5px; 
+  padding-right: 5px;
+}
+.cond-div2{
+  color: red; 
+  font-weight: bold;
+}
+.optiondiv{
+  padding: 10px; 
+  float: left;
+}
+.dis-flex{
+  display: flex;
+}
+.check-icon{
+  color:#87be1c;
+  margin-left: -2rem;
+  z-index: 1;
+  padding: 5px;
+}
+.check-icon2{
+  color:#87be1c;
+  margin-left: -4rem;
+  z-index: 1;
+  margin-top: 1rem;
+}
+.check-icon3{
+  color:#87be1c;
+  margin-left: -5rem;
+  z-index: 1;
+  margin-top: 2.5rem;
+}
+.check-icon4{
+  color:#87be1c;
+  margin-left: -3rem;
+  z-index: 1;
+  padding: 5px;
+}
+.ta-input{
+  height: 100px; 
+  width: 100%;
+  border-radius: 5px;
+}
+.date-picker{
+  width: 100%;
+  border-radius: 5px;
+}
+.bgcolor-w{
+  background-color: #ffffff;
+}
+.icolor{
+  color:#99B5CE;
+}
+.colorf{
+  color: #00356f;
+}
+.i-file{
+  margin-left: 9rem;
+  position: sticky;
+  margin-bottom: 6.5rem;
+}
+.pic-upload{
+  margin-left: 9rem;
+  position: sticky;
+  margin-bottom: 6.5rem;
+}
+.attach-ulist{
+  list-style-type:none;
+  margin-left:0;
+  margin-bottom:0.7rem
+}
+.attach-list{
+  float:right;
+  cursor:pointer;
+  padding: 0px;
+}
+.align-l{
+  text-align:left;
+}
+.dd-height{
+  height: 3.45556rem;
+}
+.btn-div{
+  display: flex; 
+  padding-top: 20px;
+}
+.summary-h{
+  text-align: left; 
+  padding-bottom: 15px;
+}
+.summarydiv{
+  padding-bottom: 15px;
+}
+.progress-percent{
+  padding-left: 45%;
+  padding-right:50%;
+  text-align:center; 
+  color:#ebeff1;
+  font-weight:bold;
+}
+/* ///////////////////////////////////// */
 .radiocontainer {
   border: 1px solid none;
   border-radius: .3em;
