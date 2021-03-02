@@ -2807,6 +2807,13 @@ textarea.form-control {
   transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
 
+input[type=text]{
+  height: 3.45556rem !important;
+  border: 1px solid #d2d4d6 !important;
+  width: 100% !important;
+  border-radius: 4px !important;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .btn {
     transition: none;
@@ -10558,4 +10565,11 @@ a.text-dark:hover, a.text-dark:focus {
 
 .datetime{
   min-width: 60px;
+}
+.newalign{
+  height: 3.45556rem;
+  width: 26rem;
+  /* color: #495045; */
+  border: 1px solid #ccc;
+  border-radius: .25rem;
 }
