@@ -191,7 +191,7 @@ export class QuestionnaireComponent implements OnInit {
     var cQuestion: Question = new Question();
     cQuestion = this.questionItem;
     var typ = cQuestion.Type__c;
-    var quesValue = cQuestion.Question__c;
+    var quesValue = cQuestion.Question_Text__c;
 
 
     // Process Inputs
@@ -627,7 +627,7 @@ export class QuestionnaireComponent implements OnInit {
       var sQues = new Question();
       sQues.Id = ques.Id;
       sQues.Name = ques.Name;
-      sQues.Question__c = ques.Question__c;
+      sQues.Question_Text__c = ques.Question_Text__c;
       sQues.Type__c = ques.Type__c;
       sQues.Next_Question__c = ques.Next_Question__c;
       sQues.Is_Optional__c = ques.Is_Optional__c;
