@@ -78,6 +78,7 @@ export class QuestionnaireComponent implements OnInit {
   private today: Date = new Date();
   private el: HTMLElement;
   public innerhtml: any;
+  public innerhtml1: any;
   public hours: string[] = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'];
   public minutes: string[] = ['00', '01', '02', '03', '04', '05', '06', '07', '08', '09', '10',
     '11', '12', '13', '14', '15', '16', '17', '18', '19', '20',
@@ -92,7 +93,8 @@ export class QuestionnaireComponent implements OnInit {
   public valueName1: string = '';
   public bookFlagAccept: string[];
   public recordId:string;
-
+ 
+  
 
   // REQ-01 PROGRESS BAR
   public progressStyle: string = '0%';
@@ -278,11 +280,9 @@ export class QuestionnaireComponent implements OnInit {
   }
   
   next(){
-
     var cQuestion: Question = new Question();
     cQuestion = this.questionItem;
     var typ = cQuestion.Type__c;
-
     // If no error then move to next steps
     if (this.questionItem.error) { return; }
 
@@ -357,7 +357,7 @@ export class QuestionnaireComponent implements OnInit {
       // Show Summary
       for (var q of this.questionStack) {
         //console.log('Handling Question => ' + q);
-
+       
         var ansWrap = this.answerMap.get(q);
         //console.log(ansWrap);
         if (ansWrap) {
@@ -388,6 +388,9 @@ export class QuestionnaireComponent implements OnInit {
 
       // Show Thank you Note
     }
+  }
+  getText(value){
+  return this.sanitizer.bypassSecurityTrustHtml(value);
   }
 
   handleBackClick() {
@@ -458,6 +461,7 @@ export class QuestionnaireComponent implements OnInit {
     }
     this.processQuestion();
     this.innerhtml = this.sanitizer.bypassSecurityTrustHtml(this.questionItem.Additional_Rich__c);
+    this.innerhtml1 = this.sanitizer.bypassSecurityTrustHtml(this.questionItem.Question_Text__c);
     this.trackId();
 
   }

@@ -190,9 +190,9 @@
   </h3>
   <div *ngFor="let qa of summary" class="summarydiv">
     <div class="summary">
-      <a class="question" (click)="summaryOpen(qa.quesId)">{{qa.quesValue}}</a>
+      <a class="question" (click)="summaryOpen(qa.quesId)" [innerHTML]="getText(qa.quesValue)">{{qa.quesValue}}</a>
       <div class="answer">
-        {{qa.ansValue}}
+          {{qa.ansValue}}
       </div>
     </div>
   </div>
