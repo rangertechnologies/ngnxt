@@ -124,7 +124,6 @@ input[type="file"] {
   text-decoration:inherit !important;
 }
 
-
 .btn-color {
   display: block;
   width: 100%;
@@ -2805,6 +2804,13 @@ textarea.form-control {
   line-height: 1.5;
   border-radius: 0.25rem;
   transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+input[type=text]{
+  height: 3.45556rem !important;
+  border: 1px solid #d2d4d6 !important;
+  width: 100% !important;
+  border-radius: 4px !important;
 }
 
 @media (prefers-reduced-motion: reduce) {

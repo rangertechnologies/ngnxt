@@ -10,11 +10,11 @@
   <div style="padding-top: 25px; padding-bottom: 10px; padding-left: 15px; color: #00356f;">
     <div *ngIf="questionItem.Is_Title__c">
       <h3 style="text-align: left;">
-        {{questionItem.Question__c}}
+        {{questionItem.Question_Text__c}}
       </h3>
     </div>
     <div *ngIf="!questionItem.Is_Title__c" style="font-size: 0.7rem;">
-      {{questionItem.Question__c}}
+      <div class="innerhtml" style="padding-left: 2rem;"  [innerHTML]="innerhtml1"></div>
     </div>
   </div>
 
@@ -24,6 +24,9 @@
       <div class="innerhtml" style="padding-left: 2rem;" [innerHTML]="innerhtml"></div>
     </div>
   </div>
+
+  
+
 
   <div *ngIf="radioFlag || dropdownFlag || dataFlag"
     style="display: inline-block; width: 100%; padding-left: 5px; padding-right: 5px;">
@@ -129,6 +132,7 @@
         <div [class]="'col-md-' + ques.Size__c + ' paddingnone'" *ngFor="let ques of subQuestions"
           style="text-align: left;">
           <span [style.font-weight]="ques.Is_Title__c ? 'bold' : ''" style="color: #00356f;">{{ques.Question__c}}</span>
+
           <div *ngIf="ques.Type__c === 'Text'">
             <input type="text" [(ngModel)]="ques.input" [id]="ques.Id" required="" (click)="clearSQError(ques.Id)"
               style.border-color="{{ques.error ? 'red' : ''}}" placeholder="{{ques.Question__c}}"
@@ -161,8 +165,7 @@
             <li *ngFor="let attachment of attachments" style="text-align:left;">{{attachment.attachmentName}}<span
                 style="float:right;cursor:pointer;padding: 0px;"
                 (click)="deleteAttachment(attachment.attachmentId)">X</span></li>
-          </ul>
-
+          </ul>     
           <div *ngIf="ques.Type__c === 'Dropdown'">
             <select class="custom-select mr-sm-2" [(ngModel)]="ques.input" (change)="Dropdown($event)"
               style="height: 3.45556rem;">
@@ -196,17 +199,16 @@
       <br />{{questionItem.error.errorDetails}}
     </div>
   </div>
-</div>
-
-<div *ngIf="summary && summary.length > 0">
+ </div>
+  <div *ngIf="summary && summary.length > 0">
   <h3 style="text-align: left; padding-bottom: 15px;">
     {{qbItem.Summary_Text__c}}
   </h3>
   <div *ngFor="let qa of summary" style="padding-bottom: 15px;">
     <div class="summary">
-      <a class="question" (click)="summaryOpen(qa.quesId)">{{qa.quesValue}}</a>
+      <a class="question" (click)="summaryOpen(qa.quesId)" [innerHTML]="getText(qa.quesValue)">{{qa.quesValue}}</a>
       <div class="answer">
-        {{qa.ansValue}}
+          {{qa.ansValue}}
       </div>
     </div>
   </div>
