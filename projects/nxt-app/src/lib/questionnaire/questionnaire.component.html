@@ -206,7 +206,7 @@
   </h3>
   <div *ngFor="let qa of summary" style="padding-bottom: 15px;">
     <div class="summary">
-      <a class="question" (click)="summaryOpen(qa.quesId)" style="padding-left: 2rem;"  [innerHTML]="getText(qa.quesValue)">{{qa.quesValue}}</a>
+      <a class="question" (click)="summaryOpen(qa.quesId)" [innerHTML]="getText(qa.quesValue)">{{qa.quesValue}}</a>
       <div class="answer">
           {{qa.ansValue}}
       </div>
