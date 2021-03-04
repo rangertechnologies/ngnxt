@@ -316,7 +316,7 @@ export class QuestionnaireComponent implements OnInit {
         //console.log("inside book");
         for (let opt of cQuestion.Questions__r.records) {
           //console.log(opt.Type__c);
-          if (opt.Type__c == "Dropdown") {
+           if (opt.Type__c == "Dropdown" || opt.Type__c == "Radio") {
             for (var opt1 of opt.Question_Options__r.records) {
               if (this.valueName == opt1.Value__c) {
                 this.recordId = opt1.Next_Question__c || cQuestion.Next_Question__c;
@@ -434,7 +434,7 @@ export class QuestionnaireComponent implements OnInit {
     this.failureRead);
 
   private successRead = (response) => {
-    //console.log(response);
+    console.log(response);
     // Reset the Variables
     if (this.questionItem) {
       this.inpValue = '';
@@ -631,7 +631,7 @@ export class QuestionnaireComponent implements OnInit {
       var sQues = new Question();
       sQues.Id = ques.Id;
       sQues.Name = ques.Name;
-      sQues.Question_Text__c = ques.Question_Text__c;
+      sQues.Question__c = ques.Question__c;
       sQues.Type__c = ques.Type__c;
       sQues.Next_Question__c = ques.Next_Question__c;
       sQues.Is_Optional__c = ques.Is_Optional__c;
@@ -649,7 +649,7 @@ export class QuestionnaireComponent implements OnInit {
 
       this.subQuestions.push(ques);
     }
-    this.bookFlagAccept = this.valueName1.split(';');
+    //  this.bookFlagAccept = this.valueName1.split(';');
     //console.log(this.subQuestions);
   }
 

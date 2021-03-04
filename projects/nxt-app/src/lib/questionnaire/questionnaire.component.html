@@ -14,7 +14,7 @@
       </h3>
     </div>
     <div *ngIf="!questionItem.Is_Title__c" style="font-size: 0.7rem;">
-      <div class="innerhtml" style="padding-left: 2rem;"  [innerHTML]="innerhtml1"></div>
+      <div class="innerhtml"  [innerHTML]="getText(questionItem.Question_Text__c)">{{questionItem.Question_Text__c}}</div>
     </div>
   </div>
 
@@ -24,10 +24,6 @@
       <div class="innerhtml" style="padding-left: 2rem;" [innerHTML]="innerhtml"></div>
     </div>
   </div>
-
-  
-
-
   <div *ngIf="radioFlag || dropdownFlag || dataFlag"
     style="display: inline-block; width: 100%; padding-left: 5px; padding-right: 5px;">
     <div *ngIf="this.questionItem.error" style="color: red; font-weight: bold;">Bitte treffen Sie eine Auswahl</div>
@@ -146,7 +142,6 @@
 
           <div *ngIf="ques.Type__c === 'File'">
             <div>
-
               <label class="picture-upload custom-file-upload" for="file-upload" style="background-color: #ffffff;">
                 <span class="picture-upload-child">
                   <i class="fa fa-file-image-o fa-5x" aria-hidden="true" style="color:#99B5CE"></i>
@@ -156,7 +151,6 @@
                   <i class="" aria-hidden="true"></i>
                 </span>
               </label>
-
               <input id="file-upload" type="file" accept="{{bookFlagAccept}}" (change)="uploadFile($event)" />
             </div>
           </div>
@@ -165,7 +159,18 @@
             <li *ngFor="let attachment of attachments" style="text-align:left;">{{attachment.attachmentName}}<span
                 style="float:right;cursor:pointer;padding: 0px;"
                 (click)="deleteAttachment(attachment.attachmentId)">X</span></li>
-          </ul>     
+          </ul> 
+          
+          <div *ngIf="ques.Type__c === 'Radio'"
+            style="display: inline-block; width: 100%; padding-left: 5px; padding-right: 5px;">
+            <div *ngFor="let opt of ques.Question_Options__r.records" class="radio col-md-6" style="padding: 10px; float: left;">
+              <label class="radiocontainer">
+                <input type="radio" [id]="ques.Id" [(ngModel)]="ques.input" value="{{opt.Value__c}}" (change)="Dropdown($event)">
+                <span class="checkmark">{{opt.Value__c}}</span>
+              </label>
+            </div>
+          </div>
+
           <div *ngIf="ques.Type__c === 'Dropdown'">
             <select class="custom-select mr-sm-2" [(ngModel)]="ques.input" (change)="Dropdown($event)"
               style="height: 3.45556rem;">
