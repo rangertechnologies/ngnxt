@@ -93,6 +93,7 @@ export class QuestionnaireComponent implements OnInit {
   public valueName1: string = '';
   public bookFlagAccept: string[];
   public recordId:string;
+  public singleQues:boolean=false;
  
   
 
@@ -344,7 +345,10 @@ export class QuestionnaireComponent implements OnInit {
     if (this.recordId) {
       //console.log('Before Calling readQuestion() using ' + recordId);
       this.readQuestion(this.recordId);
-    } else {
+    } else if(this.singleQues){
+      this.handleSubmitClick();
+    }
+    else {
       //console.log('Summary Page Logic');
       // Reset the Variables
       this.inpValue = '';
@@ -434,7 +438,6 @@ export class QuestionnaireComponent implements OnInit {
     this.failureRead);
 
   private successRead = (response) => {
-    console.log(response);
     // Reset the Variables
     if (this.questionItem) {
       this.inpValue = '';
@@ -777,6 +780,65 @@ export class QuestionnaireComponent implements OnInit {
     //console.log('Progress bar width => ' + width);
     this.progressStyle = Math.round(width) + '%';
     //$('#progress #bar').animate({'width':width + '%'});
+  }
+  getButtontext(){
+    var cQuestion: Question = new Question();
+    cQuestion = this.questionItem;
+    if (cQuestion.RecordType.Name == "CONDITIONAL") {
+        for (var cOpt of cQuestion.Question_Options__r.records) {
+          if(cOpt.Next_Question__c){
+            return this.qbItem.Next__c;
+          }else if(this.answerMap.size < 2){
+            this.singleQues=true;
+            return this.qbItem.Submit__c;
+          }else{
+            return this.qbItem.Next__c; 
+          }
+        }
+    } else if (cQuestion.RecordType.Name == "UNCONDITIONAL") {
+      if (cQuestion.Type__c == "Book") {
+        for (let opt of cQuestion.Questions__r.records) {
+          if (opt.Type__c == "Dropdown") {
+            for (var opt1 of opt.Question_Options__r.records) {
+              if (opt1.Next_Question__c) {
+                return this.qbItem.Next__c;
+              }else if(this.answerMap.size < 2){
+                this.singleQues=true;
+                return this.qbItem.Submit__c;
+              }else{
+                return this.qbItem.Next__c; 
+              }
+            }
+          } else if(cQuestion.Next_Question__c) {
+            return this.qbItem.Next__c;
+          }else if(this.answerMap.size < 2){
+            this.singleQues=true;
+            return this.qbItem.Submit__c;
+          }else{
+            return this.qbItem.Next__c; 
+          }
+        }
+      } else {
+        if(cQuestion.Next_Question__c){
+          return this.qbItem.Next__c;
+        }else if(this.answerMap.size < 2){
+          this.singleQues=true;
+          return this.qbItem.Submit__c;
+        }else{
+          return this.qbItem.Next__c; 
+        }
+      }
+    } else if (cQuestion.RecordType.Name == "OPTIONONLY") {
+       if(cQuestion.Next_Question__c){
+        return this.qbItem.Next__c;
+      }else if(this.answerMap.size < 2){
+        this.singleQues=true;
+        return this.qbItem.Submit__c;
+      }else{
+        return this.qbItem.Next__c; 
+      }
+    }
+
   }
 
 
