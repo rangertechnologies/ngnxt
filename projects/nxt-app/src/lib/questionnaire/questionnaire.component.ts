@@ -122,7 +122,7 @@ export class QuestionnaireComponent implements OnInit {
   onDateChanged(event: IMyDateModel) { //to change the border color
     this.inpValue = event.date.year + '-' + event.date.month + '-' + event.date.day;
     const htmlElement = window.document.getElementsByClassName('mydp');
-    htmlElement.item(0).setAttribute('style', 'border-color:#87be1c;width:100%');
+    htmlElement.item(0).setAttribute('style', 'border-color:#00000;width:100%');
   }
 
   ngOnInit() {

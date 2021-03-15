@@ -1,0 +1,20 @@
+<div class="col-md-6">
+    <label [style.color]="questionItem.error ? 'red' : (questionItem?.input?.length > 0 ? '#87be1c' : '')"
+      class="date-time">Zeit</label>
+    <div class="dateandTime">
+      <select name="hours" class="datetime showHour" [(ngModel)]="selectedHour" id="hour">
+        <option value="">HH</option>
+        <option [value]="hour" *ngFor="let hour of hours">{{hour}}</option>
+      </select>
+      <span class="colon"> : </span>
+      <select name="minutes" class="datetime" [(ngModel)]="selectedMinute" id="minute">
+        <option value="">MM</option>
+        <option [value]="minute" *ngFor="let minute of minutes">{{minute}}</option>
+      </select>
+      <span class="colon"> : </span>
+      <select name="AM/PM" class="datetime" [(ngModel)]="selectedMeridiem" id="meridiem">
+        <option value="AM">AM</option>
+        <option value="PM">PM</option>
+      </select>
+    </div>
+  </div>
