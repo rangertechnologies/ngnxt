@@ -9,7 +9,7 @@
 <div *ngIf="questionItem" class="questiondiv1">
   <div class="questiondiv2">
     <div *ngIf="questionItem.Is_Title__c">
-      <h3 class="questionalign">
+      <h3 class="questionalign" [innerHTML]="getText(questionItem.Question_Text__c)">
         {{questionItem.Question_Text__c}}
       </h3>
     </div>
@@ -128,7 +128,7 @@
           <div *ngIf="ques.Type__c === 'Email'">
             <input type="email" [(ngModel)]="ques.input" [id]="ques.Id" required="" (click)="clearSQError(ques.Id)"
               style.border-color="{{ques.error ? 'red' : ''}}" placeholder="{{ques.Question__c}}"
-              oninput="this.value=this.value.replace(/[^a-zA-Z0-9!#$%&\'*+\-\/=?^_`{|}~@]/g,'');" />
+              oninput="this.value=this.value.replace('^[^.][a-zA-Z0-9!#$%&\'*+\-\/=?^_`{|}~]+[^.]@[^-][a-zA-Z0-9.-]+[^-]\.[a-zA-Z]{2,}$');" />
           </div>
 
           <div *ngIf="ques.Type__c === 'File'">
