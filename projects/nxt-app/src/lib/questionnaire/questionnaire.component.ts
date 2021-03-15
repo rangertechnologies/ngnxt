@@ -649,7 +649,7 @@ export class QuestionnaireComponent implements OnInit {
 
       this.subQuestions.push(ques);
     }
-    //  this.bookFlagAccept = this.valueName1.split(';');
+    this.bookFlagAccept = this.valueName1.split(';');
     //console.log(this.subQuestions);
   }
 
