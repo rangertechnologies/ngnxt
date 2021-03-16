@@ -57,6 +57,7 @@ export class QuestionnaireComponent implements OnInit {
   public taFlag: boolean = false;
   public dtFlag: boolean = false;
   public fileFlag: boolean = false;
+  public emailFlag: boolean = false;
   public bookFlag: boolean = false;
   public optionValues: OptionValue[] = [];
   public subQuestions: Question[] = [];
@@ -543,7 +544,9 @@ export class QuestionnaireComponent implements OnInit {
       // Set the Flags
       if (typ == 'Text') {
         this.textFlag = true;
-      } else if (typ == 'File') {
+      }else if (typ == 'Email') {
+        this.emailFlag = true;
+      }else if (typ == 'File') {
         this.fileFlag = true;
       } else if (typ == 'DateTime') {
         this.dtFlag = true;
@@ -566,7 +569,9 @@ export class QuestionnaireComponent implements OnInit {
       // Set the Flags
       if (typ == 'Text') {
         this.textFlag = false;
-      } else if (typ == 'File') {
+      }else if (typ == 'Email') {
+        this.emailFlag = false;
+      }else if (typ == 'File') {
         this.fileFlag = false;
       } else if (typ == 'DateTime') {
         this.dtFlag = false;
@@ -649,7 +654,7 @@ export class QuestionnaireComponent implements OnInit {
 
       this.subQuestions.push(ques);
     }
-    this.bookFlagAccept = this.valueName1.split(';');
+       this.bookFlagAccept = this.valueName1.split(';');
     //console.log(this.subQuestions);
   }
 
@@ -665,13 +670,14 @@ export class QuestionnaireComponent implements OnInit {
 
     this.handleEvent.emit(radioTrackingId);
     this.clearError();
-    // console.log('inside optionChange using ' + selValue);
+  // console.log('inside optionChange using ' + selValue);
+
     this.inpValue = selValue;
   }
 
   clearError() {
     if (this.questionItem.error) {
-      this.questionItem.error = null;
+    this.questionItem.error = null;
     }
   }
 
