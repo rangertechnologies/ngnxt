@@ -62,7 +62,16 @@
       <i class="fa fa-check check-icon" aria-hidden="true" *ngIf="inpValue?.length > 0 && taFocusOut"></i>
     </div>
   </div>
-  <div *ngIf="dtFlag" class="dis-flex">
+  <div *ngIf="emailFlag">
+    <div class="col-md-12" style="display: flex;">
+      <input type="Email" [(ngModel)]="inpValue" id="Email-input-id" required="" (click)="clearError()"
+        style.border-color="{{this.questionItem.error ? 'red' : (inpValue?.length > 0 ? '#87be1c' : '')}}"
+        oninput="this.value=this.value.replace('^[^.][a-zA-Z0-9!#$%&\'*+\-\/=?^_`{|}~]+[^.]@[^-][a-zA-Z0-9.-]+[^-]\.[a-zA-Z]{2,}$');" />
+      <i class="fa fa-check" aria-hidden="true" style="color:#87be1c;margin-left: -2rem;z-index: 1;padding: 5px;"
+        *ngIf="inpValue?.length > 0"></i>
+    </div>
+  </div>
+  <div *ngIf="dtFlag" style="display: flex;">
     <div class="col-md-6">
       <label [style.color]="questionItem.error ? 'red' : (inpValue?.length > 0 ? '#87be1c' : '')"
         class="date-time">Datum</label>
