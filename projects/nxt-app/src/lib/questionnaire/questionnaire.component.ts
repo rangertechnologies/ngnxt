@@ -160,12 +160,9 @@ export class QuestionnaireComponent implements OnInit {
     //this.stepperCateg();
   }
 
-
-
   trimLastDummy(input: string) {
     return input = input.substring(0, input.length - 6);
   }
-
 
   getProperTime(def: string, input: string) {
     return input === '' ? def : input;
@@ -462,9 +459,7 @@ export class QuestionnaireComponent implements OnInit {
     }
     this.processQuestion();
     this.innerhtml = this.sanitizer.bypassSecurityTrustHtml(this.questionItem.Additional_Rich__c);
-    this.innerhtml1 = this.sanitizer.bypassSecurityTrustHtml(this.questionItem.Question_Text__c);
     this.trackId();
-
   }
   trackId() {
     var qtrackId = this.questionItem.Tracking_ID__c;
