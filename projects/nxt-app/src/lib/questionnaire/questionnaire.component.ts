@@ -57,6 +57,7 @@ export class QuestionnaireComponent implements OnInit {
   public taFlag: boolean = false;
   public dtFlag: boolean = false;
   public fileFlag: boolean = false;
+  public emailFlag: boolean = false;
   public bookFlag: boolean = false;
   public optionValues: OptionValue[] = [];
   public subQuestions: Question[] = [];
@@ -543,7 +544,9 @@ export class QuestionnaireComponent implements OnInit {
       // Set the Flags
       if (typ == 'Text') {
         this.textFlag = true;
-      } else if (typ == 'File') {
+      }else if (typ == 'Email') {
+        this.emailFlag = true;
+      }else if (typ == 'File') {
         this.fileFlag = true;
       } else if (typ == 'DateTime') {
         this.dtFlag = true;
@@ -566,7 +569,9 @@ export class QuestionnaireComponent implements OnInit {
       // Set the Flags
       if (typ == 'Text') {
         this.textFlag = false;
-      } else if (typ == 'File') {
+      }else if (typ == 'Email') {
+        this.emailFlag = false;
+      }else if (typ == 'File') {
         this.fileFlag = false;
       } else if (typ == 'DateTime') {
         this.dtFlag = false;
@@ -638,9 +643,10 @@ export class QuestionnaireComponent implements OnInit {
       sQues.Group__c = ques.Group__c;
       sQues.Question_No__c = ques.Question_No__c;
       sQues.Allowed_File_Extensions__c = ques.Allowed_File_Extensions__c;
+      if(ques.Type__c =='File'){
       this.valueName1 = ques.Allowed_File_Extensions__c;
       //console.log(this.valueName1);
-
+      }
 
       if (qaMap.has(ques.Question_No__c)) {
         //console.log('Setting input for the subQuestion ' + ques.Question_No__c + ' with ' + ansStr);
@@ -649,8 +655,10 @@ export class QuestionnaireComponent implements OnInit {
 
       this.subQuestions.push(ques);
     }
-    this.bookFlagAccept = this.valueName1.split(';');
+    if(this.valueName1.length >0){
+       this.bookFlagAccept = this.valueName1.split(';');
     //console.log(this.subQuestions);
+    }
   }
 
   optionChange(selValue) {
@@ -665,13 +673,14 @@ export class QuestionnaireComponent implements OnInit {
 
     this.handleEvent.emit(radioTrackingId);
     this.clearError();
-    // console.log('inside optionChange using ' + selValue);
+  // console.log('inside optionChange using ' + selValue);
+
     this.inpValue = selValue;
   }
 
   clearError() {
     if (this.questionItem.error) {
-      this.questionItem.error = null;
+    this.questionItem.error = null;
     }
   }
 
