@@ -655,8 +655,10 @@ export class QuestionnaireComponent implements OnInit {
 
       this.subQuestions.push(ques);
     }
+    if(this.valueName1.length >0){
        this.bookFlagAccept = this.valueName1.split(';');
     //console.log(this.subQuestions);
+    }
   }
 
   optionChange(selValue) {
