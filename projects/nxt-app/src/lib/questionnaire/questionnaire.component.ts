@@ -643,9 +643,10 @@ export class QuestionnaireComponent implements OnInit {
       sQues.Group__c = ques.Group__c;
       sQues.Question_No__c = ques.Question_No__c;
       sQues.Allowed_File_Extensions__c = ques.Allowed_File_Extensions__c;
+      if(ques.Type__c =='File'){
       this.valueName1 = ques.Allowed_File_Extensions__c;
       //console.log(this.valueName1);
-
+      }
 
       if (qaMap.has(ques.Question_No__c)) {
         //console.log('Setting input for the subQuestion ' + ques.Question_No__c + ' with ' + ansStr);
