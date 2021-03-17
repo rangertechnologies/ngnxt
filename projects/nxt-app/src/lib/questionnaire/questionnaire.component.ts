@@ -56,6 +56,7 @@ export class QuestionnaireComponent implements OnInit {
   public textFlag: boolean = false;
   public taFlag: boolean = false;
   public dtFlag: boolean = false;
+  public timeFlag: boolean = false;
   public fileFlag: boolean = false;
   public emailFlag: boolean = false;
   public bookFlag: boolean = false;
@@ -87,9 +88,19 @@ export class QuestionnaireComponent implements OnInit {
     '31', '32', '33', '34', '35', '36', '37', '38', '39', '40',
     '41', '42', '43', '44', '45', '46', '47', '48', '49', '50',
     '51', '52', '53', '54', '55', '56', '57', '58', '59'];
+    public timehours: string[] = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'];
+    public timeminutes: string[] = ['00', '01', '02', '03', '04', '05', '06', '07', '08', '09', '10',
+      '11', '12', '13', '14', '15', '16', '17', '18', '19', '20',
+      '21', '22', '23', '24', '25', '26', '27', '28', '29', '30',
+      '31', '32', '33', '34', '35', '36', '37', '38', '39', '40',
+      '41', '42', '43', '44', '45', '46', '47', '48', '49', '50',
+      '51', '52', '53', '54', '55', '56', '57', '58', '59'];
   public selectedHour: string = '';
   public selectedMinute: string = '';
   public selectedMeridiem: string = '';
+  public selectedHour1: string = '';
+  public selectedMinute1: string = '';
+  public selectedMeridiem1: string = '';
   public valueName: string = '';
   public valueName1: string = '';
   public bookFlagAccept: string[];
@@ -115,7 +126,7 @@ export class QuestionnaireComponent implements OnInit {
     dayLabels: { su: 'So', mo: 'Mo', tu: 'Di', we: 'Mi', th: 'Do', fr: 'Fr', sa: 'Sa' },
     monthLabels: { 1: 'Jan', 2: 'Feb', 3: 'Mär', 4: 'Apr', 5: 'Mai', 6: 'Jun', 7: 'Jul', 8: 'Aug', 9: 'Sep', 10: 'Okt', 11: 'Nov', 12: 'Dez' }
   };
-
+  
   constructor(private sfService: SalesforceService, private route: ActivatedRoute, private sanitizer: DomSanitizer, private _formBuilder: FormBuilder) {
 
   }
@@ -131,6 +142,9 @@ export class QuestionnaireComponent implements OnInit {
     this.selectedHour = "";
     this.selectedMinute = "";
     this.selectedMeridiem = "AM";
+    this.selectedHour1 = "";
+    this.selectedMinute1 = "";
+    this.selectedMeridiem1 = "AM";
     this.processQB();
   }
 
@@ -239,12 +253,26 @@ export class QuestionnaireComponent implements OnInit {
         return;
       }
       this.inpValue = this.trimLastDummy(this.inpValue);
-    } else if (this.dtFlag && this.inpValue) {
-      this.selectedHour = this.getProperTime('12', this.selectedHour);
-      this.selectedMinute = this.getProperTime('00', this.selectedMinute);
+     }
+      else if (this.timeFlag ) {
+        console.log("insid econdition")
+       this.selectedHour1 = this.getProperTime('12', this.selectedHour1);
+       this.selectedMinute1 = this.getProperTime('00', this.selectedMinute1);
+       this.selectedMeridiem1 = this.getProperTime('AM', this.selectedMeridiem1);
+       console.log(this.selectedHour1)
+       console.log(this.selectedMinute1)
+       this.inpValue = this.inpValue +  (this.selectedMeridiem1 === 'PM' && this.selectedHour1 != '12' ? (Number(this.selectedHour1) + 12) : this.selectedHour1) + ':' + this.selectedMinute1 + this.selectedMeridiem1;
+     }
+     else if (this.dtFlag && this.inpValue) {
+       this.selectedHour = this.getProperTime('12', this.selectedHour);
+       this.selectedMinute = this.getProperTime('00', this.selectedMinute);
       this.selectedMeridiem = this.getProperTime('AM', this.selectedMeridiem);
-      this.inpValue = this.inpValue + 'T' + (this.selectedMeridiem === 'PM' && this.selectedHour != '12' ? (Number(this.selectedHour) + 12) : this.selectedHour) + ':' + this.selectedMinute + this.selectedMeridiem;
-    } else if (this.fileFlag) {
+      console.log(this.selectedHour)
+      console.log(this.selectedMinute)
+       this.inpValue = this.inpValue + 'T' + (this.selectedMeridiem === 'PM' && this.selectedHour != '12' ? (Number(this.selectedHour) + 12) : this.selectedHour) + ':' + this.selectedMinute + this.selectedMeridiem;
+
+      }
+     else if (this.fileFlag) {
       //console.log('four')
       this.inpValue = '';
       if (this.attachments.length > 0) {
@@ -259,6 +287,8 @@ export class QuestionnaireComponent implements OnInit {
         return;
       }
     }
+     
+
 
     //console.log('before calling saveAnswer with ' + this.inpValue);
 
@@ -526,12 +556,20 @@ export class QuestionnaireComponent implements OnInit {
     } else if (this.bookFlag) {
       // Set the SubQuestions
       this.setSubQuestions(this.questionItem.Questions__r.records);
-    } else if (this.dtFlag && this.inpValue) {
+    } else if (this.timeFlag && this.inpValue) {
+      // Set the time 
+      var timeVal = this.inpValue.split('T');
+      this.inpValue = timeVal[0];
+      this.questionItem.input = timeVal[1];
+    } 
+     else if (this.dtFlag && this.inpValue) {
       // Set the Date and Time
       var dtVal = this.inpValue.split('T');
       this.inpValue = dtVal[0];
       this.questionItem.input = dtVal[1];
-    } else if (this.fileFlag) {
+    }
+    
+    else if (this.fileFlag) {
       // logic
       this.allowedFileExtension = this.questionItem.Allowed_File_Extensions__c.split(';');
       //console.log(this.allowedFileExtension);
@@ -561,6 +599,9 @@ export class QuestionnaireComponent implements OnInit {
       } else if (typ == 'Book') {
         this.bookFlag = true;
       }
+      else if (typ == 'Time') {
+        this.timeFlag = true;
+      }
     }
   }
 
@@ -585,6 +626,9 @@ export class QuestionnaireComponent implements OnInit {
         this.checkboxFlag = false;
       } else if (typ == 'Book') {
         this.bookFlag = false;
+      }
+      else if (typ == 'Time') {
+        this.timeFlag = false;
       }
     }
   }

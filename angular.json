@@ -53,8 +53,8 @@
                 },
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "6kb",
-                  "maximumError": "10kb"
+                  "maximumWarning": "200kb",
+                  "maximumError": "300kb"
                 }
               ]
             }
@@ -163,5 +163,8 @@
       }
     }
   },
-  "defaultProject": "ngNxt"
+  "defaultProject": "ngNxt",
+  "cli": {
+    "analytics": "689ba16e-c675-4a17-8628-7f0465919864"
+  }
 }

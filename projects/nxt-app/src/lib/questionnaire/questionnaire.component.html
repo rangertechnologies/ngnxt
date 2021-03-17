@@ -110,6 +110,30 @@
     <i class="fa fa-check" aria-hidden="true" style="color:#87be1c;margin-left: -5rem;z-index: 1;margin-top: 2.5rem;"
       *ngIf="questionItem?.input?.length > 0"></i>
   </div>
+  <div *ngIf="timeFlag" style="display: flex;">
+  <div class="col-md-6">
+    <label [style.color]="questionItem.error ? 'red' : (questionItem?.input?.length > 0 ? '#87be1c' : '')"
+      class="date-time">Zeit</label>
+    <div class="dateandTime">
+      <select name="timehours" class="datetime showHour" [(ngModel)]="selectedHour1" id="hour">
+        <option value="">HH</option>
+        <option [value]="hour" *ngFor="let hour of timehours">{{hour}}</option>
+      </select>
+      <span class="colon"> : </span>
+      <select name="timeminutes" class="datetime" [(ngModel)]="selectedMinute1" id="minute">
+        <option value="">MM</option>
+        <option [value]="minute" *ngFor="let minute of timeminutes">{{minute}}</option>
+      </select>
+      <span class="colon"> : </span>
+      <select name="AM/PM" class="datetime" [(ngModel)]="selectedMeridiem1" id="meridiem">
+        <option value="AM">AM</option>
+        <option value="PM">PM</option>
+      </select>
+    </div>
+  </div>
+  <i class="fa fa-check" aria-hidden="true" style="color:#87be1c;margin-left: -5rem;z-index: 1;margin-top: 2.5rem;"
+      *ngIf="questionItem?.input?.length > 0"></i>
+  </div>
 
   <div *ngIf="fileFlag">
     <div class="info-alert" style="margin-top: 1rem;" style.border-color="{{this.questionItem.error ? 'red' : ''}}">
