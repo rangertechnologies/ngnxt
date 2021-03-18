@@ -163,5 +163,8 @@
       }
     }
   },
-  "defaultProject": "ngNxt"
+  "defaultProject": "ngNxt",
+  "cli": {
+    "analytics": false
+  }
 }

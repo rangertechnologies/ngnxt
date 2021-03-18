@@ -308,7 +308,7 @@ export class QuestionnaireComponent implements OnInit {
     }
     //Unconditional  logic
     else if (cQuestion.RecordType.Name == "UNCONDITIONAL") {
-      console.log("inside unconditional");
+      //console.log("inside unconditional");
       //inside Book Type
       if (cQuestion.Type__c == "Book") {
         //console.log("inside book");
@@ -432,7 +432,7 @@ export class QuestionnaireComponent implements OnInit {
     this.failureRead);
 
   private successRead = (response) => {
-    console.log(response);
+    //console.log(response);
     // Reset the Variables
     if (this.questionItem) {
       this.inpValue = '';
