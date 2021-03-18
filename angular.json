@@ -165,6 +165,6 @@
   },
   "defaultProject": "ngNxt",
   "cli": {
-    "analytics": "689ba16e-c675-4a17-8628-7f0465919864"
+    "analytics": false
   }
 }
