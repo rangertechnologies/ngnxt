@@ -79,7 +79,6 @@ export class QuestionnaireComponent implements OnInit {
   private today: Date = new Date();
   private el: HTMLElement;
   public innerhtml: any;
-  public innerhtml1: any;
   public hours: string[] = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'];
   public minutes: string[] = ['00', '01', '02', '03', '04', '05', '06', '07', '08', '09', '10',
     '11', '12', '13', '14', '15', '16', '17', '18', '19', '20',
@@ -469,7 +468,6 @@ export class QuestionnaireComponent implements OnInit {
     }
     this.processQuestion();
     this.innerhtml = this.sanitizer.bypassSecurityTrustHtml(this.questionItem.Additional_Rich__c);
-    this.innerhtml1 = this.sanitizer.bypassSecurityTrustHtml(this.questionItem.Question_Text__c);
     this.trackId();
 
   }
