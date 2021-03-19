@@ -132,6 +132,7 @@ export class QuestionnaireComponent implements OnInit {
     this.selectedMinute = "";
     this.selectedMeridiem = "AM";
     this.processQB();
+    console.log('log')
   }
 
   ngOnChanges() {
@@ -218,7 +219,13 @@ export class QuestionnaireComponent implements OnInit {
           item.error = new ErrorWrapper();
           hasMissingInput = true;
         }
-
+        if (item.Type__c == 'Dropdown' ){
+          if(!item.input){
+            //console.log('1'+ item.input)
+            this.questionItem.error = new ErrorWrapper();
+              return;  
+            }         
+        }
         if (item.Type__c == 'File' && this.attachments.length > 0) {
           //console.log('inside')
           //console.log(this.attachment)

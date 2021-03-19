@@ -158,9 +158,19 @@
                 class="attach-list" (click)="deleteAttachment(attachment.attachmentId)">X</span></li>
           </ul>
 
-          <div *ngIf="ques.Type__c === 'Dropdown'">
-            <select class="custom-select mr-sm-2 dd-height" [(ngModel)]="ques.input" (change)="Dropdown($event)">
-              <option *ngFor="let opt of ques.Question_Options__r.records" value="{{opt.Value__c}}">{{opt.Value__c}}
+          <div *ngIf="ques.Type__c === 'Radio'" class="">
+            <div *ngFor="let opt of ques.Question_Options__r.records" class="radio col-md-6 optiondiv" >
+              <label class="radiocontainer">
+                <input type="radio" [id]="ques.Id" [(ngModel)]="ques.input" value="{{opt.Value__c}}" (change)="Dropdown($event)">
+                <span class="checkmark">{{opt.Value__c}}</span>
+              </label>
+            </div>
+          </div>
+
+          <div *ngIf="ques.Type__c === 'Dropdown'"class="">
+            <div *ngIf="this.questionItem.error" class="cond-div2">Bitte treffen Sie eine Auswahl</div>
+            <select class="custom-select mr-sm-2 dd-height" [(ngModel)]="ques.input" (change)="Dropdown($event)" >
+              <option *ngFor="let opt of ques.Question_Options__r.records"  value="{{opt.Value__c}}">{{opt.Value__c}}
               </option>
             </select>
           </div>
