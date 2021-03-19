@@ -27,6 +27,7 @@ import {
   BOOKQUESTION,
   TESTQB
 } from '../sample';
+import { style } from '@angular/animations';
 
 @Component({
   selector: 'lib-questionnaire',
@@ -81,20 +82,9 @@ export class QuestionnaireComponent implements OnInit {
   private el: HTMLElement;
   public innerhtml: any;
   public innerhtml1: any;
-  public hours: string[] = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'];
-  public minutes: string[] = ['00', '01', '02', '03', '04', '05', '06', '07', '08', '09', '10',
-    '11', '12', '13', '14', '15', '16', '17', '18', '19', '20',
-    '21', '22', '23', '24', '25', '26', '27', '28', '29', '30',
-    '31', '32', '33', '34', '35', '36', '37', '38', '39', '40',
-    '41', '42', '43', '44', '45', '46', '47', '48', '49', '50',
-    '51', '52', '53', '54', '55', '56', '57', '58', '59'];
-    public timehours: string[] = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'];
-    public timeminutes: string[] = ['00', '01', '02', '03', '04', '05', '06', '07', '08', '09', '10',
-      '11', '12', '13', '14', '15', '16', '17', '18', '19', '20',
-      '21', '22', '23', '24', '25', '26', '27', '28', '29', '30',
-      '31', '32', '33', '34', '35', '36', '37', '38', '39', '40',
-      '41', '42', '43', '44', '45', '46', '47', '48', '49', '50',
-      '51', '52', '53', '54', '55', '56', '57', '58', '59'];
+  public hours: any = [];
+  public minutes: any = [];
+  public meridiem: string[] =['AM','PM'] ;
   public selectedHour: string = '';
   public selectedMinute: string = '';
   public selectedMeridiem: string = '';
@@ -131,11 +121,11 @@ export class QuestionnaireComponent implements OnInit {
 
   }
 
-  onDateChanged(event: IMyDateModel) { //to change the border color
-    this.inpValue = event.date.year + '-' + event.date.month + '-' + event.date.day;
-    const htmlElement = window.document.getElementsByClassName('mydp');
-    htmlElement.item(0).setAttribute('style', 'border-color:#87be1c;width:100%');
-  }
+   onDateChanged(event: IMyDateModel) { //to change the border color
+     this.inpValue = event.date.year + '-' + event.date.month + '-' + event.date.day;
+     const htmlElement = window.document.getElementsByClassName('mydp');
+     htmlElement.item(0).setAttribute('style', 'border-color:#87be1c;width:100%');
+   }
 
   ngOnInit() {
     //console.log('inside Questionnaire ngOnInit');
@@ -145,7 +135,24 @@ export class QuestionnaireComponent implements OnInit {
     this.selectedHour1 = "";
     this.selectedMinute1 = "";
     this.selectedMeridiem1 = "AM";
-    this.processQB();
+    // dynamic hours&minuts
+    for(let i=1;i<=12;i++){
+    if(i<10)
+      this.hours.push('0'+i)
+      else{
+        this.hours.push(i)
+      }   
+    }
+    for(let i=0; i<=59;i++){
+      if(i<10){
+      this.minutes.push('0'+i)
+    }
+    else{
+      this.minutes.push(i)
+    }
+  }
+
+      this.processQB();
   }
 
   ngOnChanges() {
@@ -255,20 +262,22 @@ export class QuestionnaireComponent implements OnInit {
       this.inpValue = this.trimLastDummy(this.inpValue);
      }
       else if (this.timeFlag ) {
-        console.log("insid econdition")
-       this.selectedHour1 = this.getProperTime('12', this.selectedHour1);
-       this.selectedMinute1 = this.getProperTime('00', this.selectedMinute1);
-       this.selectedMeridiem1 = this.getProperTime('AM', this.selectedMeridiem1);
-       console.log(this.selectedHour1)
-       console.log(this.selectedMinute1)
-       this.inpValue = this.inpValue +  (this.selectedMeridiem1 === 'PM' && this.selectedHour1 != '12' ? (Number(this.selectedHour1) + 12) : this.selectedHour1) + ':' + this.selectedMinute1 + this.selectedMeridiem1;
-     }
+       this.inpValue = (this.selectedMeridiem1 === 'PM' && this.selectedHour1 != '12' ? (Number(this.selectedHour1) + 12) : this.selectedHour1) + ':' + this.selectedMinute1 + this.selectedMeridiem1;
+      console.log(this.inpValue.length );
+       if(this.inpValue.length < 6){
+    document.getElementById("zeit").style.color ="red"
+      this.questionItem.error = new ErrorWrapper();
+      return;  
+       }
+       if(this.inpValue.length > 0){
+         document.getElementById("zeit").style.color = "'#87be1c'"
+       }
+      }
+      
      else if (this.dtFlag && this.inpValue) {
        this.selectedHour = this.getProperTime('12', this.selectedHour);
        this.selectedMinute = this.getProperTime('00', this.selectedMinute);
       this.selectedMeridiem = this.getProperTime('AM', this.selectedMeridiem);
-      console.log(this.selectedHour)
-      console.log(this.selectedMinute)
        this.inpValue = this.inpValue + 'T' + (this.selectedMeridiem === 'PM' && this.selectedHour != '12' ? (Number(this.selectedHour) + 12) : this.selectedHour) + ':' + this.selectedMinute + this.selectedMeridiem;
 
       }
@@ -556,18 +565,13 @@ export class QuestionnaireComponent implements OnInit {
     } else if (this.bookFlag) {
       // Set the SubQuestions
       this.setSubQuestions(this.questionItem.Questions__r.records);
-    } else if (this.timeFlag && this.inpValue) {
-      // Set the time 
-      var timeVal = this.inpValue.split('T');
-      this.inpValue = timeVal[0];
-      this.questionItem.input = timeVal[1];
-    } 
-     else if (this.dtFlag && this.inpValue) {
-      // Set the Date and Time
-      var dtVal = this.inpValue.split('T');
-      this.inpValue = dtVal[0];
-      this.questionItem.input = dtVal[1];
-    }
+     } 
+      else if (this.dtFlag && this.inpValue) {
+       // Set the Date and Time
+       var dtVal = this.inpValue.split('T');
+       this.inpValue = dtVal[0];
+       this.questionItem.input = dtVal[1];
+   }
     
     else if (this.fileFlag) {
       // logic
@@ -834,3 +838,7 @@ export class QuestionnaireComponent implements OnInit {
 
 
 }
+function ngifhandleNextClick() {
+  throw new Error('Function not implemented.');
+}
+

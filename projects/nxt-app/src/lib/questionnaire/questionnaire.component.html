@@ -107,17 +107,16 @@
   </div>
   <div *ngIf="timeFlag" style="display: flex;">
   <div class="col-md-6">
-    <label [style.color]="questionItem.error ? 'red' : (questionItem?.input?.length > 0 ? '#87be1c' : '')"
-      class="date-time">Zeit</label>
+    <label [style.color]=id="zeit"  class="time">Zeit</label>
     <div class="dateandTime">
-      <select name="timehours" class="datetime showHour" [(ngModel)]="selectedHour1" id="hour">
+      <select name="hours" class="datetime showHour" [(ngModel)]="selectedHour1" id="hour">
         <option value="">HH</option>
-        <option [value]="hour" *ngFor="let hour of timehours">{{hour}}</option>
+        <option [value]="hour" *ngFor="let hour of hours">{{hour}}</option>
       </select>
       <span class="colon"> : </span>
-      <select name="timeminutes" class="datetime" [(ngModel)]="selectedMinute1" id="minute">
+      <select name="minutes" class="datetime" [(ngModel)]="selectedMinute1" id="minute">
         <option value="">MM</option>
-        <option [value]="minute" *ngFor="let minute of timeminutes">{{minute}}</option>
+        <option [value]="minute" *ngFor="let minute of minutes">{{minute}}</option>
       </select>
       <span class="colon"> : </span>
       <select name="AM/PM" class="datetime" [(ngModel)]="selectedMeridiem1" id="meridiem">
