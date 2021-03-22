@@ -37,7 +37,8 @@ import {
 export class QuestionnaireComponent implements OnInit {
   @Input() qbId: string;
   @Output() handleEvent = new EventEmitter();
-  @Output() handlePage = new EventEmitter();
+  @Output() handlePage: EventEmitter<any> = new EventEmitter();
+
   params: Params;
 
   public abItem: AnswerBook;
