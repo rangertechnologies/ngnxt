@@ -80,7 +80,7 @@
           [(ngModel)]="selDate" class="date-picker"
           [style.border-color]="questionItem.error ? 'red' : (inpValue?.length > 0 ? '#87be1c' : '')">
         </my-date-picker>
-        <i class="fa fa-check check-icon2" aria-hidden="true" *ngIf="inpValue?.length > 0"></i>
+        <i class="fa fa-check check-icon2" aria-hidden="true" *ngIf="inpValue?.length > 7"></i>
       </div>
     </div>
     <div class="col-md-6 paddingTop">
@@ -106,29 +106,42 @@
     <i class="fa fa-check check-icon3" aria-hidden="true" *ngIf="questionItem?.input?.length > 0"></i>
   </div>
   <div *ngIf="timeFlag" style="display: flex;">
-  <div class="col-md-6">
-    <label [style.color]=id="zeit"  class="time">Zeit</label>
-    <div class="dateandTime">
-      <select name="hours" class="datetime showHour" [(ngModel)]="selectedHour1" id="hour">
-        <option value="">HH</option>
-        <option [value]="hour" *ngFor="let hour of hours">{{hour}}</option>
-      </select>
-      <span class="colon"> : </span>
-      <select name="minutes" class="datetime" [(ngModel)]="selectedMinute1" id="minute">
-        <option value="">MM</option>
-        <option [value]="minute" *ngFor="let minute of minutes">{{minute}}</option>
-      </select>
-      <span class="colon"> : </span>
-      <select name="AM/PM" class="datetime" [(ngModel)]="selectedMeridiem1" id="meridiem">
-        <option value="AM">AM</option>
-        <option value="PM">PM</option>
-      </select>
+    <div class="col-md-6 paddingTop">
+      <label [style.color]="questionItem.error ? 'red' : (questionItem?.input?.length > 0 ? '#87be1c' : '')"
+        class="date-time colorf" id="zeit">Zeit</label>
+      <div class="dateandTime">
+        <select name="hours" class="datetime showHour" [(ngModel)]="selectedHour1" id="hour">
+          <option value="">HH</option>
+          <option [value]="hour" *ngFor="let hour of hours">{{hour}}</option>
+        </select>
+        <span class="colon"> : </span>
+        <select name="minutes" class="datetime" [(ngModel)]="selectedMinute1" id="minute">
+          <option value="">MM</option>
+          <option [value]="minute" *ngFor="let minute of minutes">{{minute}}</option>
+        </select>
+        <span class="colon"> : </span>
+        <select name="AM/PM" class="datetime" [(ngModel)]="selectedMeridiem1" id="meridiem1">
+          <option value="AM">AM</option>
+          <option value="PM" ng-selected="selectedHour1.va > 12">PM</option>
+        </select>
+      </div>
+    </div>
+    <i class="fa fa-check check-icon3" aria-hidden="true" *ngIf="questionItem?.input?.length > 0"></i>
+  </div>
+  
+  <div class="col-md-12 paddingZero" *ngIf="dateFlag" >
+    <div class="col-md-6 paddingBottom">
+      <label [style.color]="questionItem.error ? 'red' : (inpValue?.length > 0 ? '#87be1c' : '')"
+        class="date-time colorf" id="Datum">Datum</label>
+      <div class="dis-flex">
+        <my-date-picker name="mydate" [options]="myDatePickerOptions" (dateChanged)="onDateChanged($event)"
+          [(ngModel)]="selDate1" class="date-picker"
+          [style.border-color]="questionItem.error ? 'red' : (inpValue?.length > 0 ? '#87be1c' : '')">
+        </my-date-picker>
+        <i class="fa fa-check check-icon2" aria-hidden="true" *ngIf="inpValue?.length > 7 "></i>
+      </div>
     </div>
   </div>
-  <i class="fa fa-check" aria-hidden="true" style="color:#87be1c;margin-left: -5rem;z-index: 1;margin-top: 2.5rem;"
-      *ngIf="questionItem?.input?.length > 0"></i>
-  </div>
-
   <div *ngIf="fileFlag">
     <div class="info-alert ques-alert2" style.border-color="{{this.questionItem.error ? 'red' : ''}}">
       <label class="picture-upload" for="file-upload" >

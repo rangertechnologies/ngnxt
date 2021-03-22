@@ -58,6 +58,7 @@ export class QuestionnaireComponent implements OnInit {
   public taFlag: boolean = false;
   public dtFlag: boolean = false;
   public timeFlag: boolean = false;
+  public dateFlag: boolean = false;
   public fileFlag: boolean = false;
   public emailFlag: boolean = false;
   public bookFlag: boolean = false;
@@ -78,8 +79,8 @@ export class QuestionnaireComponent implements OnInit {
   public taFocusOut: boolean = false;
   public summary = [];
   public selDate: any = {};
+  public selDate1: any = {};
   private today: Date = new Date();
-  private el: HTMLElement;
   public innerhtml: any;
   public innerhtml1: any;
   public hours: any = [];
@@ -117,9 +118,9 @@ export class QuestionnaireComponent implements OnInit {
     monthLabels: { 1: 'Jan', 2: 'Feb', 3: 'Mär', 4: 'Apr', 5: 'Mai', 6: 'Jun', 7: 'Jul', 8: 'Aug', 9: 'Sep', 10: 'Okt', 11: 'Nov', 12: 'Dez' }
   };
   
-  constructor(private sfService: SalesforceService, private route: ActivatedRoute, private sanitizer: DomSanitizer, private _formBuilder: FormBuilder) {
+  constructor(private sfService: SalesforceService, private sanitizer: DomSanitizer) 
 
-  }
+  { }
 
    onDateChanged(event: IMyDateModel) { //to change the border color
      this.inpValue = event.date.year + '-' + event.date.month + '-' + event.date.day;
@@ -136,12 +137,16 @@ export class QuestionnaireComponent implements OnInit {
     this.selectedMinute1 = "";
     this.selectedMeridiem1 = "AM";
     // dynamic hours&minuts
+    
     for(let i=1;i<=12;i++){
     if(i<10)
       this.hours.push('0'+i)
       else{
         this.hours.push(i)
-      }   
+      }
+     // if(i==23){
+     //   this.hours.push('00')
+     // } 
     }
     for(let i=0; i<=59;i++){
       if(i<10){
@@ -263,14 +268,13 @@ export class QuestionnaireComponent implements OnInit {
      }
       else if (this.timeFlag ) {
        this.inpValue = (this.selectedMeridiem1 === 'PM' && this.selectedHour1 != '12' ? (Number(this.selectedHour1) + 12) : this.selectedHour1) + ':' + this.selectedMinute1 + this.selectedMeridiem1;
-      console.log(this.inpValue.length );
-       if(this.inpValue.length < 6){
-    document.getElementById("zeit").style.color ="red"
+       if(this.inpValue.length < 7){
+    document.getElementById("zeit").style.color ="red";
       this.questionItem.error = new ErrorWrapper();
       return;  
        }
        if(this.inpValue.length > 0){
-         document.getElementById("zeit").style.color = "'#87be1c'"
+         document.getElementById("zeit").style.color = "#87be1c";
        }
       }
       
@@ -279,8 +283,27 @@ export class QuestionnaireComponent implements OnInit {
        this.selectedMinute = this.getProperTime('00', this.selectedMinute);
       this.selectedMeridiem = this.getProperTime('AM', this.selectedMeridiem);
        this.inpValue = this.inpValue + 'T' + (this.selectedMeridiem === 'PM' && this.selectedHour != '12' ? (Number(this.selectedHour) + 12) : this.selectedHour) + ':' + this.selectedMinute + this.selectedMeridiem;
-
-      }
+       console.log(this.inpValue.length)
+       if(this.inpValue.length < 14){
+        this.questionItem.error = new ErrorWrapper();
+        return;}  
+          if(this.inpValue.length > 17){
+          this.questionItem.error = new ErrorWrapper();
+          return;
+         }
+        }
+        
+      else if (this.dateFlag) {
+        console.log(this.inpValue.length)
+        if(this.inpValue.length < 8){
+          document.getElementById("Datum").style.color ="red";
+            this.questionItem.error = new ErrorWrapper();
+            return;  
+             }
+             if(this.inpValue.length > 0){
+               document.getElementById("Datum").style.color = "#87be1c"
+             }
+            }
      else if (this.fileFlag) {
       //console.log('four')
       this.inpValue = '';
@@ -464,7 +487,7 @@ export class QuestionnaireComponent implements OnInit {
     this.readQuestion(this.qbItem.First_Question__c);
   }
 
-  private failureReadBook = (response) => {
+  private failureReadBook = () => {
 
   }
 
@@ -506,11 +529,10 @@ export class QuestionnaireComponent implements OnInit {
 
   }
   trackId() {
-    var qtrackId = this.questionItem.Tracking_ID__c;
     //console.log('trackId-question'+qtrackId);
   }
 
-  private failureRead = (response) => {
+  private failureRead = () => {
     //console.log('inside failureread');
     //console.log(response);
   }
@@ -539,7 +561,7 @@ export class QuestionnaireComponent implements OnInit {
     this.next();
   }
 
-  private failureSave = (response) => {
+  private failureSave = () => {
     //console.log('inside failureSave');
     //console.log(response);
   }
@@ -571,6 +593,7 @@ export class QuestionnaireComponent implements OnInit {
        var dtVal = this.inpValue.split('T');
        this.inpValue = dtVal[0];
        this.questionItem.input = dtVal[1];
+     
    }
     
     else if (this.fileFlag) {
@@ -602,10 +625,12 @@ export class QuestionnaireComponent implements OnInit {
         this.checkboxFlag = true;
       } else if (typ == 'Book') {
         this.bookFlag = true;
-      }
-      else if (typ == 'Time') {
+      }else if (typ == 'Time') {
         this.timeFlag = true;
+      }else if (typ == 'Date') {
+        this.dateFlag = true;
       }
+      
     }
   }
 
@@ -630,10 +655,12 @@ export class QuestionnaireComponent implements OnInit {
         this.checkboxFlag = false;
       } else if (typ == 'Book') {
         this.bookFlag = false;
-      }
-      else if (typ == 'Time') {
+      } else if (typ == 'Time') {
         this.timeFlag = false;
+      } else if (typ == 'Date') {
+        this.dateFlag= false;
       }
+     
     }
   }
 
@@ -777,7 +804,7 @@ export class QuestionnaireComponent implements OnInit {
   }
 
 
-  private successAttachmentDelete = (response) => {
+  private successAttachmentDelete = () => {
     for (let i = 0; i < this.attachments.length; i++) {
       if (this.attachments[i].attachmentId === this.attachmentId) {
         this.attachments.splice(i, 1);
@@ -785,11 +812,11 @@ export class QuestionnaireComponent implements OnInit {
     }
   }
 
-  private failureAttachmentCreate = (response) => {
+  private failureAttachmentCreate = () => {
     //console.log('inside failureAttachmentCreate');
   }
 
-  private failureAttachmentDelete = (response) => {
+  private failureAttachmentDelete = () => {
     //console.log('inside failureAttachmentDelete');
   }
 
@@ -837,8 +864,5 @@ export class QuestionnaireComponent implements OnInit {
   }
 
 
-}
-function ngifhandleNextClick() {
-  throw new Error('Function not implemented.');
 }
 
