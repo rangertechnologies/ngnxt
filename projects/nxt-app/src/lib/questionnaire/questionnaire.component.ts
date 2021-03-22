@@ -63,6 +63,7 @@ export class QuestionnaireComponent implements OnInit {
   public subQuestions: Question[] = [];
   public inpValue: string;
   public answerMap = new Map();
+  public attachmentsMap = new Map();
   public sqOptions = new Map();
   public questionStack = [];
   public attachments: any[] = [];
@@ -276,7 +277,6 @@ export class QuestionnaireComponent implements OnInit {
     this.answerWrap.quesValue = quesValue;
     this.answerWrap.qTyp = typ;
     this.answerWrap.ansValue = this.inpValue;
-
     this.saveAnswer();
   }
   
@@ -360,36 +360,32 @@ export class QuestionnaireComponent implements OnInit {
         //console.log('Handling Question => ' + q);
        
         var ansWrap = this.answerMap.get(q);
-        //console.log(ansWrap);
         if (ansWrap) {
           //console.log('Handling Answer for ' + ansWrap.quesId + ' of type ' + ansWrap.qTyp);
-          if (ansWrap.qTyp == 'Book') {
-            var newStr = '';
-            for (var ansStr of ansWrap.ansValue.split('@@##$$')) {
-              if (ansStr.length > 0) {
-                if (newStr.length == 0) {
-                  newStr = ansStr;
-                } else {
-                  newStr += ', ' + ansStr;
-                }
-              }
-            }
-            ansWrap.ansValue = newStr;
-          } else if (ansWrap.qTyp == 'File') {
-            let attachmentNameArray = [];
-            for (var attch of this.attachments) {
-              attachmentNameArray.push(attch.attachmentName);
-            }
-            let finalFileListString = (attachmentNameArray.toString()).replace(',', ', ');
-            ansWrap.ansValue = finalFileListString;
+          if(ansWrap.qTyp == 'File' || ansWrap.qTyp == 'Book'){
+            ansWrap.ansValue = this.ansConstruct(ansWrap);
           }
           this.summary.push(ansWrap);
         }
       }
-
+      //console.log(this.summary);
       // Show Thank you Note
     }
   }
+
+  ansConstruct(ans: any){
+    if(this.attachmentsMap.has(ans.quesId)){
+      let fileList: any = {};
+      let fileListString = '';
+      fileList = this.attachmentsMap.get(ans.quesId);
+      for(var file of fileList){
+        fileListString += file.attachmentName + ', ';
+      }
+      fileListString = fileListString.substring(0, fileListString.length - 2);
+      return fileListString;
+    }
+  }
+
   getText(value){
   return this.sanitizer.bypassSecurityTrustHtml(value);
   }
@@ -445,7 +441,6 @@ export class QuestionnaireComponent implements OnInit {
       this.resetFlag(this.questionItem.Type__c);
     }
     this.questionItem = response.question;
-
     // Handle the subQuestion options
     if (response.sqOptions) {
       //var newRecords = [];
@@ -518,6 +513,12 @@ export class QuestionnaireComponent implements OnInit {
       // Get the existing answer from the Map
       this.inpValue = eAnswer.ansValue;
       //console.log('inpValue has been set to ' + this.inpValue);
+      if(this.attachmentsMap.has(this.questionItem.Id)){
+        this.attachments = this.attachmentsMap.get(this.questionItem.Id);
+      }
+    } else {
+      //console.log('inside removing attachment array');
+      this.attachments = [];
     }
 
     if (this.checkboxFlag) {
@@ -726,6 +727,7 @@ export class QuestionnaireComponent implements OnInit {
   private successAttachmentCreate = (response) => {
     let createdAttachment: Attachment = new Attachment(response.attachmentId, response.attachmentName, this.attachment.lastModifiedDate);
     this.attachments.push(createdAttachment);
+    this.attachmentsMap.set(this.questionItem.Id,this.attachments);
   }
 
 
