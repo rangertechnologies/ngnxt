@@ -105,6 +105,30 @@
     </div>
     <i class="fa fa-check check-icon3" aria-hidden="true" *ngIf="questionItem?.input?.length > 0"></i>
   </div>
+  <div *ngIf="timeFlag" style="display: flex;">
+  <div class="col-md-6">
+    <label id="zeit"  class="time">Zeit</label>
+    <div class="dateandTime">
+      <select name="hours" class="datetime showHour" [(ngModel)]="selectedHour1" id="hour">
+        <option value="">HH</option>
+        <option [value]="hour" *ngFor="let hour of hours">{{hour}}</option>
+      </select>
+      <span class="colon"> : </span>
+      <select name="minutes" class="datetime" [(ngModel)]="selectedMinute1" id="minute">
+        <option value="">MM</option>
+        <option [value]="minute" *ngFor="let minute of minutes">{{minute}}</option>
+      </select>
+      <span class="colon"> : </span>
+      <select name="AM/PM" class="datetime" [(ngModel)]="selectedMeridiem1" id="meridiem">
+        <option value="AM">AM</option>
+        <option value="PM">PM</option>
+      </select>
+    </div>
+  </div>
+  <i class="fa fa-check" aria-hidden="true" style="color:#87be1c;margin-left: -5rem;z-index: 1;margin-top: 2.5rem;"
+      *ngIf="questionItem?.input?.length > 0"></i>
+  </div>
+
   <div *ngIf="fileFlag">
     <div class="info-alert ques-alert2" style.border-color="{{this.questionItem.error ? 'red' : ''}}">
       <label class="picture-upload" for="file-upload" >
