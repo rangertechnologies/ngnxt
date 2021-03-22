@@ -37,6 +37,7 @@ import {
 export class QuestionnaireComponent implements OnInit {
   @Input() qbId: string;
   @Output() handleEvent = new EventEmitter();
+  @Output() handlePage = new EventEmitter();
   params: Params;
 
   public abItem: AnswerBook;
@@ -437,7 +438,7 @@ export class QuestionnaireComponent implements OnInit {
   private successRead = (response) => {
     //console.log(response);
     // Reset the Variables
-    this.handleEvent.emit(this.questionItem.Tracking_ID__c);
+    this.handlePage.emit(this.questionItem.Tracking_ID__c);
     if (this.questionItem) {
       this.inpValue = '';
       this.answerWrap = new AnswerWrapper();
