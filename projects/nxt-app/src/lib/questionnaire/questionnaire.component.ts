@@ -37,6 +37,8 @@ import {
 export class QuestionnaireComponent implements OnInit {
   @Input() qbId: string;
   @Output() handleEvent = new EventEmitter();
+  @Output() handlePage: EventEmitter<any> = new EventEmitter();
+
   params: Params;
 
   public abItem: AnswerBook;
@@ -134,10 +136,10 @@ export class QuestionnaireComponent implements OnInit {
     this.processQB();
   }
 
-  ngOnChanges() {
+  /*ngOnChanges() {
     //console.log('inside Questionnaire ngOnChanges');
     this.processQB();
-  }
+  }*/
 
 
   processQB() {
@@ -437,6 +439,7 @@ export class QuestionnaireComponent implements OnInit {
   private successRead = (response) => {
     //console.log(response);
     // Reset the Variables
+    
     if (this.questionItem) {
       this.inpValue = '';
       this.answerWrap = new AnswerWrapper();
@@ -445,7 +448,7 @@ export class QuestionnaireComponent implements OnInit {
       this.resetFlag(this.questionItem.Type__c);
     }
     this.questionItem = response.question;
-
+    this.handlePage.emit(this.questionItem.Tracking_ID__c);
     // Handle the subQuestion options
     if (response.sqOptions) {
       //var newRecords = [];
@@ -463,8 +466,7 @@ export class QuestionnaireComponent implements OnInit {
     this.processQuestion();
     this.innerhtml = this.sanitizer.bypassSecurityTrustHtml(this.questionItem.Additional_Rich__c);
     this.innerhtml1 = this.sanitizer.bypassSecurityTrustHtml(this.questionItem.Question_Text__c);
-    this.trackId();
-
+    this.trackId(); 
   }
   trackId() {
     var qtrackId = this.questionItem.Tracking_ID__c;
