@@ -447,7 +447,7 @@ export class QuestionnaireComponent implements OnInit {
       this.resetFlag(this.questionItem.Type__c);
     }
     this.questionItem = response.question;
-
+    this.handlePage.emit(this.questionItem.Tracking_ID__c);
     // Handle the subQuestion options
     if (response.sqOptions) {
       //var newRecords = [];
@@ -465,8 +465,7 @@ export class QuestionnaireComponent implements OnInit {
     this.processQuestion();
     this.innerhtml = this.sanitizer.bypassSecurityTrustHtml(this.questionItem.Additional_Rich__c);
     this.innerhtml1 = this.sanitizer.bypassSecurityTrustHtml(this.questionItem.Question_Text__c);
-    this.trackId();
-    this.handlePage.emit(this.questionItem.Tracking_ID__c);
+    this.trackId(); 
   }
   trackId() {
     var qtrackId = this.questionItem.Tracking_ID__c;
