@@ -56,6 +56,7 @@ export class QuestionnaireComponent implements OnInit {
   public textFlag: boolean = false;
   public taFlag: boolean = false;
   public dtFlag: boolean = false;
+  public timeFlag: boolean = false;
   public fileFlag: boolean = false;
   public emailFlag: boolean = false;
   public bookFlag: boolean = false;
@@ -80,16 +81,14 @@ export class QuestionnaireComponent implements OnInit {
   private el: HTMLElement;
   public innerhtml: any;
   public innerhtml1: any;
-  public hours: string[] = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'];
-  public minutes: string[] = ['00', '01', '02', '03', '04', '05', '06', '07', '08', '09', '10',
-    '11', '12', '13', '14', '15', '16', '17', '18', '19', '20',
-    '21', '22', '23', '24', '25', '26', '27', '28', '29', '30',
-    '31', '32', '33', '34', '35', '36', '37', '38', '39', '40',
-    '41', '42', '43', '44', '45', '46', '47', '48', '49', '50',
-    '51', '52', '53', '54', '55', '56', '57', '58', '59'];
+  public hours: any = [];
+  public minutes: any = [];
   public selectedHour: string = '';
   public selectedMinute: string = '';
   public selectedMeridiem: string = '';
+  public selectedHour1: string = '';
+  public selectedMinute1: string = '';
+  public selectedMeridiem1: string = '';
   public valueName: string = '';
   public valueName1: string = '';
   public bookFlagAccept: string[];
@@ -131,6 +130,25 @@ export class QuestionnaireComponent implements OnInit {
     this.selectedHour = "";
     this.selectedMinute = "";
     this.selectedMeridiem = "AM";
+    this.selectedHour1 = "";
+    this.selectedMinute1 = "";
+    this.selectedMeridiem1 = "AM";
+    // dynamic hours&minuts
+    for(let i=1;i<=12;i++){
+    if(i<10)
+      this.hours.push('0'+i)
+      else{
+        this.hours.push(i)
+      }   
+    }
+    for(let i=0; i<=59;i++){
+      if(i<10){
+      this.minutes.push('0'+i)
+    }
+    else{
+      this.minutes.push(i)
+    }
+  }
     this.processQB();
   }
 
