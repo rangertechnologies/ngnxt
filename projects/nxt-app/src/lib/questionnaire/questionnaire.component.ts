@@ -437,6 +437,7 @@ export class QuestionnaireComponent implements OnInit {
   private successRead = (response) => {
     //console.log(response);
     // Reset the Variables
+    this.handleEvent.emit(this.questionItem.Tracking_ID__c);
     if (this.questionItem) {
       this.inpValue = '';
       this.answerWrap = new AnswerWrapper();
@@ -464,7 +465,6 @@ export class QuestionnaireComponent implements OnInit {
     this.innerhtml = this.sanitizer.bypassSecurityTrustHtml(this.questionItem.Additional_Rich__c);
     this.innerhtml1 = this.sanitizer.bypassSecurityTrustHtml(this.questionItem.Question_Text__c);
     this.trackId();
-
   }
   trackId() {
     var qtrackId = this.questionItem.Tracking_ID__c;
