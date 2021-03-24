@@ -137,10 +137,10 @@ export class QuestionnaireComponent implements OnInit {
     this.processQB();
   }
 
-  /*ngOnChanges() {
+  ngOnChanges() {
     //console.log('inside Questionnaire ngOnChanges');
     this.processQB();
-  }*/
+  }
 
 
   processQB() {
@@ -223,8 +223,6 @@ export class QuestionnaireComponent implements OnInit {
         }
 
         if (item.Type__c == 'File' && this.attachments.length > 0) {
-          //console.log('inside')
-          //console.log(this.attachment)
           for (var attachmentItem of this.attachments) {
             this.inpValue += attachmentItem.attachmentId + '@@##$$' + attachmentItem.attachmentName + ',';
             if (item.input == this.inpValue) {
@@ -360,31 +358,32 @@ export class QuestionnaireComponent implements OnInit {
       // Show Summary
       for (var q of this.questionStack) {
         //console.log('Handling Question => ' + q);
-       
+      
         var ansWrap = this.answerMap.get(q);
         if (ansWrap) {
           //console.log('Handling Answer for ' + ansWrap.quesId + ' of type ' + ansWrap.qTyp);
           if(ansWrap.qTyp == 'File' || ansWrap.qTyp == 'Book'){
-            ansWrap.ansValue = this.ansConstruct(ansWrap);
+            var newStr = '';
+            for (var ansStr of ansWrap.ansValue.split('@@##$$')) {
+              if (ansStr.length > 0) {
+                if (newStr.length == 0) {
+                  newStr = ansStr;
+                } else {
+                  newStr += ', ' + ansStr;
+                }
+              }
+            }
+            for(var att of this.attachmentsMap.get(ansWrap.quesId)){
+              newStr = newStr.replace(att.attachmentId,'');
+            }
+            newStr = (newStr.replace(',,',', ')).replace(', ,',', ');
+            newStr = newStr.startsWith(',') ? newStr.substring(1, newStr.length) : (newStr.endsWith(',') ? newStr.substring(0, newStr.length - 1) : newStr);
+            ansWrap.ansValue = newStr;
           }
           this.summary.push(ansWrap);
         }
       }
-      //console.log(this.summary);
       // Show Thank you Note
-    }
-  }
-
-  ansConstruct(ans: any){
-    if(this.attachmentsMap.has(ans.quesId)){
-      let fileList: any = {};
-      let fileListString = '';
-      fileList = this.attachmentsMap.get(ans.quesId);
-      for(var file of fileList){
-        fileListString += file.attachmentName + ', ';
-      }
-      fileListString = fileListString.substring(0, fileListString.length - 2);
-      return fileListString;
     }
   }
 
