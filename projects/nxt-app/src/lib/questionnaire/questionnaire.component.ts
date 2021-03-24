@@ -6,34 +6,33 @@ import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { FormBuilder } from '@angular/forms';
 
 import {
-  Question,
-  QuestionBook,
-  AnswerBook,
-  AnswerWrapper,
-  ErrorWrapper,
-  Option,
-  OptionValue,
-  AttachmentWrapper,
-  Attachment
+	Question,
+	QuestionBook,
+	AnswerBook,
+	AnswerWrapper,
+	ErrorWrapper,
+	Option,
+	OptionValue,
+	AttachmentWrapper,
+	Attachment
 } from '../wrapper';
 
 import {
-  TESTQUESTION,
-  DTQUESTION,
-  FILEQUESTION,
-  TAQUESTION,
-  RADIOQUESTION,
-  CHECKQUESTION,
-  BOOKQUESTION,
-  TESTQB
+	TESTQUESTION,
+	DTQUESTION,
+	FILEQUESTION,
+	TAQUESTION,
+	RADIOQUESTION,
+	CHECKQUESTION,
+	BOOKQUESTION,
+	TESTQB
 } from '../sample';
 
 @Component({
-  selector: 'lib-questionnaire',
-  templateUrl: './questionnaire.component.html',
-  styleUrls: ['./questionnaire.component.css']
+	selector: 'lib-questionnaire',
+	templateUrl: './questionnaire.component.html',
+	styleUrls: [ './questionnaire.component.css' ]
 })
-
 export class QuestionnaireComponent implements OnInit {
   @Input() qbId: string;
   @Output() handleEvent = new EventEmitter();
