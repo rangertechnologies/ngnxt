@@ -25,7 +25,14 @@
     </div>
   </div>
 
-  <div *ngIf="radioFlag || dropdownFlag || dataFlag" class="">
+  <div *ngIf=" dropdownFlag " class="">
+    <div *ngIf="this.questionItem.error" class="cond-div2">Bitte treffen Sie eine Auswahl</div>
+    <select class="custom-select mr-sm-2 dd-height" [(ngModel)]="inpValue" (change)="clearError()"  >
+      <option *ngFor="let opt of questionItem.Question_Options__r.records"  value="{{opt.Value__c}}">{{opt.Value__c}} </option>
+    </select>
+  </div>
+
+  <div *ngIf="radioFlag || dataFlag" class="">
     <div *ngIf="this.questionItem.error" class="cond-div2">Bitte treffen Sie eine Auswahl</div>
     <div *ngFor="let opt of questionItem.Question_Options__r.records" class="radio col-md-6 optiondiv">
       <label class="radiocontainer">
@@ -128,11 +135,13 @@
       <div class="form-row">
         <div class="questionalign" [class]="'col-md-' + ques.Size__c + ' paddingnone'" *ngFor="let ques of subQuestions">
           <span class="colorf">{{ques.Question__c}}</span>
+
           <div *ngIf="ques.Type__c === 'Text'">
             <input type="text" [(ngModel)]="ques.input" [id]="ques.Id" required="" (click)="clearSQError(ques.Id)"
               style.border-color="{{ques.error ? 'red' : ''}}" placeholder="{{ques.Question__c}}"
               oninput="this.value=this.value.replace(/[^a-zA-Z0-9\s.:;,?]/g,'');" />
           </div>
+
           <div *ngIf="ques.Type__c === 'Email'">
             <input type="email" [(ngModel)]="ques.input" [id]="ques.Id" required="" (click)="clearSQError(ques.Id)"
               style.border-color="{{ques.error ? 'red' : ''}}" placeholder="{{ques.Question__c}}"
@@ -141,7 +150,6 @@
 
           <div *ngIf="ques.Type__c === 'File'">
             <div>
-
               <label class="picture-upload custom-file-upload bgcolor-w" for="file-upload">
                 <span class="picture-upload-child">
                   <i class="fa fa-file-image-o fa-5x icolor" aria-hidden="true"></i>
@@ -159,17 +167,18 @@
           </ul>
 
           <div *ngIf="ques.Type__c === 'Radio'" class="">
+            <div *ngIf="ques.error" class="cond-div2">Bitte treffen Sie eine Auswahl</div>
             <div *ngFor="let opt of ques.Question_Options__r.records" class="radio col-md-6 optiondiv" >
               <label class="radiocontainer">
-                <input type="radio" [id]="ques.Id" [(ngModel)]="ques.input" value="{{opt.Value__c}}" (change)="Dropdown($event)">
+                <input type="radio" [id]="ques.Id" [(ngModel)]="ques.input" value="{{opt.Value__c}}" (change)="Dropdown($event); clearSQError(ques.Id)">
                 <span class="checkmark">{{opt.Value__c}}</span>
               </label>
             </div>
           </div>
 
           <div *ngIf="ques.Type__c === 'Dropdown'"class="">
-            <div *ngIf="this.questionItem.error" class="cond-div2">Bitte treffen Sie eine Auswahl</div>
-            <select class="custom-select mr-sm-2 dd-height" [(ngModel)]="ques.input" (change)="Dropdown($event)" >
+            <div *ngIf="ques.error" class="cond-div2">Bitte treffen Sie eine Auswahl</div>
+            <select class="custom-select mr-sm-2 dd-height" [(ngModel)]="ques.input" (change)="Dropdown($event); clearSQError(ques.Id)" >
               <option *ngFor="let opt of ques.Question_Options__r.records"  value="{{opt.Value__c}}">{{opt.Value__c}}
               </option>
             </select>

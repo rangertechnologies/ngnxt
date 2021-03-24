@@ -217,11 +217,10 @@ export class QuestionnaireComponent implements OnInit {
           item.error = new ErrorWrapper();
           hasMissingInput = true;
         }
-        if (item.Type__c == 'Dropdown' ){
+        if (item.Type__c == 'Dropdown' || item.Type__c == 'Radio'){
           if(!item.input){
-            //console.log('1'+ item.input)
-            this.questionItem.error = new ErrorWrapper();
-              return;  
+            item.error = new ErrorWrapper();
+          hasMissingInput = true;
             }         
         }
         if (item.Type__c == 'File' && this.attachments.length > 0) {
