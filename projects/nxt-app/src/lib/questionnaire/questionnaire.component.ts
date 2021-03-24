@@ -137,10 +137,10 @@ export class QuestionnaireComponent implements OnInit {
     this.processQB();
   }
 
-  ngOnChanges() {
+  /*ngOnChanges() {
     //console.log('inside Questionnaire ngOnChanges');
     this.processQB();
-  }
+  }*/
 
 
   processQB() {
