@@ -6,34 +6,33 @@ import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { FormBuilder } from '@angular/forms';
 
 import {
-  Question,
-  QuestionBook,
-  AnswerBook,
-  AnswerWrapper,
-  ErrorWrapper,
-  Option,
-  OptionValue,
-  AttachmentWrapper,
-  Attachment
+	Question,
+	QuestionBook,
+	AnswerBook,
+	AnswerWrapper,
+	ErrorWrapper,
+	Option,
+	OptionValue,
+	AttachmentWrapper,
+	Attachment
 } from '../wrapper';
 
 import {
-  TESTQUESTION,
-  DTQUESTION,
-  FILEQUESTION,
-  TAQUESTION,
-  RADIOQUESTION,
-  CHECKQUESTION,
-  BOOKQUESTION,
-  TESTQB
+	TESTQUESTION,
+	DTQUESTION,
+	FILEQUESTION,
+	TAQUESTION,
+	RADIOQUESTION,
+	CHECKQUESTION,
+	BOOKQUESTION,
+	TESTQB
 } from '../sample';
 
 @Component({
-  selector: 'lib-questionnaire',
-  templateUrl: './questionnaire.component.html',
-  styleUrls: ['./questionnaire.component.css']
+	selector: 'lib-questionnaire',
+	templateUrl: './questionnaire.component.html',
+	styleUrls: [ './questionnaire.component.css' ]
 })
-
 export class QuestionnaireComponent implements OnInit {
   @Input() qbId: string;
   @Output() handleEvent = new EventEmitter();
@@ -82,7 +81,6 @@ export class QuestionnaireComponent implements OnInit {
   private today: Date = new Date();
   private el: HTMLElement;
   public innerhtml: any;
-  public innerhtml1: any;
   public hours: string[] = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'];
   public minutes: string[] = ['00', '01', '02', '03', '04', '05', '06', '07', '08', '09', '10',
     '11', '12', '13', '14', '15', '16', '17', '18', '19', '20',
@@ -221,7 +219,12 @@ export class QuestionnaireComponent implements OnInit {
           item.error = new ErrorWrapper();
           hasMissingInput = true;
         }
-
+        if (item.Type__c == 'Dropdown' || item.Type__c == 'Radio'){
+          if(!item.input){
+            item.error = new ErrorWrapper();
+          hasMissingInput = true;
+            }         
+        }
         if (item.Type__c == 'File' && this.attachments.length > 0) {
           for (var attachmentItem of this.attachments) {
             this.inpValue += attachmentItem.attachmentId + '@@##$$' + attachmentItem.attachmentName + ',';
@@ -460,8 +463,8 @@ export class QuestionnaireComponent implements OnInit {
     }
     this.processQuestion();
     this.innerhtml = this.sanitizer.bypassSecurityTrustHtml(this.questionItem.Additional_Rich__c);
-    this.innerhtml1 = this.sanitizer.bypassSecurityTrustHtml(this.questionItem.Question_Text__c);
-    this.trackId(); 
+    this.trackId();
+
   }
   trackId() {
     var qtrackId = this.questionItem.Tracking_ID__c;
