@@ -376,8 +376,10 @@ export class QuestionnaireComponent implements OnInit {
                 }
               }
             }
-            for(var att of this.attachmentsMap.get(ansWrap.quesId)){
-              newStr = newStr.replace(att.attachmentId,'');
+            if(this.attachmentsMap.has(ansWrap.quesId)){
+              for(var att of this.attachmentsMap.get(ansWrap.quesId)){
+                newStr = newStr.replace(att.attachmentId,'');
+              }
             }
             newStr = (newStr.replace(',,',', ')).replace(', ,',', ');
             newStr = newStr.startsWith(',') ? newStr.substring(1, newStr.length) : (newStr.endsWith(',') ? newStr.substring(0, newStr.length - 1) : newStr);
