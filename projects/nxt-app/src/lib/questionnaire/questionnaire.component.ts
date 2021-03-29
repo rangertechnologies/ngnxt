@@ -83,15 +83,13 @@ export class QuestionnaireComponent implements OnInit {
   private today: Date = new Date();
   public innerhtml: any;
   public innerhtml1: any;
-  public hours: any = [];
-  public minutes: any = [];
-  public meridiem: string[] =['AM','PM'] ;
+  public hours: string[] = ["01","02","03","04","05","06","07","08","09","10","11","12","13","14","15","16","17","18","19","20","21","22","23","00"];
+  public minutes: string[] = ["01","02","03","04","05","06","07","08","09","10","11","12","13","14","15","16","17","18",
+  "19","20","21","22","23","24","25","26","27","28","29","30","31","32","33","34","35","36","37","38","39","40","41","42",
+  "43","44","45","46","47","48","49","50","51","52","53","54","55","56","57","58","59"];
   public selectedHour: string = '';
   public selectedMinute: string = '';
   public selectedMeridiem: string = '';
-  public selectedHour1: string = '';
-  public selectedMinute1: string = '';
-  public selectedMeridiem1: string = '';
   public valueName: string = '';
   public valueName1: string = '';
   public bookFlagAccept: string[];
@@ -133,29 +131,28 @@ export class QuestionnaireComponent implements OnInit {
     this.selectedHour = "";
     this.selectedMinute = "";
     this.selectedMeridiem = "AM";
-    this.selectedHour1 = "";
-    this.selectedMinute1 = "";
-    this.selectedMeridiem1 = "AM";
+    console.log("sahtik");
+   
     // dynamic hours&minuts
     
-    for(let i=1;i<=12;i++){
-    if(i<10)
-      this.hours.push('0'+i)
-      else{
-        this.hours.push(i)
-      }
+    // for(let i=1;i<=12;i++){
+    // if(i<10)
+    //   this.hours.push('0'+i)
+    //   else{
+    //     this.hours.push(i)
+    //   }
      // if(i==23){
      //   this.hours.push('00')
      // } 
-    }
-    for(let i=0; i<=59;i++){
-      if(i<10){
-      this.minutes.push('0'+i)
-    }
-    else{
-      this.minutes.push(i)
-    }
-  }
+    // }
+    // for(let i=0; i<=59;i++){
+    //   if(i<10){
+    //   this.minutes.push('0'+i)
+    // }
+    // else{
+    //   this.minutes.push(i)
+    // }
+ // }
 
       this.processQB();
   }
@@ -266,44 +263,53 @@ export class QuestionnaireComponent implements OnInit {
       }
       this.inpValue = this.trimLastDummy(this.inpValue);
      }
-      else if (this.timeFlag ) {
-       this.inpValue = (this.selectedMeridiem1 === 'PM' && this.selectedHour1 != '12' ? (Number(this.selectedHour1) + 12) : this.selectedHour1) + ':' + this.selectedMinute1 + this.selectedMeridiem1;
-       if(this.inpValue.length < 7){
-    document.getElementById("zeit").style.color ="red";
-      this.questionItem.error = new ErrorWrapper();
-      return;  
-       }
-       if(this.inpValue.length > 0){
-         document.getElementById("zeit").style.color = "#87be1c";
-       }
-      }
+      //else if (this.timeFlag ) {
+       //this.inpValue = (this.selectedMeridiem1 === 'PM' && this.selectedHour1 != '12' ? (Number(this.selectedHour1) + 12) : this.selectedHour1) + ':' + this.selectedMinute1 + this.selectedMeridiem1;
+    //    if(this.inpValue.length < 7){
+    // document.getElementById("zeit").style.color ="red";
+    //   this.questionItem.error = new ErrorWrapper();
+    //   return;  
+    //    }
+    //    if(this.inpValue.length > 0){
+    //      document.getElementById("zeit").style.color = "#87be1c";
+    //    }
+    //  }
       
-     else if (this.dtFlag && this.inpValue) {
-       this.selectedHour = this.getProperTime('12', this.selectedHour);
-       this.selectedMinute = this.getProperTime('00', this.selectedMinute);
-      this.selectedMeridiem = this.getProperTime('AM', this.selectedMeridiem);
-       this.inpValue = this.inpValue + 'T' + (this.selectedMeridiem === 'PM' && this.selectedHour != '12' ? (Number(this.selectedHour) + 12) : this.selectedHour) + ':' + this.selectedMinute + this.selectedMeridiem;
+     else if (this.dtFlag) {
+
+       if(this.dtFlag && this. inpValue && this.timeFlag && this.dataFlag){
+        this.selectedHour = this.getProperTime('12', this.selectedHour);
+        this.selectedMinute = this.getProperTime('00', this.selectedMinute);
+       this.selectedMeridiem = this.getProperTime('AM', this.selectedMeridiem);
+        this.inpValue = this.inpValue + 'T' + (this.selectedMeridiem === 'PM' && this.selectedHour != '12' ? (Number(this.selectedHour) + 12) : this.selectedHour) + ':' + this.selectedMinute + this.selectedMeridiem;
+       }
+       if (this.timeFlag && this.dtFlag && !this.dataFlag  ) {
+        this.inpValue = (this.selectedMeridiem === 'PM' && this.selectedHour != '12' ? (Number(this.selectedHour) + 12) : this.selectedHour) + ':' + this.selectedMinute + this.selectedMeridiem;
        console.log(this.inpValue.length)
-       if(this.inpValue.length < 14){
-        this.questionItem.error = new ErrorWrapper();
-        return;}  
-          if(this.inpValue.length > 17){
-          this.questionItem.error = new ErrorWrapper();
-          return;
-         }
+      }
+      if( this.dataFlag && this. inpValue ){
+        this.inpValue=this.inpValue;
+      }
+      //  if(this.inpValue.length < 14){
+      //   this.questionItem.error = new ErrorWrapper();
+      //   return;}  
+      //     if(this.inpValue.length > 17){
+      //     this.questionItem.error = new ErrorWrapper();
+      //     return;
+      //    }
         }
         
-      else if (this.dateFlag) {
-        console.log(this.inpValue.length)
-        if(this.inpValue.length < 8){
-          document.getElementById("Datum").style.color ="red";
-            this.questionItem.error = new ErrorWrapper();
-            return;  
-             }
-             if(this.inpValue.length > 0){
-               document.getElementById("Datum").style.color = "#87be1c"
-             }
-            }
+    //  else if (this.dateFlag) {
+      //  console.log(this.inpValue.length)
+        // if(this.inpValue.length < 8){
+        //   document.getElementById("Datum").style.color ="red";
+        //     this.questionItem.error = new ErrorWrapper();
+        //     return;  
+        //      }
+        //      if(this.inpValue.length > 0){
+        //        document.getElementById("Datum").style.color = "#87be1c"
+        //      }
+          //  }
      else if (this.fileFlag) {
       //console.log('four')
       this.inpValue = '';
@@ -507,6 +513,7 @@ export class QuestionnaireComponent implements OnInit {
       this.resetFlag(this.questionItem.Type__c);
     }
     this.questionItem = response.question;
+    console.log(this.questionItem)
 
     // Handle the subQuestion options
     if (response.sqOptions) {
@@ -615,6 +622,8 @@ export class QuestionnaireComponent implements OnInit {
         this.fileFlag = true;
       } else if (typ == 'DateTime') {
         this.dtFlag = true;
+        this.timeFlag =true;
+        this.dateFlag=true;
       } else if (typ == 'TextArea') {
         this.taFlag = true;
       } else if (typ == 'Radio') {
@@ -626,8 +635,10 @@ export class QuestionnaireComponent implements OnInit {
       } else if (typ == 'Book') {
         this.bookFlag = true;
       }else if (typ == 'Time') {
-        this.timeFlag = true;
+        this.dtFlag = true;
+        this.timeFlag = true;   
       }else if (typ == 'Date') {
+        this.dtFlag = true;
         this.dateFlag = true;
       }
       
@@ -645,6 +656,8 @@ export class QuestionnaireComponent implements OnInit {
         this.fileFlag = false;
       } else if (typ == 'DateTime') {
         this.dtFlag = false;
+        this.dateFlag = false;
+        this.timeFlag= false;
       } else if (typ == 'TextArea') {
         this.taFlag = false;
       } else if (typ == 'Radio') {
@@ -656,8 +669,10 @@ export class QuestionnaireComponent implements OnInit {
       } else if (typ == 'Book') {
         this.bookFlag = false;
       } else if (typ == 'Time') {
+        this.dtFlag= false;
         this.timeFlag = false;
       } else if (typ == 'Date') {
+        this.dtFlag= false;
         this.dateFlag= false;
       }
      
