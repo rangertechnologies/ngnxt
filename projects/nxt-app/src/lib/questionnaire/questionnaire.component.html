@@ -99,12 +99,13 @@
           <option value="">MM</option>
           <option [value]="minute" *ngFor="let minute of minutes">{{minute}}</option>
         </select>
-        
+        <div *ngIf= "questionItem.X24_Hours__c == false">
         <span class="colon"> : </span>
         <select name="AM/PM" class="datetime" [(ngModel)]="selectedMeridiem" id="meridiem">
           <option value="AM">AM</option>
           <option value="PM">PM</option>
         </select>
+      </div>
       </div>
     </div>
     <i class="fa fa-check check-icon3" aria-hidden="true" *ngIf="questionItem?.input?.length > 0"></i>

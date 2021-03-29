@@ -14,7 +14,9 @@ import {
   Option,
   OptionValue,
   AttachmentWrapper,
-  Attachment
+  Attachment,
+  selDatewrapper,
+  selDate,
 } from '../wrapper';
 
 import {
@@ -28,6 +30,7 @@ import {
   TESTQB
 } from '../sample';
 import { style } from '@angular/animations';
+import { hasLifecycleHook } from '@angular/compiler/src/lifecycle_reflector';
 
 @Component({
   selector: 'lib-questionnaire',
@@ -78,13 +81,13 @@ export class QuestionnaireComponent implements OnInit {
   public localDate: string;
   public taFocusOut: boolean = false;
   public summary = [];
-  public selDate: any = {};
+  public selDate: any = [];
   public selDate1: any = {};
   private today: Date = new Date();
   public innerhtml: any;
   public innerhtml1: any;
   public hours: string[] = ["01","02","03","04","05","06","07","08","09","10","11","12","13","14","15","16","17","18","19","20","21","22","23","00"];
-  public minutes: string[] = ["01","02","03","04","05","06","07","08","09","10","11","12","13","14","15","16","17","18",
+  public minutes: string[] = ["00","01","02","03","04","05","06","07","08","09","10","11","12","13","14","15","16","17","18",
   "19","20","21","22","23","24","25","26","27","28","29","30","31","32","33","34","35","36","37","38","39","40","41","42",
   "43","44","45","46","47","48","49","50","51","52","53","54","55","56","57","58","59"];
   public selectedHour: string = '';
@@ -276,20 +279,21 @@ export class QuestionnaireComponent implements OnInit {
     //  }
       
      else if (this.dtFlag) {
-
-       if(this.dtFlag && this. inpValue && this.timeFlag && this.dataFlag){
+       if( this.dataFlag && this. inpValue && this.dtFlag &&  !this.timeFlag ){
+         console.log(this.selDate);
+      this.inpValue=this.inpValue;
+    } if(this.dtFlag && this.inpValue && this.dateFlag && this.timeFlag){
         this.selectedHour = this.getProperTime('12', this.selectedHour);
         this.selectedMinute = this.getProperTime('00', this.selectedMinute);
        this.selectedMeridiem = this.getProperTime('AM', this.selectedMeridiem);
-        this.inpValue = this.inpValue + 'T' + (this.selectedMeridiem === 'PM' && this.selectedHour != '12' ? (Number(this.selectedHour) + 12) : this.selectedHour) + ':' + this.selectedMinute + this.selectedMeridiem;
-       }
-       if (this.timeFlag && this.dtFlag && !this.dataFlag  ) {
-        this.inpValue = (this.selectedMeridiem === 'PM' && this.selectedHour != '12' ? (Number(this.selectedHour) + 12) : this.selectedHour) + ':' + this.selectedMinute + this.selectedMeridiem;
+        this.inpValue =this.inpValue + 'T' +  (this.selectedMeridiem === 'PM' && this.selectedHour != '12' ? (Number(this.selectedHour) + 12) : this.selectedHour) + ':' + this.selectedMinute;
+       
+    }
+       if (this.timeFlag && this.dtFlag && !this.dataFlag ) {
+        this.inpValue = (this.selectedMeridiem === 'PM' && this.selectedHour != '12' ? (Number(this.selectedHour) + 12) : this.selectedHour) + ':' + this.selectedMinute ;
        console.log(this.inpValue.length)
-      }
-      if( this.dataFlag && this. inpValue ){
-        this.inpValue=this.inpValue;
-      }
+      }}
+      
       //  if(this.inpValue.length < 14){
       //   this.questionItem.error = new ErrorWrapper();
       //   return;}  
@@ -297,7 +301,7 @@ export class QuestionnaireComponent implements OnInit {
       //     this.questionItem.error = new ErrorWrapper();
       //     return;
       //    }
-        }
+        
         
     //  else if (this.dateFlag) {
       //  console.log(this.inpValue.length)
@@ -356,6 +360,11 @@ export class QuestionnaireComponent implements OnInit {
     if (this.questionItem.error) { return; }
 
     this.questionStack.push(cQuestion.Id);
+    if(cQuestion.X24_Hours__c===false){
+      this.hours= this.hours.slice(0,12);
+    }else{
+      this.hours=this.hours;
+    }
 
     // CONDITIONAL vs OPTIONONLY & UNCONDITIONAL
     if (cQuestion.RecordType.Name == "CONDITIONAL") {
@@ -420,8 +429,13 @@ export class QuestionnaireComponent implements OnInit {
       this.answerWrap = new AnswerWrapper();
       this.optionValues = [];
       this.subQuestions = [];
+      
       this.resetFlag(typ);
       this.questionItem = null;
+      if(this.dtFlag){
+      if(this.questionItem.X24_Hours__c === false  ){
+        this.hours=this.hours.slice(0,12)
+        }}
 
       // Show Summary
       for (var q of this.questionStack) {
@@ -510,6 +524,7 @@ export class QuestionnaireComponent implements OnInit {
       this.answerWrap = new AnswerWrapper();
       this.optionValues = [];
       this.subQuestions = [];
+    
       this.resetFlag(this.questionItem.Type__c);
     }
     this.questionItem = response.question;
@@ -595,12 +610,20 @@ export class QuestionnaireComponent implements OnInit {
       // Set the SubQuestions
       this.setSubQuestions(this.questionItem.Questions__r.records);
      } 
+     else if(this.dtFlag){
+      if(this.questionItem.X24_Hours__c === false  ){
+        this.hours=this.hours.slice(0,12)
+        }
+     }
       else if (this.dtFlag && this.inpValue) {
        // Set the Date and Time
        var dtVal = this.inpValue.split('T');
        this.inpValue = dtVal[0];
        this.questionItem.input = dtVal[1];
-     
+       if( this.dataFlag && this. inpValue && this.dtFlag &&  !this.timeFlag ){
+         this.selDate = " ";
+        // this.selDate ='';
+       } 
    }
     
     else if (this.fileFlag) {
