@@ -289,7 +289,7 @@ export class QuestionnaireComponent implements OnInit {
         this.inpValue =this.inpValue + 'T' +  (this.selectedMeridiem === 'PM' && this.selectedHour != '12' ? (Number(this.selectedHour) + 12) : this.selectedHour) + ':' + this.selectedMinute;
        
     }
-       if (this.timeFlag && this.dtFlag && !this.dataFlag ) {
+        if (this.timeFlag && this.dtFlag && !this.dataFlag && !this.inpValue) {
         this.inpValue = (this.selectedMeridiem === 'PM' && this.selectedHour != '12' ? (Number(this.selectedHour) + 12) : this.selectedHour) + ':' + this.selectedMinute ;
        console.log(this.inpValue.length)
       }}
@@ -611,6 +611,8 @@ export class QuestionnaireComponent implements OnInit {
       this.setSubQuestions(this.questionItem.Questions__r.records);
      } 
      else if(this.dtFlag){
+      console.log('current sel date');
+      console.log(this.selDate);
       if(this.questionItem.X24_Hours__c === false  ){
         this.hours=this.hours.slice(0,12)
         }
