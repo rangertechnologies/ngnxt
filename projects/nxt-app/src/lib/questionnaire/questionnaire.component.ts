@@ -16,7 +16,7 @@ import {
   AttachmentWrapper,
   Attachment,
   selDatewrapper,
-  selDate,
+  
 } from '../wrapper';
 
 import {
@@ -47,6 +47,7 @@ export class QuestionnaireComponent implements OnInit {
   public qbItem: QuestionBook;
   public questionItem: Question;
   public answerWrap: AnswerWrapper;
+  public selDate1 : selDatewrapper;
 
   // CONDITIONAL TYPES
   public radioFlag: boolean = false;
@@ -81,12 +82,11 @@ export class QuestionnaireComponent implements OnInit {
   public localDate: string;
   public taFocusOut: boolean = false;
   public summary = [];
-  public selDate: any = [];
-  public selDate1: any = {};
+  public selDate: any = {};
   private today: Date = new Date();
   public innerhtml: any;
   public innerhtml1: any;
-  public hours: string[] = ["01","02","03","04","05","06","07","08","09","10","11","12","13","14","15","16","17","18","19","20","21","22","23","00"];
+  public hours: any[] = ["01","02","03","04","05","06","07","08","09","10","11","12"];
   public minutes: string[] = ["00","01","02","03","04","05","06","07","08","09","10","11","12","13","14","15","16","17","18",
   "19","20","21","22","23","24","25","26","27","28","29","30","31","32","33","34","35","36","37","38","39","40","41","42",
   "43","44","45","46","47","48","49","50","51","52","53","54","55","56","57","58","59"];
@@ -135,28 +135,6 @@ export class QuestionnaireComponent implements OnInit {
     this.selectedMinute = "";
     this.selectedMeridiem = "AM";
     console.log("sahtik");
-   
-    // dynamic hours&minuts
-    
-    // for(let i=1;i<=12;i++){
-    // if(i<10)
-    //   this.hours.push('0'+i)
-    //   else{
-    //     this.hours.push(i)
-    //   }
-     // if(i==23){
-     //   this.hours.push('00')
-     // } 
-    // }
-    // for(let i=0; i<=59;i++){
-    //   if(i<10){
-    //   this.minutes.push('0'+i)
-    // }
-    // else{
-    //   this.minutes.push(i)
-    // }
- // }
-
       this.processQB();
   }
 
@@ -164,12 +142,9 @@ export class QuestionnaireComponent implements OnInit {
     //console.log('inside Questionnaire ngOnChanges');
     this.processQB();
   }
-
-
   processQB() {
     //console.log(this.qbId);
     //console.log('Version in process is 8bf11efa7f91a391d957bf6b5078edc7e656b67c');
-
     if (this.qbId) {
       if (this.qbId.length == 18) {
         //console.log('Before Calling readQuestionBook() using ' + this.qbId);
@@ -186,12 +161,9 @@ export class QuestionnaireComponent implements OnInit {
     //this.stepperCateg();
   }
 
-
-
   trimLastDummy(input: string) {
     return input = input.substring(0, input.length - 6);
   }
-
 
   getProperTime(def: string, input: string) {
     return input === '' ? def : input;
@@ -266,25 +238,6 @@ export class QuestionnaireComponent implements OnInit {
       }
       this.inpValue = this.trimLastDummy(this.inpValue);
      }
-      //else if (this.timeFlag ) {
-       //this.inpValue = (this.selectedMeridiem1 === 'PM' && this.selectedHour1 != '12' ? (Number(this.selectedHour1) + 12) : this.selectedHour1) + ':' + this.selectedMinute1 + this.selectedMeridiem1;
-    //    if(this.inpValue.length < 7){
-    // document.getElementById("zeit").style.color ="red";
-    //   this.questionItem.error = new ErrorWrapper();
-    //   return;  
-    //    }
-    //    if(this.inpValue.length > 0){
-    //      document.getElementById("zeit").style.color = "#87be1c";
-    //    }
-    //  }
-      
-    // else if (this.dtFlag) {
-        else if( this.dataFlag  && this.dtFlag &&  !this.timeFlag ){
-
-        //  console.log(this.selDate);
-      // this.inpValue=this.inpValue;
-    //   console.log("how are you");
-     } 
     else  if(this.dtFlag && this.inpValue && this.dateFlag && this.timeFlag){
         this.selectedHour = this.getProperTime('12', this.selectedHour);
         this.selectedMinute = this.getProperTime('00', this.selectedMinute);
@@ -292,39 +245,22 @@ export class QuestionnaireComponent implements OnInit {
         this.questionItem.input=  (this.selectedMeridiem === 'PM' && this.selectedHour != '12' ? (Number(this.selectedHour) + 12) : this.selectedHour) + ':' + this.selectedMinute;
         this.inpValue =this.inpValue + 'T' + this.questionItem.input;
         console.log(this.inpValue.length);
-        if(this.inpValue.length < 14){
-             this.questionItem.error = new ErrorWrapper();
-             return;} 
-    }
-       else if (this.timeFlag && this.dtFlag && !this.dataFlag ) {
+        if(this.inpValue.length < 12){
+             this.questionItem.error = new ErrorWrapper(); return;} 
+             if(this.inpValue.length > 16){
+              this.questionItem.error = new ErrorWrapper();return;} 
+    } else if (this.timeFlag && this.dtFlag && !this.dateFlag ) {
         this.inpValue = (this.selectedMeridiem === 'PM' && this.selectedHour != '12' ? (Number(this.selectedHour) + 12) : this.selectedHour) + ':' + this.selectedMinute ;
        console.log(this.inpValue.length)
        if(this.inpValue.length < 5){
            this.questionItem.error = new ErrorWrapper();
-           return;} 
-      }
-    //}
-      
-      //  if(this.inpValue.length < 14){
-      //   this.questionItem.error = new ErrorWrapper();
-      //   return;}  
-      //     if(this.inpValue.length > 17){
-      //     this.questionItem.error = new ErrorWrapper();
-      //     return;
-      //    }
-        
-        
-    //  else if (this.dateFlag) {
-      //  console.log(this.inpValue.length)
-        // if(this.inpValue.length < 8){
-        //   document.getElementById("Datum").style.color ="red";
-        //     this.questionItem.error = new ErrorWrapper();
-        //     return;  
-        //      }
-        //      if(this.inpValue.length > 0){
-        //        document.getElementById("Datum").style.color = "#87be1c"
-        //      }
-          //  }
+           return;}  }
+      else if( this.dateFlag  && this.dtFlag && this.inpValue &&  !this.timeFlag ){
+        this.inpValue=this.inpValue;
+        if(this.inpValue.length < 9){
+          this.questionItem.error = new ErrorWrapper();
+          return;} 
+      } 
      else if (this.fileFlag) {
       //console.log('four')
       this.inpValue = '';
@@ -340,10 +276,7 @@ export class QuestionnaireComponent implements OnInit {
         return;
       }
     }
-     
-
-
-    //console.log('before calling saveAnswer with ' + this.inpValue);
+   //console.log('before calling saveAnswer with ' + this.inpValue);
 
     // Check for the answer before saving to the DB
     if (!this.questionItem.Is_Optional__c && !this.inpValue) {
@@ -351,7 +284,6 @@ export class QuestionnaireComponent implements OnInit {
       this.questionItem.error = new ErrorWrapper();
       return;
     }
-
     // Save the Answer in the DB
     this.answerWrap = new AnswerWrapper();
     this.answerWrap.abId = this.abItem.Id;
@@ -359,7 +291,6 @@ export class QuestionnaireComponent implements OnInit {
     this.answerWrap.quesValue = quesValue;
     this.answerWrap.qTyp = typ;
     this.answerWrap.ansValue = this.inpValue;
-
     this.saveAnswer();
   }
   
@@ -371,12 +302,7 @@ export class QuestionnaireComponent implements OnInit {
     if (this.questionItem.error) { return; }
 
     this.questionStack.push(cQuestion.Id);
-    if(cQuestion.X24_Hours__c===false){
-      this.hours= this.hours.slice(0,12);
-    }else{
-      this.hours=this.hours;
-    }
-
+   
     // CONDITIONAL vs OPTIONONLY & UNCONDITIONAL
     if (cQuestion.RecordType.Name == "CONDITIONAL") {
       for (var cOpt of cQuestion.Question_Options__r.records) {
@@ -443,11 +369,7 @@ export class QuestionnaireComponent implements OnInit {
       
       this.resetFlag(typ);
       this.questionItem = null;
-      if(this.dtFlag){
-      if(this.questionItem.X24_Hours__c === false  ){
-        this.hours=this.hours.slice(0,12)
-        }}
-
+     
       // Show Summary
       for (var q of this.questionStack) {
         //console.log('Handling Question => ' + q);
@@ -491,13 +413,7 @@ export class QuestionnaireComponent implements OnInit {
     this.handleEvent.emit(this.qbItem.Back_Tracking_ID__c);
     this.answerCount--;
     this.updateProgress();
-    if(this.dtFlag){
-      if(this.questionItem.X24_Hours__c === false  ){
-        this.hours=this.hours.slice(0,12)
-        }else{
-          this.hours=this.hours
-        }
-    }
+   
     
 
     // CATEGORIZATION
@@ -521,8 +437,7 @@ export class QuestionnaireComponent implements OnInit {
     //console.log(response);
     this.qbItem = response.questionbook;
     this.abItem = response.answerbook;
-
-    //console.log('readingQuestion using ' + this.qbItem.First_Question__c);
+   //console.log('readingQuestion using ' + this.qbItem.First_Question__c);
     this.readQuestion(this.qbItem.First_Question__c);
   }
 
@@ -543,14 +458,7 @@ export class QuestionnaireComponent implements OnInit {
       this.answerWrap = new AnswerWrapper();
       this.optionValues = [];
       this.subQuestions = [];
-      this.resetFlag(this.questionItem.Type__c);
-      if(this.dtFlag){
-      if(this.questionItem.X24_Hours__c === false  ){
-        this.hours=this.hours.slice(0,12)
-        }else{
-          this.hours=this.hours
-        }
-    }}
+      this.resetFlag(this.questionItem.Type__c); }
     this.questionItem = response.question;
     console.log(this.questionItem)
 
@@ -634,26 +542,19 @@ export class QuestionnaireComponent implements OnInit {
       // Set the SubQuestions
       this.setSubQuestions(this.questionItem.Questions__r.records);
      } 
-     else if(this.dtFlag){
-      //console.log('current sel date');
-     // console.log(this.selDate);
-      if(this.questionItem.X24_Hours__c === false  ){
-        this.hours=this.hours.slice(0,12)
-        }else{
-          this.hours=this.hours
-        }
-     }
-      else if (this.dtFlag && this.inpValue) {
-       // Set the Date and Time
-       var dtVal = this.inpValue.split('T');
-       this.inpValue = dtVal[0];
-       this.questionItem.input = dtVal[1];
-      //  if( this.dataFlag && this. inpValue && this.dtFlag &&  !this.timeFlag ){
-      //    this.selDate = " ";
-      //   // this.selDate ='';
-      //  } 
-   }
-    
+      else if (this.dtFlag) {
+        if(this.questionItem.X24_Hours__c === true  ){
+          console.log("process")
+            this.hours.push("13","14","15","16","17","18","19","20","21","22","23","00");
+             } if(this.questionItem.X24_Hours__c=== false){
+                console.log("backclick");
+                this.hours = this.hours.slice(0,12);
+              }if(this.dtFlag&& this.inpValue){
+              var dtVal = this.inpValue.split('T');
+              this.inpValue = dtVal[0];
+              this.questionItem.input = dtVal[1];
+            }
+          }
     else if (this.fileFlag) {
       // logic
       this.allowedFileExtension = this.questionItem.Allowed_File_Extensions__c.split(';');

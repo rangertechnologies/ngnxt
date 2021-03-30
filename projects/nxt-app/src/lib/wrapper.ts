@@ -41,6 +41,7 @@ export class Question {
   };
   input?: string;
   error?: ErrorWrapper;
+  static X24_Hours__c: boolean;
 }
 
 export class QuestionR {
@@ -110,12 +111,4 @@ export class Attachment {
 export class selDatewrapper {
   quesid:string;
   answer : string;
-}
-export class selDate{
-  public quesid :string;
-  public ansvalue : string;
-  constructor(id:string,value:string){
-    this.quesid = id;
-    this.ansvalue =value;
-  }
 }
