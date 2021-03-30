@@ -141,6 +141,7 @@ export class QuestionnaireComponent implements OnInit {
   }*/
 
 
+
   processQB() {
     //console.log(this.qbId);
     //console.log('Version in process is 8bf11efa7f91a391d957bf6b5078edc7e656b67c');
@@ -409,6 +410,20 @@ export class QuestionnaireComponent implements OnInit {
     // Read the previous question from DB
     this.readQuestion(this.questionStack.pop());
     //console.log(this.questionStack);
+  }
+
+  private updateAnswerBook = (uuid: string) => this.sfService.remoteAction('NxtController.process', 
+  ['AnswerBook', 'Update', uuid],
+  this.successupdateAB,
+  this.failureupdateAB);
+   
+  private successupdateAB = (response) =>{
+    //console.log(response);
+   // console.log('status success')
+    this.abItem.Status__c = 'Completed'
+  }
+  private failureupdateAB = (response) =>{
+    //console.log('status failed')
   }
 
   private readQuestionBook = (uuid: string) => this.sfService.remoteAction('NxtController.process',
@@ -754,6 +769,7 @@ export class QuestionnaireComponent implements OnInit {
 
   handleSubmitClick() {
     this.handleEvent.emit(this.qbItem.Submit_Tracking_ID__c);
+    this.updateAnswerBook(this.abItem.Id);
   }
 
   private createAttachment = (fileWrapper: any) => this.sfService.remoteAction('NxtController.process',
