@@ -278,21 +278,32 @@ export class QuestionnaireComponent implements OnInit {
     //    }
     //  }
       
-     else if (this.dtFlag) {
-       if( this.dataFlag && this. inpValue && this.dtFlag &&  !this.timeFlag ){
-         console.log(this.selDate);
-      this.inpValue=this.inpValue;
-    } if(this.dtFlag && this.inpValue && this.dateFlag && this.timeFlag){
+    // else if (this.dtFlag) {
+        else if( this.dataFlag  && this.dtFlag &&  !this.timeFlag ){
+
+        //  console.log(this.selDate);
+      // this.inpValue=this.inpValue;
+    //   console.log("how are you");
+     } 
+    else  if(this.dtFlag && this.inpValue && this.dateFlag && this.timeFlag){
         this.selectedHour = this.getProperTime('12', this.selectedHour);
         this.selectedMinute = this.getProperTime('00', this.selectedMinute);
        this.selectedMeridiem = this.getProperTime('AM', this.selectedMeridiem);
-        this.inpValue =this.inpValue + 'T' +  (this.selectedMeridiem === 'PM' && this.selectedHour != '12' ? (Number(this.selectedHour) + 12) : this.selectedHour) + ':' + this.selectedMinute;
-       
+        this.questionItem.input=  (this.selectedMeridiem === 'PM' && this.selectedHour != '12' ? (Number(this.selectedHour) + 12) : this.selectedHour) + ':' + this.selectedMinute;
+        this.inpValue =this.inpValue + 'T' + this.questionItem.input;
+        console.log(this.inpValue.length);
+        if(this.inpValue.length < 14){
+             this.questionItem.error = new ErrorWrapper();
+             return;} 
     }
-        if (this.timeFlag && this.dtFlag && !this.dataFlag && !this.inpValue) {
+       else if (this.timeFlag && this.dtFlag && !this.dataFlag ) {
         this.inpValue = (this.selectedMeridiem === 'PM' && this.selectedHour != '12' ? (Number(this.selectedHour) + 12) : this.selectedHour) + ':' + this.selectedMinute ;
        console.log(this.inpValue.length)
-      }}
+       if(this.inpValue.length < 5){
+           this.questionItem.error = new ErrorWrapper();
+           return;} 
+      }
+    //}
       
       //  if(this.inpValue.length < 14){
       //   this.questionItem.error = new ErrorWrapper();
@@ -480,6 +491,14 @@ export class QuestionnaireComponent implements OnInit {
     this.handleEvent.emit(this.qbItem.Back_Tracking_ID__c);
     this.answerCount--;
     this.updateProgress();
+    if(this.dtFlag){
+      if(this.questionItem.X24_Hours__c === false  ){
+        this.hours=this.hours.slice(0,12)
+        }else{
+          this.hours=this.hours
+        }
+    }
+    
 
     // CATEGORIZATION
     //this.stepperCateg();
@@ -524,9 +543,14 @@ export class QuestionnaireComponent implements OnInit {
       this.answerWrap = new AnswerWrapper();
       this.optionValues = [];
       this.subQuestions = [];
-    
       this.resetFlag(this.questionItem.Type__c);
-    }
+      if(this.dtFlag){
+      if(this.questionItem.X24_Hours__c === false  ){
+        this.hours=this.hours.slice(0,12)
+        }else{
+          this.hours=this.hours
+        }
+    }}
     this.questionItem = response.question;
     console.log(this.questionItem)
 
@@ -611,10 +635,12 @@ export class QuestionnaireComponent implements OnInit {
       this.setSubQuestions(this.questionItem.Questions__r.records);
      } 
      else if(this.dtFlag){
-      console.log('current sel date');
-      console.log(this.selDate);
+      //console.log('current sel date');
+     // console.log(this.selDate);
       if(this.questionItem.X24_Hours__c === false  ){
         this.hours=this.hours.slice(0,12)
+        }else{
+          this.hours=this.hours
         }
      }
       else if (this.dtFlag && this.inpValue) {
@@ -622,10 +648,10 @@ export class QuestionnaireComponent implements OnInit {
        var dtVal = this.inpValue.split('T');
        this.inpValue = dtVal[0];
        this.questionItem.input = dtVal[1];
-       if( this.dataFlag && this. inpValue && this.dtFlag &&  !this.timeFlag ){
-         this.selDate = " ";
-        // this.selDate ='';
-       } 
+      //  if( this.dataFlag && this. inpValue && this.dtFlag &&  !this.timeFlag ){
+      //    this.selDate = " ";
+      //   // this.selDate ='';
+      //  } 
    }
     
     else if (this.fileFlag) {
