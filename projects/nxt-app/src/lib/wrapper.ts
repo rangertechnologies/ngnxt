@@ -108,7 +108,4 @@ export class Attachment {
       this.attachmentMetaData = metaData;
   }
 }
-export class selDatewrapper {
-  quesid:string;
-  answer : string;
-}
+
