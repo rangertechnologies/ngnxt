@@ -30,6 +30,7 @@ import {
 import { style } from '@angular/animations';
 import { hasLifecycleHook } from '@angular/compiler/src/lifecycle_reflector';
 import { mapToMapExpression } from '@angular/compiler/src/render3/util';
+import { SafePropertyRead, ThrowStmt } from '@angular/compiler';
 
 @Component({
 	selector: 'lib-questionnaire',
@@ -124,6 +125,7 @@ export class QuestionnaireComponent implements OnInit {
   };
   event: string;
   
+  
   constructor(private sfService: SalesforceService, private sanitizer: DomSanitizer) 
 
   { }
@@ -133,12 +135,14 @@ export class QuestionnaireComponent implements OnInit {
      const htmlElement = window.document.getElementsByClassName('mydp');
      htmlElement.item(0).setAttribute('style', 'border-color:#87be1c;width:100%');
     this.dateMap.set(this.questionItem.Id,event);
+    if(event.date.year === 0 && event.date.month === 0 && event.date.day ===0){
+      this.dateMap.delete(this.questionItem.Id);
+      this.answerMap.delete(this.questionItem.Id);
+    }
+  //  console.log(this.dateMap)
    }
-
   ngOnInit() {
-    //console.log('inside Questionnaire ngOnInit');
-    // this.selectedHour = "";
-    // this.selectedMinute = "";
+    
     this.selectedMeridiem = "AM";
     console.log("sahtik");
       this.processQB();
@@ -253,7 +257,9 @@ export class QuestionnaireComponent implements OnInit {
       }
       this.inpValue = this.trimLastDummy(this.inpValue);
      }
-    else  if(this.dtFlag && this.inpValue && this.dateFlag && this.timeFlag){
+    else  if(this.dtFlag  && this.dateFlag && this.timeFlag){
+      //this.selDate="";
+      if(this.inpValue){
         this.selectedHour = this.getProperTime('12', this.selectedHour);
         this.selectedMinute = this.getProperTime('00', this.selectedMinute);
        this.selectedMeridiem = this.getProperTime('AM', this.selectedMeridiem);
@@ -263,13 +269,10 @@ export class QuestionnaireComponent implements OnInit {
        }if(this.questionItem.X24_Hours__c === true){
          this.questionItem.input = this.selectedHour + ":" + this.selectedMinute;
        }
-       
-        this.date_TimeMap();
-        console.log(this.inpValue.length);
-        if(this.inpValue.length < 12){
-             this.questionItem.error = new ErrorWrapper(); return;} 
-             if(this.inpValue.length > 16){
-              this.questionItem.error = new ErrorWrapper();return;} 
+       this.date_TimeMap()
+      }
+      if( this.selDate===null || !this.inpValue){
+        this.questionItem.error = new ErrorWrapper(); return;}
     } else if (this.timeFlag && this.dtFlag && !this.dateFlag ) {
       this.date_TimeMap();
       if(this.questionItem.X24_Hours__c === false){
@@ -277,15 +280,11 @@ export class QuestionnaireComponent implements OnInit {
       }else{
         this.inpValue=  this.selectedHour + ":" + this.selectedMinute;
       }
-        
-       console.log(this.inpValue.length)
        if(this.inpValue.length < 5){
            this.questionItem.error = new ErrorWrapper();
            return;}  }
       else if( this.dateFlag  && this.dtFlag  &&  !this.timeFlag ){
-        this.inpValue=this.inpValue;
-        console.log(this.inpValue.length);
-        if(this.inpValue.length < 8){
+        if(this.inpValue.length < 7 || this.selDate === null){
           this.questionItem.error = new ErrorWrapper();
           return;} 
       } 
@@ -438,9 +437,6 @@ export class QuestionnaireComponent implements OnInit {
     this.handleEvent.emit(this.qbItem.Back_Tracking_ID__c);
     this.answerCount--;
     this.updateProgress();
-   
-    
-
     // CATEGORIZATION
     //this.stepperCateg();
 
@@ -573,14 +569,11 @@ export class QuestionnaireComponent implements OnInit {
       this.setSubQuestions(this.questionItem.Questions__r.records);
      } 
       else if (this.dtFlag) {
-        this.selectedHour ="";
+         this.selectedHour ="";
         this.selectedMinute ="";
         this.selDate ="";
-        if(this.dateMap.has(this.questionItem.Id)){
-          if(this.event != null){
-            this.selDate = this.dateMap.get(this.questionItem.Id)
-          }
-          
+        if(this.dateMap.has(this.questionItem.Id) ){ 
+            this.selDate = this.dateMap.get(this.questionItem.Id);
         }
         if (this.selectedhourMap.has(this.questionItem.Id)){
            this.selectedHour = this.selectedhourMap.get(this.questionItem.Id)
@@ -589,10 +582,8 @@ export class QuestionnaireComponent implements OnInit {
           this.selectedMinute = this.selectedminuteMap.get(this.questionItem.Id)
         }
         if(this.questionItem.X24_Hours__c === true  ){
-          console.log("process")
             this.hours.push("13","14","15","16","17","18","19","20","21","22","23","00");
              } if(this.questionItem.X24_Hours__c=== false){
-                console.log("backclick");
                 this.hours = this.hours.slice(0,12);
               }if(this.dtFlag&& this.inpValue){
               var dtVal = this.inpValue.split('T');
