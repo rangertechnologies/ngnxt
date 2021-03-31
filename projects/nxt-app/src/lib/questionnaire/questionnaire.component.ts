@@ -6,41 +6,40 @@ import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { FormBuilder } from '@angular/forms';
 
 import {
-  Question,
-  QuestionBook,
-  AnswerBook,
-  AnswerWrapper,
-  ErrorWrapper,
-  Option,
-  OptionValue,
-  AttachmentWrapper,
-  Attachment,
-  selDatewrapper,
-  
+	Question,
+	QuestionBook,
+	AnswerBook,
+	AnswerWrapper,
+	ErrorWrapper,
+	Option,
+	OptionValue,
+	AttachmentWrapper,
+	Attachment
 } from '../wrapper';
 
 import {
-  TESTQUESTION,
-  DTQUESTION,
-  FILEQUESTION,
-  TAQUESTION,
-  RADIOQUESTION,
-  CHECKQUESTION,
-  BOOKQUESTION,
-  TESTQB
+	TESTQUESTION,
+	DTQUESTION,
+	FILEQUESTION,
+	TAQUESTION,
+	RADIOQUESTION,
+	CHECKQUESTION,
+	BOOKQUESTION,
+	TESTQB
 } from '../sample';
 import { style } from '@angular/animations';
 import { hasLifecycleHook } from '@angular/compiler/src/lifecycle_reflector';
 
 @Component({
-  selector: 'lib-questionnaire',
-  templateUrl: './questionnaire.component.html',
-  styleUrls: ['./questionnaire.component.css']
+	selector: 'lib-questionnaire',
+	templateUrl: './questionnaire.component.html',
+	styleUrls: [ './questionnaire.component.css' ]
 })
-
 export class QuestionnaireComponent implements OnInit {
   @Input() qbId: string;
   @Output() handleEvent = new EventEmitter();
+  @Output() handlePage: EventEmitter<any> = new EventEmitter();
+
   params: Params;
 
   public abItem: AnswerBook;
@@ -70,6 +69,7 @@ export class QuestionnaireComponent implements OnInit {
   public subQuestions: Question[] = [];
   public inpValue: string;
   public answerMap = new Map();
+  public attachmentsMap = new Map();
   public sqOptions = new Map();
   public questionStack = [];
   public attachments: any[] = [];
@@ -138,10 +138,12 @@ export class QuestionnaireComponent implements OnInit {
       this.processQB();
   }
 
-  ngOnChanges() {
+  /*ngOnChanges() {
     //console.log('inside Questionnaire ngOnChanges');
     this.processQB();
-  }
+  }*/
+
+
   processQB() {
     //console.log(this.qbId);
     //console.log('Version in process is 8bf11efa7f91a391d957bf6b5078edc7e656b67c');
@@ -216,10 +218,13 @@ export class QuestionnaireComponent implements OnInit {
           item.error = new ErrorWrapper();
           hasMissingInput = true;
         }
-
+        if (item.Type__c == 'Dropdown' || item.Type__c == 'Radio'){
+          if(!item.input){
+            item.error = new ErrorWrapper();
+          hasMissingInput = true;
+            }         
+        }
         if (item.Type__c == 'File' && this.attachments.length > 0) {
-          //console.log('inside')
-          //console.log(this.attachment)
           for (var attachmentItem of this.attachments) {
             this.inpValue += attachmentItem.attachmentId + '@@##$$' + attachmentItem.attachmentName + ',';
             if (item.input == this.inpValue) {
@@ -373,12 +378,11 @@ export class QuestionnaireComponent implements OnInit {
       // Show Summary
       for (var q of this.questionStack) {
         //console.log('Handling Question => ' + q);
-       
+      
         var ansWrap = this.answerMap.get(q);
-        //console.log(ansWrap);
         if (ansWrap) {
           //console.log('Handling Answer for ' + ansWrap.quesId + ' of type ' + ansWrap.qTyp);
-          if (ansWrap.qTyp == 'Book') {
+          if(ansWrap.qTyp == 'File' || ansWrap.qTyp == 'Book'){
             var newStr = '';
             for (var ansStr of ansWrap.ansValue.split('@@##$$')) {
               if (ansStr.length > 0) {
@@ -389,22 +393,20 @@ export class QuestionnaireComponent implements OnInit {
                 }
               }
             }
-            ansWrap.ansValue = newStr;
-          } else if (ansWrap.qTyp == 'File') {
-            let attachmentNameArray = [];
-            for (var attch of this.attachments) {
-              attachmentNameArray.push(attch.attachmentName);
+            for(var att of this.attachmentsMap.get(ansWrap.quesId)){
+              newStr = newStr.replace(att.attachmentId,'');
             }
-            let finalFileListString = (attachmentNameArray.toString()).replace(',', ', ');
-            ansWrap.ansValue = finalFileListString;
+            newStr = (newStr.replace(',,',', ')).replace(', ,',', ');
+            newStr = newStr.startsWith(',') ? newStr.substring(1, newStr.length) : (newStr.endsWith(',') ? newStr.substring(0, newStr.length - 1) : newStr);
+            ansWrap.ansValue = newStr;
           }
           this.summary.push(ansWrap);
         }
       }
-
       // Show Thank you Note
     }
   }
+
   getText(value){
   return this.sanitizer.bypassSecurityTrustHtml(value);
   }
@@ -453,6 +455,7 @@ export class QuestionnaireComponent implements OnInit {
   private successRead = (response) => {
     //console.log(response);
     // Reset the Variables
+    
     if (this.questionItem) {
       this.inpValue = '';
       this.answerWrap = new AnswerWrapper();
@@ -460,8 +463,7 @@ export class QuestionnaireComponent implements OnInit {
       this.subQuestions = [];
       this.resetFlag(this.questionItem.Type__c); }
     this.questionItem = response.question;
-    console.log(this.questionItem)
-
+    this.handlePage.emit(this.questionItem.Tracking_ID__c);
     // Handle the subQuestion options
     if (response.sqOptions) {
       //var newRecords = [];
@@ -478,7 +480,6 @@ export class QuestionnaireComponent implements OnInit {
     }
     this.processQuestion();
     this.innerhtml = this.sanitizer.bypassSecurityTrustHtml(this.questionItem.Additional_Rich__c);
-    this.innerhtml1 = this.sanitizer.bypassSecurityTrustHtml(this.questionItem.Question_Text__c);
     this.trackId();
 
   }
@@ -533,6 +534,12 @@ export class QuestionnaireComponent implements OnInit {
       // Get the existing answer from the Map
       this.inpValue = eAnswer.ansValue;
       //console.log('inpValue has been set to ' + this.inpValue);
+      if(this.attachmentsMap.has(this.questionItem.Id)){
+        this.attachments = this.attachmentsMap.get(this.questionItem.Id);
+      }
+    } else {
+      //console.log('inside removing attachment array');
+      this.attachments = [];
     }
 
     if (this.checkboxFlag) {
@@ -768,6 +775,7 @@ export class QuestionnaireComponent implements OnInit {
   private successAttachmentCreate = (response) => {
     let createdAttachment: Attachment = new Attachment(response.attachmentId, response.attachmentName, this.attachment.lastModifiedDate);
     this.attachments.push(createdAttachment);
+    this.attachmentsMap.set(this.questionItem.Id,this.attachments);
   }
 
 
