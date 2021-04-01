@@ -204,6 +204,7 @@ export class QuestionnaireComponent implements OnInit {
     cQuestion = this.questionItem;
     var typ = cQuestion.Type__c;
     var quesValue = cQuestion.Question_Text__c;
+    var mailformat = ('^[^.][a-zA-Z0-9!#$%&\'*+\-\/=?^_`{|}~]+[^.]@[^-][a-zA-Z0-9.-]+[^-]\.[a-zA-Z]{2,}$');
 
 
     // Process Inputs
@@ -215,7 +216,13 @@ export class QuestionnaireComponent implements OnInit {
         this.recordId = ov.Next_Question__c;
       }
       this.inpValue = this.trimLastDummy(this.inpValue);
-    } else if (this.bookFlag) {
+    }else if (this.emailFlag){
+      if(this.inpValue && this.inpValue.match(mailformat)){
+          this.recordId = this.questionItem.Next_Question__c;
+        }else{
+          this.questionItem.error = new ErrorWrapper();
+        return;}
+     }else if (this.bookFlag) {
       //quesValue += '@@##$$';
       //console.log('two')
       this.inpValue = '';
@@ -232,6 +239,14 @@ export class QuestionnaireComponent implements OnInit {
             item.error = new ErrorWrapper();
           hasMissingInput = true;
             }
+        }
+        if (item.Type__c == 'Email'){
+          if(item.input && item.input.match(mailformat)){
+             this.recordId = cQuestion.Next_Question__c;
+            }else{
+              console.log('else')
+              item.error = new ErrorWrapper();
+              hasMissingInput = true;}
         }
         if (item.Type__c == 'File' && this.attachments.length > 0) {
           for (var attachmentItem of this.attachments) {

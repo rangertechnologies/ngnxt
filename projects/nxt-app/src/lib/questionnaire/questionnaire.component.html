@@ -79,6 +79,7 @@
         *ngIf="inpValue?.length > 0"></i>
     </div>
   </div>
+
   <div class="col-md-12 paddingZero" *ngIf="dtFlag" >
     <div *ngIf="dateFlag">
     <div class="col-md-6 paddingBottom">
@@ -118,6 +119,7 @@
     </div>
     <i class="fa fa-check check-icon3" aria-hidden="true" *ngIf="questionItem?.input?.length > 0"></i>
   </div>
+
 </div>
   <div *ngIf="fileFlag">
     <div class="info-alert ques-alert2" style.border-color="{{this.questionItem.error ? 'red' : ''}}">
@@ -137,6 +139,7 @@
         class="attach-list" (click)="deleteAttachment(attachment.attachmentId)">X</span>
     </li>
   </ul>
+
   <div *ngIf="bookFlag">
     <div class="form-group">
       <div class="form-row">
@@ -151,8 +154,7 @@
 
           <div *ngIf="ques.Type__c === 'Email'">
             <input type="email" [(ngModel)]="ques.input" [id]="ques.Id" required="" (click)="clearSQError(ques.Id)"
-              style.border-color="{{ques.error ? 'red' : ''}}" placeholder="{{ques.Question__c}}"
-              oninput="this.value=this.value.replace('^[^.][a-zA-Z0-9!#$%&\'*+\-\/=?^_`{|}~]+[^.]@[^-][a-zA-Z0-9.-]+[^-]\.[a-zA-Z]{2,}$');" />
+              style.border-color="{{ques.error ? 'red' : ''}}" placeholder="{{ques.Question__c}}"/>
           </div>
 
           <div *ngIf="ques.Type__c === 'File'">
@@ -195,6 +197,7 @@
       </div>
     </div>
   </div>
+
   <div class="col-md-12 paddingZero">
     <div class="col-md-6" [style.visibility]="questionStack.length > 0 ? 'visible':'hidden'">
       <button class="btn btn-primary btn-lg btn-block btn-back-color"
