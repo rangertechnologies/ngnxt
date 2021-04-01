@@ -27,10 +27,6 @@ import {
 	BOOKQUESTION,
 	TESTQB
 } from '../sample';
-import { style } from '@angular/animations';
-import { hasLifecycleHook } from '@angular/compiler/src/lifecycle_reflector';
-import { mapToMapExpression } from '@angular/compiler/src/render3/util';
-import { SafePropertyRead, ThrowStmt } from '@angular/compiler';
 
 @Component({
 	selector: 'lib-questionnaire',
@@ -48,7 +44,7 @@ export class QuestionnaireComponent implements OnInit {
   public qbItem: QuestionBook;
   public questionItem: Question;
   public answerWrap: AnswerWrapper;
-  
+
 
   // CONDITIONAL TYPES
   public radioFlag: boolean = false;
@@ -73,7 +69,7 @@ export class QuestionnaireComponent implements OnInit {
   public answerMap = new Map();
   public dateMap = new Map();
   public selectedhourMap = new Map();
-  public selectedminuteMap= new Map(); 
+  public selectedminuteMap= new Map();
   public attachmentsMap = new Map();
   public sqOptions = new Map();
   public questionStack = [];
@@ -89,6 +85,7 @@ export class QuestionnaireComponent implements OnInit {
   public summary = [];
   public selDate: any = {};
   private today: Date = new Date();
+  private el: HTMLElement;
   public innerhtml: any;
   public innerhtml1: any;
   public hours: any[] = ["01","02","03","04","05","06","07","08","09","10","11","12"];
@@ -102,8 +99,8 @@ export class QuestionnaireComponent implements OnInit {
   public valueName1: string = '';
   public bookFlagAccept: string[];
   public recordId:string;
- 
-  
+
+
 
   // REQ-01 PROGRESS BAR
   public progressStyle: string = '0%';
@@ -123,12 +120,10 @@ export class QuestionnaireComponent implements OnInit {
     dayLabels: { su: 'So', mo: 'Mo', tu: 'Di', we: 'Mi', th: 'Do', fr: 'Fr', sa: 'Sa' },
     monthLabels: { 1: 'Jan', 2: 'Feb', 3: 'Mär', 4: 'Apr', 5: 'Mai', 6: 'Jun', 7: 'Jul', 8: 'Aug', 9: 'Sep', 10: 'Okt', 11: 'Nov', 12: 'Dez' }
   };
-  event: string;
-  
-  
-  constructor(private sfService: SalesforceService, private sanitizer: DomSanitizer) 
 
-  { }
+  constructor(private sfService: SalesforceService, private route: ActivatedRoute, private sanitizer: DomSanitizer, private _formBuilder: FormBuilder){
+
+   }
 
    onDateChanged(event: IMyDateModel) { //to change the border color
      this.inpValue = event.date.year + '-' + event.date.month + '-' + event.date.day;
@@ -142,9 +137,9 @@ export class QuestionnaireComponent implements OnInit {
   //  console.log(this.dateMap)
    }
   ngOnInit() {
-    
+
     this.selectedMeridiem = "AM";
-    console.log("sahtik");
+
       this.processQB();
   }
 
@@ -236,7 +231,7 @@ export class QuestionnaireComponent implements OnInit {
           if(!item.input){
             item.error = new ErrorWrapper();
           hasMissingInput = true;
-            }         
+            }
         }
         if (item.Type__c == 'File' && this.attachments.length > 0) {
           for (var attachmentItem of this.attachments) {
@@ -286,8 +281,8 @@ export class QuestionnaireComponent implements OnInit {
       else if( this.dateFlag  && this.dtFlag  &&  !this.timeFlag ){
         if(this.inpValue.length < 7 || this.selDate === null){
           this.questionItem.error = new ErrorWrapper();
-          return;} 
-      } 
+          return;}
+      }
      else if (this.fileFlag) {
       //console.log('four')
       this.inpValue = '';
@@ -320,7 +315,7 @@ export class QuestionnaireComponent implements OnInit {
     this.answerWrap.ansValue = this.inpValue;
     this.saveAnswer();
   }
-  
+
   next(){
     var cQuestion: Question = new Question();
     cQuestion = this.questionItem;
@@ -329,7 +324,7 @@ export class QuestionnaireComponent implements OnInit {
     if (this.questionItem.error) { return; }
 
     this.questionStack.push(cQuestion.Id);
-   
+
     // CONDITIONAL vs OPTIONONLY & UNCONDITIONAL
     if (cQuestion.RecordType.Name == "CONDITIONAL") {
       for (var cOpt of cQuestion.Question_Options__r.records) {
@@ -393,14 +388,14 @@ export class QuestionnaireComponent implements OnInit {
       this.answerWrap = new AnswerWrapper();
       this.optionValues = [];
       this.subQuestions = [];
-      
+
       this.resetFlag(typ);
       this.questionItem = null;
-     
+
       // Show Summary
       for (var q of this.questionStack) {
         //console.log('Handling Question => ' + q);
-     
+
         var ansWrap = this.answerMap.get(q);
         if (ansWrap) {
           //console.log('Handling Answer for ' + ansWrap.quesId + ' of type ' + ansWrap.qTyp);
@@ -419,13 +414,13 @@ export class QuestionnaireComponent implements OnInit {
                     }
                   }
                   newStr = (newStr.replace(',,',', ')).replace(', ,',', ');
-                  newStr = newStr.startsWith(',') ? newStr.substring(1, newStr.length) : (newStr.endsWith(',') ? newStr.substring(0, newStr.length - 1) : newStr); 
+                  newStr = newStr.startsWith(',') ? newStr.substring(1, newStr.length) : (newStr.endsWith(',') ? newStr.substring(0, newStr.length - 1) : newStr);
                 }
               }
             }ansWrap.ansValue = newStr;
         }
           this.summary.push(ansWrap);
-        
+
       }
       }
       // Show Thank you Note
@@ -461,11 +456,11 @@ export class QuestionnaireComponent implements OnInit {
     //console.log(response);
     this.qbItem = response.questionbook;
     this.abItem = response.answerbook;
-   //console.log('readingQuestion using ' + this.qbItem.First_Question__c);
+    //console.log('readingQuestion using ' + this.qbItem.First_Question__c);
     this.readQuestion(this.qbItem.First_Question__c);
   }
 
-  private failureReadBook = () => {
+  private failureReadBook = (response) => {
 
   }
 
@@ -482,7 +477,8 @@ export class QuestionnaireComponent implements OnInit {
       this.answerWrap = new AnswerWrapper();
       this.optionValues = [];
       this.subQuestions = [];
-      this.resetFlag(this.questionItem.Type__c); }
+      this.resetFlag(this.questionItem.Type__c);
+    }
     this.questionItem = response.question;
     this.handlePage.emit(this.questionItem.Tracking_ID__c);
     // Handle the subQuestion options
@@ -505,10 +501,11 @@ export class QuestionnaireComponent implements OnInit {
 
   }
   trackId() {
+    var qtrackId = this.questionItem.Tracking_ID__c;
     //console.log('trackId-question'+qtrackId);
   }
 
-  private failureRead = () => {
+  private failureRead = (response) => {
     //console.log('inside failureread');
     //console.log(response);
   }
@@ -537,7 +534,7 @@ export class QuestionnaireComponent implements OnInit {
     this.next();
   }
 
-  private failureSave = () => {
+  private failureSave = (response) => {
     //console.log('inside failureSave');
     //console.log(response);
   }
@@ -569,12 +566,12 @@ export class QuestionnaireComponent implements OnInit {
     } else if (this.bookFlag) {
       // Set the SubQuestions
       this.setSubQuestions(this.questionItem.Questions__r.records);
-     } 
+     }
       else if (this.dtFlag) {
          this.selectedHour ="";
         this.selectedMinute ="";
         this.selDate ="";
-        if(this.dateMap.has(this.questionItem.Id) ){ 
+        if(this.dateMap.has(this.questionItem.Id) ){
             this.selDate = this.dateMap.get(this.questionItem.Id);
         }
         if (this.selectedhourMap.has(this.questionItem.Id)){
@@ -626,12 +623,12 @@ export class QuestionnaireComponent implements OnInit {
         this.bookFlag = true;
       }else if (typ == 'Time') {
         this.dtFlag = true;
-        this.timeFlag = true;   
+        this.timeFlag = true;
       }else if (typ == 'Date') {
         this.dtFlag = true;
         this.dateFlag = true;
       }
-      
+
     }
   }
 
@@ -665,7 +662,7 @@ export class QuestionnaireComponent implements OnInit {
         this.dtFlag= false;
         this.dateFlag= false;
       }
-     
+
     }
   }
 
@@ -810,7 +807,7 @@ export class QuestionnaireComponent implements OnInit {
   }
 
 
-  private successAttachmentDelete = () => {
+  private successAttachmentDelete = (response) => {
     for (let i = 0; i < this.attachments.length; i++) {
       if (this.attachments[i].attachmentId === this.attachmentId) {
         this.attachments.splice(i, 1);
@@ -818,11 +815,11 @@ export class QuestionnaireComponent implements OnInit {
     }
   }
 
-  private failureAttachmentCreate = () => {
+  private failureAttachmentCreate = (response) => {
     //console.log('inside failureAttachmentCreate');
   }
 
-  private failureAttachmentDelete = () => {
+  private failureAttachmentDelete = (response) => {
     //console.log('inside failureAttachmentDelete');
   }
 
