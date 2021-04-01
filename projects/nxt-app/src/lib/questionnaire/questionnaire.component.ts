@@ -400,7 +400,7 @@ export class QuestionnaireComponent implements OnInit {
       // Show Summary
       for (var q of this.questionStack) {
         //console.log('Handling Question => ' + q);
-      
+     
         var ansWrap = this.answerMap.get(q);
         if (ansWrap) {
           //console.log('Handling Answer for ' + ansWrap.quesId + ' of type ' + ansWrap.qTyp);
@@ -412,18 +412,21 @@ export class QuestionnaireComponent implements OnInit {
                   newStr = ansStr;
                 } else {
                   newStr += ', ' + ansStr;
+
+                  if(this.attachmentsMap.has(ansWrap.quesId)){
+                    for(var att of this.attachmentsMap.get(ansWrap.quesId)){
+                      newStr = newStr.replace(att.attachmentId,'');
+                    }
+                  }
+                  newStr = (newStr.replace(',,',', ')).replace(', ,',', ');
+                  newStr = newStr.startsWith(',') ? newStr.substring(1, newStr.length) : (newStr.endsWith(',') ? newStr.substring(0, newStr.length - 1) : newStr); 
                 }
               }
-            }
-            for(var att of this.attachmentsMap.get(ansWrap.quesId)){
-              newStr = newStr.replace(att.attachmentId,'');
-            }
-            newStr = (newStr.replace(',,',', ')).replace(', ,',', ');
-            newStr = newStr.startsWith(',') ? newStr.substring(1, newStr.length) : (newStr.endsWith(',') ? newStr.substring(0, newStr.length - 1) : newStr);
-            ansWrap.ansValue = newStr;
-          }
-          this.summary.push(ansWrap);
+            }ansWrap.ansValue = newStr;
         }
+          this.summary.push(ansWrap);
+        
+      }
       }
       // Show Thank you Note
     }
@@ -474,7 +477,6 @@ export class QuestionnaireComponent implements OnInit {
   private successRead = (response) => {
     //console.log(response);
     // Reset the Variables
-    
     if (this.questionItem) {
       this.inpValue = '';
       this.answerWrap = new AnswerWrapper();
