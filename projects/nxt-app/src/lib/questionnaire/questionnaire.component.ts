@@ -35,6 +35,7 @@ import {
 })
 export class QuestionnaireComponent implements OnInit {
   @Input() qbId: string;
+  @Input() abId: string;
   @Output() handleEvent = new EventEmitter();
   @Output() handlePage: EventEmitter<any> = new EventEmitter();
 
@@ -139,8 +140,8 @@ export class QuestionnaireComponent implements OnInit {
   ngOnInit() {
 
     this.selectedMeridiem = "AM";
-
-      this.processQB();
+    this.processQB();
+    console.log('abdul')
   }
 
   ngOnChanges() {
@@ -154,9 +155,25 @@ export class QuestionnaireComponent implements OnInit {
 
 
 
+ /*ProcessAB(){
+   if (this.abId){
+     console.log('inside abid if');
+      if (this.abId.length == 18){
+        console.log('inside abid proccess')
+        this.ReadAnswerBook(this.abId);
+      }
+   }
+ }
+*/
   processQB() {
     //console.log(this.qbId);
     //console.log('Version in process is 8bf11efa7f91a391d957bf6b5078edc7e656b67c');
+    if (this.abId){
+      if (this.qbId.length == 18) {
+
+        
+      }
+    }    
     if (this.qbId) {
       if (this.qbId.length == 18) {
         //console.log('Before Calling readQuestionBook() using ' + this.qbId);
@@ -424,6 +441,7 @@ export class QuestionnaireComponent implements OnInit {
 
       }
       }
+      
       // Show Thank you Note
     }
   }
@@ -447,6 +465,23 @@ export class QuestionnaireComponent implements OnInit {
     this.readQuestion(this.questionStack.pop());
     //console.log(this.questionStack);
   }
+  
+  //reading answer book for summary page.
+  private ReadAnswerBook = (uuid: string) => this.sfService.remoteAction('NxtController.process', 
+  ['AnswerBook', 'Update', uuid],
+  this.successReadAnswerBook,
+  this.failureReadAnswerBook);
+   
+  private successReadAnswerBook = (response) =>{
+    console.log(response);
+    console.log('status success Answerbook read')
+   
+  }
+  private failureReadAnswerBook = (response) =>{
+    console.log('status failed Answerbook read')
+  }
+ 
+  //updating status once Q&A completed.
 
   private updateAnswerBook = (uuid: string) => this.sfService.remoteAction('NxtController.process', 
   ['AnswerBook', 'Update', uuid],
@@ -485,7 +520,7 @@ export class QuestionnaireComponent implements OnInit {
     this.failureRead);
 
   private successRead = (response) => {
-    //console.log(response);
+    console.log(response);
     // Reset the Variables
     if (this.questionItem) {
       this.inpValue = '';
