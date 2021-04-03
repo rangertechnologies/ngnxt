@@ -106,16 +106,15 @@ export class QuestionnaireComponent implements OnInit {
   public progressStyle: string = '0%';
   public answerCount: number = 0;
 
-  public myDatePickerOptions: IMyDpOptions = {
+   myDatePickerOptions: IMyDpOptions = {
     dateFormat: 'dd.mm.yyyy',
     sunHighlight: false,
     disableDateRanges: [],
+     disableUntil : {year: 0, month: 0, day: 0},
+        disableSince : {year: 0, month: 0, day: 0},
+   
+
     showClearDateBtn: false,
-    disableSince: {
-      year: this.today.getFullYear(),
-      month: this.today.getMonth() + 1,
-      day: this.today.getDate() + 1
-    },
     showTodayBtn: false,
     dayLabels: { su: 'So', mo: 'Mo', tu: 'Di', we: 'Mi', th: 'Do', fr: 'Fr', sa: 'Sa' },
     monthLabels: { 1: 'Jan', 2: 'Feb', 3: 'Mär', 4: 'Apr', 5: 'Mai', 6: 'Jun', 7: 'Jul', 8: 'Aug', 9: 'Sep', 10: 'Okt', 11: 'Nov', 12: 'Dez' }
@@ -130,17 +129,23 @@ export class QuestionnaireComponent implements OnInit {
      const htmlElement = window.document.getElementsByClassName('mydp');
      htmlElement.item(0).setAttribute('style', 'border-color:#87be1c;width:100%');
     this.dateMap.set(this.questionItem.Id,event);
+    //this.myDatePickerOptions. disableUntil = {year: 0, month: 0, day: 0};
+    ///  this.myDatePickerOptions.disableSince ={year: 0, month: 0, day: 0}; 
     if(event.date.year === 0 && event.date.month === 0 && event.date.day ===0){
       this.dateMap.delete(this.questionItem.Id);
       this.answerMap.delete(this.questionItem.Id);
+     
+  
     }
-  //  console.log(this.dateMap)
+  console.log(this.dateMap)
    }
   ngOnInit() {
 
     this.selectedMeridiem = "AM";
-
+  console.log("sathik")
+  
       this.processQB();
+      
   }
 
   ngOnChanges() {
@@ -151,6 +156,22 @@ export class QuestionnaireComponent implements OnInit {
     this.selectedhourMap.set(this.questionItem.Id, this.selectedHour);
         this.selectedminuteMap.set(this.questionItem.Id,this.selectedMinute);
   }
+  day(){
+   this. myDatePickerOptions = {
+      dateFormat: 'dd.mm.yyyy',
+      sunHighlight: false,
+      disableDateRanges: [],
+      // disableUntil : {year: 0, month: 0, day: 0},
+        //  disableSince : {year: 0, month: 0, day: 0},
+     
+  
+      showClearDateBtn: false,
+      showTodayBtn: false,
+      dayLabels: { su: 'So', mo: 'Mo', tu: 'Di', we: 'Mi', th: 'Do', fr: 'Fr', sa: 'Sa' },
+      monthLabels: { 1: 'Jan', 2: 'Feb', 3: 'Mär', 4: 'Apr', 5: 'Mai', 6: 'Jun', 7: 'Jul', 8: 'Aug', 9: 'Sep', 10: 'Okt', 11: 'Nov', 12: 'Dez' }
+    }
+  }
+  
 
 
   processQB() {
@@ -196,6 +217,7 @@ export class QuestionnaireComponent implements OnInit {
   }
 
   handleNextClick() {
+   
     //console.log('one')
     this.clearError();
     this.handleEvent.emit(this.qbItem.Next_Tracking_ID__c);
@@ -253,21 +275,31 @@ export class QuestionnaireComponent implements OnInit {
       this.inpValue = this.trimLastDummy(this.inpValue);
      }
     else  if(this.dtFlag  && this.dateFlag && this.timeFlag){
+     // this.myDatePickerOptions. disableUntil = {year: 0, month: 0, day: 0};
+       // this.myDatePickerOptions.disableSince ={year: 0, month: 0, day: 0};
       //this.selDate="";
       if(this.inpValue){
+        //this.day();
+        console.log(this.inpValue.length)
         this.selectedHour = this.getProperTime('12', this.selectedHour);
         this.selectedMinute = this.getProperTime('00', this.selectedMinute);
        this.selectedMeridiem = this.getProperTime('AM', this.selectedMeridiem);
        if(this.questionItem.X24_Hours__c === false){
-        this.questionItem.input=  (this.selectedMeridiem === 'PM' && this.selectedHour != '12' ? (Number(this.selectedHour) + 12) : this.selectedHour) + ':' + this.selectedMinute;
-        this.inpValue =this.inpValue + 'T' + this.questionItem.input;
+         if(this.selectedMeridiem === 'PM' && this.selectedHour === '12'){
+           this.selectedHour="00"+this.selectedMinute;
+         }else{
+          this.questionItem.input=  (this.selectedMeridiem === 'PM' && this.selectedHour != '12' ? (Number(this.selectedHour) + 12) : this.selectedHour) + ':' + this.selectedMinute;
+          this.inpValue =this.inpValue + 'T' + this.questionItem.input;
+         }
+       
        }if(this.questionItem.X24_Hours__c === true){
          this.questionItem.input = this.selectedHour + ":" + this.selectedMinute;
        }
        this.date_TimeMap()
       }
-      if( this.selDate===null || !this.inpValue){
+      if( this.selDate===null || !this.inpValue  ){
         this.questionItem.error = new ErrorWrapper(); return;}
+        
     } else if (this.timeFlag && this.dtFlag && !this.dateFlag ) {
       this.date_TimeMap();
       if(this.questionItem.X24_Hours__c === false){
@@ -279,6 +311,9 @@ export class QuestionnaireComponent implements OnInit {
            this.questionItem.error = new ErrorWrapper();
            return;}  }
       else if( this.dateFlag  && this.dtFlag  &&  !this.timeFlag ){
+       // this.myDatePickerOptions. disableUntil = {year: 0, month: 0, day: 0};
+        //this.myDatePickerOptions.disableSince ={year: 0, month: 0, day: 0};
+       // this.day();
         if(this.inpValue.length < 7 || this.selDate === null){
           this.questionItem.error = new ErrorWrapper();
           return;}
@@ -479,6 +514,7 @@ export class QuestionnaireComponent implements OnInit {
       this.subQuestions = [];
       this.resetFlag(this.questionItem.Type__c);
     }
+    
     this.questionItem = response.question;
     this.handlePage.emit(this.questionItem.Tracking_ID__c);
     // Handle the subQuestion options
@@ -539,9 +575,15 @@ export class QuestionnaireComponent implements OnInit {
     //console.log(response);
   }
 
-  private processQuestion = () => {
+  private processQuestion = () => { 
+   //this.myDatePickerOptions. disableUntil = {year: 0, month: 0, day: 0};
+     //   this.myDatePickerOptions.disableSince ={year: 0, month: 0, day: 0};
+     //    this.day();
+       
+    
+   
     //console.log('processing question ' + this.questionItem.Name + ' existing answers are ' + this.answerMap.size); // => ' + JSON.stringify(this.questionItem));
-
+    console.log(this.questionItem);
     // Set the Flags to show right fields
     this.setFlag(this.questionItem.Type__c);
 
@@ -568,11 +610,15 @@ export class QuestionnaireComponent implements OnInit {
       this.setSubQuestions(this.questionItem.Questions__r.records);
      }
       else if (this.dtFlag) {
+        
          this.selectedHour ="";
         this.selectedMinute ="";
         this.selDate ="";
         if(this.dateMap.has(this.questionItem.Id) ){
             this.selDate = this.dateMap.get(this.questionItem.Id);
+            this.myDatePickerOptions.disableSince = this.dateMap.get(this.questionItem.Id);
+            this.myDatePickerOptions.disableUntil = this.dateMap.get(this.questionItem.Id);
+
         }
         if (this.selectedhourMap.has(this.questionItem.Id)){
            this.selectedHour = this.selectedhourMap.get(this.questionItem.Id)
@@ -588,7 +634,31 @@ export class QuestionnaireComponent implements OnInit {
               var dtVal = this.inpValue.split('T');
               this.inpValue = dtVal[0];
               this.questionItem.input = dtVal[1];
+            
+             
             }
+           // if(this.questionItem.Is_Date_Backward__c || this. questionItem.Is_Date_Forward__c){
+              
+            if(this.questionItem.Is_Date_Backward__c === true){
+             this.myDatePickerOptions.disableSince ={ year: this.today.getFullYear(),
+                month: this.today.getMonth() + 1,
+                day: this.today.getDate() + 1 }
+                this.dateMap.set(this.questionItem.Id, this.myDatePickerOptions.disableSince);
+              this.dateMap.set(this.questionItem.Id,this.myDatePickerOptions.disableUntil);
+              
+                
+            }if(this.questionItem.Is_Date_Forward__c === true){
+              this.myDatePickerOptions.disableUntil ={ year: this.today.getFullYear(),
+                month: this.today.getMonth() + 1,
+                day: this.today.getDate() + 1 }
+                this.dateMap.set(this.questionItem.Id, this.myDatePickerOptions.disableSince);
+              this.dateMap.set(this.questionItem.Id,this.myDatePickerOptions.disableUntil);
+              
+               // this.dateMap.set(this.questionItem.Id, this.myDatePickerOptions)
+             //}
+            }
+            
+           
           }
     else if (this.fileFlag) {
       // logic
