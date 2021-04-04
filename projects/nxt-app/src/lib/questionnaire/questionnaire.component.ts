@@ -623,10 +623,8 @@ export class QuestionnaireComponent implements OnInit {
                 { year: this.today.getFullYear(),
                    month: this.today.getMonth() + 1,
                    day: this.today.getDate() + 1 }
-                  console.log("backward")
               }
               if(this.questionItem.Is_Date_Forward__c === true){
-                console.log("forward")
                 this.myDatePickerOptions.disableUntil ={ year: this.today.getFullYear(),
                   month: this.today.getMonth() +1,
                   day: this.today.getDate() }
