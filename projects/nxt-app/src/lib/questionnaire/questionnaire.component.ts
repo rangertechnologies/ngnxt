@@ -107,18 +107,7 @@ export class QuestionnaireComponent implements OnInit {
   public answerCount: number = 0;
 
   public myDatePickerOptions: IMyDpOptions = {
-    dateFormat: 'dd.mm.yyyy',
-    sunHighlight: false,
-    disableDateRanges: [],
-    showClearDateBtn: false,
-    disableSince: {
-      year: this.today.getFullYear(),
-      month: this.today.getMonth() + 1,
-      day: this.today.getDate() + 1
-    },
-    showTodayBtn: false,
-    dayLabels: { su: 'So', mo: 'Mo', tu: 'Di', we: 'Mi', th: 'Do', fr: 'Fr', sa: 'Sa' },
-    monthLabels: { 1: 'Jan', 2: 'Feb', 3: 'Mär', 4: 'Apr', 5: 'Mai', 6: 'Jun', 7: 'Jul', 8: 'Aug', 9: 'Sep', 10: 'Okt', 11: 'Nov', 12: 'Dez' }
+  
   };
 
   constructor(private sfService: SalesforceService, private route: ActivatedRoute, private sanitizer: DomSanitizer, private _formBuilder: FormBuilder){
@@ -134,7 +123,6 @@ export class QuestionnaireComponent implements OnInit {
       this.dateMap.delete(this.questionItem.Id);
       this.answerMap.delete(this.questionItem.Id);
     }
-  //  console.log(this.dateMap)
    }
   ngOnInit() {
 
@@ -150,6 +138,27 @@ export class QuestionnaireComponent implements OnInit {
   date_TimeMap(){
     this.selectedhourMap.set(this.questionItem.Id, this.selectedHour);
         this.selectedminuteMap.set(this.questionItem.Id,this.selectedMinute);
+  }
+  day(){
+    this.myDatePickerOptions = {
+      dateFormat: 'dd.mm.yyyy',
+      sunHighlight: false,
+      disableDateRanges: [],
+      showClearDateBtn: false,
+      disableSince:{
+        year:0,
+        month : 0,
+        day:0
+      },
+      disableUntil:{
+        year:0,
+        month : 0,
+        day:0,
+      },
+      showTodayBtn: false,
+      dayLabels: { su: 'So', mo: 'Mo', tu: 'Di', we: 'Mi', th: 'Do', fr: 'Fr', sa: 'Sa' },
+      monthLabels: { 1: 'Jan', 2: 'Feb', 3: 'Mär', 4: 'Apr', 5: 'Mai', 6: 'Jun', 7: 'Jul', 8: 'Aug', 9: 'Sep', 10: 'Okt', 11: 'Nov', 12: 'Dez' }
+    };
   }
 
 
@@ -196,7 +205,6 @@ export class QuestionnaireComponent implements OnInit {
   }
 
   handleNextClick() {
-    //console.log('one')
     this.clearError();
     this.handleEvent.emit(this.qbItem.Next_Tracking_ID__c);
     this.recordId = null;
@@ -273,13 +281,16 @@ export class QuestionnaireComponent implements OnInit {
         this.selectedHour = this.getProperTime('12', this.selectedHour);
         this.selectedMinute = this.getProperTime('00', this.selectedMinute);
        this.selectedMeridiem = this.getProperTime('AM', this.selectedMeridiem);
-       if(this.questionItem.X24_Hours__c === false){
-        this.questionItem.input=  (this.selectedMeridiem === 'PM' && this.selectedHour != '12' ? (Number(this.selectedHour) + 12) : this.selectedHour) + ':' + this.selectedMinute;
+       if(this.questionItem.X24_Hours__c === false){ 
+          this.questionItem.input=  (this.selectedMeridiem === 'PM' && this.selectedHour != '12' ? (Number(this.selectedHour) + 12) : this.selectedHour) + ':' + this.selectedMinute;
+         if(this.selectedMeridiem === 'PM' && this.selectedHour === '12'){
+           this.questionItem.input = "00"+":"+this.selectedMinute;
+         }
         this.inpValue =this.inpValue + 'T' + this.questionItem.input;
        }if(this.questionItem.X24_Hours__c === true){
          this.questionItem.input = this.selectedHour + ":" + this.selectedMinute;
        }
-       this.date_TimeMap()
+       this.date_TimeMap();
       }
       if( this.selDate===null || !this.inpValue){
         this.questionItem.error = new ErrorWrapper(); return;}
@@ -555,6 +566,8 @@ export class QuestionnaireComponent implements OnInit {
   }
 
   private processQuestion = () => {
+    this.myDatePickerOptions; 
+    this.day();
     //console.log('processing question ' + this.questionItem.Name + ' existing answers are ' + this.answerMap.size); // => ' + JSON.stringify(this.questionItem));
 
     // Set the Flags to show right fields
@@ -604,7 +617,22 @@ export class QuestionnaireComponent implements OnInit {
               this.inpValue = dtVal[0];
               this.questionItem.input = dtVal[1];
             }
-          }
+            if(this.questionItem.Is_Date_Backward__c || this. questionItem.Is_Date_Forward__c){
+              if(this.questionItem.Is_Date_Backward__c === true){
+                this.myDatePickerOptions.disableSince =
+                { year: this.today.getFullYear(),
+                   month: this.today.getMonth() + 1,
+                   day: this.today.getDate() + 1 }
+                  console.log("backward")
+              }
+              if(this.questionItem.Is_Date_Forward__c === true){
+                console.log("forward")
+                this.myDatePickerOptions.disableUntil ={ year: this.today.getFullYear(),
+                  month: this.today.getMonth() +1,
+                  day: this.today.getDate() }
+           }
+            }
+            }
     else if (this.fileFlag) {
       // logic
       this.allowedFileExtension = this.questionItem.Allowed_File_Extensions__c.split(';');
