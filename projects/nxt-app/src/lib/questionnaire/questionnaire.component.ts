@@ -243,7 +243,13 @@ export class QuestionnaireComponent implements OnInit {
           item.error = new ErrorWrapper();
           hasMissingInput = true;
         }
-        if (item.Type__c == 'Dropdown' || item.Type__c == 'Radio'){
+        if(item.Type__c == 'Radio'){
+          if(!item.input){
+              item.error = new ErrorWrapper();
+            hasMissingInput = true;
+              }
+        }
+        if (item.Type__c == 'Dropdown'  ){
          
          // console.log(item.input)
           if(item.input){
@@ -251,8 +257,8 @@ export class QuestionnaireComponent implements OnInit {
           }
           if(!item.input){
 
-            item.input = "";
-          //  document.getElementById("dropdown").style.borderColor = "red"
+           item.input = "";
+            document.getElementById("dropdown").style.borderColor = "red"
             item.error = new ErrorWrapper();
           hasMissingInput = true;
             }
