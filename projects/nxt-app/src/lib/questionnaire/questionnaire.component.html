@@ -154,7 +154,7 @@
 
           <div *ngIf="ques.Type__c === 'Email'">
             <input type="email" [(ngModel)]="ques.input" [id]="ques.Id" required="" (click)="clearSQError(ques.Id)"
-              style.borerd-color="{{ques.error ? 'red' : ''}}" placeholder="{{ques.Question__c}}"/>
+              style.border-color="{{ques.error ? 'red' : ''}}" placeholder="{{ques.Question__c}}"/>
           </div>
 
           <div *ngIf="ques.Type__c === 'File'">
@@ -186,15 +186,11 @@
           </div>
 
           <div *ngIf="ques.Type__c === 'Dropdown'"class="">
-            <!-- <div *ngIf="ques.error" class="cond-div2">Bitte treffen Sie eine Auswahl</div> -->
-            <div [style.border-color]="ques.error ? 'red' : (ques?.input?.length > 0 ? '#87be1c' : '')">
-            <select class="custom-select mr-sm-2 dd-height" id="dropdown"[(ngModel)]="ques.input" (change)="Dropdown($event); clearSQError(ques.Id)" >
-            
-              <option value="" selected = "selected">Bitte treffen Sie eine Auswahl</option>
+            <select class="custom-select mr-sm-2 dd-height" id="dropdown" [(ngModel)]="ques.input" (change)="Dropdown($event); clearSQError(ques.Id)" >
               <option *ngFor="let opt of ques.Question_Options__r.records"  value="{{opt.Value__c}}">{{opt.Value__c}}
               </option>
-             
-            </select></div>
+              <option value="" >Bitte treffen Sie eine Auswahl</option>
+            </select>
           </div>
           <i class="fa fa-check check-icon4" aria-hidden="true" *ngIf="questionItem?.input?.length > 0"></i>
         </div>

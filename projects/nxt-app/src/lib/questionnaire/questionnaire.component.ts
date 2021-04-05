@@ -250,13 +250,10 @@ export class QuestionnaireComponent implements OnInit {
               }
         }
         if (item.Type__c == 'Dropdown'  ){
-         
-         // console.log(item.input)
           if(item.input){
             document.getElementById("dropdown").style.borderColor = "green"
           }
           if(!item.input){
-
            item.input = "";
             document.getElementById("dropdown").style.borderColor = "red"
             item.error = new ErrorWrapper();
@@ -329,7 +326,6 @@ export class QuestionnaireComponent implements OnInit {
       this.inpValue = '';
       if (this.attachments.length > 0) {
         for (var attachmentItem of this.attachments) {
-          //console.log(this.inpValue);
           this.inpValue += attachmentItem.attachmentId + '@@##$$' + attachmentItem.attachmentName + ',';
         }
         //console.log('inside filesss' + this.inpValue);
@@ -581,7 +577,6 @@ export class QuestionnaireComponent implements OnInit {
   }
 
   private processQuestion = () => {
-    console.log(this.questionItem)
     this.myDatePickerOptions; 
     this.day();
     //console.log('processing question ' + this.questionItem.Name + ' existing answers are ' + this.answerMap.size); // => ' + JSON.stringify(this.questionItem));
