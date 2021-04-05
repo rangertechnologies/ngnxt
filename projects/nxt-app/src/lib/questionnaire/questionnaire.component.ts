@@ -245,7 +245,7 @@ export class QuestionnaireComponent implements OnInit {
         }
         if (item.Type__c == 'Dropdown' || item.Type__c == 'Radio'){
          
-          console.log(item.input)
+         // console.log(item.input)
           if(item.input){
             document.getElementById("dropdown").style.borderColor = "green"
           }
@@ -261,7 +261,7 @@ export class QuestionnaireComponent implements OnInit {
           if(item.input && item.input.match(mailformat)){
              this.recordId = cQuestion.Next_Question__c;
             }else{
-              console.log('else')
+             // console.log('else')
               item.error = new ErrorWrapper();
               hasMissingInput = true;}
         }
