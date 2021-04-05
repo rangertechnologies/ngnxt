@@ -73,6 +73,7 @@ export class QuestionnaireComponent implements OnInit {
   public attachmentsMap = new Map();
   public sqOptions = new Map();
   public questionStack = [];
+  
   public attachments: any[] = [];
   public attachmentIdList: any[] = [];
   public attachmentId: string = '';
@@ -243,7 +244,15 @@ export class QuestionnaireComponent implements OnInit {
           hasMissingInput = true;
         }
         if (item.Type__c == 'Dropdown' || item.Type__c == 'Radio'){
+         
+          console.log(item.input)
+          if(item.input){
+            document.getElementById("dropdown").style.borderColor = "green"
+          }
           if(!item.input){
+
+            item.input = "";
+          //  document.getElementById("dropdown").style.borderColor = "red"
             item.error = new ErrorWrapper();
           hasMissingInput = true;
             }
@@ -566,6 +575,7 @@ export class QuestionnaireComponent implements OnInit {
   }
 
   private processQuestion = () => {
+    console.log(this.questionItem)
     this.myDatePickerOptions; 
     this.day();
     //console.log('processing question ' + this.questionItem.Name + ' existing answers are ' + this.answerMap.size); // => ' + JSON.stringify(this.questionItem));
@@ -587,8 +597,9 @@ export class QuestionnaireComponent implements OnInit {
       //console.log('inside removing attachment array');
       this.attachments = [];
     }
-
+   
     if (this.checkboxFlag) {
+       
       // Set the Options for Checkbox
       this.setOptions(this.questionItem.Question_Options__r.records);
     } else if (this.bookFlag) {
@@ -769,6 +780,7 @@ export class QuestionnaireComponent implements OnInit {
       if (qaMap.has(ques.Question_No__c)) {
         //console.log('Setting input for the subQuestion ' + ques.Question_No__c + ' with ' + ansStr);
         ques.input = qaMap.get(ques.Question_No__c);
+        console.log(ques.Input)
       }
 
       this.subQuestions.push(ques);
