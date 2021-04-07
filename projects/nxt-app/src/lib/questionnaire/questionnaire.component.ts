@@ -252,10 +252,12 @@ export class QuestionnaireComponent implements OnInit {
         if (item.Type__c == 'Dropdown'  ){
           if(item.input){
             document.getElementById("dropdown").style.borderColor = "green"
+           // document.getElementById("drop").style.borderColor = "green"
           }
           if(!item.input){
            item.input = "";
-            document.getElementById("dropdown").style.borderColor = "red"
+           // document.getElementById("dropdown").style.borderColor = "red"
+           // document.getElementById("drop").style.borderColor = "red"
             item.error = new ErrorWrapper();
           hasMissingInput = true;
             }
