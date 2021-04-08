@@ -1,0 +1,437 @@
+/*Client specific stylings*/
+
+
+.radiocontainer {
+    font-family:Univers LT W01_47 Light1475998 !important;
+    background-color:#D3DBE7 !important;
+    color:#00356F !important;
+}
+
+.colorf{
+    color: #00356f;
+}
+
+.btn-color{
+    background-color: #00356f !important;
+    color: #fff !important;
+}
+
+.btn-back-color{
+    color:#00356f !important;
+    background-color: transparent !important;
+    border-color: transparent !important;
+}
+
+
+
+
+
+/*General Nxt App stylings */
+.questiondiv1{
+    padding-left: 25px;
+    padding-right: 25px;
+}
+
+.questiondiv2{
+    padding-top: 25px; 
+    padding-bottom: 10px; 
+    padding-left: 15px; 
+}
+
+.questionalign{
+    text-align: left;
+}
+
+.question-f-size{
+    font-size: 0.7rem;
+}
+
+.infodiv{
+    padding-left: 2rem;
+    overflow:hidden !important;
+}
+
+.info-alert {
+    border: 1px solid #e6e6e6;
+    border-radius: 5px !important;
+    padding: 0.5em !important;
+    margin-left: 15px !important;
+    margin-right: 15px !important;
+    margin-bottom: 1rem;
+    display: flex;
+}
+
+.ques-alert1{
+    margin-bottom: 1rem;
+    display: flex;
+}
+
+.iposition{
+    margin-left: 3rem;
+}
+
+.col-md-1,
+.col-md-10,
+.col-md-11,
+.col-md-12,
+.col-md-2,
+.col-md-3,
+.col-md-4,
+.col-md-5,
+.col-md-6,
+.col-md-7,
+.col-md-8,
+.col-md-9{
+    position: relative;
+    padding: 15px;
+    float: left;
+    width: 100%;
+}
+.btn {
+    border-radius: .3rem;
+    font-size: 1.25rem;
+    line-height: 1.5;
+    padding: .5rem 1rem;
+    width: 100%;
+    cursor: pointer !important;
+    outline: 0;
+}
+
+.cond-div2{
+    color: red; 
+    font-weight: bold;
+}
+
+.radiocontainer {
+    border: 1px solid none;
+    border-radius: .3em;
+    padding: 0.3em;
+    padding-top: 1em;
+    align-items: center;
+    text-align: justify;
+    cursor: pointer;
+}
+
+.date-time{
+    padding: 0px !important;
+    margin: 0px !important;
+    text-align: left !important;
+}
+
+.dateandTime{
+    border: 1px solid #d2d4d6 !important;
+    position: relative !important;
+    display: flex !important;
+    border-radius: 5px !important;
+    background-image: url("https://dynamic-css1.s3.ap-south-1.amazonaws.com/External+css/time.svg") !important;
+    background-size: 25px !important;
+    background-repeat: no-repeat !important;
+    background-position: 99% center !important;
+    background-color: #fff !important;
+}
+
+.dis-flex{
+    display: flex;
+}
+
+.date-picker{
+    width: 100%;
+    border-radius: 5px;
+}
+
+.check-icon2{
+    color:#87be1c;
+    margin-left: -4rem;
+    z-index: 1;
+    margin-top: 1rem;
+}
+
+.datetime{
+    width: inherit !important;
+    background-image: none !important;
+    border: none !important;
+    position: relative !important;
+    padding: 0px !important;
+    margin: 0px;
+    padding-left: 5px;
+    min-width: 60px !important;
+}
+  
+.datetime:focus{
+    border: none;
+    box-shadow: none;
+}
+
+.showHour{
+    padding-left: 15px !important;
+}
+
+.check-icon3{
+    color:#87be1c;
+    margin-left: -4rem;
+    z-index: 1;
+    margin-top: 3rem;
+}
+
+@media (min-width: 768px) {
+    .col-md-1,
+    .col-md-10,
+    .col-md-11,
+    .col-md-12,
+    .col-md-2,
+    .col-md-3,
+    .col-md-4,
+    .col-md-5,
+    .col-md-6,
+    .col-md-7,
+    .col-md-8,
+    .col-md-9 {
+        float: left;
+    }
+    .col-md-12 {
+        width: 100%;
+    }
+    .col-md-11 {
+        width: 91.66666667%;
+    }
+    .col-md-10 {
+        width: 83.33333333%;
+    }
+    .col-md-9 {
+        width: 75%;
+    }
+    .col-md-8 {
+        width: 66.66666667%;
+    }
+    .col-md-7 {
+        width: 58.33333333%;
+    }
+    .col-md-6 {
+        width: 50%;
+    }
+    .col-md-5 {
+        width: 41.66666667%;
+    }
+    .col-md-4 {
+        width: 33.33333333%;
+    }
+    .col-md-3 {
+        width: 25%;
+    }
+    .col-md-2 {
+        width: 16.66666667%;
+    }
+    .col-md-1 {
+        width: 8.33333333%;
+    }
+}
+
+.paddingnone{
+    padding-top: 0% !important;
+    padding-bottom: 0% !important;
+}
+
+.paddingZero{
+    padding:0px !important;
+}
+    
+.summary-h{
+    text-align: left; 
+    padding-bottom: 15px;
+}
+.summarydiv{
+    padding-bottom: 15px;
+}
+
+.summary {
+    display: block !important;
+    border: 1px solid #e6e6e6 !important;
+    border-radius: 5px !important;
+    padding: 0.5em !important;
+    margin-left: 15px !important;
+    margin-right: 15px !important;
+    background-color:#EAEEF1 !important;
+    text-align: left !important;
+    cursor: pointer;
+    display: list-item;
+}
+
+.question {
+    font-weight: bold;
+    color:#00356F;
+}
+
+.answer {
+    color:#8C8F92 !important;
+}
+
+.picture-upload {
+    height: 200px;
+    width: 200px;
+    position: relative;
+    border: 1px solid #ccc;
+    display: flex;
+    padding: 6px 12px;
+    cursor: pointer;
+    background-color: #ffffff;
+    align-items: center;
+}
+
+.colon{
+    line-height: 55px !important;
+    padding: 0px !important;
+    margin-right: 10px;
+}
+
+.check-icon{
+    color:#87be1c;
+    margin-left: -2rem;
+    z-index: 1;
+    padding: 5px;
+}
+
+.align-l{
+    text-align:left;
+}
+
+.attach-ulist{
+    list-style-type:none;
+    margin-left:0;
+    margin-bottom:0.7rem
+}
+
+.attach-list{
+    float:right;
+    cursor:pointer;
+    padding: 0px;
+}
+
+.icolor{
+    color:#99B5CE;
+}
+
+.picture-upload-child {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.pic-upload{
+    position: absolute;
+    top: 15%;
+    left: 85%;
+    transform: translate(-50%, -50%);
+}
+
+@media (max-width: 767px) {
+    .paddingBottom{
+        padding-bottom: 0px;
+    }
+
+    .paddingTop{
+        padding-top:0px;
+    }
+}
+
+.btn-block + .btn-block {
+    margin-top: 0.5rem;
+}
+  
+input[type="submit"].btn-block,
+input[type="reset"].btn-block,
+input[type="button"].btn-block {
+width: 100%;
+}
+
+.btn-lg, .btn-group-lg > .btn {
+    padding: 0.5rem 1rem !important;
+    font-size: 1.25rem !important;
+    line-height: 1.5 !important;
+    border-radius: 0.3rem !important;
+}
+.btn-lg + .dropdown-toggle-split, .btn-group-lg > .btn + .dropdown-toggle-split {
+    padding-right: 0.75rem;
+    padding-left: 0.75rem;
+}
+
+
+.btn-primary:hover {
+    color: #fff;
+}
+.btn-primary:focus, .btn-primary.focus {
+    color: #fff;
+    box-shadow: 0 0 0 0.2rem rgba(38, 143, 255, 0.5);
+}
+.btn-primary.disabled, .btn-primary:disabled {
+    color: #fff;
+}
+.btn-primary:not(:disabled):not(.disabled):active, .btn-primary:not(:disabled):not(.disabled).active,
+    .show > .btn-primary.dropdown-toggle {
+      color: #fff;
+}
+.btn-primary:not(:disabled):not(.disabled):active:focus, .btn-primary:not(:disabled):not(.disabled).active:focus,
+    .show > .btn-primary.dropdown-toggle:focus {
+      box-shadow: 0 0 0 0.2rem rgba(38, 143, 255, 0.5);
+}
+
+.btn-back-color{
+    display: block !important;
+      width: 100% !important;
+      padding: .5rem 1rem !important;
+      padding-top: 0.5rem !important;
+      padding-right: 1rem !important;
+      padding-bottom: 0.5rem !important;
+      padding-left: 1rem !important;
+      font-size: 1.25rem !important;
+      line-height: 1.5 !important;
+      text-align: center !important;
+      border-radius: .3rem !important;
+      margin:0 !important;
+  
+}
+
+
+.btn-color {
+    display: block !important;
+    width: 100% !important;
+    padding: .5rem 1rem !important;
+    padding-top: 0.5rem !important;
+    padding-right: 1rem !important;
+    padding-bottom: 0.5rem !important;
+    padding-left: 1rem !important;
+    font-size: 1.25rem !important;
+    line-height: 1.5 !important;
+    border-radius: .3rem !important;
+    font-weight: 400 !important;
+    text-align: center !important;
+    border: 1px solid transparent !important;
+    margin: 0 !important;
+    margin-top: 0px !important;
+    margin-right: 0px !important;
+    margin-bottom: 0px !important;
+    margin-left: 0px !important;
+}
+
+
+.fa-plus:hover {
+    color: #87be1c;
+}
+  
+.fa-plus {
+    color: #99B5CE;
+}
+
+.btn-primary {
+    border-color: #007bff !important;
+}
+
+.questiondiv2{
+    color: #00356f !important;
+}
+
+.infodiv p {
+    margin-bottom: 0px !important;
+    text-align: left !important;
+    text-decoration:inherit !important;
+}

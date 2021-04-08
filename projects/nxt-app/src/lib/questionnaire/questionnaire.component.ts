@@ -1,9 +1,12 @@
-import { Component, OnInit, OnChanges, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, OnChanges, Input, Output, EventEmitter, Directive, HostListener,  OnDestroy,  } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { SalesforceService } from '../services/salesforce.service';
 import { IMyDateModel, IMyDpOptions } from 'mydatepicker';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { FormBuilder } from '@angular/forms';
+// import { Subject, Subscription } from 'rxjs';
+// import { debounceTime } from 'rxjs/operators';
+
 
 import {
 	Question,
@@ -27,6 +30,40 @@ import {
 	BOOKQUESTION,
 	TESTQB
 } from '../sample';
+// @Directive({
+//   selector: '[appDebounceClick]'
+// })
+// export class DebounceClickDirective implements OnInit, OnDestroy {
+//   @Input() 
+//   debounceTime = 500;
+
+//   @Output() 
+//   debounceClick = new EventEmitter();
+  
+//   private clicks = new Subject();
+//   private subscription: Subscription;
+
+//   constructor() { }
+
+//   ngOnInit() {
+//     console.log("sathik");
+    
+//     this.subscription = this.clicks.pipe(
+//       debounceTime(this.debounceTime)
+//     ).subscribe(e => this.debounceClick.emit(e));
+//   }
+
+//   ngOnDestroy() {
+//     this.subscription.unsubscribe();
+//   }
+
+//   @HostListener('click', ['$event'])
+//   clickEvent(event) {
+//     event.preventDefault();
+//     event.stopPropagation();
+//     this.clicks.next(event);
+//   }
+// }
 
 @Component({
 	selector: 'lib-questionnaire',
@@ -34,6 +71,7 @@ import {
 	styleUrls: [ './questionnaire.component.css' ]
 })
 export class QuestionnaireComponent implements OnInit {
+ // export class DebounceClickDirective {}
   @Input() qbId: string;
   @Output() handleEvent = new EventEmitter();
   @Output() handlePage: EventEmitter<any> = new EventEmitter();
@@ -577,6 +615,7 @@ export class QuestionnaireComponent implements OnInit {
   }
 
   private processQuestion = () => {
+    const htmlElement = window.document.getElementsByClassName('mydp')
     this.myDatePickerOptions; 
     this.day();
     //console.log('processing question ' + this.questionItem.Name + ' existing answers are ' + this.answerMap.size); // => ' + JSON.stringify(this.questionItem));
