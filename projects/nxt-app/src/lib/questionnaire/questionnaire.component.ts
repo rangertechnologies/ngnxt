@@ -73,6 +73,7 @@ export class QuestionnaireComponent implements OnInit {
   public attachmentsMap = new Map();
   public sqOptions = new Map();
   public questionStack = [];
+  
   public attachments: any[] = [];
   public attachmentIdList: any[] = [];
   public attachmentId: string = '';
@@ -125,9 +126,8 @@ export class QuestionnaireComponent implements OnInit {
     }
    }
   ngOnInit() {
-
+   this.inpValue="";
     this.selectedMeridiem = "AM";
-
       this.processQB();
   }
 
@@ -242,8 +242,18 @@ export class QuestionnaireComponent implements OnInit {
           item.error = new ErrorWrapper();
           hasMissingInput = true;
         }
-        if (item.Type__c == 'Dropdown' || item.Type__c == 'Radio'){
+        if(item.Type__c == 'Radio'){
           if(!item.input){
+              item.error = new ErrorWrapper();
+            hasMissingInput = true;
+              }
+        }
+        if (item.Type__c == 'Dropdown'  ){
+          if(item.input){
+            document.getElementById("dropdown").style.borderColor = "#87be1c"
+          }
+          if(!item.input){
+           item.input = "";
             item.error = new ErrorWrapper();
           hasMissingInput = true;
             }
@@ -252,7 +262,6 @@ export class QuestionnaireComponent implements OnInit {
           if(item.input && item.input.match(mailformat)){
              this.recordId = cQuestion.Next_Question__c;
             }else{
-              console.log('else')
               item.error = new ErrorWrapper();
               hasMissingInput = true;}
         }
@@ -275,6 +284,12 @@ export class QuestionnaireComponent implements OnInit {
       }
       this.inpValue = this.trimLastDummy(this.inpValue);
      }
+     else if(this.dropdownFlag){
+      if(this.inpValue.length <= 1){
+       this.inpValue="e";
+      this.questionItem.error = new ErrorWrapper();
+      }
+    }
     else  if(this.dtFlag  && this.dateFlag && this.timeFlag){
       //this.selDate="";
       if(this.inpValue){
@@ -314,7 +329,6 @@ export class QuestionnaireComponent implements OnInit {
       this.inpValue = '';
       if (this.attachments.length > 0) {
         for (var attachmentItem of this.attachments) {
-          //console.log(this.inpValue);
           this.inpValue += attachmentItem.attachmentId + '@@##$$' + attachmentItem.attachmentName + ',';
         }
         //console.log('inside filesss' + this.inpValue);
@@ -379,7 +393,7 @@ export class QuestionnaireComponent implements OnInit {
         //console.log("inside book");
         for (let opt of cQuestion.Questions__r.records) {
           //console.log(opt.Type__c);
-           if (opt.Type__c == "Dropdown" || opt.Type__c == "Radio") {
+           if (opt.Type__c == "Dropdown"||opt.Type__c == "Radio") {
             for (var opt1 of opt.Question_Options__r.records) {
               if (this.valueName == opt1.Value__c) {
                 this.recordId = opt1.Next_Question__c || cQuestion.Next_Question__c;
@@ -587,14 +601,16 @@ export class QuestionnaireComponent implements OnInit {
       //console.log('inside removing attachment array');
       this.attachments = [];
     }
-
+   
     if (this.checkboxFlag) {
+       
       // Set the Options for Checkbox
       this.setOptions(this.questionItem.Question_Options__r.records);
     } else if (this.bookFlag) {
       // Set the SubQuestions
       this.setSubQuestions(this.questionItem.Questions__r.records);
      }
+    
       else if (this.dtFlag) {
          this.selectedHour ="";
         this.selectedMinute ="";
