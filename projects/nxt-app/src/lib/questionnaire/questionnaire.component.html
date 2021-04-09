@@ -25,7 +25,7 @@
     </div>
   </div>
 
-  <div *ngIf=" dropdownFlag " class="">
+  <div *ngIf=" dropdownFlag " class="" [class]="'col-md-'+ questionItem.Size__c + ' paddingnone'">
     <select class="custom-select mr-sm-2 dd-height" [(ngModel)]="inpValue" (change)="clearError()"  style.border-color="{{this.questionItem.error ? 'red' :  (inpValue?.length > 0 ? '#87be1c' : '')}}" 
       style.color="{{questionItem.error ? 'red'  : ''}}" >
       <option *ngFor="let opt of questionItem.Question_Options__r.records"  value="{{opt.Value__c}}">{{opt.Value__c}}
@@ -49,15 +49,15 @@
     <div *ngIf="this.questionItem.error" class="cond-div2">Bitte treffen Sie eine Auswahl</div>
     <div *ngFor="let item of optionValues" class="radio col-md-12 optiondiv">
       <label class="radiocontainer">
-        <input type="checkbox" [id]="item.Id" [(ngModel)]="item.checked" (focus)="clearError()">
+        <input type="checkbox" [id]="item.Id" [(ngModel)]="item.checked" (click)="clearError()">
         <span>{{item.Value__c}}</span>
       </label>
     </div>
   </div>
 
   <div *ngIf="textFlag" class="col-md-12">
-    <div class="col-md-12" class="dis-flex">
-      <input type="text" [(ngModel)]="inpValue" id="text-input-id" required="" (focus)="clearError()"
+    <div class="col-md-12" class="dis-flex" [class]="'col-md-'+ questionItem.Size__c + ' paddingnone'">
+      <input type="text" [(ngModel)]="inpValue" class="text" id="text-input-id" required="" (focus)="clearError()"
         style.border-color="{{this.questionItem.error ? 'red' : (inpValue?.length > 0 ? '#87be1c' : '')}}"
         oninput="this.value=this.value.replace(/[^a-zA-Z0-9\s.:;,?]/g,'');" />
       <i class="fa fa-check check-icon" aria-hidden="true" *ngIf="inpValue?.length > 0"></i>
@@ -75,7 +75,7 @@
 
   <div *ngIf="emailFlag" class="col-md-12">
     <div class="dis-flex">
-      <input type="email" [(ngModel)]="inpValue" id="email-input-id" required="" (click)="clearError()"
+      <input type="email" [(ngModel)]="inpValue" id="email-input-id" required="" (focus)="clearError()"
         style.border-color="{{this.questionItem.error ? 'red' : (inpValue?.length > 0 ? '#87be1c' : '')}}"  />
       <i class="fa fa-check" aria-hidden="true" style="color:#87be1c;margin-left: -2rem;z-index: 1;padding: 5px;"
         *ngIf="inpValue?.length > 0"></i>
@@ -88,9 +88,9 @@
       <label [style.color]="questionItem.error ? 'red' : (inpValue?.length > 0 ? '#87be1c' : '')"
         class="date-time colorf">Datum</label>
       <div class="dis-flex">
-        <my-date-picker name="mydate" [options]="myDatePickerOptions" (dateChanged)="onDateChanged($event)"
+        <my-date-picker name="mydate" [options]="myDatePickerOptions" id="date" (dateChanged)="onDateChanged($event)"
           [(ngModel)]="selDate" class="date-picker"
-          [style.border-color]="questionItem.error ? 'red' : (inpValue?.length > 0 ? '#87be1c' : '')">
+          style.border-color="questionItem.error ? 'red' : (inpValue?.length > 0 ? '#87be1c' : '')">
         </my-date-picker>
         <i class="fa fa-check check-icon2" id="check-icon" aria-hidden="true" *ngIf="inpValue?.length === 8 || inpValue?.length === 9 || inpValue?.length === 15 "></i>
       </div>
@@ -100,7 +100,7 @@
     <div class="col-md-6 paddingTop">
       <label [style.color]="questionItem.error ? 'red' : (questionItem?.input?.length > 0 ? '#87be1c' : '')"
         class="date-time colorf">Zeit</label>
-      <div class="dateandTime">
+      <div class="dateandTime" id="dateandTime" style.border-color="questionItem.error ? 'red' : (questionItem?.input?.length > 0 ? '#87be1c' : '')">
         <select name="hours" class="datetime showHour" [(ngModel)]="selectedHour" id="hour">
           <option value="">HH</option>
           <option [value]="hour" *ngFor="let hour of hours">{{hour}}</option>
@@ -144,12 +144,12 @@
 
   <div *ngIf="bookFlag">
     <div class="form-group">
-      <div class="form-row"style.padding-right="20px">
-        <div class="questionalign" [class]="'col-md-'+ ques.Size__c + ' paddingnone'" *ngFor="let ques of subQuestions" style.padding-right="20px">
+      <div class="form-row">
+        <div class="questionalign" [class]="'col-md-'+ ques.Size__c + ' paddingnone'" *ngFor="let ques of subQuestions">
           <span class="colorf">{{ques.Question__c}}</span>
 
           <div *ngIf="ques.Type__c === 'Text'">
-            <input type="text" [(ngModel)]="ques.input" [id]="ques.Id" required="" (focus)="clearSQError(ques.Id)"
+            <input type="text" [(ngModel)]="ques.input"  class="text" id="text" [id]="ques.Id" required="" (focus)="clearSQError(ques.Id)"
               style.border-color="{{ques.error ? 'red' : ''}}" placeholder="{{ques.Question__c}}"
               oninput="this.value=this.value.replace(/[^a-zA-Z0-9\s.:;,?]/g,'');" />
           </div>
