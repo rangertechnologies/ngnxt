@@ -618,12 +618,6 @@ export class QuestionnaireComponent implements OnInit {
       // Set the SubQuestions
       this.setSubQuestions(this.questionItem.Questions__r.records);
      }
-    //  else if(this.textFlag){
-    //    if(this.questionItem.Size__c === 12){
-    //      document.getElementById("text").style.width="100%"
-    //    }
-    //  }
-    
       else if (this.dtFlag) {
          this.selectedHour ="";
         this.selectedMinute ="";

@@ -147,7 +147,7 @@
     color:#87be1c;
     margin-left: -4rem;
     z-index: 1;
-    margin-top: 1rem;
+     margin-top: 2%; 
 }
 
 .datetime{
@@ -292,6 +292,7 @@
     margin-left: -2rem;
     z-index: 1;
     padding: 5px;
+     margin-top: 1%; 
 }
 
 .align-l{
