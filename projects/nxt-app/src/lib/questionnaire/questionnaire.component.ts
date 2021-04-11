@@ -35,7 +35,6 @@ import {
 })
 export class QuestionnaireComponent implements OnInit {
   @Input() qbId: string;
-  @Input() abId: string;
   @Output() handleEvent = new EventEmitter();
   @Output() handlePage: EventEmitter<any> = new EventEmitter();
 
@@ -153,28 +152,10 @@ export class QuestionnaireComponent implements OnInit {
         this.selectedminuteMap.set(this.questionItem.Id,this.selectedMinute);
   }
 
-
-
- /*ProcessAB(){
-   if (this.abId){
-     console.log('inside abid if');
-      if (this.abId.length == 18){
-        console.log('inside abid proccess')
-        this.ReadAnswerBook(this.abId);
-      }
-   }
- }
-*/
   processQB() {
     //console.log(this.qbId);
-    //console.log('Version in process is 8bf11efa7f91a391d957bf6b5078edc7e656b67c');
-    if (this.abId){
-      if (this.qbId.length == 18) {
-
-        
-      }
-    }    
-    if (this.qbId) {
+    //console.log('Version in process is 8bf11efa7f91a391d957bf6b5078edc7e656b67c');  
+   if (this.qbId) {
       if (this.qbId.length == 18) {
         //console.log('Before Calling readQuestionBook() using ' + this.qbId);
         this.readQuestionBook(this.qbId);
@@ -466,21 +447,7 @@ export class QuestionnaireComponent implements OnInit {
     //console.log(this.questionStack);
   }
   
-  //reading answer book for summary page.
-  private ReadAnswerBook = (uuid: string) => this.sfService.remoteAction('NxtController.process', 
-  ['AnswerBook', 'Update', uuid],
-  this.successReadAnswerBook,
-  this.failureReadAnswerBook);
-   
-  private successReadAnswerBook = (response) =>{
-    console.log(response);
-    console.log('status success Answerbook read')
-   
-  }
-  private failureReadAnswerBook = (response) =>{
-    console.log('status failed Answerbook read')
-  }
- 
+  
   //updating status once Q&A completed.
 
   private updateAnswerBook = (uuid: string) => this.sfService.remoteAction('NxtController.process', 
@@ -503,16 +470,48 @@ export class QuestionnaireComponent implements OnInit {
     this.failureReadBook);
 
   private successReadBook = (response) => {
-    //console.log(response);
+   
+    //console.log(response)
     this.qbItem = response.questionbook;
     this.abItem = response.answerbook;
     //console.log('readingQuestion using ' + this.qbItem.First_Question__c);
+    if(this.abItem.Status__c == 'Pending'){
+      console.log('inside question read')
     this.readQuestion(this.qbItem.First_Question__c);
+    }
+    if(this.abItem.Status__c == 'Completed'){
+     console.log('inside read answer')
+     console.log(this.abItem.Id);
+     this.readAnswerbook(this.abItem.Id);
+         }
   }
 
   private failureReadBook = (response) => {
-
+          //console.log('inside failureread');
+          //console.log(response);
   }
+  
+  private readAnswerbook = (uuid: string) => this.sfService.remoteAction('NxtController.process',
+    ['AnswerBook', 'read', uuid],
+    this.successAnswerBookRead,
+    this.failureAnswerBookRead);
+
+    private successAnswerBookRead = (response) => {
+     
+      if (this.abItem.Status__c =="Completed"){
+       for(var a of this.abItem.Answers__r.records){
+          console.log('hi abdul')   
+       a.Question_Rich_Text__c;
+      }this.innerhtml = this.sanitizer.bypassSecurityTrustHtml( a.Question_Rich_Text__c);
+      }  
+    }
+    private failureAnswerBookRead = (response) => {
+          //console.log('inside failureread');
+          //console.log(response);
+        }
+
+  
+
 
   private readQuestion = (uuid: string) => this.sfService.remoteAction('NxtController.process',
     ['Question', 'read', uuid],
@@ -548,8 +547,8 @@ export class QuestionnaireComponent implements OnInit {
     this.processQuestion();
     this.innerhtml = this.sanitizer.bypassSecurityTrustHtml(this.questionItem.Additional_Rich__c);
     this.trackId();
-
   }
+  
   trackId() {
     var qtrackId = this.questionItem.Tracking_ID__c;
     //console.log('trackId-question'+qtrackId);

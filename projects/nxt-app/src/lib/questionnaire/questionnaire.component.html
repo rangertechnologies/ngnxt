@@ -215,18 +215,14 @@
       <br />{{questionItem.error.errorDetails}}
     </div>
   </div>
-</div>
+ </div>
 
-<div *ngIf="summary && summary.length > 0" class="col-md-12 questionalign">
-  <h3 class="summary-h">
-    {{qbItem.Summary_Text__c}}
-  </h3>
+ <div *ngIf="summary && summary.length > 0" class="col-md-12 questionalign">
+  <h3 class="summary-h">  {{qbItem.Summary_Text__c}}  </h3>
   <div *ngFor="let qa of summary" class="summarydiv">
     <div class="summary">
       <a class="question" (click)="summaryOpen(qa.quesId)" [innerHTML]="getText(qa.quesValue)">{{qa.quesValue}}</a>
-      <div class="answer">
-          {{qa.ansValue}}
-      </div>
+      <div class="answer">  {{qa.ansValue}}   </div>
     </div>
   </div>
 
@@ -240,4 +236,13 @@
         (click)="handleSubmitClick()">{{qbItem.Submit__c}}</button>
     </div>
   </div>
+</div>
+
+<div *ngIf="abItem " class="col-md-12 questionalign">
+  <div *ngFor="let aq of this.abItem.Answers__r.records" class="summarydiv">
+  <div class="summary">
+  <div class="question" [innerHTML]="innerhtml"> {{ aq.Question_Rich_Text__c}}  </div>
+    <div class="answer"> {{aq.Answer_Long__c}} </div>
+  </div>
+</div>
 </div>

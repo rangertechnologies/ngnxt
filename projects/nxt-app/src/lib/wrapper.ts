@@ -72,7 +72,17 @@ export class AnswerBook {
   Id: string;
   Question_Book__c: string;
   Status__c: string;
-  Answers__r?: [];
+  Answers__r?: AnswerR;
+ 
+}
+
+export class Answer {
+  Id: string;
+  Question_Rich_Text__c: string;
+  Answer_Long__c : string;
+}
+export class AnswerR {
+  records?: Answer[];
 }
 
 export class AnswerWrapper {
