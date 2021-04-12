@@ -47,7 +47,7 @@
 
   <div *ngIf="checkboxFlag"  class="">
     <div *ngIf="this.questionItem.error" class="cond-div2">Bitte treffen Sie eine Auswahl</div>
-    <div *ngFor="let item of optionValues" class="radio col-md-12 optiondiv">
+    <div *ngFor="let item of optionValues" class="radio col-md-6 optiondiv">
       <label class="radiocontainer">
         <input type="checkbox" [id]="item.Id" [(ngModel)]="item.checked" (click)="clearError()">
         <span>{{item.Value__c}}</span>
@@ -189,7 +189,7 @@
 
           <div *ngIf="ques.Type__c === 'Dropdown'"class="">
             <select class="custom-select mr-sm-2 dd-height" id="dropdown" [(ngModel)]="ques.input" (change)="Dropdown($event); clearSQError(ques.Id)"style.border-color="{{ques.error ? 'red'  : ''}}"
-            style.color="{{ques.error ? 'red'  : ''}}" >
+			style.color="{{ques.error ? 'red'  : ''}}">
               <option *ngFor="let opt of ques.Question_Options__r.records"  value="{{opt.Value__c}}">{{opt.Value__c}}
               </option>
               <option value="" >Bitte treffen Sie eine Auswahl</option>

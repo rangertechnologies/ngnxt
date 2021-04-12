@@ -123,7 +123,7 @@
     position: relative !important;
     display: flex !important;
     border-radius: 5px !important;
-    height: 41px !important ;
+    height: 38px !important ;
     background-image: url("https://dynamic-css1.s3.ap-south-1.amazonaws.com/External+css/time.svg") !important;
     background-size: 25px !important;
     background-repeat: no-repeat !important;
@@ -147,7 +147,7 @@
     color:#87be1c;
     margin-left: -4rem;
     z-index: 1;
-     margin-top: 2%; 
+     margin-top: 0.6rem; 
 }
 
 .datetime{
@@ -292,7 +292,7 @@
     margin-left: -2rem;
     z-index: 1;
     padding: 5px;
-     margin-top: 1%; 
+     margin-top: 0.4rem; 
 }
 
 .align-l{
