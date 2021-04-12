@@ -117,9 +117,9 @@ export class QuestionnaireComponent implements OnInit {
    }
 
    onDateChanged(event: IMyDateModel) { //to change the border color
-     this.inpValue = event.date.year + '-' + event.date.month + '-' + event.date.day;
-     const htmlElement = window.document.getElementsByClassName('mydp');
-     htmlElement.item(0).setAttribute('style', 'border-color:#87be1c;width:100%');
+   this.inpValue = event.date.year + '-' + event.date.month + '-' + event.date.day;
+    const htmlElement = window.document.getElementsByClassName('mydp');
+    htmlElement.item(0).setAttribute('style', 'border-color:#87be1c;width:100%');
     this.dateMap.set(this.questionItem.Id,event);
     if(event.date.year === 0 && event.date.month === 0 && event.date.day ===0){
       this.dateMap.delete(this.questionItem.Id);
@@ -208,6 +208,7 @@ export class QuestionnaireComponent implements OnInit {
   }
 
   handleNextClick() {
+   
     this.clearError();
     this.handleEvent.emit(this.qbItem.Next_Tracking_ID__c);
     this.recordId = null;
@@ -292,11 +293,19 @@ export class QuestionnaireComponent implements OnInit {
       }
     }
     else  if(this.dtFlag  && this.dateFlag && this.timeFlag){
+      const htmlElement = window.document.getElementsByClassName('mydp');
+      if(this.selDate  === null  || this.inpValue.length === 0){
+       htmlElement.item(0).setAttribute('style', 'border-color:red;width:100%');
+       }else {
+           htmlElement.item(0).setAttribute('style', 'border-color:#87be1c;width:100%');
+       }
       //this.selDate="";
       if(this.inpValue){
         this.selectedHour = this.getProperTime('12', this.selectedHour);
         this.selectedMinute = this.getProperTime('00', this.selectedMinute);
        this.selectedMeridiem = this.getProperTime('AM', this.selectedMeridiem);
+       console.log(this.inpValue.length);
+       
        if(this.questionItem.X24_Hours__c === false){ 
           this.questionItem.input=  (this.selectedMeridiem === 'PM' && this.selectedHour != '12' ? (Number(this.selectedHour) + 12) : this.selectedHour) + ':' + this.selectedMinute;
          if(this.selectedMeridiem === 'AM' && this.selectedHour === '12'){
@@ -308,7 +317,12 @@ export class QuestionnaireComponent implements OnInit {
        }
        this.date_TimeMap();
       }
+      // if(this.selDate === null){
+          // }
       if( this.selDate===null || !this.inpValue){
+        if(this.questionItem.input.length > 0){
+          document.getElementById("dateandTime").style.borderColor="#87be1c";
+        }
         this.questionItem.error = new ErrorWrapper(); return; 
       }
     } else if (this.timeFlag && this.dtFlag && !this.dateFlag ) {
@@ -322,8 +336,11 @@ export class QuestionnaireComponent implements OnInit {
            this.questionItem.error = new ErrorWrapper();
            return;}  }
       else if( this.dateFlag  && this.dtFlag  &&  !this.timeFlag ){
+
         if(this.inpValue.length < 7 || this.selDate === null){
           this.questionItem.error = new ErrorWrapper();
+          const htmlElement = window.document.getElementsByClassName('mydp');
+          htmlElement.item(0).setAttribute('style', 'border-color:red;width:100%');
           return;}
       }
      else if (this.fileFlag) {
