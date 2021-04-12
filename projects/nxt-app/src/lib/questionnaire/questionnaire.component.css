@@ -119,7 +119,7 @@
 }
 
 .dateandTime{
-    border: 1px solid #d2d4d6;
+    border: 2px solid #d2d4d6;
     position: relative !important;
     display: flex !important;
     border-radius: 5px !important;
@@ -137,6 +137,11 @@
 .text{
     width: 100%;
     height: 36px;
+}
+.text1{
+    width: 100%;
+    height: 36px;
+    margin-left:-17px;
 }
 .date-picker{
     width: 100%;

@@ -71,6 +71,7 @@ export class QuestionnaireComponent implements OnInit {
   public dateMap = new Map();
   public selectedhourMap = new Map();
   public selectedminuteMap= new Map();
+  public attributeMap = new Map();
   public attachmentsMap = new Map();
   public sqOptions = new Map();
   public questionStack = [];
@@ -131,6 +132,8 @@ export class QuestionnaireComponent implements OnInit {
     
    this.inpValue="";
     this.selectedMeridiem = "AM";
+    //const htmlElement = window.document.getElementsByClassName('mydp');
+   
       this.processQB();
   }
 
@@ -295,10 +298,11 @@ export class QuestionnaireComponent implements OnInit {
     else  if(this.dtFlag  && this.dateFlag && this.timeFlag){
       const htmlElement = window.document.getElementsByClassName('mydp');
       if(this.selDate  === null  || this.inpValue.length === 0){
-       htmlElement.item(0).setAttribute('style', 'border-color:red;width:100%');
+       htmlElement.item(0).setAttribute('style', 'width:100%;border: 2px solid red');
        }else {
-           htmlElement.item(0).setAttribute('style', 'border-color:#87be1c;width:100%');
+           htmlElement.item(0).setAttribute('style', 'border: 2px solid #87be1c ;width:100%');
        }
+       this.attributeMap.set(this.questionItem.Id, htmlElement.item(0).setAttribute);
       //this.selDate="";
       if(this.inpValue){
         this.selectedHour = this.getProperTime('12', this.selectedHour);
@@ -320,9 +324,9 @@ export class QuestionnaireComponent implements OnInit {
       // if(this.selDate === null){
           // }
       if( this.selDate===null || !this.inpValue){
-        if(this.questionItem.input.length > 0){
-          document.getElementById("dateandTime").style.borderColor="#87be1c";
-        }
+        // if(this.questionItem.input.length > 0){
+        //   document.getElementById("dateandTime").style.borderColor="#87be1c";
+        // }
         this.questionItem.error = new ErrorWrapper(); return; 
       }
     } else if (this.timeFlag && this.dtFlag && !this.dateFlag ) {
@@ -635,6 +639,10 @@ export class QuestionnaireComponent implements OnInit {
          this.selectedHour ="";
         this.selectedMinute ="";
         this.selDate ="";
+        // if(this.attributeMap.has(this.questionItem.Id) ){
+        //   const htmlElement = window.document.getElementsByClassName('mydp');
+        //   htmlElement.item(0).setAttribute =this.attributeMap.get(this.questionItem.Id);
+      //}
         if(this.dateMap.has(this.questionItem.Id) ){
             this.selDate = this.dateMap.get(this.questionItem.Id);
         }
