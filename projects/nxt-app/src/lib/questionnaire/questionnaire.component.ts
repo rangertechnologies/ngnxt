@@ -298,7 +298,7 @@ export class QuestionnaireComponent implements OnInit {
        this.selectedMeridiem = this.getProperTime('AM', this.selectedMeridiem);
        if(this.questionItem.X24_Hours__c === false){ 
           this.questionItem.input=  (this.selectedMeridiem === 'PM' && this.selectedHour != '12' ? (Number(this.selectedHour) + 12) : this.selectedHour) + ':' + this.selectedMinute;
-         if(this.selectedMeridiem === 'PM' && this.selectedHour === '12'){
+         if(this.selectedMeridiem === 'AM' && this.selectedHour === '12'){
            this.questionItem.input = "00"+":"+this.selectedMinute;
          }
         this.inpValue =this.inpValue + 'T' + this.questionItem.input;
