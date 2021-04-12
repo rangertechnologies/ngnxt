@@ -100,7 +100,7 @@
     <div class="col-md-6 paddingTop">
       <label [style.color]="questionItem.error ? 'red' : (questionItem?.input?.length > 0 ? '#87be1c' : '')"
         class="date-time colorf">Zeit</label>
-      <div class="dateandTime" id="dateandTime" style.border-color="questionItem.error ? 'red' : (questionItem?.input?.length > 0 ? '#87be1c' : '')">
+      <div class="dateandTime" id="dateandTime" [style.border-color]="questionItem.error ? 'red' : (questionItem?.input?.length > 0 ? '#87be1c' : '')" (focus)="clearSQError(questionItem.Id)">
         <select name="hours" class="datetime showHour" [(ngModel)]="selectedHour" id="hour">
           <option value="">HH</option>
           <option [value]="hour" *ngFor="let hour of hours">{{hour}}</option>

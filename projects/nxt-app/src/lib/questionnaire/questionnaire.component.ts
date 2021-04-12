@@ -309,11 +309,7 @@ export class QuestionnaireComponent implements OnInit {
        this.date_TimeMap();
       }
       if( this.selDate===null || !this.inpValue){
-        document.getElementById("dateandTime").style.borderColor ="red" ;
-        this.questionItem.error = new ErrorWrapper(); return;
-       
-      }if( this.questionItem.error){
-     document.getElementById("dateandTime").style.borderColor ="red" ;
+        this.questionItem.error = new ErrorWrapper(); return; 
       }
     } else if (this.timeFlag && this.dtFlag && !this.dateFlag ) {
       this.date_TimeMap();
