@@ -73,7 +73,6 @@ export class QuestionnaireComponent implements OnInit {
   public attachmentsMap = new Map();
   public sqOptions = new Map();
   public questionStack = [];
-  
   public attachments: any[] = [];
   public attachmentIdList: any[] = [];
   public attachmentId: string = '';
@@ -129,7 +128,6 @@ export class QuestionnaireComponent implements OnInit {
    this.inpValue="";
     this.selectedMeridiem = "AM";
     this.processQB();
-    console.log('abdul')
   }
 
   ngOnChanges() {
@@ -191,17 +189,21 @@ export class QuestionnaireComponent implements OnInit {
 
   //Summary Question Clickable Logic
   summaryOpen(value: string) {
+    if(this.abItem.Status__c == 'Pending'){
+      if(value == null){
+      return;
+      }
+     this.readQuestion(value);
+     //console.log(' in side summaryopen'+ this.summary.length);
 
-    this.readQuestion(value);
-    //console.log(' in side summaryopen'+ this.summary.length);
-
-    //Assign question stack length from summary part
-    var arrayLength = this.questionStack.length;
-    var lengthValue = this.questionStack.indexOf(value);
-    for (let i = arrayLength; i > lengthValue; i--) {
-      this.questionStack.pop()
+     //Assign question stack length from summary part
+     var arrayLength = this.questionStack.length;
+     var lengthValue = this.questionStack.indexOf(value);
+     for (let i = arrayLength; i > lengthValue; i--) {
+       this.questionStack.pop()
+     }
+     this.summary = [];
     }
-    this.summary = [];
   }
 
   handleNextClick() {
@@ -469,7 +471,9 @@ export class QuestionnaireComponent implements OnInit {
   }
 
   getText(value){
-  return this.sanitizer.bypassSecurityTrustHtml(value);
+    var doc = new DOMParser().parseFromString(value, "text/html");
+    //console.log( doc.documentElement.textContent);
+  return this.sanitizer.bypassSecurityTrustHtml(doc.documentElement.textContent);
   }
 
   handleBackClick() {
@@ -517,13 +521,11 @@ export class QuestionnaireComponent implements OnInit {
     this.abItem = response.answerbook;
     //console.log('readingQuestion using ' + this.qbItem.First_Question__c);
     if(this.abItem.Status__c == 'Pending'){
-      console.log('inside question read')
-    this.readQuestion(this.qbItem.First_Question__c);
+      this.readQuestion(this.qbItem.First_Question__c);
     }
+
     if(this.abItem.Status__c == 'Completed'){
-     console.log('inside read answer')
-     console.log(this.abItem.Id);
-     this.readAnswerbook(this.abItem.Id);
+      this.readAnswerbook(this.abItem.Id);
          }
   }
 
@@ -540,12 +542,14 @@ export class QuestionnaireComponent implements OnInit {
     private successAnswerBookRead = (response) => {
      
       if (this.abItem.Status__c =="Completed"){
-       for(var a of this.abItem.Answers__r.records){
-          console.log('hi abdul')   
-       a.Question_Rich_Text__c;
-      }this.innerhtml = this.sanitizer.bypassSecurityTrustHtml( a.Question_Rich_Text__c);
+        for(var answer of this.abItem.Answers__r.records){
+          var av = answer.Answer_Long__c.split('@@##$$');
+          var answers={ quesValue:answer.Question_Rich_Text__c, ansValue:av};
+          //console.log(answers)
+          this.summary.push(answers);
+        }
       }  
-    }
+     }
     private failureAnswerBookRead = (response) => {
           //console.log('inside failureread');
           //console.log(response);
@@ -560,7 +564,7 @@ export class QuestionnaireComponent implements OnInit {
     this.failureRead);
 
   private successRead = (response) => {
-    console.log(response);
+    //console.log(response);
     // Reset the Variables
     if (this.questionItem) {
       this.inpValue = '';
@@ -608,6 +612,10 @@ export class QuestionnaireComponent implements OnInit {
       ['Answer', 'create', JSON.stringify(this.answerWrap)],
       this.successSave,
       this.failureSave);
+  }
+  htmlDecode(input) {
+    var doc = new DOMParser().parseFromString(input, "text/html");
+    return doc.documentElement.textContent;
   }
 
   private successSave = (response) => {
@@ -973,7 +981,5 @@ export class QuestionnaireComponent implements OnInit {
     this.progressStyle = Math.round(width) + '%';
     //$('#progress #bar').animate({'width':width + '%'});
   }
-
-
 }
 
