@@ -127,8 +127,6 @@ export class QuestionnaireComponent implements OnInit {
     }
    }
   ngOnInit() {
-    console.log("sathik");
-    
    this.inpValue="";
     this.selectedMeridiem = "AM";
     //const htmlElement = window.document.getElementsByClassName('mydp');
