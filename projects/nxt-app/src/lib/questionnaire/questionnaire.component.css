@@ -119,10 +119,10 @@
 }
 
 .dateandTime{
-    border: 2px solid #d2d4d6;
+    border: 1px solid #d2d4d6;
     position: relative !important;
     display: flex !important;
-    border-radius: 5px !important;
+    border-radius: 2px !important;
     height: 38px !important ;
     background-image: url("https://dynamic-css1.s3.ap-south-1.amazonaws.com/External+css/time.svg") !important;
     background-size: 25px !important;
