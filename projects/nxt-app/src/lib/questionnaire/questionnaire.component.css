@@ -1,31 +1,3 @@
-/*Client specific stylings*/
-
-
-.radiocontainer {
-    font-family:Univers LT W01_47 Light1475998 !important;
-    background-color:#D3DBE7 !important;
-    color:#00356F !important;
-}
-
-.colorf{
-    color: #00356f;
-}
-
-.btn-color{
-    background-color: #00356f !important;
-    color: #fff !important;
-}
-
-.btn-back-color{
-    color:#00356f !important;
-    background-color: transparent !important;
-    border-color: transparent !important;
-}
-
-
-
-
-
 /*General Nxt App stylings */
 .questiondiv1{
     padding-left: 25px;
