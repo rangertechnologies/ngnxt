@@ -28,6 +28,7 @@ import {
 	TESTQB
 } from '../sample';
 
+
 @Component({
 	selector: 'lib-questionnaire',
 	templateUrl: './questionnaire.component.html',
@@ -116,9 +117,9 @@ export class QuestionnaireComponent implements OnInit {
    }
 
    onDateChanged(event: IMyDateModel) { //to change the border color
-     this.inpValue = event.date.year + '-' + event.date.month + '-' + event.date.day;
-     const htmlElement = window.document.getElementsByClassName('mydp');
-     htmlElement.item(0).setAttribute('style', 'border-color:#87be1c;width:100%');
+   this.inpValue = event.date.year + '-' + event.date.month + '-' + event.date.day;
+    const htmlElement = window.document.getElementsByClassName('mydp');
+    htmlElement.item(0).setAttribute('style', 'border-color:#87be1c;width:100%');
     this.dateMap.set(this.questionItem.Id,event);
     if(event.date.year === 0 && event.date.month === 0 && event.date.day ===0){
       this.dateMap.delete(this.questionItem.Id);
@@ -128,6 +129,8 @@ export class QuestionnaireComponent implements OnInit {
   ngOnInit() {
    this.inpValue="";
     this.selectedMeridiem = "AM";
+    //const htmlElement = window.document.getElementsByClassName('mydp');
+   
       this.processQB();
   }
 
@@ -159,6 +162,14 @@ export class QuestionnaireComponent implements OnInit {
       dayLabels: { su: 'So', mo: 'Mo', tu: 'Di', we: 'Mi', th: 'Do', fr: 'Fr', sa: 'Sa' },
       monthLabels: { 1: 'Jan', 2: 'Feb', 3: 'Mär', 4: 'Apr', 5: 'Mai', 6: 'Jun', 7: 'Jul', 8: 'Aug', 9: 'Sep', 10: 'Okt', 11: 'Nov', 12: 'Dez' }
     };
+  }
+  change(){
+    const htmlElement = window.document.getElementsByClassName('mydp');
+    if(this.selDate  === null  || this.inpValue.length === 0){
+     htmlElement.item(0).setAttribute('style', 'width:100%;border: 1px solid red');
+     }else {
+         htmlElement.item(0).setAttribute('style', 'border: 1px solid #87be1c ;width:100%');
+     }
   }
 
 
@@ -205,6 +216,7 @@ export class QuestionnaireComponent implements OnInit {
   }
 
   handleNextClick() {
+   
     this.clearError();
     this.handleEvent.emit(this.qbItem.Next_Tracking_ID__c);
     this.recordId = null;
@@ -231,8 +243,6 @@ export class QuestionnaireComponent implements OnInit {
           this.questionItem.error = new ErrorWrapper();
         return;}
      }else if (this.bookFlag) {
-      //quesValue += '@@##$$';
-      //console.log('two')
       this.inpValue = '';
       var hasMissingInput = false;
       for (var item of this.questionItem.Questions__r.records) {
@@ -291,14 +301,16 @@ export class QuestionnaireComponent implements OnInit {
       }
     }
     else  if(this.dtFlag  && this.dateFlag && this.timeFlag){
-      //this.selDate="";
+          this.change();
       if(this.inpValue){
         this.selectedHour = this.getProperTime('12', this.selectedHour);
         this.selectedMinute = this.getProperTime('00', this.selectedMinute);
        this.selectedMeridiem = this.getProperTime('AM', this.selectedMeridiem);
+       //console.log(this.inpValue.length);
+       
        if(this.questionItem.X24_Hours__c === false){ 
           this.questionItem.input=  (this.selectedMeridiem === 'PM' && this.selectedHour != '12' ? (Number(this.selectedHour) + 12) : this.selectedHour) + ':' + this.selectedMinute;
-         if(this.selectedMeridiem === 'PM' && this.selectedHour === '12'){
+         if(this.selectedMeridiem === 'AM' && this.selectedHour === '12'){
            this.questionItem.input = "00"+":"+this.selectedMinute;
          }
         this.inpValue =this.inpValue + 'T' + this.questionItem.input;
@@ -307,8 +319,6 @@ export class QuestionnaireComponent implements OnInit {
        }
        this.date_TimeMap();
       }
-      if( this.selDate===null || !this.inpValue){
-        this.questionItem.error = new ErrorWrapper(); return;}
     } else if (this.timeFlag && this.dtFlag && !this.dateFlag ) {
       this.date_TimeMap();
       if(this.questionItem.X24_Hours__c === false){
@@ -320,6 +330,7 @@ export class QuestionnaireComponent implements OnInit {
            this.questionItem.error = new ErrorWrapper();
            return;}  }
       else if( this.dateFlag  && this.dtFlag  &&  !this.timeFlag ){
+        this.change();
         if(this.inpValue.length < 7 || this.selDate === null){
           this.questionItem.error = new ErrorWrapper();
           return;}
@@ -580,6 +591,8 @@ export class QuestionnaireComponent implements OnInit {
   }
 
   private processQuestion = () => {
+    //console.log(this.questionItem.Size__c);
+    
     this.myDatePickerOptions; 
     this.day();
     //console.log('processing question ' + this.questionItem.Name + ' existing answers are ' + this.answerMap.size); // => ' + JSON.stringify(this.questionItem));
@@ -610,7 +623,6 @@ export class QuestionnaireComponent implements OnInit {
       // Set the SubQuestions
       this.setSubQuestions(this.questionItem.Questions__r.records);
      }
-    
       else if (this.dtFlag) {
          this.selectedHour ="";
         this.selectedMinute ="";
