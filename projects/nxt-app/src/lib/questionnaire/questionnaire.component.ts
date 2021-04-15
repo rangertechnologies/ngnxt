@@ -74,7 +74,6 @@ export class QuestionnaireComponent implements OnInit {
   public attachmentsMap = new Map();
   public sqOptions = new Map();
   public questionStack = [];
-  
   public attachments: any[] = [];
   public attachmentIdList: any[] = [];
   public attachmentId: string = '';
@@ -109,7 +108,7 @@ export class QuestionnaireComponent implements OnInit {
   public answerCount: number = 0;
 
   public myDatePickerOptions: IMyDpOptions = {
-  
+
   };
 
   constructor(private sfService: SalesforceService, private route: ActivatedRoute, private sanitizer: DomSanitizer, private _formBuilder: FormBuilder){
@@ -130,7 +129,7 @@ export class QuestionnaireComponent implements OnInit {
    this.inpValue="";
     this.selectedMeridiem = "AM";
     //const htmlElement = window.document.getElementsByClassName('mydp');
-   
+
       this.processQB();
   }
 
@@ -174,8 +173,8 @@ export class QuestionnaireComponent implements OnInit {
 
   processQB() {
     //console.log(this.qbId);
-    //console.log('Version in process is 8bf11efa7f91a391d957bf6b5078edc7e656b67c');  
-   if (this.qbId) {
+    //console.log('Version in process is 8bf11efa7f91a391d957bf6b5078edc7e656b67c');
+    if (this.qbId) {
       if (this.qbId.length == 18) {
         //console.log('Before Calling readQuestionBook() using ' + this.qbId);
         this.readQuestionBook(this.qbId);
@@ -215,7 +214,7 @@ export class QuestionnaireComponent implements OnInit {
   }
 
   handleNextClick() {
-   
+
     this.clearError();
     this.handleEvent.emit(this.qbItem.Next_Tracking_ID__c);
     this.recordId = null;
@@ -306,8 +305,8 @@ export class QuestionnaireComponent implements OnInit {
         this.selectedMinute = this.getProperTime('00', this.selectedMinute);
        this.selectedMeridiem = this.getProperTime('AM', this.selectedMeridiem);
        //console.log(this.inpValue.length);
-       
-       if(this.questionItem.X24_Hours__c === false){ 
+
+       if(this.questionItem.X24_Hours__c === false){
           this.questionItem.input=  (this.selectedMeridiem === 'PM' && this.selectedHour != '12' ? (Number(this.selectedHour) + 12) : this.selectedHour) + ':' + this.selectedMinute;
          if(this.selectedMeridiem === 'AM' && this.selectedHour === '12'){
            this.questionItem.input = "00"+":"+this.selectedMinute;
@@ -473,7 +472,7 @@ export class QuestionnaireComponent implements OnInit {
 
       }
       }
-      
+
       // Show Thank you Note
     }
   }
@@ -497,15 +496,15 @@ export class QuestionnaireComponent implements OnInit {
     this.readQuestion(this.questionStack.pop());
     //console.log(this.questionStack);
   }
-  
-  
+
+
   //updating status once Q&A completed.
 
-  private updateAnswerBook = (uuid: string) => this.sfService.remoteAction('NxtController.process', 
+  private updateAnswerBook = (uuid: string) => this.sfService.remoteAction('NxtController.process',
   ['AnswerBook', 'Update', uuid],
   this.successupdateAB,
   this.failureupdateAB);
-   
+
   private successupdateAB = (response) =>{
     //console.log(response);
    // console.log('status success')
@@ -521,48 +520,17 @@ export class QuestionnaireComponent implements OnInit {
     this.failureReadBook);
 
   private successReadBook = (response) => {
-   
+
     //console.log(response)
     this.qbItem = response.questionbook;
     this.abItem = response.answerbook;
     //console.log('readingQuestion using ' + this.qbItem.First_Question__c);
-    if(this.abItem.Status__c == 'Pending'){
-      console.log('inside question read')
     this.readQuestion(this.qbItem.First_Question__c);
-    }
-    if(this.abItem.Status__c == 'Completed'){
-     console.log('inside read answer')
-     console.log(this.abItem.Id);
-     this.readAnswerbook(this.abItem.Id);
-         }
   }
 
   private failureReadBook = (response) => {
-          //console.log('inside failureread');
           //console.log(response);
   }
-  
-  private readAnswerbook = (uuid: string) => this.sfService.remoteAction('NxtController.process',
-    ['AnswerBook', 'read', uuid],
-    this.successAnswerBookRead,
-    this.failureAnswerBookRead);
-
-    private successAnswerBookRead = (response) => {
-     
-      if (this.abItem.Status__c =="Completed"){
-       for(var a of this.abItem.Answers__r.records){
-          console.log('hi abdul')   
-       a.Question_Rich_Text__c;
-      }this.innerhtml = this.sanitizer.bypassSecurityTrustHtml( a.Question_Rich_Text__c);
-      }  
-    }
-    private failureAnswerBookRead = (response) => {
-          //console.log('inside failureread');
-          //console.log(response);
-        }
-
-  
-
 
   private readQuestion = (uuid: string) => this.sfService.remoteAction('NxtController.process',
     ['Question', 'read', uuid],
@@ -570,7 +538,7 @@ export class QuestionnaireComponent implements OnInit {
     this.failureRead);
 
   private successRead = (response) => {
-    console.log(response);
+    //console.log(response);
     // Reset the Variables
     if (this.questionItem) {
       this.inpValue = '';
@@ -599,7 +567,7 @@ export class QuestionnaireComponent implements OnInit {
     this.innerhtml = this.sanitizer.bypassSecurityTrustHtml(this.questionItem.Additional_Rich__c);
     this.trackId();
   }
-  
+
   trackId() {
     var qtrackId = this.questionItem.Tracking_ID__c;
     //console.log('trackId-question'+qtrackId);
@@ -641,8 +609,8 @@ export class QuestionnaireComponent implements OnInit {
 
   private processQuestion = () => {
     //console.log(this.questionItem.Size__c);
-    
-    this.myDatePickerOptions; 
+
+    this.myDatePickerOptions;
     this.day();
     //console.log('processing question ' + this.questionItem.Name + ' existing answers are ' + this.answerMap.size); // => ' + JSON.stringify(this.questionItem));
 
@@ -663,9 +631,9 @@ export class QuestionnaireComponent implements OnInit {
       //console.log('inside removing attachment array');
       this.attachments = [];
     }
-   
+
     if (this.checkboxFlag) {
-       
+
       // Set the Options for Checkbox
       this.setOptions(this.questionItem.Question_Options__r.records);
     } else if (this.bookFlag) {

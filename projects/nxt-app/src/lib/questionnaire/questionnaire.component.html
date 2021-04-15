@@ -26,7 +26,7 @@
   </div>
 
   <div *ngIf=" dropdownFlag " class="" [class]="'col-md-'+ questionItem.Size__c + ' paddingnone'">
-    <select class="custom-select mr-sm-2 dd-height" id="dropdown" [(ngModel)]="inpValue" (change)="clearError()"  style.border-color="{{this.questionItem.error ? 'red' :  (inpValue?.length > 0 ? '#87be1c' : '')}}" 
+    <select class="custom-select mr-sm-2 dd-height" id="dropdown" [(ngModel)]="inpValue" (change)="clearError()"  style.border-color="{{this.questionItem.error ? 'red' :  (inpValue?.length > 0 ? '#87be1c' : '')}}"
       style.color="{{questionItem.error ? 'red'  : ''}}">
       <option *ngFor="let opt of questionItem.Question_Options__r.records" class="option" value="{{opt.Value__c}}">{{opt.Value__c}}
       </option>
@@ -240,13 +240,4 @@
         (click)="handleSubmitClick()">{{qbItem.Submit__c}}</button>
     </div>
   </div>
-</div>
-
-<div *ngIf="abItem " class="col-md-12 questionalign">
-  <div *ngFor="let aq of this.abItem.Answers__r.records" class="summarydiv">
-  <div class="summary">
-  <div class="question" [innerHTML]="innerhtml"> {{ aq.Question_Rich_Text__c}}  </div>
-    <div class="answer"> {{aq.Answer_Long__c}} </div>
-  </div>
-</div>
 </div>

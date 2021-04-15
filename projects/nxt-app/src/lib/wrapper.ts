@@ -8,7 +8,7 @@ export class QuestionBook {
   Submit__c : string;
   First_Question__c: string;
   Title__c: string;
- 
+
   Next_Tracking_ID__c: string;
   Back_Tracking_ID__c: string;
   Cancel_Tracking_ID__c: string;
@@ -75,7 +75,7 @@ export class AnswerBook {
   Question_Book__c: string;
   Status__c: string;
   Answers__r?: AnswerR;
- 
+
 }
 
 export class Answer {
