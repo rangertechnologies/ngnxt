@@ -1,11 +1,11 @@
 {
   "name": "nxt-app",
-  "version": "2.0.7",
+  "version": "2.0.8",
   "peerDependencies": {
     "@angular/common": "^10.0.11",
     "@angular/core": "^10.0.11"
   },
   "dependencies": {
-    "tslib": "^2.0.4"
+    "tslib": "^2.0.8"
   }
 }
