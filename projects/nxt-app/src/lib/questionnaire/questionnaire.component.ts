@@ -74,7 +74,6 @@ export class QuestionnaireComponent implements OnInit {
   public attachmentsMap = new Map();
   public sqOptions = new Map();
   public questionStack = [];
-  
   public attachments: any[] = [];
   public attachmentIdList: any[] = [];
   public attachmentId: string = '';
@@ -109,7 +108,7 @@ export class QuestionnaireComponent implements OnInit {
   public answerCount: number = 0;
 
   public myDatePickerOptions: IMyDpOptions = {
-  
+
   };
 
   constructor(private sfService: SalesforceService, private route: ActivatedRoute, private sanitizer: DomSanitizer, private _formBuilder: FormBuilder){
@@ -129,9 +128,7 @@ export class QuestionnaireComponent implements OnInit {
   ngOnInit() {
    this.inpValue="";
     this.selectedMeridiem = "AM";
-    //const htmlElement = window.document.getElementsByClassName('mydp');
-   
-      this.processQB();
+    this.processQB();
   }
 
   ngOnChanges() {
@@ -172,7 +169,6 @@ export class QuestionnaireComponent implements OnInit {
      }
   }
 
-
   processQB() {
     //console.log(this.qbId);
     //console.log('Version in process is 8bf11efa7f91a391d957bf6b5078edc7e656b67c');
@@ -202,21 +198,25 @@ export class QuestionnaireComponent implements OnInit {
 
   //Summary Question Clickable Logic
   summaryOpen(value: string) {
+    if(this.abItem.Status__c == 'Pending'){
+      if(value == null){
+      return;
+      }
+     this.readQuestion(value);
+     //console.log(' in side summaryopen'+ this.summary.length);
 
-    this.readQuestion(value);
-    //console.log(' in side summaryopen'+ this.summary.length);
-
-    //Assign question stack length from summary part
-    var arrayLength = this.questionStack.length;
-    var lengthValue = this.questionStack.indexOf(value);
-    for (let i = arrayLength; i > lengthValue; i--) {
-      this.questionStack.pop()
+     //Assign question stack length from summary part
+     var arrayLength = this.questionStack.length;
+     var lengthValue = this.questionStack.indexOf(value);
+     for (let i = arrayLength; i > lengthValue; i--) {
+       this.questionStack.pop()
+     }
+     this.summary = [];
     }
-    this.summary = [];
   }
 
   handleNextClick() {
-   
+
     this.clearError();
     this.handleEvent.emit(this.qbItem.Next_Tracking_ID__c);
     this.recordId = null;
@@ -307,8 +307,8 @@ export class QuestionnaireComponent implements OnInit {
         this.selectedMinute = this.getProperTime('00', this.selectedMinute);
        this.selectedMeridiem = this.getProperTime('AM', this.selectedMeridiem);
        //console.log(this.inpValue.length);
-       
-       if(this.questionItem.X24_Hours__c === false){ 
+
+       if(this.questionItem.X24_Hours__c === false){
           this.questionItem.input=  (this.selectedMeridiem === 'PM' && this.selectedHour != '12' ? (Number(this.selectedHour) + 12) : this.selectedHour) + ':' + this.selectedMinute;
          if(this.selectedMeridiem === 'AM' && this.selectedHour === '12'){
            this.questionItem.input = "00"+":"+this.selectedMinute;
@@ -474,12 +474,15 @@ export class QuestionnaireComponent implements OnInit {
 
       }
       }
+
       // Show Thank you Note
     }
   }
 
   getText(value){
-  return this.sanitizer.bypassSecurityTrustHtml(value);
+    var doc = new DOMParser().parseFromString(value, "text/html");
+    //console.log( doc.documentElement.textContent);
+  return this.sanitizer.bypassSecurityTrustHtml(doc.documentElement.textContent);
   }
 
   handleBackClick() {
@@ -498,22 +501,70 @@ export class QuestionnaireComponent implements OnInit {
     //console.log(this.questionStack);
   }
 
+
+  //updating status once Q&A completed.
+
+  private updateAnswerBook = (uuid: string) => this.sfService.remoteAction('NxtController.process',
+  ['AnswerBook', 'Update', uuid],
+  this.successupdateAB,
+  this.failureupdateAB);
+
+  private successupdateAB = (response) =>{
+    //console.log(response);
+   // console.log('status success')
+    this.abItem.Status__c = 'Completed'
+  }
+  private failureupdateAB = (response) =>{
+    //console.log('status failed')
+  }
+
   private readQuestionBook = (uuid: string) => this.sfService.remoteAction('NxtController.process',
     ['QuestionBook', 'read', uuid],
     this.successReadBook,
     this.failureReadBook);
 
   private successReadBook = (response) => {
-    //console.log(response);
+
+    //console.log(response)
     this.qbItem = response.questionbook;
     this.abItem = response.answerbook;
     //console.log('readingQuestion using ' + this.qbItem.First_Question__c);
-    this.readQuestion(this.qbItem.First_Question__c);
+    if(this.abItem.Status__c == 'Pending'){
+      this.readQuestion(this.qbItem.First_Question__c);
+    }
+
+    if(this.abItem.Status__c == 'Completed'){
+      this.readAnswerbook(this.abItem.Id);
+         }
   }
 
   private failureReadBook = (response) => {
-
+          //console.log(response);
   }
+  
+  private readAnswerbook = (uuid: string) => this.sfService.remoteAction('NxtController.process',
+    ['AnswerBook', 'read', uuid],
+    this.successAnswerBookRead,
+    this.failureAnswerBookRead);
+
+    private successAnswerBookRead = (response) => {
+     
+      if (this.abItem.Status__c =="Completed"){
+        for(var answer of this.abItem.Answers__r.records){
+          var av = answer.Answer_Long__c.split('@@##$$');
+          var answers={ quesValue:answer.Question_Rich_Text__c, ansValue:av};
+          //console.log(answers)
+          this.summary.push(answers);
+        }
+      }  
+     }
+    private failureAnswerBookRead = (response) => {
+          //console.log('inside failureread');
+          //console.log(response);
+        }
+
+  
+
 
   private readQuestion = (uuid: string) => this.sfService.remoteAction('NxtController.process',
     ['Question', 'read', uuid],
@@ -549,8 +600,8 @@ export class QuestionnaireComponent implements OnInit {
     this.processQuestion();
     this.innerhtml = this.sanitizer.bypassSecurityTrustHtml(this.questionItem.Additional_Rich__c);
     this.trackId();
-
   }
+
   trackId() {
     var qtrackId = this.questionItem.Tracking_ID__c;
     //console.log('trackId-question'+qtrackId);
@@ -569,6 +620,10 @@ export class QuestionnaireComponent implements OnInit {
       ['Answer', 'create', JSON.stringify(this.answerWrap)],
       this.successSave,
       this.failureSave);
+  }
+  htmlDecode(input) {
+    var doc = new DOMParser().parseFromString(input, "text/html");
+    return doc.documentElement.textContent;
   }
 
   private successSave = (response) => {
@@ -592,8 +647,8 @@ export class QuestionnaireComponent implements OnInit {
 
   private processQuestion = () => {
     //console.log(this.questionItem.Size__c);
-    
-    this.myDatePickerOptions; 
+
+    this.myDatePickerOptions;
     this.day();
     //console.log('processing question ' + this.questionItem.Name + ' existing answers are ' + this.answerMap.size); // => ' + JSON.stringify(this.questionItem));
 
@@ -614,9 +669,9 @@ export class QuestionnaireComponent implements OnInit {
       //console.log('inside removing attachment array');
       this.attachments = [];
     }
-   
+
     if (this.checkboxFlag) {
-       
+
       // Set the Options for Checkbox
       this.setOptions(this.questionItem.Question_Options__r.records);
     } else if (this.bookFlag) {
@@ -894,6 +949,7 @@ export class QuestionnaireComponent implements OnInit {
 
   handleSubmitClick() {
     this.handleEvent.emit(this.qbItem.Submit_Tracking_ID__c);
+    this.updateAnswerBook(this.abItem.Id);
   }
 
   private createAttachment = (fileWrapper: any) => this.sfService.remoteAction('NxtController.process',
@@ -934,7 +990,5 @@ export class QuestionnaireComponent implements OnInit {
     this.progressStyle = Math.round(width) + '%';
     //$('#progress #bar').animate({'width':width + '%'});
   }
-
-
 }
 
