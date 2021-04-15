@@ -317,6 +317,10 @@ export class QuestionnaireComponent implements OnInit {
        }if(this.questionItem.X24_Hours__c === true){
          this.questionItem.input = this.selectedHour + ":" + this.selectedMinute;
        }
+       if(this.selDate === null || !this.inpValue){
+        this.questionItem.error = new ErrorWrapper();
+        return;
+       }
        this.date_TimeMap();
       }
     } else if (this.timeFlag && this.dtFlag && !this.dateFlag ) {
