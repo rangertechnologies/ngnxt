@@ -98,7 +98,7 @@
   <div *ngIf="timeFlag">
     <div class="col-md-6 paddingTop">
       <label class="date-time colorf">Zeit</label>
-      <div class="dateandTime" id="dateandTime" [style.border-color]="questionItem.error ? 'red' :(questionItem?.input?.length > 0) ? '#87be1c' :questionItem.error ? 'red': ''"  (focus)="clearSQError">
+      <div class="dateandTime" id="dateandTime" [style.border-color]="questionItem.error ? 'red' :(questionItem?.input?.length > 0) ? '#87be1c': ''"  (focus)="clearSQError">
         <select name="hours" class="datetime showHour" [(ngModel)]="selectedHour" id="hour" (focus)="clearError()">
           <option value="">HH</option>
           <option [value]="hour" *ngFor="let hour of hours">{{hour}}</option>
@@ -186,7 +186,7 @@
           </div>
 
           <div *ngIf="ques.Type__c === 'Dropdown'"class="">
-            <select class="custom-select mr-sm-2 dd-height" id="dropdown" [(ngModel)]="ques.input" (change)="Dropdown($event); clearSQError(ques.Id)"style.border-color=" {{ques.error ? 'red'  : '#858585'}}"
+            <select class="custom-select mr-sm-2 dd-height" id="dropdown" [(ngModel)]="ques.input" (focus)="Dropdown($event); clearSQError(ques.Id)"style.border-color=" {{ques.error ? 'red'  : '#d2d4d6'}}"
 		        	style.color="{{ques.error ? 'red'  : ''}}" >
               <option *ngFor="let opt of ques.Question_Options__r.records" class="option"  value="{{opt.Value__c}}">{{opt.Value__c}}
               </option>

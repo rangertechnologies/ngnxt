@@ -91,11 +91,10 @@
 }
 
 .dateandTime{
-    border: 1px solid #d2d4d6 !important;
+    border: 1px solid #d2d4d6;
     position: relative !important;
     display: flex !important;
     border-radius: 2px !important;
-    height: 38px ;
     background-image: url("https://dynamic-css1.s3.ap-south-1.amazonaws.com/External+css/time.svg") !important;
     background-size: 25px !important;
     background-repeat: no-repeat !important;
@@ -116,7 +115,7 @@
     margin-left:-17px !important;
 }
 #dropdown{
-    border: 1px solid !important;
+    border: 1px solid #d2d4d6;
 }
 .option{
     color:  #767676 !important;
@@ -418,7 +417,7 @@ width: 100% !important;
     color: #00356f !important;
 }
 
-.infodiv p {
+.infodiv P {
     margin-bottom: 0px !important;
     text-align: left !important;
     text-decoration:inherit !important;
