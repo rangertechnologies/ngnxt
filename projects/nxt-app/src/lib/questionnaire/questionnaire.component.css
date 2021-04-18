@@ -105,11 +105,11 @@
 .dis-flex{
     display: flex !important;
 }
-.text{
+.textBox{
     width: 100% !important;
     height: 36px;
 }
-.text1{
+.textBox1{
     width: 100% !important;
     height: 36px;
     margin-left:-17px !important;
@@ -241,6 +241,7 @@
     text-align: left !important;
     cursor: pointer !important;
     display: list-item !important;
+    list-style-type: none;
 }
 
 .question {
