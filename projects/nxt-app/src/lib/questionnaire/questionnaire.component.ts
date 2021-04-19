@@ -1,4 +1,4 @@
-import { Component, OnInit, OnChanges, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, OnChanges, Input, Output, EventEmitter ,ViewEncapsulation} from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { SalesforceService } from '../services/salesforce.service';
 import { IMyDateModel, IMyDpOptions } from 'mydatepicker';
@@ -6,34 +6,35 @@ import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { FormBuilder } from '@angular/forms';
 
 import {
-	Question,
-	QuestionBook,
-	AnswerBook,
-	AnswerWrapper,
-	ErrorWrapper,
-	Option,
-	OptionValue,
-	AttachmentWrapper,
-	Attachment
+Question,
+QuestionBook,
+AnswerBook,
+AnswerWrapper,
+ErrorWrapper,
+Option,
+OptionValue,
+AttachmentWrapper,
+Attachment
 } from '../wrapper';
 
 import {
-	TESTQUESTION,
-	DTQUESTION,
-	FILEQUESTION,
-	TAQUESTION,
-	RADIOQUESTION,
-	CHECKQUESTION,
-	BOOKQUESTION,
-	TESTQB
+TESTQUESTION,
+DTQUESTION,
+FILEQUESTION,
+TAQUESTION,
+RADIOQUESTION,
+CHECKQUESTION,
+BOOKQUESTION,
+TESTQB
 } from '../sample';
 
-
 @Component({
-	selector: 'lib-questionnaire',
-	templateUrl: './questionnaire.component.html',
-	styleUrls: [ './questionnaire.component.css' ]
+selector: 'lib-questionnaire',
+templateUrl: './questionnaire.component.html',
+encapsulation: ViewEncapsulation.None,
+styleUrls: [ './questionnaire.component.css' ]
 })
+
 export class QuestionnaireComponent implements OnInit {
   @Input() qbId: string;
   @Output() handleEvent = new EventEmitter();
@@ -259,9 +260,6 @@ export class QuestionnaireComponent implements OnInit {
               }
         }
         if (item.Type__c == 'Dropdown'  ){
-          if(item.input){
-            document.getElementById("dropdown").style.borderColor = "#87be1c"
-          }
           if(!item.input){
            item.input = "";
             item.error = new ErrorWrapper();
@@ -316,6 +314,10 @@ export class QuestionnaireComponent implements OnInit {
         this.inpValue =this.inpValue + 'T' + this.questionItem.input;
        }if(this.questionItem.X24_Hours__c === true){
          this.questionItem.input = this.selectedHour + ":" + this.selectedMinute;
+       }
+       if(this.selDate === null || !this.inpValue){
+        this.questionItem.error = new ErrorWrapper();
+        return;
        }
        this.date_TimeMap();
       }
