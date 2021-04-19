@@ -574,6 +574,7 @@ export class QuestionnaireComponent implements OnInit {
   private successRead = (response) => {
     //console.log(response);
     // Reset the Variables
+ 
     if (this.questionItem) {
       this.inpValue = '';
       this.answerWrap = new AnswerWrapper();
@@ -851,7 +852,9 @@ export class QuestionnaireComponent implements OnInit {
 
       if (qaMap.has(ques.Question_No__c)) {
         //console.log('Setting input for the subQuestion ' + ques.Question_No__c + ' with ' + ansStr);
+        if(ques.Type__c !='File'){
         ques.input = qaMap.get(ques.Question_No__c);
+        }
       }
 
       this.subQuestions.push(ques);
