@@ -4,12 +4,15 @@ import { QuestionnaireComponent } from './questionnaire/questionnaire.component'
 import { CommonModule } from "@angular/common";
 import { FormsModule,ReactiveFormsModule } from '@angular/forms';
 import { MyDatePickerModule } from 'mydatepicker';
+import { DebounceClickDirectiveDirective } from './questionnaire/debounce-click-directive.directive';
 @NgModule({
-  declarations: [NxtAppComponent, QuestionnaireComponent],
+  declarations: [NxtAppComponent, QuestionnaireComponent, DebounceClickDirectiveDirective, ] ,
+   
   imports: [
     CommonModule, FormsModule,
     MyDatePickerModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+   
   ],
   exports: [NxtAppComponent, QuestionnaireComponent]
 })
