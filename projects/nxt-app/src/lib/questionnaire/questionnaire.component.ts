@@ -101,6 +101,7 @@ export class QuestionnaireComponent implements OnInit {
   public valueName1: string = '';
   public bookFlagAccept: string[];
   public recordId:string;
+  public currentQuestionId: string;
 
 
 
@@ -217,7 +218,12 @@ export class QuestionnaireComponent implements OnInit {
   }
 
   handleNextClick() {
-
+    console.log('inside handleclick next');
+    console.log('this question item');
+    console.log(this.questionItem.Question_Text__c);
+    if(this.currentQuestionId === null){
+      return;
+    }
     this.clearError();
     this.handleEvent.emit(this.qbItem.Next_Tracking_ID__c);
     this.recordId = null;
@@ -585,6 +591,7 @@ export class QuestionnaireComponent implements OnInit {
       this.resetFlag(this.questionItem.Type__c);
     }
     this.questionItem = response.question;
+    this.currentQuestionId = this.questionItem.Id;
     this.handlePage.emit(this.questionItem.Tracking_ID__c);
     // Handle the subQuestion options
     if (response.sqOptions) {
@@ -617,6 +624,10 @@ export class QuestionnaireComponent implements OnInit {
 
   private saveAnswer = () => {
     // Set the Answer Number based on the Question Stack Length
+    if(this.currentQuestionId === null){
+      console.log('inside save answer not to call multiple time answer create');
+      return;
+    }
     this.answerWrap.ansNumber = this.questionStack.length + 1;
 
     this.sfService.remoteAction('NxtController.process',
@@ -631,8 +642,9 @@ export class QuestionnaireComponent implements OnInit {
 
   private successSave = (response) => {
     //console.log('size',this.answerMap.size);
-    //console.log('inside successSave');
+    console.log('inside successSave');
     //console.log(response);
+    this.currentQuestionId = null;
     if (response.status == 'success') {
       //this.abItem = response.answerbook;
       this.answerMap.set(response.answer.quesId, response.answer);
