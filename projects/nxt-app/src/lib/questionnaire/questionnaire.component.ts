@@ -220,8 +220,10 @@ export class QuestionnaireComponent implements OnInit {
   handleNextClick() {
     console.log('inside handleclick next');
     console.log('this question item');
-    console.log(this.questionItem.Question_Text__c);
+    console.log(this.questionItem);
+    console.log('this.currentQuestionId '+this.currentQuestionId);
     if(this.currentQuestionId === null){
+      console.log('this.currentQuestionId is null therefore returning'+this.currentQuestionId);
       return;
     }
     this.clearError();
@@ -624,10 +626,12 @@ export class QuestionnaireComponent implements OnInit {
 
   private saveAnswer = () => {
     // Set the Answer Number based on the Question Stack Length
-    if(this.currentQuestionId === null){
-      console.log('inside save answer not to call multiple time answer create');
-      return;
-    }
+    console.log('inside save answer '+this.currentQuestionId);
+    this.currentQuestionId = null;
+    // if(this.currentQuestionId === null){
+    //   console.log('inside save answer not to call multiple time answer create');
+    //   return;
+    // }
     this.answerWrap.ansNumber = this.questionStack.length + 1;
 
     this.sfService.remoteAction('NxtController.process',
@@ -644,7 +648,6 @@ export class QuestionnaireComponent implements OnInit {
     //console.log('size',this.answerMap.size);
     console.log('inside successSave');
     //console.log(response);
-    this.currentQuestionId = null;
     if (response.status == 'success') {
       //this.abItem = response.answerbook;
       this.answerMap.set(response.answer.quesId, response.answer);
