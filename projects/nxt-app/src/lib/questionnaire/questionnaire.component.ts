@@ -845,6 +845,7 @@ export class QuestionnaireComponent implements OnInit {
       sQues.Id = ques.Id;
       sQues.Name = ques.Name;
       sQues.Question__c = ques.Question__c;
+      sQues.Error_Message__c = ques.Error_Message__c;
       sQues.Type__c = ques.Type__c;
       sQues.Next_Question__c = ques.Next_Question__c;
       sQues.Is_Optional__c = ques.Is_Optional__c;
