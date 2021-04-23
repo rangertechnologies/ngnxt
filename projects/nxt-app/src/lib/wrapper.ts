@@ -6,9 +6,9 @@ export class QuestionBook {
   Cancel__c : string;
   Back__c : string;
   Submit__c : string;
+  Edit__c : string;
   First_Question__c: string;
   Title__c: string;
-
   Next_Tracking_ID__c: string;
   Back_Tracking_ID__c: string;
   Cancel_Tracking_ID__c: string;
