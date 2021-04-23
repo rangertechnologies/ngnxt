@@ -29,6 +29,7 @@ export class Question {
   Is_Optional__c: boolean;
   Is_Title__c: boolean;
   X24_Hours__c: boolean;
+  Error_Message__c: string;
   Is_Date_Backward__c : boolean;
   Is_Date_Forward__c : boolean;
   Group__c: string;

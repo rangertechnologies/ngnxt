@@ -30,12 +30,12 @@
       style.color="{{questionItem.error ? 'red'  : ''}}">
       <option *ngFor="let opt of questionItem.Question_Options__r.records" class="option" value="{{opt.Value__c}}">{{opt.Value__c}}
       </option>
-      <option value="e" disabled hidden>Bitte treffen Sie eine Auswahl</option>
+      <option value="e" disabled hidden>{{questionItem.Error_Message__c}}</option>
     </select>
   </div>
 
   <div *ngIf="radioFlag || dataFlag" class="">
-    <div *ngIf="this.questionItem.error" class="cond-div2">Bitte treffen Sie eine Auswahl</div>
+    <div *ngIf="this.questionItem.error" class="cond-div2">{{questionItem.Error_Message__c}}</div>
     <div *ngFor="let opt of questionItem.Question_Options__r.records" class="radio col-md-6 optiondiv">
       <label class="radiocontainer">
         <input type="radio" [id]="opt.Id" [(ngModel)]="inpValue" name="inpValue" value="{{opt.Value__c}}"
@@ -46,7 +46,7 @@
   </div>
 
   <div *ngIf="checkboxFlag"  class="">
-    <div *ngIf="this.questionItem.error" class="cond-div2">Bitte treffen Sie eine Auswahl</div>
+    <div *ngIf="this.questionItem.error" class="cond-div2" >{{questionItem.Error_Message__c}}</div>
     <div *ngFor="let item of optionValues" class="radio col-md-6 optiondiv">
       <label class="radiocontainer">
         <input type="checkbox" [id]="item.Id" [(ngModel)]="item.checked" (click)="clearError()">
@@ -176,7 +176,7 @@
           </ul>
 
           <div *ngIf="ques.Type__c === 'Radio'" class="">
-            <div *ngIf="ques.error" class="cond-div2">Bitte treffen Sie eine Auswahl</div>
+            <div *ngIf="ques.error" class="cond-div2" >{{ques.Error_Message__c}}</div>
             <div *ngFor="let opt of ques.Question_Options__r.records" class="radio col-md-6 optiondiv" >
               <label class="radiocontainer">
                 <input type="radio" [id]="ques.Id" [(ngModel)]="ques.input" value="{{opt.Value__c}}" (change)="Dropdown($event); clearSQError(ques.Id)">
@@ -190,7 +190,7 @@
 		        	style.color="{{ques.error ? 'red'  : ''}}" >
               <option *ngFor="let opt of ques.Question_Options__r.records" class="option"  value="{{opt.Value__c}}">{{opt.Value__c}}
               </option>
-              <option value="" disabled hidden >Bitte treffen Sie eine Auswahl</option>
+              <option value="" disabled hidden >{{ques.Error_Message__c}}</option>
             </select>
           </div>
           <i class="fa fa-check check-icon4" aria-hidden="true" *ngIf="questionItem?.input?.length > 0"></i>
