@@ -225,7 +225,17 @@
   <h3 class="summary-h">  {{qbItem.Summary_Text__c}}  </h3>
   <div *ngFor="let qa of summary" class="summarydiv">
     <div class="summary">
-      <a class="question" (click)="summaryOpen(qa.quesId)" [innerHTML]="getText(qa.quesValue)">{{qa.quesValue}}</a>
+      
+      <div *ngIf = "!qbItem.Edit__c">
+      <a class="question" (click)="handleEditClick(qa.quesId)" [innerHTML]="getText(qa.quesValue)">{{qa.quesValue}}</a>
+    </div>
+
+      <div *ngIf= "qbItem.Edit__c">
+        <div class="question" [innerHTML]="getText(qa.quesValue)">{{qa.quesValue}}</div>
+        <button class="edit" (click)="handleEditClick(qa.quesId)" >
+          <img src="">{{qbItem.Edit__c}}</button>
+      </div>
+
       <div class="answer">  {{qa.ansValue}}   </div>
     </div>
   </div>

@@ -199,11 +199,12 @@ export class QuestionnaireComponent implements OnInit {
   }
 
   //Summary Question Clickable Logic
-  summaryOpen(value: string) {
+  handleEditClick(value: string){
     if(this.abItem.Status__c == 'Pending'){
       if(value == null){
       return;
       }
+
      this.readQuestion(value);
      //console.log(' in side summaryopen'+ this.summary.length);
 
