@@ -258,7 +258,7 @@
 
 .question {
     font-weight: bold !important;
-    color:#00356F !important;
+    color:#00356F;
 }
 
 .answer {
@@ -359,10 +359,10 @@ width: 100% !important;
 
 
 .btn-primary:hover {
-    color: #fff !important;
+    color: #fff ;
 }
 .btn-primary:focus, .btn-primary.focus {
-    color: #fff !important;
+    color: #fff;
     box-shadow: 0 0 0 0.2rem rgba(38, 143, 255, 0.5) !important;
 }
 .btn-primary.disabled, .btn-primary:disabled {
@@ -370,7 +370,7 @@ width: 100% !important;
 }
 .btn-primary:not(:disabled):not(.disabled):active, .btn-primary:not(:disabled):not(.disabled).active,
     .show > .btn-primary.dropdown-toggle {
-      color: #fff !important;
+      color: #fff;
 }
 .btn-primary:not(:disabled):not(.disabled):active:focus, .btn-primary:not(:disabled):not(.disabled).active:focus,
     .show > .btn-primary.dropdown-toggle:focus {
