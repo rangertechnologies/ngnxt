@@ -317,6 +317,7 @@ export class QuestionnaireComponent implements OnInit {
         this.inpValue =this.inpValue + 'T' + this.questionItem.input;
        }if(this.questionItem.X24_Hours__c === true){
          this.questionItem.input = this.selectedHour + ":" + this.selectedMinute;
+         this.inpValue =this.inpValue + 'T' + this.questionItem.input;
        }
        if(this.selDate === null || !this.inpValue){
         this.questionItem.error = new ErrorWrapper();
