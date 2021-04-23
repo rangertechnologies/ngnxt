@@ -246,7 +246,7 @@
 
 .question {
     font-weight: bold !important;
-    color:#00356F !important;
+    color:#00356F;
 }
 
 .answer {
@@ -347,7 +347,7 @@ width: 100% !important;
 
 
 .btn-primary:hover {
-    color: #fff !important;
+    color: #fff ;
 }
 .btn-primary:focus, .btn-primary.focus {
     color: #fff !important;
