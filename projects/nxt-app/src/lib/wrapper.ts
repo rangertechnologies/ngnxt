@@ -6,9 +6,9 @@ export class QuestionBook {
   Cancel__c : string;
   Back__c : string;
   Submit__c : string;
+  Edit__c : string;
   First_Question__c: string;
   Title__c: string;
-
   Next_Tracking_ID__c: string;
   Back_Tracking_ID__c: string;
   Cancel_Tracking_ID__c: string;
@@ -29,6 +29,7 @@ export class Question {
   Is_Optional__c: boolean;
   Is_Title__c: boolean;
   X24_Hours__c: boolean;
+  Error_Message__c: string;
   Is_Date_Backward__c : boolean;
   Is_Date_Forward__c : boolean;
   Group__c: string;
