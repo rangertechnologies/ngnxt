@@ -298,7 +298,7 @@ export class QuestionnaireComponent implements OnInit {
      }
      else if(this.dropdownFlag){
       if(this.inpValue.length <= 1){
-       this.inpValue="e";
+       this.inpValue=".";  
       this.questionItem.error = new ErrorWrapper();
       }
     }
@@ -623,7 +623,9 @@ export class QuestionnaireComponent implements OnInit {
 
   private saveAnswer = () => {
     // Set the Answer Number based on the Question Stack Length
-    this.currentQuestionId = null;
+    if(this.inpValue != "."){
+      this.currentQuestionId = null;
+    }
     this.answerWrap.ansNumber = this.questionStack.length + 1;
 
     this.sfService.remoteAction('NxtController.process',
