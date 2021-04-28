@@ -30,12 +30,12 @@
       style.color="{{questionItem.error ? 'red'  : ''}}">
       <option *ngFor="let opt of questionItem.Question_Options__r.records" class="option" value="{{opt.Value__c}}">{{opt.Value__c}}
       </option>
-      <option value="e" disabled hidden>Bitte treffen Sie eine Auswahl</option>
+      <option value="." disabled hidden>Bitte treffen Sie eine Auswahl</option>
     </select>
   </div>
 
   <div *ngIf="radioFlag || dataFlag" class="">
-    <div *ngIf="this.questionItem.error" class="cond-div2">Bitte treffen Sie eine Auswahl</div>
+    <div *ngIf="this.questionItem.error" class="cond-div2">{{questionItem.Error_Message__c}}</div>
     <div *ngFor="let opt of questionItem.Question_Options__r.records" class="radio col-md-6 optiondiv">
       <label class="radiocontainer">
         <input type="radio" [id]="opt.Id" [(ngModel)]="inpValue" name="inpValue" value="{{opt.Value__c}}"
@@ -46,7 +46,7 @@
   </div>
 
   <div *ngIf="checkboxFlag"  class="">
-    <div *ngIf="this.questionItem.error" class="cond-div2">Bitte treffen Sie eine Auswahl</div>
+    <div *ngIf="this.questionItem.error" class="cond-div2" >{{questionItem.Error_Message__c}}</div>
     <div *ngFor="let item of optionValues" class="radio col-md-6 optiondiv">
       <label class="radiocontainer">
         <input type="checkbox" [id]="item.Id" [(ngModel)]="item.checked" (click)="clearError()">
@@ -176,7 +176,7 @@
           </ul>
 
           <div *ngIf="ques.Type__c === 'Radio'" class="">
-            <div *ngIf="ques.error" class="cond-div2">Bitte treffen Sie eine Auswahl</div>
+            <div *ngIf="ques.error" class="cond-div2" >{{ques.Error_Message__c}}</div>
             <div *ngFor="let opt of ques.Question_Options__r.records" class="radio col-md-6 optiondiv" >
               <label class="radiocontainer">
                 <input type="radio" [id]="ques.Id" [(ngModel)]="ques.input" value="{{opt.Value__c}}" (change)="Dropdown($event); clearSQError(ques.Id)">
@@ -190,7 +190,7 @@
 		        	style.color="{{ques.error ? 'red'  : ''}}" >
               <option *ngFor="let opt of ques.Question_Options__r.records" class="option"  value="{{opt.Value__c}}">{{opt.Value__c}}
               </option>
-              <option value="" disabled hidden >Bitte treffen Sie eine Auswahl</option>
+              <option value="" disabled hidden >{{ques.Error_Message__c}}</option>
             </select>
           </div>
           <i class="fa fa-check check-icon4" aria-hidden="true" *ngIf="questionItem?.input?.length > 0"></i>
@@ -224,8 +224,18 @@
  <div *ngIf="summary && summary.length > 0" class="col-md-12 questionalign">
   <h3 class="summary-h">  {{qbItem.Summary_Text__c}}  </h3>
   <div *ngFor="let qa of summary" class="summarydiv">
-    <div class="summary" >
-      <a class="question" (click)="summaryOpen(qa.quesId)" [innerHTML]="getText(qa.quesValue)">{{qa.quesValue}}</a>
+    <div class="summary">
+      
+      <div *ngIf = "!qbItem.Edit__c">
+      <a class="question" (click)="handleEditClick(qa.quesId)" [innerHTML]="getText(qa.quesValue)">{{qa.quesValue}}</a>
+    </div>
+
+      <div *ngIf= "qbItem.Edit__c">
+        <div class="question" [innerHTML]="getText(qa.quesValue)">{{qa.quesValue}}</div>
+        <button class="edit" (click)="handleEditClick(qa.quesId)" >
+          <img src="">{{qbItem.Edit__c}}</button>
+      </div>
+
       <div class="answer">  {{qa.ansValue}}   </div>
     </div>
   </div>

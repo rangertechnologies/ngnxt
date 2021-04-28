@@ -101,6 +101,7 @@ export class QuestionnaireComponent implements OnInit {
   public valueName1: string = '';
   public bookFlagAccept: string[];
   public recordId:string;
+  public currentQuestionId: string;
 
 
 
@@ -198,11 +199,12 @@ export class QuestionnaireComponent implements OnInit {
   }
 
   //Summary Question Clickable Logic
-  summaryOpen(value: string) {
+  handleEditClick(value: string){
     if(this.abItem.Status__c == 'Pending'){
       if(value == null){
       return;
       }
+
      this.readQuestion(value);
      //console.log(' in side summaryopen'+ this.summary.length);
 
@@ -217,7 +219,9 @@ export class QuestionnaireComponent implements OnInit {
   }
 
   handleNextClick() {
-
+    if(this.currentQuestionId === null){
+      return;
+    }
     this.clearError();
     this.handleEvent.emit(this.qbItem.Next_Tracking_ID__c);
     this.recordId = null;
@@ -294,7 +298,7 @@ export class QuestionnaireComponent implements OnInit {
      }
      else if(this.dropdownFlag){
       if(this.inpValue.length <= 1){
-       this.inpValue="e";
+       this.inpValue=".";  
       this.questionItem.error = new ErrorWrapper();
       }
     }
@@ -314,6 +318,7 @@ export class QuestionnaireComponent implements OnInit {
         this.inpValue =this.inpValue + 'T' + this.questionItem.input;
        }if(this.questionItem.X24_Hours__c === true){
          this.questionItem.input = this.selectedHour + ":" + this.selectedMinute;
+         this.inpValue =this.inpValue + 'T' + this.questionItem.input;
        }
        if(this.selDate === null || !this.inpValue){
         this.questionItem.error = new ErrorWrapper();
@@ -585,6 +590,7 @@ export class QuestionnaireComponent implements OnInit {
       this.resetFlag(this.questionItem.Type__c);
     }
     this.questionItem = response.question;
+    this.currentQuestionId = this.questionItem.Id;
     this.handlePage.emit(this.questionItem.Tracking_ID__c);
     // Handle the subQuestion options
     if (response.sqOptions) {
@@ -617,6 +623,9 @@ export class QuestionnaireComponent implements OnInit {
 
   private saveAnswer = () => {
     // Set the Answer Number based on the Question Stack Length
+    if(this.inpValue != "."){
+      this.currentQuestionId = null;
+    }
     this.answerWrap.ansNumber = this.questionStack.length + 1;
 
     this.sfService.remoteAction('NxtController.process',
@@ -630,9 +639,6 @@ export class QuestionnaireComponent implements OnInit {
   }
 
   private successSave = (response) => {
-    //console.log('size',this.answerMap.size);
-    //console.log('inside successSave');
-    //console.log(response);
     if (response.status == 'success') {
       //this.abItem = response.answerbook;
       this.answerMap.set(response.answer.quesId, response.answer);
@@ -841,6 +847,7 @@ export class QuestionnaireComponent implements OnInit {
       sQues.Id = ques.Id;
       sQues.Name = ques.Name;
       sQues.Question__c = ques.Question__c;
+      sQues.Error_Message__c = ques.Error_Message__c;
       sQues.Type__c = ques.Type__c;
       sQues.Next_Question__c = ques.Next_Question__c;
       sQues.Is_Optional__c = ques.Is_Optional__c;
