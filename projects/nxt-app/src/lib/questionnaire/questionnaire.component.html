@@ -224,7 +224,7 @@
  <div *ngIf="summary && summary.length > 0" class="col-md-12 questionalign">
   <h3 class="summary-h">  {{qbItem.Summary_Text__c}}  </h3>
   <div *ngFor="let qa of summary" class="summarydiv">
-    <div class="summary">
+    <div class="summary" >
       <a class="question" (click)="summaryOpen(qa.quesId)" [innerHTML]="getText(qa.quesValue)">{{qa.quesValue}}</a>
       <div class="answer">  {{qa.ansValue}}   </div>
     </div>

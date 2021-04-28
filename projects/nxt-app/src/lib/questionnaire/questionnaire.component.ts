@@ -943,7 +943,6 @@ export class QuestionnaireComponent implements OnInit {
       }
     }
   }
-
   private failureAttachmentCreate = (response) => {
     //console.log('inside failureAttachmentCreate');
   }
@@ -951,10 +950,11 @@ export class QuestionnaireComponent implements OnInit {
   private failureAttachmentDelete = (response) => {
     //console.log('inside failureAttachmentDelete');
   }
-
   handleSubmitClick() {
     this.handleEvent.emit(this.qbItem.Submit_Tracking_ID__c);
     this.updateAnswerBook(this.abItem.Id);
+    console.log(this.updateAnswerBook);
+    
   }
 
   private createAttachment = (fileWrapper: any) => this.sfService.remoteAction('NxtController.process',
