@@ -223,8 +223,25 @@
 
  <div *ngIf="summary && summary.length > 0" class="col-md-12 questionalign">
   <h3 class="summary-h">  {{qbItem.Summary_Text__c}}  </h3>
-  <div *ngFor="let qa of summary" class="summarydiv">
-    <div class="summary">
+  <div *ngFor="let qa of summary"  [ngClass]="{'summarydiv': this.abItem.Status__c != 'Completed'}">
+    <div  [ngClass]="{'submit': this.abItem.Status__c === 'Completed'}">
+    <div [ngClass]="{'summary': this.abItem.Status__c != 'Completed'}" >
+      
+      <div *ngIf = "!qbItem.Edit__c"  [ngClass]="{'question': this.abItem.Status__c != 'Completed'}" >
+      <a  [ngClass]="{'asum': this.abItem.Status__c === 'Completed'}" (click)="handleEditClick(qa.quesId)" [innerHTML]="getText(qa.quesValue)">{{qa.quesValue}}</a>
+    </div>
+
+      <div *ngIf= "qbItem.Edit__c">
+        <div class="question" [innerHTML]="getText(qa.quesValue)">{{qa.quesValue}}</div>
+        <button class="edit" (click)="handleEditClick(qa.quesId)" >
+          <img src="">{{qbItem.Edit__c}}</button>
+      </div>
+      <div  [ngClass]="{'bsum': this.abItem.Status__c === 'Completed'}">
+      <div [ngClass]="{'answer': this.abItem.Status__c != 'Completed'}">  {{qa.ansValue}}   </div> </div>
+    </div>
+    </div>
+  </div>
+    <!-- <div class="submit" *ngIf = " this.abItem.Status__c === 'Completed'">
       
       <div *ngIf = "!qbItem.Edit__c">
       <a class="question" (click)="handleEditClick(qa.quesId)" [innerHTML]="getText(qa.quesValue)">{{qa.quesValue}}</a>
@@ -238,7 +255,7 @@
 
       <div class="answer">  {{qa.ansValue}}   </div>
     </div>
-  </div>
+   -->
 
   <div *ngIf="abItem">
     <div class="" *ngIf="abItem.Status__c != 'Completed'" >

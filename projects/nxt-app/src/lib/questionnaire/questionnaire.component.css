@@ -206,7 +206,7 @@
         width: 58.33333333% !important;
     }
     .col-md-6 {
-        width: 50% !important;
+        width: 50%;
     }
     .col-md-5 {
         width: 41.66666667% !important;
@@ -236,10 +236,10 @@
     
 .summary-h{
     text-align: left !important; 
-    padding-bottom: 15px !important;
+    padding-bottom: 15px;
 }
 .summarydiv{
-    padding-bottom: 15px !important;
+    padding-bottom: 15px ;
 }
 
 .summary {
@@ -254,6 +254,29 @@
     cursor: pointer !important;
     display: list-item !important;
     list-style-type: none;
+}
+.submit {
+    display: block !important;
+    border: 17px solid #ffffff !important;
+    border-radius: 5px !important;
+    padding: 0.5em !important;
+    margin-left: 15px !important;
+    margin-right: 15px !important;
+    text-align: left !important;
+    cursor: pointer !important;
+    display: list-item !important;
+    list-style-type: none;
+    float: left;
+    width: 27.33%;
+    padding: 15px !important;
+    height: 9rem;
+}
+.asum{
+    color: #8c8f92 !important;
+}
+.bsum{
+    font-size: 16px;
+    font-weight: 600;
 }
 
 .question {
