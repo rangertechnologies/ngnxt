@@ -241,22 +241,6 @@
     </div>
     </div>
   </div>
-    <!-- <div class="submit" *ngIf = " this.abItem.Status__c === 'Completed'">
-      
-      <div *ngIf = "!qbItem.Edit__c">
-      <a class="question" (click)="handleEditClick(qa.quesId)" [innerHTML]="getText(qa.quesValue)">{{qa.quesValue}}</a>
-    </div>
-
-      <div *ngIf= "qbItem.Edit__c">
-        <div class="question" [innerHTML]="getText(qa.quesValue)">{{qa.quesValue}}</div>
-        <button class="edit" (click)="handleEditClick(qa.quesId)" >
-          <img src="">{{qbItem.Edit__c}}</button>
-      </div>
-
-      <div class="answer">  {{qa.ansValue}}   </div>
-    </div>
-   -->
-
   <div *ngIf="abItem">
     <div class="" *ngIf="abItem.Status__c != 'Completed'" >
     <div class="col-md-6">
