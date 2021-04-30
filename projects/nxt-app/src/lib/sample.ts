@@ -26,10 +26,26 @@ Back_Tracking_ID__c: '12345',
 Cancel_Tracking_ID__c: '12345',
 Submit_Tracking_ID__c: '12345',
 First_Question__c: '1',
+Possibilities__c : {
+  total: '4',
+  paths: [
+    {
+      questions: [
+        'QN-01',
+        'QN-02',
+        'QN-03',
+        'QN-04',
+        'QN-05',
+      ],
+      count: '5',
+    }] ,
+    minQuestions: '2',
+  maxQuestions : '3',
+},
 Title__c: 'Demo Unconditional',
 Total_Questions__c: 3,
-Possibilities__c : possibilities[] 
 }
+
 // Text Question
 export const TESTQUESTION: Question = {
 Id: '11',

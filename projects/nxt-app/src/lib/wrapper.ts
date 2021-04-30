@@ -20,18 +20,16 @@ export class QuestionBook {
 }
 export class possibilities{
   total : string;
-  path : pathobj[];
-  minquest : string;
-  maxquest : string;
+  paths : pathobj[];
+  minQuestions : string;
+  maxQuestions : string;
 
 }
 export class pathobj{
-  questions : qid [];
+  questions : string[];
   count : string;
 }
-export class qid{
-  name : string;
-}
+
 export class Question {
   Id: string;
   Name: string;
