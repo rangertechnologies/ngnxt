@@ -10,6 +10,8 @@ export const TESTQUESTIONS: Question[] = [
 */
 
 // Dynamic Field Changes
+
+
 export const TESTQB: QuestionBook = {
 Id: 2,
 Name: 'QB-0000',
@@ -26,6 +28,7 @@ Submit_Tracking_ID__c: '12345',
 First_Question__c: '1',
 Title__c: 'Demo Unconditional',
 Total_Questions__c: 3,
+Possibilities__c : possibilities[] 
 }
 // Text Question
 export const TESTQUESTION: Question = {

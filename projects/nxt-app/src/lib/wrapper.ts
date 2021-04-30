@@ -16,8 +16,22 @@ export class QuestionBook {
   Total_Questions__c: number;
   Summary_Text__c?: string;
   Questions__r?: QuestionR;
+  Possibilities__c : possibilities;
 }
+export class possibilities{
+  total : string;
+  path : pathobj[];
+  minquest : string;
+  maxquest : string;
 
+}
+export class pathobj{
+  questions : qid [];
+  count : string;
+}
+export class qid{
+  name : string;
+}
 export class Question {
   Id: string;
   Name: string;
