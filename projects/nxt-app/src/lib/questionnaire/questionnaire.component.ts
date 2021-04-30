@@ -83,6 +83,10 @@ export class QuestionnaireComponent implements OnInit {
   public fileExceededLimit: boolean = false;
   public fileTypeIncorrect: boolean = false;
   public localDate: string;
+  public path: string[];
+  public maxQuestion : any;
+  public sat1 : string;
+  public sat : number;
   public taFocusOut: boolean = false;
   public summary = [];
   public selDate: any = {};
@@ -655,6 +659,25 @@ export class QuestionnaireComponent implements OnInit {
   }
 
   private processQuestion = () => {
+    console.log(this.qbItem.Possibilities__c);
+    
+    
+  
+    if(this.qbItem.Possibilities__c){
+      this.path=this.qbItem.Possibilities__c;
+      this.maxQuestion=this.path[this.path.length - 3] + this.path[this.path.length - 2];
+      this.sat1= this.maxQuestion;
+      console.log(this.sat);
+      
+      this.sat= this.maxQuestion
+      
+      
+     if (this.sat1.startsWith(':') ){
+       this.maxQuestion=this.path[this.path.length-2];
+       this.sat = this.maxQuestion;
+     }
+    }
+    
     //console.log(this.questionItem.Size__c);
 
     this.myDatePickerOptions;
@@ -997,7 +1020,7 @@ export class QuestionnaireComponent implements OnInit {
   // }
   // Update Function for the Progress Bar
   updateProgress() {
-    var width = 100 * (this.answerCount / this.qbItem.Total_Questions__c);
+    var width = 100 * (this.questionStack.length / this.sat);
     //console.log('Progress bar width => ' + width);
     this.progressStyle = Math.round(width) + '%';
     //$('#progress #bar').animate({'width':width + '%'});

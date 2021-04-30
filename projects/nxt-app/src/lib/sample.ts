@@ -24,6 +24,7 @@ Back_Tracking_ID__c: '12345',
 Cancel_Tracking_ID__c: '12345',
 Submit_Tracking_ID__c: '12345',
 First_Question__c: '1',
+Possibilities__c: [],
 Title__c: 'Demo Unconditional',
 Total_Questions__c: 3,
 }

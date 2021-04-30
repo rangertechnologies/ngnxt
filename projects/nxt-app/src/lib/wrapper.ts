@@ -13,6 +13,7 @@ export class QuestionBook {
   Back_Tracking_ID__c: string;
   Cancel_Tracking_ID__c: string;
   Submit_Tracking_ID__c: string;
+  Possibilities__c: string[];
   Total_Questions__c: number;
   Summary_Text__c?: string;
   Questions__r?: QuestionR;
