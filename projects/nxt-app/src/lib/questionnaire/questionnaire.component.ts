@@ -131,6 +131,7 @@ export class QuestionnaireComponent implements OnInit {
    this.inpValue="";
     this.selectedMeridiem = "AM";
     this.processQB();
+    console.log('abdul')
   }
 
   ngOnChanges() {
@@ -298,7 +299,7 @@ export class QuestionnaireComponent implements OnInit {
      }
      else if(this.dropdownFlag){
       if(this.inpValue.length <= 1){
-       this.inpValue=".";  
+       this.inpValue="e";
       this.questionItem.error = new ErrorWrapper();
       }
     }
@@ -537,40 +538,54 @@ export class QuestionnaireComponent implements OnInit {
     this.abItem = response.answerbook;
     //console.log('readingQuestion using ' + this.qbItem.First_Question__c);
     if(this.abItem.Status__c == 'Pending'){
-      this.readQuestion(this.qbItem.First_Question__c);
+        // If no answers read first question
+        console.log('success read')
+       
+       if(this.abItem.Answers__r == null || this.abItem.Answers__r.records.length == 0) {
+         // console.log(this.abItem.Answers__r.records.length)
+          console.log('inside first question')
+          this.readQuestion(this.qbItem.First_Question__c);
+          console.log(this.abItem)
+        } else{
+          // Populate the existing answers
+          console.log(this.abItem.Answers__r.records.length)
+          var lastQuestionId = '';
+          console.log('inside else for answer')
+          for(var ansObject of this.abItem.Answers__r.records) {
+            console.log('inside else-for')
+            lastQuestionId = ansObject.Question_Ref__c;
+            this.questionStack.push(ansObject.Question_Ref__c);
+            this.answerMap.set(ansObject.Question_Ref__c , ansObject.Answer_Long__c);
+            console.log(this.questionStack)
+            
+          }
+          this.questionStack.pop();
+          // Read the last answered question
+          this.readQuestion(lastQuestionId);
+         
+        }
+      
     }
 
     if(this.abItem.Status__c == 'Completed'){
-      this.readAnswerbook(this.abItem.Id);
+     this.summaryprocess();
          }
   }
 
   private failureReadBook = (response) => {
           //console.log(response);
   }
-  
-  private readAnswerbook = (uuid: string) => this.sfService.remoteAction('NxtController.process',
-    ['AnswerBook', 'read', uuid],
-    this.successAnswerBookRead,
-    this.failureAnswerBookRead);
 
-    private successAnswerBookRead = (response) => {
-     
-      if (this.abItem.Status__c =="Completed"){
-        for(var answer of this.abItem.Answers__r.records){
-          var av = answer.Answer_Long__c.split('@@##$$');
-          var answers={ quesValue:answer.Question_Rich_Text__c, ansValue:av};
-          //console.log(answers)
-          this.summary.push(answers);
-        }
-      }  
-     }
-    private failureAnswerBookRead = (response) => {
-          //console.log('inside failureread');
-          //console.log(response);
-        }
-
-  
+  summaryprocess(){
+    console.log(this.abItem.Answers__r.records.length)
+    for(var answer of this.abItem.Answers__r.records){
+      console.log('inside completed')
+      var av = answer.Answer_Long__c.split('@@##$$');
+      var answers={ quesValue:answer.Question_Rich_Text__c, ansValue:av};
+      //console.log(answers)
+      this.summary.push(answers);
+    }
+  }
 
 
   private readQuestion = (uuid: string) => this.sfService.remoteAction('NxtController.process',
@@ -581,7 +596,8 @@ export class QuestionnaireComponent implements OnInit {
   private successRead = (response) => {
     //console.log(response);
     // Reset the Variables
- 
+    console.log(this.questionStack.length)
+   console.log(this.abItem.Answers__r)
     if (this.questionItem) {
       this.inpValue = '';
       this.answerWrap = new AnswerWrapper();
@@ -592,6 +608,7 @@ export class QuestionnaireComponent implements OnInit {
     this.questionItem = response.question;
     this.currentQuestionId = this.questionItem.Id;
     this.handlePage.emit(this.questionItem.Tracking_ID__c);
+    console.log(this.questionStack.length)
     // Handle the subQuestion options
     if (response.sqOptions) {
       //var newRecords = [];
@@ -623,9 +640,7 @@ export class QuestionnaireComponent implements OnInit {
 
   private saveAnswer = () => {
     // Set the Answer Number based on the Question Stack Length
-    if(this.inpValue != "."){
-      this.currentQuestionId = null;
-    }
+    this.currentQuestionId = null;
     this.answerWrap.ansNumber = this.questionStack.length + 1;
 
     this.sfService.remoteAction('NxtController.process',
