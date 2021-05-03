@@ -73,6 +73,7 @@ export class QuestionnaireComponent implements OnInit {
   public selectedhourMap = new Map();
   public selectedminuteMap= new Map();
   public attachmentsMap = new Map();
+  public pathMap = new Map();
   public sqOptions = new Map();
   public questionStack = [];
   public attachments: any[] = [];
@@ -83,8 +84,10 @@ export class QuestionnaireComponent implements OnInit {
   public fileExceededLimit: boolean = false;
   public fileTypeIncorrect: boolean = false;
   public localDate: string;
+  public  pathquestion: number;
   public taFocusOut: boolean = false;
   public summary = [];
+  public paths : string;
   public selDate: any = {};
   private today: Date = new Date();
   private el: HTMLElement;
@@ -655,8 +658,48 @@ export class QuestionnaireComponent implements OnInit {
   }
 
   private processQuestion = () => {
-    //console.log(this.questionItem.Size__c);
+    this.pathMap.set(this.questionItem.Id,this.questionItem.Name);
+    console.log(this.pathMap);
+    
+    
+   // this.paths = new this.paths
+    console.log( this.qbItem.Possibilities__c);
+    // this.pathquestion = this.qbItem.Possibilities__c.split('"')
+    // const total = this.qbItem.Possibilities__c.split(',"paths"')
+    // console.log(total);
+    //pathquestion.
+    
+    var obj = JSON.parse(this.qbItem.Possibilities__c)
+    console.log(obj);
+   // obj.maxQuestions
+    //console.log(obj.paths[3]);
+    this.paths = JSON.stringify(obj.paths)
 
+    this.pathquestion = obj.maxQuestions
+    if(this.pathMap.has(obj.path[0])){
+      console.log('true');
+      
+    }
+   // console.log(this.pathquestion);
+    //this.paths = obj.paths
+    // console.log(this.paths);
+    // var obj = JSON.parse(this.paths)
+    // console.log(obj);
+  //  console.log(obj.count);
+  // console.log(obj[1]);
+  
+  //   console.log(obj[1].questions);
+  //   console.log(obj[1].count);
+    
+    
+    
+    
+    //console.log(obj.paths.count);
+    
+    
+    //console.log(this.questionItem.Size__c);
+   //console.log(pathquestion);
+   
     this.myDatePickerOptions;
     this.day();
     //console.log('processing question ' + this.questionItem.Name + ' existing answers are ' + this.answerMap.size); // => ' + JSON.stringify(this.questionItem));
@@ -997,7 +1040,7 @@ export class QuestionnaireComponent implements OnInit {
   // }
   // Update Function for the Progress Bar
   updateProgress() {
-    var width = 100 * (this.answerCount / this.qbItem.Total_Questions__c);
+    var width = 100 * (this.questionStack.length / this.pathquestion);
     //console.log('Progress bar width => ' + width);
     this.progressStyle = Math.round(width) + '%';
     //$('#progress #bar').animate({'width':width + '%'});

@@ -16,6 +16,7 @@ export class QuestionBook {
   Total_Questions__c: number;
   Summary_Text__c?: string;
   Questions__r?: QuestionR;
+  Possibilities__c : string;
 }
 
 export class Question {
