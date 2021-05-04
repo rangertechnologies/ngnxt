@@ -27,6 +27,8 @@ CHECKQUESTION,
 BOOKQUESTION,
 TESTQB
 } from '../sample';
+import { of } from 'rxjs';
+
 
 @Component({
 selector: 'lib-questionnaire',
@@ -76,6 +78,7 @@ export class QuestionnaireComponent implements OnInit {
   public pathMap = new Map();
   public sqOptions = new Map();
   public questionStack = [];
+  public questionNmae = [];
   public attachments: any[] = [];
   public attachmentIdList: any[] = [];
   public attachmentId: string = '';
@@ -385,6 +388,7 @@ export class QuestionnaireComponent implements OnInit {
     if (this.questionItem.error) { return; }
 
     this.questionStack.push(cQuestion.Id);
+    this.questionNmae.push(cQuestion.Name)
 
     // CONDITIONAL vs OPTIONONLY & UNCONDITIONAL
     if (cQuestion.RecordType.Name == "CONDITIONAL") {
@@ -496,6 +500,7 @@ export class QuestionnaireComponent implements OnInit {
   }
 
   handleBackClick() {
+    this.questionNmae.pop()
     this.handleEvent.emit(this.qbItem.Back_Tracking_ID__c);
     this.answerCount--;
     this.updateProgress();
@@ -658,28 +663,53 @@ export class QuestionnaireComponent implements OnInit {
   }
 
   private processQuestion = () => {
-    this.pathMap.set(this.questionItem.Id,this.questionItem.Name);
-    console.log(this.pathMap);
+    console.log(this.questionNmae[0]);
+    // if(this.handleNextClick){
+    //   var count =0;
+    // }
+    for(let i =0 ; i< this.questionStack.length ; i++){
+      
+    this.pathMap.set(i,this.questionItem.Name);
+      // var object ={} ;
+      //  object[i] = this.questionItem.Name;
+
+    
+     // console.log(this.pathMap);
+    
+    }
+    for(let qns of this.questionItem.Name){
+      //console.log("for of" + qns);
+      
+    }
+    
+  //  console.log(this.pathMap);
     
     
    // this.paths = new this.paths
-    console.log( this.qbItem.Possibilities__c);
+  //  console.log( this.qbItem.Possibilities__c);
     // this.pathquestion = this.qbItem.Possibilities__c.split('"')
     // const total = this.qbItem.Possibilities__c.split(',"paths"')
     // console.log(total);
     //pathquestion.
     
     var obj = JSON.parse(this.qbItem.Possibilities__c)
-    console.log(obj);
+   // console.log(obj);
    // obj.maxQuestions
-    //console.log(obj.paths[3]);
+   // console.log(obj.paths[0].count);
+  //  console.log(obj.paths[0].questions[0]);
+    
     this.paths = JSON.stringify(obj.paths)
+    // var a ={0:this.questionItem.Name ,1:this.questionItem.Name } 
+    
+    // console.log(a);
+    
+   
 
     this.pathquestion = obj.maxQuestions
-    if(this.pathMap.has(obj.path[0])){
-      console.log('true');
+    // if(this.pathMap.has(obj.path[0])){
+    //   console.log('true');
       
-    }
+    // }
    // console.log(this.pathquestion);
     //this.paths = obj.paths
     // console.log(this.paths);
