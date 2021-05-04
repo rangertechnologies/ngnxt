@@ -208,17 +208,6 @@
       <button class="btn btn-primary btn-lg btn-block btn-color" (click)="handleNextClick()">{{qbItem.Next__c}}</button>
     </div>
   </div>
-
-  <div class="col-md-12 paddingZero">
-    <br /><br /><br />
-    <span>Question # and Name for Reference: </span>
-    {{questionItem.Question_No__c}} and {{questionItem.Name}}
-    <div *ngIf="questionItem.error">
-      <br />{{questionItem.error.errorCode}}
-      <br />{{questionItem.error.errorMsg}}
-      <br />{{questionItem.error.errorDetails}}
-    </div>
-  </div>
  </div>
 
  <div *ngIf="summary && summary.length > 0" class="col-md-12 questionalign">
