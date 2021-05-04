@@ -36,7 +36,7 @@
 }
 
 .info-alert {
-    border: 1px solid #e6e6e6 !important;
+    border: 1px solid #e6e6e6;
     border-radius: 5px !important;
     padding: 0.5em !important;
     margin-left: 15px !important;
@@ -206,7 +206,7 @@
         width: 58.33333333% !important;
     }
     .col-md-6 {
-        width: 50% !important;
+        width: 50% ;
     }
     .col-md-5 {
         width: 41.66666667% !important;
