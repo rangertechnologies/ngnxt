@@ -87,6 +87,7 @@ export class QuestionnaireComponent implements OnInit {
   public fileExceededLimit: boolean = false;
   public fileTypeIncorrect: boolean = false;
   public back: boolean = false;
+  public check: boolean ;
   public localDate: string;
   public  pathquestion: number;
   public taFocusOut: boolean = false;
@@ -687,89 +688,21 @@ export class QuestionnaireComponent implements OnInit {
   }
 
   private processQuestion = () => {
+    
   //  console.log(this.back);
     
     if(!this.back){
-      console.log("back false");
+    // console.log("back false");
       this.questionNmae.push(this.questionItem.Name)
     }
     this.back=false;
-    
 
-     console.log( this.questionNmae);
-     
-     
-    // console.log( "qn name is" +  this.questionItem.Name);
-     console.log( this.questionStack);
-    
-    // console.log( "stack lenght is" + this.questionStack.length);
-    // console.log( " name object lenght is" + this.questionNmae.length);
-    
-    
-    
-    // if(this.handleNextClick){
-    //   var count =0;
-    // }
-    // for(let i =0 ; i< this.questionStack.length ; i++){
-      
-    // this.pathMap.set(i,this.questionItem.Name);
-      // var object ={} ;
-      //  object[i] = this.questionItem.Name;
 
-    
-     // console.log(this.pathMap);
-    
-    // }
-    // for(let qns of this.questionItem.Name){
-    //   //console.log("for of" + qns);
-      
-    // }
-    
-  //  console.log(this.pathMap);
-    
-    
-   // this.paths = new this.paths
-  //  console.log( this.qbItem.Possibilities__c);
-    // this.pathquestion = this.qbItem.Possibilities__c.split('"')
-    // const total = this.qbItem.Possibilities__c.split(',"paths"')
-    // console.log(total);
-    //pathquestion.
-    
     this.possibilities = JSON.parse(this.qbItem.Possibilities__c)
-   // console.log(obj);
-   // obj.maxQuestions
-   // console.log(obj.paths[0].count);
-  //  console.log(obj.paths[0].questions[0]);
-    
-   // this.paths = JSON.stringify(obj.paths)
-    // var a ={0:this.questionItem.Name ,1:this.questionItem.Name } 
-    
-    // console.log(a);
-    
-   
+    console.log(this.possibilities.total);
 
-  //  this.pathquestion = this.possibilities.maxQuestions
-    // if(this.pathMap.has(obj.path[0])){
-    //   console.log('true');
-      
-    // }
-   // console.log(this.pathquestion);
-    //this.paths = obj.paths
-    // console.log(this.paths);
-    // var obj = JSON.parse(this.paths)
-    // console.log(obj);
-  //  console.log(obj.count);
-  // console.log(obj[1]);
-  
-  //   console.log(obj[1].questions);
-  //   console.log(obj[1].count);
-    
-    
-    
-    
-    //console.log(obj.paths.count);
-    
-    
+
+
     //console.log(this.questionItem.Size__c);
    //console.log(pathquestion);
    
@@ -1113,16 +1046,35 @@ export class QuestionnaireComponent implements OnInit {
   // }
   // Update Function for the Progress Bar
   updateProgress() {
+    let j ;
+     let i;
+     var currentName;
+     var pathposs;
     //console.log('update');
-  
-    const currentName = Object.values(this.questionNmae)
-    const pathposs = Object.values(this.possibilities.paths[0].questions)
+  for( i = 0 ; i<this.possibilities.total ; i++){
+    currentName = Object.values(this.questionNmae)
+    pathposs = Object.values(this.possibilities.paths[i].questions)
     console.log(pathposs);
     console.log(currentName);
-    
-    if(pathposs[0] === currentName[0]){
-      console.log("true");
+    console.log(pathposs[0]);
+
+    for(j = 0; j<this.questionNmae.length; j++){
+      if(pathposs[j] === currentName[j]){
+        this.check = true;
+       console.log(this.check);
+     }else{
+          this.check=false;
+          console.log(this.check);
+     }
     }
+   }
+
+if(this.check===true){
+  console.log("check true");
+  
+}
+    
+   
     var width = 100 * (this.questionStack.length / this.possibilities.paths[0].count);
     //console.log('Progress bar width => ' + width);
     this.progressStyle = Math.round(width) + '%';
