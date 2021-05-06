@@ -86,6 +86,7 @@ export class QuestionnaireComponent implements OnInit {
   public allowedFileExtension: string[];
   public fileExceededLimit: boolean = false;
   public fileTypeIncorrect: boolean = false;
+  public back: boolean = false;
   public localDate: string;
   public  pathquestion: number;
   public taFocusOut: boolean = false;
@@ -95,6 +96,7 @@ export class QuestionnaireComponent implements OnInit {
   private today: Date = new Date();
   private el: HTMLElement;
   public innerhtml: any;
+  public possibilities : any;
   public innerhtml1: any;
   public hours: any[] = ["01","02","03","04","05","06","07","08","09","10","11","12"];
   public minutes: string[] = ["00","01","02","03","04","05","06","07","08","09","10","11","12","13","14","15","16","17","18",
@@ -207,7 +209,11 @@ export class QuestionnaireComponent implements OnInit {
   //Summary Question Clickable Logic
   handleEditClick(value: string){
     if(this.abItem.Status__c == 'Pending'){
+      console.log("edit");
+      
       if(value == null){
+        console.log('edit inside ');
+        
       return;
       }
 
@@ -217,14 +223,32 @@ export class QuestionnaireComponent implements OnInit {
      //Assign question stack length from summary part
      var arrayLength = this.questionStack.length;
      var lengthValue = this.questionStack.indexOf(value);
+     console.log(arrayLength);
+     console.log(lengthValue);
+    
+     
+     
      for (let i = arrayLength; i > lengthValue; i--) {
-       this.questionStack.pop()
+       //console.log("pop");
+       
+       this.questionStack.pop();
+       
+     //  this.questionNmae.pop()
+     }
+     var arrayLength1 = this.questionNmae.length;
+    // var lengthValue1 = this.questionStack.indexOf(value);
+     console.log(arrayLength1   +  "namelength");
+    // console.log(lengthValue1   +  "name index");
+     
+     for (let j = arrayLength1; j > lengthValue; j--) {
+       this.questionNmae.pop()
      }
      this.summary = [];
     }
   }
 
   handleNextClick() {
+    //this.updateProgress();
     if(this.currentQuestionId === null){
       return;
     }
@@ -388,7 +412,7 @@ export class QuestionnaireComponent implements OnInit {
     if (this.questionItem.error) { return; }
 
     this.questionStack.push(cQuestion.Id);
-    this.questionNmae.push(cQuestion.Name)
+  //  this.questionNmae.push(cQuestion.Name);
 
     // CONDITIONAL vs OPTIONONLY & UNCONDITIONAL
     if (cQuestion.RecordType.Name == "CONDITIONAL") {
@@ -500,6 +524,7 @@ export class QuestionnaireComponent implements OnInit {
   }
 
   handleBackClick() {
+    this.back = true
     this.questionNmae.pop()
     this.handleEvent.emit(this.qbItem.Back_Tracking_ID__c);
     this.answerCount--;
@@ -539,8 +564,7 @@ export class QuestionnaireComponent implements OnInit {
     this.failureReadBook);
 
   private successReadBook = (response) => {
-
-    //console.log(response)
+  //console.log(response)
     this.qbItem = response.questionbook;
     this.abItem = response.answerbook;
     //console.log('readingQuestion using ' + this.qbItem.First_Question__c);
@@ -663,24 +687,43 @@ export class QuestionnaireComponent implements OnInit {
   }
 
   private processQuestion = () => {
-    console.log(this.questionNmae[0]);
+  //  console.log(this.back);
+    
+    if(!this.back){
+      console.log("back false");
+      this.questionNmae.push(this.questionItem.Name)
+    }
+    this.back=false;
+    
+
+     console.log( this.questionNmae);
+     
+     
+    // console.log( "qn name is" +  this.questionItem.Name);
+     console.log( this.questionStack);
+    
+    // console.log( "stack lenght is" + this.questionStack.length);
+    // console.log( " name object lenght is" + this.questionNmae.length);
+    
+    
+    
     // if(this.handleNextClick){
     //   var count =0;
     // }
-    for(let i =0 ; i< this.questionStack.length ; i++){
+    // for(let i =0 ; i< this.questionStack.length ; i++){
       
-    this.pathMap.set(i,this.questionItem.Name);
+    // this.pathMap.set(i,this.questionItem.Name);
       // var object ={} ;
       //  object[i] = this.questionItem.Name;
 
     
      // console.log(this.pathMap);
     
-    }
-    for(let qns of this.questionItem.Name){
-      //console.log("for of" + qns);
+    // }
+    // for(let qns of this.questionItem.Name){
+    //   //console.log("for of" + qns);
       
-    }
+    // }
     
   //  console.log(this.pathMap);
     
@@ -692,20 +735,20 @@ export class QuestionnaireComponent implements OnInit {
     // console.log(total);
     //pathquestion.
     
-    var obj = JSON.parse(this.qbItem.Possibilities__c)
+    this.possibilities = JSON.parse(this.qbItem.Possibilities__c)
    // console.log(obj);
    // obj.maxQuestions
    // console.log(obj.paths[0].count);
   //  console.log(obj.paths[0].questions[0]);
     
-    this.paths = JSON.stringify(obj.paths)
+   // this.paths = JSON.stringify(obj.paths)
     // var a ={0:this.questionItem.Name ,1:this.questionItem.Name } 
     
     // console.log(a);
     
    
 
-    this.pathquestion = obj.maxQuestions
+  //  this.pathquestion = this.possibilities.maxQuestions
     // if(this.pathMap.has(obj.path[0])){
     //   console.log('true');
       
@@ -1070,7 +1113,19 @@ export class QuestionnaireComponent implements OnInit {
   // }
   // Update Function for the Progress Bar
   updateProgress() {
-    var width = 100 * (this.questionStack.length / this.pathquestion);
+    //console.log('update');
+    const currentName = Object.values(this.questionNmae[0])
+    const pathposs = Object.values(this.possibilities.paths[0].questions[0])
+    console.log(pathposs);
+    console.log(currentName);
+    
+    
+    
+    if(pathposs.length === currentName.length){
+      console.log("true");
+      
+    }
+    var width = 100 * (this.questionStack.length / this.possibilities.paths[0].count);
     //console.log('Progress bar width => ' + width);
     this.progressStyle = Math.round(width) + '%';
     //$('#progress #bar').animate({'width':width + '%'});
