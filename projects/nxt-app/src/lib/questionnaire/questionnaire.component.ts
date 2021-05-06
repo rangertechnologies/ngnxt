@@ -1114,16 +1114,14 @@ export class QuestionnaireComponent implements OnInit {
   // Update Function for the Progress Bar
   updateProgress() {
     //console.log('update');
-    const currentName = Object.values(this.questionNmae[0])
-    const pathposs = Object.values(this.possibilities.paths[0].questions[0])
+  
+    const currentName = Object.values(this.questionNmae)
+    const pathposs = Object.values(this.possibilities.paths[0].questions)
     console.log(pathposs);
     console.log(currentName);
     
-    
-    
-    if(pathposs.length === currentName.length){
+    if(pathposs[0] === currentName[0]){
       console.log("true");
-      
     }
     var width = 100 * (this.questionStack.length / this.possibilities.paths[0].count);
     //console.log('Progress bar width => ' + width);
