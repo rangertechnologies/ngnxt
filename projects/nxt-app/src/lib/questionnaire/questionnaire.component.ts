@@ -79,6 +79,7 @@ export class QuestionnaireComponent implements OnInit {
   public sqOptions = new Map();
   public questionStack = [];
   public questionNmae = [];
+  public truePath =[];
   public attachments: any[] = [];
   public attachmentIdList: any[] = [];
   public attachmentId: string = '';
@@ -92,7 +93,7 @@ export class QuestionnaireComponent implements OnInit {
   public  pathquestion: number;
   public taFocusOut: boolean = false;
   public summary = [];
-  public paths : string;
+  public pathsMap = new Map ;
   public selDate: any = {};
   private today: Date = new Date();
   private el: HTMLElement;
@@ -700,6 +701,8 @@ export class QuestionnaireComponent implements OnInit {
 
     this.possibilities = JSON.parse(this.qbItem.Possibilities__c)
     console.log(this.possibilities.total);
+    console.log(this.possibilities);
+    
 
 
 
@@ -1046,36 +1049,53 @@ export class QuestionnaireComponent implements OnInit {
   // }
   // Update Function for the Progress Bar
   updateProgress() {
+    var z = [];
     let j ;
      let i;
      var currentName;
      var pathposs;
+     var t = [] ;
     //console.log('update');
   for( i = 0 ; i<this.possibilities.total ; i++){
     currentName = Object.values(this.questionNmae)
     pathposs = Object.values(this.possibilities.paths[i].questions)
+    
     console.log(pathposs);
-    console.log(currentName);
-    console.log(pathposs[0]);
-
+   // console.log(currentName);
+   // console.log(pathposs[0]);
     for(j = 0; j<this.questionNmae.length; j++){
-      if(pathposs[j] === currentName[j]){
+      t.values=i;
+      if(pathposs[j] === currentName[j]){ 
         this.check = true;
        console.log(this.check);
+       //return this.possibilities.paths
+   
      }else{
           this.check=false;
+         console.log(i);
           console.log(this.check);
      }
-    }
+    //  if(this.check === true)
+     }
+    // if(pathposs[i]   &&this.check === false){
+    //  // console.log("inside");
+      
+    //  // delete Object.values[pathposs]
+      
+    // }
    }
+   
+//console.log(this.pathMap);
+console.log(z);
+
 
 if(this.check===true){
   console.log("check true");
   
 }
     
-   
-    var width = 100 * (this.questionStack.length / this.possibilities.paths[0].count);
+   if(z>this.possibilities.total){}
+    var width = 100 * (this.questionStack.length / this.possibilities.maxQuestions);
     //console.log('Progress bar width => ' + width);
     this.progressStyle = Math.round(width) + '%';
     //$('#progress #bar').animate({'width':width + '%'});
