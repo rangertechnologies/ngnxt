@@ -90,7 +90,10 @@ export class QuestionnaireComponent implements OnInit {
   public back: boolean = false;
   public check: boolean ;
   public localDate: string;
+  public currentName: string;
   public  pathquestion: number;
+  public  count: number;
+  public c: string ;
   public taFocusOut: boolean = false;
   public summary = [];
   public pathsMap = new Map ;
@@ -697,7 +700,11 @@ export class QuestionnaireComponent implements OnInit {
       this.questionNmae.push(this.questionItem.Name)
     }
     this.back=false;
-
+    this.currentName = this.questionItem.Name
+    this.pathquestion = this.questionNmae.indexOf(this.currentName)
+    console.log(this.currentName);
+    console.log(this.pathquestion);
+    
 
     this.possibilities = JSON.parse(this.qbItem.Possibilities__c)
     console.log(this.possibilities.total);
@@ -1049,34 +1056,48 @@ export class QuestionnaireComponent implements OnInit {
   // }
   // Update Function for the Progress Bar
   updateProgress() {
-    var z = [];
-    let j ;
+ 
+    let j =[];
      let i;
-     var currentName;
+    // var currentName;
      var pathposs;
-     var t = [] ;
+   //  var t = [] ;
     //console.log('update');
   for( i = 0 ; i<this.possibilities.total ; i++){
-    currentName = Object.values(this.questionNmae)
+   // currentName = Object.values(this.questionNmae)
     pathposs = Object.values(this.possibilities.paths[i].questions)
     
     console.log(pathposs);
    // console.log(currentName);
    // console.log(pathposs[0]);
-    for(j = 0; j<this.questionNmae.length; j++){
-      t.values=i;
-      if(pathposs[j] === currentName[j]){ 
+   // for(j = 0; j<this.questionNmae.length; j++){
+      //t.values=i;
+     
+      if(pathposs[this.pathquestion] === this. currentName){ 
+      //  this.count++
+     // const z = [i];
+     // t= [z];
+     j.push(i);
+    // this.count.push(i)
         this.check = true;
        console.log(this.check);
+       
+       
+      //return this.pathposs[this.pathquestion] 
        //return this.possibilities.paths
-   
-     }else{
+     
+     
+     
+     }
+     
+     else{
           this.check=false;
          console.log(i);
           console.log(this.check);
+          
      }
     //  if(this.check === true)
-     }
+   //  }
     // if(pathposs[i]   &&this.check === false){
     //  // console.log("inside");
       
@@ -1086,18 +1107,37 @@ export class QuestionnaireComponent implements OnInit {
    }
    
 //console.log(this.pathMap);
-console.log(z);
+//console.log(this.count);
+console.log(j);
+console.log(j[0]);
+
+console.log(j.toString());
 
 
-if(this.check===true){
-  console.log("check true");
-  
+
+
+if(j.length === 1){
+  //this.c= JSON.stringify(j[0])
+  this.count = j[0];
+ console.log(this.count);
+ 
 }
+//console.log(this.c);
+
+console.log(this.count);
+
     
-   if(z>this.possibilities.total){}
+  if(j.length>1){
     var width = 100 * (this.questionStack.length / this.possibilities.maxQuestions);
     //console.log('Progress bar width => ' + width);
     this.progressStyle = Math.round(width) + '%';
+  }
+  else if(j.length === 1){
+    var width = 100 * (this.questionStack.length / this.possibilities.paths[this.count].count);
+    //console.log('Progress bar width => ' + width);
+    this.progressStyle = Math.round(width) + '%';
+  }
+   
     //$('#progress #bar').animate({'width':width + '%'});
   }
 }
