@@ -78,7 +78,6 @@ export class QuestionnaireComponent implements OnInit {
   public sqOptions = new Map();
   public questionStack = [];
   public questionNmae = [];
-  public truePath =[];
   public attachments: any[] = [];
   public attachmentIdList: any[] = [];
   public attachmentId: string = '';
