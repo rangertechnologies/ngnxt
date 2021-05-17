@@ -27,7 +27,7 @@ CHECKQUESTION,
 BOOKQUESTION,
 TESTQB
 } from '../sample';
-import { of } from 'rxjs';
+
 
 
 @Component({
@@ -75,7 +75,6 @@ export class QuestionnaireComponent implements OnInit {
   public selectedhourMap = new Map();
   public selectedminuteMap= new Map();
   public attachmentsMap = new Map();
-  public pathMap = new Map();
   public sqOptions = new Map();
   public questionStack = [];
   public questionNmae = [];
@@ -93,10 +92,8 @@ export class QuestionnaireComponent implements OnInit {
   public currentName: string;
   public  pathquestion: number;
   public  count: number;
-  public c: string ;
   public taFocusOut: boolean = false;
   public summary = [];
-  public pathsMap = new Map ;
   public selDate: any = {};
   private today: Date = new Date();
   private el: HTMLElement;
@@ -214,11 +211,7 @@ export class QuestionnaireComponent implements OnInit {
   //Summary Question Clickable Logic
   handleEditClick(value: string){
     if(this.abItem.Status__c == 'Pending'){
-      console.log("edit");
-      
       if(value == null){
-        console.log('edit inside ');
-        
       return;
       }
 
@@ -228,23 +221,12 @@ export class QuestionnaireComponent implements OnInit {
      //Assign question stack length from summary part
      var arrayLength = this.questionStack.length;
      var lengthValue = this.questionStack.indexOf(value);
-     console.log(arrayLength);
-     console.log(lengthValue);
-    
-     
      
      for (let i = arrayLength; i > lengthValue; i--) {
-       //console.log("pop");
-       
        this.questionStack.pop();
-       
-     //  this.questionNmae.pop()
+  
      }
      var arrayLength1 = this.questionNmae.length;
-    // var lengthValue1 = this.questionStack.indexOf(value);
-     console.log(arrayLength1   +  "namelength");
-    // console.log(lengthValue1   +  "name index");
-     
      for (let j = arrayLength1; j > lengthValue; j--) {
        this.questionNmae.pop()
      }
@@ -692,29 +674,13 @@ export class QuestionnaireComponent implements OnInit {
   }
 
   private processQuestion = () => {
-    
-  //  console.log(this.back);
-    
     if(!this.back){
-    // console.log("back false");
       this.questionNmae.push(this.questionItem.Name)
     }
     this.back=false;
     this.currentName = this.questionItem.Name
-    this.pathquestion = this.questionNmae.indexOf(this.currentName)
-    console.log(this.currentName);
-    console.log(this.pathquestion);
-    
-
+    this.pathquestion = this.questionNmae.indexOf(this.currentName);
     this.possibilities = JSON.parse(this.qbItem.Possibilities__c)
-    console.log(this.possibilities.total);
-    console.log(this.possibilities);
-    
-
-
-
-    //console.log(this.questionItem.Size__c);
-   //console.log(pathquestion);
    
     this.myDatePickerOptions;
     this.day();
@@ -1056,77 +1022,20 @@ export class QuestionnaireComponent implements OnInit {
   // }
   // Update Function for the Progress Bar
   updateProgress() {
- 
     let j =[];
-     let i;
-    // var currentName;
-     var pathposs;
-   //  var t = [] ;
-    //console.log('update');
-  for( i = 0 ; i<this.possibilities.total ; i++){
-   // currentName = Object.values(this.questionNmae)
-    pathposs = Object.values(this.possibilities.paths[i].questions)
-    
-    console.log(pathposs);
-   // console.log(currentName);
-   // console.log(pathposs[0]);
-   // for(j = 0; j<this.questionNmae.length; j++){
-      //t.values=i;
-     
+  for(let  i = 0 ; i<this.possibilities.total ; i++){
+    var pathposs = Object.values(this.possibilities.paths[i].questions)
       if(pathposs[this.pathquestion] === this. currentName){ 
-      //  this.count++
-     // const z = [i];
-     // t= [z];
      j.push(i);
-    // this.count.push(i)
         this.check = true;
-       console.log(this.check);
-       
-       
-      //return this.pathposs[this.pathquestion] 
-       //return this.possibilities.paths
-     
-     
-     
      }
-     
      else{
           this.check=false;
-         console.log(i);
-          console.log(this.check);
-          
      }
-    //  if(this.check === true)
-   //  }
-    // if(pathposs[i]   &&this.check === false){
-    //  // console.log("inside");
-      
-    //  // delete Object.values[pathposs]
-      
-    // }
    }
-   
-//console.log(this.pathMap);
-//console.log(this.count);
-console.log(j);
-console.log(j[0]);
-
-console.log(j.toString());
-
-
-
-
 if(j.length === 1){
-  //this.c= JSON.stringify(j[0])
   this.count = j[0];
- console.log(this.count);
- 
 }
-//console.log(this.c);
-
-console.log(this.count);
-
-    
   if(j.length>1){
     var width = 100 * (this.questionStack.length / this.possibilities.maxQuestions);
     //console.log('Progress bar width => ' + width);
