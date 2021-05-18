@@ -90,6 +90,7 @@ export class QuestionnaireComponent implements OnInit {
   public localDate: string;
   public currentName: string;
   public  pathquestion: number;
+  public  percent: number;
   public  count: number;
   public taFocusOut: boolean = false;
   public summary = [];
@@ -679,7 +680,8 @@ export class QuestionnaireComponent implements OnInit {
     this.back=false;
     this.currentName = this.questionItem.Name
     this.pathquestion = this.questionNmae.indexOf(this.currentName);
-    this.possibilities = JSON.parse(this.qbItem.Possibilities__c)
+    this.possibilities = JSON.parse(this.qbItem.Possibilities__c);
+
    
     this.myDatePickerOptions;
     this.day();
@@ -752,6 +754,7 @@ export class QuestionnaireComponent implements OnInit {
       this.allowedFileExtension = this.questionItem.Allowed_File_Extensions__c.split(';');
       //console.log(this.allowedFileExtension);
     }
+    this. updateProgress();
   }
   setFlag(typ) {
     //console.log('inside setFlag for ' + typ);
@@ -1044,7 +1047,17 @@ if(j.length === 1){
     var width = 100 * (this.questionStack.length / this.possibilities.paths[this.count].count);
     //console.log('Progress bar width => ' + width);
     this.progressStyle = Math.round(width) + '%';
+   
+    
+    
   }
+  this.percent= + Math.round(width)
+ // console.log(this.percent);
+  //console.log(this.progressStyle);
+  
+  
+  
+  // console.log(Number(this.progressStyle));
    
     //$('#progress #bar').animate({'width':width + '%'});
   }

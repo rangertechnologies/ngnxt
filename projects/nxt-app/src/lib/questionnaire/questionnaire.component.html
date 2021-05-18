@@ -1,6 +1,17 @@
 <!-- Progress Bar-->
 <div id="progress" style="display: block;">
   <div id="bar" style.width="{{progressStyle}}">
+    <circle-progress
+  [percent]="this.percent"
+  [radius]="50"
+  [outerStrokeWidth]="8"
+  [innerStrokeWidth]="4"
+  [outerStrokeColor]="'#6b090f'"
+  [innerStrokeColor]="'#e7e8ea'"
+  [animation]="true"
+  [title]= "this.percent"
+  [animationDuration]="300"
+></circle-progress>
     <P class="progress-percent">
       {{(progressStyle)}}</P>
   </div>
