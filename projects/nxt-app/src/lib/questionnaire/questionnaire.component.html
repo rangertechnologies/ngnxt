@@ -132,7 +132,7 @@
         </span>
       </label>
     </div>
-    <input id="file-upload" type="file" accept="{{allowedFileExtension}}" (change)="uploadFile($event)" />
+    <input id="file-upload"  #localref type="file" accept="{{allowedFileExtension}}" (change)="uploadFile($event)" />
   </div>
   <ul *ngIf="attachments?.length > 0 && fileFlag" class="attach-ulist col-md-12">
     <li *ngFor="let attachment of attachments" class="align-l">{{attachment.attachmentName}}<span
@@ -167,7 +167,7 @@
                   <i class="" aria-hidden="true"></i>
                 </span>
               </label>
-              <input id="file-upload" type="file" accept="{{bookFlagAccept}}" (change)="uploadFile($event)" />
+              <input id="file-upload"  #localref type="file" accept="{{bookFlagAccept}}" (change)="uploadFile($event)" />
             </div>
           </div>
           <ul *ngIf="attachments?.length > 0 && ques.Type__c === 'File'" class="attach-ulist col-md-12">

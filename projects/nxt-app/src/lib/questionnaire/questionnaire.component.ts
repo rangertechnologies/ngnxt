@@ -1,4 +1,4 @@
-import { Component, OnInit, OnChanges, Input, Output, EventEmitter ,ViewEncapsulation} from '@angular/core';
+import { Component, OnInit, OnChanges, Input, Output, EventEmitter, ElementRef, ViewChild, ViewEncapsulation} from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { SalesforceService } from '../services/salesforce.service';
 import { IMyDateModel, IMyDpOptions } from 'mydatepicker';
@@ -102,7 +102,7 @@ export class QuestionnaireComponent implements OnInit {
   public bookFlagAccept: string[];
   public recordId:string;
   public currentQuestionId: string;
-
+  @ViewChild('localref') inputVar:ElementRef;
 
 
   // REQ-01 PROGRESS BAR
@@ -973,6 +973,7 @@ export class QuestionnaireComponent implements OnInit {
     this.attachmentId = attachmentId;
     this.handleEvent.emit('deleteAttachment');
     this.deleteSFAttachment(attachmentId);
+    this.inputVar.nativeElement.value = null;
   }
 
   private deleteSFAttachment = (fileId: string) => this.sfService.remoteAction('NxtController.process',
