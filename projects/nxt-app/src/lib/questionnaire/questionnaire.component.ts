@@ -27,7 +27,7 @@ CHECKQUESTION,
 BOOKQUESTION,
 TESTQB
 } from '../sample';
-
+import { of } from 'rxjs';
 
 
 @Component({
@@ -75,9 +75,11 @@ export class QuestionnaireComponent implements OnInit {
   public selectedhourMap = new Map();
   public selectedminuteMap= new Map();
   public attachmentsMap = new Map();
+  public pathMap = new Map();
   public sqOptions = new Map();
   public questionStack = [];
   public questionNmae = [];
+  public truePath =[];
   public attachments: any[] = [];
   public attachmentIdList: any[] = [];
   public attachmentId: string = '';
@@ -91,8 +93,10 @@ export class QuestionnaireComponent implements OnInit {
   public currentName: string;
   public  pathquestion: number;
   public  count: number;
+  public c: string ;
   public taFocusOut: boolean = false;
   public summary = [];
+  public pathsMap = new Map ;
   public selDate: any = {};
   private today: Date = new Date();
   private el: HTMLElement;
@@ -210,7 +214,11 @@ export class QuestionnaireComponent implements OnInit {
   //Summary Question Clickable Logic
   handleEditClick(value: string){
     if(this.abItem.Status__c == 'Pending'){
+      console.log("edit");
+      
       if(value == null){
+        console.log('edit inside ');
+        
       return;
       }
 
@@ -220,12 +228,23 @@ export class QuestionnaireComponent implements OnInit {
      //Assign question stack length from summary part
      var arrayLength = this.questionStack.length;
      var lengthValue = this.questionStack.indexOf(value);
+     console.log(arrayLength);
+     console.log(lengthValue);
+    
+     
      
      for (let i = arrayLength; i > lengthValue; i--) {
+       //console.log("pop");
+       
        this.questionStack.pop();
-  
+       
+     //  this.questionNmae.pop()
      }
      var arrayLength1 = this.questionNmae.length;
+    // var lengthValue1 = this.questionStack.indexOf(value);
+     console.log(arrayLength1   +  "namelength");
+    // console.log(lengthValue1   +  "name index");
+     
      for (let j = arrayLength1; j > lengthValue; j--) {
        this.questionNmae.pop()
      }
@@ -234,7 +253,7 @@ export class QuestionnaireComponent implements OnInit {
   }
 
   handleNextClick() {
-    //this.updateProgress();
+    // this.updateProgress();
     if(this.currentQuestionId === null){
       return;
     }
@@ -673,13 +692,39 @@ export class QuestionnaireComponent implements OnInit {
   }
 
   private processQuestion = () => {
+    
+  //  console.log(this.back);
+    
     if(!this.back){
+    // console.log("back false");
       this.questionNmae.push(this.questionItem.Name)
     }
     this.back=false;
+
     this.currentName = this.questionItem.Name
-    this.pathquestion = this.questionNmae.indexOf(this.currentName);
+    this.pathquestion = this.questionNmae.indexOf(this.currentName)
+   console.log(this.currentName   + "current name");
+   console.log(this.pathquestion  +  'index of current question');
+   
+   // console.log(this.pathquestion);
+    console.log(this.questionItem.Name  + 'qitem name ');
+    console.log(this.questionStack + 'qstack');
+    console.log(this.questionNmae.length  + 'qname lenght');
+    
+    console.log(this.questionStack.length  + 'qstack lenght');
+    
+    
+    
+
     this.possibilities = JSON.parse(this.qbItem.Possibilities__c)
+    //console.log(this.possibilities.total);
+  //  console.log(this.possibilities);
+    
+
+
+
+    //console.log(this.questionItem.Size__c);
+   //console.log(pathquestion);
    
     this.myDatePickerOptions;
     this.day();
@@ -1017,36 +1062,125 @@ export class QuestionnaireComponent implements OnInit {
   //   this.secondFormGroup = this._formBuilder.group({
   //     secondCtrl: ['', Validators.required]
   //   });
-
   // }
   // Update Function for the Progress Bar
   updateProgress() {
+    var z = [];
+   // let j ;
+ 
     let j =[];
-  for(let  i = 0 ; i<this.possibilities.total ; i++){
-    var pathposs = Object.values(this.possibilities.paths[i].questions)
-      if(pathposs[this.pathquestion] === this. currentName){ 
+     let i;
+    // var currentName;
+    // var currentName;
+     var pathposs;
+     var t = [] ;
+   //  var t = [] ;
+    //console.log('update');
+  for( i = 0 ; i<this.possibilities.total ; i++){
+   // currentName = Object.values(this.questionNmae)
+   // currentName = Object.values(this.questionNmae)
+    pathposs = Object.values(this.possibilities.paths[i].questions)
+    
+    console.log(pathposs);
+      // console.log(pathposs[0]);
+ //console.log(currentName);
+    // for(j = 0; j<this.questionNmae.length; j++){
+    //   t.values=i;
+    //   if(pathposs[j] === currentName[j]){ 
+   // for(j = 0; j<this.questionNmae.length; j++){
+      //t.values=i;
+      console.log(pathposs[this.pathquestion]  + 'pathposs question');
+      
+     
+      if(pathposs[this.pathquestion] === this.currentName){ 
+      //  this.count++
+     // const z = [i];
+     // t= [z];
      j.push(i);
+    // this.count.push(i)
+  
+    
         this.check = true;
+       console.log(this.check);
+       
+       
+      //return this.pathposs[this.pathquestion] 
+       //return this.possibilities.paths
+   
      }
      else{
-          this.check=false;
+console.log('if condition false');
+
      }
-   }
+     
+     }
+     
+    //  else{
+    //       this.check=false;
+    //      console.log(i);
+    //       console.log(this.check);
+          
+    //  }
+    //  if(this.check === true)
+    // }
+   //  }
+    // if(pathposs[i]   &&this.check === false){
+    //  // console.log("inside");
+      
+    //  // delete Object.values[pathposs]
+      
+    // }
+  // }
+   
+//console.log(this.pathMap);
+//console.log(z);
+//console.log(this.count);
+//console.log(j);
+
+console.log(j);
+console.log(j[0]);
+
+//console.log(j.toString());
+
+// if(this.check===true){
+//   console.log("check true");
+  
+// }
+
+
 if(j.length === 1){
+  //this.c= JSON.stringify(j[0])
   this.count = j[0];
+ //console.log(this.count);
+ 
 }
+//console.log(this.c);
+
+//console.log(this.count);
+
+    
+   if(z>this.possibilities.total){}
+  //  if(j[0]=== undefined){
+  //    console.log('undefined true');
+  //    var width = 100 * (this.questionStack.length / this.possibilities.maxQuestions);
+  //    this.progressStyle = Math.round(width) + '%';
+  //  }
   if(j.length>1){
-    var width = 100 * (this.questionStack.length / this.possibilities.maxQuestions);
+    var width = 100 * (this.questionNmae.length / this.possibilities.maxQuestions);
+    console.log(width);
+    
     //console.log('Progress bar width => ' + width);
     this.progressStyle = Math.round(width) + '%';
   }
   else if(j.length === 1){
-    var width = 100 * (this.questionStack.length / this.possibilities.paths[this.count].count);
+    var width = 100 * (this.questionNmae.length / this.possibilities.paths[this.count].count);
+    console.log(width);
+    
     //console.log('Progress bar width => ' + width);
     this.progressStyle = Math.round(width) + '%';
   }
    
     //$('#progress #bar').animate({'width':width + '%'});
-  }
+  
 }
-
+}
