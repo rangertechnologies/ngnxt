@@ -1,33 +1,54 @@
 <!-- Progress Bar-->
-<div id="progress" style="display: block;">
+<!-- <div id="progress" style="display: block;" *ngIf= "qbItem.Edit__c">
   <div id="bar" style.width="{{progressStyle}}">
     <circle-progress
   [percent]="this.percent"
-  [radius]="50"
-  [outerStrokeWidth]="8"
-  [innerStrokeWidth]="4"
+  [radius]="40"
+  [outerStrokeWidth]="6"
+  [innerStrokeWidth]="3"
   [outerStrokeColor]="'#6b090f'"
   [innerStrokeColor]="'#e7e8ea'"
   [animation]="true"
-  [title]= "this.percent"
+  [title]= "'this.percent' + '%'"
   [animationDuration]="300"
 ></circle-progress>
     <P class="progress-percent">
-      {{(progressStyle)}}</P>
+      {{(progressStyle)}}</P> 
   </div>
-</div>
+</div> -->
 
 <div *ngIf="questionItem" class="questiondiv1">
   <div class="questiondiv2">
-    <div *ngIf="questionItem.Is_Title__c">
-      <h3 class="questionalign" [innerHTML]="getText(questionItem.Question_Text__c)">
+    <div id="progress" style="display: block; margin-top: -26px;
+    margin-bottom: 6px;">
+      <div id="bar" style.width="{{progressStyle}}">
+        <circle-progress
+      [percent]="this.percent"
+      [radius]="30"
+      [outerStrokeWidth]="6"
+      [innerStrokeWidth]="3"
+      [outerStrokeColor]="'#c5281c'"
+      [innerStrokeColor]="'#e7e8ea'"
+      [animation]="true"
+      [title]= "this.percent"
+      [animationDuration]="300"
+      [startFromZero]="false"
+      [responsive]="false"
+    ></circle-progress>
+        <!-- <P class="progress-percent">
+          {{(progressStyle)}}</P> -->
+      </div>
+    </div>
+    <div *ngIf="questionItem.Is_Title__c"[ngClass]="{'questionalign':this.questionItem.Type__c != 'Book'}">
+  <h3  [ngClass]="{'right':this.questionItem.Type__c === 'Book'}"[innerHTML]="getText(questionItem.Question_Text__c)">
         {{questionItem.Question_Text__c}}
       </h3>
     </div>
+  </div>
     <div *ngIf="!questionItem.Is_Title__c" class="question-f-size">
       <div [innerHTML]="getText(questionItem.Question_Text__c)">{{questionItem.Question_Text__c}}</div>
     </div>
-  </div>
+  
 
   <div *ngIf="questionItem.Additional_Rich__c">
     <div class="info-alert ques-alert1">
@@ -154,7 +175,7 @@
   <div *ngIf="bookFlag">
     <div class="form-group">
       <div class="form-row">
-        <div class="questionalign" [class]="'col-md-'+ ques.Size__c + ' paddingnone'" *ngFor="let ques of subQuestions">
+        <div class="" [class]="'col-md-'+ ques.Size__c + ' paddingnone'" *ngFor="let ques of subQuestions">
           <span class="colorf">{{ques.Question__c}}</span>
 
           <div *ngIf="ques.Type__c === 'Text'">
@@ -221,13 +242,14 @@
   </div>
  </div>
 
- <div *ngIf="summary && summary.length > 0" class="col-md-12 questionalign">
+ <div *ngIf="summary && summary.length > 0" class="col-md-12">
   <h3 class="summary-h">  {{qbItem.Summary_Text__c}}  </h3>
-  <div *ngFor="let qa of summary" class="summarydiv">
-    <div class="summary">
+  <div *ngFor="let qa of summary"  [ngClass]="{'summarydiv': this.abItem.Status__c != 'Completed'}">
+    <div  [ngClass]="{'submit': this.abItem.Status__c === 'Completed'}">
+    <div [ngClass]="{'summary': this.abItem.Status__c != 'Completed'}" >
       
-      <div *ngIf = "!qbItem.Edit__c">
-      <a class="question" (click)="handleEditClick(qa.quesId)" [innerHTML]="getText(qa.quesValue)">{{qa.quesValue}}</a>
+      <div *ngIf = "!qbItem.Edit__c"  [ngClass]="{'question': this.abItem.Status__c != 'Completed'}" >
+      <a  [ngClass]="{'asum': this.abItem.Status__c === 'Completed'}" (click)="handleEditClick(qa.quesId)" [innerHTML]="getText(qa.quesValue)">{{qa.quesValue}}</a>
     </div>
 
       <div *ngIf= "qbItem.Edit__c">
@@ -235,8 +257,9 @@
         <button class="edit" (click)="handleEditClick(qa.quesId)" >
           <img src="">{{qbItem.Edit__c}}</button>
       </div>
-
-      <div class="answer">  {{qa.ansValue}}   </div>
+      <div  [ngClass]="{'bsum': this.abItem.Status__c === 'Completed'}">
+      <div [ngClass]="{'answer': this.abItem.Status__c != 'Completed'}">  {{qa.ansValue}}   </div> </div>
+    </div>
     </div>
   </div>
 

@@ -17,12 +17,11 @@ import { NgCircleProgressModule } from 'ng-circle-progress';
       "space": -2,
       "outerStrokeWidth": 2,
       "outerStrokeColor": "#808080",
-      "innerStrokeColor": "#e7e8ea",
+      "innerStrokeColor": "#919191",
       "innerStrokeWidth": 2,
       "title": [
-                "working",
-                "in",
-                "progress"
+                
+                "%"
       ],
       // titleFontSize: 12,
       // "subtitleFontSize": 20,

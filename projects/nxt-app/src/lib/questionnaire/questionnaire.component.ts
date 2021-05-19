@@ -141,6 +141,8 @@ export class QuestionnaireComponent implements OnInit {
    this.inpValue="";
     this.selectedMeridiem = "AM";
     this.processQB();
+    console.log('1234');
+    
   }
 
   ngOnChanges() {
@@ -674,6 +676,14 @@ export class QuestionnaireComponent implements OnInit {
   }
 
   private processQuestion = () => {
+    console.log(this.bookFlag + 'book');
+    console.log(this.questionItem.Type__c);
+    console.log(this.questionItem.Type__c != 'Book');
+    console.log(this.questionItem.Type__c ===  'Book');
+    
+    
+    
+    
     if(!this.back){
       this.questionNmae.push(this.questionItem.Name)
     }
