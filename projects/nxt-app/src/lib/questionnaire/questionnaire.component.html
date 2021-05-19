@@ -19,14 +19,14 @@
 
 <div *ngIf="questionItem" class="questiondiv1">
   <div class="questiondiv2">
-    <div id="progress" style="display: block; margin-top: -26px;
-    margin-bottom: 6px;">
+    <div id="progress"  *ngIf= "qbItem.Edit__c">
       <div id="bar" style.width="{{progressStyle}}">
-        <circle-progress
+        <circle-progress 
       [percent]="this.percent"
       [radius]="30"
-      [outerStrokeWidth]="6"
-      [innerStrokeWidth]="3"
+      [space]="-4"
+      [outerStrokeWidth]="4"
+      [innerStrokeWidth]="4"
       [outerStrokeColor]="'#c5281c'"
       [innerStrokeColor]="'#e7e8ea'"
       [animation]="true"
@@ -243,6 +243,26 @@
  </div>
 
  <div *ngIf="summary && summary.length > 0" class="col-md-12">
+  <div id="progress2" style="display: block; margin-top: -26px;
+  margin-bottom: 6px;" *ngIf= "qbItem.Edit__c">
+    <div id="bar" style.width="{{progressStyle}}">
+      <circle-progress class="circle"
+    [percent]="this.percent"
+    [radius]="30"
+    [outerStrokeWidth]="6"
+    [innerStrokeWidth]="9"
+    [outerStrokeColor]="'#c5281c'"
+    [innerStrokeColor]="'#e7e8ea'"
+    [animation]="true"
+    [title]= "this.percent"
+    [animationDuration]="300"
+    [startFromZero]="false"
+    [responsive]="false"
+  ></circle-progress>
+      <!-- <P class="progress-percent">
+        {{(progressStyle)}}</P> -->
+    </div>
+  </div>
   <h3 class="summary-h">  {{qbItem.Summary_Text__c}}  </h3>
   <div *ngFor="let qa of summary"  [ngClass]="{'summarydiv': this.abItem.Status__c != 'Completed'}">
     <div  [ngClass]="{'submit': this.abItem.Status__c === 'Completed'}">
