@@ -154,6 +154,7 @@
 
 </div>
   <div *ngIf="fileFlag">
+    <div *ngIf = "!qbItem.Edit__c">
     <div class="info-alert ques-alert2" style.border-color="{{this.questionItem.error ? 'red' : ''}}">
       <label class="picture-upload" for="file-upload" >
         <span class="picture-upload-child">
@@ -165,12 +166,29 @@
       </label>
     </div>
     <input id="file-upload" type="file" accept="{{allowedFileExtension}}" (change)="uploadFile($event)" />
+    </div>
+
+    <div *ngIf = "qbItem.Edit__c">
+      
+      <div class="Rectangle-file ques-alert2" style.border-color="{{this.questionItem.error ? 'red' : ''}}">
+        <img src="https://rnxt.s3.amazonaws.com/MytIcon/icon-doc-img%402x.png" class="icon-edit1">Imagen-de-los-daos  
+
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <label for="files" class="btn" style="color: #c5281c; width:0%">Adjuntar</label>    
+        <input id="files" style="visibility:hidden;" type="file" accept="{{allowedFileExtension}}" (change)="uploadFile($event)" />
+        </div>      
+      </div>
+    
   </div>
   <ul *ngIf="attachments?.length > 0 && fileFlag" class="attach-ulist col-md-12">
     <li *ngFor="let attachment of attachments" class="align-l">{{attachment.attachmentName}}<span
         class="attach-list" (click)="deleteAttachment(attachment.attachmentId)">X</span>
     </li>
   </ul>
+
+
+
 
   <div *ngIf="bookFlag">
     <div class="form-group">
@@ -249,8 +267,9 @@
       <circle-progress class="circle"
     [percent]="this.percent"
     [radius]="30"
-    [outerStrokeWidth]="6"
-    [innerStrokeWidth]="9"
+    [space]="-4"
+    [outerStrokeWidth]="4"
+    [innerStrokeWidth]="4"
     [outerStrokeColor]="'#c5281c'"
     [innerStrokeColor]="'#e7e8ea'"
     [animation]="true"
@@ -275,7 +294,7 @@
       <div *ngIf= "qbItem.Edit__c">
         <div class="question" [innerHTML]="getText(qa.quesValue)">{{qa.quesValue}}</div>
         <button class="edit" (click)="handleEditClick(qa.quesId)" >
-          <img src="">{{qbItem.Edit__c}}</button>
+          <img src="https://rnxt.s3.amazonaws.com/MytIcon/icon-edit%402x.png" class="icon-edit">{{qbItem.Edit__c}}</button>
       </div>
       <div  [ngClass]="{'bsum': this.abItem.Status__c === 'Completed'}">
       <div [ngClass]="{'answer': this.abItem.Status__c != 'Completed'}">  {{qa.ansValue}}   </div> </div>
