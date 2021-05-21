@@ -17,37 +17,33 @@
   </div>
 </div> -->
 
-<div *ngIf="questionItem" class="questiondiv1">
-  <div class="questiondiv2">
+<div *ngIf="questionItem" class="questiondiv1" >
+  <div class="questiondiv2" [ngClass]="{'questiondiv2': !qbItem.Edit__c}">
+    <div [ngClass]="{'bgColor': qbItem.Edit__c}">
     <div id="progress"  *ngIf= "qbItem.Edit__c">
       <div id="bar" style.width="{{progressStyle}}">
-        <circle-progress 
-      [percent]="this.percent"
-      [radius]="30"
-      [space]="-4"
-      [outerStrokeWidth]="4"
-      [innerStrokeWidth]="4"
-      [outerStrokeColor]="'#c5281c'"
-      [innerStrokeColor]="'#e7e8ea'"
-      [animation]="true"
-      [title]= "this.percent"
-      [animationDuration]="300"
-      [startFromZero]="false"
-      [responsive]="false"
+        <circle-progress  [percent]="this.percent"  [radius]="30"  [space]="-4" [outerStrokeWidth]="4" [innerStrokeWidth]="4"
+       [outerStrokeColor]="'#c5281c'" [innerStrokeColor]="'#e7e8ea'"[animation]="true" [title]= "this.percent"  [animationDuration]="300"
+       [startFromZero]="false" [responsive]="false"
     ></circle-progress>
         <!-- <P class="progress-percent">
           {{(progressStyle)}}</P> -->
       </div>
     </div>
-    <div *ngIf="questionItem.Is_Title__c"[ngClass]="{'questionalign':this.questionItem.Type__c != 'Book'}">
-  <h3  [ngClass]="{'right':this.questionItem.Type__c === 'Book'}"[innerHTML]="getText(questionItem.Question_Text__c)">
+    <div *ngIf="questionItem.Is_Title__c"[ngClass]="{'questionalign': !qbItem.Edit__c}">
+      <div [ngClass]="{'largeTitle':this.questionItem.Type__c != 'Book'&& qbItem.Edit__c }">
+  <h3  [ngClass]="{'right':this.questionItem.Type__c === 'Book' &&  qbItem.Edit__c }"[innerHTML]="getText(questionItem.Question_Text__c)">
         {{questionItem.Question_Text__c}}
       </h3>
     </div>
   </div>
-    <div *ngIf="!questionItem.Is_Title__c" class="question-f-size">
+  </div>
+</div>
+    <div *ngIf="!questionItem.Is_Title__c"   [ngClass]="{'question-f-size': !qbItem.Edit__c}" >
+      <div  [ngClass]="{'smallTitle': qbItem.Edit__c}">
       <div [innerHTML]="getText(questionItem.Question_Text__c)">{{questionItem.Question_Text__c}}</div>
     </div>
+  </div>
   
 
   <div *ngIf="questionItem.Additional_Rich__c">
@@ -284,20 +280,22 @@
   </div>
   <h3 class="summary-h">  {{qbItem.Summary_Text__c}}  </h3>
   <div *ngFor="let qa of summary"  [ngClass]="{'summarydiv': this.abItem.Status__c != 'Completed'}">
-    <div  [ngClass]="{'submit': this.abItem.Status__c === 'Completed'}">
-    <div [ngClass]="{'summary': this.abItem.Status__c != 'Completed'}" >
+    <div  [ngClass]="{'submit': this.abItem.Status__c === 'Completed' &&  qbItem.Edit__c}">
+      <div [ngClass]="{'non': this.abItem.Status__c != 'Completed' &&  qbItem.Edit__c} ">
+    <div [ngClass]="{'summary': this.abItem.Status__c != 'Completed'&& !qbItem.Edit__c}" >
       
       <div *ngIf = "!qbItem.Edit__c"  [ngClass]="{'question': this.abItem.Status__c != 'Completed'}" >
       <a  [ngClass]="{'asum': this.abItem.Status__c === 'Completed'}" (click)="handleEditClick(qa.quesId)" [innerHTML]="getText(qa.quesValue)">{{qa.quesValue}}</a>
     </div>
 
-      <div *ngIf= "qbItem.Edit__c">
-        <div class="question" [innerHTML]="getText(qa.quesValue)">{{qa.quesValue}}</div>
+      <div *ngIf= "qbItem.Edit__c"  [ngClass]="{'question': this.abItem.Status__c != 'Completed'}">
+        <div [ngClass]="{'asum': this.abItem.Status__c === 'Completed'}" [innerHTML]="getText(qa.quesValue)">{{qa.quesValue}}</div>
         <button class="edit" (click)="handleEditClick(qa.quesId)" >
           <img src="https://rnxt.s3.amazonaws.com/MytIcon/icon-edit%402x.png" class="icon-edit">{{qbItem.Edit__c}}</button>
       </div>
       <div  [ngClass]="{'bsum': this.abItem.Status__c === 'Completed'}">
       <div [ngClass]="{'answer': this.abItem.Status__c != 'Completed'}">  {{qa.ansValue}}   </div> </div>
+    </div>
     </div>
     </div>
   </div>

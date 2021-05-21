@@ -1050,11 +1050,24 @@ if(j.length === 1){
 }
   if(j.length>1){
     var width = 100 * (this.questionStack.length / this.possibilities.maxQuestions);
+    console.log('greaterthen1');
+    console.log(this.questionStack.length / this.possibilities.maxQuestions);
+    console.log("^^^^length/max");
+    
+    
+    
+    console.log(width);
+    
     //console.log('Progress bar width => ' + width);
     this.progressStyle = Math.round(width) + '%';
   }
   else if(j.length === 1){
+
     var width = 100 * (this.questionStack.length / this.possibilities.paths[this.count].count);
+    console.log('=1');
+    console.log(this.questionStack.length / this.possibilities.maxQuestions);
+    console.log("^^^^length/max");
+    console.log(width);
     //console.log('Progress bar width => ' + width);
     this.progressStyle = Math.round(width) + '%';
    

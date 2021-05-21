@@ -32,16 +32,30 @@
     padding-top: 25px !important; 
     padding-bottom: 10px !important; 
     padding-left: 15px !important; 
-    background-color: #f5f2f2
+    color: #00356f !important
+    
+}
+.bgColor{
+    padding-left: 15px !important; 
+    background-color: rgba(239, 239, 239, 0.9);
+    padding-bottom: 2%;
+    padding-top: 4%;
+    color: #20252b;
 }
 .questionalign{
+    text-align: left !important;
+    padding-right: 4% !important;
+}
+.largeTitle{
     text-align: left !important;
     padding-right: 4% !important;
     margin-left: 116px;
     margin-top: -63px;
 }
-
 .question-f-size{
+    font-size: 0.7rem !important;
+}
+.smallTitle{
     font-size: 0.7rem !important;
     margin-left: 116px;
     margin-top: -63px;
@@ -51,6 +65,17 @@
     margin-left: 116px;
     margin-top: -63px;
 }
+.non{
+         /* border: 1px solid #e6e6e6!important; 
+     border-radius: 5px!important; 
+     padding: .5em!important;  */
+     background-color: white
+
+}
+/* .QEdit{
+    font-weight: bold !important;
+    color: black;
+} */
 #progress{
     display: block;
     margin-top: -26px;
@@ -526,9 +551,7 @@ width: 100% !important;
     border-color: #007bff !important;
 }
 
-.questiondiv2{
-    color: #00356f !important;
-}
+
 
 .infodiv P {
     margin-bottom: 0px !important;
