@@ -182,6 +182,11 @@ export class QuestionnaireComponent implements OnInit {
          htmlElement.item(0).setAttribute('style', 'border: 1px solid #87be1c ;width:100%');
      }
   }
+//   function IncreaseTextboxSize() {  
+//     var textsize = $('#txtwidth').val();  
+//     $("#txtname").css("width", textsize);  
+//     $("#message").html("Currently textbox Size is " + textsize + "px.");  
+// } 
 
   processQB() {
     //console.log(this.qbId);
@@ -676,10 +681,10 @@ export class QuestionnaireComponent implements OnInit {
   }
 
   private processQuestion = () => {
-    console.log(this.bookFlag + 'book');
-    console.log(this.questionItem.Type__c);
-    console.log(this.questionItem.Type__c != 'Book');
-    console.log(this.questionItem.Type__c ===  'Book');
+    // console.log(this.bookFlag + 'book');
+    // console.log(this.questionItem.Type__c);
+    // console.log(this.questionItem.Type__c != 'Book');
+    // console.log(this.questionItem.Type__c ===  'Book');
     
     
     
@@ -1034,12 +1039,18 @@ export class QuestionnaireComponent implements OnInit {
   // }
   // Update Function for the Progress Bar
   updateProgress() {
+    console.log('updatetrue');
+    
     let j =[];
   for(let  i = 0 ; i<this.possibilities.total ; i++){
     var pathposs = Object.values(this.possibilities.paths[i].questions)
+    console.log('inside f');
+    
       if(pathposs[this.pathquestion] === this. currentName){ 
      j.push(i);
         this.check = true;
+        console.log('match true');
+        
      }
      else{
           this.check=false;

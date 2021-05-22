@@ -166,22 +166,41 @@
 
     <div *ngIf = "qbItem.Edit__c">
       
-      <div class="Rectangle-file ques-alert2" style.border-color="{{this.questionItem.error ? 'red' : ''}}">
-        <img src="https://rnxt.s3.amazonaws.com/MytIcon/icon-doc-img%402x.png" class="icon-edit1">Imagen-de-los-daos  
+      <div class="Rectangle-file ques-alert2"  style.border-color="{{this.questionItem.error ? 'red' : ''}}">
+        <div *ngIf="attachments?.length ===0" >
+        <img src="https://rnxt.s3.amazonaws.com/MytIcon/icon-doc-img%402x.png" class="icon-edit1"> 
+         <div class="fileQues" [innerHTML]="getText(questionItem.Question_Text__c)">{{questionItem.Question_Text__c}}</div> 
 
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        <label for="files" class="btn" style="color: #c5281c; width:0%">Adjuntar</label>    
+        <label for="files" class="btn addBtn" >Adjuntar</label>    
         <input id="files" style="visibility:hidden;" type="file" accept="{{allowedFileExtension}}" (change)="uploadFile($event)" />
-        </div>      
+      </div> 
+      <ul *ngIf="attachments?.length > 0" class="attach-ulist">
+        <img src="https://rnxt.s3.amazonaws.com/MytIcon/icon-doc-img%402x.png" class="icon-edit2"> 
+        <li *ngFor="let attachment of attachments" class="align-l">{{attachment.attachmentName}}
+          <span class="attach-list" (click)="deleteAttachment(attachment.attachmentId)"><img src="https://rnxt.s3.amazonaws.com/MytIcon/icon-delete%402x.png" class="deleteIcon"></span>
+        </li>
+      </ul>    
       </div>
-    
+    </div> 
+    <div *ngIf="attachments?.length >0" >
+    <div class="Rectangle-file ques-alert2" >
+      <img src="https://rnxt.s3.amazonaws.com/MytIcon/icon-doc-img%402x.png" class="icon-edit1"> 
+       <div class="fileQues" [innerHTML]="getText(questionItem.Question_Text__c)">{{questionItem.Question_Text__c}}</div> 
+
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <label for="files" class="btn addBtn" >Adjuntar</label>    
+      <input id="files" style="visibility:hidden;" type="file" accept="{{allowedFileExtension}}" (change)="uploadFile($event)" />
+    </div> 
+    </div>
   </div>
-  <ul *ngIf="attachments?.length > 0 && fileFlag" class="attach-ulist col-md-12">
-    <li *ngFor="let attachment of attachments" class="align-l">{{attachment.attachmentName}}<span
-        class="attach-list" (click)="deleteAttachment(attachment.attachmentId)">X</span>
+  <!-- <ul *ngIf="attachments?.length > 0 && fileFlag" class="attach-ulist col-md-12">
+    <li *ngFor="let attachment of attachments" class="align-l">{{attachment.attachmentName}}
+      <span class="attach-list" (click)="deleteAttachment(attachment.attachmentId)"><img src="https://rnxt.s3.amazonaws.com/MytIcon/icon-delete%402x.png"></span>
     </li>
-  </ul>
+  </ul> -->
 
 
 

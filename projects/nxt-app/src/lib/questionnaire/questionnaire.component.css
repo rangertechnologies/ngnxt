@@ -22,7 +22,13 @@
   .icon-edit1{
     width: 31px;
     height: 28px;
-    margin: -25px 13px -25px -2%;}
+    margin: 2% 0% 2% -2%;
+}
+ .icon-edit2{
+    width: 31px;
+    height: 28px;
+    margin: 2% 0 2% -12%;
+}
   
 .questiondiv1{
     padding-left: 25px !important;
@@ -103,7 +109,7 @@
     margin: 19px 314px 17px 54px;
     padding: 3px 16px 5px;
     border: dashed 2px #d8d8d8;
-    background-color: var(--white);
+    background-color: #f6f6f6
   }
  
 .info-alert {
@@ -386,7 +392,19 @@
 .answer {
     color:#8C8F92 !important;
 }
-
+.fileQues{
+    margin: -8% 0% 0% 8%;
+}
+.addBtn{
+    color: #c5281c !important; 
+    width:0%;
+    margin: -24% 0% 0% 79%;
+    text-decoration: underline;
+    font-size: 1rem !important;
+}
+.deleteIcon{
+    height: 24px;
+}
 
 .picture-upload {
     height: 200px !important;
@@ -417,6 +435,8 @@
 
 .align-l{
     text-align:left !important;
+    margin-top: -8%;
+    /* margin-left: 6%; */
 }
 
 .attach-ulist{
