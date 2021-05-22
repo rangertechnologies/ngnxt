@@ -26,7 +26,8 @@ Submit_Tracking_ID__c: '12345',
 First_Question__c: '1',
 Title__c: 'Demo Unconditional',
 Total_Questions__c: 3,
-Possibilities__c : 'path'
+Possibilities__c : 'path',
+Progress_Bar__c : true
 }
 // Text Question
 export const TESTQUESTION: Question = {

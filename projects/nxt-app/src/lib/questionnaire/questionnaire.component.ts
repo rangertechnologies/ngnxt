@@ -228,10 +228,12 @@ export class QuestionnaireComponent implements OnInit {
        this.questionStack.pop();
   
      }
+     if(this.qbItem.Progress_Bar__c === true ){
      var arrayLength1 = this.questionNmae.length;
      for (let j = arrayLength1; j > lengthValue; j--) {
        this.questionNmae.pop()
      }
+    }
      this.summary = [];
     }
   }
@@ -676,6 +678,7 @@ export class QuestionnaireComponent implements OnInit {
   }
 
   private processQuestion = () => {
+    if(this.qbItem.Progress_Bar__c === true ){
     console.log(this.bookFlag + 'book');
     console.log(this.questionItem.Type__c);
     console.log(this.questionItem.Type__c != 'Book');
@@ -691,7 +694,7 @@ export class QuestionnaireComponent implements OnInit {
     this.currentName = this.questionItem.Name
     this.pathquestion = this.questionNmae.indexOf(this.currentName);
     this.possibilities = JSON.parse(this.qbItem.Possibilities__c);
-
+  }
    
     this.myDatePickerOptions;
     this.day();
@@ -764,7 +767,10 @@ export class QuestionnaireComponent implements OnInit {
       this.allowedFileExtension = this.questionItem.Allowed_File_Extensions__c.split(';');
       //console.log(this.allowedFileExtension);
     }
+    if(this.qbItem.Progress_Bar__c === true)
+    {
     this. updateProgress();
+    }
   }
   setFlag(typ) {
     //console.log('inside setFlag for ' + typ);
@@ -1034,6 +1040,7 @@ export class QuestionnaireComponent implements OnInit {
   // }
   // Update Function for the Progress Bar
   updateProgress() {
+    if(this.qbItem.Progress_Bar__c === true ){
     let j =[];
   for(let  i = 0 ; i<this.possibilities.total ; i++){
     var pathposs = Object.values(this.possibilities.paths[i].questions)
@@ -1084,5 +1091,6 @@ if(j.length === 1){
    
     //$('#progress #bar').animate({'width':width + '%'});
   }
+}
 }
 
