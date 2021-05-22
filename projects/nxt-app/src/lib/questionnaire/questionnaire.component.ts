@@ -678,18 +678,10 @@ export class QuestionnaireComponent implements OnInit {
   }
 
   private processQuestion = () => {
-    if(this.qbItem.Progress_Bar__c === true ){
-    console.log(this.bookFlag + 'book');
-    console.log(this.questionItem.Type__c);
-    console.log(this.questionItem.Type__c != 'Book');
-    console.log(this.questionItem.Type__c ===  'Book');
-    
-    
-    
-    
-    if(!this.back){
-      this.questionNmae.push(this.questionItem.Name)
-    }
+    if(this.qbItem.Progress_Bar__c === true ){  
+      if(!this.back){
+           this.questionNmae.push(this.questionItem.Name)
+      }
     this.back=false;
     this.currentName = this.questionItem.Name
     this.pathquestion = this.questionNmae.indexOf(this.currentName);
@@ -1038,6 +1030,7 @@ export class QuestionnaireComponent implements OnInit {
   //   });
 
   // }
+  
   // Update Function for the Progress Bar
   updateProgress() {
     if(this.qbItem.Progress_Bar__c === true ){
@@ -1052,18 +1045,11 @@ export class QuestionnaireComponent implements OnInit {
           this.check=false;
      }
    }
-if(j.length === 1){
-  this.count = j[0];
-}
+  if(j.length === 1){
+     this.count = j[0];
+  }
   if(j.length>1){
     var width = 100 * (this.questionStack.length / this.possibilities.maxQuestions);
-    console.log('greaterthen1');
-    console.log(this.questionStack.length / this.possibilities.maxQuestions);
-    console.log("^^^^length/max");
-    
-    
-    
-    console.log(width);
     
     //console.log('Progress bar width => ' + width);
     this.progressStyle = Math.round(width) + '%';
@@ -1071,25 +1057,10 @@ if(j.length === 1){
   else if(j.length === 1){
 
     var width = 100 * (this.questionStack.length / this.possibilities.paths[this.count].count);
-    console.log('=1');
-    console.log(this.questionStack.length / this.possibilities.maxQuestions);
-    console.log("^^^^length/max");
-    console.log(width);
     //console.log('Progress bar width => ' + width);
-    this.progressStyle = Math.round(width) + '%';
-   
-    
-    
+    this.progressStyle = Math.round(width) + '%'; 
   }
   this.percent= + Math.round(width)
- // console.log(this.percent);
-  //console.log(this.progressStyle);
-  
-  
-  
-  // console.log(Number(this.progressStyle));
-   
-    //$('#progress #bar').animate({'width':width + '%'});
   }
 }
 }
