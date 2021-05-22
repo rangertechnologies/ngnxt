@@ -17,6 +17,8 @@
   </div>
 </div> -->
 
+<ngx-spinner [name] = "spinnerName" [type] = "spinnerType"></ngx-spinner>
+
 <div *ngIf="questionItem" class="questiondiv1" >
   <div class="questiondiv2" [ngClass]="{'questiondiv2': !qbItem.Progress_Bar__c}">
     <div [ngClass]="{'bgColor': qbItem.Progress_Bar__c}">

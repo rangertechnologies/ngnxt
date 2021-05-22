@@ -4,6 +4,7 @@ import { SalesforceService } from '../services/salesforce.service';
 import { IMyDateModel, IMyDpOptions } from 'mydatepicker';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { FormBuilder } from '@angular/forms';
+import { NgxSpinnerService } from "ngx-spinner";
 
 import {
 Question,
@@ -112,7 +113,8 @@ export class QuestionnaireComponent implements OnInit {
   public bookFlagAccept: string[];
   public recordId:string;
   public currentQuestionId: string;
-
+  public spinnerType : string;
+  public spinnerName : string;
 
 
   // REQ-01 PROGRESS BAR
@@ -123,8 +125,10 @@ export class QuestionnaireComponent implements OnInit {
 
   };
 
-  constructor(private sfService: SalesforceService, private route: ActivatedRoute, private sanitizer: DomSanitizer, private _formBuilder: FormBuilder){
-
+  constructor(private sfService: SalesforceService, private route: ActivatedRoute, private sanitizer: DomSanitizer, private spinner: NgxSpinnerService, private _formBuilder: FormBuilder){
+   
+    this.spinnerName = 'sp1';
+    this.spinnerType = 'ball-spin-clockwise';
    }
 
    onDateChanged(event: IMyDateModel) { //to change the border color
@@ -956,6 +960,7 @@ export class QuestionnaireComponent implements OnInit {
     if (local.fileTypeIncorrect) { return; }
     let fileContent: any;
     var reader = new FileReader();
+    
     reader.onload = function () {
       fileContent = reader.result;
       local.fileExceededLimit = local.attachment.size > 3242880; //Validating file size
@@ -968,6 +973,7 @@ export class QuestionnaireComponent implements OnInit {
         local.createAttachment(fileWrapper);
       }
     }
+    this.spinner.show(this.spinnerName);
     reader.readAsDataURL(event.target.files[0]);
   }
 
@@ -975,6 +981,7 @@ export class QuestionnaireComponent implements OnInit {
     let createdAttachment: Attachment = new Attachment(response.attachmentId, response.attachmentName, this.attachment.lastModifiedDate);
     this.attachments.push(createdAttachment);
     this.attachmentsMap.set(this.questionItem.Id,this.attachments);
+    this.spinner.hide(this.spinnerName);
   }
 
 

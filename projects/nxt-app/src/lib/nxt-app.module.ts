@@ -1,16 +1,17 @@
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { NxtAppComponent } from './nxt-app.component';
 import { QuestionnaireComponent } from './questionnaire/questionnaire.component';
 import { CommonModule } from "@angular/common";
 import { FormsModule,ReactiveFormsModule } from '@angular/forms';
 import { MyDatePickerModule } from 'mydatepicker';
 import { NgCircleProgressModule } from 'ng-circle-progress';
+import { NgxSpinnerModule } from "ngx-spinner";
 @NgModule({
   declarations: [NxtAppComponent, QuestionnaireComponent],
   imports: [
     CommonModule, FormsModule,
     MyDatePickerModule,
-    ReactiveFormsModule,
+    ReactiveFormsModule, NgxSpinnerModule,
     NgCircleProgressModule.forRoot({
       "backgroundPadding": 7,
       "radius": 60,
@@ -30,6 +31,7 @@ import { NgCircleProgressModule } from 'ng-circle-progress';
       "showUnits": false,
       "clockwise":true})
   ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
   exports: [NxtAppComponent, QuestionnaireComponent]
 })
 export class NxtAppModule { }
