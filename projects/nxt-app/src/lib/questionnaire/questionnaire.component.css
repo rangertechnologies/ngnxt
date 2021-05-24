@@ -558,3 +558,42 @@ width: 100% !important;
     text-align: left !important;
     text-decoration:inherit !important;
 }
+.rusty {
+    width: 121px;
+    height: 56px;
+    margin: -10px 0 0 513px;
+    padding: 15px 24px 17px;
+    color: #FFFF;
+    background-color: #c5281c;
+}
+.grey {
+    width: 87px;
+    height: 56px;
+    margin: -9px 63px 0px 1041px;
+    padding: 15px 24px 17px;
+    border: solid 2px #6F7072;
+    background-color: #FFFFFF;
+}
+@media only screen and (max-width:768px) {
+    .rusty{
+        width: 121px;
+        height: 56px;
+        margin: -10px 0 0 575px;
+        padding: 15px 24px 17px;
+        color: #FFFF;
+        background-color: #c5281c;
+    }
+    .grey{
+        width: 87px;
+        height: 56px;
+        margin: 76px ​63px 0 440px !important;
+        padding: 15px 24px 17px;
+        border: solid 2px #6F7072;
+        background-color: #FFFFFF;
+    }
+}
+
+
+
+
+  
