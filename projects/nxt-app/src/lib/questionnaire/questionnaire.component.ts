@@ -146,7 +146,7 @@ export class QuestionnaireComponent implements OnInit {
    this.inpValue="";
     this.selectedMeridiem = "AM";
     this.processQB();
-    console.log('abdul');
+    console.log('sat');
     
   }
 
@@ -709,7 +709,7 @@ export class QuestionnaireComponent implements OnInit {
  // console.log(this.recordId);
  // console.log(this.questionItem.Id);
   
-  
+ 
     
    
     this.pop =true;
@@ -723,7 +723,7 @@ export class QuestionnaireComponent implements OnInit {
            this.questionNmae.push(this.questionItem.Name)
       }
     this.back=false;
-    console.log(this.questionNmae);
+  //  console.log(this.questionNmae);
     
     this.currentName = this.questionItem.Name
     this.pathquestion = this.questionNmae.indexOf(this.currentName);
@@ -797,6 +797,7 @@ export class QuestionnaireComponent implements OnInit {
             }
             }
     else if (this.fileFlag) {
+      this.fileUI();
       // logic
       this.allowedFileExtension = this.questionItem.Allowed_File_Extensions__c.split(';');
       //console.log(this.allowedFileExtension);
@@ -1064,6 +1065,12 @@ export class QuestionnaireComponent implements OnInit {
     var fileNameWithType = fileNamewithIdandType.substr(fileNamewithIdandType.indexOf('::::') + 4);
     return fileNameWithType; //fileNameWithType.replace(/^(.*(\/|\\))(.+)$/, '$3');
   }
+  fileUI(){
+    if(this.attachments.length ===0){
+    console.log('attach true');
+    
+    }
+  }
 
   //Update function for categorization
   // stepperCateg() {
@@ -1082,18 +1089,18 @@ export class QuestionnaireComponent implements OnInit {
     let j =[];
   for(let  i = 0 ; i<this.possibilities.total ; i++){
     var pathposs = Object.values(this.possibilities.paths[i].questions)
-    console.log('inside f');
-    console.log(pathposs[this.pathquestion]   + 'check');
-    console.log(this.currentName   + 'check');
-    console.log(pathposs );
-    console.log(this.pathquestion);
+    // console.log('inside f');
+    // console.log(pathposs[this.pathquestion]   + 'check');
+    // console.log(this.currentName   + 'check');
+    // console.log(pathposs );
+    // console.log(this.pathquestion);
     
     
     
       if(pathposs[this.pathquestion] === this.currentName){ 
      j.push(i);
         this.check = true;
-        console.log('match true');
+     //   console.log('match true');
         
      }
      else{
@@ -1112,11 +1119,11 @@ export class QuestionnaireComponent implements OnInit {
   else if(j.length === 1){
 
     var width = 100 * (this.questionStack.length / this.possibilities.paths[this.count].count);
-    console.log('=1');
-    console.log(this.questionStack.length / this.possibilities.maxQuestions);
-    console.log("^^^^length/max");
-    console.log(width);
-    console.log('Progress bar width => ' + width);
+    // console.log('=1');
+    // console.log(this.questionStack.length / this.possibilities.maxQuestions);
+    // console.log("^^^^length/max");
+    // console.log(width);
+    // console.log('Progress bar width => ' + width);
     this.progressStyle = Math.round(width) + '%';
    
     

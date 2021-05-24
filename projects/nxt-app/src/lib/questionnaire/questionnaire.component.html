@@ -2,23 +2,25 @@
 
 <div *ngIf="questionItem" class="questiondiv1" >
 
-  <div class="questiondiv2" [ngClass]="{'questiondiv2': !qbItem.Progress_Bar__c}">
+  <div  [ngClass]="{'questiondiv2': !qbItem.Progress_Bar__c}">
     <div [ngClass]="{'bgColor': qbItem.Progress_Bar__c}">
     <div id="progress"  *ngIf= "qbItem.Progress_Bar__c">
-      <div id="bar" style.width="{{progressStyle}}">
-        <circle-progress  [percent]="this.percent"  [radius]="30"  [space]="-4" [outerStrokeWidth]="4" [innerStrokeWidth]="4"
+      <div id="bar">
+        <circle-progress class="titlebar" [percent]="this.percent"  [radius]="55"  [space]="-4" [outerStrokeWidth]="4" [innerStrokeWidth]="4"
        [outerStrokeColor]="'#c5281c'" [innerStrokeColor]="'#e7e8ea'"[animation]="true" [title]= "this.percent"  [animationDuration]="300"
        [startFromZero]="false" [responsive]="false">
        </circle-progress>
       </div>
     </div>
      <div *ngIf="questionItem.Group__c"[ngClass]="{'questionalign': !qbItem.Progress_Bar__c}">
-      <div [ngClass]="{'largeTitle':this.questionItem.Type__c != 'Book'&& qbItem.Progress_Bar__c }">
-      <h3  [ngClass]="{'right':this.questionItem.Type__c === 'Book' &&  qbItem.Progress_Bar__c }">
+      <div [ngClass]="{'largeTitle ':   this.questionItem.Type__c != 'Book'&& qbItem.Progress_Bar__c }">
+        <div  [ngClass]="{'bookTitle':this.questionItem.Type__c === 'Book' &&  qbItem.Progress_Bar__c }">
+      <h3 >
         {{questionItem.Group__c}}
       </h3>
       <div *ngIf="questionItem.Additional_Rich__c && qbItem.Progress_Bar__c ">
         <div [innerHTML]="innerhtml"></div>
+      </div>
       </div>
       </div>
      </div>
@@ -157,19 +159,22 @@
 
     <div *ngIf = "qbItem.Progress_Bar__c">
       
-      <div class="Rectangle-file ques-alert2"  style.border-color="{{this.questionItem.error ? 'red' : ''}}">
-        <div *ngIf="attachments?.length ===0" >
+      <div style.border-color="{{this.questionItem.error ? 'red' : ''}}">
+        <div  [ngClass]="{'Rectangle-file ques-alert2': attachments?.length ===0}" *ngIf="attachments?.length ===0"  >
         <img src="https://rnxt.s3.amazonaws.com/MytIcon/icon-doc-img%402x.png" class="icon-edit1"> 
          <div class="fileQues" [innerHTML]="getText(questionItem.Question_Text__c)">{{questionItem.Question_Text__c}}</div> 
         <label for="files" class="btn addBtn" >Adjuntar</label>    
         <input id="files" style="visibility:hidden;" type="file" accept="{{allowedFileExtension}}" (change)="uploadFile($event)" />
       </div> 
+      <div [ngClass]="{'uploadBox': attachments?.length >0}">
       <ul *ngIf="attachments?.length > 0" class="attach-ulist">
-        <img src="https://rnxt.s3.amazonaws.com/MytIcon/icon-doc-img%402x.png" class="icon-edit2"> 
-        <li *ngFor="let attachment of attachments" class="align-l">{{attachment.attachmentName}}
+        <li *ngFor="let attachment of attachments" class="align-l">
+          <img src="https://rnxt.s3.amazonaws.com/MytIcon/icon-doc-img%402x.png"  class="icon-edit2" >
+          {{attachment.attachmentName}}
           <span class="attach-list" (click)="deleteAttachment(attachment.attachmentId)"><img src="https://rnxt.s3.amazonaws.com/MytIcon/icon-delete%402x.png" class="deleteIcon"></span>
         </li>
       </ul> 
+      </div>
     </div> 
     </div> 
     <div *ngIf="attachments?.length > 0" >
@@ -261,12 +266,11 @@
  </div>
 
  <div *ngIf="summary && summary.length > 0" class="col-md-12">
-  <div id="progress2" style="display: block; margin-top: -26px;
-  margin-bottom: 6px;" *ngIf= "qbItem.Progress_Bar__c">
-    <div id="bar" style.width="{{progressStyle}}">
+  <div  *ngIf= "qbItem.Progress_Bar__c">
+    <div class="bgColor" style.width="{{progressStyle}}">
       <circle-progress class="circle"
     [percent]="this.percent"
-    [radius]="30"
+    [radius]="55"
     [space]="-4"
     [outerStrokeWidth]="4"
     [innerStrokeWidth]="4"
