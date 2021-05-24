@@ -255,8 +255,8 @@
       </div> 
     </div>
     <div [ngClass]="{'col-md-6': !qbItem.Progress_Bar__c}" >
-      <div [ngClass]="{'btn btn-primary btn-lg btn-block btn-back-color': !qbItem.Progress_Bar__c}">
-        <button [ngClass]="{'rusty': qbItem.Progress_Bar__c}" (click)="handleNextClick()">{{qbItem.Next__c}}</button>
+      <div>
+        <button [ngClass]="{'rusty': qbItem.Progress_Bar__c, 'btn btn-primary btn-lg btn-block btn-back-color': !qbItem.Progress_Bar__c}"  (click)="handleNextClick()">{{qbItem.Next__c}}</button>
       </div>  
     </div>
   </div>
