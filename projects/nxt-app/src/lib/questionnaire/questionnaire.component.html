@@ -247,16 +247,16 @@
     </div>
   </div>
 
-  <div class="col-md-12 paddingZero">
+  <div class="flexer">
     <div [ngClass]="{'col-md-6': !qbItem.Progress_Bar__c}" [style.visibility]="questionStack.length > 0 ? 'visible':'hidden'">
-      <div [ngClass]="{'btn btn-primary btn-lg btn-block btn-back-color': !qbItem.Progress_Bar__c}">
-        <button [ngClass]="{'grey': qbItem.Progress_Bar__c}"
+      <div [ngClass]="{}">
+        <button [ngClass]="{'grey btn-text': qbItem.Progress_Bar__c, 'btn btn-primary btn-lg btn-block btn-back-color': !qbItem.Progress_Bar__c}"
         (click)="handleBackClick()">{{qbItem.Back__c}}</button>
       </div> 
     </div>
     <div [ngClass]="{'col-md-6': !qbItem.Progress_Bar__c}" >
       <div>
-        <button [ngClass]="{'rusty': qbItem.Progress_Bar__c, 'btn btn-primary btn-lg btn-block btn-back-color': !qbItem.Progress_Bar__c}"  (click)="handleNextClick()">{{qbItem.Next__c}}</button>
+        <button [ngClass]="{'rusty btn-text2': qbItem.Progress_Bar__c, 'btn btn-primary btn-lg btn-block btn-back-color': !qbItem.Progress_Bar__c}"  (click)="handleNextClick()">{{qbItem.Next__c}}</button>
       </div>  
     </div>
   </div>
