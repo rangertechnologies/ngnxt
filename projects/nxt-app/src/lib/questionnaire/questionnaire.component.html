@@ -1,54 +1,43 @@
-<!-- Progress Bar-->
-<!-- <div id="progress" style="display: block;" *ngIf= "qbItem.Progress_Bar__c">
-  <div id="bar" style.width="{{progressStyle}}">
-    <circle-progress
-  [percent]="this.percent"
-  [radius]="40"
-  [outerStrokeWidth]="6"
-  [innerStrokeWidth]="3"
-  [outerStrokeColor]="'#6b090f'"
-  [innerStrokeColor]="'#e7e8ea'"
-  [animation]="true"
-  [title]= "'this.percent' + '%'"
-  [animationDuration]="300"
-></circle-progress>
-    <P class="progress-percent">
-      {{(progressStyle)}}</P> 
-  </div>
-</div> -->
-
 <ngx-spinner [name] = "spinnerName" [type] = "spinnerType"></ngx-spinner>
 
 <div *ngIf="questionItem" class="questiondiv1" >
+
   <div class="questiondiv2" [ngClass]="{'questiondiv2': !qbItem.Progress_Bar__c}">
     <div [ngClass]="{'bgColor': qbItem.Progress_Bar__c}">
     <div id="progress"  *ngIf= "qbItem.Progress_Bar__c">
       <div id="bar" style.width="{{progressStyle}}">
         <circle-progress  [percent]="this.percent"  [radius]="30"  [space]="-4" [outerStrokeWidth]="4" [innerStrokeWidth]="4"
        [outerStrokeColor]="'#c5281c'" [innerStrokeColor]="'#e7e8ea'"[animation]="true" [title]= "this.percent"  [animationDuration]="300"
-       [startFromZero]="false" [responsive]="false"
-    ></circle-progress>
-        <!-- <P class="progress-percent">
-          {{(progressStyle)}}</P> -->
+       [startFromZero]="false" [responsive]="false">
+       </circle-progress>
       </div>
     </div>
-    <div *ngIf="questionItem.Is_Title__c"[ngClass]="{'questionalign': !qbItem.Progress_Bar__c}">
+     <div *ngIf="questionItem.Group__c"[ngClass]="{'questionalign': !qbItem.Progress_Bar__c}">
       <div [ngClass]="{'largeTitle':this.questionItem.Type__c != 'Book'&& qbItem.Progress_Bar__c }">
-  <h3  [ngClass]="{'right':this.questionItem.Type__c === 'Book' &&  qbItem.Progress_Bar__c }"[innerHTML]="getText(questionItem.Question_Text__c)">
-        {{questionItem.Question_Text__c}}
+      <h3  [ngClass]="{'right':this.questionItem.Type__c === 'Book' &&  qbItem.Progress_Bar__c }">
+        {{questionItem.Group__c}}
       </h3>
-    </div>
+      <div *ngIf="questionItem.Additional_Rich__c && qbItem.Progress_Bar__c ">
+        <div [innerHTML]="innerhtml"></div>
+      </div>
+      </div>
+     </div>
+    </div>  
   </div>
-  </div>
-</div>
-    <div *ngIf="!questionItem.Is_Title__c"   [ngClass]="{'question-f-size': !qbItem.Progress_Bar__c}" >
-      <div  [ngClass]="{'smallTitle': qbItem.Progress_Bar__c}">
-      <div [innerHTML]="getText(questionItem.Question_Text__c)">{{questionItem.Question_Text__c}}</div>
-    </div>
-  </div>
-  
 
-  <div *ngIf="questionItem.Additional_Rich__c">
+  <!--Question alignment-->
+  <div class="questiondiv2">	
+    <div *ngIf="questionItem.Is_Title__c">	
+      <h3 class="questionalign" [innerHTML]="getText(questionItem.Question_Text__c)">	
+        {{questionItem.Question_Text__c}}	
+      </h3>	
+    </div>	
+    <div *ngIf="!questionItem.Is_Title__c" class="question-f-size">	
+      <div [innerHTML]="getText(questionItem.Question_Text__c)">{{questionItem.Question_Text__c}}</div>	
+    </div>	
+  </div>
+
+  <div *ngIf="questionItem.Additional_Rich__c && !qbItem.Progress_Bar__c ">
     <div class="info-alert ques-alert1">
       <i class="fa fa-info fa-3x iposition icolor" aria-hidden="true"></i>
       <div class="infodiv" [innerHTML]="innerhtml"></div>

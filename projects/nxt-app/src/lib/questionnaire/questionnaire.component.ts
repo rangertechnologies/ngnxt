@@ -146,7 +146,7 @@ export class QuestionnaireComponent implements OnInit {
    this.inpValue="";
     this.selectedMeridiem = "AM";
     this.processQB();
-    console.log('1234');
+    console.log('abdul');
     
   }
 
@@ -229,7 +229,6 @@ export class QuestionnaireComponent implements OnInit {
       if(value == null){
       return;
       }
-
      this.readQuestion(value);
      //console.log(' in side summaryopen'+ this.summary.length);
 
