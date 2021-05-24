@@ -132,13 +132,13 @@
           <option [value]="hour" *ngFor="let hour of hours">{{hour}}</option>
         </select>
         <span class="colon"> : </span>
-        <select name="minutes" class="datetime" [(ngModel)]="selectedMinute" id="minute" (focus)="clearError()" >
+        <select name="minutes" class="datetime showminute" [(ngModel)]="selectedMinute" id="minute" (focus)="clearError()" >
           <option value="">MM</option>
           <option [value]="minute" *ngFor="let minute of minutes">{{minute}}</option>
         </select>
         <div *ngIf= "questionItem.X24_Hours__c == false">
         <span class="colon"> : </span>
-        <select name="AM/PM" class="datetime" [(ngModel)]="selectedMeridiem" id="meridiem">
+        <select name="AM/PM" class="" [(ngModel)]="selectedMeridiem" id="meridiem">
           <option value="AM">AM</option>
           <option value="PM">PM</option>
         </select>
@@ -170,9 +170,6 @@
         <div *ngIf="attachments?.length ===0" >
         <img src="https://rnxt.s3.amazonaws.com/MytIcon/icon-doc-img%402x.png" class="icon-edit1"> 
          <div class="fileQues" [innerHTML]="getText(questionItem.Question_Text__c)">{{questionItem.Question_Text__c}}</div> 
-
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         <label for="files" class="btn addBtn" >Adjuntar</label>    
         <input id="files" style="visibility:hidden;" type="file" accept="{{allowedFileExtension}}" (change)="uploadFile($event)" />
       </div> 
@@ -181,16 +178,13 @@
         <li *ngFor="let attachment of attachments" class="align-l">{{attachment.attachmentName}}
           <span class="attach-list" (click)="deleteAttachment(attachment.attachmentId)"><img src="https://rnxt.s3.amazonaws.com/MytIcon/icon-delete%402x.png" class="deleteIcon"></span>
         </li>
-      </ul>    
-      </div>
+      </ul> 
     </div> 
-    <div *ngIf="attachments?.length >0" >
+    </div> 
+    <div *ngIf="attachments?.length > 0" >
     <div class="Rectangle-file ques-alert2" >
       <img src="https://rnxt.s3.amazonaws.com/MytIcon/icon-doc-img%402x.png" class="icon-edit1"> 
        <div class="fileQues" [innerHTML]="getText(questionItem.Question_Text__c)">{{questionItem.Question_Text__c}}</div> 
-
-      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
       <label for="files" class="btn addBtn" >Adjuntar</label>    
       <input id="files" style="visibility:hidden;" type="file" accept="{{allowedFileExtension}}" (change)="uploadFile($event)" />
     </div> 
@@ -306,9 +300,10 @@
       <div *ngIf = "!qbItem.Edit__c"  [ngClass]="{'question': this.abItem.Status__c != 'Completed'}" >
       <a  [ngClass]="{'asum': this.abItem.Status__c === 'Completed'}" (click)="handleEditClick(qa.quesId)" [innerHTML]="getText(qa.quesValue)">{{qa.quesValue}}</a>
     </div>
-
-      <div *ngIf= "qbItem.Edit__c"  [ngClass]="{'question': this.abItem.Status__c != 'Completed'}">
-        <div [ngClass]="{'asum': this.abItem.Status__c === 'Completed'}" [innerHTML]="getText(qa.quesValue)">{{qa.quesValue}}</div>
+    <div *ngIf= "qbItem.Edit__c" [ngClass]="{'question': this.abItem.Status__c != 'Completed'}">
+      <div [ngClass]="{'asum': this.abItem.Status__c === 'Completed'}" [innerHTML]="getText(qa.quesValue)">{{qa.quesValue}}</div>
+    </div>
+    <div *ngIf= "qbItem.Edit__c &&  this.abItem.Status__c != 'Completed'" >
         <button class="edit" (click)="handleEditClick(qa.quesId)" >
           <img src="https://rnxt.s3.amazonaws.com/MytIcon/icon-edit%402x.png" class="icon-edit">{{qbItem.Edit__c}}</button>
       </div>
