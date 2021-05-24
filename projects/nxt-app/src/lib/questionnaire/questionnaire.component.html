@@ -1,5 +1,5 @@
 <!-- Progress Bar-->
-<!-- <div id="progress" style="display: block;" *ngIf= "qbItem.Edit__c">
+<!-- <div id="progress" style="display: block;" *ngIf= "qbItem.Progress_Bar__c">
   <div id="bar" style.width="{{progressStyle}}">
     <circle-progress
   [percent]="this.percent"
@@ -17,10 +17,12 @@
   </div>
 </div> -->
 
+<ngx-spinner [name] = "spinnerName" [type] = "spinnerType"></ngx-spinner>
+
 <div *ngIf="questionItem" class="questiondiv1" >
-  <div class="questiondiv2" [ngClass]="{'questiondiv2': !qbItem.Edit__c}">
-    <div [ngClass]="{'bgColor': qbItem.Edit__c}">
-    <div id="progress"  *ngIf= "qbItem.Edit__c">
+  <div class="questiondiv2" [ngClass]="{'questiondiv2': !qbItem.Progress_Bar__c}">
+    <div [ngClass]="{'bgColor': qbItem.Progress_Bar__c}">
+    <div id="progress"  *ngIf= "qbItem.Progress_Bar__c">
       <div id="bar" style.width="{{progressStyle}}">
         <circle-progress  [percent]="this.percent"  [radius]="30"  [space]="-4" [outerStrokeWidth]="4" [innerStrokeWidth]="4"
        [outerStrokeColor]="'#c5281c'" [innerStrokeColor]="'#e7e8ea'"[animation]="true" [title]= "this.percent"  [animationDuration]="300"
@@ -30,17 +32,17 @@
           {{(progressStyle)}}</P> -->
       </div>
     </div>
-    <div *ngIf="questionItem.Is_Title__c"[ngClass]="{'questionalign': !qbItem.Edit__c}">
-      <div [ngClass]="{'largeTitle':this.questionItem.Type__c != 'Book'&& qbItem.Edit__c }">
-  <h3  [ngClass]="{'right':this.questionItem.Type__c === 'Book' &&  qbItem.Edit__c }"[innerHTML]="getText(questionItem.Question_Text__c)">
+    <div *ngIf="questionItem.Is_Title__c"[ngClass]="{'questionalign': !qbItem.Progress_Bar__c}">
+      <div [ngClass]="{'largeTitle':this.questionItem.Type__c != 'Book'&& qbItem.Progress_Bar__c }">
+  <h3  [ngClass]="{'right':this.questionItem.Type__c === 'Book' &&  qbItem.Progress_Bar__c }"[innerHTML]="getText(questionItem.Question_Text__c)">
         {{questionItem.Question_Text__c}}
       </h3>
     </div>
   </div>
   </div>
 </div>
-    <div *ngIf="!questionItem.Is_Title__c"   [ngClass]="{'question-f-size': !qbItem.Edit__c}" >
-      <div  [ngClass]="{'smallTitle': qbItem.Edit__c}">
+    <div *ngIf="!questionItem.Is_Title__c"   [ngClass]="{'question-f-size': !qbItem.Progress_Bar__c}" >
+      <div  [ngClass]="{'smallTitle': qbItem.Progress_Bar__c}">
       <div [innerHTML]="getText(questionItem.Question_Text__c)">{{questionItem.Question_Text__c}}</div>
     </div>
   </div>
@@ -150,7 +152,7 @@
 
 </div>
   <div *ngIf="fileFlag">
-    <div *ngIf = "!qbItem.Edit__c">
+    <div *ngIf = "!qbItem.Progress_Bar__c">
     <div class="info-alert ques-alert2" style.border-color="{{this.questionItem.error ? 'red' : ''}}">
       <label class="picture-upload" for="file-upload" >
         <span class="picture-upload-child">
@@ -164,7 +166,7 @@
     <input id="file-upload" type="file" accept="{{allowedFileExtension}}" (change)="uploadFile($event)" />
     </div>
 
-    <div *ngIf = "qbItem.Edit__c">
+    <div *ngIf = "qbItem.Progress_Bar__c">
       
       <div class="Rectangle-file ques-alert2"  style.border-color="{{this.questionItem.error ? 'red' : ''}}">
         <div *ngIf="attachments?.length ===0" >
@@ -271,7 +273,7 @@
 
  <div *ngIf="summary && summary.length > 0" class="col-md-12">
   <div id="progress2" style="display: block; margin-top: -26px;
-  margin-bottom: 6px;" *ngIf= "qbItem.Edit__c">
+  margin-bottom: 6px;" *ngIf= "qbItem.Progress_Bar__c">
     <div id="bar" style.width="{{progressStyle}}">
       <circle-progress class="circle"
     [percent]="this.percent"
@@ -293,9 +295,9 @@
   </div>
   <h3 class="summary-h">  {{qbItem.Summary_Text__c}}  </h3>
   <div *ngFor="let qa of summary"  [ngClass]="{'summarydiv': this.abItem.Status__c != 'Completed'}">
-    <div  [ngClass]="{'submit': this.abItem.Status__c === 'Completed' &&  qbItem.Edit__c}">
-      <div [ngClass]="{'non': this.abItem.Status__c != 'Completed' &&  qbItem.Edit__c} ">
-    <div [ngClass]="{'summary': this.abItem.Status__c != 'Completed'&& !qbItem.Edit__c}" >
+    <div  [ngClass]="{'submit': this.abItem.Status__c === 'Completed' &&  qbItem.Progress_Bar__c}">
+      <div [ngClass]="{'non': this.abItem.Status__c != 'Completed' &&  qbItem.Progress_Bar__c} ">
+    <div [ngClass]="{'summary': this.abItem.Status__c != 'Completed'&& !qbItem.Progress_Bar__c}" >
       
       <div *ngIf = "!qbItem.Edit__c"  [ngClass]="{'question': this.abItem.Status__c != 'Completed'}" >
       <a  [ngClass]="{'asum': this.abItem.Status__c === 'Completed'}" (click)="handleEditClick(qa.quesId)" [innerHTML]="getText(qa.quesValue)">{{qa.quesValue}}</a>

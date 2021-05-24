@@ -4,6 +4,7 @@ import { SalesforceService } from '../services/salesforce.service';
 import { IMyDateModel, IMyDpOptions } from 'mydatepicker';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { FormBuilder } from '@angular/forms';
+import { NgxSpinnerService } from "ngx-spinner";
 
 import {
 Question,
@@ -113,7 +114,8 @@ export class QuestionnaireComponent implements OnInit {
   public bookFlagAccept: string[];
   public recordId:string;
   public currentQuestionId: string;
-
+  public spinnerType : string;
+  public spinnerName : string;
 
 
   // REQ-01 PROGRESS BAR
@@ -124,8 +126,10 @@ export class QuestionnaireComponent implements OnInit {
 
   };
 
-  constructor(private sfService: SalesforceService, private route: ActivatedRoute, private sanitizer: DomSanitizer, private _formBuilder: FormBuilder){
-
+  constructor(private sfService: SalesforceService, private route: ActivatedRoute, private sanitizer: DomSanitizer, private spinner: NgxSpinnerService, private _formBuilder: FormBuilder){
+   
+    this.spinnerName = 'sp1';
+    this.spinnerType = 'ball-spin-clockwise';
    }
 
    onDateChanged(event: IMyDateModel) { //to change the border color
@@ -237,10 +241,12 @@ export class QuestionnaireComponent implements OnInit {
        this.questionStack.pop();
   
      }
+     if(this.qbItem.Progress_Bar__c === true ){
      var arrayLength1 = this.questionNmae.length;
      for (let j = arrayLength1; j > lengthValue; j--) {
        this.questionNmae.pop()
      }
+    }
      this.summary = [];
     }
   }
@@ -710,18 +716,20 @@ export class QuestionnaireComponent implements OnInit {
     this.pop =true;
     
     
-    if(!this.back){
-      this.questionNmae.push(this.questionItem.Name)
-    }
+    // if(!this.back){
+    //   this.questionNmae.push(this.questionItem.Name)
+    // }
+    if(this.qbItem.Progress_Bar__c === true ){  
+      if(!this.back){
+           this.questionNmae.push(this.questionItem.Name)
+      }
     this.back=false;
     console.log(this.questionNmae);
     
     this.currentName = this.questionItem.Name
     this.pathquestion = this.questionNmae.indexOf(this.currentName);
     this.possibilities = JSON.parse(this.qbItem.Possibilities__c);
-console.log(this.pathquestion   + 'index');
-console.log(this.currentName);
-
+  }
    
     this.myDatePickerOptions;
     this.day();
@@ -794,7 +802,10 @@ console.log(this.currentName);
       this.allowedFileExtension = this.questionItem.Allowed_File_Extensions__c.split(';');
       //console.log(this.allowedFileExtension);
     }
+    if(this.qbItem.Progress_Bar__c === true)
+    {
     this. updateProgress();
+    }
   }
   setFlag(typ) {
     //console.log('inside setFlag for ' + typ);
@@ -988,6 +999,7 @@ console.log(this.currentName);
     if (local.fileTypeIncorrect) { return; }
     let fileContent: any;
     var reader = new FileReader();
+    
     reader.onload = function () {
       fileContent = reader.result;
       local.fileExceededLimit = local.attachment.size > 3242880; //Validating file size
@@ -1000,6 +1012,7 @@ console.log(this.currentName);
         local.createAttachment(fileWrapper);
       }
     }
+    this.spinner.show(this.spinnerName);
     reader.readAsDataURL(event.target.files[0]);
   }
 
@@ -1007,6 +1020,7 @@ console.log(this.currentName);
     let createdAttachment: Attachment = new Attachment(response.attachmentId, response.attachmentName, this.attachment.lastModifiedDate);
     this.attachments.push(createdAttachment);
     this.attachmentsMap.set(this.questionItem.Id,this.attachments);
+    this.spinner.hide(this.spinnerName);
   }
 
 
@@ -1062,10 +1076,10 @@ console.log(this.currentName);
   //   });
 
   // }
+  
   // Update Function for the Progress Bar
   updateProgress() {
-    console.log('updatetrue');
-    
+    if(this.qbItem.Progress_Bar__c === true ){
     let j =[];
   for(let  i = 0 ; i<this.possibilities.total ; i++){
     var pathposs = Object.values(this.possibilities.paths[i].questions)
@@ -1087,18 +1101,11 @@ console.log(this.currentName);
           this.check=false;
      }
    }
-if(j.length === 1){
-  this.count = j[0];
-}
+  if(j.length === 1){
+     this.count = j[0];
+  }
   if(j.length>1){
     var width = 100 * (this.questionStack.length / this.possibilities.maxQuestions);
-    console.log('greaterthen1');
-    console.log(this.questionStack.length / this.possibilities.maxQuestions);
-    console.log("^^^^length/max");
-    
-    
-    
-    console.log(width);
     
     //console.log('Progress bar width => ' + width);
     this.progressStyle = Math.round(width) + '%';
@@ -1117,14 +1124,7 @@ if(j.length === 1){
     
   }
   this.percent= + Math.round(width)
- // console.log(this.percent);
-  //console.log(this.progressStyle);
-  
-  
-  
-  // console.log(Number(this.progressStyle));
-   
-    //$('#progress #bar').animate({'width':width + '%'});
   }
+}
 }
 

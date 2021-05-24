@@ -17,6 +17,7 @@ export class QuestionBook {
   Summary_Text__c?: string;
   Questions__r?: QuestionR;
   Possibilities__c : string;
+  Progress_Bar__c : boolean;
 }
 
 export class Question {
