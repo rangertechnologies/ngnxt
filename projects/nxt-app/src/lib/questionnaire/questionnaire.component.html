@@ -118,7 +118,7 @@
   <div *ngIf="timeFlag">
     <div class="col-md-6 paddingTop">
       <label class="date-time colorf">{{questionItem.Time_Text__c}}</label>
-      <div [ngClass]="{'dt-line date-line': qbItem.Progress_Bar__c, 'dateandTime': !qbItem.Progress_Bar__c}" id="dateandTime" [style.border-color]="questionItem.error ? 'red' :(questionItem?.input?.length > 0) ? '#87be1c': ''"  (focus)="clearSQError">
+      <div [ngClass]="{'dt-line date-line dt-time': qbItem.Progress_Bar__c, 'dateandTime': !qbItem.Progress_Bar__c}" id="dateandTime" [style.border-color]="questionItem.error ? 'red' :(questionItem?.input?.length > 0) ? '#87be1c': ''"  (focus)="clearSQError">
         <select name="hours" class="datetime showHour" [(ngModel)]="selectedHour" id="hour" (focus)="clearError()">
           <option value="">HH</option>
           <option [value]="hour" *ngFor="let hour of hours">{{hour}}</option>
@@ -128,13 +128,13 @@
           <option value="">MM</option>
           <option [value]="minute" *ngFor="let minute of minutes">{{minute}}</option>
         </select>
-        <div class="colon1" *ngIf= "questionItem.X24_Hours__c == false">
+        <div [ngClass]="{'colon1': qbItem.Progress_Bar__c}" *ngIf= "questionItem.X24_Hours__c == false">
         <span class="colon"> : </span>
         <select name="AM/PM" class="" [(ngModel)]="selectedMeridiem" id="meridiem">
           <option value="AM">AM</option>
           <option value="PM">PM</option>
         </select>
-        <div [ngClass]="{'dt-time': qbItem.Progress_Bar__c, 'dateandTime': !qbItem.Progress_Bar__c}"></div>
+        <!-- <div [ngClass]="{'': qbItem.Progress_Bar__c, 'dateandTime': !qbItem.Progress_Bar__c}"></div> -->
       </div>
       </div>
     </div>
@@ -203,8 +203,9 @@
     <div class="form-group">
       <div class="form-row">
         <div class="" [class]="'col-md-'+ ques.Size__c + ' paddingnone'" *ngFor="let ques of subQuestions">
-          <span class="colorf down2">{{ques.Question__c}}</span>
-
+          <div [ngClass]="{'down2': qbItem.Progress_Bar__c}">
+           <span class="colorf">{{ques.Question__c}}</span>
+          </div>
           <div *ngIf="ques.Type__c === 'Text'">
             <input type="text" [(ngModel)]="ques.input"  [ngClass]="{'dt-line date-line down1 boxoutline': qbItem.Progress_Bar__c, 'textBox': !qbItem.Progress_Bar__c}" id="text" [id]="ques.Id" required="" (focus)="clearSQError(ques.Id)"
               style.border-color="{{ques.error ? 'red' : ''}}" placeholder="{{ques.Question__c}}"
