@@ -238,7 +238,7 @@
             <div>
               <div   style.border-color="{{this.ques.error ? 'red' : ''}}" [ngClass]="{'Rectangle-file ques-alert2': attachments?.length ===0}" *ngIf="attachments?.length ===0"  >
               <img src="https://rnxt.s3.amazonaws.com/MytIcon/icon-doc-img%402x.png" class="icon-edit1"> 
-               <div class="fileQues" [innerHTML]="getText(questionItem.Question_Text__c)">{{ques.Question_Text__c}}</div> 
+               <div class="fileQues">{{ques.Question__c}}</div> 
               <label for="files" class="btn addBtn" >Adjuntar</label>    
               <input id="files" style="visibility:hidden;" type="file" accept="{{allowedFileExtension}}" (change)="uploadFile($event)" />
             </div> 
@@ -256,7 +256,7 @@
           <div *ngIf="attachments?.length > 0 && qbItem.Progress_Bar__c" >
           <div class="Rectangle-file ques-alert2" >
             <img src="https://rnxt.s3.amazonaws.com/MytIcon/icon-doc-img%402x.png" class="icon-edit1"> 
-             <div class="fileQues" [innerHTML]="getText(questionItem.Question_Text__c)">{{ques.Question_Text__c}}</div> 
+             <div class="fileQues" >{{ques.Question__c}}</div> 
             <label for="files" class="btn addBtn" >Adjuntar</label>    
             <input id="files" style="visibility:hidden;" type="file" accept="{{allowedFileExtension}}" (change)="uploadFile($event)" />
           </div> 

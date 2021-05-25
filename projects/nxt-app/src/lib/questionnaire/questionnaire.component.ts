@@ -909,7 +909,6 @@ export class QuestionnaireComponent implements OnInit {
     for (var ques of records) {
       var sQues = new Question();
       sQues.Id = ques.Id;
-      sQues.Question_Text__c =ques.Question_Text__c
       sQues.Name = ques.Name;
       sQues.Question__c = ques.Question__c;
       sQues.Error_Message__c = ques.Error_Message__c;
