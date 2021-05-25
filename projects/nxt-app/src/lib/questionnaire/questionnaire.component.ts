@@ -320,7 +320,7 @@ export class QuestionnaireComponent implements OnInit {
               //console.log('inside' + recordId);
             }
           }
-          this.attachments = [];
+         // this.attachments = [];
         }//item.input == this.inpValue;
         this.inpValue += (item.input != undefined ? item.input : '') + '@@##$$';
         //console.log('inside book1' + this.inpValue)
@@ -708,6 +708,8 @@ export class QuestionnaireComponent implements OnInit {
  // console.log(this.questionItem);
  // console.log(this.recordId);
  // console.log(this.questionItem.Id);
+ console.log(this.questionItem.Question_Text__c);
+ 
   
  
     
@@ -923,6 +925,7 @@ export class QuestionnaireComponent implements OnInit {
     for (var ques of records) {
       var sQues = new Question();
       sQues.Id = ques.Id;
+      sQues.Question_Text__c =ques.Question_Text__c
       sQues.Name = ques.Name;
       sQues.Question__c = ques.Question__c;
       sQues.Error_Message__c = ques.Error_Message__c;

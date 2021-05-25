@@ -156,11 +156,15 @@
     </div>
     <input id="file-upload" type="file" accept="{{allowedFileExtension}}" (change)="uploadFile($event)" />
     </div>
+    <ul *ngIf="attachments?.length > 0 && questionItem.Type__c === 'File' && !qbItem.Progress_Bar__c" class="attach-ulist col-md-12">
+      <li *ngFor="let attachment of attachments" class="align-l">{{attachment.attachmentName}}<span
+          class="attach-list" (click)="deleteAttachment(attachment.attachmentId)">X</span></li>
+    </ul>
 
     <div *ngIf = "qbItem.Progress_Bar__c">
       
-      <div style.border-color="{{this.questionItem.error ? 'red' : ''}}">
-        <div  [ngClass]="{'Rectangle-file ques-alert2': attachments?.length ===0}" *ngIf="attachments?.length ===0"  >
+      <div >
+        <div  style.border-color="{{this.questionItem.error ? 'red' : ''}}" [ngClass]="{'Rectangle-file ques-alert2': attachments?.length ===0}" *ngIf="attachments?.length ===0"  >
         <img src="https://rnxt.s3.amazonaws.com/MytIcon/icon-doc-img%402x.png" class="icon-edit1"> 
          <div class="fileQues" [innerHTML]="getText(questionItem.Question_Text__c)">{{questionItem.Question_Text__c}}</div> 
         <label for="files" class="btn addBtn" >Adjuntar</label>    
@@ -177,7 +181,7 @@
       </div>
     </div> 
     </div> 
-    <div *ngIf="attachments?.length > 0" >
+    <div *ngIf="attachments?.length > 0 && qbItem.Progress_Bar__c" >
     <div class="Rectangle-file ques-alert2" >
       <img src="https://rnxt.s3.amazonaws.com/MytIcon/icon-doc-img%402x.png" class="icon-edit1"> 
        <div class="fileQues" [innerHTML]="getText(questionItem.Question_Text__c)">{{questionItem.Question_Text__c}}</div> 
@@ -213,7 +217,7 @@
           </div>
 
           <div *ngIf="ques.Type__c === 'File'">
-            <div>
+            <div *ngIf = "!qbItem.Progress_Bar__c">
               <label class="picture-upload custom-file-upload bgcolor-w" for="file-upload">
                 <span class="picture-upload-child">
                   <i class="fa fa-file-image-o fa-5x icolor" aria-hidden="true"></i>
@@ -224,12 +228,41 @@
               </label>
               <input id="file-upload" type="file" accept="{{bookFlagAccept}}" (change)="uploadFile($event)" />
             </div>
-          </div>
-          <ul *ngIf="attachments?.length > 0 && ques.Type__c === 'File'" class="attach-ulist col-md-12">
+          
+          <ul *ngIf="attachments?.length > 0 && ques.Type__c === 'File' && !qbItem.Progress_Bar__c" class="attach-ulist col-md-12">
             <li *ngFor="let attachment of attachments" class="align-l">{{attachment.attachmentName}}<span
                 class="attach-list" (click)="deleteAttachment(attachment.attachmentId)">X</span></li>
           </ul>
+          <div *ngIf = "qbItem.Progress_Bar__c">
+      
+            <div>
+              <div   style.border-color="{{this.ques.error ? 'red' : ''}}" [ngClass]="{'Rectangle-file ques-alert2': attachments?.length ===0}" *ngIf="attachments?.length ===0"  >
+              <img src="https://rnxt.s3.amazonaws.com/MytIcon/icon-doc-img%402x.png" class="icon-edit1"> 
+               <div class="fileQues" [innerHTML]="getText(questionItem.Question_Text__c)">{{ques.Question_Text__c}}</div> 
+              <label for="files" class="btn addBtn" >Adjuntar</label>    
+              <input id="files" style="visibility:hidden;" type="file" accept="{{allowedFileExtension}}" (change)="uploadFile($event)" />
+            </div> 
+            <div [ngClass]="{'uploadBox': attachments?.length >0}">
+            <ul *ngIf="attachments?.length > 0" class="attach-ulist">
+              <li *ngFor="let attachment of attachments" class="align-l">
+                <img src="https://rnxt.s3.amazonaws.com/MytIcon/icon-doc-img%402x.png"  class="icon-edit2" >
+                {{attachment.attachmentName}}
+                <span class="attach-list" (click)="deleteAttachment(attachment.attachmentId)"><img src="https://rnxt.s3.amazonaws.com/MytIcon/icon-delete%402x.png" class="deleteIcon"></span>
+              </li>
+            </ul> 
+            </div>
+          </div> 
+          </div> 
+          <div *ngIf="attachments?.length > 0 && qbItem.Progress_Bar__c" >
+          <div class="Rectangle-file ques-alert2" >
+            <img src="https://rnxt.s3.amazonaws.com/MytIcon/icon-doc-img%402x.png" class="icon-edit1"> 
+             <div class="fileQues" [innerHTML]="getText(questionItem.Question_Text__c)">{{ques.Question_Text__c}}</div> 
+            <label for="files" class="btn addBtn" >Adjuntar</label>    
+            <input id="files" style="visibility:hidden;" type="file" accept="{{allowedFileExtension}}" (change)="uploadFile($event)" />
+          </div> 
+          </div>
 
+        </div>
           <div *ngIf="ques.Type__c === 'Radio'" class="">
             <div *ngIf="ques.error" class="cond-div2" >{{ques.Error_Message__c}}</div>
             <div *ngFor="let opt of ques.Question_Options__r.records" class="radio col-md-6 optiondiv" >
