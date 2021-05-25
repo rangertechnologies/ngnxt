@@ -313,14 +313,14 @@
     </div>
   </div>
 
-  <div *ngIf="abItem">
+  <div class="flexer" *ngIf="abItem">
     <div class="" *ngIf="abItem.Status__c != 'Completed'" >
     <div class="col-md-6">
-      <button class="btn btn-primary btn-lg btn-block btn-back-color"
+      <button [ngClass]="{'grey btn-text btn-r': qbItem.Progress_Bar__c, 'btn btn-primary btn-lg btn-block btn-back-color': !qbItem.Progress_Bar__c}"
         (click)="handleBackClick()">{{qbItem.Back__c}}</button>
     </div>
     <div class="col-md-6">
-      <button class="btn btn-primary btn-lg btn-block btn-color"
+      <button [ngClass]="{'rusty btn-text2': qbItem.Progress_Bar__c, 'btn btn-primary btn-lg btn-block btn-back-color': !qbItem.Progress_Bar__c}"
         (click)="handleSubmitClick()">{{qbItem.Submit__c}}</button>
     </div>
   </div>
