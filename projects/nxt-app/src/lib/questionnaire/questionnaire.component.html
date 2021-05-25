@@ -46,7 +46,7 @@
   </div>
 
   <div *ngIf=" dropdownFlag " class="" [class]="'col-md-'+ questionItem.Size__c + ' paddingnone'">
-    <select class="custom-select mr-sm-2 dd-height" id="dropdown" [(ngModel)]="inpValue" (change)="clearError()"  style.border-color="{{this.questionItem.error ? 'red' :  (inpValue?.length > 0 ? '#87be1c' : '')}}"
+    <select [ngClass]="{'dt-line date-line down1 boxoutline': qbItem.Progress_Bar__c, 'custom-select': !qbItem.Progress_Bar__c}"class="mr-sm-2 dd-height" id="dropdown" [(ngModel)]="inpValue" (change)="clearError()"  style.border-color="{{this.questionItem.error ? 'red' :  (inpValue?.length > 0 ? '#87be1c' : '')}}"
       style.color="{{questionItem.error ? 'red'  : ''}}">
       <option *ngFor="let opt of questionItem.Question_Options__r.records" class="option" value="{{opt.Value__c}}">{{opt.Value__c}}
       </option>
@@ -77,7 +77,7 @@
 
   <div *ngIf="textFlag" class="col-md-12">
     <div class="col-md-12" class="dis-flex" [class]="'col-md-'+ questionItem.Size__c + ' paddingnone'">
-      <input type="text" [(ngModel)]="inpValue" class="textBox1" id="text-input-id" required="" (focus)="clearError()"
+      <input type="text" [(ngModel)]="inpValue" [ngClass]="{'boxoutline': qbItem.Progress_Bar__c, 'textBox1': !qbItem.Progress_Bar__c}" id="text-input-id" required="" (focus)="clearError()"
         style.border-color="{{this.questionItem.error ? 'red' : (inpValue?.length > 0 ? '#87be1c' : '')}}"
         oninput="this.value=this.value.replace(/[^a-zA-Z0-9\s.:;,?]/g,'');" />
       <i class="fa fa-check check-icon" aria-hidden="true" *ngIf="inpValue?.length > 0"></i>
@@ -95,7 +95,7 @@
 
   <div *ngIf="emailFlag" class="col-md-12">
     <div class="dis-flex">
-      <input type="email" [(ngModel)]="inpValue" id="email-input-id" required="" (focus)="clearError()"
+      <input type="email"[ngClass]="{'boxoutline': qbItem.Progress_Bar__c}" [(ngModel)]="inpValue" id="email-input-id" required="" (focus)="clearError()"
         style.border-color="{{this.questionItem.error ? 'red' : (inpValue?.length > 0 ? '#87be1c' : '')}}"  />
       <i class="fa fa-check" aria-hidden="true" style="color:#87be1c;margin-left: -2rem;z-index: 1;padding: 5px;"
         *ngIf="inpValue?.length > 0"></i>
@@ -118,7 +118,7 @@
   <div *ngIf="timeFlag">
     <div class="col-md-6 paddingTop">
       <label class="date-time colorf">{{questionItem.Time_Text__c}}</label>
-      <div class="dateandTime" id="dateandTime" [style.border-color]="questionItem.error ? 'red' :(questionItem?.input?.length > 0) ? '#87be1c': ''"  (focus)="clearSQError">
+      <div [ngClass]="{'dt-line date-line': qbItem.Progress_Bar__c, 'dateandTime': !qbItem.Progress_Bar__c}" id="dateandTime" [style.border-color]="questionItem.error ? 'red' :(questionItem?.input?.length > 0) ? '#87be1c': ''"  (focus)="clearSQError">
         <select name="hours" class="datetime showHour" [(ngModel)]="selectedHour" id="hour" (focus)="clearError()">
           <option value="">HH</option>
           <option [value]="hour" *ngFor="let hour of hours">{{hour}}</option>
@@ -128,12 +128,13 @@
           <option value="">MM</option>
           <option [value]="minute" *ngFor="let minute of minutes">{{minute}}</option>
         </select>
-        <div *ngIf= "questionItem.X24_Hours__c == false">
+        <div class="colon1" *ngIf= "questionItem.X24_Hours__c == false">
         <span class="colon"> : </span>
         <select name="AM/PM" class="" [(ngModel)]="selectedMeridiem" id="meridiem">
           <option value="AM">AM</option>
           <option value="PM">PM</option>
         </select>
+        <div [ngClass]="{'dt-time': qbItem.Progress_Bar__c, 'dateandTime': !qbItem.Progress_Bar__c}"></div>
       </div>
       </div>
     </div>
@@ -202,10 +203,10 @@
     <div class="form-group">
       <div class="form-row">
         <div class="" [class]="'col-md-'+ ques.Size__c + ' paddingnone'" *ngFor="let ques of subQuestions">
-          <span class="colorf">{{ques.Question__c}}</span>
+          <span class="colorf down2">{{ques.Question__c}}</span>
 
           <div *ngIf="ques.Type__c === 'Text'">
-            <input type="text" [(ngModel)]="ques.input"  class="textBox" id="text" [id]="ques.Id" required="" (focus)="clearSQError(ques.Id)"
+            <input type="text" [(ngModel)]="ques.input"  [ngClass]="{'dt-line date-line down1 boxoutline': qbItem.Progress_Bar__c, 'textBox': !qbItem.Progress_Bar__c}" id="text" [id]="ques.Id" required="" (focus)="clearSQError(ques.Id)"
               style.border-color="{{ques.error ? 'red' : ''}}" placeholder="{{ques.Question__c}}"
               oninput="this.value=this.value.replace(/[^a-zA-Z0-9\s.:;,?]/g,'');" />
           </div>
@@ -273,7 +274,7 @@
           </div>
 
           <div *ngIf="ques.Type__c === 'Dropdown'"class="">
-            <select class="custom-select mr-sm-2 dd-height" id="dropdown" [(ngModel)]="ques.input" (focus)="Dropdown($event); clearSQError(ques.Id)"style.border-color=" {{ques.error ? 'red'  : '#858585'}}"
+            <select [ngClass]="{'dt-line down1': qbItem.Progress_Bar__c, 'custom-select': !qbItem.Progress_Bar__c}"class="custom-select mr-sm-2 dd-height" id="dropdown" [(ngModel)]="ques.input" (focus)="Dropdown($event); clearSQError(ques.Id)"style.border-color=" {{ques.error ? 'red'  : '#858585'}}"
 		        	style.color="{{ques.error ? 'red'  : ''}}" >
               <option *ngFor="let opt of ques.Question_Options__r.records" class="option"  value="{{opt.Value__c}}">{{opt.Value__c}}
               </option>
@@ -286,13 +287,17 @@
     </div>
   </div>
 
-  <div class="col-md-12 paddingZero">
-    <div class="col-md-6" [style.visibility]="questionStack.length > 0 ? 'visible':'hidden'">
-      <button class="btn btn-primary btn-lg btn-block btn-back-color"
+  <div class="flexer">
+    <div [ngClass]="{'col-md-6': !qbItem.Progress_Bar__c}" [style.visibility]="questionStack.length > 0 ? 'visible':'hidden'">
+      <div [ngClass]="{}">
+        <button [ngClass]="{'grey btn-text left-bt': qbItem.Progress_Bar__c, 'btn btn-primary btn-lg btn-block btn-back-color': !qbItem.Progress_Bar__c}"
         (click)="handleBackClick()">{{qbItem.Back__c}}</button>
+      </div> 
     </div>
-    <div class="col-md-6">
-      <button class="btn btn-primary btn-lg btn-block btn-color" (click)="handleNextClick()">{{qbItem.Next__c}}</button>
+    <div [ngClass]="{'col-md-6': !qbItem.Progress_Bar__c}" >
+      <div>
+        <button [ngClass]="{'rusty btn-text2 right-bt': qbItem.Progress_Bar__c, 'btn btn-primary btn-lg btn-block btn-back-color': !qbItem.Progress_Bar__c}"  (click)="handleNextClick()">{{qbItem.Next__c}}</button>
+      </div>  
     </div>
   </div>
  </div>
@@ -342,14 +347,14 @@
     </div>
   </div>
 
-  <div *ngIf="abItem">
+  <div class="flexer" *ngIf="abItem">
     <div class="" *ngIf="abItem.Status__c != 'Completed'" >
     <div class="col-md-6">
-      <button class="btn btn-primary btn-lg btn-block btn-back-color"
+      <button [ngClass]="{'grey btn-text btn-r': qbItem.Progress_Bar__c, 'btn btn-primary btn-lg btn-block btn-back-color': !qbItem.Progress_Bar__c}"
         (click)="handleBackClick()">{{qbItem.Back__c}}</button>
     </div>
     <div class="col-md-6">
-      <button class="btn btn-primary btn-lg btn-block btn-color"
+      <button [ngClass]="{'rusty btn-text2': qbItem.Progress_Bar__c, 'btn btn-primary btn-lg btn-block btn-back-color': !qbItem.Progress_Bar__c}"
         (click)="handleSubmitClick()">{{qbItem.Submit__c}}</button>
     </div>
   </div>
