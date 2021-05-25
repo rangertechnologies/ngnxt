@@ -11,11 +11,10 @@
        [startFromZero]="false" [responsive]="false">
        </circle-progress>
       </div>
-    </div>
-     <div *ngIf="questionItem.Group__c"[ngClass]="{'questionalign': !qbItem.Progress_Bar__c}">
-      <div [ngClass]="{'largeTitle ':   this.questionItem.Type__c != 'Book'&& qbItem.Progress_Bar__c }">
-        <div  [ngClass]="{'bookTitle':this.questionItem.Type__c === 'Book' &&  qbItem.Progress_Bar__c }">
-      <h3 >
+     </div>
+     <div *ngIf="questionItem.Group__c && qbItem.Progress_Bar__c"[ngClass]="{'questionalign': !qbItem.Progress_Bar__c}">
+      <div [ngClass]="{'largeTitle':this.questionItem.Type__c != 'Book'&& qbItem.Progress_Bar__c }">
+      <h3  [ngClass]="{'right':this.questionItem.Type__c === 'Book' &&  qbItem.Progress_Bar__c }">
         {{questionItem.Group__c}}
       </h3>
       <div *ngIf="questionItem.Additional_Rich__c && qbItem.Progress_Bar__c ">
@@ -106,7 +105,7 @@
   <div class="col-md-12 paddingZero" *ngIf="dtFlag" >
     <div *ngIf="dateFlag">
     <div class="col-md-6 paddingBottom">
-      <label class="date-time colorf">Datum</label>
+      <label class="date-time colorf">{{questionItem.Date_Text__c}}</label>
       <div class="dis-flex">
         <my-date-picker name="mydate" [options]="myDatePickerOptions" id="date" (dateChanged)="onDateChanged($event)"
           [(ngModel)]="selDate" class="date-picker"
@@ -118,7 +117,7 @@
   </div>
   <div *ngIf="timeFlag">
     <div class="col-md-6 paddingTop">
-      <label class="date-time colorf">Zeit</label>
+      <label class="date-time colorf">{{questionItem.Time_Text__c}}</label>
       <div class="dateandTime" id="dateandTime" [style.border-color]="questionItem.error ? 'red' :(questionItem?.input?.length > 0) ? '#87be1c': ''"  (focus)="clearSQError">
         <select name="hours" class="datetime showHour" [(ngModel)]="selectedHour" id="hour" (focus)="clearError()">
           <option value="">HH</option>
@@ -266,33 +265,34 @@
  </div>
 
  <div *ngIf="summary && summary.length > 0" class="col-md-12">
-  <div  *ngIf= "qbItem.Progress_Bar__c">
-    <div class="bgColor" style.width="{{progressStyle}}">
-      <circle-progress class="circle"
-    [percent]="this.percent"
-    [radius]="55"
-    [space]="-4"
-    [outerStrokeWidth]="4"
-    [innerStrokeWidth]="4"
-    [outerStrokeColor]="'#c5281c'"
-    [innerStrokeColor]="'#e7e8ea'"
-    [animation]="true"
-    [title]= "this.percent"
-    [animationDuration]="300"
-    [startFromZero]="false"
-    [responsive]="false"
-  ></circle-progress>
-      <!-- <P class="progress-percent">
-        {{(progressStyle)}}</P> -->
+  <div id="progress2" style="display: block; margin-top: -26px;  margin-bottom: 6px;" *ngIf= "qbItem.Progress_Bar__c">
+    <div id="bar" style.width="{{progressStyle}}">
+     <circle-progress class="circle" [percent]="this.percent" [radius]="30" [space]="-4" [outerStrokeWidth]="4" [innerStrokeWidth]="4"
+      [outerStrokeColor]="'#c5281c'" [innerStrokeColor]="'#e7e8ea'" [animation]="true" [title]= "this.percent" [animationDuration]="300"
+      [startFromZero]="false" [responsive]="false">
+    </circle-progress>
     </div>
   </div>
-  <h3 class="summary-h">  {{qbItem.Summary_Text__c}}  </h3>
+  
+  <div *ngIf="qbItem.Summary_Text__c && qbItem.Progress_Bar__c"[ngClass]="{'largeTitle': qbItem.Progress_Bar__c }">
+   
+    <h3 class=" questionalign" [ngClass]="{'right': qbItem.Progress_Bar__c }">
+      {{qbItem.Summary_Text__c}}
+    </h3>
+   <div class=" questionalign">Revisa que todos los datos sean correctos antes de enviarlo.</div> 
+  </div>
+   
+  
+  <h3 *ngIf="!qbItem.Progress_Bar__c" class="summary-h">  {{qbItem.Summary_Text__c}}  </h3>
   <div *ngFor="let qa of summary"  [ngClass]="{'summarydiv': this.abItem.Status__c != 'Completed'}">
     <div  [ngClass]="{'submit': this.abItem.Status__c === 'Completed' &&  qbItem.Progress_Bar__c}">
       <div [ngClass]="{'non': this.abItem.Status__c != 'Completed' &&  qbItem.Progress_Bar__c} ">
     <div [ngClass]="{'summary': this.abItem.Status__c != 'Completed'&& !qbItem.Progress_Bar__c}" >
-      
+
+      <div> {{qa.groupText}}</div>
+
       <div *ngIf = "!qbItem.Edit__c"  [ngClass]="{'question': this.abItem.Status__c != 'Completed'}" >
+       
       <a  [ngClass]="{'asum': this.abItem.Status__c === 'Completed'}" (click)="handleEditClick(qa.quesId)" [innerHTML]="getText(qa.quesValue)">{{qa.quesValue}}</a>
     </div>
     <div *ngIf= "qbItem.Edit__c" [ngClass]="{'question': this.abItem.Status__c != 'Completed'}">
