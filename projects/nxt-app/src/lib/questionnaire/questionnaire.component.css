@@ -609,3 +609,36 @@ width: 100% !important;
     text-align: left !important;
     text-decoration:inherit !important;
 }
+.rusty {
+    width: 121px;
+    height: 56px;
+    /* margin: 0px 0 0 1196px; */
+    margin-left: 90.8%;
+    color: #FFFF;
+    background-color: #c5281c;
+}
+.grey {
+    width: 87px;
+    height: 56px;
+    margin: 0px 0 0 1180px;
+    padding: 15px 24px 17px;
+    border: solid 2px #6F7072;
+    background-color: #FFFFFF;
+}
+.btn-text{
+    margin: 0;
+    position: relative;
+    right: 3rem;
+}
+.btn-text2{
+    margin: 0;
+}
+.flexer{
+    max-width: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+}
+.btn-r{
+    right: 0rem;
+}
