@@ -145,9 +145,7 @@ export class QuestionnaireComponent implements OnInit {
   ngOnInit() {
    this.inpValue="";
     this.selectedMeridiem = "AM";
-    this.processQB();
-    console.log('abdul');
-    
+    this.processQB();    
   }
 
   ngOnChanges() {
@@ -406,6 +404,7 @@ export class QuestionnaireComponent implements OnInit {
     this.answerWrap.quesValue = quesValue;
     this.answerWrap.qTyp = typ;
     this.answerWrap.ansValue = this.inpValue;
+    this.answerWrap.groupText = cQuestion.Group__c;
     this.saveAnswer();
   }
 
@@ -700,19 +699,7 @@ export class QuestionnaireComponent implements OnInit {
   }
 
   private processQuestion = () => {
-    // console.log(this.bookFlag + 'book');
-    // console.log(this.questionItem.Type__c);
-    // console.log(this.questionItem.Type__c != 'Book');
-    // console.log(this.questionItem.Type__c ===  'Book');
-  //  console.log('summary');
- // console.log(this.questionItem);
- // console.log(this.recordId);
- // console.log(this.questionItem.Id);
-  
-  
-    
-   
-    this.pop =true;
+        this.pop =true;
     
     
     // if(!this.back){
@@ -723,7 +710,6 @@ export class QuestionnaireComponent implements OnInit {
            this.questionNmae.push(this.questionItem.Name)
       }
     this.back=false;
-    console.log(this.questionNmae);
     
     this.currentName = this.questionItem.Name
     this.pathquestion = this.questionNmae.indexOf(this.currentName);
@@ -1081,21 +1067,11 @@ export class QuestionnaireComponent implements OnInit {
     if(this.qbItem.Progress_Bar__c === true ){
     let j =[];
   for(let  i = 0 ; i<this.possibilities.total ; i++){
-    var pathposs = Object.values(this.possibilities.paths[i].questions)
-    console.log('inside f');
-    console.log(pathposs[this.pathquestion]   + 'check');
-    console.log(this.currentName   + 'check');
-    console.log(pathposs );
-    console.log(this.pathquestion);
-    
-    
-    
+    var pathposs = Object.values(this.possibilities.paths[i].questions) 
       if(pathposs[this.pathquestion] === this.currentName){ 
-     j.push(i);
-        this.check = true;
-        console.log('match true');
-        
-     }
+         j.push(i);
+        this.check = true;        
+      }
      else{
           this.check=false;
      }
@@ -1105,22 +1081,12 @@ export class QuestionnaireComponent implements OnInit {
   }
   if(j.length>1){
     var width = 100 * (this.questionStack.length / this.possibilities.maxQuestions);
-    
     //console.log('Progress bar width => ' + width);
     this.progressStyle = Math.round(width) + '%';
   }
   else if(j.length === 1){
-
     var width = 100 * (this.questionStack.length / this.possibilities.paths[this.count].count);
-    console.log('=1');
-    console.log(this.questionStack.length / this.possibilities.maxQuestions);
-    console.log("^^^^length/max");
-    console.log(width);
-    console.log('Progress bar width => ' + width);
-    this.progressStyle = Math.round(width) + '%';
-   
-    
-    
+    this.progressStyle = Math.round(width) + '%'; 
   }
   this.percent= + Math.round(width)
   }

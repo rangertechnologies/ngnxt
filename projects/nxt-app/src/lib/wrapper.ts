@@ -100,6 +100,7 @@ export class AnswerWrapper {
   quesValue: string;
   qTyp: string;
   ansValue: string;
+  groupText: string;
 }
 
 export class ErrorWrapper {
