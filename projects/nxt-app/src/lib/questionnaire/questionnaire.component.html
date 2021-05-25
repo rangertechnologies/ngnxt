@@ -1,54 +1,45 @@
-<!-- Progress Bar-->
-<!-- <div id="progress" style="display: block;" *ngIf= "qbItem.Progress_Bar__c">
-  <div id="bar" style.width="{{progressStyle}}">
-    <circle-progress
-  [percent]="this.percent"
-  [radius]="40"
-  [outerStrokeWidth]="6"
-  [innerStrokeWidth]="3"
-  [outerStrokeColor]="'#6b090f'"
-  [innerStrokeColor]="'#e7e8ea'"
-  [animation]="true"
-  [title]= "'this.percent' + '%'"
-  [animationDuration]="300"
-></circle-progress>
-    <P class="progress-percent">
-      {{(progressStyle)}}</P> 
-  </div>
-</div> -->
-
 <ngx-spinner [name] = "spinnerName" [type] = "spinnerType"></ngx-spinner>
 
 <div *ngIf="questionItem" class="questiondiv1" >
-  <div class="questiondiv2" [ngClass]="{'questiondiv2': !qbItem.Progress_Bar__c}">
+
+  <div  [ngClass]="{'questiondiv2': !qbItem.Progress_Bar__c}">
     <div [ngClass]="{'bgColor': qbItem.Progress_Bar__c}">
     <div id="progress"  *ngIf= "qbItem.Progress_Bar__c">
-      <div id="bar" style.width="{{progressStyle}}">
-        <circle-progress  [percent]="this.percent"  [radius]="30"  [space]="-4" [outerStrokeWidth]="4" [innerStrokeWidth]="4"
+      <div id="bar">
+        <circle-progress class="titlebar" [percent]="this.percent"  [radius]="55"  [space]="-4" [outerStrokeWidth]="4" [innerStrokeWidth]="4"
        [outerStrokeColor]="'#c5281c'" [innerStrokeColor]="'#e7e8ea'"[animation]="true" [title]= "this.percent"  [animationDuration]="300"
-       [startFromZero]="false" [responsive]="false"
-    ></circle-progress>
-        <!-- <P class="progress-percent">
-          {{(progressStyle)}}</P> -->
+       [startFromZero]="false" [responsive]="false">
+       </circle-progress>
       </div>
     </div>
-    <div *ngIf="questionItem.Is_Title__c"[ngClass]="{'questionalign': !qbItem.Progress_Bar__c}">
-      <div [ngClass]="{'largeTitle':this.questionItem.Type__c != 'Book'&& qbItem.Progress_Bar__c }">
-  <h3  [ngClass]="{'right':this.questionItem.Type__c === 'Book' &&  qbItem.Progress_Bar__c }"[innerHTML]="getText(questionItem.Question_Text__c)">
-        {{questionItem.Question_Text__c}}
+     <div *ngIf="questionItem.Group__c"[ngClass]="{'questionalign': !qbItem.Progress_Bar__c}">
+      <div [ngClass]="{'largeTitle ':   this.questionItem.Type__c != 'Book'&& qbItem.Progress_Bar__c }">
+        <div  [ngClass]="{'bookTitle':this.questionItem.Type__c === 'Book' &&  qbItem.Progress_Bar__c }">
+      <h3 >
+        {{questionItem.Group__c}}
       </h3>
-    </div>
+      <div *ngIf="questionItem.Additional_Rich__c && qbItem.Progress_Bar__c ">
+        <div [innerHTML]="innerhtml"></div>
+      </div>
+      </div>
+      </div>
+     </div>
+    </div>  
   </div>
-  </div>
-</div>
-    <div *ngIf="!questionItem.Is_Title__c"   [ngClass]="{'question-f-size': !qbItem.Progress_Bar__c}" >
-      <div  [ngClass]="{'smallTitle': qbItem.Progress_Bar__c}">
-      <div [innerHTML]="getText(questionItem.Question_Text__c)">{{questionItem.Question_Text__c}}</div>
-    </div>
-  </div>
-  
 
-  <div *ngIf="questionItem.Additional_Rich__c">
+  <!--Question alignment-->
+  <div class="questiondiv2">	
+    <div *ngIf="questionItem.Is_Title__c">	
+      <h3 class="questionalign" [innerHTML]="getText(questionItem.Question_Text__c)">	
+        {{questionItem.Question_Text__c}}	
+      </h3>	
+    </div>	
+    <div *ngIf="!questionItem.Is_Title__c" class="question-f-size">	
+      <div [innerHTML]="getText(questionItem.Question_Text__c)">{{questionItem.Question_Text__c}}</div>	
+    </div>	
+  </div>
+
+  <div *ngIf="questionItem.Additional_Rich__c && !qbItem.Progress_Bar__c ">
     <div class="info-alert ques-alert1">
       <i class="fa fa-info fa-3x iposition icolor" aria-hidden="true"></i>
       <div class="infodiv" [innerHTML]="innerhtml"></div>
@@ -134,13 +125,13 @@
           <option [value]="hour" *ngFor="let hour of hours">{{hour}}</option>
         </select>
         <span class="colon"> : </span>
-        <select name="minutes" class="datetime" [(ngModel)]="selectedMinute" id="minute" (focus)="clearError()" >
+        <select name="minutes" class="datetime showminute" [(ngModel)]="selectedMinute" id="minute" (focus)="clearError()" >
           <option value="">MM</option>
           <option [value]="minute" *ngFor="let minute of minutes">{{minute}}</option>
         </select>
         <div *ngIf= "questionItem.X24_Hours__c == false">
         <span class="colon"> : </span>
-        <select name="AM/PM" class="datetime" [(ngModel)]="selectedMeridiem" id="meridiem">
+        <select name="AM/PM" class="" [(ngModel)]="selectedMeridiem" id="meridiem">
           <option value="AM">AM</option>
           <option value="PM">PM</option>
         </select>
@@ -168,22 +159,38 @@
 
     <div *ngIf = "qbItem.Progress_Bar__c">
       
-      <div class="Rectangle-file ques-alert2" style.border-color="{{this.questionItem.error ? 'red' : ''}}">
-        <img src="https://rnxt.s3.amazonaws.com/MytIcon/icon-doc-img%402x.png" class="icon-edit1">Imagen-de-los-daos  
-
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        <label for="files" class="btn" style="color: #c5281c; width:0%">Adjuntar</label>    
+      <div style.border-color="{{this.questionItem.error ? 'red' : ''}}">
+        <div  [ngClass]="{'Rectangle-file ques-alert2': attachments?.length ===0}" *ngIf="attachments?.length ===0"  >
+        <img src="https://rnxt.s3.amazonaws.com/MytIcon/icon-doc-img%402x.png" class="icon-edit1"> 
+         <div class="fileQues" [innerHTML]="getText(questionItem.Question_Text__c)">{{questionItem.Question_Text__c}}</div> 
+        <label for="files" class="btn addBtn" >Adjuntar</label>    
         <input id="files" style="visibility:hidden;" type="file" accept="{{allowedFileExtension}}" (change)="uploadFile($event)" />
-        </div>      
+      </div> 
+      <div [ngClass]="{'uploadBox': attachments?.length >0}">
+      <ul *ngIf="attachments?.length > 0" class="attach-ulist">
+        <li *ngFor="let attachment of attachments" class="align-l">
+          <img src="https://rnxt.s3.amazonaws.com/MytIcon/icon-doc-img%402x.png"  class="icon-edit2" >
+          {{attachment.attachmentName}}
+          <span class="attach-list" (click)="deleteAttachment(attachment.attachmentId)"><img src="https://rnxt.s3.amazonaws.com/MytIcon/icon-delete%402x.png" class="deleteIcon"></span>
+        </li>
+      </ul> 
       </div>
-    
+    </div> 
+    </div> 
+    <div *ngIf="attachments?.length > 0" >
+    <div class="Rectangle-file ques-alert2" >
+      <img src="https://rnxt.s3.amazonaws.com/MytIcon/icon-doc-img%402x.png" class="icon-edit1"> 
+       <div class="fileQues" [innerHTML]="getText(questionItem.Question_Text__c)">{{questionItem.Question_Text__c}}</div> 
+      <label for="files" class="btn addBtn" >Adjuntar</label>    
+      <input id="files" style="visibility:hidden;" type="file" accept="{{allowedFileExtension}}" (change)="uploadFile($event)" />
+    </div> 
+    </div>
   </div>
-  <ul *ngIf="attachments?.length > 0 && fileFlag" class="attach-ulist col-md-12">
-    <li *ngFor="let attachment of attachments" class="align-l">{{attachment.attachmentName}}<span
-        class="attach-list" (click)="deleteAttachment(attachment.attachmentId)">X</span>
+  <!-- <ul *ngIf="attachments?.length > 0 && fileFlag" class="attach-ulist col-md-12">
+    <li *ngFor="let attachment of attachments" class="align-l">{{attachment.attachmentName}}
+      <span class="attach-list" (click)="deleteAttachment(attachment.attachmentId)"><img src="https://rnxt.s3.amazonaws.com/MytIcon/icon-delete%402x.png"></span>
     </li>
-  </ul>
+  </ul> -->
 
 
 
@@ -263,12 +270,11 @@
  </div>
 
  <div *ngIf="summary && summary.length > 0" class="col-md-12">
-  <div id="progress2" style="display: block; margin-top: -26px;
-  margin-bottom: 6px;" *ngIf= "qbItem.Progress_Bar__c">
-    <div id="bar" style.width="{{progressStyle}}">
+  <div  *ngIf= "qbItem.Progress_Bar__c">
+    <div class="bgColor" style.width="{{progressStyle}}">
       <circle-progress class="circle"
     [percent]="this.percent"
-    [radius]="30"
+    [radius]="55"
     [space]="-4"
     [outerStrokeWidth]="4"
     [innerStrokeWidth]="4"
@@ -293,9 +299,10 @@
       <div *ngIf = "!qbItem.Edit__c"  [ngClass]="{'question': this.abItem.Status__c != 'Completed'}" >
       <a  [ngClass]="{'asum': this.abItem.Status__c === 'Completed'}" (click)="handleEditClick(qa.quesId)" [innerHTML]="getText(qa.quesValue)">{{qa.quesValue}}</a>
     </div>
-
-      <div *ngIf= "qbItem.Edit__c"  [ngClass]="{'question': this.abItem.Status__c != 'Completed'}">
-        <div [ngClass]="{'asum': this.abItem.Status__c === 'Completed'}" [innerHTML]="getText(qa.quesValue)">{{qa.quesValue}}</div>
+    <div *ngIf= "qbItem.Edit__c" [ngClass]="{'question': this.abItem.Status__c != 'Completed'}">
+      <div [ngClass]="{'asum': this.abItem.Status__c === 'Completed'}" [innerHTML]="getText(qa.quesValue)">{{qa.quesValue}}</div>
+    </div>
+    <div *ngIf= "qbItem.Edit__c &&  this.abItem.Status__c != 'Completed'" >
         <button class="edit" (click)="handleEditClick(qa.quesId)" >
           <img src="https://rnxt.s3.amazonaws.com/MytIcon/icon-edit%402x.png" class="icon-edit">{{qbItem.Edit__c}}</button>
       </div>

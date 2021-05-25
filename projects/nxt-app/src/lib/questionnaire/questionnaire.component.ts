@@ -88,6 +88,7 @@ export class QuestionnaireComponent implements OnInit {
   public fileTypeIncorrect: boolean = false;
   public back: boolean = false;
   public check: boolean ;
+  public pop: boolean ;
   public localDate: string;
   public currentName: string;
   public  pathquestion: number;
@@ -145,7 +146,7 @@ export class QuestionnaireComponent implements OnInit {
    this.inpValue="";
     this.selectedMeridiem = "AM";
     this.processQB();
-    console.log('1234');
+    console.log('sat');
     
   }
 
@@ -186,8 +187,16 @@ export class QuestionnaireComponent implements OnInit {
          htmlElement.item(0).setAttribute('style', 'border: 1px solid #87be1c ;width:100%');
      }
   }
+//   function IncreaseTextboxSize() {  
+//     var textsize = $('#txtwidth').val();  
+//     $("#txtname").css("width", textsize);  
+//     $("#message").html("Currently textbox Size is " + textsize + "px.");  
+// } 
 
   processQB() {
+    //this.qbItem
+   
+    
     //console.log(this.qbId);
     //console.log('Version in process is 8bf11efa7f91a391d957bf6b5078edc7e656b67c');
     if (this.qbId) {
@@ -220,7 +229,6 @@ export class QuestionnaireComponent implements OnInit {
       if(value == null){
       return;
       }
-
      this.readQuestion(value);
      //console.log(' in side summaryopen'+ this.summary.length);
 
@@ -243,6 +251,8 @@ export class QuestionnaireComponent implements OnInit {
   }
 
   handleNextClick() {
+    //console.log(this.questionItem);
+    
     //this.updateProgress();
     if(this.currentQuestionId === null){
       return;
@@ -465,7 +475,10 @@ export class QuestionnaireComponent implements OnInit {
     if (this.recordId) {
       //console.log('Before Calling readQuestion() using ' + recordId);
       this.readQuestion(this.recordId);
+      this.pop = true;
+
     } else {
+      this.pop = false;
       //console.log('Summary Page Logic');
       // Reset the Variables
       this.inpValue = '';
@@ -520,7 +533,10 @@ export class QuestionnaireComponent implements OnInit {
 
   handleBackClick() {
     this.back = true
-    this.questionNmae.pop()
+    if(this.pop === true){
+      this.questionNmae.pop();
+    }
+   
     this.handleEvent.emit(this.qbItem.Back_Tracking_ID__c);
     this.answerCount--;
     this.updateProgress();
@@ -528,6 +544,8 @@ export class QuestionnaireComponent implements OnInit {
     //this.stepperCateg();
 
     if (this.summary) {
+  //    console.log('summary true');
+      
       this.summary = [];
     }
 
@@ -682,11 +700,31 @@ export class QuestionnaireComponent implements OnInit {
   }
 
   private processQuestion = () => {
+    // console.log(this.bookFlag + 'book');
+    // console.log(this.questionItem.Type__c);
+    // console.log(this.questionItem.Type__c != 'Book');
+    // console.log(this.questionItem.Type__c ===  'Book');
+  //  console.log('summary');
+ // console.log(this.questionItem);
+ // console.log(this.recordId);
+ // console.log(this.questionItem.Id);
+  
+ 
+    
+   
+    this.pop =true;
+    
+    
+    // if(!this.back){
+    //   this.questionNmae.push(this.questionItem.Name)
+    // }
     if(this.qbItem.Progress_Bar__c === true ){  
       if(!this.back){
            this.questionNmae.push(this.questionItem.Name)
       }
     this.back=false;
+  //  console.log(this.questionNmae);
+    
     this.currentName = this.questionItem.Name
     this.pathquestion = this.questionNmae.indexOf(this.currentName);
     this.possibilities = JSON.parse(this.qbItem.Possibilities__c);
@@ -759,6 +797,7 @@ export class QuestionnaireComponent implements OnInit {
             }
             }
     else if (this.fileFlag) {
+      this.fileUI();
       // logic
       this.allowedFileExtension = this.questionItem.Allowed_File_Extensions__c.split(';');
       //console.log(this.allowedFileExtension);
@@ -1026,6 +1065,12 @@ export class QuestionnaireComponent implements OnInit {
     var fileNameWithType = fileNamewithIdandType.substr(fileNamewithIdandType.indexOf('::::') + 4);
     return fileNameWithType; //fileNameWithType.replace(/^(.*(\/|\\))(.+)$/, '$3');
   }
+  fileUI(){
+    if(this.attachments.length ===0){
+    console.log('attach true');
+    
+    }
+  }
 
   //Update function for categorization
   // stepperCateg() {
@@ -1044,9 +1089,19 @@ export class QuestionnaireComponent implements OnInit {
     let j =[];
   for(let  i = 0 ; i<this.possibilities.total ; i++){
     var pathposs = Object.values(this.possibilities.paths[i].questions)
-      if(pathposs[this.pathquestion] === this. currentName){ 
+    // console.log('inside f');
+    // console.log(pathposs[this.pathquestion]   + 'check');
+    // console.log(this.currentName   + 'check');
+    // console.log(pathposs );
+    // console.log(this.pathquestion);
+    
+    
+    
+      if(pathposs[this.pathquestion] === this.currentName){ 
      j.push(i);
         this.check = true;
+     //   console.log('match true');
+        
      }
      else{
           this.check=false;
@@ -1064,8 +1119,15 @@ export class QuestionnaireComponent implements OnInit {
   else if(j.length === 1){
 
     var width = 100 * (this.questionStack.length / this.possibilities.paths[this.count].count);
-    //console.log('Progress bar width => ' + width);
-    this.progressStyle = Math.round(width) + '%'; 
+    // console.log('=1');
+    // console.log(this.questionStack.length / this.possibilities.maxQuestions);
+    // console.log("^^^^length/max");
+    // console.log(width);
+    // console.log('Progress bar width => ' + width);
+    this.progressStyle = Math.round(width) + '%';
+   
+    
+    
   }
   this.percent= + Math.round(width)
   }
