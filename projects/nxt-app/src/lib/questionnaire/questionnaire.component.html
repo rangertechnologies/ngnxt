@@ -104,7 +104,7 @@
   <div class="col-md-12 paddingZero" *ngIf="dtFlag" >
     <div *ngIf="dateFlag">
     <div class="col-md-6 paddingBottom">
-      <label class="date-time colorf">Datum</label>
+      <label class="date-time colorf">{{questionItem.Date_Text__c}}</label>
       <div class="dis-flex">
         <my-date-picker name="mydate" [options]="myDatePickerOptions" id="date" (dateChanged)="onDateChanged($event)"
           [(ngModel)]="selDate" class="date-picker"
@@ -116,7 +116,7 @@
   </div>
   <div *ngIf="timeFlag">
     <div class="col-md-6 paddingTop">
-      <label class="date-time colorf">Zeit</label>
+      <label class="date-time colorf">{{questionItem.Time_Text__c}}</label>
       <div class="dateandTime" id="dateandTime" [style.border-color]="questionItem.error ? 'red' :(questionItem?.input?.length > 0) ? '#87be1c': ''"  (focus)="clearSQError">
         <select name="hours" class="datetime showHour" [(ngModel)]="selectedHour" id="hour" (focus)="clearError()">
           <option value="">HH</option>

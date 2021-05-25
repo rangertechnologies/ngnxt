@@ -34,6 +34,8 @@ export class Question {
   Error_Message__c: string;
   Is_Date_Backward__c : boolean;
   Is_Date_Forward__c : boolean;
+  Time_Text__c : string;
+  Date_Text__c : string;
   Group__c: string;
   Question_No__c?: string;
   Question_Options__r?: OptionR;
