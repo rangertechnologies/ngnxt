@@ -205,7 +205,7 @@ export class QuestionnaireComponent implements OnInit {
       if(value == null){
       return;
       }
-
+console.log('hi')
      this.readQuestion(value);
      //console.log(' in side summaryopen'+ this.summary.length);
 
@@ -283,7 +283,7 @@ export class QuestionnaireComponent implements OnInit {
             this.inpValue += attachmentItem.attachmentId + '@@##$$' + attachmentItem.attachmentName + ',';
             if (item.input == this.inpValue) {
               this.recordId = cQuestion.Next_Question__c;
-              //console.log('inside' + recordId);
+              console.log('inside' + this.recordId);
             }
           }
           this.attachments = [];
@@ -347,10 +347,12 @@ export class QuestionnaireComponent implements OnInit {
       //console.log('four')
       this.inpValue = '';
       if (this.attachments.length > 0) {
+        console.log('file')
         for (var attachmentItem of this.attachments) {
+          console.log('files ')
           this.inpValue += attachmentItem.attachmentId + '@@##$$' + attachmentItem.attachmentName + ',';
         }
-        //console.log('inside filesss' + this.inpValue);
+        console.log('inside filesss' + this.inpValue);
         this.inpValue = this.inpValue.substr(0, this.inpValue.length - 1);
       } else {
         this.questionItem.error = new ErrorWrapper();
@@ -466,10 +468,15 @@ export class QuestionnaireComponent implements OnInit {
                   newStr = ansStr;
                 } else {
                   newStr += ', ' + ansStr;
-
+console.log('art')
                   if(this.attachmentsMap.has(ansWrap.quesId)){
+                    console.log('inside if1')
                     for(var att of this.attachmentsMap.get(ansWrap.quesId)){
+                      console.log('inside if2')
+                      if(att.attachmentId){
+                        console.log('inside if3')
                       newStr = newStr.replace(att.attachmentId,'');
+                      }
                     }
                   }
                   newStr = (newStr.replace(',,',', ')).replace(', ,',', ');
@@ -519,7 +526,7 @@ export class QuestionnaireComponent implements OnInit {
 
   private successupdateAB = (response) =>{
     //console.log(response);
-   // console.log('status success')
+    //console.log('status success')
     this.abItem.Status__c = 'Completed'
   }
   private failureupdateAB = (response) =>{
@@ -536,7 +543,7 @@ export class QuestionnaireComponent implements OnInit {
     //console.log(response)
     this.qbItem = response.questionbook;
     this.abItem = response.answerbook;
-    //console.log('readingQuestion using ' + this.qbItem.First_Question__c);
+    console.log('readingQuestion using ' + this.qbItem.First_Question__c);
     if(this.abItem.Status__c == 'Pending'){
         // If no answers read first question
         console.log('success read')
@@ -548,16 +555,37 @@ export class QuestionnaireComponent implements OnInit {
           console.log(this.abItem)
         } else{
           // Populate the existing answers
-          console.log(this.abItem.Answers__r.records.length)
+          
           var lastQuestionId = '';
-          console.log('inside else for answer')
+          
           for(var ansObject of this.abItem.Answers__r.records) {
-            console.log('inside else-for')
+            
             lastQuestionId = ansObject.Question_Ref__c;
             this.questionStack.push(ansObject.Question_Ref__c);
-            this.answerMap.set(ansObject.Question_Ref__c , ansObject.Answer_Long__c);
-            console.log(this.questionStack)
+           
+            this.answerMap.set(ansObject.Question_Ref__c , {quesValue: ansObject.Question_Rich_Text__c ,ansValue :ansObject.Answer_Long__c, quesId:ansObject.Question_Ref__c, 
+              qTyp :ansObject.Question_Type__c});
+           
+            //console.log(this.questionStack)
+           if(ansObject.Question_Type__c == 'Book'){
+            var av1 = ansObject.Answer_Long__c.split('@@##$$');
+             console.log('book')
             
+              console.log('log')
+              
+                console.log("bookid"+av1[0]);
+                this.attachmentsMap.set(ansObject.Question_Ref__c,[{attachmentName : av1[1],attachmentId:av1[0]}]);
+                console.log(this.attachmentsMap);
+                           
+           }
+
+            if(ansObject.Question_Type__c == 'File'){
+              console.log('inside if');
+              var av = ansObject.Answer_Long__c.split('@@##$$');
+              console.log("id"+av[0]);
+              this.attachmentsMap.set(ansObject.Question_Ref__c,[{attachmentName : av[1],attachmentId:av[0]}]);
+              console.log(this.attachmentsMap);
+            }
           }
           this.questionStack.pop();
           // Read the last answered question
@@ -577,9 +605,9 @@ export class QuestionnaireComponent implements OnInit {
   }
 
   summaryprocess(){
-    console.log(this.abItem.Answers__r.records.length)
+    //console.log(this.abItem.Answers__r.records.length)
     for(var answer of this.abItem.Answers__r.records){
-      console.log('inside completed')
+     // console.log('inside completed')
       var av = answer.Answer_Long__c.split('@@##$$');
       var answers={ quesValue:answer.Question_Rich_Text__c, ansValue:av};
       //console.log(answers)
@@ -594,10 +622,11 @@ export class QuestionnaireComponent implements OnInit {
     this.failureRead);
 
   private successRead = (response) => {
-    //console.log(response);
+   // console.log(response.answerbook)
+    console.log(response.abItem);
     // Reset the Variables
-    console.log(this.questionStack.length)
-   console.log(this.abItem.Answers__r)
+    //console.log(this.questionStack.length)
+   //console.log(this.abItem.Answers__r)
     if (this.questionItem) {
       this.inpValue = '';
       this.answerWrap = new AnswerWrapper();
@@ -608,7 +637,7 @@ export class QuestionnaireComponent implements OnInit {
     this.questionItem = response.question;
     this.currentQuestionId = this.questionItem.Id;
     this.handlePage.emit(this.questionItem.Tracking_ID__c);
-    console.log(this.questionStack.length)
+    //console.log(this.questionStack.length)
     // Handle the subQuestion options
     if (response.sqOptions) {
       //var newRecords = [];
@@ -671,6 +700,7 @@ export class QuestionnaireComponent implements OnInit {
 
   private processQuestion = () => {
     //console.log(this.questionItem.Size__c);
+    console.log('hjy'+this.answerWrap)
 
     this.myDatePickerOptions;
     this.day();
@@ -682,15 +712,16 @@ export class QuestionnaireComponent implements OnInit {
     // Check the existing answer from answerMap
     if (this.answerMap.has(this.questionItem.Id)) {
       //console.log('existing answer found for this.questionItem.Name');
-      var eAnswer = this.answerMap.get(this.questionItem.Id);
+      var eAnswer = this.answerMap.get(this.questionItem.Id );
       // Get the existing answer from the Map
       this.inpValue = eAnswer.ansValue;
       //console.log('inpValue has been set to ' + this.inpValue);
-      if(this.attachmentsMap.has(this.questionItem.Id)){
-        this.attachments = this.attachmentsMap.get(this.questionItem.Id);
+      if(this.attachmentsMap.has(this.questionItem.Id )){
+        
+        this.attachments = this.attachmentsMap.get(this.questionItem.Id );
       }
     } else {
-      //console.log('inside removing attachment array');
+      console.log('inside removing attachment array');
       this.attachments = [];
     }
 
@@ -741,7 +772,7 @@ export class QuestionnaireComponent implements OnInit {
     else if (this.fileFlag) {
       // logic
       this.allowedFileExtension = this.questionItem.Allowed_File_Extensions__c.split(';');
-      //console.log(this.allowedFileExtension);
+      console.log(this.allowedFileExtension);
     }
   }
   setFlag(typ) {
@@ -954,7 +985,7 @@ export class QuestionnaireComponent implements OnInit {
   private successAttachmentCreate = (response) => {
     let createdAttachment: Attachment = new Attachment(response.attachmentId, response.attachmentName, this.attachment.lastModifiedDate);
     this.attachments.push(createdAttachment);
-    this.attachmentsMap.set(this.questionItem.Id,this.attachments);
+    this.attachmentsMap.set(this.questionItem.Id ,this.attachments);
   }
 
 

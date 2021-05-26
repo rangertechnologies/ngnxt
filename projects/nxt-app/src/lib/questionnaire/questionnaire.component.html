@@ -215,7 +215,7 @@
   <div *ngFor="let qa of summary" class="summarydiv">
     <div class="summary">
       
-      <div *ngIf = "!qbItem.Edit__c">
+      <div *ngIf = "!qbItem.Edit__c" >
       <a class="question" (click)="handleEditClick(qa.quesId)" [innerHTML]="getText(qa.quesValue)">{{qa.quesValue}}</a>
     </div>
 
