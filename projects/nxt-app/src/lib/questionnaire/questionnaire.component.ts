@@ -580,13 +580,48 @@ export class QuestionnaireComponent implements OnInit {
     this.qbItem = response.questionbook;
     this.abItem = response.answerbook;
     //console.log('readingQuestion using ' + this.qbItem.First_Question__c);
-    if(this.abItem.Status__c == 'Pending'){
-      this.readQuestion(this.qbItem.First_Question__c);
+    if(this.abItem.Status__c == 'Pending') {
+      if(this.abItem.Answers__r == null || this.abItem.Answers__r.records.length == 0) {
+        this.readQuestion(this.qbItem.First_Question__c);
+      } else {
+        // Populate the existing answers
+        var lastQuestionId = '';
+        
+        for(var ansObject of this.abItem.Answers__r.records) {
+          lastQuestionId = ansObject.Question_Ref__c;
+          this.questionStack.push(ansObject.Question_Ref__c);
+        
+          this.answerMap.set(ansObject.Question_Ref__c , { quesValue: ansObject.Question_Rich_Text__c,
+                                                           ansValue :ansObject.Answer_Long__c, 
+                                                           quesId:ansObject.Question_Ref__c, 
+                                                           qTyp :ansObject.Question_Type__c });
+        
+          //console.log(this.questionStack)
+          if(ansObject.Question_Type__c == 'Book') {
+            var av1 = ansObject.Answer_Long__c.split('@@##$$');
+            console.log('book log');
+            
+            console.log("bookid"+av1[0]);
+            this.attachmentsMap.set(ansObject.Question_Ref__c,[{attachmentName : av1[1],attachmentId:av1[0]}]);
+            console.log(this.attachmentsMap);
+          } else if(ansObject.Question_Type__c == 'File') {
+            console.log('inside if');
+            var av = ansObject.Answer_Long__c.split('@@##$$');
+            console.log("id"+av[0]);
+            this.attachmentsMap.set(ansObject.Question_Ref__c, [{attachmentName : av[1], attachmentId:av[0]}]);
+            console.log(this.attachmentsMap);
+          }
+        }
+
+        this.questionStack.pop();
+        // Read the last answered question
+        this.readQuestion(lastQuestionId);
+      }
     }
 
     if(this.abItem.Status__c == 'Completed'){
       this.readAnswerbook(this.abItem.Id);
-         }
+    }
   }
 
   private failureReadBook = (response) => {
