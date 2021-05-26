@@ -346,7 +346,13 @@
           <img src="https://rnxt.s3.amazonaws.com/MytIcon/icon-edit%402x.png" class="icon-edit">{{qbItem.Edit__c}}</button>
       </div>
       <div  [ngClass]="{'bsum': this.abItem.Status__c === 'Completed'}">
-      <div [ngClass]="{'answer': this.abItem.Status__c != 'Completed'}">  {{qa.ansValue}}   </div> </div>
+      <div [ngClass]="{'answer': this.abItem.Status__c != 'Completed'}">
+        <div *ngIf= "qa.qTyp === 'File'">
+          <img src="https://rnxt.s3.amazonaws.com/MytIcon/icon-doc-img%401.png" class="icon-edit1"> {{qa.ansValue}}
+        </div> 
+
+        <div *ngIf= "qa.qTyp != 'File'">{{qa.ansValue}}</div>
+            </div> </div>
     </div>
     </div>
     </div>
