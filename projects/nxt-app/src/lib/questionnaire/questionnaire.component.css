@@ -660,8 +660,7 @@ width: 100% !important;
     border-color: #F1F1F1;
 }
 .down2 {
-    line-height: 5.5;
-    margin-top: 4%;
+    margin-top: 3.5%;
 }
 .dt-time{
     background-image: url("https://dynamic-css1.s3.ap-south-1.amazonaws.com/External+css/time.svg") !important;
@@ -675,8 +674,14 @@ width: 100% !important;
     outline: transparent;
 }
 .right-bt{
-    margin-top: 75%;
+    margin-top: 24%;
 }
 .left-bt{
-    margin-top: 106%;
+    margin-top: 36%;
+}
+.spaceline{
+    line-height: 0;
+}
+.spaceline1{
+    line-height: 2.5;
 }

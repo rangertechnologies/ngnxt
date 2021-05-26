@@ -29,7 +29,7 @@
   <!--Question alignment-->
   <div class="questiondiv2">	
     <div *ngIf="questionItem.Is_Title__c">	
-      <h3 class="questionalign" [innerHTML]="getText(questionItem.Question_Text__c)">	
+      <h3 [ngClass]="{'spaceline': qbItem.Progress_Bar__c}" class="questionalign" [innerHTML]="getText(questionItem.Question_Text__c)">	
         {{questionItem.Question_Text__c}}	
       </h3>	
     </div>	
@@ -204,7 +204,7 @@
       <div class="form-row">
         <div class="" [class]="'col-md-'+ ques.Size__c + ' paddingnone'" *ngFor="let ques of subQuestions">
           <div [ngClass]="{'down2': qbItem.Progress_Bar__c}">
-           <span class="colorf">{{ques.Question__c}}</span>
+           <span [ngClass]="{'spaceline1': qbItem.Progress_Bar__c}" class="colorf">{{ques.Question__c}}</span>
           </div>
           <div *ngIf="ques.Type__c === 'Text'">
             <input type="text" [(ngModel)]="ques.input"  [ngClass]="{'dt-line date-line down1 boxoutline': qbItem.Progress_Bar__c, 'textBox': !qbItem.Progress_Bar__c}" id="text" [id]="ques.Id" required="" (focus)="clearSQError(ques.Id)"
@@ -326,17 +326,20 @@
   <div *ngFor="let qa of summary"  [ngClass]="{'summarydiv': this.abItem.Status__c != 'Completed'}">
     <div  [ngClass]="{'submit': this.abItem.Status__c === 'Completed' &&  qbItem.Progress_Bar__c}">
       <div [ngClass]="{'non': this.abItem.Status__c != 'Completed' &&  qbItem.Progress_Bar__c} ">
-    <div [ngClass]="{'summary': this.abItem.Status__c != 'Completed'&& !qbItem.Progress_Bar__c}" >
+    <div [ngClass]="{'summary': this.abItem.Status__c != 'Completed'&& !qbItem.Progress_Bar__c }">
+      <div [ngClass]="{'summary': this.abItem.Status__c === 'Completed'}">
 
-      <div> {{qa.groupText}}</div>
+       <div> {{qa.groupText}}</div>
 
-      <div *ngIf = "!qbItem.Edit__c"  [ngClass]="{'question': this.abItem.Status__c != 'Completed'}" >
+       <div *ngIf = "!qbItem.Edit__c"  [ngClass]="{'question': this.abItem.Status__c != 'Completed'}" >
        
-      <a  [ngClass]="{'asum': this.abItem.Status__c === 'Completed'}" (click)="handleEditClick(qa.quesId)" [innerHTML]="getText(qa.quesValue)">{{qa.quesValue}}</a>
+        <a  [ngClass]="{'asum': this.abItem.Status__c === 'Completed'}" (click)="handleEditClick(qa.quesId)" [innerHTML]="getText(qa.quesValue)">{{qa.quesValue}}</a>    
     </div>
+
     <div *ngIf= "qbItem.Edit__c" [ngClass]="{'question': this.abItem.Status__c != 'Completed'}">
       <div [ngClass]="{'asum': this.abItem.Status__c === 'Completed'}" [innerHTML]="getText(qa.quesValue)">{{qa.quesValue}}</div>
     </div>
+   </div>
     <div *ngIf= "qbItem.Edit__c &&  this.abItem.Status__c != 'Completed'" >
         <button class="edit" (click)="handleEditClick(qa.quesId)" >
           <img src="https://rnxt.s3.amazonaws.com/MytIcon/icon-edit%402x.png" class="icon-edit">{{qbItem.Edit__c}}</button>
