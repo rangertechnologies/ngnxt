@@ -324,10 +324,11 @@
   
   <h3 *ngIf="!qbItem.Progress_Bar__c" class="summary-h">  {{qbItem.Summary_Text__c}}  </h3>
   <div *ngFor="let qa of summary"  [ngClass]="{'summarydiv': this.abItem.Status__c != 'Completed'}">
+    <div  [ngClass]="{'summarydiv': this.abItem.Status__c === 'Completed'&& !qbItem.Progress_Bar__c }">
     <div  [ngClass]="{'submit': this.abItem.Status__c === 'Completed' &&  qbItem.Progress_Bar__c}">
       <div [ngClass]="{'non': this.abItem.Status__c != 'Completed' &&  qbItem.Progress_Bar__c} ">
     <div [ngClass]="{'summary': this.abItem.Status__c != 'Completed'&& !qbItem.Progress_Bar__c }">
-      <div [ngClass]="{'summary': this.abItem.Status__c === 'Completed'}">
+      <div [ngClass]="{'summary': this.abItem.Status__c === 'Completed'&& !qbItem.Progress_Bar__c &&  qbItem.Progress_Bar__c}">
 
        <div> {{qa.groupText}}</div>
 
@@ -339,7 +340,7 @@
     <div *ngIf= "qbItem.Edit__c" [ngClass]="{'question': this.abItem.Status__c != 'Completed'}">
       <div [ngClass]="{'asum': this.abItem.Status__c === 'Completed'}" [innerHTML]="getText(qa.quesValue)">{{qa.quesValue}}</div>
     </div>
-   </div>
+  
     <div *ngIf= "qbItem.Edit__c &&  this.abItem.Status__c != 'Completed'" >
         <button class="edit" (click)="handleEditClick(qa.quesId)" >
           <img src="https://rnxt.s3.amazonaws.com/MytIcon/icon-edit%402x.png" class="icon-edit">{{qbItem.Edit__c}}</button>
@@ -347,10 +348,11 @@
       <div  [ngClass]="{'bsum': this.abItem.Status__c === 'Completed'}">
       <div [ngClass]="{'answer': this.abItem.Status__c != 'Completed'}">  {{qa.ansValue}}   </div> </div>
     </div>
+  </div>
     </div>
     </div>
   </div>
-
+ </div>
   <div class="flexer" *ngIf="abItem">
     <div class="" *ngIf="abItem.Status__c != 'Completed'" >
     <div class="col-md-6">
