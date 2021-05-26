@@ -332,7 +332,7 @@
 
        <div> {{qa.groupText}}</div>
 
-       <div *ngIf = "!qbItem.Edit__c"  [ngClass]="{'question': this.abItem.Status__c != 'Completed'}" >
+       <div *ngIf = "!qbItem.Edit__c"  [ngClass]="{'question s-colr': this.abItem.Status__c != 'Completed'}" >
        
         <a  [ngClass]="{'asum': this.abItem.Status__c === 'Completed'}" (click)="handleEditClick(qa.quesId)" [innerHTML]="getText(qa.quesValue)">{{qa.quesValue}}</a>    
     </div>
