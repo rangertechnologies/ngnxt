@@ -475,7 +475,6 @@ export class QuestionnaireComponent implements OnInit {
       //console.log('Before Calling readQuestion() using ' + recordId);
       this.readQuestion(this.recordId);
       this.pop = true;
-
     } else {
       this.pop = false;
       //console.log('Summary Page Logic');
@@ -589,12 +588,15 @@ export class QuestionnaireComponent implements OnInit {
         
         for(var ansObject of this.abItem.Answers__r.records) {
           lastQuestionId = ansObject.Question_Ref__c;
+          console.log('Question: ' + ansObject.Question_Rich_Text__c);
+          console.log('Answer: ' + ansObject.Answer_Long__c);
+
           this.questionStack.push(ansObject.Question_Ref__c);
         
-          this.answerMap.set(ansObject.Question_Ref__c , { quesValue: ansObject.Question_Rich_Text__c,
-                                                           ansValue :ansObject.Answer_Long__c, 
-                                                           quesId:ansObject.Question_Ref__c, 
-                                                           qTyp :ansObject.Question_Type__c });
+          this.answerMap.set(ansObject.Question_Ref__c, { quesValue: ansObject.Question_Rich_Text__c,
+                                                           ansValue: ansObject.Answer_Long__c, 
+                                                           quesId: ansObject.Question_Ref__c, 
+                                                           qTyp: ansObject.Question_Type__c });
         
           //console.log(this.questionStack)
           if(ansObject.Question_Type__c == 'Book') {
@@ -734,23 +736,23 @@ export class QuestionnaireComponent implements OnInit {
   }
 
   private processQuestion = () => {
-        this.pop =true;
-    
-    
+    this.pop = true;
+
     // if(!this.back){
     //   this.questionNmae.push(this.questionItem.Name)
     // }
-    if(this.qbItem.Progress_Bar__c === true ){  
-      if(!this.back){
-           this.questionNmae.push(this.questionItem.Name)
+
+    if (this.qbItem.Progress_Bar__c === true) {
+      if (!this.back) {
+        this.questionNmae.push(this.questionItem.Name);
       }
-    this.back=false;
-    
-    this.currentName = this.questionItem.Name
-    this.pathquestion = this.questionNmae.indexOf(this.currentName);
-    this.possibilities = JSON.parse(this.qbItem.Possibilities__c);
-  }
-   
+      this.back = false;
+
+      this.currentName = this.questionItem.Name;
+      this.pathquestion = this.questionNmae.indexOf(this.currentName);
+      this.possibilities = JSON.parse(this.qbItem.Possibilities__c);
+    }
+
     this.myDatePickerOptions;
     this.day();
     //console.log('processing question ' + this.questionItem.Name + ' existing answers are ' + this.answerMap.size); // => ' + JSON.stringify(this.questionItem));
@@ -765,7 +767,7 @@ export class QuestionnaireComponent implements OnInit {
       // Get the existing answer from the Map
       this.inpValue = eAnswer.ansValue;
       //console.log('inpValue has been set to ' + this.inpValue);
-      if(this.attachmentsMap.has(this.questionItem.Id)){
+      if (this.attachmentsMap.has(this.questionItem.Id)) {
         this.attachments = this.attachmentsMap.get(this.questionItem.Id);
       }
     } else {
@@ -774,60 +776,80 @@ export class QuestionnaireComponent implements OnInit {
     }
 
     if (this.checkboxFlag) {
-
       // Set the Options for Checkbox
       this.setOptions(this.questionItem.Question_Options__r.records);
     } else if (this.bookFlag) {
       // Set the SubQuestions
       this.setSubQuestions(this.questionItem.Questions__r.records);
-     }
-      else if (this.dtFlag) {
-         this.selectedHour ="";
-        this.selectedMinute ="";
-        this.selDate ="";
-        if(this.dateMap.has(this.questionItem.Id) ){
-            this.selDate = this.dateMap.get(this.questionItem.Id);
+    } else if (this.dtFlag) {
+      this.selectedHour = "";
+      this.selectedMinute = "";
+      this.selDate = "";
+      if (this.dateMap.has(this.questionItem.Id)) {
+        this.selDate = this.dateMap.get(this.questionItem.Id);
+      }
+      if (this.selectedhourMap.has(this.questionItem.Id)) {
+        this.selectedHour = this.selectedhourMap.get(this.questionItem.Id);
+      }
+      if (this.selectedhourMap.has(this.questionItem.Id)) {
+        this.selectedMinute = this.selectedminuteMap.get(this.questionItem.Id);
+      }
+      if (this.questionItem.X24_Hours__c === true) {
+        this.hours.push(
+          "13",
+          "14",
+          "15",
+          "16",
+          "17",
+          "18",
+          "19",
+          "20",
+          "21",
+          "22",
+          "23",
+          "00"
+        );
+      }
+      if (this.questionItem.X24_Hours__c === false) {
+        this.hours = this.hours.slice(0, 12);
+      }
+      if (this.dtFlag && this.inpValue) {
+        var dtVal = this.inpValue.split("T");
+        this.inpValue = dtVal[0];
+        this.questionItem.input = dtVal[1];
+      }
+      if (
+        this.questionItem.Is_Date_Backward__c ||
+        this.questionItem.Is_Date_Forward__c
+      ) {
+        if (this.questionItem.Is_Date_Backward__c === true) {
+          this.myDatePickerOptions.disableSince = {
+            year: this.today.getFullYear(),
+            month: this.today.getMonth() + 1,
+            day: this.today.getDate() + 1,
+          };
         }
-        if (this.selectedhourMap.has(this.questionItem.Id)){
-           this.selectedHour = this.selectedhourMap.get(this.questionItem.Id)
+        if (this.questionItem.Is_Date_Forward__c === true) {
+          this.myDatePickerOptions.disableUntil = {
+            year: this.today.getFullYear(),
+            month: this.today.getMonth() + 1,
+            day: this.today.getDate(),
+          };
         }
-        if (this.selectedhourMap.has(this.questionItem.Id)){
-          this.selectedMinute = this.selectedminuteMap.get(this.questionItem.Id)
-        }
-        if(this.questionItem.X24_Hours__c === true  ){
-            this.hours.push("13","14","15","16","17","18","19","20","21","22","23","00");
-             } if(this.questionItem.X24_Hours__c=== false){
-                this.hours = this.hours.slice(0,12);
-              }if(this.dtFlag&& this.inpValue){
-              var dtVal = this.inpValue.split('T');
-              this.inpValue = dtVal[0];
-              this.questionItem.input = dtVal[1];
-            }
-            if(this.questionItem.Is_Date_Backward__c || this. questionItem.Is_Date_Forward__c){
-              if(this.questionItem.Is_Date_Backward__c === true){
-                this.myDatePickerOptions.disableSince =
-                { year: this.today.getFullYear(),
-                   month: this.today.getMonth() + 1,
-                   day: this.today.getDate() + 1 }
-              }
-              if(this.questionItem.Is_Date_Forward__c === true){
-                this.myDatePickerOptions.disableUntil ={ year: this.today.getFullYear(),
-                  month: this.today.getMonth() +1,
-                  day: this.today.getDate() }
-           }
-            }
-            }
-    else if (this.fileFlag) {
+      }
+    } else if (this.fileFlag) {
       this.fileUI();
       // logic
-      this.allowedFileExtension = this.questionItem.Allowed_File_Extensions__c.split(';');
+      this.allowedFileExtension = this.questionItem.Allowed_File_Extensions__c.split(
+        ";"
+      );
       //console.log(this.allowedFileExtension);
     }
-    if(this.qbItem.Progress_Bar__c === true)
-    {
-    this. updateProgress();
+    if (this.qbItem.Progress_Bar__c === true) {
+      this.updateProgress();
     }
   }
+
   setFlag(typ) {
     //console.log('inside setFlag for ' + typ);
 
