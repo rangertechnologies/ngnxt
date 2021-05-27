@@ -437,3 +437,97 @@ width: 100% !important;
     text-align: left !important;
     text-decoration:inherit !important;
 }
+.rusty {
+    width: 121px;
+    height: 56px;
+    /* margin: 0px 0 0 1196px; */
+    margin-left: 90.8%;
+    color: #FFFF;
+    background-color: #c5281c;
+    outline: auto;
+}
+.rusty:focus{
+    outline: none !important;
+    border:none !important;
+}
+.grey {
+    width: 87px;
+    height: 56px;
+    margin: 0px 0 0 1180px;
+    padding: 15px 24px 17px;
+    border: solid 2px #6F7072;
+    background-color: #FFFFFF;
+}
+.grey:focus{
+    outline: none !important;
+}
+.btn-text{
+    margin: 0;
+    position: relative;
+    right: 3rem;
+}
+.btn-text2{
+    margin: 0;
+}
+.flexer{
+    max-width: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+}
+.btn-r{
+    right: 0rem;
+}
+
+.dt-line{
+    border-top: none;
+    border-left: none;
+    border-right: none;
+}
+
+.colon1{
+    margin: -40px 0px 0px 136px;
+}
+.down1{
+    width: 100%;
+}
+.date-line {
+    border-bottom: groove;
+    border-color: #F1F1F1;
+}
+.down2 {
+    line-height: 3.5;
+    margin-top: 3%
+}
+.dt-time{
+    background-image: url("https://rnxt.s3.amazonaws.com/MytIcon/icon-clock%402x.png") !important;
+    background-size: 25px !important;
+    background-repeat: no-repeat !important;
+    background-position: 99% center !important;
+    background-color: #fff !important;
+    height: 37px;
+}
+.boxoutline{
+    outline: transparent;
+}
+.right-bt{
+    margin-top: 24%;
+}
+.left-bt{
+    margin-top: 36%;
+}
+.spaceline{
+    line-height: 0;
+}
+.spaceline1{
+    line-height: 2.5;
+}
+.s-color{
+    color:#00356f;
+}
+.q-color{
+    color:#212529 !important;
+}
+.edit:focus{
+    outline: none !important;
+}

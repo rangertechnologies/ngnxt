@@ -6,16 +6,38 @@
   </div>
 </div>
 
-<div *ngIf="questionItem" class="questiondiv1">
-  <div class="questiondiv2">
-    <div *ngIf="questionItem.Is_Title__c">
-      <h3 class="questionalign" [innerHTML]="getText(questionItem.Question_Text__c)">
-        {{questionItem.Question_Text__c}}
+  <div  [ngClass]="{'questiondiv2': !qbItem.Progress_Bar__c,'q-color': qbItem.Progress_Bar__c}">
+    <div [ngClass]="{'bgColor': qbItem.Progress_Bar__c}">
+    <div id="progress"  *ngIf= "qbItem.Progress_Bar__c">
+        <circle-progress class="titlebar" [percent]="this.percent"  [radius]="55"  [space]="-4" [outerStrokeWidth]="4" [innerStrokeWidth]="4"
+       [outerStrokeColor]="'#c5281c'" [innerStrokeColor]="'#e7e8ea'"[animation]="true" [title]= "this.percent"  [animationDuration]="300"
+       [startFromZero]="false" [responsive]="false">
+       </circle-progress>
+     </div>
+     <div *ngIf="questionItem.Group__c && qbItem.Progress_Bar__c"[ngClass]="{'questionalign': !qbItem.Progress_Bar__c}">
+      <div [ngClass]="{'largeTitle':this.questionItem.Type__c != 'Book'&& qbItem.Progress_Bar__c,  'bookTitle':this.questionItem.Type__c === 'Book' &&  qbItem.Progress_Bar__c }">
+      <h3 >
+        {{questionItem.Group__c}}
       </h3>
-    </div>
-    <div *ngIf="!questionItem.Is_Title__c" class="question-f-size">
-      <div [innerHTML]="getText(questionItem.Question_Text__c)">{{questionItem.Question_Text__c}}</div>
-    </div>
+      <div *ngIf="questionItem.Additional_Rich__c && qbItem.Progress_Bar__c ">
+        <div [innerHTML]="innerhtml"></div>
+      </div>
+      </div>
+      </div>
+     </div>
+    </div>  
+  
+
+  <!--Question alignment-->
+  <div class="questiondiv2" [ngClass]="{'q-color': qbItem.Progress_Bar__c}">	
+    <div *ngIf="questionItem.Is_Title__c">	
+      <h3 [ngClass]="{'spaceline': qbItem.Progress_Bar__c}" class="questionalign" [innerHTML]="getText(questionItem.Question_Text__c)">	
+        {{questionItem.Question_Text__c}}	
+      </h3>	
+    </div>	
+    <div *ngIf="!questionItem.Is_Title__c" class="question-f-size">	
+      <div [innerHTML]="getText(questionItem.Question_Text__c)">{{questionItem.Question_Text__c}}</div>	
+    </div>	
   </div>
 
   <div *ngIf="questionItem.Additional_Rich__c">
@@ -210,13 +232,40 @@
   </div>
  </div>
 
- <div *ngIf="summary && summary.length > 0" class="col-md-12 questionalign">
-  <h3 class="summary-h">  {{qbItem.Summary_Text__c}}  </h3>
-  <div *ngFor="let qa of summary" class="summarydiv">
-    <div class="summary">
-      
-      <div *ngIf = "!qbItem.Edit__c">
-      <a class="question" (click)="handleEditClick(qa.quesId)" [innerHTML]="getText(qa.quesValue)">{{qa.quesValue}}</a>
+ <div *ngIf="summary && summary.length > 0" class="col-md-12">
+  <div id="progress2" style="display: block; margin-top: -26px;  margin-bottom: 6px;" *ngIf= "qbItem.Progress_Bar__c">
+  <div  [ngClass]="{'bgColor': qbItem.Progress_Bar__c}">
+    <div id="progress"  *ngIf= "qbItem.Progress_Bar__c">
+     <circle-progress class="titlebar" [percent]="this.percent" [radius]="55" [space]="-4" [outerStrokeWidth]="4" [innerStrokeWidth]="4"
+      [outerStrokeColor]="'#c5281c'" [innerStrokeColor]="'#e7e8ea'" [animation]="true" [title]= "this.percent" [animationDuration]="300"
+      [startFromZero]="false" [responsive]="false">
+    </circle-progress>
+    </div>
+  
+  
+  <div *ngIf="qbItem.Summary_Text__c && qbItem.Progress_Bar__c"[ngClass]="{'summaryTitle': qbItem.Progress_Bar__c && this.abItem.Status__c != 'Completed','summaryTitle-completed': qbItem.Progress_Bar__c &&this.abItem.Status__c === 'Completed'}">
+   
+    <h3 >
+      {{qbItem.Summary_Text__c}}
+    </h3>
+   <div *ngIf="this.abItem.Status__c != 'Completed'">Revisa que todos los datos sean correctos antes de enviarlo.</div> 
+  </div>
+</div> 
+</div>
+  
+  <h3 *ngIf="!qbItem.Progress_Bar__c" class="summary-h">  {{qbItem.Summary_Text__c}}  </h3>
+  <div *ngFor="let qa of summary"  [ngClass]="{'summarydiv': this.abItem.Status__c != 'Completed'}">
+    <div  [ngClass]="{'summarydiv': this.abItem.Status__c === 'Completed'&& !qbItem.Progress_Bar__c }">
+    <div  [ngClass]="{'submit': this.abItem.Status__c === 'Completed' &&  qbItem.Progress_Bar__c}">
+      <div [ngClass]="{'non': this.abItem.Status__c != 'Completed' &&  qbItem.Progress_Bar__c} ">
+    <div [ngClass]="{'summary': this.abItem.Status__c != 'Completed'&& !qbItem.Progress_Bar__c }">
+      <div [ngClass]="{'summary': this.abItem.Status__c === 'Completed'&& !qbItem.Progress_Bar__c &&  qbItem.Progress_Bar__c}">
+
+      <div *ngIf="this.abItem.Status__c != 'Completed' &&  qbItem.Progress_Bar__c" [ngClass]="{'summary-groupText':  qbItem.Progress_Bar__c}"> {{qa.groupText}}</div>
+
+       <div *ngIf = "!qbItem.Edit__c"  [ngClass]="{'question s-color': this.abItem.Status__c != 'Completed'}" >
+       
+        <a  [ngClass]="{'asum': this.abItem.Status__c === 'Completed'}" (click)="handleEditClick(qa.quesId)" [innerHTML]="getText(qa.quesValue)">{{qa.quesValue}}</a>    
     </div>
 
       <div *ngIf= "qbItem.Edit__c">
