@@ -723,3 +723,19 @@ width: 100% !important;
 .left-bt{
     margin-top: 106%;
 }
+.rusty:focus{
+    outline: none !important;
+    border:none !important;
+}
+.grey:focus{
+    outline: none !important;
+}
+.s-color{
+    color:#00356f;
+}
+.q-color{
+    color:#212529 !important;
+}
+.edit:focus{
+    outline: none !important;
+}

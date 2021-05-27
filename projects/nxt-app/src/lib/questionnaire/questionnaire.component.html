@@ -2,7 +2,7 @@
 
 <div *ngIf="questionItem" class="questiondiv1" >
 
-  <div  [ngClass]="{'questiondiv2': !qbItem.Progress_Bar__c}">
+  <div  [ngClass]="{'questiondiv2': !qbItem.Progress_Bar__c,'q-color': qbItem.Progress_Bar__c}">
     <div [ngClass]="{'bgColor': qbItem.Progress_Bar__c}">
     <div id="progress"  *ngIf= "qbItem.Progress_Bar__c">
         <circle-progress class="titlebar" [percent]="this.percent"  [radius]="55"  [space]="-4" [outerStrokeWidth]="4" [innerStrokeWidth]="4"
@@ -25,9 +25,9 @@
   
 
   <!--Question alignment-->
-  <div class="questiondiv2">	
+  <div class="questiondiv2" [ngClass]="{'q-color': qbItem.Progress_Bar__c}">	
     <div *ngIf="questionItem.Is_Title__c">	
-      <h3 class="questionalign" [innerHTML]="getText(questionItem.Question_Text__c)">	
+      <h3 [ngClass]="{'spaceline': qbItem.Progress_Bar__c}" class="questionalign" [innerHTML]="getText(questionItem.Question_Text__c)">	
         {{questionItem.Question_Text__c}}	
       </h3>	
     </div>	
@@ -334,7 +334,7 @@
 
       <div *ngIf="this.abItem.Status__c != 'Completed' &&  qbItem.Progress_Bar__c" [ngClass]="{'summary-groupText':  qbItem.Progress_Bar__c}"> {{qa.groupText}}</div>
 
-      <div *ngIf = "!qbItem.Edit__c"  [ngClass]="{'question': this.abItem.Status__c != 'Completed'}" >
+      <div *ngIf = "!qbItem.Edit__c"  [ngClass]="{'question s-color': this.abItem.Status__c != 'Completed'}">
        
       <a  [ngClass]="{'asum': this.abItem.Status__c === 'Completed'}" (click)="handleEditClick(qa.quesId)" [innerHTML]="getText(qa.quesValue)">{{qa.quesValue}}</a>
     </div>
