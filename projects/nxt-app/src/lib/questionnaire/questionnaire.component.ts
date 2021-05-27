@@ -4,6 +4,7 @@ import { SalesforceService } from '../services/salesforce.service';
 import { IMyDateModel, IMyDpOptions } from 'mydatepicker';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { FormBuilder } from '@angular/forms';
+import { NgxSpinnerService } from "ngx-spinner";
 
 import {
 Question,
@@ -27,6 +28,8 @@ CHECKQUESTION,
 BOOKQUESTION,
 TESTQB
 } from '../sample';
+
+
 
 @Component({
 selector: 'lib-questionnaire',
@@ -75,6 +78,7 @@ export class QuestionnaireComponent implements OnInit {
   public attachmentsMap = new Map();
   public sqOptions = new Map();
   public questionStack = [];
+  public questionNmae = [];
   public attachments: any[] = [];
   public attachmentIdList: any[] = [];
   public attachmentId: string = '';
@@ -82,13 +86,21 @@ export class QuestionnaireComponent implements OnInit {
   public allowedFileExtension: string[];
   public fileExceededLimit: boolean = false;
   public fileTypeIncorrect: boolean = false;
+  public back: boolean = false;
+  public check: boolean ;
+  public pop: boolean ;
   public localDate: string;
+  public currentName: string;
+  public  pathquestion: number;
+  public  percent: number;
+  public  count: number;
   public taFocusOut: boolean = false;
   public summary = [];
   public selDate: any = {};
   private today: Date = new Date();
   private el: HTMLElement;
   public innerhtml: any;
+  public possibilities : any;
   public innerhtml1: any;
   public hours: any[] = ["01","02","03","04","05","06","07","08","09","10","11","12"];
   public minutes: string[] = ["00","01","02","03","04","05","06","07","08","09","10","11","12","13","14","15","16","17","18",
@@ -102,7 +114,8 @@ export class QuestionnaireComponent implements OnInit {
   public bookFlagAccept: string[];
   public recordId:string;
   public currentQuestionId: string;
-
+  public spinnerType : string;
+  public spinnerName : string;
 
 
   // REQ-01 PROGRESS BAR
@@ -113,8 +126,10 @@ export class QuestionnaireComponent implements OnInit {
 
   };
 
-  constructor(private sfService: SalesforceService, private route: ActivatedRoute, private sanitizer: DomSanitizer, private _formBuilder: FormBuilder){
-
+  constructor(private sfService: SalesforceService, private route: ActivatedRoute, private sanitizer: DomSanitizer, private spinner: NgxSpinnerService, private _formBuilder: FormBuilder){
+   
+    this.spinnerName = 'sp1';
+    this.spinnerType = 'ball-spin-clockwise';
    }
 
    onDateChanged(event: IMyDateModel) { //to change the border color
@@ -130,7 +145,7 @@ export class QuestionnaireComponent implements OnInit {
   ngOnInit() {
    this.inpValue="";
     this.selectedMeridiem = "AM";
-    this.processQB();
+    this.processQB(); 
   }
 
   ngOnChanges() {
@@ -170,8 +185,16 @@ export class QuestionnaireComponent implements OnInit {
          htmlElement.item(0).setAttribute('style', 'border: 1px solid #87be1c ;width:100%');
      }
   }
+//   function IncreaseTextboxSize() {  
+//     var textsize = $('#txtwidth').val();  
+//     $("#txtname").css("width", textsize);  
+//     $("#message").html("Currently textbox Size is " + textsize + "px.");  
+// } 
 
   processQB() {
+    //this.qbItem
+   
+    
     //console.log(this.qbId);
     //console.log('Version in process is 8bf11efa7f91a391d957bf6b5078edc7e656b67c');
     if (this.qbId) {
@@ -204,21 +227,31 @@ export class QuestionnaireComponent implements OnInit {
       if(value == null){
       return;
       }
-
      this.readQuestion(value);
      //console.log(' in side summaryopen'+ this.summary.length);
 
      //Assign question stack length from summary part
      var arrayLength = this.questionStack.length;
      var lengthValue = this.questionStack.indexOf(value);
+     
      for (let i = arrayLength; i > lengthValue; i--) {
-       this.questionStack.pop()
+       this.questionStack.pop();
+  
      }
+     if(this.qbItem.Progress_Bar__c === true ){
+     var arrayLength1 = this.questionNmae.length;
+     for (let j = arrayLength1; j > lengthValue; j--) {
+       this.questionNmae.pop()
+     }
+    }
      this.summary = [];
     }
   }
 
   handleNextClick() {
+    //console.log(this.questionItem);
+    
+    //this.updateProgress();
     if(this.currentQuestionId === null){
       return;
     }
@@ -285,7 +318,7 @@ export class QuestionnaireComponent implements OnInit {
               //console.log('inside' + recordId);
             }
           }
-          this.attachments = [];
+         // this.attachments = [];
         }//item.input == this.inpValue;
         this.inpValue += (item.input != undefined ? item.input : '') + '@@##$$';
         //console.log('inside book1' + this.inpValue)
@@ -371,6 +404,7 @@ export class QuestionnaireComponent implements OnInit {
     this.answerWrap.quesValue = quesValue;
     this.answerWrap.qTyp = typ;
     this.answerWrap.ansValue = this.inpValue;
+    this.answerWrap.groupText = cQuestion.Group__c;
     this.saveAnswer();
   }
 
@@ -382,6 +416,7 @@ export class QuestionnaireComponent implements OnInit {
     if (this.questionItem.error) { return; }
 
     this.questionStack.push(cQuestion.Id);
+  //  this.questionNmae.push(cQuestion.Name);
 
     // CONDITIONAL vs OPTIONONLY & UNCONDITIONAL
     if (cQuestion.RecordType.Name == "CONDITIONAL") {
@@ -439,7 +474,10 @@ export class QuestionnaireComponent implements OnInit {
     if (this.recordId) {
       //console.log('Before Calling readQuestion() using ' + recordId);
       this.readQuestion(this.recordId);
+      this.pop = true;
+
     } else {
+      this.pop = false;
       //console.log('Summary Page Logic');
       // Reset the Variables
       this.inpValue = '';
@@ -493,6 +531,11 @@ export class QuestionnaireComponent implements OnInit {
   }
 
   handleBackClick() {
+    this.back = true
+    if(this.pop === true){
+      this.questionNmae.pop();
+    }
+   
     this.handleEvent.emit(this.qbItem.Back_Tracking_ID__c);
     this.answerCount--;
     this.updateProgress();
@@ -500,6 +543,8 @@ export class QuestionnaireComponent implements OnInit {
     //this.stepperCateg();
 
     if (this.summary) {
+  //    console.log('summary true');
+      
       this.summary = [];
     }
 
@@ -531,8 +576,7 @@ export class QuestionnaireComponent implements OnInit {
     this.failureReadBook);
 
   private successReadBook = (response) => {
-
-    //console.log(response)
+  //console.log(response)
     this.qbItem = response.questionbook;
     this.abItem = response.answerbook;
     //console.log('readingQuestion using ' + this.qbItem.First_Question__c);
@@ -655,8 +699,23 @@ export class QuestionnaireComponent implements OnInit {
   }
 
   private processQuestion = () => {
-    //console.log(this.questionItem.Size__c);
-
+        this.pop =true;
+    
+    
+    // if(!this.back){
+    //   this.questionNmae.push(this.questionItem.Name)
+    // }
+    if(this.qbItem.Progress_Bar__c === true ){  
+      if(!this.back){
+           this.questionNmae.push(this.questionItem.Name)
+      }
+    this.back=false;
+    
+    this.currentName = this.questionItem.Name
+    this.pathquestion = this.questionNmae.indexOf(this.currentName);
+    this.possibilities = JSON.parse(this.qbItem.Possibilities__c);
+  }
+   
     this.myDatePickerOptions;
     this.day();
     //console.log('processing question ' + this.questionItem.Name + ' existing answers are ' + this.answerMap.size); // => ' + JSON.stringify(this.questionItem));
@@ -724,9 +783,14 @@ export class QuestionnaireComponent implements OnInit {
             }
             }
     else if (this.fileFlag) {
+      this.fileUI();
       // logic
       this.allowedFileExtension = this.questionItem.Allowed_File_Extensions__c.split(';');
       //console.log(this.allowedFileExtension);
+    }
+    if(this.qbItem.Progress_Bar__c === true)
+    {
+    this. updateProgress();
     }
   }
   setFlag(typ) {
@@ -921,6 +985,7 @@ export class QuestionnaireComponent implements OnInit {
     if (local.fileTypeIncorrect) { return; }
     let fileContent: any;
     var reader = new FileReader();
+    
     reader.onload = function () {
       fileContent = reader.result;
       local.fileExceededLimit = local.attachment.size > 3242880; //Validating file size
@@ -933,6 +998,7 @@ export class QuestionnaireComponent implements OnInit {
         local.createAttachment(fileWrapper);
       }
     }
+    this.spinner.show(this.spinnerName);
     reader.readAsDataURL(event.target.files[0]);
   }
 
@@ -940,6 +1006,7 @@ export class QuestionnaireComponent implements OnInit {
     let createdAttachment: Attachment = new Attachment(response.attachmentId, response.attachmentName, this.attachment.lastModifiedDate);
     this.attachments.push(createdAttachment);
     this.attachmentsMap.set(this.questionItem.Id,this.attachments);
+    this.spinner.hide(this.spinnerName);
   }
 
 
@@ -984,6 +1051,10 @@ export class QuestionnaireComponent implements OnInit {
     var fileNameWithType = fileNamewithIdandType.substr(fileNamewithIdandType.indexOf('::::') + 4);
     return fileNameWithType; //fileNameWithType.replace(/^(.*(\/|\\))(.+)$/, '$3');
   }
+  fileUI(){
+    if(this.attachments.length ===0){
+    }
+  }
 
   //Update function for categorization
   // stepperCateg() {
@@ -995,12 +1066,35 @@ export class QuestionnaireComponent implements OnInit {
   //   });
 
   // }
+  
   // Update Function for the Progress Bar
   updateProgress() {
-    var width = 100 * (this.answerCount / this.qbItem.Total_Questions__c);
+    if(this.qbItem.Progress_Bar__c === true ){
+    let j =[];
+  for(let  i = 0 ; i<this.possibilities.total ; i++){
+    var pathposs = Object.values(this.possibilities.paths[i].questions) 
+      if(pathposs[this.pathquestion] === this.currentName){ 
+         j.push(i);
+        this.check = true;        
+      }
+     else{
+          this.check=false;
+     }
+   }
+  if(j.length === 1){
+     this.count = j[0];
+  }
+  if(j.length>1){
+    var width = 100 * (this.questionStack.length / this.possibilities.maxQuestions);
     //console.log('Progress bar width => ' + width);
     this.progressStyle = Math.round(width) + '%';
-    //$('#progress #bar').animate({'width':width + '%'});
   }
+  else if(j.length === 1){
+    var width = 100 * (this.questionStack.length / this.possibilities.paths[this.count].count);
+    this.progressStyle = Math.round(width) + '%'; 
+  }
+  this.percent= + Math.round(width)
+  }
+}
 }
 

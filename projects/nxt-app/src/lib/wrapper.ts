@@ -16,6 +16,8 @@ export class QuestionBook {
   Total_Questions__c: number;
   Summary_Text__c?: string;
   Questions__r?: QuestionR;
+  Possibilities__c : string;
+  Progress_Bar__c : boolean;
 }
 
 export class Question {
@@ -32,6 +34,8 @@ export class Question {
   Error_Message__c: string;
   Is_Date_Backward__c : boolean;
   Is_Date_Forward__c : boolean;
+  Time_Text__c : string;
+  Date_Text__c : string;
   Group__c: string;
   Question_No__c?: string;
   Question_Options__r?: OptionR;
@@ -96,6 +100,7 @@ export class AnswerWrapper {
   quesValue: string;
   qTyp: string;
   ansValue: string;
+  groupText: string;
 }
 
 export class ErrorWrapper {
