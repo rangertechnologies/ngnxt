@@ -29,6 +29,10 @@
     height: 28px;
     margin: 2% 0 2% -12%;
     padding-right: 3%;
+}.icon-edit-summary{
+    width: 29px;
+    height: 28px;
+   
 }
   
 .questiondiv1{
@@ -208,7 +212,8 @@
 }
 #meridiem{
     margin-top: -2px;
-    border: hidden;      
+    border: hidden; 
+    outline: none;     
 }
 
 .dis-flex{
@@ -251,6 +256,7 @@
     margin: 0px !important;
     padding-left: 5px !important;
     min-width: 60px !important;
+    outline-style: none;
 }
   
 .datetime:focus{
@@ -258,12 +264,12 @@
     box-shadow: none !important;
 }
 
-.showHour{
+/* .showHour{
     padding-left: 15px !important;
 }
 .showminute{
     padding-left: 15px !important;
-}
+} */
 .check-icon3{
     color:#87be1c !important;
     margin-left: -4rem !important;
@@ -410,7 +416,8 @@
     /* font-weight: bold !important; */
     color: #8c8f92!important;
     padding-left: 3%;
-    font-size: 14px;
+    font-size: 15px;
+    padding-bottom: 7px;
 }
 
 .answer {
@@ -422,12 +429,15 @@
 .summaryTitle{
     width: max-content;
     padding-left: 2%;
-    padding-top: 4%;
+    padding-top: 33px;
 }
 .summaryTitle-completed{
     width: max-content;
     padding-left: 2%;
-    padding-top: 6%;
+    padding-top: 47px;
+}
+.dpDown:focus-visible{
+    outline: none;
 }
 .summary-groupText{
     font-weight: 700!important;
@@ -468,7 +478,7 @@
 .colon{
     line-height: 40px !important;
     padding: 0px !important;
-    margin-right: 10px !important;
+    /* margin-right: 10px !important; */
     margin-block: auto;
 }
 
