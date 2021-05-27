@@ -5,16 +5,14 @@
   <div  [ngClass]="{'questiondiv2': !qbItem.Progress_Bar__c}">
     <div [ngClass]="{'bgColor': qbItem.Progress_Bar__c}">
     <div id="progress"  *ngIf= "qbItem.Progress_Bar__c">
-      <div id="bar">
         <circle-progress class="titlebar" [percent]="this.percent"  [radius]="55"  [space]="-4" [outerStrokeWidth]="4" [innerStrokeWidth]="4"
        [outerStrokeColor]="'#c5281c'" [innerStrokeColor]="'#e7e8ea'"[animation]="true" [title]= "this.percent"  [animationDuration]="300"
        [startFromZero]="false" [responsive]="false">
        </circle-progress>
-      </div>
      </div>
      <div *ngIf="questionItem.Group__c && qbItem.Progress_Bar__c"[ngClass]="{'questionalign': !qbItem.Progress_Bar__c}">
-      <div [ngClass]="{'largeTitle':this.questionItem.Type__c != 'Book'&& qbItem.Progress_Bar__c }">
-      <h3  [ngClass]="{'right':this.questionItem.Type__c === 'Book' &&  qbItem.Progress_Bar__c }">
+      <div [ngClass]="{'largeTitle':this.questionItem.Type__c != 'Book'&& qbItem.Progress_Bar__c,  'bookTitle':this.questionItem.Type__c === 'Book' &&  qbItem.Progress_Bar__c }">
+      <h3 >
         {{questionItem.Group__c}}
       </h3>
       <div *ngIf="questionItem.Additional_Rich__c && qbItem.Progress_Bar__c ">
@@ -171,11 +169,13 @@
         <input id="files" style="visibility:hidden;" type="file" accept="{{allowedFileExtension}}" (change)="uploadFile($event)" />
       </div> 
       <div [ngClass]="{'uploadBox': attachments?.length >0}">
-      <ul *ngIf="attachments?.length > 0" class="attach-ulist">
+      <ul *ngIf="attachments?.length > 0"  [ngClass]="{'myT-file-docicon': qbItem.Progress_Bar__c}">
         <li *ngFor="let attachment of attachments" class="align-l">
           <img src="https://rnxt.s3.amazonaws.com/MytIcon/icon-doc-img%402x.png"  class="icon-edit2" >
+          <div class="filename">
           {{attachment.attachmentName}}
           <span class="attach-list" (click)="deleteAttachment(attachment.attachmentId)"><img src="https://rnxt.s3.amazonaws.com/MytIcon/icon-delete%402x.png" class="deleteIcon"></span>
+        </div>
         </li>
       </ul> 
       </div>
@@ -230,7 +230,7 @@
               <input id="file-upload" type="file" accept="{{bookFlagAccept}}" (change)="uploadFile($event)" />
             </div>
           
-          <ul *ngIf="attachments?.length > 0 && ques.Type__c === 'File' && !qbItem.Progress_Bar__c" class="attach-ulist col-md-12">
+          <ul *ngIf="attachments?.length > 0 && ques.Type__c === 'File' && !qbItem.Progress_Bar__c"  class="attach-ulist col-md-12">
             <li *ngFor="let attachment of attachments" class="align-l">{{attachment.attachmentName}}<span
                 class="attach-list" (click)="deleteAttachment(attachment.attachmentId)">X</span></li>
           </ul>
@@ -244,11 +244,13 @@
               <input id="files" style="visibility:hidden;" type="file" accept="{{allowedFileExtension}}" (change)="uploadFile($event)" />
             </div> 
             <div [ngClass]="{'uploadBox': attachments?.length >0}">
-            <ul *ngIf="attachments?.length > 0" class="attach-ulist">
+            <ul *ngIf="attachments?.length > 0" [ngClass]="{'myT-file-docicon': qbItem.Progress_Bar__c}" >
               <li *ngFor="let attachment of attachments" class="align-l">
                 <img src="https://rnxt.s3.amazonaws.com/MytIcon/icon-doc-img%402x.png"  class="icon-edit2" >
+                <div class="filename">
                 {{attachment.attachmentName}}
                 <span class="attach-list" (click)="deleteAttachment(attachment.attachmentId)"><img src="https://rnxt.s3.amazonaws.com/MytIcon/icon-delete%402x.png" class="deleteIcon"></span>
+                </div>
               </li>
             </ul> 
             </div>
@@ -305,22 +307,24 @@
 
  <div *ngIf="summary && summary.length > 0" class="col-md-12">
   <div id="progress2" style="display: block; margin-top: -26px;  margin-bottom: 6px;" *ngIf= "qbItem.Progress_Bar__c">
-    <div id="bar" style.width="{{progressStyle}}">
-     <circle-progress class="circle" [percent]="this.percent" [radius]="30" [space]="-4" [outerStrokeWidth]="4" [innerStrokeWidth]="4"
+  <div  [ngClass]="{'bgColor': qbItem.Progress_Bar__c}">
+    <div id="progress"  *ngIf= "qbItem.Progress_Bar__c">
+     <circle-progress class="titlebar" [percent]="this.percent" [radius]="55" [space]="-4" [outerStrokeWidth]="4" [innerStrokeWidth]="4"
       [outerStrokeColor]="'#c5281c'" [innerStrokeColor]="'#e7e8ea'" [animation]="true" [title]= "this.percent" [animationDuration]="300"
       [startFromZero]="false" [responsive]="false">
     </circle-progress>
     </div>
-  </div>
   
-  <div *ngIf="qbItem.Summary_Text__c && qbItem.Progress_Bar__c"[ngClass]="{'largeTitle': qbItem.Progress_Bar__c }">
+  
+  <div *ngIf="qbItem.Summary_Text__c && qbItem.Progress_Bar__c"[ngClass]="{'summaryTitle': qbItem.Progress_Bar__c && this.abItem.Status__c != 'Completed','summaryTitle-completed': qbItem.Progress_Bar__c &&this.abItem.Status__c === 'Completed'}">
    
-    <h3 class=" questionalign" [ngClass]="{'right': qbItem.Progress_Bar__c }">
+    <h3 >
       {{qbItem.Summary_Text__c}}
     </h3>
-   <div class=" questionalign">Revisa que todos los datos sean correctos antes de enviarlo.</div> 
+   <div *ngIf="this.abItem.Status__c != 'Completed'">Revisa que todos los datos sean correctos antes de enviarlo.</div> 
   </div>
-   
+</div> 
+</div>
   
   <h3 *ngIf="!qbItem.Progress_Bar__c" class="summary-h">  {{qbItem.Summary_Text__c}}  </h3>
   <div *ngFor="let qa of summary"  [ngClass]="{'summarydiv': this.abItem.Status__c != 'Completed'}">
@@ -330,7 +334,7 @@
     <div [ngClass]="{'summary': this.abItem.Status__c != 'Completed'&& !qbItem.Progress_Bar__c }">
       <div [ngClass]="{'summary': this.abItem.Status__c === 'Completed'&& !qbItem.Progress_Bar__c &&  qbItem.Progress_Bar__c}">
 
-       <div> {{qa.groupText}}</div>
+      <div *ngIf="this.abItem.Status__c != 'Completed' &&  qbItem.Progress_Bar__c" [ngClass]="{'summary-groupText':  qbItem.Progress_Bar__c}"> {{qa.groupText}}</div>
 
        <div *ngIf = "!qbItem.Edit__c"  [ngClass]="{'question': this.abItem.Status__c != 'Completed'}" >
        
@@ -346,7 +350,13 @@
           <img src="https://rnxt.s3.amazonaws.com/MytIcon/icon-edit%402x.png" class="icon-edit">{{qbItem.Edit__c}}</button>
       </div>
       <div  [ngClass]="{'bsum': this.abItem.Status__c === 'Completed'}">
-      <div [ngClass]="{'answer': this.abItem.Status__c != 'Completed'}">  {{qa.ansValue}}   </div> </div>
+      <div [ngClass]="{'answer': this.abItem.Status__c != 'Completed'}">
+        <div *ngIf= "qa.qTyp === 'File'">
+          <img src="https://rnxt.s3.amazonaws.com/MytIcon/icon-doc-img%401.png" class="icon-edit1"> {{qa.ansValue}}
+        </div> 
+
+        <div *ngIf= "qa.qTyp != 'File'">{{qa.ansValue}}</div>
+            </div> </div>
     </div>
   </div>
     </div>

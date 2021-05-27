@@ -145,7 +145,7 @@ export class QuestionnaireComponent implements OnInit {
   ngOnInit() {
    this.inpValue="";
     this.selectedMeridiem = "AM";
-    this.processQB();  
+    this.processQB(); 
   }
 
   ngOnChanges() {
@@ -1053,8 +1053,6 @@ export class QuestionnaireComponent implements OnInit {
   }
   fileUI(){
     if(this.attachments.length ===0){
-    console.log('attach true');
-    
     }
   }
 
