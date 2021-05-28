@@ -104,6 +104,7 @@ export class AnswerWrapper {
   qTyp: string;
   ansValue: string;
   groupText: string;
+  squesValue: string;
 }
 
 export class ErrorWrapper {
