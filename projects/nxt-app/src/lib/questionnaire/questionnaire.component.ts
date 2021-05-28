@@ -145,7 +145,7 @@ export class QuestionnaireComponent implements OnInit {
   ngOnInit() {
     this.inpValue="";
     this.selectedMeridiem = "AM";
-    this.processQB();  
+    this.processQB();
   }
 
   ngOnChanges() {
@@ -186,16 +186,16 @@ export class QuestionnaireComponent implements OnInit {
          htmlElement.item(0).setAttribute('style', 'border: 1px solid #87be1c ;width:100%');
      }
   }
-//   function IncreaseTextboxSize() {  
-//     var textsize = $('#txtwidth').val();  
-//     $("#txtname").css("width", textsize);  
-//     $("#message").html("Currently textbox Size is " + textsize + "px.");  
-// } 
+//   function IncreaseTextboxSize() {
+//     var textsize = $('#txtwidth').val();
+//     $("#txtname").css("width", textsize);
+//     $("#message").html("Currently textbox Size is " + textsize + "px.");
+// }
 
   processQB() {
     //this.qbItem
-   
-    
+
+
     //console.log(this.qbId);
     //console.log('Version in process is 8bf11efa7f91a391d957bf6b5078edc7e656b67c');
     if (this.qbId) {
@@ -234,10 +234,10 @@ export class QuestionnaireComponent implements OnInit {
      //Assign question stack length from summary part
      var arrayLength = this.questionStack.length;
      var lengthValue = this.questionStack.indexOf(value);
-     
+
      for (let i = arrayLength; i > lengthValue; i--) {
        this.questionStack.pop();
-  
+
      }
      if(this.qbItem.Progress_Bar__c === true ){
      var arrayLength1 = this.questionName.length;
@@ -251,7 +251,7 @@ export class QuestionnaireComponent implements OnInit {
 
   handleNextClick() {
     //console.log(this.questionItem);
-    
+
     //this.updateProgress();
     if(this.currentQuestionId === null){
       return;
@@ -332,7 +332,7 @@ export class QuestionnaireComponent implements OnInit {
      }
      else if(this.dropdownFlag){
       if(this.inpValue.length <= 1){
-       this.inpValue=".";  
+       this.inpValue=".";
       this.questionItem.error = new ErrorWrapper();
       }
     }
@@ -534,7 +534,7 @@ export class QuestionnaireComponent implements OnInit {
     if(this.pop === true){
       this.questionName.pop();
     }
-   
+
     this.handleEvent.emit(this.qbItem.Back_Tracking_ID__c);
     this.answerCount--;
     this.updateProgress();
@@ -580,28 +580,28 @@ export class QuestionnaireComponent implements OnInit {
     //console.log('readingQuestion using ' + this.qbItem.First_Question__c);
     if(this.abItem.Status__c == 'Pending') {
       if(this.abItem.Answers__r == null || this.abItem.Answers__r.records.length == 0) {
-        this.readQuestion(this.qbItem.First_Question__c);
+          this.readQuestion(this.qbItem.First_Question__c);
       } else {
         // Populate the existing answers
         var lastQuestionId = '';
-        
+
         for(var ansObject of this.abItem.Answers__r.records) {
           lastQuestionId = ansObject.Question_Ref__c;
           console.log('Question: ' + ansObject.Question_Rich_Text__c);
           console.log('Answer: ' + ansObject.Answer_Long__c);
 
           this.questionStack.push(ansObject.Question_Ref__c);
-        
+
           this.answerMap.set(ansObject.Question_Ref__c, { quesValue: ansObject.Question_Rich_Text__c,
-                                                           ansValue: ansObject.Answer_Long__c, 
-                                                           quesId: ansObject.Question_Ref__c, 
+                                                           ansValue: ansObject.Answer_Long__c,
+                                                           quesId: ansObject.Question_Ref__c,
                                                            qTyp: ansObject.Question_Type__c });
-        
+
           //console.log(this.questionStack)
           if(ansObject.Question_Type__c == 'Book') {
             var av1 = ansObject.Answer_Long__c.split('@@##$$');
             console.log('book log');
-            
+
             console.log("bookid"+av1[0]);
             this.attachmentsMap.set(ansObject.Question_Ref__c,[{attachmentName : av1[1],attachmentId:av1[0]}]);
             console.log(this.attachmentsMap);
@@ -635,7 +635,7 @@ export class QuestionnaireComponent implements OnInit {
   private failureReadBook = (response) => {
           //console.log(response);
   }
-  
+
   private readAnswerbook = (uuid: string) => this.sfService.remoteAction('NxtController.process',
     ['AnswerBook', 'read', uuid],
     this.successAnswerBookRead,
@@ -649,9 +649,9 @@ export class QuestionnaireComponent implements OnInit {
           //console.log(answers)
           this.summary.push(answers);
         }
-      }  
+      }
     }
-    
+
     private failureAnswerBookRead = (response) => {
       //console.log('inside failureread');
       //console.log(response);
@@ -663,9 +663,9 @@ export class QuestionnaireComponent implements OnInit {
     this.failureRead);
 
   private successRead = (response) => {
-    //console.log(response);
+    console.log(response);
     // Reset the Variables
- 
+
     if (this.questionItem) {
       this.inpValue = '';
       this.answerWrap = new AnswerWrapper();
@@ -1044,7 +1044,7 @@ export class QuestionnaireComponent implements OnInit {
     if (local.fileTypeIncorrect) { return; }
     let fileContent: any;
     var reader = new FileReader();
-    
+
     reader.onload = function () {
       fileContent = reader.result;
       local.fileExceededLimit = local.attachment.size > 3242880; //Validating file size
@@ -1113,7 +1113,7 @@ export class QuestionnaireComponent implements OnInit {
   fileUI(){
     if(this.attachments.length ===0){
     console.log('attach true');
-    
+
     }
   }
 
@@ -1127,16 +1127,16 @@ export class QuestionnaireComponent implements OnInit {
   //   });
 
   // }
-  
+
   // Update Function for the Progress Bar
   updateProgress() {
     if(this.qbItem.Progress_Bar__c === true ){
     let j =[];
   for(let  i = 0 ; i<this.possibilities.total ; i++){
-    var pathposs = Object.values(this.possibilities.paths[i].questions) 
-      if(pathposs[this.pathquestion] === this.currentName){ 
+    var pathposs = Object.values(this.possibilities.paths[i].questions)
+      if(pathposs[this.pathquestion] === this.currentName){
          j.push(i);
-        this.check = true;        
+        this.check = true;
       }
      else{
           this.check=false;
@@ -1152,7 +1152,7 @@ export class QuestionnaireComponent implements OnInit {
   }
   else if(j.length === 1){
     var width = 100 * (this.questionStack.length / this.possibilities.paths[this.count].count);
-    this.progressStyle = Math.round(width) + '%'; 
+    this.progressStyle = Math.round(width) + '%';
   }
   this.percent= + Math.round(width)
   }

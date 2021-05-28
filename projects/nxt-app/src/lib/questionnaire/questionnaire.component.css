@@ -11,7 +11,7 @@
     font-size: 16px;
     cursor: pointer;
   }
-  
+
   .icon-edit {
     width: 15px;
     height: 18px;
@@ -30,17 +30,17 @@
     margin: 2% 0 2% -12%;
     padding-right: 3%;
 }
-  
+
 .questiondiv1{
-    padding-left: 25px !important;
-    padding-right: 25px !important;
+    padding-left: 25px;
+    padding-right: 25px;
 }
+
 .questiondiv2{
-    padding-top: 25px !important; 
-    padding-bottom: 10px !important; 
-    padding-left: 15px !important; 
-    color: #00356f !important
-    
+    padding-top: 25px;
+    padding-bottom: 10px;
+    padding-left: 15px;
+    color: #00356f;
 }
 .bgColor{
     background-color: rgba(239, 239, 239, 0.9);
@@ -82,8 +82,8 @@
     width: max-content;
 }
 .non{
-         /* border: 1px solid #e6e6e6!important; 
-     border-radius: 5px!important; 
+         /* border: 1px solid #e6e6e6!important;
+     border-radius: 5px!important;
      padding: .5em!important;  */
      background-color: white
 
@@ -126,7 +126,7 @@
     border: dashed 2px #d8d8d8;
     background-color: #f6f6f6
   }
- 
+
 .info-alert {
     border: 1px solid #e6e6e6;
     border-radius: 5px !important;
@@ -163,10 +163,11 @@
     float: left !important;
     width: 100% !important;
 }
-.btn {
-    border-radius: .3rem !important;
-    font-size: 1.25rem !important;
-    line-height: 1.5 !important;
+
+.nxt-btn {
+    border-radius: .3rem;
+    font-size: 1.25rem;
+    line-height: 1.5;
     padding: .5rem 1rem !important;
     width: 100% ;
     cursor: pointer !important;
@@ -174,7 +175,7 @@
 }
 
 .cond-div2{
-    color: red !important; 
+    color: red !important;
     font-weight: bold !important;
 }
 
@@ -208,7 +209,7 @@
 }
 #meridiem{
     margin-top: -2px;
-    border: hidden;      
+    border: hidden;
 }
 
 .dis-flex{
@@ -238,7 +239,7 @@
     color:#87be1c !important;
     margin-left: -4rem !important;
     z-index: 1 !important;
-     margin-top: 0.6rem !important; 
+     margin-top: 0.6rem !important;
      line-height: 3
 }
 
@@ -252,7 +253,7 @@
     padding-left: 5px !important;
     min-width: 60px !important;
 }
-  
+
 .datetime:focus{
     border: none !important;
     box-shadow: none !important;
@@ -332,9 +333,9 @@
 .paddingZero{
     padding:0px !important;
 }
-    
+
 .summary-h{
-    text-align: left !important; 
+    text-align: left !important;
     padding-bottom: 15px !important;
 }
 /* .summarydiv{
@@ -412,11 +413,31 @@
     color:#8C8F92 !important;
     padding-left: 3%;
 }
+
+.summaryTitle{
+    width: max-content;
+    padding-left: 2%;
+    padding-top: 4%;
+}
+
+.summaryTitle-completed{
+    width: max-content;
+    padding-left: 2%;
+    padding-top: 6%;
+}
+
+.summary-groupText{
+    font-weight: 700!important;
+    padding-left: 3%;
+    padding-bottom: 1%;
+}
+
 .fileQues{
     margin: -8% 0% 0% 8%;
 }
-.addBtn{
-    color: #c5281c !important; 
+
+.addBtn {
+    color: #c5281c !important;
     width:0%;
     margin: -13% 0 0 79%;
     text-decoration: underline;
@@ -451,7 +472,7 @@
     margin-left: -2rem !important;
     z-index: 1 !important;
     padding: 5px !important;
-     margin-top: 0.4rem !important; 
+     margin-top: 0.4rem !important;
 }
 
 .align-l{
@@ -510,7 +531,7 @@
 .btn-block + .btn-block {
     margin-top: 0.5rem !important;
 }
-  
+
 input[type="submit"].btn-block,
 input[type="reset"].btn-block,
 input[type="button"].btn-block {
@@ -561,9 +582,8 @@ width: 100% !important;
       text-align: center !important;
       border-radius: .3rem !important;
       margin:0 !important;
-  
-}
 
+}
 
 .btn-color {
     display: block !important;
@@ -585,6 +605,7 @@ width: 100% !important;
     margin-bottom: 0px !important;
     margin-left: 0px !important;
 }
+
 .myTbtn{
     background-color: #c5281c !important;
     margin-left: 245% !important;
@@ -592,11 +613,10 @@ width: 100% !important;
     width: 25% !important;
 }
 
-
 .fa-plus:hover {
     color: #87be1c !important;
 }
-  
+
 .fa-plus {
     color: #99B5CE !important;
 }
@@ -609,6 +629,7 @@ width: 100% !important;
     text-align: left !important;
     text-decoration:inherit !important;
 }
+
 .rusty {
     width: 121px;
     height: 56px;
@@ -617,6 +638,7 @@ width: 100% !important;
     color: #FFFF;
     background-color: #c5281c;
 }
+
 .grey {
     width: 87px;
     height: 56px;
@@ -639,14 +661,9 @@ width: 100% !important;
     display: flex;
     justify-content: flex-end;
 }
+
 .btn-r{
     right: 0rem;
-}
-
-.dt-line{
-    border-top: none;
-    border-left: none;
-    border-right: none;
 }
 
 .colon1{

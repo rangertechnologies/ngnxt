@@ -1,6 +1,6 @@
 {
   "name": "ng-nxt",
-  "version": "2.0.11",
+  "version": "2.0.12",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -16,16 +16,16 @@
   },
   "private": true,
   "dependencies": {
-    "@angular/animations": "^10.0.14",
-    "@angular/cdk": "^10.2.6",
-    "@angular/common": "^10.0.14",
-    "@angular/compiler": "^10.0.14",
-    "@angular/core": "^10.0.14",
-    "@angular/forms": "^10.0.14",
+    "@angular/animations": "~12.0.0",
+    "@angular/cdk": "~12.0.0",
+    "@angular/common": "~12.0.0",
+    "@angular/compiler": "~12.0.0",
+    "@angular/core": "~12.0.0",
+    "@angular/forms": "~12.0.0",
     "@angular/material": "^10.2.6",
-    "@angular/platform-browser": "^10.0.14",
-    "@angular/platform-browser-dynamic": "^10.0.14",
-    "@angular/router": "^10.0.14",
+    "@angular/platform-browser": "~12.0.0",
+    "@angular/platform-browser-dynamic": "~12.0.0",
+    "@angular/router": "~12.0.0",
     "domsanitizer": "^0.2.2",
     "dotenv": "^8.6.0",
     "git-describe": "^4.0.4",
@@ -45,11 +45,11 @@
     "zone.js": "~0.10.3"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "^0.1000.8",
-    "@angular-devkit/build-ng-packagr": "^0.1000.8",
-    "@angular/cli": "^10.2.3",
-    "@angular/compiler-cli": "^10.2.5",
-    "@angular/language-service": "^10.2.5",
+    "@angular-devkit/build-angular": "^12.0.0",
+    "@angular-devkit/build-ng-packagr": "^0.1002.0",
+    "@angular-devkit/architect": "~0.1200.2",
+    "@angular/compiler-cli": "^12.0.0",
+    "@angular/language-service": "~12.0.0",
     "@types/jasmine": "~3.3.8",
     "@types/jasminewd2": "^2.0.9",
     "@types/node": "^12.20.13",
@@ -61,10 +61,10 @@
     "karma-coverage-istanbul-reporter": "~3.0.2",
     "karma-jasmine": "~3.3.0",
     "karma-jasmine-html-reporter": "^1.6.0",
-    "ng-packagr": "^10.1.2",
+    "ng-packagr": "^12.0.0",
     "protractor": "~7.0.0",
     "ts-node": "~7.0.0",
     "tslint": "~6.1.0",
-    "typescript": "^3.9.9"
+    "typescript": "~4.2.4"
   }
 }
