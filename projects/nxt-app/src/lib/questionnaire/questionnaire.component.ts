@@ -96,6 +96,7 @@ export class QuestionnaireComponent implements OnInit {
   public  count: number;
   public taFocusOut: boolean = false;
   public summary = [];
+  //public sques: string;
   public selDate: any = {};
   private today: Date = new Date();
   private el: HTMLElement;
@@ -262,6 +263,7 @@ export class QuestionnaireComponent implements OnInit {
     var cQuestion: Question = new Question();
     cQuestion = this.questionItem;
     var typ = cQuestion.Type__c;
+   // this.sques += cQuestion.Question__c + '@@##$$';
     var quesValue = cQuestion.Question_Text__c;
     var mailformat = ('^[^.][a-zA-Z0-9!#$%&\'*+\-\/=?^_`{|}~]+[^.]@[^-][a-zA-Z0-9.-]+[^-]\.[a-zA-Z]{2,}$');
 
@@ -313,7 +315,7 @@ export class QuestionnaireComponent implements OnInit {
         }
         if (item.Type__c == 'File' && this.attachments.length > 0) {
           for (var attachmentItem of this.attachments) {
-            this.inpValue += attachmentItem.attachmentId + '@#$' + attachmentItem.attachmentName + ',';
+            this.inpValue += attachmentItem.attachmentId + '@@##$$' + attachmentItem.attachmentName + ',';
             if (item.input == this.inpValue) {
               this.recordId = cQuestion.Next_Question__c;
               //console.log('inside' + recordId);
@@ -381,7 +383,7 @@ export class QuestionnaireComponent implements OnInit {
       this.inpValue = '';
       if (this.attachments.length > 0) {
         for (var attachmentItem of this.attachments) {
-          this.inpValue += attachmentItem.attachmentId + '@#$' + attachmentItem.attachmentName + ',';
+          this.inpValue += attachmentItem.attachmentId + '@@##$$' + attachmentItem.attachmentName + ',';
         }
         //console.log('inside filesss' + this.inpValue);
         this.inpValue = this.inpValue.substr(0, this.inpValue.length - 1);
@@ -406,6 +408,7 @@ export class QuestionnaireComponent implements OnInit {
     this.answerWrap.qTyp = typ;
     this.answerWrap.ansValue = this.inpValue;
     this.answerWrap.groupText = cQuestion.Group__c;
+    //this.answerWrap.squesValue = cQuestion.Question__c;
     this.saveAnswer();
   }
 
@@ -610,7 +613,7 @@ export class QuestionnaireComponent implements OnInit {
             var attList;
             var att;
             for(var attVar of ansObject.Answer_Long__c.split(',')) {
-              var attIdName = attVar.split('@#$');
+              var attIdName = attVar.split('@@##$$');
               att.attachmentName = attIdName[1];
               att.attachmentId = attIdName[0];
               attList.push(att);
