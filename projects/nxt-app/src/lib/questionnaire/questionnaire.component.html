@@ -1,9 +1,9 @@
 <ngx-spinner [name] = "spinnerName" [type] = "spinnerType"></ngx-spinner>
 
-<div *ngIf="questionItem" class="questiondiv1" >
+<div *ngIf="questionItem" class="questiondiv1">
 
   <div  [ngClass]="{'questiondiv2': !qbItem.Progress_Bar__c}">
-    <div [ngClass]="{'bgColor': qbItem.Progress_Bar__c}">
+    <div [ngClass]="{'nxt-bgColor': qbItem.Progress_Bar__c}">
     <div id="progress"  *ngIf= "qbItem.Progress_Bar__c">
         <circle-progress class="titlebar" [percent]="this.percent"  [radius]="55"  [space]="-4" [outerStrokeWidth]="4" [innerStrokeWidth]="4"
        [outerStrokeColor]="'#c5281c'" [innerStrokeColor]="'#e7e8ea'"[animation]="true" [title]= "this.percent"  [animationDuration]="300"
@@ -21,19 +21,19 @@
       </div>
       </div>
      </div>
-    </div>  
-  
+    </div>
+
 
   <!--Question alignment-->
-  <div class="questiondiv2">	
-    <div *ngIf="questionItem.Is_Title__c">	
-      <h3 class="questionalign" [innerHTML]="getText(questionItem.Question_Text__c)">	
-        {{questionItem.Question_Text__c}}	
-      </h3>	
-    </div>	
-    <div *ngIf="!questionItem.Is_Title__c" class="question-f-size">	
-      <div [innerHTML]="getText(questionItem.Question_Text__c)">{{questionItem.Question_Text__c}}</div>	
-    </div>	
+  <div class="questiondiv2">
+    <div *ngIf="questionItem.Is_Title__c">
+      <h3 class="questionalign" [innerHTML]="getText(questionItem.Question_Text__c)">
+        {{questionItem.Question_Text__c}}
+      </h3>
+    </div>
+    <div *ngIf="!questionItem.Is_Title__c" class="question-f-size">
+      <div [innerHTML]="getText(questionItem.Question_Text__c)">{{questionItem.Question_Text__c}}</div>
+    </div>
   </div>
 
   <div *ngIf="questionItem.Additional_Rich__c && !qbItem.Progress_Bar__c ">
@@ -160,14 +160,14 @@
     </ul>
 
     <div *ngIf = "qbItem.Progress_Bar__c">
-      
+
       <div >
         <div  style.border-color="{{this.questionItem.error ? 'red' : ''}}" [ngClass]="{'Rectangle-file ques-alert2': attachments?.length ===0}" *ngIf="attachments?.length ===0"  >
-        <img src="https://rnxt.s3.amazonaws.com/MytIcon/icon-doc-img%402x.png" class="icon-edit1"> 
-         <div class="fileQues" [innerHTML]="getText(questionItem.Question_Text__c)">{{questionItem.Question_Text__c}}</div> 
-        <label for="files" class="btn addBtn" >Adjuntar</label>    
+        <img src="https://rnxt.s3.amazonaws.com/MytIcon/icon-doc-img%402x.png" class="icon-edit1">
+         <div class="fileQues" [innerHTML]="getText(questionItem.Question_Text__c)">{{questionItem.Question_Text__c}}</div>
+        <label for="files" class="nxt-btn addBtn" >Adjuntar</label>
         <input id="files" style="visibility:hidden;" type="file" accept="{{allowedFileExtension}}" (change)="uploadFile($event)" />
-      </div> 
+      </div>
       <div [ngClass]="{'uploadBox': attachments?.length >0}">
       <ul *ngIf="attachments?.length > 0"  [ngClass]="{'myT-file-docicon': qbItem.Progress_Bar__c}">
         <li *ngFor="let attachment of attachments" class="align-l">
@@ -177,17 +177,17 @@
           <span class="attach-list" (click)="deleteAttachment(attachment.attachmentId)"><img src="https://rnxt.s3.amazonaws.com/MytIcon/icon-delete%402x.png" class="deleteIcon"></span>
         </div>
         </li>
-      </ul> 
+      </ul>
       </div>
-    </div> 
-    </div> 
+    </div>
+    </div>
     <div *ngIf="attachments?.length > 0 && qbItem.Progress_Bar__c" >
     <div class="Rectangle-file ques-alert2" >
-      <img src="https://rnxt.s3.amazonaws.com/MytIcon/icon-doc-img%402x.png" class="icon-edit1"> 
-       <div class="fileQues" [innerHTML]="getText(questionItem.Question_Text__c)">{{questionItem.Question_Text__c}}</div> 
-      <label for="files" class="btn addBtn" >Adjuntar</label>    
+      <img src="https://rnxt.s3.amazonaws.com/MytIcon/icon-doc-img%402x.png" class="icon-edit1">
+       <div class="fileQues" [innerHTML]="getText(questionItem.Question_Text__c)">{{questionItem.Question_Text__c}}</div>
+      <label for="files" class="nxt-btn addBtn" >Adjuntar</label>
       <input id="files" style="visibility:hidden;" type="file" accept="{{allowedFileExtension}}" (change)="uploadFile($event)" />
-    </div> 
+    </div>
     </div>
   </div>
   <!-- <ul *ngIf="attachments?.length > 0 && fileFlag" class="attach-ulist col-md-12">
@@ -235,14 +235,14 @@
                 class="attach-list" (click)="deleteAttachment(attachment.attachmentId)">X</span></li>
           </ul>
           <div *ngIf = "qbItem.Progress_Bar__c">
-      
+
             <div>
               <div   style.border-color="{{this.ques.error ? 'red' : ''}}" [ngClass]="{'Rectangle-file ques-alert2': attachments?.length ===0}" *ngIf="attachments?.length ===0"  >
-              <img src="https://rnxt.s3.amazonaws.com/MytIcon/icon-doc-img%402x.png" class="icon-edit1"> 
-               <div class="fileQues">{{ques.Question__c}}</div> 
-              <label for="files" class="btn addBtn" >Adjuntar</label>    
+              <img src="https://rnxt.s3.amazonaws.com/MytIcon/icon-doc-img%402x.png" class="icon-edit1">
+               <div class="fileQues">{{ques.Question__c}}</div>
+              <label for="files" class="nxt-btn addBtn" >Adjuntar</label>
               <input id="files" style="visibility:hidden;" type="file" accept="{{allowedFileExtension}}" (change)="uploadFile($event)" />
-            </div> 
+            </div>
             <div [ngClass]="{'uploadBox': attachments?.length >0}">
             <ul *ngIf="attachments?.length > 0" [ngClass]="{'myT-file-docicon': qbItem.Progress_Bar__c}" >
               <li *ngFor="let attachment of attachments" class="align-l">
@@ -252,17 +252,17 @@
                 <span class="attach-list" (click)="deleteAttachment(attachment.attachmentId)"><img src="https://rnxt.s3.amazonaws.com/MytIcon/icon-delete%402x.png" class="deleteIcon"></span>
                 </div>
               </li>
-            </ul> 
+            </ul>
             </div>
-          </div> 
-          </div> 
+          </div>
+          </div>
           <div *ngIf="attachments?.length > 0 && qbItem.Progress_Bar__c" >
           <div class="Rectangle-file ques-alert2" >
-            <img src="https://rnxt.s3.amazonaws.com/MytIcon/icon-doc-img%402x.png" class="icon-edit1"> 
-             <div class="fileQues" >{{ques.Question__c}}</div> 
-            <label for="files" class="btn addBtn" >Adjuntar</label>    
+            <img src="https://rnxt.s3.amazonaws.com/MytIcon/icon-doc-img%402x.png" class="icon-edit1">
+             <div class="fileQues" >{{ques.Question__c}}</div>
+            <label for="files" class="nxt-btn addBtn" >Adjuntar</label>
             <input id="files" style="visibility:hidden;" type="file" accept="{{allowedFileExtension}}" (change)="uploadFile($event)" />
-          </div> 
+          </div>
           </div>
 
         </div>
@@ -293,14 +293,14 @@
   <div class="flexer">
     <div [ngClass]="{'col-md-6': !qbItem.Progress_Bar__c}" [style.visibility]="questionStack.length > 0 ? 'visible':'hidden'">
       <div [ngClass]="{}">
-        <button [ngClass]="{'grey btn-text left-bt': qbItem.Progress_Bar__c, 'btn btn-primary btn-lg btn-block btn-back-color': !qbItem.Progress_Bar__c}"
+        <button [ngClass]="{'grey btn-text left-bt': qbItem.Progress_Bar__c, 'nxt-btn btn-primary btn-lg btn-block btn-back-color': !qbItem.Progress_Bar__c}"
         (click)="handleBackClick()">{{qbItem.Back__c}}</button>
-      </div> 
+      </div>
     </div>
     <div [ngClass]="{'col-md-6': !qbItem.Progress_Bar__c}" >
       <div>
-        <button [ngClass]="{'rusty btn-text2 right-bt': qbItem.Progress_Bar__c, 'btn btn-primary btn-lg btn-block btn-back-color': !qbItem.Progress_Bar__c}"  (click)="handleNextClick()">{{qbItem.Next__c}}</button>
-      </div>  
+        <button [ngClass]="{'rusty btn-text2 right-bt': qbItem.Progress_Bar__c, 'nxt-btn btn-primary btn-lg btn-block btn-back-color': !qbItem.Progress_Bar__c}"  (click)="handleNextClick()">{{qbItem.Next__c}}</button>
+      </div>
     </div>
   </div>
  </div>
@@ -335,7 +335,7 @@
       <div *ngIf="this.abItem.Status__c != 'Completed' &&  qbItem.Progress_Bar__c" [ngClass]="{'summary-groupText':  qbItem.Progress_Bar__c}"> {{qa.groupText}}</div>
 
       <div *ngIf = "!qbItem.Edit__c"  [ngClass]="{'question': this.abItem.Status__c != 'Completed'}" >
-       
+
       <a  [ngClass]="{'asum': this.abItem.Status__c === 'Completed'}" (click)="handleEditClick(qa.quesId)" [innerHTML]="getText(qa.quesValue)">{{qa.quesValue}}</a>
     </div>
     <div *ngIf= "qbItem.Edit__c" [ngClass]="{'question': this.abItem.Status__c != 'Completed'}">
@@ -361,11 +361,11 @@
   <div class="flexer" *ngIf="abItem">
     <div class="" *ngIf="abItem.Status__c != 'Completed'" >
     <div class="col-md-6">
-      <button [ngClass]="{'grey btn-text btn-r': qbItem.Progress_Bar__c, 'btn btn-primary btn-lg btn-block btn-back-color': !qbItem.Progress_Bar__c}"
+      <button [ngClass]="{'grey btn-text btn-r': qbItem.Progress_Bar__c, 'nxt-btn btn-primary btn-lg btn-block btn-back-color': !qbItem.Progress_Bar__c}"
         (click)="handleBackClick()">{{qbItem.Back__c}}</button>
     </div>
     <div class="col-md-6">
-      <button [ngClass]="{'rusty btn-text2': qbItem.Progress_Bar__c, 'btn btn-primary btn-lg btn-block btn-back-color': !qbItem.Progress_Bar__c}"
+      <button [ngClass]="{'rusty btn-text2': qbItem.Progress_Bar__c, 'nxt-btn btn-primary btn-lg btn-block btn-back-color': !qbItem.Progress_Bar__c}"
         (click)="handleSubmitClick()">{{qbItem.Submit__c}}</button>
     </div>
   </div>
