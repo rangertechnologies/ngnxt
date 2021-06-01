@@ -369,12 +369,12 @@
             src="https://rnxt.s3.amazonaws.com/MytIcon/icon-doc-img%402x.png"
             class="icon-edit1"
           />
-          <div
-            class="fileQues"
-            [innerHTML]="getText(questionItem.Question_Text__c)"
-          >
+          
+      
+            
+          
             {{ questionItem.Question_Text__c }}
-          </div>
+          
           <label for="files" class="nxt-btn addBtn">Adjuntar</label>
           <input
             id="files"
@@ -409,7 +409,7 @@
         </div>
       </div>
     </div>
-    <div *ngIf="attachments?.length > 0 && qbItem.Progress_Bar__c">
+    <div class="myt-box" *ngIf="attachments?.length > 0 && qbItem.Progress_Bar__c">
       <div class="Rectangle-file ques-alert2">
         <img
           src="https://rnxt.s3.amazonaws.com/MytIcon/icon-doc-img%402x.png"
@@ -527,7 +527,7 @@
                 >
               </li>
             </ul>
-            <div *ngIf="qbItem.Progress_Bar__c">
+            <div class="myt-box" *ngIf="qbItem.Progress_Bar__c">
               <div>
                 <div
                   style.border-color="{{ this.ques.error ? 'red' : '' }}"
@@ -575,13 +575,13 @@
                 </div>
               </div>
             </div>
-            <div *ngIf="attachments?.length > 0 && qbItem.Progress_Bar__c">
+            <div class="myt-box"*ngIf="attachments?.length > 0 && qbItem.Progress_Bar__c">
               <div class="Rectangle-file ques-alert2">
                 <img
                   src="https://rnxt.s3.amazonaws.com/MytIcon/icon-doc-img%402x.png"
                   class="icon-edit1"
                 />
-                <div class="fileQues">{{ ques.Question__c }}</div>
+                <div class="fileQues myt-file">{{ ques.Question__c }}</div>
                 <label for="files" class="nxt-btn addBtn">Adjuntar</label>
                 <input
                   id="files"
@@ -617,7 +617,7 @@
           <div *ngIf="ques.Type__c === 'Dropdown'" class="">
             <select
               [ngClass]="{
-                'dt-line down1 dpDown': qbItem.Progress_Bar__c,
+                'dt-line down1 dpDown myt-dropbox': qbItem.Progress_Bar__c,
                 'custom-select': !qbItem.Progress_Bar__c
               }"
               class="custom-select mr-sm-2 dd-height"
