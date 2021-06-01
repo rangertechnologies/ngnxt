@@ -67,8 +67,8 @@
 .largeTitle {
   /* padding: 1%;
     margin: -11% 0% 5% 17%; */
-  padding-left: 4%;
-  padding-top: 9%;
+    padding-left: 8%;
+    padding-top: 28%;
   width: max-content;
 }
 .question-f-size {
@@ -502,10 +502,10 @@
 }
 
 .colon {
-  line-height: 40px !important;
-  padding: 0px !important;
-  /* margin-right: 10px !important; */
-  margin-block: auto;
+  line-height: 62px!important;
+  padding: 0!important;
+  /* margin-block: auto; */
+  margin-top: 10%;
 }
 
 .check-icon {
@@ -719,7 +719,7 @@ input[type="button"].btn-block {
 }
 
 .colon1 {
-  margin: -40px 0px 0px 136px;
+  display: contents;
 }
 .down1 {
   width: 100%;
@@ -738,7 +738,7 @@ input[type="button"].btn-block {
   background-repeat: no-repeat !important;
   background-position: 99% center !important;
   background-color: #fff !important;
-  height: 37px;
+  height: 65px;
 }
 .boxoutline {
   outline: transparent;
