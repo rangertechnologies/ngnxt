@@ -49,11 +49,8 @@
   <!--Question alignment-->
   <div class="questiondiv2">
     <div *ngIf="questionItem.Is_Title__c">
-      <h3
-        class="questionalign"
-        [innerHTML]="getText(questionItem.Question_Text__c)"
-      >
-        {{ questionItem.Question_Text__c }}
+      <h3 class="questionalign myt-fontc" [innerHTML]="getText(questionItem.Question_Text__c)">
+        {{questionItem.Question_Text__c}}
       </h3>
     </div>
     <div *ngIf="!questionItem.Is_Title__c" class="question-f-size">
