@@ -1359,13 +1359,15 @@ export class QuestionnaireComponent implements OnInit {
     if (this.qbItem.Progress_Bar__c === true) {
       let j = [];
       for (let i = 0; i < this.possibilities.total; i++) {
-        console.log(pathposs[this.pathquestion] + "right");
-        console.log(this.currentName  + "left");
+       
         
         var pathposs = Object.values(this.possibilities.paths[i].questions);
+        console.log(pathposs[this.pathquestion] + "right");
+        console.log(this.currentName  + "left");
         if (pathposs[this.pathquestion] === this.currentName) {
           j.push(i);
-         console.log("true");
+        
+        console.log(" match true");
          
           
           this.check = true;
@@ -1383,9 +1385,9 @@ export class QuestionnaireComponent implements OnInit {
       if (j.length > 1) {
         var width =
           100 * (this.questionStack.length / this.possibilities.maxQuestions);
-        //console.log('Progress bar width => ' + width);
+        console.log('Progress bar width => ' + width);
         this.progressStyle = Math.round(width) + "%";
-        console.log(this.progressStyle);
+      //  console.log(this.progressStyle);
       
         
       } else if (j.length === 1) {
@@ -1394,7 +1396,7 @@ export class QuestionnaireComponent implements OnInit {
           (this.questionStack.length /
             this.possibilities.paths[this.count].count);
         this.progressStyle = Math.round(width) + "%";
-        console.log(this.progressStyle);
+        console.log('Progress bar width => ' + width);
       }
       this.percent = +Math.round(width);
     }
