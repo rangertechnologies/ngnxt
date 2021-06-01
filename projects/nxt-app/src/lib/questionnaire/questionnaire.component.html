@@ -726,11 +726,13 @@
         </div>
       </div>
     </div>
+    <div *ngIf="!qbItem.Progress_Bar__c">
+      <h3 class="summary-h">
+        {{ qbItem.Summary_Text__c }}
+      </h3>
+    </div>
   </div>
 
-  <h3 *ngIf="!qbItem.Progress_Bar__c" class="summary-h">
-    {{ qbItem.Summary_Text__c }}
-  </h3>
   <div
     *ngFor="let qa of summary"
     [ngClass]="{ summarydiv: this.abItem.Status__c != 'Completed' }"
@@ -752,9 +754,7 @@
           }"
         >
           <div
-            *ngIf="
-              this.abItem.Status__c != 'Completed' && qbItem.Progress_Bar__c
-            "
+            *ngIf="this.abItem.Status__c != 'Completed' && qbItem.Progress_Bar__c"
             [ngClass]="{ 'summary-groupText': qbItem.Progress_Bar__c }"
           >
             {{ qa.groupText }}

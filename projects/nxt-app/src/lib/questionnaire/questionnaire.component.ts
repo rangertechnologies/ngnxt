@@ -32,12 +32,11 @@ TESTQB
 
 
 @Component({
-selector: 'lib-questionnaire',
-templateUrl: './questionnaire.component.html',
-encapsulation: ViewEncapsulation.None,
-styleUrls: [ './questionnaire.component.css' ]
+  selector: "lib-questionnaire",
+  templateUrl: "./questionnaire.component.html",
+  encapsulation: ViewEncapsulation.None,
+  styleUrls: ["./questionnaire.component.css"],
 })
-
 export class QuestionnaireComponent implements OnInit {
   @Input() qbId: string;
   @Output() handleEvent = new EventEmitter();
@@ -49,7 +48,6 @@ export class QuestionnaireComponent implements OnInit {
   public qbItem: QuestionBook;
   public questionItem: Question;
   public answerWrap: AnswerWrapper;
-
 
   // CONDITIONAL TYPES
   public radioFlag: boolean = false;
@@ -74,26 +72,26 @@ export class QuestionnaireComponent implements OnInit {
   public answerMap = new Map();
   public dateMap = new Map();
   public selectedhourMap = new Map();
-  public selectedminuteMap= new Map();
+  public selectedminuteMap = new Map();
   public attachmentsMap = new Map();
   public sqOptions = new Map();
   public questionStack = [];
   public questionName = [];
   public attachments: any[] = [];
   public attachmentIdList: any[] = [];
-  public attachmentId: string = '';
+  public attachmentId: string = "";
   public attachment: any;
   public allowedFileExtension: string[];
   public fileExceededLimit: boolean = false;
   public fileTypeIncorrect: boolean = false;
   public back: boolean = false;
-  public check: boolean ;
-  public pop: boolean ;
+  public check: boolean;
+  public pop: boolean;
   public localDate: string;
   public currentName: string;
-  public  pathquestion: number;
-  public  percent: number;
-  public  count: number;
+  public pathquestion: number;
+  public percent: number;
+  public count: number;
   public taFocusOut: boolean = false;
   public summary = [];
   //public sques: string;
@@ -101,101 +99,208 @@ export class QuestionnaireComponent implements OnInit {
   private today: Date = new Date();
   private el: HTMLElement;
   public innerhtml: any;
-  public possibilities : any;
+  public possibilities: any;
   public innerhtml1: any;
-  public hours: any[] = ["01","02","03","04","05","06","07","08","09","10","11","12"];
-  public minutes: string[] = ["00","01","02","03","04","05","06","07","08","09","10","11","12","13","14","15","16","17","18",
-  "19","20","21","22","23","24","25","26","27","28","29","30","31","32","33","34","35","36","37","38","39","40","41","42",
-  "43","44","45","46","47","48","49","50","51","52","53","54","55","56","57","58","59"];
-  public selectedHour: string = '';
-  public selectedMinute: string = '';
-  public selectedMeridiem: string = '';
-  public valueName: string = '';
-  public valueName1: string = '';
+  public hours: any[] = [
+    "01",
+    "02",
+    "03",
+    "04",
+    "05",
+    "06",
+    "07",
+    "08",
+    "09",
+    "10",
+    "11",
+    "12",
+  ];
+  public minutes: string[] = [
+    "00",
+    "01",
+    "02",
+    "03",
+    "04",
+    "05",
+    "06",
+    "07",
+    "08",
+    "09",
+    "10",
+    "11",
+    "12",
+    "13",
+    "14",
+    "15",
+    "16",
+    "17",
+    "18",
+    "19",
+    "20",
+    "21",
+    "22",
+    "23",
+    "24",
+    "25",
+    "26",
+    "27",
+    "28",
+    "29",
+    "30",
+    "31",
+    "32",
+    "33",
+    "34",
+    "35",
+    "36",
+    "37",
+    "38",
+    "39",
+    "40",
+    "41",
+    "42",
+    "43",
+    "44",
+    "45",
+    "46",
+    "47",
+    "48",
+    "49",
+    "50",
+    "51",
+    "52",
+    "53",
+    "54",
+    "55",
+    "56",
+    "57",
+    "58",
+    "59",
+  ];
+  public selectedHour: string = "";
+  public selectedMinute: string = "";
+  public selectedMeridiem: string = "";
+  public valueName: string = "";
+  public valueName1: string = "";
   public bookFlagAccept: string[];
-  public recordId:string;
+  public recordId: string;
   public currentQuestionId: string;
-  public spinnerType : string;
-  public spinnerName : string;
-
+  public spinnerType: string;
+  public spinnerName: string;
 
   // REQ-01 PROGRESS BAR
-  public progressStyle: string = '0%';
+  public progressStyle: string = "0%";
   public answerCount: number = 0;
 
-  public myDatePickerOptions: IMyDpOptions = {
+  public myDatePickerOptions: IMyDpOptions = {};
 
-  };
-
-  constructor(private sfService: SalesforceService, private route: ActivatedRoute, private sanitizer: DomSanitizer, private spinner: NgxSpinnerService, private _formBuilder: FormBuilder){
-    this.spinnerName = 'sp1';
-    this.spinnerType = 'ball-spin-clockwise';
+  constructor(
+    private sfService: SalesforceService,
+    private route: ActivatedRoute,
+    private sanitizer: DomSanitizer,
+    private spinner: NgxSpinnerService,
+    private _formBuilder: FormBuilder
+  ) {
+    this.spinnerName = "sp1";
+    this.spinnerType = "ball-spin-clockwise";
   }
 
-  onDateChanged(event: IMyDateModel) { //to change the border color
-    this.inpValue = event.date.year + '-' + event.date.month + '-' + event.date.day;
-    const htmlElement = window.document.getElementsByClassName('mydp');
-    htmlElement.item(0).setAttribute('style', 'border-color:#87be1c;width:100%');
+  onDateChanged(event: IMyDateModel) {
+    //to change the border color
+    this.inpValue =
+      event.date.year + "-" + event.date.month + "-" + event.date.day;
+    const htmlElement = window.document.getElementsByClassName("mydp");
+    htmlElement
+      .item(0)
+      .setAttribute("style", "border-color:#87be1c;width:100%");
     this.dateMap.set(this.questionItem.Id, event);
-    if(event.date.year === 0 && event.date.month === 0 && event.date.day ===0){
+    if (
+      event.date.year === 0 &&
+      event.date.month === 0 &&
+      event.date.day === 0
+    ) {
       this.dateMap.delete(this.questionItem.Id);
       this.answerMap.delete(this.questionItem.Id);
     }
   }
 
   ngOnInit() {
-    this.inpValue="";
+    this.inpValue = "";
     this.selectedMeridiem = "AM";
-    this.processQB(); 
+    this.processQB();
   }
 
   ngOnChanges() {
     //console.log('inside Questionnaire ngOnChanges');
     this.processQB();
   }
-  date_TimeMap(){
+  date_TimeMap() {
     this.selectedhourMap.set(this.questionItem.Id, this.selectedHour);
-    this.selectedminuteMap.set(this.questionItem.Id,this.selectedMinute);
+    this.selectedminuteMap.set(this.questionItem.Id, this.selectedMinute);
   }
 
-  day(){
+  day() {
     this.myDatePickerOptions = {
-      dateFormat: 'dd.mm.yyyy',
+      dateFormat: "dd.mm.yyyy",
       sunHighlight: false,
       disableDateRanges: [],
       showClearDateBtn: false,
-      disableSince:{
-        year:0,
-        month : 0,
-        day:0
+      disableSince: {
+        year: 0,
+        month: 0,
+        day: 0,
       },
-      disableUntil:{
-        year:0,
-        month : 0,
-        day:0,
+      disableUntil: {
+        year: 0,
+        month: 0,
+        day: 0,
       },
       showTodayBtn: false,
-      dayLabels: { su: 'So', mo: 'Mo', tu: 'Di', we: 'Mi', th: 'Do', fr: 'Fr', sa: 'Sa' },
-      monthLabels: { 1: 'Jan', 2: 'Feb', 3: 'Mär', 4: 'Apr', 5: 'Mai', 6: 'Jun', 7: 'Jul', 8: 'Aug', 9: 'Sep', 10: 'Okt', 11: 'Nov', 12: 'Dez' }
+      dayLabels: {
+        su: "So",
+        mo: "Mo",
+        tu: "Di",
+        we: "Mi",
+        th: "Do",
+        fr: "Fr",
+        sa: "Sa",
+      },
+      monthLabels: {
+        1: "Jan",
+        2: "Feb",
+        3: "Mär",
+        4: "Apr",
+        5: "Mai",
+        6: "Jun",
+        7: "Jul",
+        8: "Aug",
+        9: "Sep",
+        10: "Okt",
+        11: "Nov",
+        12: "Dez",
+      },
     };
   }
-  change(){
-    const htmlElement = window.document.getElementsByClassName('mydp');
-    if(this.selDate  === null  || this.inpValue.length === 0){
-     htmlElement.item(0).setAttribute('style', 'width:100%;border: 1px solid red');
-     }else {
-         htmlElement.item(0).setAttribute('style', 'border: 1px solid #87be1c ;width:100%');
-     }
+  change() {
+    const htmlElement = window.document.getElementsByClassName("mydp");
+    if (this.selDate === null || this.inpValue.length === 0) {
+      htmlElement
+        .item(0)
+        .setAttribute("style", "width:100%;border: 1px solid red");
+    } else {
+      htmlElement
+        .item(0)
+        .setAttribute("style", "border: 1px solid #87be1c ;width:100%");
+    }
   }
-//   function IncreaseTextboxSize() {
-//     var textsize = $('#txtwidth').val();
-//     $("#txtname").css("width", textsize);
-//     $("#message").html("Currently textbox Size is " + textsize + "px.");
-// }
+  //   function IncreaseTextboxSize() {
+  //     var textsize = $('#txtwidth').val();
+  //     $("#txtname").css("width", textsize);
+  //     $("#message").html("Currently textbox Size is " + textsize + "px.");
+  // }
 
   processQB() {
     //this.qbItem
-
 
     //console.log(this.qbId);
     //console.log('Version in process is 8bf11efa7f91a391d957bf6b5078edc7e656b67c');
@@ -203,7 +308,6 @@ export class QuestionnaireComponent implements OnInit {
       if (this.qbId.length == 18) {
         //console.log('Before Calling readQuestionBook() using ' + this.qbId);
         this.readQuestionBook(this.qbId);
-
       } else {
         //console.log('Setting the Question Directly for testing');
         this.questionItem = DTQUESTION;
@@ -216,37 +320,36 @@ export class QuestionnaireComponent implements OnInit {
   }
 
   trimLastDummy(input: string) {
-    return input = input.substring(0, input.length - 6);
+    return (input = input.substring(0, input.length - 6));
   }
 
   getProperTime(def: string, input: string) {
-    return input === '' ? def : input;
+    return input === "" ? def : input;
   }
 
   //Summary Question Clickable Logic
-  handleEditClick(value: string){
-    if(this.abItem.Status__c == 'Pending'){
-      if(value == null){
-      return;
+  handleEditClick(value: string) {
+    if (this.abItem.Status__c == "Pending") {
+      if (value == null) {
+        return;
       }
-     this.readQuestion(value);
-     //console.log(' in side summaryopen'+ this.summary.length);
+      this.readQuestion(value);
+      //console.log(' in side summaryopen'+ this.summary.length);
 
-     //Assign question stack length from summary part
-     var arrayLength = this.questionStack.length;
-     var lengthValue = this.questionStack.indexOf(value);
+      //Assign question stack length from summary part
+      var arrayLength = this.questionStack.length;
+      var lengthValue = this.questionStack.indexOf(value);
 
-     for (let i = arrayLength; i > lengthValue; i--) {
-       this.questionStack.pop();
-
-     }
-     if(this.qbItem.Progress_Bar__c === true ){
-     var arrayLength1 = this.questionName.length;
-     for (let j = arrayLength1; j > lengthValue; j--) {
-       this.questionName.pop()
-     }
-    }
-     this.summary = [];
+      for (let i = arrayLength; i > lengthValue; i--) {
+        this.questionStack.pop();
+      }
+      if (this.qbItem.Progress_Bar__c === true) {
+        var arrayLength1 = this.questionName.length;
+        for (let j = arrayLength1; j > lengthValue; j--) {
+          this.questionName.pop();
+        }
+      }
+      this.summary = [];
     }
   }
 
@@ -254,7 +357,7 @@ export class QuestionnaireComponent implements OnInit {
     //console.log(this.questionItem);
 
     //this.updateProgress();
-    if(this.currentQuestionId === null){
+    if (this.currentQuestionId === null) {
       return;
     }
     this.clearError();
@@ -263,67 +366,75 @@ export class QuestionnaireComponent implements OnInit {
     var cQuestion: Question = new Question();
     cQuestion = this.questionItem;
     var typ = cQuestion.Type__c;
-   // this.sques += cQuestion.Question__c + '@@##$$';
+    // this.sques += cQuestion.Question__c + '@@##$$';
     var quesValue = cQuestion.Question_Text__c;
-    var mailformat = ('^[^.][a-zA-Z0-9!#$%&\'*+\-\/=?^_`{|}~]+[^.]@[^-][a-zA-Z0-9.-]+[^-]\.[a-zA-Z]{2,}$');
-
+    var mailformat =
+      "^[^.][a-zA-Z0-9!#$%&'*+-/=?^_`{|}~]+[^.]@[^-][a-zA-Z0-9.-]+[^-].[a-zA-Z]{2,}$";
 
     // Process Inputs
     if (this.checkboxFlag) {
-      this.inpValue = '';
+      this.inpValue = "";
       // Save all the selected options in the inpValue
-      for (var ov of this.optionValues.filter(item => item.checked)) {
-        this.inpValue += ov.Value__c + '@@##$$';
+      for (var ov of this.optionValues.filter((item) => item.checked)) {
+        this.inpValue += ov.Value__c + "@@##$$";
         this.recordId = ov.Next_Question__c;
       }
       this.inpValue = this.trimLastDummy(this.inpValue);
-    }else if (this.emailFlag){
-      if(this.inpValue && this.inpValue.match(mailformat)){
-          this.recordId = this.questionItem.Next_Question__c;
-        }else{
-          this.questionItem.error = new ErrorWrapper();
-        return;}
-     }else if (this.bookFlag) {
-      this.inpValue = '';
+    } else if (this.emailFlag) {
+      if (this.inpValue && this.inpValue.match(mailformat)) {
+        this.recordId = this.questionItem.Next_Question__c;
+      } else {
+        this.questionItem.error = new ErrorWrapper();
+        return;
+      }
+    } else if (this.bookFlag) {
+      this.inpValue = "";
       var hasMissingInput = false;
       for (var item of this.questionItem.Questions__r.records) {
-        if (!item.Is_Optional__c &&
-          ((item.Type__c != 'File' && !item.input) ||
-            (item.Type__c == 'File' && this.attachments.length == 0))) {
+        if (
+          !item.Is_Optional__c &&
+          ((item.Type__c != "File" && !item.input) ||
+            (item.Type__c == "File" && this.attachments.length == 0))
+        ) {
           item.error = new ErrorWrapper();
           hasMissingInput = true;
         }
-        if(item.Type__c == 'Radio'){
-          if(!item.input){
-              item.error = new ErrorWrapper();
-            hasMissingInput = true;
-              }
-        }
-        if (item.Type__c == 'Dropdown'  ){
-          if(!item.input){
-           item.input = "";
+        if (item.Type__c == "Radio") {
+          if (!item.input) {
             item.error = new ErrorWrapper();
-          hasMissingInput = true;
-            }
+            hasMissingInput = true;
+          }
         }
-        if (item.Type__c == 'Email'){
-          if(item.input && item.input.match(mailformat)){
-             this.recordId = cQuestion.Next_Question__c;
-            }else{
-              item.error = new ErrorWrapper();
-              hasMissingInput = true;}
+        if (item.Type__c == "Dropdown") {
+          if (!item.input) {
+            item.input = "";
+            item.error = new ErrorWrapper();
+            hasMissingInput = true;
+          }
         }
-        if (item.Type__c == 'File' && this.attachments.length > 0) {
+        if (item.Type__c == "Email") {
+          if (item.input && item.input.match(mailformat)) {
+            this.recordId = cQuestion.Next_Question__c;
+          } else {
+            item.error = new ErrorWrapper();
+            hasMissingInput = true;
+          }
+        }
+        if (item.Type__c == "File" && this.attachments.length > 0) {
           for (var attachmentItem of this.attachments) {
-            this.inpValue += attachmentItem.attachmentId + '@@##$$' + attachmentItem.attachmentName + ',';
+            this.inpValue +=
+              attachmentItem.attachmentId +
+              "@#$" +
+              attachmentItem.attachmentName +
+              ",";
             if (item.input == this.inpValue) {
               this.recordId = cQuestion.Next_Question__c;
               //console.log('inside' + recordId);
             }
           }
-         // this.attachments = [];
-        }//item.input == this.inpValue;
-        this.inpValue += (item.input != undefined ? item.input : '') + '@@##$$';
+          // this.attachments = [];
+        } //item.input == this.inpValue;
+        this.inpValue += (item.input != undefined ? item.input : "") + "@@##$$";
         //console.log('inside book1' + this.inpValue)
       }
       if (hasMissingInput) {
@@ -331,59 +442,74 @@ export class QuestionnaireComponent implements OnInit {
         return;
       }
       this.inpValue = this.trimLastDummy(this.inpValue);
-     }
-     else if(this.dropdownFlag){
-      if(this.inpValue.length <= 1){
-       this.inpValue=".";
-      this.questionItem.error = new ErrorWrapper();
+    } else if (this.dropdownFlag) {
+      if (this.inpValue.length <= 1) {
+        this.inpValue = ".";
+        this.questionItem.error = new ErrorWrapper();
       }
-    }
-    else  if(this.dtFlag  && this.dateFlag && this.timeFlag){
-          this.change();
-      if(this.inpValue){
-        this.selectedHour = this.getProperTime('12', this.selectedHour);
-        this.selectedMinute = this.getProperTime('00', this.selectedMinute);
-       this.selectedMeridiem = this.getProperTime('AM', this.selectedMeridiem);
-       //console.log(this.inpValue.length);
+    } else if (this.dtFlag && this.dateFlag && this.timeFlag) {
+      this.change();
+      if (this.inpValue) {
+        this.selectedHour = this.getProperTime("12", this.selectedHour);
+        this.selectedMinute = this.getProperTime("00", this.selectedMinute);
+        this.selectedMeridiem = this.getProperTime("AM", this.selectedMeridiem);
+        //console.log(this.inpValue.length);
 
-       if(this.questionItem.X24_Hours__c === false){
-          this.questionItem.input=  (this.selectedMeridiem === 'PM' && this.selectedHour != '12' ? (Number(this.selectedHour) + 12) : this.selectedHour) + ':' + this.selectedMinute;
-         if(this.selectedMeridiem === 'AM' && this.selectedHour === '12'){
-           this.questionItem.input = "00"+":"+this.selectedMinute;
-         }
-        this.inpValue =this.inpValue + 'T' + this.questionItem.input;
-       }if(this.questionItem.X24_Hours__c === true){
-         this.questionItem.input = this.selectedHour + ":" + this.selectedMinute;
-         this.inpValue =this.inpValue + 'T' + this.questionItem.input;
-       }
-       if(this.selDate === null || !this.inpValue){
+        if (this.questionItem.X24_Hours__c === false) {
+          this.questionItem.input =
+            (this.selectedMeridiem === "PM" && this.selectedHour != "12"
+              ? Number(this.selectedHour) + 12
+              : this.selectedHour) +
+            ":" +
+            this.selectedMinute;
+          if (this.selectedMeridiem === "AM" && this.selectedHour === "12") {
+            this.questionItem.input = "00" + ":" + this.selectedMinute;
+          }
+          this.inpValue = this.inpValue + "T" + this.questionItem.input;
+        }
+        if (this.questionItem.X24_Hours__c === true) {
+          this.questionItem.input =
+            this.selectedHour + ":" + this.selectedMinute;
+          this.inpValue = this.inpValue + "T" + this.questionItem.input;
+        }
+        if (this.selDate === null || !this.inpValue) {
+          this.questionItem.error = new ErrorWrapper();
+          return;
+        }
+        this.date_TimeMap();
+      }
+    } else if (this.timeFlag && this.dtFlag && !this.dateFlag) {
+      this.date_TimeMap();
+      if (this.questionItem.X24_Hours__c === false) {
+        this.inpValue =
+          (this.selectedMeridiem === "PM" && this.selectedHour != "12"
+            ? Number(this.selectedHour) + 12
+            : this.selectedHour) +
+          ":" +
+          this.selectedMinute;
+      } else {
+        this.inpValue = this.selectedHour + ":" + this.selectedMinute;
+      }
+      if (this.inpValue.length < 5) {
         this.questionItem.error = new ErrorWrapper();
         return;
-       }
-       this.date_TimeMap();
       }
-    } else if (this.timeFlag && this.dtFlag && !this.dateFlag ) {
-      this.date_TimeMap();
-      if(this.questionItem.X24_Hours__c === false){
-        this.inpValue = (this.selectedMeridiem === 'PM' && this.selectedHour != '12' ? (Number(this.selectedHour) + 12) : this.selectedHour) + ':' + this.selectedMinute ;
-      }else{
-        this.inpValue=  this.selectedHour + ":" + this.selectedMinute;
+    } else if (this.dateFlag && this.dtFlag && !this.timeFlag) {
+      this.change();
+      if (this.inpValue.length < 7 || this.selDate === null) {
+        this.questionItem.error = new ErrorWrapper();
+        return;
       }
-       if(this.inpValue.length < 5){
-           this.questionItem.error = new ErrorWrapper();
-           return;}  }
-      else if( this.dateFlag  && this.dtFlag  &&  !this.timeFlag ){
-        this.change();
-        if(this.inpValue.length < 7 || this.selDate === null){
-          this.questionItem.error = new ErrorWrapper();
-          return;}
-      }
-     else if (this.fileFlag) {
+    } else if (this.fileFlag) {
       //console.log('four')
-      this.inpValue = '';
+      this.inpValue = "";
       if (this.attachments.length > 0) {
         for (var attachmentItem of this.attachments) {
-          this.inpValue += attachmentItem.attachmentId + '@@##$$' + attachmentItem.attachmentName + ',';
+          this.inpValue +=
+            attachmentItem.attachmentId +
+            "@#$" +
+            attachmentItem.attachmentName +
+            ",";
         }
         //console.log('inside filesss' + this.inpValue);
         this.inpValue = this.inpValue.substr(0, this.inpValue.length - 1);
@@ -392,7 +518,7 @@ export class QuestionnaireComponent implements OnInit {
         return;
       }
     }
-   //console.log('before calling saveAnswer with ' + this.inpValue);
+    //console.log('before calling saveAnswer with ' + this.inpValue);
 
     // Check for the answer before saving to the DB
     if (!this.questionItem.Is_Optional__c && !this.inpValue) {
@@ -412,15 +538,17 @@ export class QuestionnaireComponent implements OnInit {
     this.saveAnswer();
   }
 
-  next(){
+  next() {
     var cQuestion: Question = new Question();
     cQuestion = this.questionItem;
     var typ = cQuestion.Type__c;
     // If no error then move to next steps
-    if (this.questionItem.error) { return; }
+    if (this.questionItem.error) {
+      return;
+    }
 
     this.questionStack.push(cQuestion.Id);
-  //  this.questionName.push(cQuestion.Name);
+    //  this.questionName.push(cQuestion.Name);
 
     // CONDITIONAL vs OPTIONONLY & UNCONDITIONAL
     if (cQuestion.RecordType.Name == "CONDITIONAL") {
@@ -450,10 +578,11 @@ export class QuestionnaireComponent implements OnInit {
         //console.log("inside book");
         for (let opt of cQuestion.Questions__r.records) {
           //console.log(opt.Type__c);
-           if (opt.Type__c == "Dropdown"||opt.Type__c == "Radio") {
+          if (opt.Type__c == "Dropdown" || opt.Type__c == "Radio") {
             for (var opt1 of opt.Question_Options__r.records) {
               if (this.valueName == opt1.Value__c) {
-                this.recordId = opt1.Next_Question__c || cQuestion.Next_Question__c;
+                this.recordId =
+                  opt1.Next_Question__c || cQuestion.Next_Question__c;
               }
             }
           } else {
@@ -483,7 +612,7 @@ export class QuestionnaireComponent implements OnInit {
       this.pop = false;
       //console.log('Summary Page Logic');
       // Reset the Variables
-      this.inpValue = '';
+      this.inpValue = "";
       this.answerWrap = new AnswerWrapper();
       this.optionValues = [];
       this.subQuestions = [];
@@ -498,43 +627,50 @@ export class QuestionnaireComponent implements OnInit {
         var ansWrap = this.answerMap.get(q);
         if (ansWrap) {
           //console.log('Handling Answer for ' + ansWrap.quesId + ' of type ' + ansWrap.qTyp);
-          if(ansWrap.qTyp == 'File' || ansWrap.qTyp == 'Book'){
-            var newStr = '';
-            for (var ansStr of ansWrap.ansValue.split('@@##$$')) {
+          if (ansWrap.qTyp == "File" || ansWrap.qTyp == "Book") {
+            var newStr = "";
+            for (var ansStr of ansWrap.ansValue.split("@@##$$")) {
               if (ansStr.length > 0) {
                 if (newStr.length == 0) {
                   newStr = ansStr;
                 } else {
-                  newStr += ', ' + ansStr;
+                  newStr += ", " + ansStr;
 
-                  if(this.attachmentsMap.has(ansWrap.quesId)){
-                    for(var att of this.attachmentsMap.get(ansWrap.quesId)){
-                      newStr = newStr.replace(att.attachmentId,'');
+                  if (this.attachmentsMap.has(ansWrap.quesId)) {
+                    for (var att of this.attachmentsMap.get(ansWrap.quesId)) {
+                      newStr = newStr.replace(att.attachmentId, "");
                     }
                   }
-                  newStr = (newStr.replace(',,',', ')).replace(', ,',', ');
-                  newStr = newStr.startsWith(',') ? newStr.substring(1, newStr.length) : (newStr.endsWith(',') ? newStr.substring(0, newStr.length - 1) : newStr);
+                  newStr = newStr.replace(",,", ", ").replace(", ,", ", ");
+                  newStr = newStr.startsWith(",")
+                    ? newStr.substring(1, newStr.length)
+                    : newStr.endsWith(",")
+                    ? newStr.substring(0, newStr.length - 1)
+                    : newStr;
                 }
               }
-            }ansWrap.ansValue = newStr;
-        }
+            }
+            ansWrap.ansValue = newStr;
+          }
           this.summary.push(ansWrap);
-      }
+        }
       }
 
       // Show Thank you Note
     }
   }
 
-  getText(value){
+  getText(value) {
     var doc = new DOMParser().parseFromString(value, "text/html");
     //console.log( doc.documentElement.textContent);
-  return this.sanitizer.bypassSecurityTrustHtml(doc.documentElement.textContent);
+    return this.sanitizer.bypassSecurityTrustHtml(
+      doc.documentElement.textContent
+    );
   }
 
   handleBackClick() {
-    this.back = true
-    if(this.pop === true){
+    this.back = true;
+    if (this.pop === true) {
       this.questionName.pop();
     }
 
@@ -545,7 +681,7 @@ export class QuestionnaireComponent implements OnInit {
     //this.stepperCateg();
 
     if (this.summary) {
-  //    console.log('summary true');
+      //    console.log('summary true');
       this.summary = [];
     }
 
@@ -554,66 +690,78 @@ export class QuestionnaireComponent implements OnInit {
     //console.log(this.questionStack);
   }
 
-
   //updating status once Q&A completed.
 
-  private updateAnswerBook = (uuid: string) => this.sfService.remoteAction('NxtController.process',
-  ['AnswerBook', 'Update', uuid],
-  this.successupdateAB,
-  this.failureupdateAB);
+  private updateAnswerBook = (uuid: string) =>
+    this.sfService.remoteAction(
+      "NxtController.process",
+      ["AnswerBook", "Update", uuid],
+      this.successupdateAB,
+      this.failureupdateAB
+    );
 
-  private successupdateAB = (response) =>{
+  private successupdateAB = (response) => {
     //console.log(response);
-   // console.log('status success')
-    this.abItem.Status__c = 'Completed'
-  }
-  private failureupdateAB = (response) =>{
+    // console.log('status success')
+    this.abItem.Status__c = "Completed";
+  };
+  private failureupdateAB = (response) => {
     //console.log('status failed')
-  }
+  };
 
-  private readQuestionBook = (uuid: string) => this.sfService.remoteAction('NxtController.process',
-    ['QuestionBook', 'read', uuid],
-    this.successReadBook,
-    this.failureReadBook);
+  private readQuestionBook = (uuid: string) =>
+    this.sfService.remoteAction(
+      "NxtController.process",
+      ["QuestionBook", "read", uuid],
+      this.successReadBook,
+      this.failureReadBook
+    );
 
   private successReadBook = (response) => {
-  //console.log(response)
+    //console.log(response)
     this.qbItem = response.questionbook;
     this.abItem = response.answerbook;
     //console.log('readingQuestion using ' + this.qbItem.First_Question__c);
-    if(this.abItem.Status__c == 'Pending') {
-      if(this.abItem.Answers__r == null || this.abItem.Answers__r.records.length == 0) {
-          this.readQuestion(this.qbItem.First_Question__c);
+    if (this.abItem.Status__c == "Pending") {
+      if (
+        this.abItem.Answers__r == null ||
+        this.abItem.Answers__r.records.length == 0
+      ) {
+        this.readQuestion(this.qbItem.First_Question__c);
       } else {
         // Populate the existing answers
-        var lastQuestionId = '';
+        var lastQuestionId = "";
 
-        for(var ansObject of this.abItem.Answers__r.records) {
+        for (var ansObject of this.abItem.Answers__r.records) {
           lastQuestionId = ansObject.Question_Ref__c;
-          console.log('Question: ' + ansObject.Question_Rich_Text__c);
-          console.log('Answer: ' + ansObject.Answer_Long__c);
+          console.log("Question: " + ansObject.Question_Rich_Text__c);
+          console.log("Answer: " + ansObject.Answer_Long__c);
 
           this.questionStack.push(ansObject.Question_Ref__c);
 
-          this.answerMap.set(ansObject.Question_Ref__c, { quesValue: ansObject.Question_Rich_Text__c,
-                                                           ansValue: ansObject.Answer_Long__c,
-                                                           quesId: ansObject.Question_Ref__c,
-                                                           qTyp: ansObject.Question_Type__c });
+          this.answerMap.set(ansObject.Question_Ref__c, {
+            quesValue: ansObject.Question_Rich_Text__c,
+            ansValue: ansObject.Answer_Long__c,
+            quesId: ansObject.Question_Ref__c,
+            qTyp: ansObject.Question_Type__c,
+          });
 
           //console.log(this.questionStack)
-          if(ansObject.Question_Type__c == 'Book') {
-            var av1 = ansObject.Answer_Long__c.split('@@##$$');
-            console.log('book log');
+          if (ansObject.Question_Type__c == "Book") {
+            var av1 = ansObject.Answer_Long__c.split("@@##$$");
+            console.log("book log");
 
-            console.log("bookid"+av1[0]);
-            this.attachmentsMap.set(ansObject.Question_Ref__c,[{attachmentName : av1[1],attachmentId:av1[0]}]);
+            console.log("bookid" + av1[0]);
+            this.attachmentsMap.set(ansObject.Question_Ref__c, [
+              { attachmentName: av1[1], attachmentId: av1[0] },
+            ]);
             console.log(this.attachmentsMap);
-          } else if(ansObject.Question_Type__c == 'File') {
-            console.log('inside if');
+          } else if (ansObject.Question_Type__c == "File") {
+            console.log("inside if");
             var attList;
             var att;
-            for(var attVar of ansObject.Answer_Long__c.split(',')) {
-              var attIdName = attVar.split('@@##$$');
+            for (var attVar of ansObject.Answer_Long__c.split(",")) {
+              var attIdName = attVar.split("@@##$$");
               att.attachmentName = attIdName[1];
               att.attachmentId = attIdName[0];
               attList.push(att);
@@ -630,47 +778,85 @@ export class QuestionnaireComponent implements OnInit {
       }
     }
 
-    if(this.abItem.Status__c == 'Completed'){
-      this.readAnswerbook(this.abItem.Id);
-    }
-  }
+    if (this.abItem.Status__c == "Completed") {
+      this.percent = 100;
+      this.progressStyle = "100%";
+      // this.readAnswerbook(this.abItem.Id);
+      for (var answer of this.abItem.Answers__r.records) {
+        var answers = {};
+        if(answer.Question_Type__c == 'File') {
+          var files = "";
+          var fIndex = 0;
+          var fileList = answer.Answer_Long__c.split(",");
+          for(var fileIdName of fileList) {
+            var fileName = fileIdName.split('@#$');
+            if(fIndex == 0) {
+              files = fileName[1];
+            } else {
+              files = files + ' ,' + fileName[1];
+            }
+            
+            fIndex++;
+          }
 
-  private failureReadBook = (response) => {
-          //console.log(response);
-  }
-
-  private readAnswerbook = (uuid: string) => this.sfService.remoteAction('NxtController.process',
-    ['AnswerBook', 'read', uuid],
-    this.successAnswerBookRead,
-    this.failureAnswerBookRead);
-
-    private successAnswerBookRead = (response) => {
-      if (this.abItem.Status__c =="Completed") {
-        for(var answer of this.abItem.Answers__r.records) {
-          var av = answer.Answer_Long__c.split('@@##$$');
-          var answers = { quesValue:answer.Question_Rich_Text__c, ansValue:av };
-          //console.log(answers)
+          answers = { quesValue: answer.Question_Rich_Text__c, ansValue: files };
           this.summary.push(answers);
-        }
+        } else if(answer.Question_Type__c == 'Book') {
+          for(var bqAnswerValue of answer.Answer_Long__c.split("@@##$$")) {
+            answers = {};
+            answers = { quesValue: answer.Question_Rich_Text__c, ansValue: bqAnswerValue };
+            this.summary.push(answers);
+          }
+        } else {
+          answers = { quesValue: answer.Question_Rich_Text__c, ansValue: answer.Answer_Long__c };
+          this.summary.push(answers);
+        }       
       }
     }
+  };
 
-    private failureAnswerBookRead = (response) => {
-      //console.log('inside failureread');
-      //console.log(response);
+  private failureReadBook = (response) => {
+    //console.log(response);
+  };
+
+  private readAnswerbook = (uuid: string) =>
+    this.sfService.remoteAction(
+      "NxtController.process",
+      ["AnswerBook", "read", uuid],
+      this.successAnswerBookRead,
+      this.failureAnswerBookRead
+    );
+
+  private successAnswerBookRead = (response) => {
+    if (this.abItem.Status__c == "Completed") {
+      for (var answer of this.abItem.Answers__r.records) {
+        var av = answer.Answer_Long__c.split("@@##$$");
+        var answers = { quesValue: answer.Question_Rich_Text__c, ansValue: av };
+        //console.log(answers)
+        this.summary.push(answers);
+      }
     }
+  };
 
-  private readQuestion = (uuid: string) => this.sfService.remoteAction('NxtController.process',
-    ['Question', 'read', uuid],
-    this.successRead,
-    this.failureRead);
+  private failureAnswerBookRead = (response) => {
+    //console.log('inside failureread');
+    //console.log(response);
+  };
+
+  private readQuestion = (uuid: string) =>
+    this.sfService.remoteAction(
+      "NxtController.process",
+      ["Question", "read", uuid],
+      this.successRead,
+      this.failureRead
+    );
 
   private successRead = (response) => {
     console.log(response);
     // Reset the Variables
 
     if (this.questionItem) {
-      this.inpValue = '';
+      this.inpValue = "";
       this.answerWrap = new AnswerWrapper();
       this.optionValues = [];
       this.subQuestions = [];
@@ -694,9 +880,11 @@ export class QuestionnaireComponent implements OnInit {
       }
     }
     this.processQuestion();
-    this.innerhtml = this.sanitizer.bypassSecurityTrustHtml(this.questionItem.Additional_Rich__c);
+    this.innerhtml = this.sanitizer.bypassSecurityTrustHtml(
+      this.questionItem.Additional_Rich__c
+    );
     this.trackId();
-  }
+  };
 
   trackId() {
     var qtrackId = this.questionItem.Tracking_ID__c;
@@ -706,27 +894,29 @@ export class QuestionnaireComponent implements OnInit {
   private failureRead = (response) => {
     //console.log('inside failureread');
     //console.log(response);
-  }
+  };
 
   private saveAnswer = () => {
     // Set the Answer Number based on the Question Stack Length
-    if(this.inpValue != "."){
+    if (this.inpValue != ".") {
       this.currentQuestionId = null;
     }
     this.answerWrap.ansNumber = this.questionStack.length + 1;
 
-    this.sfService.remoteAction('NxtController.process',
-      ['Answer', 'create', JSON.stringify(this.answerWrap)],
+    this.sfService.remoteAction(
+      "NxtController.process",
+      ["Answer", "create", JSON.stringify(this.answerWrap)],
       this.successSave,
-      this.failureSave);
-  }
+      this.failureSave
+    );
+  };
   htmlDecode(input) {
     var doc = new DOMParser().parseFromString(input, "text/html");
     return doc.documentElement.textContent;
   }
 
   private successSave = (response) => {
-    if (response.status == 'success') {
+    if (response.status == "success") {
       //this.abItem = response.answerbook;
       this.answerMap.set(response.answer.quesId, response.answer);
     } else {
@@ -734,12 +924,12 @@ export class QuestionnaireComponent implements OnInit {
       this.questionItem.error.errorMsg = response.error.errorMsg;
     }
     this.next();
-  }
+  };
 
   private failureSave = (response) => {
     //console.log('inside failureSave');
     //console.log(response);
-  }
+  };
 
   private processQuestion = () => {
     this.pop = true;
@@ -768,7 +958,7 @@ export class QuestionnaireComponent implements OnInit {
 
     // Check the existing answer from answerMap
     if (this.answerMap.has(this.questionItem.Id)) {
-      console.log('existing answer found for this.questionItem.Name');
+      console.log("existing answer found for this.questionItem.Name");
       var eAnswer = this.answerMap.get(this.questionItem.Id);
       // Get the existing answer from the Map
       this.inpValue = eAnswer.ansValue;
@@ -847,81 +1037,80 @@ export class QuestionnaireComponent implements OnInit {
     } else if (this.fileFlag) {
       this.fileUI();
       // logic
-      this.allowedFileExtension = this.questionItem.Allowed_File_Extensions__c.split(";");
+      this.allowedFileExtension =
+        this.questionItem.Allowed_File_Extensions__c.split(";");
       //console.log(this.allowedFileExtension);
     }
     if (this.qbItem.Progress_Bar__c === true) {
       this.updateProgress();
     }
-  }
+  };
 
   setFlag(typ) {
     //console.log('inside setFlag for ' + typ);
 
     if (typ) {
       // Set the Flags
-      if (typ == 'Text') {
+      if (typ == "Text") {
         this.textFlag = true;
-      }else if (typ == 'Email') {
+      } else if (typ == "Email") {
         this.emailFlag = true;
-      }else if (typ == 'File') {
+      } else if (typ == "File") {
         this.fileFlag = true;
-      } else if (typ == 'DateTime') {
-        this.dtFlag = true;
-        this.timeFlag =true;
-        this.dateFlag=true;
-      } else if (typ == 'TextArea') {
-        this.taFlag = true;
-      } else if (typ == 'Radio') {
-        this.radioFlag = true;
-      } else if (typ == 'Dropdown') {
-        this.dropdownFlag = true;
-      } else if (typ == 'Checkbox') {
-        this.checkboxFlag = true;
-      } else if (typ == 'Book') {
-        this.bookFlag = true;
-      }else if (typ == 'Time') {
+      } else if (typ == "DateTime") {
         this.dtFlag = true;
         this.timeFlag = true;
-      }else if (typ == 'Date') {
+        this.dateFlag = true;
+      } else if (typ == "TextArea") {
+        this.taFlag = true;
+      } else if (typ == "Radio") {
+        this.radioFlag = true;
+      } else if (typ == "Dropdown") {
+        this.dropdownFlag = true;
+      } else if (typ == "Checkbox") {
+        this.checkboxFlag = true;
+      } else if (typ == "Book") {
+        this.bookFlag = true;
+      } else if (typ == "Time") {
+        this.dtFlag = true;
+        this.timeFlag = true;
+      } else if (typ == "Date") {
         this.dtFlag = true;
         this.dateFlag = true;
       }
-
     }
   }
 
   resetFlag(typ) {
     if (typ) {
       // Set the Flags
-      if (typ == 'Text') {
+      if (typ == "Text") {
         this.textFlag = false;
-      }else if (typ == 'Email') {
+      } else if (typ == "Email") {
         this.emailFlag = false;
-      }else if (typ == 'File') {
+      } else if (typ == "File") {
         this.fileFlag = false;
-      } else if (typ == 'DateTime') {
+      } else if (typ == "DateTime") {
         this.dtFlag = false;
         this.dateFlag = false;
-        this.timeFlag= false;
-      } else if (typ == 'TextArea') {
-        this.taFlag = false;
-      } else if (typ == 'Radio') {
-        this.radioFlag = false;
-      } else if (typ == 'Dropdown') {
-        this.dropdownFlag = false;
-      } else if (typ == 'Checkbox') {
-        this.checkboxFlag = false;
-      } else if (typ == 'Book') {
-        this.bookFlag = false;
-      } else if (typ == 'Time') {
-        this.dtFlag= false;
         this.timeFlag = false;
-      } else if (typ == 'Date') {
-        this.dtFlag= false;
-        this.dateFlag= false;
+      } else if (typ == "TextArea") {
+        this.taFlag = false;
+      } else if (typ == "Radio") {
+        this.radioFlag = false;
+      } else if (typ == "Dropdown") {
+        this.dropdownFlag = false;
+      } else if (typ == "Checkbox") {
+        this.checkboxFlag = false;
+      } else if (typ == "Book") {
+        this.bookFlag = false;
+      } else if (typ == "Time") {
+        this.dtFlag = false;
+        this.timeFlag = false;
+      } else if (typ == "Date") {
+        this.dtFlag = false;
+        this.dateFlag = false;
       }
-
     }
   }
 
@@ -934,17 +1123,20 @@ export class QuestionnaireComponent implements OnInit {
       ov.Next_Question__c = opt.Next_Question__c;
       ov.checked = false;
 
-      if (this.inpValue && this.inpValue.split('@@##$$').includes(opt.Value__c)) {
+      if (
+        this.inpValue &&
+        this.inpValue.split("@@##$$").includes(opt.Value__c)
+      ) {
         ov.checked = true;
       }
 
       this.optionValues.push(ov);
     }
   }
-   //Dropdown quesId == inpId
-   Dropdown(event){
+  //Dropdown quesId == inpId
+  Dropdown(event) {
     //console.log(event.target.value);
-    this.valueName=event.target.value;
+    this.valueName = event.target.value;
   }
 
   setSubQuestions(records) {
@@ -953,14 +1145,14 @@ export class QuestionnaireComponent implements OnInit {
     var qaMap = new Map();
     if (this.inpValue) {
       var aIndex = 0;
-      if (this.inpValue.search(', ') == -1) {
-        for (var ansStr of this.inpValue.split('@@##$$')) {
+      if (this.inpValue.search(", ") == -1) {
+        for (var ansStr of this.inpValue.split("@@##$$")) {
           aIndex++;
           qaMap.set(aIndex, ansStr);
           //console.log('Setting the qaMap for ' + aIndex + ' with ' + ansStr);
         }
       } else {
-        for (var ansStr of this.inpValue.split(', ')) {
+        for (var ansStr of this.inpValue.split(", ")) {
           aIndex++;
           qaMap.set(aIndex, ansStr);
           //console.log('Setting the qaMap ' + aIndex + ' with ' + ansStr);
@@ -980,28 +1172,28 @@ export class QuestionnaireComponent implements OnInit {
       sQues.Group__c = ques.Group__c;
       sQues.Question_No__c = ques.Question_No__c;
       sQues.Allowed_File_Extensions__c = ques.Allowed_File_Extensions__c;
-      if(ques.Type__c =='File'){
-      this.valueName1 = ques.Allowed_File_Extensions__c;
-      //console.log(this.valueName1);
+      if (ques.Type__c == "File") {
+        this.valueName1 = ques.Allowed_File_Extensions__c;
+        //console.log(this.valueName1);
       }
 
       if (qaMap.has(ques.Question_No__c)) {
         //console.log('Setting input for the subQuestion ' + ques.Question_No__c + ' with ' + ansStr);
-        if(ques.Type__c !='File'){
-        ques.input = qaMap.get(ques.Question_No__c);
+        if (ques.Type__c != "File") {
+          ques.input = qaMap.get(ques.Question_No__c);
         }
       }
 
       this.subQuestions.push(ques);
     }
-    if(this.valueName1.length >0){
-       this.bookFlagAccept = this.valueName1.split(';');
-    //console.log(this.subQuestions);
+    if (this.valueName1.length > 0) {
+      this.bookFlagAccept = this.valueName1.split(";");
+      //console.log(this.subQuestions);
     }
   }
 
   optionChange(selValue) {
-    let radioTrackingId: string = '';
+    let radioTrackingId: string = "";
     for (var opt of this.questionItem.Question_Options__r.records) {
       //console.log('optionChange TrackingId'+opt.Tracking_ID__c);
       if (opt.Value__c == selValue) {
@@ -1012,19 +1204,19 @@ export class QuestionnaireComponent implements OnInit {
 
     this.handleEvent.emit(radioTrackingId);
     this.clearError();
-  // console.log('inside optionChange using ' + selValue);
+    // console.log('inside optionChange using ' + selValue);
 
     this.inpValue = selValue;
   }
 
   clearError() {
     if (this.questionItem.error) {
-    this.questionItem.error = null;
+      this.questionItem.error = null;
     }
   }
 
   clearSQError(quesId) {
-    var sqList = this.subQuestions.filter(item => item.Id == quesId);
+    var sqList = this.subQuestions.filter((item) => item.Id == quesId);
     for (var sq of sqList) {
       sq.error = null;
     }
@@ -1038,13 +1230,28 @@ export class QuestionnaireComponent implements OnInit {
     local.attachment = event.target.files[0];
     // Validate the file extension
     //console.log(local.attachment);
-    let fileNameWithType: string = local.attachment && local.attachment.name.toLowerCase();
-    if (!fileNameWithType.endsWith('.jpg') && !fileNameWithType.endsWith('.png') && !fileNameWithType.endsWith('.pdf') && !fileNameWithType.endsWith('.jpeg') && !fileNameWithType.endsWith('.heic') && !fileNameWithType.endsWith('.heif') &&
-      !fileNameWithType.endsWith('.JPG') && !fileNameWithType.endsWith('.PNG') && !fileNameWithType.endsWith('.PDF') && !fileNameWithType.endsWith('.JPEG') && !fileNameWithType.endsWith('.HEIC') && !fileNameWithType.endsWith('.HEIF')) {
+    let fileNameWithType: string =
+      local.attachment && local.attachment.name.toLowerCase();
+    if (
+      !fileNameWithType.endsWith(".jpg") &&
+      !fileNameWithType.endsWith(".png") &&
+      !fileNameWithType.endsWith(".pdf") &&
+      !fileNameWithType.endsWith(".jpeg") &&
+      !fileNameWithType.endsWith(".heic") &&
+      !fileNameWithType.endsWith(".heif") &&
+      !fileNameWithType.endsWith(".JPG") &&
+      !fileNameWithType.endsWith(".PNG") &&
+      !fileNameWithType.endsWith(".PDF") &&
+      !fileNameWithType.endsWith(".JPEG") &&
+      !fileNameWithType.endsWith(".HEIC") &&
+      !fileNameWithType.endsWith(".HEIF")
+    ) {
       local.fileTypeIncorrect = true;
     }
     // Return when the file type is incorrect
-    if (local.fileTypeIncorrect) { return; }
+    if (local.fileTypeIncorrect) {
+      return;
+    }
     let fileContent: any;
     var reader = new FileReader();
 
@@ -1059,18 +1266,21 @@ export class QuestionnaireComponent implements OnInit {
         fileWrapper.fileContent = fileContent;
         local.createAttachment(fileWrapper);
       }
-    }
+    };
     this.spinner.show(this.spinnerName);
     reader.readAsDataURL(event.target.files[0]);
   }
 
   private successAttachmentCreate = (response) => {
-    let createdAttachment: Attachment = new Attachment(response.attachmentId, response.attachmentName, this.attachment.lastModifiedDate);
+    let createdAttachment: Attachment = new Attachment(
+      response.attachmentId,
+      response.attachmentName,
+      this.attachment.lastModifiedDate
+    );
     this.attachments.push(createdAttachment);
-    this.attachmentsMap.set(this.questionItem.Id,this.attachments);
+    this.attachmentsMap.set(this.questionItem.Id, this.attachments);
     this.spinner.hide(this.spinnerName);
-  }
-
+  };
 
   private successAttachmentDelete = (response) => {
     for (let i = 0; i < this.attachments.length; i++) {
@@ -1078,43 +1288,52 @@ export class QuestionnaireComponent implements OnInit {
         this.attachments.splice(i, 1);
       }
     }
-  }
+  };
 
   private failureAttachmentCreate = (response) => {
     //console.log('inside failureAttachmentCreate');
-  }
+  };
 
   private failureAttachmentDelete = (response) => {
     //console.log('inside failureAttachmentDelete');
-  }
+  };
 
   handleSubmitClick() {
     this.handleEvent.emit(this.qbItem.Submit_Tracking_ID__c);
     this.updateAnswerBook(this.abItem.Id);
   }
 
-  private createAttachment = (fileWrapper: any) => this.sfService.remoteAction('NxtController.process',
-    ['Attachment', 'create', JSON.stringify(fileWrapper)],
-    this.successAttachmentCreate,
-    this.failureAttachmentCreate);
+  private createAttachment = (fileWrapper: any) =>
+    this.sfService.remoteAction(
+      "NxtController.process",
+      ["Attachment", "create", JSON.stringify(fileWrapper)],
+      this.successAttachmentCreate,
+      this.failureAttachmentCreate
+    );
 
   deleteAttachment(attachmentId: string) {
     this.attachmentId = attachmentId;
-    this.handleEvent.emit('deleteAttachment');
+    this.handleEvent.emit("deleteAttachment");
     this.deleteSFAttachment(attachmentId);
   }
 
-  private deleteSFAttachment = (fileId: string) => this.sfService.remoteAction('NxtController.process',
-    ['Attachment', 'delete', fileId],
-    this.successAttachmentDelete,
-    this.failureAttachmentDelete);
+  private deleteSFAttachment = (fileId: string) =>
+    this.sfService.remoteAction(
+      "NxtController.process",
+      ["Attachment", "delete", fileId],
+      this.successAttachmentDelete,
+      this.failureAttachmentDelete
+    );
 
-  getFileName(fileNamewithIdandType) {  //truncate file path
-    var fileNameWithType = fileNamewithIdandType.substr(fileNamewithIdandType.indexOf('::::') + 4);
+  getFileName(fileNamewithIdandType) {
+    //truncate file path
+    var fileNameWithType = fileNamewithIdandType.substr(
+      fileNamewithIdandType.indexOf("::::") + 4
+    );
     return fileNameWithType; //fileNameWithType.replace(/^(.*(\/|\\))(.+)$/, '$3');
   }
-  fileUI(){
-    if(this.attachments.length ===0){
+  fileUI() {
+    if (this.attachments.length === 0) {
     }
   }
 
@@ -1131,32 +1350,34 @@ export class QuestionnaireComponent implements OnInit {
 
   // Update Function for the Progress Bar
   updateProgress() {
-    if(this.qbItem.Progress_Bar__c === true ){
-    let j =[];
-  for(let  i = 0 ; i<this.possibilities.total ; i++){
-    var pathposs = Object.values(this.possibilities.paths[i].questions)
-      if(pathposs[this.pathquestion] === this.currentName){
-         j.push(i);
-        this.check = true;
+    if (this.qbItem.Progress_Bar__c === true) {
+      let j = [];
+      for (let i = 0; i < this.possibilities.total; i++) {
+        var pathposs = Object.values(this.possibilities.paths[i].questions);
+        if (pathposs[this.pathquestion] === this.currentName) {
+          j.push(i);
+          this.check = true;
+        } else {
+          this.check = false;
+        }
       }
-     else{
-          this.check=false;
-     }
-   }
-  if(j.length === 1){
-     this.count = j[0];
+      if (j.length === 1) {
+        this.count = j[0];
+      }
+      if (j.length > 1) {
+        var width =
+          100 * (this.questionStack.length / this.possibilities.maxQuestions);
+        //console.log('Progress bar width => ' + width);
+        this.progressStyle = Math.round(width) + "%";
+      } else if (j.length === 1) {
+        var width =
+          100 *
+          (this.questionStack.length /
+            this.possibilities.paths[this.count].count);
+        this.progressStyle = Math.round(width) + "%";
+      }
+      this.percent = +Math.round(width);
+    }
   }
-  if(j.length>1){
-    var width = 100 * (this.questionStack.length / this.possibilities.maxQuestions);
-    //console.log('Progress bar width => ' + width);
-    this.progressStyle = Math.round(width) + '%';
-  }
-  else if(j.length === 1){
-    var width = 100 * (this.questionStack.length / this.possibilities.paths[this.count].count);
-    this.progressStyle = Math.round(width) + '%';
-  }
-  this.percent= + Math.round(width)
-  }
-}
 }
 
