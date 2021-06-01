@@ -734,8 +734,8 @@ export class QuestionnaireComponent implements OnInit {
 
         for (var ansObject of this.abItem.Answers__r.records) {
           lastQuestionId = ansObject.Question_Ref__c;
-          console.log("Question: " + ansObject.Question_Rich_Text__c);
-          console.log("Answer: " + ansObject.Answer_Long__c);
+         // console.log("Question: " + ansObject.Question_Rich_Text__c);
+        //  console.log("Answer: " + ansObject.Answer_Long__c);
 
           this.questionStack.push(ansObject.Question_Ref__c);
 
@@ -749,15 +749,15 @@ export class QuestionnaireComponent implements OnInit {
           //console.log(this.questionStack)
           if (ansObject.Question_Type__c == "Book") {
             var av1 = ansObject.Answer_Long__c.split("@@##$$");
-            console.log("book log");
+           // console.log("book log");
 
-            console.log("bookid" + av1[0]);
+          //  console.log("bookid" + av1[0]);
             this.attachmentsMap.set(ansObject.Question_Ref__c, [
               { attachmentName: av1[1], attachmentId: av1[0] },
             ]);
-            console.log(this.attachmentsMap);
+          //  console.log(this.attachmentsMap);
           } else if (ansObject.Question_Type__c == "File") {
-            console.log("inside if");
+         //  console.log("inside if");
             var attList;
             var att;
             for (var attVar of ansObject.Answer_Long__c.split(",")) {
@@ -767,12 +767,12 @@ export class QuestionnaireComponent implements OnInit {
               attList.push(att);
             }
             this.attachmentsMap.set(ansObject.Question_Ref__c, attList);
-            console.log(this.attachmentsMap);
+          //  console.log(this.attachmentsMap);
           }
         }
 
         this.questionStack.pop();
-        console.log(this.answerMap);
+        //console.log(this.answerMap);
         // Read the last answered question
         this.readQuestion(lastQuestionId);
       }
@@ -852,7 +852,7 @@ export class QuestionnaireComponent implements OnInit {
     );
 
   private successRead = (response) => {
-    console.log(response);
+   // console.log(response);
     // Reset the Variables
 
     if (this.questionItem) {
@@ -964,7 +964,7 @@ export class QuestionnaireComponent implements OnInit {
 
     // Check the existing answer from answerMap
     if (this.answerMap.has(this.questionItem.Id)) {
-      console.log("existing answer found for this.questionItem.Name");
+    //  console.log("existing answer found for this.questionItem.Name");
       var eAnswer = this.answerMap.get(this.questionItem.Id);
       // Get the existing answer from the Map
       this.inpValue = eAnswer.ansValue;
