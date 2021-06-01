@@ -943,7 +943,9 @@ export class QuestionnaireComponent implements OnInit {
         this.questionName.push(this.questionItem.Name);
       }
       this.back = false;
-
+          console.log(this.questionItem);
+          console.log(this.questionItem.Name);
+          
       this.currentName = this.questionItem.Name;
       this.pathquestion = this.questionName.indexOf(this.currentName);
       this.possibilities = JSON.parse(this.qbItem.Possibilities__c);
