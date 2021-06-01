@@ -947,6 +947,12 @@ export class QuestionnaireComponent implements OnInit {
       this.currentName = this.questionItem.Name;
       this.pathquestion = this.questionName.indexOf(this.currentName);
       this.possibilities = JSON.parse(this.qbItem.Possibilities__c);
+      console.log(this.possibilities);
+      console.log(this.currentName);
+      console.log(this.pathquestion);
+      
+      
+      
     }
 
     this.myDatePickerOptions;
@@ -1353,28 +1359,42 @@ export class QuestionnaireComponent implements OnInit {
     if (this.qbItem.Progress_Bar__c === true) {
       let j = [];
       for (let i = 0; i < this.possibilities.total; i++) {
+        console.log(pathposs[this.pathquestion] + "right");
+        console.log(this.currentName  + "left");
+        
         var pathposs = Object.values(this.possibilities.paths[i].questions);
         if (pathposs[this.pathquestion] === this.currentName) {
           j.push(i);
+         console.log("true");
+         
+          
           this.check = true;
         } else {
           this.check = false;
         }
       }
       if (j.length === 1) {
+        console.log('lenght1');
+        
         this.count = j[0];
+        console.log(this.count + 'count');
+        
       }
       if (j.length > 1) {
         var width =
           100 * (this.questionStack.length / this.possibilities.maxQuestions);
         //console.log('Progress bar width => ' + width);
         this.progressStyle = Math.round(width) + "%";
+        console.log(this.progressStyle);
+      
+        
       } else if (j.length === 1) {
         var width =
           100 *
           (this.questionStack.length /
             this.possibilities.paths[this.count].count);
         this.progressStyle = Math.round(width) + "%";
+        console.log(this.progressStyle);
       }
       this.percent = +Math.round(width);
     }
