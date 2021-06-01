@@ -777,6 +777,8 @@ export class QuestionnaireComponent implements OnInit {
         this.readQuestion(lastQuestionId);
       }
     } else if (this.abItem.Status__c == "Completed") {
+      // Temporary Fix for duplicate answers on the summary.
+      this.summary = [];
       this.percent = 100;
       this.progressStyle = "100%";
 
