@@ -67,8 +67,9 @@
 .largeTitle {
   /* padding: 1%;
     margin: -11% 0% 5% 17%; */
-    padding-left: 8%;
-    padding-top: 28%;
+
+    padding-left: 16px;
+        padding-top: 43px;
   width: max-content;
 }
 .question-f-size {
@@ -81,7 +82,7 @@
   margin-bottom: 55px;
 }
 .bookTitle {
-  padding-top: 37px;
+  padding-top: 43px;
   padding-left: 7%;
   width: max-content;
 }
