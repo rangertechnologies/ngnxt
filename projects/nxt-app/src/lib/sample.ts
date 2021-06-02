@@ -27,6 +27,8 @@ export const TESTQB: QuestionBook = {
   Title__c: "Demo Unconditional",
   Total_Questions__c: 3,
   Possibilities__c: "path",
+  Summary_Sub_Text__c : "",
+  Summary_Text__c :"",
   Progress_Bar__c: true,
 };
 // Text Question
@@ -48,6 +50,7 @@ export const TESTQUESTION: Question = {
   Is_Date_Backward__c: false,
   Is_Date_Forward__c: false,
   Group__c: "Basic",
+  Sub_Text__c : "Necesitamos que confirmes la titularidad de la cuenta.",
   Size__c: 1,
   Question_No__c: "1",
   RecordType: {
@@ -74,6 +77,7 @@ export const DTQUESTION: Question = {
   Time_Text__c: "Zeit",
   Date_Text__c: "Datum",
   Group__c: "Basic",
+  Sub_Text__c : "Necesitamos que confirmes la titularidad de la cuenta.",
   Size__c: 1,
   Question_No__c: "1",
   RecordType: {
@@ -100,6 +104,7 @@ export const FILEQUESTION: Question = {
   Time_Text__c: "Zeit",
   Date_Text__c: "Datum",
   Group__c: "Basic",
+  Sub_Text__c : "Necesitamos que confirmes la titularidad de la cuenta.",
   Size__c: 1,
   Question_No__c: "1",
   RecordType: {
@@ -126,6 +131,7 @@ export const TAQUESTION: Question = {
   Time_Text__c: "Zeit",
   Date_Text__c: "Datum",
   Group__c: "Basic",
+  Sub_Text__c : "Necesitamos que confirmes la titularidad de la cuenta.",
   Size__c: 1,
   Question_No__c: "1",
   RecordType: {
@@ -152,6 +158,7 @@ export const RADIOQUESTION: Question = {
   Time_Text__c: "Zeit",
   Date_Text__c: "Datum",
   Group__c: "Basic",
+  Sub_Text__c : "Necesitamos que confirmes la titularidad de la cuenta.",
   Size__c: 1,
   Question_No__c: "5",
   RecordType: {
@@ -203,6 +210,7 @@ export const CHECKQUESTION: Question = {
   Time_Text__c: "Zeit",
   Date_Text__c: "Datum",
   Group__c: "Basic",
+  Sub_Text__c : "Necesitamos que confirmes la titularidad de la cuenta.",
   Size__c: 1,
   Question_No__c: "6",
   RecordType: {
@@ -254,6 +262,7 @@ export const BOOKQUESTION: Question = {
   Time_Text__c: "Zeit",
   Date_Text__c: "Datum",
   Group__c: "Basic",
+  Sub_Text__c : "Necesitamos que confirmes la titularidad de la cuenta.",
   Size__c: 1,
   Question_No__c: "7",
   Questions__r: {
@@ -276,6 +285,7 @@ export const BOOKQUESTION: Question = {
         Time_Text__c: "Zeit",
         Date_Text__c: "Datum",
         Group__c: "Basic",
+        Sub_Text__c : "Necesitamos que confirmes la titularidad de la cuenta.",
         RecordType: {
           Name: "UNCONDITIONAL",
         },
@@ -323,6 +333,7 @@ export const BOOKQUESTION: Question = {
         Time_Text__c: "Zeit",
         Date_Text__c: "Datum",
         Group__c: "Basic",
+        Sub_Text__c : "Necesitamos que confirmes la titularidad de la cuenta.",
         RecordType: {
           Name: "UNCONDITIONAL",
         },
@@ -345,6 +356,7 @@ export const BOOKQUESTION: Question = {
         Date_Text__c: "Datum",
         Size__c: 8,
         Group__c: "Basic",
+        Sub_Text__c : "Necesitamos que confirmes la titularidad de la cuenta.",
         RecordType: {
           Name: "UNCONDITIONAL",
         },
@@ -367,6 +379,7 @@ export const BOOKQUESTION: Question = {
         Allowed_File_Extensions__c: ".pdf",
         Size__c: 8,
         Group__c: "Basic",
+        Sub_Text__c : "Necesitamos que confirmes la titularidad de la cuenta.",
         RecordType: {
           Name: "UNCONDITIONAL",
         },
@@ -389,6 +402,7 @@ export const BOOKQUESTION: Question = {
         Date_Text__c: "Datum",
         Size__c: 4,
         Group__c: "Basic",
+        Sub_Text__c : "Necesitamos que confirmes la titularidad de la cuenta.",
         RecordType: {
           Name: "UNCONDITIONAL",
         },

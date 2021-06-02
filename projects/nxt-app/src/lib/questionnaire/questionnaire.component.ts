@@ -225,7 +225,7 @@ export class QuestionnaireComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log ("object-r");
+   // console.log ('abdul');
     this.inpValue = "";
     this.selectedMeridiem = "AM";
     this.processQB();
@@ -631,6 +631,7 @@ export class QuestionnaireComponent implements OnInit {
           if (ansWrap.qTyp == "File" || ansWrap.qTyp == "Book") {
             var newStr = "";
             for (var ansStr of ansWrap.ansValue.split("@@##$$")) {
+            
               if (ansStr.length > 0) {
                 if (newStr.length == 0) {
                   newStr = ansStr;
@@ -638,6 +639,7 @@ export class QuestionnaireComponent implements OnInit {
                   newStr += ", " + ansStr;
 
                   if (this.attachmentsMap.has(ansWrap.quesId)) {
+                    
                     for (var att of this.attachmentsMap.get(ansWrap.quesId)) {
                       newStr = newStr.replace(att.attachmentId, "");
                     }
@@ -946,24 +948,12 @@ export class QuestionnaireComponent implements OnInit {
       }
       this.back = false;
       if(this.questionName[0] === this.questionName[1]){
-        console.log(" 0&&1 are equal");
         this.questionName.pop();
-        
       }
-      console.log(this.questionName);
-      
-          console.log(this.questionItem);
-          console.log(this.questionItem.Name);
           
       this.currentName = this.questionItem.Name;
       this.pathquestion = this.questionName.indexOf(this.currentName);
-      this.possibilities = JSON.parse(this.qbItem.Possibilities__c);
-      console.log(this.possibilities);
-      console.log(this.currentName);
-      console.log(this.pathquestion);
-      
-      
-      
+      this.possibilities = JSON.parse(this.qbItem.Possibilities__c);    
     }
 
     this.myDatePickerOptions;
@@ -1372,44 +1362,27 @@ export class QuestionnaireComponent implements OnInit {
       for (let i = 0; i < this.possibilities.total; i++) {
        
         
-        var pathposs = Object.values(this.possibilities.paths[i].questions);
-        console.log(pathposs[this.pathquestion] + "right");
-        console.log(this.currentName  + "left");
-        console.log(pathposs);
-        
+        var pathposs = Object.values(this.possibilities.paths[i].questions);        
         if (pathposs[this.pathquestion] === this.currentName) {
-          j.push(i);
-        
-        console.log(" match true");
-         
-          
+          j.push(i);   
           this.check = true;
         } else {
           this.check = false;
         }
       }
-      if (j.length === 1) {
-        console.log('lenght1');
-        
+      if (j.length === 1) {        
         this.count = j[0];
-        console.log(this.count + 'count');
-        
       }
       if (j.length > 1) {
         var width =
           100 * (this.questionStack.length / this.possibilities.maxQuestions);
-        console.log('Progress bar width => ' + width);
-        this.progressStyle = Math.round(width) + "%";
-      //  console.log(this.progressStyle);
-      
-        
+        this.progressStyle = Math.round(width) + "%";     
       } else if (j.length === 1) {
         var width =
           100 *
           (this.questionStack.length /
             this.possibilities.paths[this.count].count);
         this.progressStyle = Math.round(width) + "%";
-        console.log('Progress bar width => ' + width);
       }
       this.percent = +Math.round(width);
     }
