@@ -687,9 +687,12 @@
   </div>
 </div>
 
-<div *ngIf="summary && summary.length > 0" class="col-md-12">
+<div *ngIf="summary && summary.length > 0" class="col-md-12"
+   [ngClass]="{
+              'col-md-12':!qbItem.Progress_Bar__c
+               }">
   <div id="progress2" *ngIf="qbItem.Progress_Bar__c">
-    <div [ngClass]="{ bgColor: qbItem.Progress_Bar__c }">
+    <div [ngClass]="{'bgColor summary-top' : qbItem.Progress_Bar__c }">
       <div id="progress-summary" *ngIf="qbItem.Progress_Bar__c">
         <circle-progress
           class="titlebar"
@@ -732,7 +735,7 @@
       </h3>
     </div>
   </div>
-
+<div class ="full-summary">
   <div
     *ngFor="let qa of summary"
     [ngClass]="{ summarydiv: this.abItem.Status__c != 'Completed' }"
@@ -807,6 +810,8 @@
       </div>
     </div>
   </div>
+  </div>
+
 
   <div class="flexer" *ngIf="abItem">
     <div class="" *ngIf="abItem.Status__c != 'Completed'">

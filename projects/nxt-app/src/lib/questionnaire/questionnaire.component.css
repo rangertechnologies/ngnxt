@@ -427,10 +427,11 @@
 }
 
 .answer {
-  color: black !important;
+  color: #20252b !important;
   padding-left: 3%;
-  margin-top: -2%;
+  margin-top: -4%;
   padding-bottom: 1%;
+  font-size: 16px;
 }
 .summaryTitle {
   width: max-content;
@@ -444,11 +445,6 @@
 }
 .dpDown:focus-visible {
   outline: none;
-}
-.summary-groupText {
-  font-weight: 700 !important;
-  padding-left: 3%;
-  padding-bottom: 1%;
 }
 
 .summaryTitle {
