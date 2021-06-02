@@ -259,9 +259,9 @@
   background-image: none !important;
   border: none !important;
   position: relative !important;
-  padding: 0px !important;
-  margin: 0px !important;
-  padding-left: 5px !important;
+  padding: 0px;
+  margin: 0px;
+  padding-left: 5px;
   min-width: 60px !important;
   outline-style: none;
 }
@@ -745,4 +745,10 @@ input[type="button"].btn-block {
 }
 .left-bt {
   margin-top: 106%;
+}
+.myt-colon{
+  margin-left: -32px;
+}
+.myt-hour{
+  padding-left: 26px !important;
 }
