@@ -943,6 +943,13 @@ export class QuestionnaireComponent implements OnInit {
         this.questionName.push(this.questionItem.Name);
       }
       this.back = false;
+      if(this.questionName[0] === this.questionName[1]){
+        console.log(" 0&&1 are equal");
+        this.questionName.pop();
+        
+      }
+      console.log(this.questionName);
+      
           console.log(this.questionItem);
           console.log(this.questionItem.Name);
           
@@ -1366,6 +1373,8 @@ export class QuestionnaireComponent implements OnInit {
         var pathposs = Object.values(this.possibilities.paths[i].questions);
         console.log(pathposs[this.pathquestion] + "right");
         console.log(this.currentName  + "left");
+        console.log(pathposs);
+        
         if (pathposs[this.pathquestion] === this.currentName) {
           j.push(i);
         
