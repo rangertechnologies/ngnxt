@@ -268,7 +268,7 @@
         >
           <select
             name="hours"
-            class="datetime showHour myt-time"
+            class="datetime showHour myt-time myt-hour"
             [(ngModel)]="selectedHour"
             id="hour"
             (focus)="clearError()"
@@ -295,7 +295,7 @@
             [ngClass]="{ colon1: qbItem.Progress_Bar__c }"
             *ngIf="questionItem.X24_Hours__c == false"
           >
-            <span class="colon"> : </span>
+            <span class="colon myt-colon"> : </span>
             <select
               name="AM/PM"
               class="datetime myt-time"
