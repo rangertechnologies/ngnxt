@@ -171,7 +171,7 @@
   position: relative !important;
   padding: 15px !important;
   float: left !important;
-  width: 100% !important;
+  width: 100%;
 }
 
 .nxt-btn {
