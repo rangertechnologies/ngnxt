@@ -777,13 +777,14 @@ export class QuestionnaireComponent implements OnInit {
         // Read the last answered question
         this.readQuestion(lastQuestionId);
       }
-    }
-
-    if (this.abItem.Status__c == "Completed") {
+    } else if (this.abItem.Status__c == "Completed") {
+      // Temporary Fix for duplicate answers on the summary.
+      this.summary = [];
       this.percent = 100;
       this.progressStyle = "100%";
-      // this.readAnswerbook(this.abItem.Id);
+
       for (var answer of this.abItem.Answers__r.records) {
+        console.log(answer.Question_Rich_Text__c);
         var answers = {};
         if(answer.Question_Type__c == 'File') {
           var files = "";
