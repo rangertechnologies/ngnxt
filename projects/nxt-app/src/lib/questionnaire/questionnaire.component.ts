@@ -225,6 +225,7 @@ export class QuestionnaireComponent implements OnInit {
   }
 
   ngOnInit() {
+    console.log ("object-r");
     this.inpValue = "";
     this.selectedMeridiem = "AM";
     this.processQB();
