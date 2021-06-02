@@ -268,7 +268,7 @@
         >
           <select
             name="hours"
-            class="datetime showHour"
+            class="datetime showHour myt-time"
             [(ngModel)]="selectedHour"
             id="hour"
             (focus)="clearError()"
@@ -281,7 +281,7 @@
           <span class="colon"> : </span>
           <select
             name="minutes"
-            class="datetime showminute"
+            class="datetime showminute myt-time"
             [(ngModel)]="selectedMinute"
             id="minute"
             (focus)="clearError()"
@@ -298,7 +298,7 @@
             <span class="colon"> : </span>
             <select
               name="AM/PM"
-              class="datetime"
+              class="datetime myt-time"
               [(ngModel)]="selectedMeridiem"
               id="meridiem"
             >
@@ -369,11 +369,14 @@
             src="https://rnxt.s3.amazonaws.com/MytIcon/icon-doc-img%402x.png"
             class="icon-edit1"
           />
-          
+          <div
+          class="fileQues"
+          [innerHTML]="getText(questionItem.Question_Text__c)"
+        >       
+          {{ questionItem.Question_Text__c }}
+        </div>
       
             
-          
-            {{ questionItem.Question_Text__c }}
           
           <label for="files" class="nxt-btn addBtn">Adjuntar</label>
           <input
