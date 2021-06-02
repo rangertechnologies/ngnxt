@@ -15,6 +15,7 @@ export class QuestionBook {
   Submit_Tracking_ID__c: string;
   Total_Questions__c: number;
   Summary_Text__c?: string;
+  Summary_Sub_Text__c : string;
   Questions__r?: QuestionR;
   Possibilities__c : string;
   Progress_Bar__c : boolean;
@@ -39,6 +40,7 @@ export class Question {
   Group__c: string;
   Question_No__c?: string;
   Question_Options__r?: OptionR;
+  Sub_Text__c : string;
   Size__c: number;
   Tracking_ID__c: string;
   Additional_Rich__c? : string;
