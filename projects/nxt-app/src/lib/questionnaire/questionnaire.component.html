@@ -369,11 +369,14 @@
             src="https://rnxt.s3.amazonaws.com/MytIcon/icon-doc-img%402x.png"
             class="icon-edit1"
           />
-          
+          <div
+          class="fileQues"
+          [innerHTML]="getText(questionItem.Question_Text__c)"
+        >       
+          {{ questionItem.Question_Text__c }}
+        </div>
       
             
-          
-            {{ questionItem.Question_Text__c }}
           
           <label for="files" class="nxt-btn addBtn">Adjuntar</label>
           <input
