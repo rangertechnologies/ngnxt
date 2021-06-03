@@ -105,7 +105,7 @@
       *ngFor="let opt of questionItem.Question_Options__r.records"
       class="radio col-md-6 optiondiv"
     >
-      <label class="radiocontainer">
+      <label class="radiocontainer container radiotext">{{ opt.Value__c }}
         <input
           type="radio"
           [id]="opt.Id"
@@ -114,7 +114,7 @@
           value="{{ opt.Value__c }}"
           (change)="optionChange(opt.Value__c)"
         />
-        <span class="checkmark">{{ opt.Value__c }}</span>
+        <span class="checkmark"></span>
       </label>
     </div>
   </div>
@@ -357,89 +357,39 @@
     </ul>
 
     <div *ngIf="qbItem.Progress_Bar__c">
-      <div>
-        <div
-          style.border-color="{{ this.questionItem.error ? 'red' : '' }}"
-          [ngClass]="{
-            'Rectangle-file ques-alert2': attachments?.length === 0
-          }"
-          *ngIf="attachments?.length === 0"
-        >
-          <img
-            src="https://rnxt.s3.amazonaws.com/MytIcon/icon-doc-img%402x.png"
-            class="icon-edit1"
-          />
-          <div
-          class="fileQues"
-          [innerHTML]="getText(questionItem.Question_Text__c)"
-        >       
-          {{ questionItem.Question_Text__c }}
-        </div>
-      
-            
-          
-          <label for="files" class="nxt-btn addBtn">Adjuntar</label>
-          <input
-            id="files"
-            style="visibility: hidden"
-            type="file"
-            accept="{{ allowedFileExtension }}"
-            (change)="uploadFile($event)"
-          />
-        </div>
-        <div [ngClass]="{ uploadBox: attachments?.length > 0 }">
-          <ul
-            *ngIf="attachments?.length > 0"
-            [ngClass]="{ 'myT-file-docicon': qbItem.Progress_Bar__c }"
-          >
-            <li *ngFor="let attachment of attachments" class="align-l">
-              <img
-                src="https://rnxt.s3.amazonaws.com/MytIcon/icon-doc-img%402x.png"
-                class="icon-edit2"
-              />
-              <div class="filename">
-                {{ attachment.attachmentName }}
-                <span
-                  class="attach-list"
-                  (click)="deleteAttachment(attachment.attachmentId)"
-                  ><img
-                    src="https://rnxt.s3.amazonaws.com/MytIcon/icon-delete%402x.png"
-                    class="deleteIcon"
-                /></span>
-              </div>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </div>
-    <div class="myt-box" *ngIf="attachments?.length > 0 && qbItem.Progress_Bar__c">
-      <div class="Rectangle-file ques-alert2">
-        <img
-          src="https://rnxt.s3.amazonaws.com/MytIcon/icon-doc-img%402x.png"
-          class="icon-edit1"
-        />
-        <div
-          class="fileQues"
-          [innerHTML]="getText(questionItem.Question_Text__c)"
-        >
-          {{ questionItem.Question_Text__c }}
-        </div>
-        <label for="files" class="nxt-btn addBtn">Adjuntar</label>
-        <input
-          id="files"
-          style="visibility: hidden"
-          type="file"
-          accept="{{ allowedFileExtension }}"
-          (change)="uploadFile($event)"
-        />
-      </div>
+      <div *ngFor="let attachment of attachments" class="file-uploading-box" >
+    <img
+    src="https://rnxt.s3.amazonaws.com/MytIcon/icon-doc-img%402x.png"
+    class="icon-edit1"
+  />
+<span class="uploading-file-name"  >{{ attachment.attachmentName }}</span>
+<img
+src="https://rnxt.s3.amazonaws.com/MytIcon/icon-delete%402x.png"
+class="deleteIcon" (click)="deleteAttachment(attachment.attachmentId)"
+/>
+
+
+
+</div>
+<div class="file-upload-box"   style.border-color="{{ this.questionItem.error ? 'red' : '' }}">
+    <img
+    src="https://rnxt.s3.amazonaws.com/MytIcon/icon-doc-img%402x.png"
+    class="icon-edit1"
+  />
+<span class="f-Name"  [innerHTML]="getText(questionItem.Question_Text__c)"> {{ questionItem.Question_Text__c }}</span>
+<label class="file-label ">
+<span  >
+Adjuntar
+</span>
+<input name="attachment" type="file" placeholder="Ticket kaufen" multiple
+accept=".pdf, .png, .jpg, .jpeg, .heic, .application/pdf"
+(change)="uploadFile($event)" class="file-upload-btn">
+</label>
+</div>
+    
     </div>
   </div>
-  <!-- <ul *ngIf="attachments?.length > 0 && fileFlag" class="attach-ulist col-md-12">
-    <li *ngFor="let attachment of attachments" class="align-l">{{attachment.attachmentName}}
-      <span class="attach-list" (click)="deleteAttachment(attachment.attachmentId)"><img src="https://rnxt.s3.amazonaws.com/MytIcon/icon-delete%402x.png"></span>
-    </li>
-  </ul> -->
+
 
   <div *ngIf="bookFlag">
     <div class="form-group">
@@ -531,90 +481,37 @@
               </li>
             </ul>
             <div class="myt-box" *ngIf="qbItem.Progress_Bar__c">
-              <div>
-                <div
-                  style.border-color="{{ this.ques.error ? 'red' : '' }}"
-                  [ngClass]="{
-                    'Rectangle-file ques-alert2': attachments?.length === 0
-                  }"
-                  *ngIf="attachments?.length === 0"
-                >
+             
+              <div *ngFor="let attachment of attachments"  class="file-uploading-box">
+                              <img
+                              src="https://rnxt.s3.amazonaws.com/MytIcon/icon-doc-img%402x.png"
+                              class="icon-edit1"
+                            />
+									<span class="uploading-file-name"   > {{ attachment.attachmentName }}</span>
                   <img
-                    src="https://rnxt.s3.amazonaws.com/MytIcon/icon-doc-img%402x.png"
-                    class="icon-edit1"
-                  />
-                  <div class="fileQues">{{ ques.Question__c }}</div>
-                  <label for="files" class="nxt-btn addBtn">Adjuntar</label>
-                  <input
-                    id="files"
-                    style="visibility: hidden"
-                    type="file"
-                    accept="{{ allowedFileExtension }}"
-                    (change)="uploadFile($event)"
-                  />
-                </div>
-                <div [ngClass]="{ uploadBox: attachments?.length > 0 }">
-                  <ul
-                    *ngIf="attachments?.length > 0"
-                    [ngClass]="{ 'myT-file-docicon': qbItem.Progress_Bar__c }"
-                  >
-                    <li *ngFor="let attachment of attachments" class="align-l">
-                      <img
-                        src="https://rnxt.s3.amazonaws.com/MytIcon/icon-doc-img%402x.png"
-                        class="icon-edit2"
-                      />
-                      <div class="filename">
-                        {{ attachment.attachmentName }}
-                        <span
-                          class="attach-list"
-                          (click)="deleteAttachment(attachment.attachmentId)"
-                          ><img
-                            src="https://rnxt.s3.amazonaws.com/MytIcon/icon-delete%402x.png"
-                            class="deleteIcon"
-                        /></span>
-                      </div>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-            <div class="myt-box"*ngIf="attachments?.length > 0 && qbItem.Progress_Bar__c">
-              <div class="Rectangle-file ques-alert2">
-                <img
-                  src="https://rnxt.s3.amazonaws.com/MytIcon/icon-doc-img%402x.png"
-                  class="icon-edit1"
-                />
-                <div class="fileQues myt-file">{{ ques.Question__c }}</div>
-                <label for="files" class="nxt-btn addBtn">Adjuntar</label>
-                <input
-                  id="files"
-                  style="visibility: hidden"
-                  type="file"
-                  accept="{{ allowedFileExtension }}"
-                  (change)="uploadFile($event)"
-                />
-              </div>
+                  src="https://rnxt.s3.amazonaws.com/MytIcon/icon-delete%402x.png"
+                  class="deleteIcon" (click)="deleteAttachment(attachment.attachmentId)"
+              />
+
+
+
+								</div>
+								<div  class="file-upload-box"   style.border-color="{{ this.questionItem.error ? 'red' : '' }}">
+                              <img
+                              src="https://rnxt.s3.amazonaws.com/MytIcon/icon-doc-img%402x.png"
+                              class="icon-edit1"
+                            />
+									<span class="f-Name">{{ ques.Question__c }}</span>
+									<label class="file-label ">
+										<span style="color: #c5281c;text-decoration:underline">
+											Adjuntar
+										</span>
+										<input name="attachment" type="file" placeholder="Ticket kaufen" multiple
+											accept=".pdf, .png, .jpg, .jpeg, .heic, .application/pdf"
+											(change)="uploadFile($event)"class="file-upload-btn">
+									</label>
             </div>
           </div>
-          <div *ngIf="ques.Type__c === 'Radio'" class="">
-            <div *ngIf="ques.error" class="cond-div2">
-              {{ ques.Error_Message__c }}
-            </div>
-            <div
-              *ngFor="let opt of ques.Question_Options__r.records"
-              class="radio col-md-6 optiondiv"
-            >
-              <label class="radiocontainer">
-                <input
-                  type="radio"
-                  [id]="ques.Id"
-                  [(ngModel)]="ques.input"
-                  value="{{ opt.Value__c }}"
-                  (change)="Dropdown($event); clearSQError(ques.Id)"
-                />
-                <span class="checkmark">{{ opt.Value__c }}</span>
-              </label>
-            </div>
           </div>
 
           <div *ngIf="ques.Type__c === 'Dropdown'" class="">
