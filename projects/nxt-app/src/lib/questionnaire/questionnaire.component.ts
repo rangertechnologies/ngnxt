@@ -633,17 +633,15 @@ export class QuestionnaireComponent implements OnInit {
         if (ansWrap) {
           //console.log("Handling Answer for " + ansWrap.quesId + " of type " + ansWrap.qTyp);
           var newStr = "";
+          
           for (var ansStr of ansWrap.ansValue.split("@@##$$")) {
             if (ansStr.length > 0) {
               if (newStr.length == 0) {
                 newStr = ansStr;
-
+                //for file assignment
                 if (this.attachmentsMap.has(ansWrap.quesId)) {
-                  console.log("filemap");
                   for (var att of this.attachmentsMap.get(ansWrap.quesId)) {
-                    console.log("att:" + att);
                     newStr = newStr.replace(att.attachmentId + "@#$", "");
-                    console.log(newStr);
                   }
                 }
               } else {
