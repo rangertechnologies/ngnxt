@@ -36,6 +36,7 @@
           <h3>
             {{ questionItem.Group__c }}
           </h3>
+          <div>{{questionItem.Sub_Text__c}}</div>
           <div
             *ngIf="questionItem.Additional_Rich__c && qbItem.Progress_Bar__c"
           >
@@ -725,7 +726,7 @@
           {{ qbItem.Summary_Text__c }}
         </h3>
         <div *ngIf="this.abItem.Status__c != 'Completed'">
-          Revisa que todos los datos sean correctos antes de enviarlo.
+          {{ qbItem.Summary_Sub_Text__c}}
         </div>
       </div>
     </div>
