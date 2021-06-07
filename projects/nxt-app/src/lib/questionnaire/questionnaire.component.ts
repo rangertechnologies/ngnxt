@@ -1,35 +1,41 @@
-import { Component, OnInit, OnChanges, Input, Output, EventEmitter ,ViewEncapsulation} from '@angular/core';
-import { ActivatedRoute, Params } from '@angular/router';
-import { SalesforceService } from '../services/salesforce.service';
-import { IMyDateModel, IMyDpOptions } from 'mydatepicker';
-import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
-import { FormBuilder } from '@angular/forms';
+import {
+  Component,
+  OnInit,
+  OnChanges,
+  Input,
+  Output,
+  EventEmitter,
+  ViewEncapsulation,
+} from "@angular/core";
+import { ActivatedRoute, Params } from "@angular/router";
+import { SalesforceService } from "../services/salesforce.service";
+import { IMyDateModel, IMyDpOptions } from "mydatepicker";
+import { DomSanitizer, SafeHtml } from "@angular/platform-browser";
+import { FormBuilder } from "@angular/forms";
 import { NgxSpinnerService } from "ngx-spinner";
 
 import {
-Question,
-QuestionBook,
-AnswerBook,
-AnswerWrapper,
-ErrorWrapper,
-Option,
-OptionValue,
-AttachmentWrapper,
-Attachment
-} from '../wrapper';
+  Question,
+  QuestionBook,
+  AnswerBook,
+  AnswerWrapper,
+  ErrorWrapper,
+  Option,
+  OptionValue,
+  AttachmentWrapper,
+  Attachment,
+} from "../wrapper";
 
 import {
-TESTQUESTION,
-DTQUESTION,
-FILEQUESTION,
-TAQUESTION,
-RADIOQUESTION,
-CHECKQUESTION,
-BOOKQUESTION,
-TESTQB
-} from '../sample';
-
-
+  TESTQUESTION,
+  DTQUESTION,
+  FILEQUESTION,
+  TAQUESTION,
+  RADIOQUESTION,
+  CHECKQUESTION,
+  BOOKQUESTION,
+  TESTQB,
+} from "../sample";
 
 @Component({
   selector: "lib-questionnaire",
@@ -225,7 +231,7 @@ export class QuestionnaireComponent implements OnInit {
   }
 
   ngOnInit() {
-   // console.log ('abdul');
+    console.log("abdul");
     this.inpValue = "";
     this.selectedMeridiem = "AM";
     this.processQB();
@@ -623,43 +629,42 @@ export class QuestionnaireComponent implements OnInit {
 
       // Show Summary
       for (var q of this.questionStack) {
-        //console.log('Handling Question => ' + q);
-
         var ansWrap = this.answerMap.get(q);
         if (ansWrap) {
-          //console.log('Handling Answer for ' + ansWrap.quesId + ' of type ' + ansWrap.qTyp);
-          if (ansWrap.qTyp == "File" || ansWrap.qTyp == "Book") {
-            var newStr = "";
-            for (var ansStr of ansWrap.ansValue.split("@@##$$")) {
-            
-              if (ansStr.length > 0) {
-                if (newStr.length == 0) {
-                  newStr = ansStr;
-                } else {
-                  newStr += ", " + ansStr;
-
-                  if (this.attachmentsMap.has(ansWrap.quesId)) {
-                    
-                    for (var att of this.attachmentsMap.get(ansWrap.quesId)) {
-                      newStr = newStr.replace(att.attachmentId, "");
-                    }
+          //console.log("Handling Answer for " + ansWrap.quesId + " of type " + ansWrap.qTyp);
+          var newStr = "";
+          
+          for (var ansStr of ansWrap.ansValue.split("@@##$$")) {
+            if (ansStr.length > 0) {
+              if (newStr.length == 0) {
+                newStr = ansStr;
+                //for file assignment
+                if (this.attachmentsMap.has(ansWrap.quesId)) {
+                  for (var att of this.attachmentsMap.get(ansWrap.quesId)) {
+                    newStr = newStr.replace(att.attachmentId + "@#$", "");
                   }
-                  newStr = newStr.replace(",,", ", ").replace(", ,", ", ");
-                  newStr = newStr.startsWith(",")
-                    ? newStr.substring(1, newStr.length)
-                    : newStr.endsWith(",")
-                    ? newStr.substring(0, newStr.length - 1)
-                    : newStr;
                 }
+              } else {
+                newStr += ", " + ansStr;
+                //for file assignment
+                if (this.attachmentsMap.has(ansWrap.quesId)) {
+                  for (var att of this.attachmentsMap.get(ansWrap.quesId)) {
+                    newStr = newStr.replace(att.attachmentId + "@#$", "");
+                  }
+                }
+                newStr = newStr.replace(",,", ", ").replace(", ,", ", ");
+                newStr = newStr.startsWith(",")
+                  ? newStr.substring(1, newStr.length)
+                  : newStr.endsWith(",")
+                  ? newStr.substring(0, newStr.length - 1)
+                  : newStr;
               }
             }
-            ansWrap.ansValue = newStr;
           }
+          ansWrap.ansValue = newStr;
           this.summary.push(ansWrap);
         }
       }
-
-      // Show Thank you Note
     }
   }
 
@@ -737,8 +742,8 @@ export class QuestionnaireComponent implements OnInit {
 
         for (var ansObject of this.abItem.Answers__r.records) {
           lastQuestionId = ansObject.Question_Ref__c;
-         // console.log("Question: " + ansObject.Question_Rich_Text__c);
-        //  console.log("Answer: " + ansObject.Answer_Long__c);
+          // console.log("Question: " + ansObject.Question_Rich_Text__c);
+          //  console.log("Answer: " + ansObject.Answer_Long__c);
 
           this.questionStack.push(ansObject.Question_Ref__c);
 
@@ -752,15 +757,15 @@ export class QuestionnaireComponent implements OnInit {
           //console.log(this.questionStack)
           if (ansObject.Question_Type__c == "Book") {
             var av1 = ansObject.Answer_Long__c.split("@@##$$");
-           // console.log("book log");
+            // console.log("book log");
 
-          //  console.log("bookid" + av1[0]);
+            //  console.log("bookid" + av1[0]);
             this.attachmentsMap.set(ansObject.Question_Ref__c, [
               { attachmentName: av1[1], attachmentId: av1[0] },
             ]);
-          //  console.log(this.attachmentsMap);
+            //  console.log(this.attachmentsMap);
           } else if (ansObject.Question_Type__c == "File") {
-         //  console.log("inside if");
+            //  console.log("inside if");
             var attList;
             var att;
             for (var attVar of ansObject.Answer_Long__c.split(",")) {
@@ -770,7 +775,7 @@ export class QuestionnaireComponent implements OnInit {
               attList.push(att);
             }
             this.attachmentsMap.set(ansObject.Question_Ref__c, attList);
-          //  console.log(this.attachmentsMap);
+            //  console.log(this.attachmentsMap);
           }
         }
 
@@ -786,35 +791,45 @@ export class QuestionnaireComponent implements OnInit {
       this.progressStyle = "100%";
 
       for (var answer of this.abItem.Answers__r.records) {
+        console.log("repeat");
         console.log(answer.Question_Rich_Text__c);
         var answers = {};
-        if(answer.Question_Type__c == 'File') {
+        if (answer.Question_Type__c == "File") {
           var files = "";
           var fIndex = 0;
           var fileList = answer.Answer_Long__c.split(",");
-          for(var fileIdName of fileList) {
-            var fileName = fileIdName.split('@#$');
-            if(fIndex == 0) {
+          for (var fileIdName of fileList) {
+            var fileName = fileIdName.split("@#$");
+            if (fIndex == 0) {
               files = fileName[1];
             } else {
-              files = files + ' ,' + fileName[1];
+              files = files + " ," + fileName[1];
             }
-            
+
             fIndex++;
           }
 
-          answers = { quesValue: answer.Question_Rich_Text__c, ansValue: files };
+          answers = {
+            quesValue: answer.Question_Rich_Text__c,
+            ansValue: files,
+          };
           this.summary.push(answers);
-        } else if(answer.Question_Type__c == 'Book') {
-          for(var bqAnswerValue of answer.Answer_Long__c.split("@@##$$")) {
+        } else if (answer.Question_Type__c == "Book") {
+          for (var bqAnswerValue of answer.Answer_Long__c.split("@@##$$")) {
             answers = {};
-            answers = { quesValue: answer.Question_Rich_Text__c, ansValue: bqAnswerValue };
+            answers = {
+              quesValue: answer.Question_Rich_Text__c,
+              ansValue: bqAnswerValue,
+            };
             this.summary.push(answers);
           }
         } else {
-          answers = { quesValue: answer.Question_Rich_Text__c, ansValue: answer.Answer_Long__c };
+          answers = {
+            quesValue: answer.Question_Rich_Text__c,
+            ansValue: answer.Answer_Long__c,
+          };
           this.summary.push(answers);
-        }       
+        }
       }
     }
   };
@@ -856,7 +871,7 @@ export class QuestionnaireComponent implements OnInit {
     );
 
   private successRead = (response) => {
-   // console.log(response);
+    // console.log(response);
     // Reset the Variables
 
     if (this.questionItem) {
@@ -947,13 +962,13 @@ export class QuestionnaireComponent implements OnInit {
         this.questionName.push(this.questionItem.Name);
       }
       this.back = false;
-      if(this.questionName[0] === this.questionName[1]){
+      if (this.questionName[0] === this.questionName[1]) {
         this.questionName.pop();
       }
-          
+
       this.currentName = this.questionItem.Name;
       this.pathquestion = this.questionName.indexOf(this.currentName);
-      this.possibilities = JSON.parse(this.qbItem.Possibilities__c);    
+      this.possibilities = JSON.parse(this.qbItem.Possibilities__c);
     }
 
     this.myDatePickerOptions;
@@ -965,7 +980,7 @@ export class QuestionnaireComponent implements OnInit {
 
     // Check the existing answer from answerMap
     if (this.answerMap.has(this.questionItem.Id)) {
-    //  console.log("existing answer found for this.questionItem.Name");
+      //  console.log("existing answer found for this.questionItem.Name");
       var eAnswer = this.answerMap.get(this.questionItem.Id);
       // Get the existing answer from the Map
       this.inpValue = eAnswer.ansValue;
@@ -1360,23 +1375,21 @@ export class QuestionnaireComponent implements OnInit {
     if (this.qbItem.Progress_Bar__c === true) {
       let j = [];
       for (let i = 0; i < this.possibilities.total; i++) {
-       
-        
-        var pathposs = Object.values(this.possibilities.paths[i].questions);        
+        var pathposs = Object.values(this.possibilities.paths[i].questions);
         if (pathposs[this.pathquestion] === this.currentName) {
-          j.push(i);   
+          j.push(i);
           this.check = true;
         } else {
           this.check = false;
         }
       }
-      if (j.length === 1) {        
+      if (j.length === 1) {
         this.count = j[0];
       }
       if (j.length > 1) {
         var width =
           100 * (this.questionStack.length / this.possibilities.maxQuestions);
-        this.progressStyle = Math.round(width) + "%";     
+        this.progressStyle = Math.round(width) + "%";
       } else if (j.length === 1) {
         var width =
           100 *
@@ -1388,4 +1401,3 @@ export class QuestionnaireComponent implements OnInit {
     }
   }
 }
-
