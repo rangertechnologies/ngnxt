@@ -50,7 +50,7 @@
   <!--Question alignment-->
   <div class="questiondiv2">
     <div *ngIf="questionItem.Is_Title__c">
-      <h3 class="questionalign myt-fontc" [innerHTML]="getText(questionItem.Question_Text__c)">
+      <h3 class="questionalign myt-fontc myt-font3 myt-align" [innerHTML]="getText(questionItem.Question_Text__c)">
         {{questionItem.Question_Text__c}}
       </h3>
     </div>
@@ -106,7 +106,7 @@
       *ngFor="let opt of questionItem.Question_Options__r.records"
       class="radio col-md-6 optiondiv"
     >
-      <label class="radiocontainer container radiotext">{{ opt.Value__c }}
+      <label class="radiocontainer container radiotext myt-font4">{{ opt.Value__c }}
         <input
           type="radio"
           [id]="opt.Id"
@@ -140,14 +140,14 @@
   <div *ngIf="textFlag" class="col-md-12">
     <div
       class="col-md-12"
-      class="dis-flex"
+      class="dis-flex myt-align1"
       [class]="'col-md-' + questionItem.Size__c + ' paddingnone'"
     >
       <input
         type="text"
         [(ngModel)]="inpValue"
         [ngClass]="{
-          boxoutline: qbItem.Progress_Bar__c,
+          'boxoutline myt-font1': qbItem.Progress_Bar__c,
           textBox1: !qbItem.Progress_Bar__c
         }"
         id="text-input-id"
@@ -296,7 +296,7 @@
             [ngClass]="{ colon1: qbItem.Progress_Bar__c }"
             *ngIf="questionItem.X24_Hours__c == false"
           >
-            <span class="colon myt-colon"> : </span>
+            <span class="colon"> : </span>
             <select
               name="AM/PM"
               class="datetime myt-time"
@@ -363,7 +363,7 @@
     src="https://rnxt.s3.amazonaws.com/MytIcon/icon-doc-img%402x.png"
     class="icon-edit1"
   />
-<span class="uploading-file-name"  >{{ attachment.attachmentName }}</span>
+<span class="uploading-file-name myt-font1"  >{{ attachment.attachmentName }}</span>
 <img
 src="https://rnxt.s3.amazonaws.com/MytIcon/icon-delete%402x.png"
 class="deleteIcon" (click)="deleteAttachment(attachment.attachmentId)"
@@ -401,14 +401,14 @@ accept=".pdf, .png, .jpg, .jpeg, .heic, .application/pdf"
           *ngFor="let ques of subQuestions"
         >
           <div [ngClass]="{ down2: qbItem.Progress_Bar__c }">
-            <span class="colorf">{{ ques.Question__c }}</span>
+            <span class="colorf myt-font3">{{ ques.Question__c }}</span>
           </div>
           <div *ngIf="ques.Type__c === 'Text'">
             <input
               type="text"
               [(ngModel)]="ques.input"
               [ngClass]="{
-                'dt-line date-line down1 boxoutline': qbItem.Progress_Bar__c,
+                'dt-line date-line down1 boxoutline myt-font1': qbItem.Progress_Bar__c,
                 textBox: !qbItem.Progress_Bar__c
               }"
               id="text"
@@ -488,7 +488,7 @@ accept=".pdf, .png, .jpg, .jpeg, .heic, .application/pdf"
                               src="https://rnxt.s3.amazonaws.com/MytIcon/icon-doc-img%402x.png"
                               class="icon-edit1"
                             />
-									<span class="uploading-file-name"   > {{ attachment.attachmentName }}</span>
+									<span class="uploading-file-name myt-font1"   > {{ attachment.attachmentName }}</span>
                   <img
                   src="https://rnxt.s3.amazonaws.com/MytIcon/icon-delete%402x.png"
                   class="deleteIcon" (click)="deleteAttachment(attachment.attachmentId)"
@@ -518,7 +518,7 @@ accept=".pdf, .png, .jpg, .jpeg, .heic, .application/pdf"
           <div *ngIf="ques.Type__c === 'Dropdown'" class="">
             <select
               [ngClass]="{
-                'dt-line down1 dpDown myt-dropbox myt-border-r': qbItem.Progress_Bar__c,
+                'dt-line down1 dpDown myt-dropbox myt-border-r myt-font1': qbItem.Progress_Bar__c,
                 'custom-select': !qbItem.Progress_Bar__c
               }"
               class="custom-select mr-sm-2 dd-height"
@@ -656,14 +656,14 @@ accept=".pdf, .png, .jpg, .jpeg, .heic, .application/pdf"
         >
           <div
             *ngIf="this.abItem.Status__c != 'Completed' && qbItem.Progress_Bar__c"
-            [ngClass]="{ 'summary-groupText': qbItem.Progress_Bar__c }"
+            [ngClass]="{ 'summary-groupText myt-font2': qbItem.Progress_Bar__c }"
           >
             {{ qa.groupText }}
           </div>
 
           <div
             *ngIf="!qbItem.Edit__c"
-            [ngClass]="{ question: this.abItem.Status__c != 'Completed' }"
+            [ngClass]="{ 'question myt-font3': this.abItem.Status__c != 'Completed' }"
           >
             <a
               [ngClass]="{ asum: this.abItem.Status__c === 'Completed' }"
@@ -674,7 +674,7 @@ accept=".pdf, .png, .jpg, .jpeg, .heic, .application/pdf"
           </div>
           <div
             *ngIf="qbItem.Edit__c"
-            [ngClass]="{ question: this.abItem.Status__c != 'Completed' }"
+            [ngClass]="{ 'question myt-font3': this.abItem.Status__c != 'Completed' }"
           >
             <div
               [ngClass]="{ asum: this.abItem.Status__c === 'Completed' }"
@@ -692,7 +692,7 @@ accept=".pdf, .png, .jpg, .jpeg, .heic, .application/pdf"
             </button>
           </div>
           <div [ngClass]="{ bsum: this.abItem.Status__c === 'Completed' }">
-            <div [ngClass]="{ answer: this.abItem.Status__c != 'Completed' }">
+            <div [ngClass]="{ 'answer myt-font1': this.abItem.Status__c != 'Completed' }">
               <div *ngIf="qa.qTyp === 'File'">
                 <img
                   src="https://rnxt.s3.amazonaws.com/MytIcon/icon-doc-img%401.png"
