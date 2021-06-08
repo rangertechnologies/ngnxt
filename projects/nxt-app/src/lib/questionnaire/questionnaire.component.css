@@ -261,8 +261,10 @@
   padding: 0px;
   margin: 0px;
   padding-left: 5px;
-  min-width: 60px !important;
+  min-width: 19px !important;
   outline-style: none;
+  font-size: 16px!important;
+  letter-spacing: 2px;
 }
 
 .datetime:focus {
