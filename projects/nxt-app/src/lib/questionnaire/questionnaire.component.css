@@ -68,8 +68,10 @@
     margin: -11% 0% 5% 17%; */
 
     padding-left: 16px;
-        padding-top: 43px;
-  width: max-content;
+    padding-top: 14px;
+    /* width: initial; 
+    /* width: -moz-max-content; */
+    /* width: max-content; */
 }
 .question-f-size {
   font-size: 0.7rem !important;
