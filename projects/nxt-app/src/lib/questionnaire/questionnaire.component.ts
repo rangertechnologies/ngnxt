@@ -213,17 +213,25 @@ export class QuestionnaireComponent implements OnInit {
 
   onDateChanged(event: IMyDateModel) {
     //to change the border color
-    this.inpValue =
-      event.date.year + "-" + event.date.month + "-" + event.date.day;
+    
+    if (this.qbItem.Progress_Bar__c) {
+      this.inpValue =
+      event.date.day + "/" + event.date.month + "/" + event.date.year;
+    }else{
+      this.inpValue =
+      event.date.year  + "-" + event.date.month + "-" + event.date.day ;
+    }
+    
     const htmlElement = window.document.getElementsByClassName("mydp");
     htmlElement
       .item(0)
       .setAttribute("style", "border-color:#87be1c;width:100%");
     this.dateMap.set(this.questionItem.Id, event);
     if (
-      event.date.year === 0 &&
+      event.date.day === 0 &&
       event.date.month === 0 &&
-      event.date.day === 0
+      event.date.year === 0
+      
     ) {
       this.dateMap.delete(this.questionItem.Id);
       this.answerMap.delete(this.questionItem.Id);
@@ -472,12 +480,21 @@ export class QuestionnaireComponent implements OnInit {
           if (this.selectedMeridiem === "AM" && this.selectedHour === "12") {
             this.questionItem.input = "00" + ":" + this.selectedMinute;
           }
-          this.inpValue = this.inpValue + "T" + this.questionItem.input;
+          if (this.qbItem.Progress_Bar__c){
+            this.inpValue = this.inpValue + " " + this.questionItem.input;
+          }else{
+            this.inpValue = this.inpValue + "T" + this.questionItem.input;
+          }
+          
         }
         if (this.questionItem.X24_Hours__c === true) {
           this.questionItem.input =
             this.selectedHour + ":" + this.selectedMinute;
-          this.inpValue = this.inpValue + "T" + this.questionItem.input;
+            if (this.qbItem.Progress_Bar__c){
+              this.inpValue = this.inpValue + " " + this.questionItem.input;
+            }else{
+              this.inpValue = this.inpValue + "T" + this.questionItem.input;
+            }
         }
         if (this.selDate === null || !this.inpValue) {
           this.questionItem.error = new ErrorWrapper();
@@ -711,7 +728,7 @@ export class QuestionnaireComponent implements OnInit {
   private successupdateAB = (response) => {
     //console.log(response);
     // console.log('status success')
-    this.abItem.Status__c = "Completed";
+    //this.abItem.Status__c = "Completed";
   };
   private failureupdateAB = (response) => {
     //console.log('status failed')
@@ -1388,11 +1405,11 @@ export class QuestionnaireComponent implements OnInit {
       }
       if (j.length > 1) {
         var width =
-          100 * (this.questionStack.length / this.possibilities.maxQuestions);
+          90 * (this.questionStack.length / this.possibilities.maxQuestions);
         this.progressStyle = Math.round(width) + "%";
       } else if (j.length === 1) {
         var width =
-          100 *
+          90 *
           (this.questionStack.length /
             this.possibilities.paths[this.count].count);
         this.progressStyle = Math.round(width) + "%";
