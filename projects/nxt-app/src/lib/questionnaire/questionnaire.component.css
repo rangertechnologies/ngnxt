@@ -398,19 +398,28 @@
 }
 .submit {
   display: block !important;
-  border: 17px solid #ffffff !important;
-  border-radius: 5px !important;
-  padding: 0.5em !important;
-  margin-left: 15px !important;
-  margin-right: 15px !important;
+  /* border: 17px solid #ffffff !important; */
+  /* border-radius: 5px !important;
+  padding: 0.5em !important; */
+  /* margin-left: 15px !important;
+  margin-right: 15px !important; */
   text-align: left !important;
   cursor: pointer !important;
   display: list-item !important;
   list-style-type: none;
   float: left;
-  width: 27.33%;
-  padding: 15px !important;
-  height: 9rem;
+  width: 33.33%;
+  /* padding: 15px !important; */
+  /* height: 9rem; */
+  height: 9em;
+  padding-left: 6%;
+    padding-bottom: 3%;
+    padding-right: 3%;
+    padding-top: 3%;
+}
+.full-summary-completed{
+  padding-bottom: 501px;
+  margin-top: 4%;
 }
 .asum {
   color: #6f7072 !important;

@@ -634,7 +634,7 @@ accept=".pdf, .png, .jpg, .jpeg, .heic, .application/pdf"
       </h3>
     </div>
   </div>
-<div class ="full-summary">
+<div   [ngClass]="{ 'full-summary': this.abItem.Status__c != 'Completed', 'full-summary-completed': this.abItem.Status__c === 'Completed' && qbItem.Progress_Bar__c }">
   <div
     *ngFor="let qa of summary"
     [ngClass]="{ summarydiv: this.abItem.Status__c != 'Completed' }"
