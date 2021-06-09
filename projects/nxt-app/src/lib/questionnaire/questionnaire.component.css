@@ -38,6 +38,13 @@
 .questiondiv1 {
   padding-left: 25px;
   padding-right: 25px;
+  padding-top: 3%;
+}
+#progress-summary {
+  padding-left: 12px;
+}
+#progress {
+  padding-left: 12px;
 }
 
 .questiondiv2 {
@@ -451,11 +458,7 @@
   padding-left: 2%;
   padding-top: 33px;
 }
-.summaryTitle-completed {
-  width: max-content;
-  padding-left: 2%;
-  padding-top: 47px;
-}
+
 .dpDown:focus-visible {
   outline: none;
 }
@@ -469,7 +472,7 @@
 .summaryTitle-completed {
   width: max-content;
   padding-left: 2%;
-  padding-top: 6%;
+  padding-top: 36px;
 }
 
 .summary-groupText {

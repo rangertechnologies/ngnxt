@@ -7,7 +7,7 @@
         <circle-progress
           class="titlebar"
           [percent]="this.percent"
-          [radius]="55"
+          [radius]="40"
           [space]="-4"
           [outerStrokeWidth]="4"
           [innerStrokeWidth]="4"
@@ -16,6 +16,7 @@
           [animation]="true"
           class="ng-star-inserted"
           [title]="this.percent+'%'"
+          [showSubtitle]="false"
           [animationDuration]="300"
           [startFromZero]="false"
           [responsive]="false"
@@ -27,12 +28,7 @@
         [ngClass]="{ questionalign: !qbItem.Progress_Bar__c }"
       >
         <div
-          [ngClass]="{
-            largeTitle:
-              this.questionItem.Type__c != 'Book' && qbItem.Progress_Bar__c,
-            bookTitle:
-              this.questionItem.Type__c === 'Book' && qbItem.Progress_Bar__c
-          }"
+         class="largeTitle"
         >
           <h3>
             {{ questionItem.Group__c }}
@@ -596,14 +592,16 @@ accept=".pdf, .png, .jpg, .jpeg, .heic, .application/pdf"
         <circle-progress
           class="titlebar"
           [percent]="this.percent"
-          [radius]="55"
+          [radius]="40"
           [space]="-4"
           [outerStrokeWidth]="4"
           [innerStrokeWidth]="4"
           [outerStrokeColor]="'#c5281c'"
           [innerStrokeColor]="'#e7e8ea'"
           [animation]="true"
+          class="ng-star-inserted"
           [title]="this.percent+'%'"
+          [showSubtitle]="false"
           [animationDuration]="300"
           [startFromZero]="false"
           [responsive]="false"
