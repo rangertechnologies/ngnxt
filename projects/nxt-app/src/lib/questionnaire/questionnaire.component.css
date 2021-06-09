@@ -735,7 +735,7 @@ input[type="button"].btn-block {
   border-color: #f1f1f1;
 }
 .down2 {
-  margin-top: 3%;
+  margin-top: 5%;
 }
 .dt-time {
   background-image: url("https://rnxt.s3.amazonaws.com/MytIcon/icon-clock%402x.png") !important;
@@ -760,3 +760,4 @@ input[type="button"].btn-block {
 .myt-hour{
   padding-left: 26px !important;
 }
+
