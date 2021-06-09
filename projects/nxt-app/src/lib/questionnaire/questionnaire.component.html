@@ -37,7 +37,7 @@
           <h3>
             {{ questionItem.Group__c }}
           </h3>
-          <div>{{questionItem.Sub_Text__c}}</div>
+          <div class="myt-font5">{{questionItem.Sub_Text__c}}</div>
           <div
             *ngIf="questionItem.Additional_Rich__c && qbItem.Progress_Bar__c"
           >
@@ -623,7 +623,7 @@ accept=".pdf, .png, .jpg, .jpeg, .heic, .application/pdf"
         <h3>
           {{ qbItem.Summary_Text__c }}
         </h3>
-        <div *ngIf="this.abItem.Status__c != 'Completed'">
+        <div class="myt-font5" *ngIf="this.abItem.Status__c != 'Completed'">
           {{ qbItem.Summary_Sub_Text__c}}
         </div>
       </div>
