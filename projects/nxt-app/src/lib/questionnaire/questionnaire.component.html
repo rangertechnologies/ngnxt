@@ -678,7 +678,7 @@ accept=".pdf, .png, .jpg, .jpeg, .heic, .application/pdf"
             [ngClass]="{ 'question myt-font3': this.abItem.Status__c != 'Completed' }"
           >
             <div
-              [ngClass]="{ asum: this.abItem.Status__c === 'Completed' }"
+              [ngClass]="{ 'asum myt-font3': this.abItem.Status__c === 'Completed' }"
               [innerHTML]="getText(qa.quesValue)"
             >
               {{ qa.quesValue }}
@@ -692,7 +692,7 @@ accept=".pdf, .png, .jpg, .jpeg, .heic, .application/pdf"
               />{{ qbItem.Edit__c }}
             </button>
           </div>
-          <div [ngClass]="{ bsum: this.abItem.Status__c === 'Completed' }">
+          <div [ngClass]="{ 'bsum myt-font1': this.abItem.Status__c === 'Completed' }">
             <div [ngClass]="{ 'answer myt-font1': this.abItem.Status__c != 'Completed' }">
               <div *ngIf="qa.qTyp === 'File'">
                 <img
