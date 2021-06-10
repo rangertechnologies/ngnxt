@@ -213,7 +213,6 @@ export class QuestionnaireComponent implements OnInit {
 
   onDateChanged(event: IMyDateModel) {
     //to change the border color
-    
     if (this.qbItem.Progress_Bar__c) {
       this.inpValue =
       event.date.day + "/" + event.date.month + "/" + event.date.year;
@@ -221,7 +220,6 @@ export class QuestionnaireComponent implements OnInit {
       this.inpValue =
       event.date.year  + "-" + event.date.month + "-" + event.date.day ;
     }
-    
     const htmlElement = window.document.getElementsByClassName("mydp");
     htmlElement
       .item(0)
@@ -231,7 +229,6 @@ export class QuestionnaireComponent implements OnInit {
       event.date.day === 0 &&
       event.date.month === 0 &&
       event.date.year === 0
-      
     ) {
       this.dateMap.delete(this.questionItem.Id);
       this.answerMap.delete(this.questionItem.Id);
@@ -272,27 +269,27 @@ export class QuestionnaireComponent implements OnInit {
       },
       showTodayBtn: false,
       dayLabels: {
-        su: "So",
-        mo: "Mo",
-        tu: "Di",
-        we: "Mi",
-        th: "Do",
-        fr: "Fr",
-        sa: "Sa",
+        su: "Dom",
+        mo: "Lun",
+        tu: "Mar",
+        we: "Mié",
+        th: "Jue",
+        fr: "Vie",
+        sa: "Sáb",
       },
       monthLabels: {
-        1: "Jan",
+        1: "Ene",
         2: "Feb",
-        3: "Mär",
-        4: "Apr",
-        5: "Mai",
+        3: "Mar",
+        4: "Abr",
+        5: "Mayo",
         6: "Jun",
         7: "Jul",
-        8: "Aug",
+        8: "Ago",
         9: "Sep",
-        10: "Okt",
+        10: "Oct",
         11: "Nov",
-        12: "Dez",
+        12: "Dic",
       },
     };
   }
@@ -480,21 +477,20 @@ export class QuestionnaireComponent implements OnInit {
           if (this.selectedMeridiem === "AM" && this.selectedHour === "12") {
             this.questionItem.input = "00" + ":" + this.selectedMinute;
           }
-          if (this.qbItem.Progress_Bar__c){
+          if (this.qbItem.Progress_Bar__c) {
             this.inpValue = this.inpValue + " " + this.questionItem.input;
-          }else{
+          } else {
             this.inpValue = this.inpValue + "T" + this.questionItem.input;
           }
-          
         }
         if (this.questionItem.X24_Hours__c === true) {
           this.questionItem.input =
             this.selectedHour + ":" + this.selectedMinute;
-            if (this.qbItem.Progress_Bar__c){
-              this.inpValue = this.inpValue + " " + this.questionItem.input;
-            }else{
-              this.inpValue = this.inpValue + "T" + this.questionItem.input;
-            }
+          if (this.qbItem.Progress_Bar__c) {
+            this.inpValue = this.inpValue + " " + this.questionItem.input;
+          } else {
+            this.inpValue = this.inpValue + "T" + this.questionItem.input;
+          }
         }
         if (this.selDate === null || !this.inpValue) {
           this.questionItem.error = new ErrorWrapper();
@@ -650,7 +646,7 @@ export class QuestionnaireComponent implements OnInit {
         if (ansWrap) {
           //console.log("Handling Answer for " + ansWrap.quesId + " of type " + ansWrap.qTyp);
           var newStr = "";
-          
+
           for (var ansStr of ansWrap.ansValue.split("@@##$$")) {
             if (ansStr.length > 0) {
               if (newStr.length == 0) {
