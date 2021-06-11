@@ -35,11 +35,11 @@
   height: 28px;
 }
 
-.questiondiv1 {
+/* .questiondiv1 {
   padding-left: 25px;
   padding-right: 25px;
   padding-top: 3%;
-}
+} */
 #progress-summary {
   padding-left: 12px;
 }
@@ -47,12 +47,12 @@
   padding-left: 12px;
 }
 
-.questiondiv2 {
+/* .questiondiv2 {
   padding-top: 25px;
   padding-bottom: 10px;
   padding-left: 15px;
   color: #00356f;
-}
+} */
 .bgColor {
   background-color: rgba(239, 239, 239, 0.9);
   padding-top: 0%;
@@ -67,10 +67,10 @@
   border: dashed 2px #d8d8d8;
   background-color: #f6f6f6;
 }
-.questionalign {
+/* .questionalign {
   text-align: left !important;
   padding-right: 4% !important;
-}
+} */
 .largeTitle {
   /* padding: 1%;
     margin: -11% 0% 5% 17%; */
@@ -198,7 +198,7 @@
   font-weight: bold !important;
 }
 
-.radiocontainer {
+/* .radiocontainer {
   border: 1px solid none !important;
   border-radius: 0.3em !important;
   padding: 0.3em !important;
@@ -206,13 +206,13 @@
   align-items: center !important;
   text-align: justify !important;
   cursor: pointer !important;
-}
+} */
 
-.date-time {
+/* .date-time {
   padding: 0px !important;
   margin: 0px !important;
   text-align: left !important;
-}
+} */
 
 .dateandTime {
   border: 1px solid #d2d4d6;
@@ -231,9 +231,9 @@
   border: hidden;
 }
 
-.dis-flex {
+/* .dis-flex {
   display: flex !important;
-}
+} */
 .textBox {
   width: 100% !important;
   height: 36px;
@@ -249,10 +249,10 @@
 .option {
   color: #767676 !important;
 }
-.date-picker {
+/* .date-picker {
   width: 100% !important;
   border-radius: 5px !important;
-}
+} */
 
 .check-icon2 {
   color: #87be1c !important;
@@ -262,7 +262,7 @@
   line-height: 3;
 }
 
-.datetime {
+/* .datetime {
   width: inherit !important;
   background-image: none !important;
   border: none !important;
@@ -274,7 +274,7 @@
   outline-style: none;
   font-size: 16px!important;
   letter-spacing: 2px;
-}
+} */
 
 .datetime:focus {
   border: none !important;
@@ -352,9 +352,9 @@
   padding-bottom: 0% !important;
 }
 
-.paddingZero {
+/* .paddingZero {
   padding: 0px !important;
-}
+} */
 
 .summary-h {
   text-align: left !important;
@@ -438,13 +438,12 @@
   color: #20252b;
   padding-left: 3%;
 }
-.question {
-  /* font-weight: bold !important; */
+/* .question {
   color: #8c8f92 !important;
   padding-left: 3%;
   font-size: 15px;
   padding-bottom: 7px;
-}
+} */
 
 .answer {
   color: #20252b !important;
@@ -520,12 +519,11 @@
   align-items: center !important;
 }
 
-.colon {
+/* .colon {
   line-height: 62px!important;
   padding: 0!important;
-  /* margin-block: auto; */
   margin-top: 10%;
-}
+} */
 
 .check-icon {
   color: #87be1c !important;
@@ -590,9 +588,9 @@
     width: auto;
   }
 
-  .paddingTop {
+  /* .paddingTop {
     padding-top: 0px !important;
-  }
+  } */
 }
 
 .btn-block + .btn-block {
