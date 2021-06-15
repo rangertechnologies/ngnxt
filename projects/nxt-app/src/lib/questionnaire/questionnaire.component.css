@@ -11,7 +11,7 @@
     cursor: pointer;
   }
   
-.questiondiv1{
+/* .questiondiv1{
     padding-left: 25px !important;
     padding-right: 25px !important;
 }
@@ -24,7 +24,7 @@
 .questionalign{
     text-align: left !important;
     padding-right: 4% !important;
-}
+} */
 
 .question-f-size{
     font-size: 0.7rem !important;
@@ -86,7 +86,7 @@
     font-weight: bold !important;
 }
 
-.radiocontainer {
+/* .radiocontainer {
     border: 1px solid none !important;
     border-radius: .3em !important;
     padding: 0.3em !important;
@@ -94,13 +94,13 @@
     align-items: center !important;
     text-align: justify !important;
     cursor: pointer !important;
-}
+} */
 
-.date-time{
+/* .date-time{
     padding: 0px !important;
     margin: 0px !important;
     text-align: left !important;
-}
+} */
 
 .dateandTime{
     border: 1px solid #d2d4d6;
@@ -114,9 +114,9 @@
     background-color: #fff !important;
 }
 
-.dis-flex{
+/* .dis-flex{
     display: flex !important;
-}
+} */
 .textBox{
     width: 100% !important;
     height: 36px;
@@ -132,10 +132,10 @@
 .option{
     color:  #767676 !important;
 }
-.date-picker{
+/* .date-picker{
     width: 100% !important;
     border-radius: 5px !important;
-}
+} */
 
 .check-icon2{
     color:#87be1c !important;
@@ -230,9 +230,9 @@
     padding-bottom: 0% !important;
 }
 
-.paddingZero{
+/* .paddingZero{
     padding:0px !important;
-}
+} */
     
 .summary-h{
     text-align: left !important; 
@@ -256,10 +256,10 @@
     list-style-type: none;
 }
 
-.question {
+/* .question {
     font-weight: bold !important;
     color:#00356F;
-}
+} */
 
 .answer {
     color:#8C8F92 !important;
@@ -277,12 +277,12 @@
     align-items: center !important;
 }
 
-.colon{
+/* .colon{
     line-height: 40px !important;
     padding: 0px !important;
     margin-right: 10px !important;
     margin-block: auto;
-}
+} */
 
 .check-icon{
     color:#87be1c !important;
@@ -331,9 +331,9 @@
         padding-bottom: 0px !important;
     }
 
-    .paddingTop{
+    /* .paddingTop{
         padding-top:0px !important;
-    }
+    } */
 }
 
 .btn-block + .btn-block {
@@ -428,9 +428,9 @@ width: 100% !important;
     border-color: #007bff !important;
 }
 
-.questiondiv2{
+/* .questiondiv2{
     color: #00356f !important;
-}
+} */
 
 .infodiv P {
     margin-bottom: 0px !important;

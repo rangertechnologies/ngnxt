@@ -64,6 +64,7 @@ export class QuestionnaireComponent implements OnInit {
   public dateFlag: boolean = false;
   public fileFlag: boolean = false;
   public emailFlag: boolean = false;
+  public numberFlag: boolean = false;
   public bookFlag: boolean = false;
   public optionValues: OptionValue[] = [];
   public subQuestions: Question[] = [];
@@ -738,6 +739,8 @@ export class QuestionnaireComponent implements OnInit {
         this.textFlag = true;
       }else if (typ == 'Email') {
         this.emailFlag = true;
+      }else if (typ == 'Number'){
+        this.numberFlag = true;
       }else if (typ == 'File') {
         this.fileFlag = true;
       } else if (typ == 'DateTime') {
@@ -772,6 +775,8 @@ export class QuestionnaireComponent implements OnInit {
         this.textFlag = false;
       }else if (typ == 'Email') {
         this.emailFlag = false;
+      }else if (typ == 'Number'){
+        this.numberFlag = false;
       }else if (typ == 'File') {
         this.fileFlag = false;
       } else if (typ == 'DateTime') {
