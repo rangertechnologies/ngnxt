@@ -30,7 +30,7 @@
         <div
          class="largeTitle"
         >
-          <h3>
+          <h3 class="myt-font6">
             {{ questionItem.Group__c }}
           </h3>
           <div class="myt-font5">{{questionItem.Sub_Text__c}}</div>
@@ -361,7 +361,7 @@
     src="https://rnxt.s3.amazonaws.com/MytIcon/icon-doc-img%402x.png"
     class="icon-edit1"
   />
-<span class="uploading-file-name myt-font1"  >{{ attachment.attachmentName }}</span>
+<span class="uploading-file-name myt-font1 myt-font8"  >{{ attachment.attachmentName }}</span>
 <img
 src="https://rnxt.s3.amazonaws.com/MytIcon/icon-delete%402x.png"
 class="deleteIcon" (click)="deleteAttachment(attachment.attachmentId)"
@@ -399,7 +399,7 @@ accept=".pdf, .png, .jpg, .jpeg, .heic, .application/pdf"
           *ngFor="let ques of subQuestions"
         >
           <div [ngClass]="{ down2: qbItem.Progress_Bar__c }">
-            <span class="colorf myt-font3">{{ ques.Question__c }}</span>
+            <span class="colorf myt-font3 myt-font7">{{ ques.Question__c }}</span>
           </div>
           <div *ngIf="ques.Type__c === 'Text'">
             <input
@@ -486,7 +486,7 @@ accept=".pdf, .png, .jpg, .jpeg, .heic, .application/pdf"
                               src="https://rnxt.s3.amazonaws.com/MytIcon/icon-doc-img%402x.png"
                               class="icon-edit1"
                             />
-									<span class="uploading-file-name myt-font1"   > {{ attachment.attachmentName }}</span>
+									<span class="uploading-file-name myt-font1 font-weight: normal;"   > {{ attachment.attachmentName }}</span>
                   <img
                   src="https://rnxt.s3.amazonaws.com/MytIcon/icon-delete%402x.png"
                   class="deleteIcon" (click)="deleteAttachment(attachment.attachmentId)"
@@ -663,7 +663,7 @@ accept=".pdf, .png, .jpg, .jpeg, .heic, .application/pdf"
 
           <div
             *ngIf="!qbItem.Edit__c"
-            [ngClass]="{ 'question myt-font3': this.abItem.Status__c != 'Completed' }"
+            [ngClass]="{ 'question myt-font3 myt-font8': this.abItem.Status__c != 'Completed' }"
           >
             <a
               [ngClass]="{ asum: this.abItem.Status__c === 'Completed' }"
@@ -674,7 +674,7 @@ accept=".pdf, .png, .jpg, .jpeg, .heic, .application/pdf"
           </div>
           <div
             *ngIf="qbItem.Edit__c"
-            [ngClass]="{ 'question myt-font3': this.abItem.Status__c != 'Completed' }"
+            [ngClass]="{ 'question myt-font3 myt-font8': this.abItem.Status__c != 'Completed' }"
           >
             <div
               [ngClass]="{ 'asum myt-font3': this.abItem.Status__c === 'Completed' }"
