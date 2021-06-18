@@ -711,6 +711,16 @@ accept=".pdf, .png, .jpg, .jpeg, .heic, .application/pdf"
 
 
   <div class="flexer" *ngIf="abItem">
+    <div class="" *ngIf="abItem.Status__c == 'Completed'">
+      <div class="col-md-6">
+        <button [ngClass]="{'grey btn-text btn-r': qbItem.Progress_Bar__c,
+                            'nxt-btn btn-primary btn-lg btn-block btn-back-color': !qbItem.Progress_Bar__c}"
+          (click)="handleCancelClick()"
+        >
+          {{ qbItem.Cancel__c }}
+        </button>
+      </div>
+    </div>
     <div class="" *ngIf="abItem.Status__c != 'Completed'">
       <div class="col-md-6">
         <button
