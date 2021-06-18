@@ -237,8 +237,7 @@ export class QuestionnaireComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log("abdul");
-    console.log(this.insuranceStartDate);
+    //console.log("abdul");
     this.inpValue = "";
     this.selectedMeridiem = "AM";
     this.processQB();
@@ -1357,6 +1356,11 @@ export class QuestionnaireComponent implements OnInit {
   handleSubmitClick() {
     this.handleEvent.emit(this.qbItem.Submit_Tracking_ID__c);
     this.updateAnswerBook(this.abItem.Id);
+  }
+
+  handleCancelClick() {
+    this.handleEvent.emit(this.qbItem.Cancel_Tracking_ID__c);
+    
   }
 
   private createAttachment = (fileWrapper: any) =>
