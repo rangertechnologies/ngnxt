@@ -496,6 +496,7 @@ export class QuestionnaireComponent implements OnInit {
             this.inpValue = this.inpValue + "T" + this.questionItem.input;
           }
         }
+        if (this.qbItem.Progress_Bar__c){
         console.log("ans => "+this.inpValue)
         var date1:any = this.inpValue.split(' ');
             date1=date1[0].split('/');
@@ -511,6 +512,7 @@ export class QuestionnaireComponent implements OnInit {
           //console.log('inside')
           return;
         }
+      }
         if (this.selDate === null || !this.inpValue) {
           this.questionItem.error = new ErrorWrapper();
           return;
