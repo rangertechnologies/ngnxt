@@ -756,7 +756,6 @@ input[type="button"].btn-block {
   background-repeat: no-repeat !important;
   background-position: 99% center !important;
   background-color: #fff !important;
-  height: 65px;
 }
 .boxoutline {
   outline: transparent;
