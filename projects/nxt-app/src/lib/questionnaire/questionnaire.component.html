@@ -219,6 +219,7 @@
   </div>
 
   <div class="col-md-12 paddingZero myt-time1" *ngIf="dtFlag">
+    <div class="col-md-12" *ngIf ="questionItem.error" >{{questionItem.error.errorMsg}}</div>
     <div *ngIf="dateFlag">
       <div class="col-md-6 paddingBottom">
         <label class="date-time colorf">{{ questionItem.Date_Text__c }}</label>

@@ -45,6 +45,7 @@ import {
 })
 export class QuestionnaireComponent implements OnInit {
   @Input() qbId: string;
+  @Input() insuranceStartDate:string;
   @Output() handleEvent = new EventEmitter();
   @Output() handlePage: EventEmitter<any> = new EventEmitter();
 
@@ -237,6 +238,7 @@ export class QuestionnaireComponent implements OnInit {
 
   ngOnInit() {
     console.log("abdul");
+    console.log(this.insuranceStartDate);
     this.inpValue = "";
     this.selectedMeridiem = "AM";
     this.processQB();
@@ -460,8 +462,10 @@ export class QuestionnaireComponent implements OnInit {
         this.questionItem.error = new ErrorWrapper();
       }
     } else if (this.dtFlag && this.dateFlag && this.timeFlag) {
+      //this one
       this.change();
       if (this.inpValue) {
+
         this.selectedHour = this.getProperTime("12", this.selectedHour);
         this.selectedMinute = this.getProperTime("00", this.selectedMinute);
         this.selectedMeridiem = this.getProperTime("AM", this.selectedMeridiem);
@@ -491,6 +495,21 @@ export class QuestionnaireComponent implements OnInit {
           } else {
             this.inpValue = this.inpValue + "T" + this.questionItem.input;
           }
+        }
+        console.log("ans => "+this.inpValue)
+        var date1:any = this.inpValue.split(' ');
+            date1=date1[0].split('/');
+            date1=[date1[2],date1[1],date1[0]].join('-');
+            date1=new Date(date1);
+            //console.log(date1)
+        var date2:any = this.insuranceStartDate.split(' ');
+            date2 = new Date(date2[0]);
+            //console.log(date2);
+        if(date1 < date2){
+          this.questionItem.error = new ErrorWrapper();
+          this.questionItem.error.errorMsg= "No es posible dar de alta la reclamación debido a que la fecha del incidente es anterior a la fecha de contratación de la póliza";
+          //console.log('inside')
+          return;
         }
         if (this.selDate === null || !this.inpValue) {
           this.questionItem.error = new ErrorWrapper();
