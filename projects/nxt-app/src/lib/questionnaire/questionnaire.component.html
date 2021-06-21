@@ -134,7 +134,7 @@
     </div>
   </div>
 
-  <div *ngIf="textFlag" class="col-md-12 myt-book1">
+  <!--<div *ngIf="textFlag" class="col-md-12 myt-book1">
     <div
       class="col-md-12"
       class="dis-flex myt-align1"
@@ -165,7 +165,7 @@
         *ngIf="inpValue?.length > 0"
       ></i>
     </div>
-  </div>
+  </div>-->
 
   <div *ngIf="taFlag" class="col-md-12">
     <div class="dis-flex">
@@ -191,6 +191,37 @@
       ></i>
     </div>
   </div>
+
+  <div *ngIf="numberFlag"  class="col-md-12">
+    <div class="dis-flex">
+      <input
+        type="Text"
+        [ngClass]="{ boxoutline: qbItem.Progress_Bar__c }"
+        [(ngModel)]="inpValue"
+        id="number-input-id"
+        (ngModelChange)="CCOnChange($event)"
+        required=""
+        maxlength = "29"
+        (focus)="clearError()"
+        oninput="this.value=this.value.replace(/[^0-9 ]/g,'');"
+        style="width:-webkit-fill-available;"
+        style.border-color="{{
+          this.questionItem.error
+            ? 'red'
+            : inpValue?.length > 0
+            ? '#87be1c'
+            : ''
+        }}"
+      />
+      <i
+        class="fa fa-check"
+        aria-hidden="true"
+        style="color: #87be1c; margin-left: -2rem; z-index: 1; padding: 5px;"
+        *ngIf="inpValue?.length > 0"
+      ></i>
+    </div>
+  </div>
+
 
   <div *ngIf="emailFlag" class="col-md-12">
     <div class="dis-flex">

@@ -72,6 +72,7 @@ export class QuestionnaireComponent implements OnInit {
   public dateFlag: boolean = false;
   public fileFlag: boolean = false;
   public emailFlag: boolean = false;
+  public numberFlag: boolean = false;
   public bookFlag: boolean = false;
   public optionValues: OptionValue[] = [];
   public subQuestions: Question[] = [];
@@ -1108,6 +1109,9 @@ export class QuestionnaireComponent implements OnInit {
       // Set the Flags
       if (typ == "Text") {
         this.textFlag = true;
+        this.numberFlag = true;
+      } else if (typ == "Number") {
+        this.numberFlag = true;
       } else if (typ == "Email") {
         this.emailFlag = true;
       } else if (typ == "File") {
@@ -1141,6 +1145,9 @@ export class QuestionnaireComponent implements OnInit {
       // Set the Flags
       if (typ == "Text") {
         this.textFlag = false;
+        this.numberFlag = false;
+      } else if (typ == "Number") {
+        this.numberFlag = false;
       } else if (typ == "Email") {
         this.emailFlag = false;
       } else if (typ == "File") {
@@ -1267,6 +1274,18 @@ export class QuestionnaireComponent implements OnInit {
   clearError() {
     if (this.questionItem.error) {
       this.questionItem.error = null;
+    }
+  }
+
+  CCOnChange(inpValue: string) {
+    console.log('Inside calling CCOnChange');
+    console.log('inpValue = '+inpValue);
+    inpValue = inpValue.replace(/\s+/g, '')
+    if (inpValue.length > 0) {
+      console.log('inpValue.length = '+inpValue.length);
+      if (inpValue.length % 4 == 0 && inpValue.length<24) {
+        this.inpValue += " ";
+      }
     }
   }
 
