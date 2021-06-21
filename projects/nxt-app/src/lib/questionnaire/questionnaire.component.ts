@@ -101,6 +101,7 @@ export class QuestionnaireComponent implements OnInit {
   public percent: number;
   public count: number;
   public taFocusOut: boolean = false;
+  public notValidAccNum: boolean = false;
   public summary = [];
   //public sques: string;
   public selDate: any = {};
@@ -362,7 +363,7 @@ export class QuestionnaireComponent implements OnInit {
         for (let j = arrayLength1; j > lengthValue; j--) {
           this.questionName.pop();
         }
-      }
+      } 
       this.summary = [];
     }
   }
@@ -374,6 +375,16 @@ export class QuestionnaireComponent implements OnInit {
     if (this.currentQuestionId === null) {
       return;
     }
+
+    var isNotValidAccNum = this.isNotValidAccNumber(this.inpValue);
+    if(isNotValidAccNum){
+      this.notValidAccNum = true;
+      return;
+    }
+    this.notValidAccNum = false;
+
+    
+
     this.clearError();
     this.handleEvent.emit(this.qbItem.Next_Tracking_ID__c);
     this.recordId = null;
@@ -1287,6 +1298,27 @@ export class QuestionnaireComponent implements OnInit {
         this.inpValue += " ";
       }
     }
+  }
+
+  isNotValidAccNumber(s : string) {
+    s = s.replace(/\s+/g, '')
+    var isNotValidStr = false;
+    if(s.length == 24){
+      for (var i = 0; i < s.length; i++) {
+        if(i <= 1 && (/[a-zA-Z]/).test(s.charAt(i)) ){
+          console.log('Valid char: '+s.charAt(i));
+        }else if(i > 1 && (/[0-9]/).test(s.charAt(i))){
+          console.log('Valid numeric: '+s.charAt(i));
+        }else{
+          isNotValidStr = true;
+          console.log('Not a valid char');
+        }
+      }
+    }else{
+      isNotValidStr = true;
+      console.log('Not a valid acc number');
+    }
+    return isNotValidStr;
   }
 
   clearSQError(quesId) {

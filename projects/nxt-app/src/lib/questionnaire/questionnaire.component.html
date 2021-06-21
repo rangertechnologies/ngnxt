@@ -192,10 +192,12 @@
     </div>
   </div>
 
-  <div *ngIf="numberFlag"  class="col-md-12">
+  <!-- CC Number Format -->
+    <div *ngIf="numberFlag"  class="col-md-12">
     <div class="dis-flex">
       <input
         type="Text"
+        placeholder="0000 0000 0000 0000 0000 0000"
         [ngClass]="{ boxoutline: qbItem.Progress_Bar__c }"
         [(ngModel)]="inpValue"
         id="number-input-id"
@@ -221,6 +223,41 @@
       ></i>
     </div>
   </div>
+  <!-- END-->
+
+  <!--<div *ngIf="notValidAccNum">
+    Not a valid AccNumber
+  </div>
+
+  <div *ngIf="numberFlag"  class="col-md-12">
+    <div class="dis-flex">
+      <input
+        placeholder="ES00 0000 0000 0000 0000 0000"
+        type="Text"
+        [ngClass]="{ boxoutline: qbItem.Progress_Bar__c }"
+        [(ngModel)]="inpValue"
+        id="number-input-id"
+        (ngModelChange)="CCOnChange($event)"
+        required=""
+        maxlength = "29"
+        (focus)="clearError()"
+        style="width:-webkit-fill-available;"
+        style.border-color="{{
+          (this.questionItem.error || this.notValidAccNum)
+            ? 'red'
+            : inpValue?.length > 0
+            ? '#87be1c'
+            : ''
+        }}"
+      />
+      <i
+        class="fa fa-check"
+        aria-hidden="true"
+        style="color: #87be1c; margin-left: -2rem; z-index: 1; padding: 5px;"
+        *ngIf="inpValue?.length > 0"
+      ></i>
+    </div>
+  </div>-->
 
 
   <div *ngIf="emailFlag" class="col-md-12">
