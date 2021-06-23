@@ -28,7 +28,7 @@ export class Question {
   Question__c : string;
   Question_Text__c : string;
   Type__c: string;
-  Number_Type__c : string;
+ 
   Next_Question__c?: string;
   Is_Optional__c: boolean;
   Is_Title__c: boolean;

@@ -36,7 +36,7 @@ export const TESTQUESTION: Question = {
   Id: "11",
   Name: "QN-00001",
   Type__c: "Text",
-  Number_Type__c : "Account",
+  
   Allowed_File_Extensions__c: ".pdf",
   Question_Text__c: "What is your Name?",
   Question__c: "What is your Name?",
@@ -64,7 +64,7 @@ export const DTQUESTION: Question = {
   Id: "12",
   Name: "QN-00002",
   Type__c: "DateTime",
-  Number_Type__c : "Account",
+  
   Allowed_File_Extensions__c: ".pdf",
   Question_Text__c: "When did the incident happen?",
   Question__c: "When did the incident happen?",
@@ -92,7 +92,7 @@ export const FILEQUESTION: Question = {
   Id: "13",
   Name: "QN-00003",
   Type__c: "File",
-  Number_Type__c : "Account",
+  
   Allowed_File_Extensions__c: ".pdf",
   Question_Text__c: "Upload the Incident Report/Images?",
   Question__c: "Upload the Incident Report/Images?",
@@ -120,7 +120,7 @@ export const TAQUESTION: Question = {
   Id: "14",
   Name: "QN-00004",
   Type__c: "TextArea",
-  Number_Type__c : "Account",
+  
   Allowed_File_Extensions__c: ".pdf",
   Question_Text__c: "Explain the particulars of the Incident?",
   Question__c: "Explain the particulars of the Incident?",
@@ -148,7 +148,7 @@ export const RADIOQUESTION: Question = {
   Id: "15",
   Name: "QN-00005",
   Type__c: "Radio",
-  Number_Type__c : "Account",
+  
   Allowed_File_Extensions__c: ".pdf",
   Question_Text__c: "Choose your favorite role",
   Question__c: "Choose your favorite role",
@@ -201,7 +201,7 @@ export const CHECKQUESTION: Question = {
   Id: "16",
   Name: "QN-00006",
   Type__c: "Checkbox",
-  Number_Type__c : "Account",
+  
   Allowed_File_Extensions__c: ".pdf",
   Question_Text__c: "Choose your favorite spots",
   Question__c: "Choose your favorite spots",
@@ -254,7 +254,7 @@ export const BOOKQUESTION: Question = {
   Id: "17",
   Name: "QN-00007",
   Type__c: "Book",
-  Number_Type__c : "Account",
+  
   Allowed_File_Extensions__c: ".pdf",
   Tracking_ID__c: "1234",
   Question__c: "Provide your Address",
@@ -278,7 +278,7 @@ export const BOOKQUESTION: Question = {
         Id: "170",
         Name: "QN-000070",
         Type__c: "Dropdown",
-        Number_Type__c : "Account",
+        
         Question_Text__c: "Land",
         Question__c: "Land",
         Size__c: 1,
@@ -327,7 +327,7 @@ export const BOOKQUESTION: Question = {
         Id: "171",
         Name: "QN-000071",
         Type__c: "Text",
-        Number_Type__c : "Account",
+        
         Size__c: 3,
         Allowed_File_Extensions__c: ".pdf",
         Question_Text__c: "PLZ",
@@ -351,7 +351,7 @@ export const BOOKQUESTION: Question = {
         Id: "172",
         Name: "QN-000072",
         Type__c: "Text",
-        Number_Type__c : "Account",
+        
         Allowed_File_Extensions__c: ".pdf",
         Tracking_ID__c: "1234",
         Question_Text__c: "ORT",
@@ -375,7 +375,7 @@ export const BOOKQUESTION: Question = {
         Id: "173",
         Name: "QN-000073",
         Type__c: "Text",
-        Number_Type__c : "Account",
+        
         Question_Text__c: "StraBe",
         Question__c: "StraBe",
         Tracking_ID__c: "1234",
@@ -399,7 +399,7 @@ export const BOOKQUESTION: Question = {
         Id: "174",
         Name: "QN-000074",
         Type__c: "Text",
-        Number_Type__c : "Account",
+        
         Allowed_File_Extensions__c: ".pdf",
         Tracking_ID__c: "1234",
         Question_Text__c: "Hausnummer",
