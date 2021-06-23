@@ -134,7 +134,7 @@
     </div>
   </div>
 
-  <!--<div *ngIf="textFlag" class="col-md-12 myt-book1">
+  <div *ngIf="textFlag" class="col-md-12 myt-book1">
     <div
       class="col-md-12"
       class="dis-flex myt-align1"
@@ -165,7 +165,7 @@
         *ngIf="inpValue?.length > 0"
       ></i>
     </div>
-  </div>-->
+  </div>
 
   <div *ngIf="taFlag" class="col-md-12">
     <div class="dis-flex">
@@ -225,11 +225,9 @@
   </div>
   <!-- END-->
 
-  <!--<div *ngIf="notValidAccNum">
-    Not a valid AccNumber
-  </div>
+  
 
-  <div *ngIf="numberFlag"  class="col-md-12">
+  <div *ngIf="alphanumericFlag"  class="col-md-12">
     <div class="dis-flex">
       <input
         placeholder="ES00 0000 0000 0000 0000 0000"
@@ -250,6 +248,9 @@
             : ''
         }}"
       />
+      <div *ngIf="notValidAccNum">
+        {{ questionItem.Error_Message__c }}
+      </div>
       <i
         class="fa fa-check"
         aria-hidden="true"
@@ -257,7 +258,7 @@
         *ngIf="inpValue?.length > 0"
       ></i>
     </div>
-  </div>-->
+  </div>
 
 
   <div *ngIf="emailFlag" class="col-md-12">
