@@ -156,6 +156,24 @@
   display: flex !important;
 }
 
+.addtional-info
+
+{
+  margin-left: -33px;
+  margin-top: -21px;
+  font-size: 16px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  color: #6f7072;
+  font-family: Helvetica;
+
+
+}
+
+
+
+
 .ques-alert1 {
   margin-bottom: 1rem !important;
   display: flex !important;

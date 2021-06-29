@@ -65,6 +65,14 @@
     </div>
   </div>
 
+  <div *ngIf="questionItem.Additional_Rich__c && qbItem.Progress_Bar__c">
+    <div class="addtional-info ques-alert1">
+      <div class="infodiv" [innerHTML]="innerhtml">
+       {{ questionItem.Additional_Rich__c }} 
+      </div>
+    </div>
+  </div>
+
   <div
     *ngIf="dropdownFlag"
     class=""
