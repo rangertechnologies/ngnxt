@@ -176,14 +176,12 @@ export class QuestionnaireComponent implements OnInit {
 	public currentQuestionId: string;
 	public spinnerType: string;
 	public spinnerName: string;
-	public numErrorMessage: boolean = false;
 
 	// REQ-01 PROGRESS BAR
 	public progressStyle: string = '0%';
 	public answerCount: number = 0;
 
 	public myDatePickerOptions: IMyDpOptions = {};
-	num: any;
 
 	constructor(
 		private sfService: SalesforceService,
@@ -339,11 +337,6 @@ export class QuestionnaireComponent implements OnInit {
 	}
 
 	handleNextClick() {
-		if(this.inpValue.length<29){
-			this.numErrorMessage=true
-			setTimeout (()=>{this.numErrorMessage=false},4000)
-			return;
-		}
 		//console.log(this.questionItem);
 
 		//this.updateProgress();
@@ -389,7 +382,10 @@ export class QuestionnaireComponent implements OnInit {
 				this.notValidAccNum = false;
 			
 		}else if (this.numberFlag ) {
-				if (this.inpValue) {
+			console.log('Abdul'+this.inpValue)
+			
+				if (this.inpValue.length >= 29) {
+					console.log('Abdul'+this.inpValue.length)
 					this.recordId = this.questionItem.Next_Question__c;
 				}else {
 				this.questionItem.error = new ErrorWrapper();
@@ -1069,7 +1065,7 @@ export class QuestionnaireComponent implements OnInit {
 				//this.numberFlag = true;
 			} else if (typ == 'Number') {
 				this.numberFlag = true;
-			} else if (typ == 'Alphanumeric') {
+			} else if (typ == 'AlphaNumeric') {
 				this.alphanumericFlag = true;
 			} else if (typ == 'Email') {
 				this.emailFlag = true;
@@ -1107,7 +1103,7 @@ export class QuestionnaireComponent implements OnInit {
 				//this.numberFlag = false;
 			} else if (typ == 'Number') {
 				this.numberFlag = false;
-			} else if (typ == 'Alphanumeric') {
+			} else if (typ == 'AlphaNumeric') {
 				this.alphanumericFlag = false;
 			} else if (typ == 'Email') {
 				this.emailFlag = false;
