@@ -176,12 +176,14 @@ export class QuestionnaireComponent implements OnInit {
 	public currentQuestionId: string;
 	public spinnerType: string;
 	public spinnerName: string;
+	public numErrorMessage: boolean = false;
 
 	// REQ-01 PROGRESS BAR
 	public progressStyle: string = '0%';
 	public answerCount: number = 0;
 
 	public myDatePickerOptions: IMyDpOptions = {};
+	num: any;
 
 	constructor(
 		private sfService: SalesforceService,
@@ -337,6 +339,11 @@ export class QuestionnaireComponent implements OnInit {
 	}
 
 	handleNextClick() {
+		if(this.inpValue.length<29){
+			this.numErrorMessage=true
+			setTimeout (()=>{this.numErrorMessage=false},4000)
+			return;
+		}
 		//console.log(this.questionItem);
 
 		//this.updateProgress();

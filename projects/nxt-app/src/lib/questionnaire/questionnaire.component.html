@@ -193,10 +193,14 @@
   </div>
 
   <!-- CC Number Format -->
+  <div class="alert alert-warning" *ngIf="numErrorMessage " role="alert">
+        This is a warning alert—check it out!
+      </div>
     <div *ngIf="numberFlag"  class="col-md-12">
-    <div class="dis-flex">
+      <div class="dis-flex">
       <input
         type="Text"
+        onkeypress="return event.charCode != 32"
         placeholder="0000 0000 0000 0000 0000 0000"
         [ngClass]="{ boxoutline: qbItem.Progress_Bar__c }"
         [(ngModel)]="inpValue"
@@ -639,7 +643,7 @@ accept=".pdf, .png, .jpg, .jpeg, .heic, .application/pdf"
     <div [ngClass]="{ 'col-md-6': !qbItem.Progress_Bar__c }">
       <div>
         <button
-          [ngClass]="{
+            [ngClass]="{
             'rusty btn-text2 right-bt': qbItem.Progress_Bar__c,
             'nxt-btn btn-primary btn-lg btn-block btn-back-color':
               !qbItem.Progress_Bar__c
