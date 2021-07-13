@@ -573,7 +573,7 @@ export class QuestionnaireComponent implements OnInit {
 		if (cQuestion.RecordType.Name == 'CONDITIONAL') {
 			for (var cOpt of cQuestion.Question_Options__r.records) {
 				// Radio / Data
-				//console.log('Option => ' + cOpt.Value__c + ' matching with ' + ansVal);
+			    //console.log('Option => ' + cOpt.Value__c + ' matching with ' + ansVal);
 				if (cOpt.Value__c == this.inpValue) {
 					//console.log('Match Found using ' + cOpt.Next_Question__c);
 					this.recordId = cOpt.Next_Question__c;
@@ -599,6 +599,9 @@ export class QuestionnaireComponent implements OnInit {
 						for (var opt1 of opt.Question_Options__r.records) {
 							if (this.valueName == opt1.Value__c) {
 								this.recordId = opt1.Next_Question__c || cQuestion.Next_Question__c;
+							}else{
+								//console.log('Else'+this.recordId)
+								this.recordId = cQuestion.Next_Question__c;
 							}
 						}
 					} else {
