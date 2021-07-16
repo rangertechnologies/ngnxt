@@ -790,14 +790,15 @@ export class QuestionnaireComponent implements OnInit {
 				this.readQuestion(lastQuestionId);
 			}
 		} else if (this.abItem.Status__c == 'Completed') {
+			this.handleEvent.emit('Summaryupdated');
 			// Temporary Fix for duplicate answers on the summary.
 			this.summary = [];
 			this.percent = 100;
 			this.progressStyle = '100%';
 
 			for (var answer of this.abItem.Answers__r.records) {
-				console.log('repeat');
-				console.log(answer.Question_Rich_Text__c);
+				//console.log('repeat');
+				//console.log(answer.Question_Rich_Text__c);
 				var answers = {};
 				if (answer.Question_Type__c == 'File') {
 					var files = '';
