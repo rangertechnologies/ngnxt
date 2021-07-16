@@ -859,6 +859,7 @@ export class QuestionnaireComponent implements OnInit {
 				//console.log(answers)
 				this.summary.push(answers);
 			}
+			this.handleEvent.emit('Summaryupdated');
 		}
 	};
 
