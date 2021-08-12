@@ -790,4 +790,21 @@ input[type="button"].btn-block {
 .myt-hour{
   padding-left: 26px !important;
 }
+.townArea{
+  text-align: left;
+  height: 43px;
+  padding-left: 15px;
+}
+.townArea:hover{
+  background-color: rgba(158,158,158,.18);
+}
+.listFlow{
+width:94% !important;
+font-weight: normal !important;
+color: #767676 !important;
+z-index: 2;
+position: absolute;
+background: white;
+box-shadow: 0 2px 5px rgb(0 0 0 / 25%);
+}
 
