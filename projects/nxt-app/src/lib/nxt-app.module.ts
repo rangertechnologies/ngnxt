@@ -6,8 +6,9 @@ import { FormsModule,ReactiveFormsModule } from '@angular/forms';
 import { MyDatePickerModule } from 'mydatepicker';
 import { NgCircleProgressModule } from 'ng-circle-progress';
 import { NgxSpinnerModule } from "ngx-spinner";
+import { LookupComponent } from './lookup/lookup.component';
 @NgModule({
-  declarations: [NxtAppComponent, QuestionnaireComponent],
+  declarations: [NxtAppComponent, QuestionnaireComponent, LookupComponent],
   imports: [
     CommonModule, FormsModule,
     MyDatePickerModule,

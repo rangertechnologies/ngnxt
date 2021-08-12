@@ -1,0 +1,16 @@
+
+  <div id="autocomplete-input" style="max-width: 780px;">
+    <input [(ngModel)]="selectedValue" (ngModelChange)="selectedValue=$event.toUpperCase()" (focusin)="getTownLocal()"
+    placeholder="Indica población" (blur)="clearList()" (input)="getTownLocal()" type="text" name="name" style="margin: 0 !important;"
+      autocomplete="town" />
+    <div id="selectList" class="listFlow" >
+      <div *ngFor="let area of tempoAddress" class="townArea" (click)="townName(area)">
+        <div >
+          <div>{{area.town}}</div>
+        </div>
+      </div>
+    </div>
+   <!-- <div  *ngIf="errorMessage !=''" data-abide-error=""
+											class="form-error is-visible widthAdjust">{{errorMessage}}</div>-->
+  </div>
+

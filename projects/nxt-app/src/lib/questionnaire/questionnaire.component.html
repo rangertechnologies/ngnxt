@@ -480,6 +480,14 @@ accept=".pdf, .png, .jpg, .jpeg, .heic, .application/pdf"
             <span class="colorf myt-font3 myt-font7">{{ ques.Question__c }}</span>
           </div>
           <div *ngIf="ques.Type__c === 'Text'">
+            <div *ngIf="ques.Question__c === 'Indica población' ">
+              <div [id]="ques.Id">
+                <lib-lookup (childEvent)="child($event)"></lib-lookup> 
+              </div>
+             
+           </div>
+            
+           <div *ngIf="ques.Question__c != 'Indica población' ">
             <input
               type="text"
               [(ngModel)]="ques.input"
@@ -495,6 +503,7 @@ accept=".pdf, .png, .jpg, .jpeg, .heic, .application/pdf"
               placeholder="{{ ques.Question__c }}"
               oninput="this.value=this.value.replace(/[^a-zA-Z0-9\s.:;,?]/g,'');"
             />
+          </div>
           </div>
 
           <div *ngIf="ques.Type__c === 'Email'">

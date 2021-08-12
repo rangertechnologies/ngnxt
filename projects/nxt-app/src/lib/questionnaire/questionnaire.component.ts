@@ -176,7 +176,8 @@ export class QuestionnaireComponent implements OnInit {
 	public currentQuestionId: string;
 	public spinnerType: string;
 	public spinnerName: string;
-
+	public selectedtown: string;
+    public localaddress :any [] = [];
 	// REQ-01 PROGRESS BAR
 	public progressStyle: string = '0%';
 	public answerCount: number = 0;
@@ -215,6 +216,7 @@ export class QuestionnaireComponent implements OnInit {
 		this.inpValue = '';
 		this.selectedMeridiem = 'AM';
 		this.processQB();
+		this.localaddress = JSON.parse(localStorage.getItem('address'));
 	}
 
 	ngOnChanges() {
@@ -225,7 +227,6 @@ export class QuestionnaireComponent implements OnInit {
 		this.selectedhourMap.set(this.questionItem.Id, this.selectedHour);
 		this.selectedminuteMap.set(this.questionItem.Id, this.selectedMinute);
 	}
-
 	day() {
 		this.myDatePickerOptions = {
 			dateFormat: 'dd.mm.yyyy',
@@ -392,6 +393,10 @@ export class QuestionnaireComponent implements OnInit {
 			this.inpValue = '';
 			var hasMissingInput = false;
 			for (var item of this.questionItem.Questions__r.records) {
+				if(item.Type__c =='Text' && item.Question__c=='Indica población'){
+					item.input =this.selectedtown;
+					 
+		   }
 				if (
 					!item.Is_Optional__c &&
 					((item.Type__c != 'File' && !item.input) ||
@@ -435,7 +440,7 @@ export class QuestionnaireComponent implements OnInit {
 				//console.log('inside book1' + this.inpValue)
 			}
 			if (hasMissingInput) {
-				//console.log('file two')
+				console.log('file two')
 				return;
 			}
 			this.inpValue = this.trimLastDummy(this.inpValue);
@@ -594,6 +599,16 @@ export class QuestionnaireComponent implements OnInit {
 			if (cQuestion.Type__c == 'Book') {
 				//console.log("inside book");
 				for (let opt of cQuestion.Questions__r.records) {
+					if(opt.Type__c =='Text' && opt.Question__c=='Indica población'){
+						for(let loctown of this.localaddress){
+                          if(this.selectedtown==loctown.town){
+							  console.log('abdul test')
+							this.recordId = cQuestion.Next_Question__c;
+						  }
+						}
+						
+						 
+			   }
 					//console.log(opt.Type__c);
 					if (opt.Type__c == 'Dropdown' || opt.Type__c == 'Radio') {
 						for (var opt1 of opt.Question_Options__r.records) {
@@ -1167,13 +1182,13 @@ export class QuestionnaireComponent implements OnInit {
 				for (var ansStr of this.inpValue.split('@@##$$')) {
 					aIndex++;
 					qaMap.set(aIndex, ansStr);
-					//console.log('Setting the qaMap for ' + aIndex + ' with ' + ansStr);
+					console.log('Setting the qaMap for ' + aIndex + ' with ' + ansStr);
 				}
 			} else {
 				for (var ansStr of this.inpValue.split(', ')) {
 					aIndex++;
 					qaMap.set(aIndex, ansStr);
-					//console.log('Setting the qaMap ' + aIndex + ' with ' + ansStr);
+					console.log('Setting the qaMap ' + aIndex + ' with ' + ansStr);
 				}
 			}
 		}
@@ -1190,13 +1205,14 @@ export class QuestionnaireComponent implements OnInit {
 			sQues.Group__c = ques.Group__c;
 			sQues.Question_No__c = ques.Question_No__c;
 			sQues.Allowed_File_Extensions__c = ques.Allowed_File_Extensions__c;
+			
 			if (ques.Type__c == 'File') {
 				this.valueName1 = ques.Allowed_File_Extensions__c;
 				//console.log(this.valueName1);
 			}
 
 			if (qaMap.has(ques.Question_No__c)) {
-				//console.log('Setting input for the subQuestion ' + ques.Question_No__c + ' with ' + ansStr);
+				console.log('Setting input for the subQuestion ' + ques.Question_No__c + ' with ' + ansStr);
 				if (ques.Type__c != 'File') {
 					ques.input = qaMap.get(ques.Question_No__c);
 				}
@@ -1426,4 +1442,10 @@ export class QuestionnaireComponent implements OnInit {
 			this.percent = +Math.round(width);
 		}
 	}
+
+
+child(event){
+this.selectedtown = event;
+console.log('Selectedevent'+event.length)
+}
 }
