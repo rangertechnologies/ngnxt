@@ -687,19 +687,18 @@ export class QuestionnaireComponent implements OnInit {
 		  if(item.Type__c== "Text" && item.Question__c === 'Indica población'){
 			  for(var loc of this.localaddress){
 				  if(loc.town==this.selectedValue){
-					  console.log('testing ')
+					  //console.log('testing ')
 					  item.input=this.selectedValue;
 					  break;
 				  }else if(count == this.localaddress.length -1){
-					console.log('error form')
+					//console.log('error form')
 					item.error = new ErrorWrapper();
 					hasMissingInput = true;
 					return;
 				  }
 				  count++;  
 			  }
-			console.log('testin values=='+this.selectedValue)
-			
+			//console.log('testin values=='+this.selectedValue)
 		  }
 			 /* var loctown;
 			  for(let val of this.localaddress){
@@ -808,7 +807,7 @@ export class QuestionnaireComponent implements OnInit {
           }
         }
         if (this.qbItem.Progress_Bar__c) {
-          console.log("ans => " + this.inpValue);
+          //console.log("ans => " + this.inpValue);
           var date1: any = this.inpValue.split(" ");
           date1 = date1[0].split("/");
           date1 = [date1[2], date1[1], date1[0]].join("-");
@@ -1598,11 +1597,11 @@ export class QuestionnaireComponent implements OnInit {
   }
 
   CCOnChange(inpValue: string) {
-    console.log("Inside calling CCOnChange");
-    console.log("inpValue = " + inpValue);
+    //console.log("Inside calling CCOnChange");
+    //console.log("inpValue = " + inpValue);
     inpValue = inpValue.replace(/\s+/g, "");
     if (inpValue.length > 0) {
-      console.log("inpValue.length = " + inpValue.length);
+      //console.log("inpValue.length = " + inpValue.length);
       if (inpValue.length % 4 == 0 && inpValue.length < 24) {
         this.inpValue += " ";
       }
@@ -1615,17 +1614,17 @@ export class QuestionnaireComponent implements OnInit {
     if (s.length == 24) {
       for (var i = 0; i < s.length; i++) {
         if (i <= 1 && /[a-zA-Z]/.test(s.charAt(i))) {
-          console.log("Valid char: " + s.charAt(i));
+          //console.log("Valid char: " + s.charAt(i));
         } else if (i > 1 && /[0-9]/.test(s.charAt(i))) {
-          console.log("Valid numeric: " + s.charAt(i));
+          //console.log("Valid numeric: " + s.charAt(i));
         } else {
           isNotValidStr = true;
-          console.log("Not a valid char");
+          //console.log("Not a valid char");
         }
       }
     } else {
       isNotValidStr = true;
-      console.log("Not a valid acc number");
+      //console.log("Not a valid acc number");
     }
     return isNotValidStr;
   }
@@ -1800,22 +1799,16 @@ export class QuestionnaireComponent implements OnInit {
 
   townName(area) {
     this.selectedValue = area.town;
-    console.log("1456" + this.selectedValue);
     this.tempoAddress = [];
   }
 
   getTownLocal() {
     this.tempoAddress = [];
-    //console.log('1258'+this.selectedValue)
     if (this.selectedValue.length > 0) {
-      //console.log(this.localaddress)
-
       for (var val of this.localaddress) {
-        //console.log('local address'+val.town);
         if (
           val.town.substring(0, this.selectedValue.length) == this.selectedValue
         ) {
-          //console.log('78'+val.town)
           this.tempoAddress.push(val);
           if (this.tempoAddress.length == 6) {
             break;

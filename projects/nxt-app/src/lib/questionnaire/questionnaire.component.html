@@ -310,7 +310,6 @@
                   <input [(ngModel)]="selectedValue" (ngModelChange)="selectedValue=$event.toUpperCase()"
                   style.border-color=" {{ ques.error ? 'red !important' : '#858585' }}" style.color="{{ ques.error ? 'red' : '' }}" 
                   required=""  oninput="this.value=this.value.replace(/[^a-zA-Z\s.:;,?]/g,'')" (focus)="clearSQError(ques.Id)"
-              
                   (focusin)="getTownLocal()" placeholder="Indica población" (blur)="clearList()"
                     (input)="getTownLocal()" type="text" name="name" style="margin: 0 !important;"
                     autocomplete="town" />
@@ -321,8 +320,6 @@
                       </div>
                     </div>
                   </div>
-                  <!-- <div  *ngIf="errorMessage !=''" data-abide-error=""
-											class="form-error is-visible widthAdjust">{{errorMessage}}</div>-->
                 </div>
               </div>
             </div>
