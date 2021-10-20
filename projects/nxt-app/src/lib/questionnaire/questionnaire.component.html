@@ -1,16 +1,27 @@
 <ngx-spinner [name]="spinnerName" [type]="spinnerType"></ngx-spinner>
 
 <div *ngIf="questionItem" class="questiondiv1">
+
+  <div *ngIf="questionItem.Additional_Rich__c && qbItem.Progress_Bar__c">
+    <!--<div class="addtional-info ques-alert1">
+      <div class="infodiv" [innerHTML]="innerhtml">-->
+        <div class="myt-font6" [innerHTML]="innerhtml">
+        {{ questionItem.Additional_Rich__c }}
+      </div>
+    
+  </div>
+
   <div [ngClass]="{ questiondiv2: !qbItem.Progress_Bar__c }">
     <div [ngClass]="{ bgColor: qbItem.Progress_Bar__c }">
       <div id="progress" *ngIf="qbItem.Progress_Bar__c">
-        <circle-progress class="titlebar" [percent]="this.percent" [radius]="40" [space]="-4" [outerStrokeWidth]="4"
-          [innerStrokeWidth]="4" [outerStrokeColor]="'#c5281c'" [innerStrokeColor]="'#e7e8ea'" [animation]="true"
+        <circle-progress class="titlebar" [percent]="this.percent" [radius]="60" [space]="-20" [outerStrokeWidth]="15"
+          [innerStrokeWidth]="4" [outerStrokeColor]="'#f2d4ce'" [innerStrokeColor]="'#efe8e6'" [animation]="true"
           class="ng-star-inserted" [title]="this.percent+'%'" [showSubtitle]="false" [animationDuration]="300"
           [startFromZero]="false" [responsive]="false">
         </circle-progress>
       </div>
-      <div *ngIf="questionItem.Group__c && qbItem.Progress_Bar__c"
+    </div>
+    <div *ngIf="questionItem.Group__c && qbItem.Progress_Bar__c"
         [ngClass]="{ questionalign: !qbItem.Progress_Bar__c }">
         <div class="largeTitle">
           <h3 class="myt-font6">
@@ -24,13 +35,12 @@
           </div>-->
         </div>
       </div>
-    </div>
   </div>
 
   <!--Question alignment-->
   <div class="questiondiv2">
     <div *ngIf="questionItem.Is_Title__c">
-      <h3 class="questionalign myt-fontc myt-font3 myt-align" [innerHTML]="getText(questionItem.Question_Text__c)">
+      <h3 class="questionalign  myt-font3 myt-align" [innerHTML]="getText(questionItem.Question_Text__c)">
         {{questionItem.Question_Text__c}}
       </h3>
     </div>
@@ -48,13 +58,7 @@
     </div>
   </div>
 
-  <div *ngIf="questionItem.Additional_Rich__c && qbItem.Progress_Bar__c">
-    <div class="addtional-info ques-alert1">
-      <div class="infodiv" [innerHTML]="innerhtml">
-        {{ questionItem.Additional_Rich__c }}
-      </div>
-    </div>
-  </div>
+
 
   <div *ngIf="dropdownFlag" class="" [class]="'col-md-' + questionItem.Size__c + ' paddingnone'">
     <select [ngClass]="{
