@@ -1,4 +1,20 @@
 /*General Nxt App stylings */
+.rusty {
+  width: 200px!important;
+  background-color: #cd2810!important;
+  border: none!important;
+  color: #fff!important;
+  padding: 15px!important;
+  text-align: center!important;
+  text-decoration: none!important;
+  display: inline-block!important;
+  font-size: 20px!important;
+  /* margin: -2px 0px!important; */
+  height: 60px;
+  margin-left: -440%;
+  cursor: pointer!important;
+  border-radius: 40px!important;
+}
 .edit {
   background-color: white;
   border: none;
@@ -75,11 +91,11 @@
   /* padding: 1%;
     margin: -11% 0% 5% 17%; */
 
-    padding-left: 16px;
-    padding-top: 14px;
-    /* width: initial; 
+  padding-left: 16px;
+  padding-top: 14px;
+  /* width: initial; 
     /* width: -moz-max-content; */
-    /* width: max-content; */
+  /* width: max-content; */
 }
 .question-f-size {
   font-size: 0.7rem !important;
@@ -156,9 +172,7 @@
   display: flex !important;
 }
 
-.addtional-info
-
-{
+.addtional-info {
   margin-left: -33px;
   margin-top: -21px;
   font-size: 16px;
@@ -167,12 +181,7 @@
   font-style: normal;
   color: #6f7072;
   font-family: Helvetica;
-
-
 }
-
-
-
 
 .ques-alert1 {
   margin-bottom: 1rem !important;
@@ -197,7 +206,7 @@
 .col-md-9 {
   position: relative !important;
   padding: 15px !important;
-  float: left !important;
+  float: center !important;
   width: 100%;
 }
 
@@ -268,7 +277,12 @@
   color: #767676 !important;
 }
 .date-picker {
-  width: 100% !important;
+  width: 50% !important;
+  height: 44px !important;
+  text-align: left !important;
+  margin-left: 20rem !important;
+  margin-top: 1.5rem !important;
+  font-size: 20px !important; 
   border-radius: 5px !important;
 }
 
@@ -282,6 +296,7 @@
 
 .datetime {
   width: inherit !important;
+  background: #dedddd;
   background-image: none !important;
   border: none !important;
   position: relative !important;
@@ -290,8 +305,8 @@
   padding-left: 5px;
   min-width: 19px !important;
   outline-style: none;
-  font-size: 16px!important;
-  letter-spacing: 2px;
+  font-size: 15px !important;
+  letter-spacing: 1px;
 }
 
 .datetime:focus {
@@ -325,7 +340,7 @@
   .col-md-7,
   .col-md-8,
   .col-md-9 {
-    float: left !important;
+    float: center !important;
   }
   .col-md-12 {
     width: 100% !important;
@@ -439,11 +454,11 @@
   height: auto;
   word-wrap: break-word;
   padding-left: 6%;
-    padding-bottom: 3%;
-    padding-right: 3%;
-    padding-top: 3%;
+  padding-bottom: 3%;
+  padding-right: 3%;
+  padding-top: 3%;
 }
-.full-summary-completed{
+.full-summary-completed {
   padding-bottom: 501px;
   margin-top: 4%;
 }
@@ -467,13 +482,14 @@
 
 .answer {
   color: #20252b !important;
+  margin-left: 73px;
   padding-left: 3%;
   margin-top: -4%;
   padding-bottom: 1%;
   font-size: 16px;
   word-wrap: break-word;
   width: 88%;
-  text-align: justify;
+  text-align: center;
 }
 .summaryTitle {
   width: max-content;
@@ -513,10 +529,10 @@
   margin: -13% 0 0 79%;
   text-decoration: underline;
   font-size: 1rem !important;
-  border: none!important;
+  border: none !important;
   background-color: #f6f6f6 !important;
 }
-.file-ouestion{
+.file-ouestion {
   font-size: 12px;
   font-stretch: condensed;
   margin-top: -30px;
@@ -543,8 +559,8 @@
 }
 
 .colon {
-  line-height: 62px!important;
-  padding: 0!important;
+  line-height: 40px !important;
+  padding: 0 !important;
   /* margin-block: auto; */
   margin-top: 10%;
 }
@@ -746,7 +762,21 @@ input[type="button"].btn-block {
   right: 3rem;
 }
 .btn-text2 {
-  margin: 0;
+  /*margin: 0;*/
+  width: 298px!important;
+    background-color: #cd2810!important;
+    border: none!important;
+    color: #fff!important;
+    padding: 15px!important;
+    text-align: center!important;
+    text-decoration: none!important;
+    display: inline-block!important;
+    font-size: 18px!important;
+    /* margin: -2px 0px!important; */
+    height: 60px;
+    margin-left: -238%;
+    cursor: pointer!important;
+    border-radius: 40px!important;
 }
 .flexer {
   max-width: 100%;
@@ -763,7 +793,10 @@ input[type="button"].btn-block {
   display: contents;
 }
 .down1 {
-  width: 100%;
+
+  width: 36%;
+  margin-left: 313px;
+
 }
 .date-line {
   border-bottom: groove;
@@ -776,8 +809,11 @@ input[type="button"].btn-block {
   background-image: url("https://rnxt.s3.amazonaws.com/MytIcon/icon-clock%402x.png") !important;
   background-size: 25px !important;
   background-repeat: no-repeat !important;
-  background-position: 99% center !important;
-  background-color: #fff !important;
+  background-position: 95% center !important;
+  background: #dedddd;
+  margin-top: 1.5rem;
+  margin-right: -2rem;
+  margin-left: 3rem;
 }
 .boxoutline {
   outline: transparent;
@@ -786,29 +822,42 @@ input[type="button"].btn-block {
   margin-top: 75%;
 }
 .left-bt {
-  margin-top: 106%;
+  width: 298px!important;
+    background-color: #cd2810!important;
+    border: none!important;
+    color: #fff!important;
+    padding: 15px!important;
+    text-align: center!important;
+    text-decoration: none!important;
+    display: inline-block!important;
+    font-size: 20px!important;
+    /* margin: -2px 0px!important; */
+    /* height: 60px; */
+    margin-left: -2%;
+    cursor: pointer!important;
+    border-radius: 40px!important;
+    margin-top: 162px;
 }
-.myt-colon{
+.myt-colon {
   margin-left: -32px;
 }
-.myt-hour{
-  padding-left: 26px !important;
+.myt-hour {
+  padding-left: 0px !important;
 }
-.townArea{
+.townArea {
   text-align: left;
   height: 43px;
   padding-left: 15px;
 }
-.townArea:hover{
-  background-color: rgba(158,158,158,.18);
+.townArea:hover {
+  background-color: rgba(158, 158, 158, 0.18);
 }
-.listFlow{
-width:94% !important;
-font-weight: normal !important;
-color: #767676 !important;
-z-index: 2;
-position: absolute;
-background: white;
-box-shadow: 0 2px 5px rgb(0 0 0 / 25%);
+.listFlow {
+  width: 94% !important;
+  font-weight: normal !important;
+  color: #767676 !important;
+  z-index: 2;
+  position: absolute;
+  background: white;
+  box-shadow: 0 2px 5px rgb(0 0 0 / 25%);
 }
-

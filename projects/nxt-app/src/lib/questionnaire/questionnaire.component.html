@@ -147,7 +147,7 @@
 
 
   <div *ngIf="alphanumericFlag" class="col-md-12">
-    <div class="dis-flex">
+    <div class="down1">
       <input placeholder="ES00 0000 0000 0000 0000 0000" type="Text" [ngClass]="{ boxoutline: qbItem.Progress_Bar__c }"
         [(ngModel)]="inpValue" id="number-input-id" (ngModelChange)="CCOnChange($event)" required="" maxlength="29"
         (focus)="clearError()" style="width:-webkit-fill-available;" style.border-color="{{
@@ -395,7 +395,7 @@
 
           <div *ngIf="ques.Type__c === 'Dropdown'" class="">
             <select [ngClass]="{
-                'dt-line down1 dpDown myt-dropbox myt-border-r myt-font1': qbItem.Progress_Bar__c,
+                'dt-line dpDown myt-dropbox myt-border-r myt-font1': qbItem.Progress_Bar__c,
                 'custom-select': !qbItem.Progress_Bar__c
               }" class="custom-select mr-sm-2 dd-height" id="dropdown" [(ngModel)]="ques.input"
               (focus)="Dropdown($event); clearSQError(ques.Id)"
