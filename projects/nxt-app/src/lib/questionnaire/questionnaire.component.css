@@ -239,16 +239,27 @@ border-color: gray;
 }
 
 .radiocontainer {
+  margin-left: 27rem;
   border: 1px solid none !important;
-  border-radius: 0.3em !important;
-  padding: 0.3em !important;
-  padding-top: 1em !important;
-  align-items: center !important;
-  text-align: center !important;
-  cursor: pointer !important;
-  font-family:Rubik, "Helvetica Neue", Helvetica, Roboto, Arial, sans-serif !important;
-  color:#555 !important;
+  border-radius: .3em!important;
+  padding: 1em .3em .3em!important;
+  align-items: center!important;
+  text-align: center!important;
+  cursor: pointer!important;
+  font-family: Rubik,Helvetica Neue,Helvetica,Roboto,Arial,sans-serif!important;
+  color: #555!important;
 }
+.checkmark {
+  position: absolute;
+  top: 0;
+  left: 26.5rem;
+  height: 20px;
+  width: 20px;
+  background-color: #ffffff00;
+  border-radius: 50%;
+  border:1px solid grey;
+}
+
 
 .date-time {
   padding: 0px !important;
@@ -295,7 +306,7 @@ border-color: gray;
   width: 50% !important;
   height: 44px !important;
   text-align: left !important;
-  margin-left: 20rem !important;
+  margin-left: 19rem !important;
   margin-top: 1.5rem !important;
   font-size: 20px !important; 
   border-radius: 5px !important;
@@ -322,6 +333,7 @@ border-color: gray;
   outline-style: none;
   font-size: 15px !important;
   letter-spacing: 1px;
+  
 }
 
 .datetime:focus {
@@ -497,7 +509,7 @@ border-color: gray;
 
 .answer {
   color: #20252b !important;
-  margin-left: 73px;
+  margin-left: 23rem;
   padding-left: 3%;
   margin-top: -2%;
   padding-bottom: 1%;
@@ -510,6 +522,16 @@ border-color: gray;
   width: max-content;
   padding-left: 2%;
   padding-top: 33px;
+}
+
+.myt-font1{
+  width: 16rem;
+  font-size: 14px !important;
+  font-weight: normal !important;
+}
+
+.myt-font7{
+  font-weight: 100 !important;
 }
 
 .dpDown:focus-visible {
@@ -553,6 +575,43 @@ border-color: gray;
   margin-top: -30px;
   font-weight: 100;
 }
+/*file upload start*/
+.file-upload-btn{
+  display: none;
+}
+.file-upload-box{
+  max-width: 24.5rem;
+  margin-left: 18rem;
+  height: 56px;
+  padding: 16px;
+  display: flex;
+  border: dashed 2px;
+  background-color: #f6f6f6;
+  justify-content: space-between;
+  color: #d8d8d8;
+}
+.file-label{
+  color: #c5281c;
+  text-decoration:underline
+}
+.file-uploading-box{
+  font-size: 14px !important;
+  font-weight: normal !important;
+  max-width: 24.5rem;
+  margin-left: 18rem;
+  height: 56px;
+  padding: 16px;
+  display: flex;
+  border: dashed 2px;
+  background-color: #f6f6f6;
+  justify-content: space-between;
+  margin-bottom: 17px;
+  color: #d8d8d8;
+}
+.uploading-file-name{
+  color:#6f7072;
+}
+/*file upload end*/
 .deleteIcon {
   height: 24px;
 }
@@ -796,7 +855,7 @@ input[type="button"].btn-block {
     font-size: 18px!important;
     /* margin: -2px 0px!important; */
     height: 60px;
-    margin-left: -238%;
+    margin-left: -259%;
     cursor: pointer!important;
     border-radius: 40px!important;
 }
@@ -816,8 +875,8 @@ input[type="button"].btn-block {
 }
 .down1 {
 
-  width: 36%;
-  margin-left: 313px;
+  width: 16rem;
+  margin-left: 21.5rem;
 
 }
 .date-line {
@@ -831,11 +890,12 @@ input[type="button"].btn-block {
   background-image: url("https://rnxt.s3.amazonaws.com/MytIcon/icon-clock%402x.png") !important;
   background-size: 25px !important;
   background-repeat: no-repeat !important;
-  background-position: 95% center !important;
+  background-position: 99% center !important;
   background: #dedddd;
   margin-top: 1.5rem;
-  margin-right: -2rem;
-  margin-left: 3rem;
+  margin-right: 20rem;
+  margin-left: 1rem;
+  text-align: left;
 }
 .boxoutline {
   outline: transparent;
