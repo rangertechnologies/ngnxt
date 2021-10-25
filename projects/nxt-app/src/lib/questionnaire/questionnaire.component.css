@@ -16,7 +16,7 @@
   border-radius: 40px!important;
 }
 .edit {
-  background-color: white;
+  background-color: #dedddd;
   border: none;
   color: #c5281c;
   text-decoration: underline;
@@ -65,6 +65,7 @@
 
 .bgColor {
   text-align: center;
+  background-color: #dedddd;
 }
 
   /*background-color: rgba(239, 239, 239, 0.9);
@@ -117,7 +118,7 @@
      border-radius: 5px!important;
      padding: .5em!important;
      */
-  background-color: white;
+  background-color: #dedddd;
 }
 
 /* .QEdit{
@@ -326,9 +327,7 @@ border-color: gray;
   background-image: none !important;
   border: none !important;
   position: relative !important;
-  padding: 0px;
-  margin: 0px;
-  padding-left: 5px;
+  padding-left: 15px;
   min-width: 19px !important;
   outline-style: none;
   font-size: 15px !important;
@@ -500,6 +499,7 @@ border-color: gray;
   padding-left: 3%;
 }
 .question {
+  background: #dedddd;
   /* font-weight: bold !important; */
   color: #8c8f92 !important;
   padding-left: 3%;
@@ -517,12 +517,9 @@ border-color: gray;
   word-wrap: break-word;
   width: 88%;
   text-align: center;
+  background: #dedddd;
 }
-.summaryTitle {
-  width: max-content;
-  padding-left: 2%;
-  padding-top: 33px;
-}
+
 
 .myt-font1{
   width: 16rem;
@@ -552,8 +549,9 @@ border-color: gray;
 
 .summary-groupText {
   font-weight: 700 !important;
-  padding-left: 3%;
+  margin-left: -10.5rem;
   padding-bottom: 1%;
+  background-color: #dedddd;
 }
 
 .fileQues {
@@ -873,12 +871,20 @@ input[type="button"].btn-block {
 .colon1 {
   display: contents;
 }
+
+.down{
+  margin-left: 0.5rem;
+}
 .down1 {
 
   width: 16rem;
-  margin-left: 21.5rem;
+  margin-left: 21.7rem;
 
 }
+.dropbox{
+  margin-left: 21.5rem;
+}
+
 .date-line {
   border-bottom: groove;
   border-color: #f1f1f1;
@@ -892,9 +898,7 @@ input[type="button"].btn-block {
   background-repeat: no-repeat !important;
   background-position: 99% center !important;
   background: #dedddd;
-  margin-top: 1.5rem;
-  margin-right: 20rem;
-  margin-left: 1rem;
+  margin-left: 19rem;
   text-align: left;
 }
 .boxoutline {
@@ -915,7 +919,7 @@ input[type="button"].btn-block {
     font-size: 20px!important;
     /* margin: -2px 0px!important; */
     /* height: 60px; */
-    margin-left: -2%;
+    margin-left: -23%;
     cursor: pointer!important;
     border-radius: 40px!important;
     margin-top: 162px;
@@ -934,8 +938,14 @@ input[type="button"].btn-block {
 .townArea:hover {
   background-color: rgba(158, 158, 158, 0.18);
 }
+
+.myt-align3{
+  width: 100% !important;
+}
+
 .listFlow {
-  width: 94% !important;
+  width: 16.2rem !important;
+  margin-left: 21.5rem;
   font-weight: normal !important;
   color: #767676 !important;
   z-index: 2;
