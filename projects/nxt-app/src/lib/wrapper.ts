@@ -90,6 +90,7 @@ export class Answer {
   Id: string;
   Question_Rich_Text__c: string;
   Answer_Long__c : string;
+  Question_Group_Text__c: string;
   Question_Ref__c : string;
   Question_Type__c : string;
 }

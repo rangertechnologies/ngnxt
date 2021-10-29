@@ -14,7 +14,9 @@
   <div [ngClass]="{ questiondiv2: !qbItem.Progress_Bar__c }">
     <div [ngClass]="{ bgColor: qbItem.Progress_Bar__c }">
       <div id="progress" *ngIf="qbItem.Progress_Bar__c">
+        
         <circle-progress class="titlebar" [percent]="this.percent" [radius]="60" [space]="-20" [outerStrokeWidth]="15"
+
           [innerStrokeWidth]="4" [outerStrokeColor]="'#f2d4ce'" [innerStrokeColor]="'#efe8e6'" [animation]="true"
           class="ng-star-inserted" [title]="this.percent+'%'" [showSubtitle]="false" [animationDuration]="300"
           [startFromZero]="false" [responsive]="false">
@@ -61,6 +63,7 @@
 
 
   <div *ngIf="dropdownFlag" >
+    <div class="dis-flex">
     <select   [ngClass]="{
         'dt-line myt-align3 myt-align2 dpDown dropbox down1 myt-dropbox myt-border-r myt-font1': qbItem.Progress_Bar__c,
         'custom-select': !qbItem.Progress_Bar__c
@@ -73,18 +76,22 @@
       <option value="." disabled hidden>Bitte treffen Sie eine Auswahl</option>
     </select>
   </div>
+  </div>
 
   <div *ngIf="radioFlag || dataFlag" class="">
     <div *ngIf="this.questionItem.error" class="cond-div2">
       {{ questionItem.Error_Message__c }}
     </div>
-    <div *ngFor="let opt of questionItem.Question_Options__r.records" class="radio col-md-6 optiondiv" style = "width:7% !important; ">
+    <div class="dis-flex">
+    <div *ngFor="let opt of questionItem.Question_Options__r.records" class="radio col-md-6 radioOption" >
+      
       <label class="radiocontainer container radiotext myt-font4">{{ opt.Value__c }}
         <input type="radio" [id]="opt.Id" [(ngModel)]="inpValue" name="inpValue" value="{{ opt.Value__c }}"
           (change)="optionChange(opt.Value__c)" />
         <span class="checkmark"></span>
       </label>
     </div>
+  </div>
   </div>
 
   <div *ngIf="checkboxFlag" class="">
@@ -151,10 +158,10 @@
 
 
   <div *ngIf="alphanumericFlag" class="col-md-12">
-    <div class="down1">
+    <div class="bookText1">
       <input placeholder="ES00 0000 0000 0000 0000 0000" type="Text" [ngClass]="{ boxoutline: qbItem.Progress_Bar__c }"
         [(ngModel)]="inpValue" id="number-input-id" (ngModelChange)="CCOnChange($event)" required="" maxlength="29"
-        (focus)="clearError()" style="width:-webkit-fill-available;" style.border-color="{{
+        (focus)="clearError()" style="width:-webkit-fill-available; background-color: #dedddd" style.border-color="{{
           (this.questionItem.error || this.notValidAccNum)
             ? 'red'
             : inpValue?.length > 0
@@ -192,10 +199,10 @@
       <div class="col-md-12 paddingBottom">
         <label class="date-time colorf">{{ questionItem.Date_Text__c }}</label>
         <div class="dis-flex">
-          <my-date-picker name="mydate" [options]="myDatePickerOptions" id="date" (dateChanged)="onDateChanged($event)"
+          <my-date-picker name="mydate" [options]="myDatePickerOptions" id="date" style="font-size: 18px !important;" (dateChanged)="onDateChanged($event)"
             [(ngModel)]="selDate" class="date-picker" (focus)="clearError()">
           </my-date-picker>
-          <i class="fa fa-check check-icon2" id="check-icon" aria-hidden="true" *ngIf="
+          <i class="fa check-icon2" id="check-icon" aria-hidden="true" *ngIf="
               inpValue?.length === 8 ||
               inpValue?.length === 9 ||
               inpValue?.length === 15
@@ -204,18 +211,13 @@
       </div>
     </div>
     <div *ngIf="timeFlag">
-      <div class="col-md-10 paddingBottom">
+      <div class="col-md-12 paddingBottom">
         <label class="date-time colorf">{{ questionItem.Time_Text__c }}</label>
-        <div [ngClass]="{
-            'dt-line date-line dt-time': qbItem.Progress_Bar__c,
-            dateandTime: !qbItem.Progress_Bar__c
-          }" id="dateandTime" [style.border-color]="
-            questionItem.error
-              ? 'red'
-              : questionItem?.input?.length > 0
-              ? '#87be1c'
-              : ''
-          " (focus)="(clearSQError)">
+        <div class="dis-flex">
+         <div [ngClass]="{'dt-line date-line dt-time': qbItem.Progress_Bar__c,
+                           dateandTime: !qbItem.Progress_Bar__c}" 
+              id="dateandTime" [style.border-color]="questionItem.error ? 'red': questionItem?.input?.length > 0 ? '#87be1c' : ''"
+              (focus)="(clearSQError)">
           <select name="hours" class="datetime showHour myt-time myt-hour" [(ngModel)]="selectedHour" id="hour"
             (focus)="clearError()">
             <option value="">HH</option>
@@ -233,7 +235,7 @@
           </select>
           <div [ngClass]="{ colon1: qbItem.Progress_Bar__c }" *ngIf="questionItem.X24_Hours__c == false">
             <span class="colon"> : </span>
-            <select name="AM/PM" class="datetime myt-time" [(ngModel)]="selectedMeridiem" id="meridiem">
+            <select name="AM/PM" class="myt-time" [(ngModel)]="selectedMeridiem" id="meridiem">
               <option value="AM">AM</option>
               <option value="PM">PM</option>
             </select>
@@ -241,12 +243,13 @@
           </div>
         </div>
       </div>
-      <i class="fa fa-check check-icon3" aria-hidden="true" *ngIf="questionItem?.input?.length > 0"></i>
+      </div>
+      <i class="fa check-icon3" aria-hidden="true" *ngIf="questionItem?.input?.length > 0"></i>
     </div>
   </div>
   <div *ngIf="fileFlag">
     <div *ngIf="!qbItem.Progress_Bar__c">
-      <div class="info-alert ques-alert2" style.border-color="{{ this.questionItem.error ? 'red' : '' }}">
+      <div class="info-alert" style.border-color="{{ this.questionItem.error ? 'red' : '' }}">
         <label class="picture-upload" for="file-upload">
           <span class="picture-upload-child">
             <i class="fa fa-file-image-o fa-5x icolor" aria-hidden="true"></i>
@@ -303,19 +306,19 @@
         <div class="myt-time myt-align3" [class]="'col-md-' + ques.Size__c + ' paddingnone'"
           *ngFor="let ques of subQuestions">
           <div [ngClass]="{ down2: qbItem.Progress_Bar__c }">
-            <span class="colorf myt-font3 myt-font7">{{ ques.Question__c }}</span>
+            <span class="dis-flex colorf myt-font3 myt-font7">{{ ques.Question__c }}</span>
           </div>
           <div *ngIf="ques.Type__c === 'Text'">
 
             <div *ngIf="ques.Question__c === 'Indica población' ">
               
-              <div [id]="ques.Id">
+              <div [id]="ques.Id" class="dis-flex;">
                 <div id="autocomplete-input"  style="max-width: 780px; ">
                   <input [(ngModel)]="selectedValue" (ngModelChange)="selectedValue=$event.toUpperCase()"
                   style.border-color=" {{ ques.error ? 'red !important' : '#858585' }}" style.color="{{ ques.error ? 'red' : '' }}" 
                   required=""  oninput="this.value=this.value.replace(/[^a-zA-Z\s.:;,?]/g,'')" (focus)="clearSQError(ques.Id)"
                   (focusin)="getTownLocal()" placeholder="Indica población" (blur)="clearList()"
-                    (input)="getTownLocal()" type="text" name="name" style="margin-left: 21.5rem;width: 16.2rem;"
+                    (input)="getTownLocal()" type="text" name="name" class="town"
                     autocomplete="town" />
                   <div id="selectList" class="listFlow">
                     <div *ngFor="let area of tempoAddress" class="townArea" (click)="townName(area)">
@@ -330,7 +333,7 @@
 
             <div *ngIf="ques.Question__c != 'Indica población' ">
             <input type="text" [(ngModel)]="ques.input" [ngClass]="{
-                'dt-line date-line down1 boxoutline myt-font1': qbItem.Progress_Bar__c,
+                'dis-flex dt-line date-line bookText boxoutline myt-font1': qbItem.Progress_Bar__c,
                 textBox: !qbItem.Progress_Bar__c
               }" id="text" [id]="ques.Id" required="" (focus)="clearSQError(ques.Id)"
               style.border-color="{{ ques.error ? 'red' : '' }}" placeholder="{{ ques.Question__c }}"
@@ -398,6 +401,7 @@
           </div>
 
           <div *ngIf="ques.Type__c === 'Dropdown'" class="">
+            <div class="dis-flex">
             <select [ngClass]="{
                 'dt-line dpDown down myt-dropbox myt-border-r myt-font1': qbItem.Progress_Bar__c,
                 'custom-select': !qbItem.Progress_Bar__c
@@ -411,34 +415,35 @@
                 {{ ques.Error_Message__c }}
               </option>
             </select>
+            </div>
           </div>
-          <i class="fa fa-check check-icon4" aria-hidden="true" *ngIf="questionItem?.input?.length > 0"></i>
+          <i class="fa fa-check " aria-hidden="true" *ngIf="questionItem?.input?.length > 0"></i>
         </div>
       </div>
     </div>
   </div>
 
   <div class="flexer">
-    <div [ngClass]="{ 'col-md-6': !qbItem.Progress_Bar__c }"
-      [style.visibility]="questionStack.length > 0 ? 'visible' : 'hidden'">
-      <div [ngClass]="{}">
-        <button [ngClass]="{
-            'grey btn-text left-bt': qbItem.Progress_Bar__c,
-            'nxt-btn btn-primary btn-lg btn-block btn-back-color':
-              !qbItem.Progress_Bar__c
-          }" (click)="handleBackClick()">
-          {{ qbItem.Back__c }}
-        </button>
-      </div>
-    </div>
     <div [ngClass]="{ 'col-md-6': !qbItem.Progress_Bar__c }">
       <div>
         <button [ngClass]="{
-            'rusty btn-text2 right-bt': qbItem.Progress_Bar__c,
+            'rusty': qbItem.Progress_Bar__c,
             'nxt-btn btn-primary btn-lg btn-block btn-back-color':
               !qbItem.Progress_Bar__c
           }" (click)="handleNextClick()">
           {{ qbItem.Next__c }}
+        </button>
+      </div>
+    </div>
+    <div [ngClass]="{ 'col-md-6': !qbItem.Progress_Bar__c }"
+      [style.visibility]="questionStack.length > 0 ? 'visible' : 'hidden'">
+      <div [ngClass]="{}">
+        <button [ngClass]="{
+            'left-bt': qbItem.Progress_Bar__c,
+            'nxt-btn btn-primary btn-lg btn-block btn-back-color':
+              !qbItem.Progress_Bar__c
+          }" (click)="handleBackClick()">
+          {{ qbItem.Back__c }}
         </button>
       </div>
     </div>
@@ -449,25 +454,21 @@
               'col-md-12':!qbItem.Progress_Bar__c
                }">
   <div id="progress2" *ngIf="qbItem.Progress_Bar__c">
-    <div [ngClass]="{'bgColor summary-top' : qbItem.Progress_Bar__c }" style="background-color: #dedddd;">
+    <div [ngClass]="{'bgColor summary-top' : qbItem.Progress_Bar__c }" >
       <div id="progress-summary" *ngIf="qbItem.Progress_Bar__c">
         <circle-progress class="titlebar" [percent]="this.percent" [radius]="40" [space]="-4" [outerStrokeWidth]="4"
           [innerStrokeWidth]="4" [outerStrokeColor]="'#c5281c'" [innerStrokeColor]="'#e7e8ea'" [animation]="true"
           class="ng-star-inserted" [title]="this.percent+'%'" [showSubtitle]="false" [animationDuration]="300"
           [startFromZero]="false" [responsive]="false">
         </circle-progress>
-      </div>
+      
 
-      <div *ngIf="qbItem.Summary_Text__c && qbItem.Progress_Bar__c" [ngClass]="{
-          summaryTitle:
-            qbItem.Progress_Bar__c && this.abItem.Status__c != 'Completed',
-          'summaryTitle-completed':
-            qbItem.Progress_Bar__c && this.abItem.Status__c === 'Completed'
-        }">
-        <h3 style="text-align: center; margin-left: 19rem; ">
+      <div *ngIf="qbItem.Summary_Text__c && qbItem.Progress_Bar__c" 
+      [ngClass]="{ summaryTitle: qbItem.Progress_Bar__c }">
+        <h3 class="subTitle" >
           {{ qbItem.Summary_Text__c }}
         </h3>
-        <div class="myt-font5" style="margin-left: 21rem;" *ngIf="this.abItem.Status__c != 'Completed'">
+        <div class="subTitle1" >
           {{ qbItem.Summary_Sub_Text__c}}
         </div>
       </div>
@@ -478,55 +479,46 @@
       </h3>
     </div>
   </div>
-  <div style="background: #dedddd;"
-    [ngClass]="{ 'full-summary': this.abItem.Status__c != 'Completed', 'full-summary-completed': this.abItem.Status__c === 'Completed' && qbItem.Progress_Bar__c }">
-    <div *ngFor="let qa of summary" style="background: #dedddd;">
-      <div [ngClass]="{
-        submit: this.abItem.Status__c === 'Completed' && qbItem.Progress_Bar__c
-      }">
-        <div [ngClass]="{
-          non: this.abItem.Status__c != 'Completed' && qbItem.Progress_Bar__c
-        }">
-          <div [ngClass]="{
-            summary:
-              this.abItem.Status__c != 'Completed' && !qbItem.Progress_Bar__c
-          }">
-            <div *ngIf="this.abItem.Status__c != 'Completed' && qbItem.Progress_Bar__c"
-              [ngClass]="{ 'summary-groupText myt-font2': qbItem.Progress_Bar__c }" style="background: #dedddd;">
+  <div [ngClass]="{ 'full-summary': qbItem.Progress_Bar__c }">
+    <div *ngFor="let qa of summary" >
+     
+        <div [ngClass]="{ non:  qbItem.Progress_Bar__c }">
+          <div [ngClass]="{ summary: this.abItem.Status__c != 'Completed' && !qbItem.Progress_Bar__c }">
+            <div *ngIf="qbItem.Progress_Bar__c"
+              [ngClass]="{ 'summary-groupText myt-font2': qbItem.Progress_Bar__c }" style=" width: max-content;">
               {{ qa.groupText }}
             </div>
 
-            <div *ngIf="!qbItem.Edit__c"
+           <div *ngIf="!qbItem.Edit__c"
               [ngClass]="{ 'question myt-font3 myt-font8': this.abItem.Status__c != 'Completed' }">
               <a [ngClass]="{ asum: this.abItem.Status__c === 'Completed' }" (click)="handleEditClick(qa.quesId)"
                 [innerHTML]="getText(qa.quesValue)">{{ qa.quesValue }}</a>
             </div>
             <div *ngIf="qbItem.Edit__c"
               [ngClass]="{ 'question myt-font3 myt-font8': this.abItem.Status__c != 'Completed' }">
-              <div [ngClass]="{ 'asum myt-font3': this.abItem.Status__c === 'Completed' }"
+              <div [ngClass]="{ 'question summary-completed myt-font3 myt-font8': this.abItem.Status__c === 'Completed' }"
                 [innerHTML]="getText(qa.quesValue)">
                 {{ qa.quesValue }}
               </div>
             </div>
             <div *ngIf="qbItem.Edit__c && this.abItem.Status__c != 'Completed'" style="background: #dedddd;">
               <button class="edit" (click)="handleEditClick(qa.quesId)">
-                <img src="https://rnxt.s3.amazonaws.com/MytIcon/icon-edit%402x.png" class="icon-edit" />{{
-                qbItem.Edit__c }}
+                <img src="https://rnxt.s3.amazonaws.com/MytIcon/icon-edit%402x.png" class="icon-edit" />
               </button>
             </div>
-            <div [ngClass]="{ 'bsum myt-font1': this.abItem.Status__c === 'Completed' }" >
-              <div [ngClass]="{ 'answer myt-font1': this.abItem.Status__c != 'Completed' }">
+           
+            <div [ngClass]="{ 'answer summary-completed ': this.abItem.Status__c === 'Completed' }" >
+              <div [ngClass]="{ 'answer ': this.abItem.Status__c != 'Completed' }">
                 <div *ngIf="qa.qTyp === 'File'">
                   <img src="https://rnxt.s3.amazonaws.com/MytIcon/icon-doc-img%401.png" class="icon-edit-summary" />
                   {{ qa.ansValue }}
                 </div>
-
                 <div *ngIf="qa.qTyp != 'File'">{{ qa.ansValue }}</div>
               </div>
-            </div>
           </div>
         </div>
-      </div>
+        </div>
+    </div>
     </div>
   </div>
 
@@ -534,32 +526,29 @@
   <div class="flexer" *ngIf="abItem">
     <div class="" *ngIf="abItem.Status__c == 'Completed'">
       <div class="col-md-6">
-        <button [ngClass]="{'grey btn-text btn-r': qbItem.Progress_Bar__c,
+        <button [ngClass]="{'btn-text': qbItem.Progress_Bar__c,
                             'nxt-btn btn-primary btn-lg btn-block btn-back-color': !qbItem.Progress_Bar__c}"
           (click)="handleCancelClick()">
           {{ qbItem.Cancel__c }}
         </button>
       </div>
     </div>
+
     <div class="" *ngIf="abItem.Status__c != 'Completed'">
       <div class="col-md-6">
-        <button [ngClass]="{
-            'grey btn-text btn-r': qbItem.Progress_Bar__c,
-            'nxt-btn btn-primary btn-lg btn-block btn-back-color':
-              !qbItem.Progress_Bar__c
-          }" (click)="handleBackClick()">
-          {{ qbItem.Back__c }}
-        </button>
-      </div>
-      <div class="col-md-6">
-        <button [ngClass]="{
-            'rusty btn-text2': qbItem.Progress_Bar__c,
-            'nxt-btn btn-primary btn-lg btn-block btn-back-color':
-              !qbItem.Progress_Bar__c
-          }" (click)="handleSubmitClick()">
+        <button [ngClass]="{ 'btn-text2': qbItem.Progress_Bar__c,
+                              'nxt-btn btn-primary btn-lg btn-block btn-back-color': !qbItem.Progress_Bar__c }" 
+          (click)="handleSubmitClick()">
           {{ qbItem.Submit__c }}
         </button>
       </div>
-    </div>
+      <div class="col-md-6">
+        <button [ngClass]="{'grey': qbItem.Progress_Bar__c,
+                             'nxt-btn btn-primary btn-lg btn-block btn-back-color': !qbItem.Progress_Bar__c}" 
+                (click)="handleBackClick()">
+          {{ qbItem.Back__c }}
+        </button>
+      </div>
+   </div>
   </div>
 </div>

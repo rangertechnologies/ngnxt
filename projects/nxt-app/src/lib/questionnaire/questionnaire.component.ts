@@ -1088,8 +1088,9 @@ export class QuestionnaireComponent implements OnInit {
 
         for (var ansObject of this.abItem.Answers__r.records) {
           lastQuestionId = ansObject.Question_Ref__c;
-          // console.log("Question: " + ansObject.Question_Rich_Text__c);
-          //  console.log("Answer: " + ansObject.Answer_Long__c);
+           //console.log("Question: " + ansObject.Question_Rich_Text__c);
+           // console.log("Answer: " + ansObject.Answer_Long__c);
+            //console.log("grouptext: " + ansObject.Question_Group_Text__c);
 
           this.questionStack.push(ansObject.Question_Ref__c);
 
@@ -1098,6 +1099,7 @@ export class QuestionnaireComponent implements OnInit {
             ansValue: ansObject.Answer_Long__c,
             quesId: ansObject.Question_Ref__c,
             qTyp: ansObject.Question_Type__c,
+            groupText:ansObject.Question_Group_Text__c,
           });
 
           //console.log(this.questionStack)
@@ -1138,6 +1140,7 @@ export class QuestionnaireComponent implements OnInit {
       this.progressStyle = "100%";
 
       for (var answer of this.abItem.Answers__r.records) {
+        //console.log(answer.Question_Group_Text__c);
         //console.log('repeat');
         //console.log(answer.Question_Rich_Text__c);
         var answers = {};
@@ -1157,6 +1160,7 @@ export class QuestionnaireComponent implements OnInit {
           }
 
           answers = {
+            groupText:answer.Question_Group_Text__c,
             quesValue: answer.Question_Rich_Text__c,
             ansValue: files,
           };
@@ -1165,6 +1169,7 @@ export class QuestionnaireComponent implements OnInit {
           for (var bqAnswerValue of answer.Answer_Long__c.split("@@##$$")) {
             answers = {};
             answers = {
+              groupText:answer.Question_Group_Text__c,
               quesValue: answer.Question_Rich_Text__c,
               ansValue: bqAnswerValue,
             };
@@ -1172,6 +1177,7 @@ export class QuestionnaireComponent implements OnInit {
           }
         } else {
           answers = {
+            groupText:answer.Question_Group_Text__c,
             quesValue: answer.Question_Rich_Text__c,
             ansValue: answer.Answer_Long__c,
           };
@@ -1197,7 +1203,7 @@ export class QuestionnaireComponent implements OnInit {
     if (this.abItem.Status__c == "Completed") {
       for (var answer of this.abItem.Answers__r.records) {
         var av = answer.Answer_Long__c.split("@@##$$");
-        var answers = { quesValue: answer.Question_Rich_Text__c, ansValue: av };
+        var answers = { quesValue: answer.Question_Rich_Text__c, ansValue: av, groupText:answer.Question_Group_Text__c };
         //console.log(answers)
         this.summary.push(answers);
       }
