@@ -6,7 +6,7 @@
   text-align: center;
   font-size: 24px;
   height: 60px;
-  margin-left: -3%;
+  margin-left: 3%;
   margin-top: 11%;
   cursor: pointer;
 }
@@ -634,14 +634,19 @@ input[type="button"].btn-block{
   border-color: #007bff ;
 }
 
+.ques-Title{
+  text-align: left;
+  font-size: 24px;
+}
+
 .grey{
-  width: 160%;
+  width: 152%;
   height: 56px;
-  margin: 0px 0px 0px 18px;
-  padding: 14px 21px 17px;
+  margin: 0px 0px 0px 0px;
+  padding: 14px 0px 17px;
   background-color: #cd2810;
   color: #fff;
-  font-size: 21px;
+  font-size: 24px;
 }
 
 .btn-text{
@@ -651,18 +656,19 @@ input[type="button"].btn-block{
     color: #fff;
     height: 60px;
     margin-left: 6rem;
-    margin-right: 14rem;
-    margin-top: 56px;
+    margin-right: 16rem;
+    margin-top: 0px;
     cursor: pointer;
     border-radius: 40px;
 }
 .btn-text2{
-    width: 200%;
+    width: 150%;
+    font-size: 24px;
     background-color: #cd2810;
     border: none;
     color: #fff;
     height: 60px;
-    margin-left: -14rem;
+    margin-left: 0rem;
     margin-right: 17rem;
     margin-top: 56px;
     cursor: pointer;
@@ -726,7 +732,7 @@ input[type="button"].btn-block{
     height: 60px;
     margin-top: 152px;
     margin-bottom: 4rem;
-    margin-left: -37rem;
+    margin-left: -35rem;
 }
 
 .townArea{
@@ -849,6 +855,7 @@ background-color: #dedddd;
 
 .summary-completed{
   padding-left: 2%;
+  margin-top: -6px;
 }
 
 .town{
@@ -911,9 +918,173 @@ background-color: #dedddd;
   }
 }
 
+@media all and (min-width: 768px){
+  .myt-time{
+    width: 6%;
+  }
+  .radioOption{
+    width: 9.5%;
+  }
+  .subTitle{
+    margin-left: 9rem;
+  }
+  .subTitle1{
+    margin-left: 10rem;
+  }
+  .rusty{
+    margin-left: 8%;
+  }
+  .left-bt{
+  margin-left: -33rem;
+  }
+  .btn-text2{
+    margin-left: 28px;
+  }
+  .grey{
+    margin: 0 0 0 24px;
+  }
+  .btn-text{
+    width: 250%;
+    
+  }
+}
 
+@media all and (min-width:876px) {
+  .myt-time{
+    width: 5.5%;
+  }
+  .subTitle{
+    margin-left: 11rem;
+  }
+  .subTitle1{
+    margin-left: 14rem;
+  }
+  .rusty{
+    margin-left: 17%;
+  }
+  .left-bt{
+  margin-left: -30rem;
+  }
+  .btn-text2{
+    margin-left: 63px;
+  }
+  .grey{
+    margin: 0 0 0 55px;
+  }
+  .btn-text{
+    width: 300%;
+  }
+}
+@media all and (min-width: 967px){
+  .myt-time{
+    width: 5%;
+  }
+  .subTitle{
+    margin-left: 13rem;
+  }
+  .subTitle1{
+    margin-left: 18rem;
+  }
+  .rusty{
+    margin-left: 25%;
+  }
+  .left-bt{
+  margin-left: -27rem;
+  }
+  .btn-text2{
+    margin-left: 88px;
+  }
+  .grey{
+    margin: 0 0 0 84px;
+  }
+  .btn-text{
+    width: 340%;
+  }
+}
 
+@media all and (min-width: 1026px){
+  .showminute{
+    margin:0%;
+  }
+  .myt-time{
+    width: 4.5%;
+  }
+  .answer{
+    margin-top: -4%;
+  }
+  .rusty{
+    margin-left: 21%;
+  }
+  .left-bt{
+  margin-left: -28.5rem;
+  }
+  .btn-text2{
+    margin-left: 91px;
+  }
+  .grey{
+    margin: 0 0 0 84px;
+  }
+}
 
+@media all and (min-width: 1126px){
+  .dt-time{
+    background-position: 98.5%!important;
+  }
+  .myt-time{
+    width: 4%;
+  }
+  .answer{
+    margin-top: -3%;
+  }
+  .subTitle{
+    margin-left: 15rem;
+  }
+  .subTitle1{
+    margin-left: 21rem;
+  }
+  .rusty{
+    margin-left: 29%;
+  }
+  .left-bt{
+  margin-left: -25.5rem;
+  }
+  .btn-text2{
+    margin-left: 120px;
+  }
+  .grey{
+    margin: 0 0 0 113px;
+  }
+  .btn-text{
+    width: 345%;
+  }
+}
+
+@media all and (min-width: 1250px){
+  .myt-time{
+    width: 3.7%;
+  }
+  .subTitle{
+    margin-left: 18rem;
+  }
+  .subTitle1{
+    margin-left: 15rem;
+  }
+  .rusty{
+    margin-left: 34%;
+  }
+  .left-bt{
+  margin-left: -23.5rem;
+  }
+  .btn-text2{
+    margin-left: 138px;
+  }
+  .grey{
+    margin: 0 0 0 133px;
+  }
+  .btn-text{
+    width: 350%;
+  }
+}
 
 
 /*General Nxt App stylings */

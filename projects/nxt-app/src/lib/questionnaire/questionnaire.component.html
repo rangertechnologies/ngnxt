@@ -1,6 +1,13 @@
 <ngx-spinner [name]="spinnerName" [type]="spinnerType"></ngx-spinner>
 
 <div *ngIf="questionItem" class="questiondiv1">
+  <div *ngIf="questionItem.Title__c && qbItem.Progress_Bar__c">
+    <!--<div class="addtional-info ques-alert1">
+      <div class="infodiv" [innerHTML]="innerhtml">-->
+        <div class="ques-Title" >
+        {{ questionItem.Title__c }}
+      </div>
+  </div>
 
   <div *ngIf="questionItem.Additional_Rich__c && qbItem.Progress_Bar__c">
     <!--<div class="addtional-info ques-alert1">
@@ -15,13 +22,13 @@
     <div [ngClass]="{ bgColor: qbItem.Progress_Bar__c }">
       <div id="progress" *ngIf="qbItem.Progress_Bar__c">
         
-        <circle-progress class="titlebar" [percent]="this.percent" [radius]="60" [space]="-20" [outerStrokeWidth]="15"
-
-          [innerStrokeWidth]="4" [outerStrokeColor]="'#f2d4ce'" [innerStrokeColor]="'#efe8e6'" [animation]="true"
-          class="ng-star-inserted" [title]="this.percent+'%'" [showSubtitle]="false" [animationDuration]="300"
-          [startFromZero]="false" [responsive]="false">
-        </circle-progress>
-      </div>
+        <circle-progress class="titlebar" [percent]="this.percent" [radius]="40" [space]="-4" [outerStrokeWidth]="4"
+        [innerStrokeWidth]="4" [outerStrokeColor]="'#e0b1b0'" [innerStrokeColor]="'#e7e8ea'" [animation]="true" [backgroundPadding]= "0"
+        [backgroundColor]= "'#dd2e13'" [backgroundGradientStopColor]="'#f9bfbd'" [titleColor]="'#f3eded'" 
+        class="ng-star-inserted" [title]="this.percent+'%'" [showSubtitle]="false" [showBackground]="true" [animationDuration]="300"
+        [startFromZero]="false" [responsive]="false" >
+      </circle-progress>
+       </div>
     </div>
     <div *ngIf="questionItem.Group__c && qbItem.Progress_Bar__c"
         [ngClass]="{ questionalign: !qbItem.Progress_Bar__c }">
@@ -83,7 +90,7 @@
       {{ questionItem.Error_Message__c }}
     </div>
     <div class="dis-flex">
-    <div *ngFor="let opt of questionItem.Question_Options__r.records" class="radio col-md-6 radioOption" >
+    <div *ngFor="let opt of questionItem.Question_Options__r.records" class="radio radioOption col-md-6 " >
       
       <label class="radiocontainer container radiotext myt-font4">{{ opt.Value__c }}
         <input type="radio" [id]="opt.Id" [(ngModel)]="inpValue" name="inpValue" value="{{ opt.Value__c }}"
@@ -457,10 +464,11 @@
     <div [ngClass]="{'bgColor summary-top' : qbItem.Progress_Bar__c }" >
       <div id="progress-summary" *ngIf="qbItem.Progress_Bar__c">
         <circle-progress class="titlebar" [percent]="this.percent" [radius]="40" [space]="-4" [outerStrokeWidth]="4"
-          [innerStrokeWidth]="4" [outerStrokeColor]="'#c5281c'" [innerStrokeColor]="'#e7e8ea'" [animation]="true"
-          class="ng-star-inserted" [title]="this.percent+'%'" [showSubtitle]="false" [animationDuration]="300"
-          [startFromZero]="false" [responsive]="false">
-        </circle-progress>
+        [innerStrokeWidth]="4" [outerStrokeColor]="'#e0b1b0'" [innerStrokeColor]="'#e7e8ea'" [animation]="true" [backgroundPadding]= "0"
+        [backgroundColor]= "'#dd2e13'" [backgroundGradientStopColor]="'#f9bfbd'" [titleColor]="'#f3eded'" 
+        class="ng-star-inserted" [title]="this.percent+'%'" [showSubtitle]="false" [showBackground]="true" [animationDuration]="300"
+        [startFromZero]="false" [responsive]="false" >
+      </circle-progress>
       
 
       <div *ngIf="qbItem.Summary_Text__c && qbItem.Progress_Bar__c" 
