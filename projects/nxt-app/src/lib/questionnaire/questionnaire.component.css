@@ -347,6 +347,7 @@
 }
 
 .answer{
+  max-width: 32%;
   color: #a3a2a2;
   margin-top: -3%;
   margin-left: 14rem;
@@ -870,6 +871,7 @@ background-color: #dedddd;
 .town{
   /* margin:auto;
   width: 57%; */
+  margin: 0;
   background-color: #dedddd;
 }
 .town-drop{
@@ -1264,6 +1266,10 @@ background-color: #dedddd;
   }
 }*/
 @media screen and (max-width: 672px) {
+  .town-drop{
+    margin:auto;
+    width: 100% !important;
+  }
   .dis-flex{
     display: flex;
     justify-content: left;
