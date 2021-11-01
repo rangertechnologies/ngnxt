@@ -348,6 +348,8 @@
 
 .answer{
   max-width: 55%;
+  margin-left: auto;
+  margin-right: auto;
   color: #a3a2a2;
   margin-top: -3%;
   padding-bottom: 3%;
@@ -356,6 +358,8 @@
   word-wrap: break-word;
   text-align: left;
   background: #dedddd;
+  border-bottom: 1px solid #fff;
+  
 }
 
 .myt-font{
@@ -1514,4 +1518,8 @@ background-color: #dedddd;
 }
 .mydp .selection {
   padding: 0 !important;
+}
+.sum-ques{
+  width: 55%;
+  margin: auto;
 }

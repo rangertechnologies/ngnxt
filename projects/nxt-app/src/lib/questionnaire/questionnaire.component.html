@@ -497,7 +497,7 @@
                 [innerHTML]="getText(qa.quesValue)">{{ qa.quesValue }}</a>
             </div>
             <div *ngIf="qbItem.Edit__c"
-              [ngClass]="{ 'question myt-font3 myt-font8': this.abItem.Status__c != 'Completed' }">
+              [ngClass]="{ 'sum-ques question myt-font3 myt-font8': this.abItem.Status__c != 'Completed' }">
               <div [ngClass]="{ 'question summary-completed myt-font3 myt-font8': this.abItem.Status__c === 'Completed' }"
                 [innerHTML]="getText(qa.quesValue)">
                 {{ qa.quesValue }}
