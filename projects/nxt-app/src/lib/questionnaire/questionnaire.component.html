@@ -90,7 +90,7 @@
     <div class="dis-flex">
     <div *ngFor="let opt of questionItem.Question_Options__r.records" class="radio radioOption" >
       
-      <label class="radiocontainer container radiotext myt-font4">{{ opt.Value__c }}
+      <label class="radiocontainer container  myt-font4">{{ opt.Value__c }}
         <input type="radio" [id]="opt.Id" [(ngModel)]="inpValue" name="inpValue" value="{{ opt.Value__c }}"
           (change)="optionChange(opt.Value__c)" />
         <span class="checkmark"></span>
