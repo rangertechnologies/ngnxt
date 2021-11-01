@@ -868,9 +868,13 @@ background-color: #dedddd;
 }
 
 .town{
+  /* margin:auto;
+  width: 57%; */
+  background-color: #dedddd;
+}
+.town-drop{
   margin:auto;
   width: 57%;
-  background-color: #dedddd;
 }
 /* Media screen starts*/
   
