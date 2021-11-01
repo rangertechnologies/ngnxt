@@ -181,7 +181,7 @@
   border: 1px solid none ;
   border-radius: .3em;
   padding: 0 ;
-  margin-left: 31px;
+  /* margin-left: 31px; */
   align-items: center;
   text-align: center;
   cursor: pointer;
@@ -195,8 +195,7 @@
 
 .checkmark{
   position: absolute;
-  top: -60%;
-  left: 37.5%;
+  left: 47.5%;
   height: 20px;
   width: 20px;
   background-color: #ffffff00;
@@ -773,6 +772,7 @@ input[type="button"].btn-block{
 
 /* / Hide the browser's default radio button / */
 .container input{
+  display: none;
   position: absolute;
   opacity: 0;
   cursor: pointer;
@@ -1288,7 +1288,7 @@ background-color: #dedddd;
     width:8%;
   }
   .radiocontainer{
-    margin-left: 4rem;
+    /* margin-left: 4rem; */
   }
   .checkmark{
     left:3.8rem;
@@ -1466,9 +1466,9 @@ background-color: #dedddd;
   /* .myt-time{
     width: 15%;
   } */
-  .checkmark{
+  /* .checkmark{
     top: -25px;
-  }
+  } */
   .radiotext{
     margin-top: -45px;
   }
@@ -1489,5 +1489,5 @@ background-color: #dedddd;
   }
 }
 .mydp .selection {
-  padding: 0;
+  padding: 0 !important;
 }

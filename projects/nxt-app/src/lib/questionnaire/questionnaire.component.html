@@ -88,7 +88,7 @@
       {{ questionItem.Error_Message__c }}
     </div>
     <div class="dis-flex">
-    <div *ngFor="let opt of questionItem.Question_Options__r.records" class="radio radioOption col-md-1 " >
+    <div *ngFor="let opt of questionItem.Question_Options__r.records" class="radio radioOption" >
       
       <label class="radiocontainer container radiotext myt-font4">{{ opt.Value__c }}
         <input type="radio" [id]="opt.Id" [(ngModel)]="inpValue" name="inpValue" value="{{ opt.Value__c }}"
@@ -221,7 +221,7 @@
         <div class="dis-flex">
          <div [ngClass]="{'dt-line date-line dt-time': qbItem.Progress_Bar__c,
                            dateandTime: !qbItem.Progress_Bar__c}" 
-              id="dateandTime" [style.border-color]="questionItem.error ? 'red': questionItem?.input?.length > 0 ? '#87be1c' : ''"
+              id="dateandTime" [style.border-color]="questionItem.error ? 'red': questionItem?.input?.length > 0 ? '' : ''"
               (focus)="(clearSQError)">
           <select name="hours" class="datetime showHour myt-time myt-hour" [(ngModel)]="selectedHour" id="hour"
             (focus)="clearError()">
