@@ -207,11 +207,11 @@
           <my-date-picker name="mydate" [options]="myDatePickerOptions" id="date" style="font-size: 18px !important;" (dateChanged)="onDateChanged($event)"
             [(ngModel)]="selDate" class="date-picker" (focus)="clearError()">
           </my-date-picker>
-          <i class="fa check-icon2" id="check-icon" aria-hidden="true" *ngIf="
+          <!-- <i class="fa check-icon2" id="check-icon" aria-hidden="true" *ngIf="
               inpValue?.length === 8 ||
               inpValue?.length === 9 ||
               inpValue?.length === 15
-            "></i>
+            "></i> -->
         </div>
       </div>
     </div>
