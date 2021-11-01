@@ -347,10 +347,9 @@
 }
 
 .answer{
-  max-width: 32%;
+  max-width: 55%;
   color: #a3a2a2;
   margin-top: -3%;
-  margin-left: 14rem;
   padding-bottom: 3%;
   font-size: 14px;
   font-weight: 400;
@@ -415,13 +414,17 @@
 }
 
 .summary-groupText{
-  width: 100%;
+  width: 55%;
+  margin: auto;
   text-align: left;
   font-weight: 700 ;
-  margin-left: 14rem;
   padding-bottom: 1%;
   background-color: #dedddd;
   color:#c5281c;
+}
+.sum-ques{
+  width: 55%;
+  margin: auto;
 }
 
 /*file upload start*/

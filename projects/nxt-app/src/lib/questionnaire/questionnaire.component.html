@@ -492,7 +492,7 @@
             </div>
 
            <div *ngIf="!qbItem.Edit__c"
-              [ngClass]="{ 'question myt-font3 myt-font8': this.abItem.Status__c != 'Completed' }">
+              [ngClass]="{ 'question sum-ques myt-font3 myt-font8': this.abItem.Status__c != 'Completed' }">
               <a [ngClass]="{ asum: this.abItem.Status__c === 'Completed' }" (click)="handleEditClick(qa.quesId)"
                 [innerHTML]="getText(qa.quesValue)">{{ qa.quesValue }}</a>
             </div>
