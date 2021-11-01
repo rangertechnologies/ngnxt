@@ -443,6 +443,7 @@
   padding: 16px;
   display: flex;
   border: 2px;
+  border-bottom: 1px solid #fff;
   background-color: #dedddd;
   justify-content: space-between;
   color: #d8d8d8;
@@ -940,338 +941,6 @@ background-color: #dedddd;
   }
 }
 
-@media screen and (max-width: 11800x){
-  /* .myt-time{
-    width: 7%;
-  } */
-}
-/*@media screen and (min-width: 1080px) {
-  .myt-time{
-  width: 9%;
-  }
-  .myt-font7{
-    padding-left: 11.5rem;
-  }
-  .down{
-    margin-left: 0rem;
-    width: 46.5%;
-  }
-  .bookText{
-    margin-left: 12.3rem;
-  }
-  .bookText1{
-    width: 46.5%;
-  }
-  .town{
-    margin-left: 12.3rem;
-  }
-  .listFlow{
-    margin-left: 12rem;
-  }
-  .file-upload-box{
-    margin-left: 15rem;
-  }
-  .file-uploading-box{
-    margin-left: 15rem;
-  }
-  .subTitle{
-    margin-left: 16rem;
-  }
-  .subTitle1{
-    margin-left: 18rem;
-  }
-  .edit{
-    margin-left: 50%;
-  }
-}
-@media screen and (min-width: 950px) {
-  .rusty{
-    width: 21rem;
-    margin-left: 0%;
-  }
-  .left-bt{
-    width: 21rem;
-    margin-left: -21rem;
-  }
-  .date-picker{
-    width: 60%;
-    margin-left: 1rem;
-  }
-  .dt-time{
-    width: 60%;
-    margin-left: 1rem;
-  }
-  .myt-time{
-    width: 10%;
-  }
-  .myt-font7{
-    padding-left: 9rem;
-  }
-  .down{
-    width: 60%;
-    margin-left: -1rem;
-  }
-  .bookText{
-    width: 60%;
-    margin-left:10rem ;
-  }
-  .bookText1{
-    width: 60%;
-    margin-left: 10rem;
-  }
-  
-  .town{
-    margin-left: 10rem;
-    width: 60%;
-  }
-  .file-upload-box{
-    max-width: 57.5%;
-    margin-left: 11.5rem;
-  }
-  .file-uploading-box{
-    max-width: 57.5%;
-    margin-left: 11.5rem;
-  }
-  .subTitle{
-    margin-left: 13rem;
-  }
-  .subTitle1{
-    margin-left: 17rem;
-  }
-  .edit{
-    margin-left: 58%;
-  }
-  .btn-text2{
-    width: 19rem;
-  }
-  .grey{
-    width: 19rem;
-  }
-}
-@media screen and (min-width: 850px) {
-  .rusty{
-    width: 21rem;
-    margin-left: 0rem;
-  }
-  .left-bt{
-    width: 21rem;
-    margin-left: -21rem;
-  }
-  .date-picker{
-    width: 60%;
-    margin-left: 1rem;
-  }
-  .dt-time{
-    width: 60%;
-    margin-left: 1rem;
-  }
-  .myt-time{
-    width: 10%;
-  }
-  .myt-font7{
-    padding-left: 8rem;
-  }
-  .down{
-    width: 60%;
-    margin-left: -1rem;
-  }
-  .bookText{
-    width: 60%;
-    margin-left: 8.5rem;
-  }
-  .bookText1{
-    width: 60%;
-    margin-left: 8.5rem;
-  }
-  .town{
-    margin-left: 8.5rem;
-    width: 60%;
-  }
-  .file-upload-box{
-    max-width: 57%;
-    margin-left: 9.5rem;
-  }
-  .file-uploading-box{
-    max-width: 57%;
-    margin-left: 9.5rem;
-  }
-  .subTitle{
-    margin-left: 11rem;
-  }
-  .subTitle1{
-    margin-left: 13rem;
-  }
-  .summary-groupText{
-    margin-left: 8rem;
-  }
-  .question{
-    margin-left: 8rem;
-  }
-  .answer{
-    margin-left: 8rem;
-  }
-  .edit{
-    margin-left: 90%;
-  }
-  .btn-text2{
-    width: 21rem;
-    margin-left: 17rem;
-  }
-  .grey{
-    width: 21rem;
-    margin: 0 0 0 0rem;
-  }
-}
-@media screen and (min-width: 750px) {
-  .rusty{
-    width: 21rem;
-    margin-left: 0rem;
-  }
-  .left-bt{
-    width: 21rem;
-    margin-left: -21rem;
-  }
-  .date-picker{
-    width: 74%;
-  }
-  .dt-time{
-    width: 74%;
-  }
-  .myt-time{
-    width: 9%;
-  }
-  .radioOption{
-    width:6%;
-  }
-  .myt-font7{
-    padding-left: 3.5rem;
-  }
-  .down{
-    width: 74%;
-    margin-left: -2rem;
-  }
-  .bookText{
-    width: 74%;
-    margin-left: 4rem;
-  }
-  .bookText1{
-    width: 74%;
-    margin-left: 4rem;
-  }
-  .town{
-    margin-left: 4rem;
-    width: 74%;
-  }
-  .file-upload-box{
-    max-width: 60%;
-    margin-left: 8rem;
-  }
-  .file-uploading-box{
-    max-width: 60%;
-    margin-left: 8rem;
-  }
-  .subTitle{
-    margin-left: 11rem;
-  }
-  .subTitle1{
-    margin-left: 7rem;
-  }
-  .summary-groupText{
-    margin-left: 0rem;
-  }
-  .question{
-    margin-left: 8rem;
-  }
-  .answer{
-    margin-left: 8rem;
-  }
-  .edit{
-    margin-left: 90%;
-  }
-  .btn-text2{
-    width: 24rem;
-  }
-  .grey{
-    width: 24rem;
-    margin: 0 0 0 17rem;
-  }
-}
-@media screen and (min-width: 672px) {
-  .rusty{
-    width: 21rem;
-    margin-left: 0rem;
-  }
-  .left-bt{
-    width: 21rem;
-    margin-left: -21rem;
-  }
-  .date-picker{
-    width: 74%;
-  }
-  .dt-time{
-    width: 74%;
-  }
-  .myt-time{
-    width: 10%;
-  }
-  .radioOption{
-    width:7%;
-  }
-  .myt-font7{
-    padding-left: 3.5rem;
-  }
-  .down{
-    width: 74%;
-    margin-left: 0%;
-  }
-  .bookText{
-    width: 74%;
-    margin-left: 4.2rem;
-  }
-  .bookText1{
-    width: 74%;
-    margin-left: 4.2rem;
-  }
-  .town{
-    margin-left: 4rem;
-    width: 74%;
-  }
-  .file-upload-box{
-    max-width: 70%;
-    margin-left: 5rem;
-  }
-  .file-uploading-box{
-    max-width: 70%;
-    margin-left: 5rem;
-  }
-  .subTitle{
-    margin-left: 4rem;
-  }
-  .subTitle1{
-    margin-left: 7rem;
-  }
-  .summary-groupText{
-    margin-left: 0rem;
-
-  }
-  .question{
-    margin-left: 0rem;
-  }
-  .answer{
-    margin-left: 0rem;
-  }
-  .edit{
-    margin-left: 90%;
-  }
-  .btn-text2{
-    width: 24rem;
-    margin-left: 17rem;
-  }
-  .grey{
-    width: 24rem;
-    margin: 0 0 0 17rem;
-  }
-}*/
 @media screen and (max-width: 672px) {
   .town-drop{
     margin:auto;
@@ -1309,9 +978,7 @@ background-color: #dedddd;
     margin-top: 0;
     margin: 0 8px;
   }
-  .radiocontainer{
-    /* margin-left: 4rem; */
-  }
+
   .checkmark{
     left:3.8rem;
   }
@@ -1328,7 +995,7 @@ background-color: #dedddd;
     width: 100%;
     margin-left: 0rem;
   }
-  .bookText1{
+  .book{
     width: 100%;
     margin-left: 0rem;
   }
@@ -1351,15 +1018,15 @@ background-color: #dedddd;
   .subTitle1{
     margin-left: 70px;
   }
-  .summary-groupText{
+  /*.summary-groupText{
     margin-left: 0rem;
-  }
+  }*/
   .question{
     margin-left: 0rem;
   }
-  .answer{
+  /*.answer{
     margin-left: 0rem;
-  }
+  }*/
   .edit{
     margin-left: 90%;
   }
@@ -1381,9 +1048,7 @@ background-color: #dedddd;
     width: 27rem;
     margin-left: -27rem;
   }
-  /* .myt-time{
-    width: 9%;
-  } */
+ 
   .showminute{
     margin-top: 0.5%;
   }
@@ -1391,7 +1056,7 @@ background-color: #dedddd;
     width: 100%;
     margin-left: 0rem;
   }
-  .bookText1{
+  .book{
     width: 100%;
     margin-left: 0rem;
   }
@@ -1399,23 +1064,19 @@ background-color: #dedddd;
     margin-left: 6rem;
   }
   .btn-text2{
-    width: 21rem;
+    width: 18rem;
     margin-right: 0rem;
     margin-left: 0;
   }
   .grey{
-    width: 21rem;
+    width: 18rem;
     margin: 0 0 0 0;
-  }
-
-
-  
+  }  
 }
 @media screen and (max-width: 672px) {
   .questiondiv1{
     padding: 0;
   }
-  
 }
 @media screen and (max-width: 525px) {
   .rusty{
@@ -1425,18 +1086,14 @@ background-color: #dedddd;
     width: 26rem;
     margin-left: -26rem;
   }
-  /* .myt-time{
-    width: 10%;
-  } */
+ 
   .subTitle{
     margin-left: 2rem;
   }
 }
 
 @media screen and (max-width: 480px) {
-  /* .myt-time{
-    width: 11%;
-  } */
+
   .subTitle{
     margin-left: 2rem;
   }
@@ -1466,9 +1123,7 @@ background-color: #dedddd;
     width: 21rem;
     margin-left: -21rem;
   }
-  /* .myt-time{
-    width: 14%;
-  } */
+  
   .file-upload-box{
     max-width: 100%;
   }
@@ -1491,12 +1146,7 @@ background-color: #dedddd;
     width: 19rem;
     margin-left: -19rem;
   }
-  /* .myt-time{
-    width: 15%;
-  } */
-  /* .checkmark{
-    top: -25px;
-  } */
+ 
   .radiotext{
     margin-top: -45px;
   }

@@ -279,7 +279,7 @@
 
     <div *ngIf="qbItem.Progress_Bar__c">
       <div *ngFor="let attachment of attachments" class="file-uploading-box">
-        <img src="https://rnxt.s3.amazonaws.com/MytIcon/icon-doc-img%402x.png" class="icon-edit1" />
+        <!--<img src="https://rnxt.s3.amazonaws.com/MytIcon/icon-doc-img%402x.png" class="icon-edit1" />-->
         <span class="uploading-file-name ">{{ attachment.attachmentName }}</span>
         <img src="https://rnxt.s3.amazonaws.com/MytIcon/icon-delete%402x.png" class="deleteIcon"
           (click)="deleteAttachment(attachment.attachmentId)" />
@@ -288,13 +288,12 @@
 
       </div>
       <div class="file-upload-box" style.border-color="{{ this.questionItem.error ? 'red' : '' }}">
-        <img src="https://rnxt.s3.amazonaws.com/MytIcon/icon-doc-img%402x.png" class="icon-edit1" />
+      
+        <!--<img src="https://rnxt.s3.amazonaws.com/MytIcon/icon-doc-img%402x.png" class="icon-edit1" />-->
         <span class="f-Name" [innerHTML]="getText(questionItem.Question_Text__c)"> {{ questionItem.Question_Text__c
           }}</span>
         <label class="file-label ">
-          <span>
-            Adjuntar
-          </span>
+          <img src="https://rnxt.s3.amazonaws.com/MytIcon/file-upload.png" />
           <input name="attachment" type="file" placeholder="Ticket kaufen" multiple
             accept=".pdf, .png, .jpg, .jpeg, .heic, .application/pdf" (change)="uploadFile($event)"
             class="file-upload-btn">
@@ -498,7 +497,7 @@
             </div>
             <div *ngIf="qbItem.Edit__c"
               [ngClass]="{ 'sum-ques question myt-font3 myt-font8': this.abItem.Status__c != 'Completed' }">
-              <div [ngClass]="{ 'question summary-completed myt-font3 myt-font8': this.abItem.Status__c === 'Completed' }"
+              <div [ngClass]="{ 'sum-ques question summary-completed myt-font3 myt-font8': this.abItem.Status__c === 'Completed' }"
                 [innerHTML]="getText(qa.quesValue)">
                 {{ qa.quesValue }}
               </div>
