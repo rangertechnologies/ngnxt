@@ -754,8 +754,6 @@ input[type="button"].btn-block{
 }
 
 .listFlow{
-  width: 50% !important ;
-  margin-left: 14rem;
   font-weight: normal ;
   color: #767676 ;
   z-index: 2;
