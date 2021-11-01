@@ -1,13 +1,11 @@
 <ngx-spinner [name]="spinnerName" [type]="spinnerType"></ngx-spinner>
 
 <div *ngIf="questionItem" class="questiondiv1">
-  <div *ngIf="questionItem.Title__c && qbItem.Progress_Bar__c">
-    <!--<div class="addtional-info ques-alert1">
-      <div class="infodiv" [innerHTML]="innerhtml">-->
+  <!--<div *ngIf="questionItem.Title__c && qbItem.Progress_Bar__c">
         <div class="ques-Title" >
         {{ questionItem.Title__c }}
       </div>
-  </div>
+  </div>-->
 
   <div *ngIf="questionItem.Additional_Rich__c && qbItem.Progress_Bar__c">
     <!--<div class="addtional-info ques-alert1">
@@ -90,7 +88,7 @@
       {{ questionItem.Error_Message__c }}
     </div>
     <div class="dis-flex">
-    <div *ngFor="let opt of questionItem.Question_Options__r.records" class="radio radioOption col-md-6 " >
+    <div *ngFor="let opt of questionItem.Question_Options__r.records" class="radio radioOption col-md-1 " >
       
       <label class="radiocontainer container radiotext myt-font4">{{ opt.Value__c }}
         <input type="radio" [id]="opt.Id" [(ngModel)]="inpValue" name="inpValue" value="{{ opt.Value__c }}"
@@ -165,7 +163,7 @@
 
 
   <div *ngIf="alphanumericFlag" class="col-md-12">
-    <div class="bookText1">
+    <div class="book">
       <input placeholder="ES00 0000 0000 0000 0000 0000" type="Text" [ngClass]="{ boxoutline: qbItem.Progress_Bar__c }"
         [(ngModel)]="inpValue" id="number-input-id" (ngModelChange)="CCOnChange($event)" required="" maxlength="29"
         (focus)="clearError()" style="width:-webkit-fill-available; background-color: #dedddd" style.border-color="{{
@@ -310,17 +308,17 @@
   <div *ngIf="bookFlag">
     <div class="form-group">
       <div class="form-row">
-        <div class="myt-time myt-align3" [class]="'col-md-' + ques.Size__c + ' paddingnone'"
+        <div class="myt-align3" [class]="'col-md-' + ques.Size__c + ' paddingnone'"
           *ngFor="let ques of subQuestions">
           <div [ngClass]="{ down2: qbItem.Progress_Bar__c }">
-            <span class="dis-flex colorf myt-font3 myt-font7">{{ ques.Question__c }}</span>
+            <span class="dis-flex myt-font3 myt-font7">{{ ques.Question__c }}</span>
           </div>
           <div *ngIf="ques.Type__c === 'Text'">
 
             <div *ngIf="ques.Question__c === 'Indica población' ">
               
               <div [id]="ques.Id" class="dis-flex;">
-                <div id="autocomplete-input"  style="max-width: 780px; ">
+                <div id="autocomplete-input" >
                   <input [(ngModel)]="selectedValue" (ngModelChange)="selectedValue=$event.toUpperCase()"
                   style.border-color=" {{ ques.error ? 'red !important' : '#858585' }}" style.color="{{ ques.error ? 'red' : '' }}" 
                   required=""  oninput="this.value=this.value.replace(/[^a-zA-Z\s.:;,?]/g,'')" (focus)="clearSQError(ques.Id)"
@@ -473,12 +471,8 @@
 
       <div *ngIf="qbItem.Summary_Text__c && qbItem.Progress_Bar__c" 
       [ngClass]="{ summaryTitle: qbItem.Progress_Bar__c }">
-        <h3 class="subTitle" >
-          {{ qbItem.Summary_Text__c }}
-        </h3>
-        <div class="subTitle1" >
-          {{ qbItem.Summary_Sub_Text__c}}
-        </div>
+        <h3 class="subTitle" >{{ qbItem.Summary_Text__c }}</h3>
+        <div class="subTitle1" >{{ qbItem.Summary_Sub_Text__c}}</div>
       </div>
     </div>
     <div *ngIf="!qbItem.Progress_Bar__c">
@@ -493,7 +487,7 @@
         <div [ngClass]="{ non:  qbItem.Progress_Bar__c }">
           <div [ngClass]="{ summary: this.abItem.Status__c != 'Completed' && !qbItem.Progress_Bar__c }">
             <div *ngIf="qbItem.Progress_Bar__c"
-              [ngClass]="{ 'summary-groupText myt-font2': qbItem.Progress_Bar__c }" style=" width: max-content;">
+              [ngClass]="{ 'summary-groupText myt-font2': qbItem.Progress_Bar__c }" >
               {{ qa.groupText }}
             </div>
 
