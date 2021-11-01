@@ -870,7 +870,7 @@ background-color: #dedddd;
 }
 
 .town{
-  margin-left: 12.5rem;
+  margin:auto;
   width: 57%;
   background-color: #dedddd;
 }
@@ -1290,7 +1290,9 @@ background-color: #dedddd;
     margin-top: -0.5%;
   }
   .radioOption{
-    width:8%;
+    width: auto;
+    margin-top: 0;
+    margin: 0 8px;
   }
   .radiocontainer{
     /* margin-left: 4rem; */
@@ -1392,6 +1394,12 @@ background-color: #dedddd;
   }
 
 
+  
+}
+@media screen and (max-width: 672px) {
+  .questiondiv1{
+    padding: 0;
+  }
   
 }
 @media screen and (max-width: 525px) {
