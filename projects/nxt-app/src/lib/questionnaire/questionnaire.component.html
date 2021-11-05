@@ -312,11 +312,64 @@
           <div [ngClass]="{ down2: qbItem.Progress_Bar__c }">
             <span class="dis-flex myt-font3 myt-font7">{{ ques.Question__c }}</span>
           </div>
+          
           <div *ngIf="ques.Type__c === 'Text'">
-
-            <div *ngIf="ques.Question__c === 'Indica población' ">
-              
+          
+           
+            <!--<div *ngIf="ques.Question__c === 'Código postal' ">
               <div [id]="ques.Id" class="dis-flex;">
+                <div  class="town-drop">
+                  <input  id="autocomplete-input" [(ngModel)]="selectedPostalcode" 
+                  style.border-color=" {{ ques.error ? 'red !important' : '#858585' }}" style.color="{{ ques.error ? 'red' : '' }}" 
+                  required=""  oninput="this.value=this.value.replace(/[^a-zA-Z\s.:;,?]/g,'')" (focus)="clearSQError(ques.Id)"
+                  (focusin)="getCode()" placeholder="Indica población" (blur)="closeDropdown()"
+                    (input)="getCode()" type="text" name="name" class="town"
+                    autocomplete="postal-code" maxlength="5" oninput="this.value=this.value.replace(/[^0-9]/g,'');" />
+                  <div id="selectList" class="listFlow">
+                    <div *ngFor="let value of tempoAddress" class="townArea" (click)="getPostalcode(value)">
+                      <div>
+                        <div>{{value.zipCode}}</div>
+                      </div>
+                    </div>
+                  </div>
+              </div>
+             </div>
+            </div>
+         
+             <div *ngIf="ques.Question__c === 'Indica población' ">
+              <div [id]="ques.Id" class="dis-flex;">
+                <div  class="town-drop">
+                  <input  *ngIf="!(places.length > 1)" type="text" id="autocomplete-input" [(ngModel)]="selectedCity"  maxlength="50" 
+                  style.border-color=" {{ ques.error ? 'red !important' : '#858585' }}" style.color="{{ ques.error ? 'red' : '' }}" 
+                  required=""  placeholder="CITY" autocomplete="address-level2" value="Chennai"  />
+
+                  <select *ngIf="places.length > 1" id="city" name="gender" style.border-color=" {{ ques.error ? 'red !important' : '#858585' }}" style.color="{{ ques.error ? 'red' : '' }}" [(ngModel)]="selectedCity" >
+                  <option value="">Select city</option>
+                        <option *ngFor="let values of places" [value]="values.town" >{{values.town}}</option>
+                    </select>
+                </div>
+              </div>
+             </div>
+          
+            <div *ngIf="ques.Question__c === 'Provincia' ">
+              <div [id]="ques.Id" class="dis-flex;">
+                <div  class="town-drop">
+                  <select placeholder="provinca" style.border-color=" {{ ques.error ? 'red !important' : '#858585' }}" style.color="{{ ques.error ? 'red' : '' }}" [(ngModel)]="selectedProvince" >
+                  <option  value="">select Province</option>
+                        <option *ngFor="let values of province" [value]="values.province">{{values.province}}</option>
+                    </select>
+                </div>
+              </div>
+              <div *ngIf="ques.Question__c != 'Indica población' || ques.Question__c !='Provincia' || ques.Question__c !='Código postal' ">
+            </div>-->
+          
+          
+
+
+
+              <!--Text for MYT-->
+              <div *ngIf="ques.Question__c === 'Indica población' ">
+            <div [id]="ques.Id" class="dis-flex;">
                 <div  class="town-drop">
                   <input  id="autocomplete-input" [(ngModel)]="selectedValue" (ngModelChange)="selectedValue=$event.toUpperCase()"
                   style.border-color=" {{ ques.error ? 'red !important' : '#858585' }}" style.color="{{ ques.error ? 'red' : '' }}" 
@@ -332,18 +385,21 @@
                     </div>
                   </div>
                 </div>
-              </div>
+               </div>
             </div>
 
             <div *ngIf="ques.Question__c != 'Indica población' ">
-            <input type="text" [(ngModel)]="ques.input" [ngClass]="{
-                'dis-flex dt-line date-line bookText boxoutline myt-font1': qbItem.Progress_Bar__c,
-                textBox: !qbItem.Progress_Bar__c
+              <input type="text" [(ngModel)]="ques.input" [ngClass]="{
+               'dis-flex dt-line date-line bookText boxoutline myt-font1': qbItem.Progress_Bar__c,
+               textBox: !qbItem.Progress_Bar__c
               }" id="text" [id]="ques.Id" required="" (focus)="clearSQError(ques.Id)"
               style.border-color="{{ ques.error ? 'red' : '' }}" placeholder="{{ ques.Question__c }}"
               oninput="this.value=this.value.replace(/[^a-zA-Z0-9\s.:;,?]/g,'');" />
+              </div>
             </div>
-          </div>
+
+          
+          
 
           <div *ngIf="ques.Type__c === 'Email'">
             <input type="email" [(ngModel)]="ques.input" [id]="ques.Id" required="" (focus)="clearSQError(ques.Id)"
@@ -526,7 +582,7 @@
 
   <div class="flexer" *ngIf="abItem">
     <div class="" *ngIf="abItem.Status__c == 'Completed'">
-      <div class="col-md-6">
+      <div class="col-md-12">
         <button [ngClass]="{'btn-text': qbItem.Progress_Bar__c,
                             'nxt-btn btn-primary btn-lg btn-block btn-back-color': !qbItem.Progress_Bar__c}"
           (click)="handleCancelClick()">

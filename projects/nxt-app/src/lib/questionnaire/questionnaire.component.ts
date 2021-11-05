@@ -453,9 +453,17 @@ export class QuestionnaireComponent implements OnInit {
   ];
   public tempoAddress: any[] = [];
   public selectedValue: string;
+  public selectedPostalcode: string;
+  public selectedProvince: string;
+  public selectedCity: string;
   public selectedArea: string;
   public localaddress: any[] = [];
 
+  public allAddress :any [] = [];
+  public PostalCode:string;
+  public places: any[] = [];
+  public province:any[]=[];
+ 
   // REQ-01 PROGRESS BAR
   public progressStyle: string = "0%";
   public answerCount: number = 0;
@@ -498,11 +506,19 @@ export class QuestionnaireComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log("abdul");
+    console.log("RNXT-Claim");
     this.inpValue = "";
     this.selectedMeridiem = "AM";
     this.processQB();
     this.localaddress = JSON.parse(localStorage.getItem("address"));
+    this.allAddress=this.localaddress.filter((item, index) => {
+      if (this.localaddress.indexOf(item) == index){
+        return item;
+      }
+    }); 
+    this.allAddress.sort(function(a, b){
+      return a.zipCode - b.zipCode
+    });
   }
 
   ngOnChanges() {
@@ -1805,6 +1821,7 @@ export class QuestionnaireComponent implements OnInit {
 
   townName(area) {
     this.selectedValue = area.town;
+    console.log('this value='+this.selectedValue)
     this.tempoAddress = [];
   }
 
@@ -1812,10 +1829,14 @@ export class QuestionnaireComponent implements OnInit {
     this.tempoAddress = [];
     if (this.selectedValue.length > 0) {
       for (var val of this.localaddress) {
+        //for (var val of this.sampleAddress) {
+          //console.log('this value1='+val)
         if (
           val.town.substring(0, this.selectedValue.length) == this.selectedValue
         ) {
+          //console.log(val.country)
           this.tempoAddress.push(val);
+          //console.log('tempoAddress'+this.tempoAddress)
           if (this.tempoAddress.length == 6) {
             break;
           }
@@ -1834,8 +1855,66 @@ export class QuestionnaireComponent implements OnInit {
 
   setSearchListWidth() {
     //to resize search list based on the screen size
-    const searchBoxWidth =
-      window.document.getElementById("autocomplete-input").offsetWidth;
+    const searchBoxWidth = window.document.getElementById("autocomplete-input").offsetWidth;
     document.getElementById("selectList").style.width = searchBoxWidth + "px";
   }
-}
+
+    getCode(){
+      this.tempoAddress = [];
+      if (this.selectedPostalcode.length > 0) {
+        for (var val of this.allAddress) {
+          //for (var val of this.sampleAddress) {
+            console.log('this value1='+val)
+          if (val.zipCode.substring(0, this.selectedPostalcode.length) == this.selectedPostalcode) {
+            console.log(val.country)
+            this.tempoAddress.push(val);
+            console.log('tempoAddress'+this.tempoAddress)
+            if (this.tempoAddress.length == 6) {
+              break;
+            }
+          }
+        }
+      }
+      document.getElementById("selectList").style.display = "block";
+      this.setSearchListWidth();
+    }
+    getPostalcode(value){
+     this.places=[];
+     this.province=[];
+      var province;
+      var town;
+      this.selectedPostalcode = value.zipCode;
+      this.selectedProvince = value.country;
+      console.log('this value='+this.selectedPostalcode)
+      console.log('this value='+this.selectedProvince)
+      this.tempoAddress=[];
+      for(var val of this.localaddress){
+        //for (var val of this.sampleAddress) {
+          console.log(val.zipCode +'=pc')
+        if(this.selectedPostalcode == val.zipCode ){
+
+          this.places.push(val);
+          this.province.push(val);
+          this.selectedProvince=val.country;
+          province = val.province
+          town = val.town;
+        }
+      }
+      if(this.places.length == 1){
+        this.selectedProvince =province;
+        this.selectedCity = town;
+      }else if(this.places.length >1 || this.places.length ==0){
+          this.selectedCity ='';
+          this.selectedProvince='';
+      }
+    }
+    closeDropdown() {
+      if(this.selectedPostalcode.length == 5){
+        this.getPostalcode({zipCode:this.selectedPostalcode});
+      }
+
+   setTimeout(()=> {
+      document.getElementById('selectList').style.display = "none";
+    }, 500);
+   }
+  }

@@ -668,12 +668,12 @@ input[type="button"].btn-block{
 }
 
 .btn-text{
-    width: 100%;
+    width: 100% ;
     font-size: 24px;
     background-color: #cd2810;
     color: #fff;
     height: 60px;
-    margin-left: 6rem;
+    margin-left: auto;
     margin-right: 16rem;
     margin-top: 0px;
     cursor: pointer;
@@ -866,7 +866,7 @@ input[type="button"].btn-block{
 }
 
 .book{
-width:24.2%;
+width:27%;
 margin-left: 39%;
 background-color: #dedddd;
 }
@@ -958,6 +958,7 @@ background-color: #dedddd;
     width: 28rem;
     margin-left: -28rem;
   }
+
   .questionalign{
     text-align: left;
   }
@@ -1150,9 +1151,9 @@ background-color: #dedddd;
   .radiotext{
     margin-top: -45px;
   }
-  .myt-font7{
+  /*.myt-font7{
     margin-left: 0%;
-  }
+  }*/
   .file-upload-box{
     max-width: 100%;
   }
