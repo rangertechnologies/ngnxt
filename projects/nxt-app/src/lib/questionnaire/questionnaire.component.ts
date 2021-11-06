@@ -700,21 +700,54 @@ export class QuestionnaireComponent implements OnInit {
       var hasMissingInput = false;
 	  var count = 0;
       for (var item of this.questionItem.Questions__r.records) {
-		  if(item.Type__c== "Text" && item.Question__c === 'Indica población'){
+
+        if(item.Type__c== "Text" && item.Question__c === 'Indica población'){
 			  for(var loc of this.localaddress){
-				  if(loc.town==this.selectedValue){
-					  //console.log('testing ')
-					  item.input=this.selectedValue;
+				  if(this.selectedCity){
+					  console.log('testing town value'+ this.selectedCity)
+					  item.input= this.selectedCity;
 					  break;
-				  }else if(count == this.localaddress.length -1){
-					//console.log('error form')
+				  }  else if(count == this.localaddress.length -1){
+					console.log('error form city')
 					item.error = new ErrorWrapper();
 					hasMissingInput = true;
 					return;
 				  }
 				  count++;  
 			  }
-			//console.log('testin values=='+this.selectedValue)
+			console.log('testin values=='+item.input)
+		  }
+      if(item.Type__c== "Text" && item.Question__c === 'Código postal'){
+			  for(var loc of this.localaddress){
+				  if(loc.zipCode == this.selectedPostalcode){
+					  console.log('testing zipcode value*****'+ this.selectedPostalcode)
+					  item.input=this.selectedPostalcode;
+					  break;
+				  } else if(count == this.localaddress.length -1){
+					console.log('error form')
+					item.error = new ErrorWrapper();
+					hasMissingInput = true;
+					return;
+				  }
+				  count++;  
+			  }
+			console.log('testin values=='+item.input)
+		  }
+      if(item.Type__c== "Text" && item.Question__c === 'Provincia'){
+			  for(var loc of this.localaddress){
+				  if(loc.province == this.selectedProvince){
+					  console.log('******testing province value'+ this.selectedProvince)
+					  item.input=this.selectedProvince;
+					  break;
+				  } else if(count == this.localaddress.length -1){
+					console.log('error form')
+					item.error = new ErrorWrapper();
+					hasMissingInput = true;
+					return;
+				  }
+				  count++;  
+			  }
+			console.log('testin values=='+item.input)
 		  }
 			 /* var loctown;
 			  for(let val of this.localaddress){
@@ -1864,11 +1897,11 @@ export class QuestionnaireComponent implements OnInit {
       if (this.selectedPostalcode.length > 0) {
         for (var val of this.allAddress) {
           //for (var val of this.sampleAddress) {
-            console.log('this value1='+val)
+            //console.log('this value1='+val)
           if (val.zipCode.substring(0, this.selectedPostalcode.length) == this.selectedPostalcode) {
-            console.log(val.country)
+            //console.log(val.country)
             this.tempoAddress.push(val);
-            console.log('tempoAddress'+this.tempoAddress)
+            //console.log('tempoAddress'+this.tempoAddress)
             if (this.tempoAddress.length == 6) {
               break;
             }
@@ -1879,25 +1912,28 @@ export class QuestionnaireComponent implements OnInit {
       this.setSearchListWidth();
     }
     getPostalcode(value){
+     this.tempoAddress=[];
      this.places=[];
      this.province=[];
       var province;
       var town;
+      
       this.selectedPostalcode = value.zipCode;
       this.selectedProvince = value.country;
-      console.log('this value='+this.selectedPostalcode)
+      console.log('this postal='+this.selectedPostalcode)
       console.log('this value='+this.selectedProvince)
-      this.tempoAddress=[];
+      
       for(var val of this.localaddress){
-        //for (var val of this.sampleAddress) {
-          console.log(val.zipCode +'=pc')
         if(this.selectedPostalcode == val.zipCode ){
-
+          console.log('this post='+this.selectedPostalcode)
+          console.log('this val='+this.selectedProvince)
           this.places.push(val);
           this.province.push(val);
           this.selectedProvince=val.country;
           province = val.province
           town = val.town;
+          console.log('this post123='+town)
+          console.log('this val123='+province)
         }
       }
       if(this.places.length == 1){

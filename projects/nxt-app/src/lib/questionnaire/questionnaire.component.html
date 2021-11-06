@@ -7,14 +7,7 @@
       </div>
   </div>-->
 
-  <div *ngIf="questionItem.Additional_Rich__c && qbItem.Progress_Bar__c">
-    <!--<div class="addtional-info ques-alert1">
-      <div class="infodiv" [innerHTML]="innerhtml">-->
-        <div class="myt-font6" [innerHTML]="innerhtml">
-        {{ questionItem.Additional_Rich__c }}
-      </div>
-    
-  </div>
+
 
   <div [ngClass]="{ questiondiv2: !qbItem.Progress_Bar__c }">
     <div [ngClass]="{ bgColor: qbItem.Progress_Bar__c }">
@@ -57,7 +50,14 @@
       </div>
     </div>
   </div>
-
+  <div *ngIf="questionItem.Additional_Rich__c && qbItem.Progress_Bar__c" class="additional">
+    <!--<div class="addtional-info ques-alert1">
+      <div class="infodiv" [innerHTML]="innerhtml">-->
+        <div  [innerHTML]="getText(questionItem.Additional_Rich__c)">
+        {{ questionItem.Additional_Rich__c }}
+      </div>
+    
+  </div>
   <div *ngIf="questionItem.Additional_Rich__c && !qbItem.Progress_Bar__c">
     <div class="info-alert ques-alert1">
       <i class="fa fa-info fa-3x iposition icolor" aria-hidden="true"></i>
@@ -103,12 +103,14 @@
     <div *ngIf="this.questionItem.error" class="cond-div2">
       {{ questionItem.Error_Message__c }}
     </div>
+    <div class="dis-flex">
     <div *ngFor="let item of optionValues" class="radio col-md-6 optiondiv">
-      <label class="radiocontainer">
+      <label class="radiocontainer check" >
         <input type="checkbox" [id]="item.Id" [(ngModel)]="item.checked" (click)="clearError()" />
         <span>{{ item.Value__c }}</span>
       </label>
     </div>
+  </div>
   </div>
 
   <div *ngIf="textFlag" class="col-md-12 myt-book1">
@@ -316,7 +318,7 @@
           <div *ngIf="ques.Type__c === 'Text'">
           
            
-            <!--<div *ngIf="ques.Question__c === 'Código postal' ">
+            <div *ngIf="ques.Question__c === 'Código postal' ">
               <div [id]="ques.Id" class="dis-flex;">
                 <div  class="town-drop">
                   <input  id="autocomplete-input" [(ngModel)]="selectedPostalcode" 
@@ -339,11 +341,11 @@
              <div *ngIf="ques.Question__c === 'Indica población' ">
               <div [id]="ques.Id" class="dis-flex;">
                 <div  class="town-drop">
-                  <input  *ngIf="!(places.length > 1)" type="text" id="autocomplete-input" [(ngModel)]="selectedCity"  maxlength="50" 
+                  <input  *ngIf="!(places.length > 1)" type="text" id="autocomplete-input" [(ngModel)]="selectedCity"  maxlength="50" class="text-border"
                   style.border-color=" {{ ques.error ? 'red !important' : '#858585' }}" style.color="{{ ques.error ? 'red' : '' }}" 
                   required=""  placeholder="CITY" autocomplete="address-level2" value="Chennai"  />
 
-                  <select *ngIf="places.length > 1" id="city" name="gender" style.border-color=" {{ ques.error ? 'red !important' : '#858585' }}" style.color="{{ ques.error ? 'red' : '' }}" [(ngModel)]="selectedCity" >
+                  <select *ngIf="places.length > 1" id="city" class="text-border" name="gender" style.border-color=" {{ ques.error ? 'red !important' : '#858585' }}" style.color="{{ ques.error ? 'red' : '' }}" [(ngModel)]="selectedCity" >
                   <option value="">Select city</option>
                         <option *ngFor="let values of places" [value]="values.town" >{{values.town}}</option>
                     </select>
@@ -353,21 +355,20 @@
           
             <div *ngIf="ques.Question__c === 'Provincia' ">
               <div [id]="ques.Id" class="dis-flex;">
-                <div  class="town-drop">
-                  <select placeholder="provinca" style.border-color=" {{ ques.error ? 'red !important' : '#858585' }}" style.color="{{ ques.error ? 'red' : '' }}" [(ngModel)]="selectedProvince" >
+                <div  class="town-drop ">
+                  <select class="text-border" placeholder="provinca" style.border-color=" {{ ques.error ? 'red !important' : '#858585' }}" style.color="{{ ques.error ? 'red' : '' }}" [(ngModel)]="selectedProvince" >
                   <option  value="">select Province</option>
                         <option *ngFor="let values of province" [value]="values.province">{{values.province}}</option>
                     </select>
                 </div>
               </div>
-              <div *ngIf="ques.Question__c != 'Indica población' || ques.Question__c !='Provincia' || ques.Question__c !='Código postal' ">
-            </div>-->
+            </div>
           
           
 
 
 
-              <!--Text for MYT-->
+              <!--Text for MYT
               <div *ngIf="ques.Question__c === 'Indica población' ">
             <div [id]="ques.Id" class="dis-flex;">
                 <div  class="town-drop">
@@ -386,9 +387,10 @@
                   </div>
                 </div>
                </div>
-            </div>
+            </div>-->
 
-            <div *ngIf="ques.Question__c != 'Indica población' ">
+          
+            <div *ngIf="ques.Question__c != 'Indica población' && ques.Question__c !='Provincia' && ques.Question__c !='Código postal' ">
               <input type="text" [(ngModel)]="ques.input" [ngClass]="{
                'dis-flex dt-line date-line bookText boxoutline myt-font1': qbItem.Progress_Bar__c,
                textBox: !qbItem.Progress_Bar__c

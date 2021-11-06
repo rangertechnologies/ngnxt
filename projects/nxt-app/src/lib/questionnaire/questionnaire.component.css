@@ -725,11 +725,11 @@ input[type="button"].btn-block{
 }
 
 .myt-dropbox{
-  background-image: url(https://rnxt.s3.amazonaws.com/MytIcon/icon-arrow-down.png) ;
+  background-image: url(https://rnxt.s3.amazonaws.com/MytIcon/down-red.png) ;
   background-origin: content-box;
   background-position: right -.9rem center;
   background-repeat: no-repeat;
-  background-size: 26px 24px;
+  background-size: 35px 33px;
   padding-right: 1.35rem;
   background-color: #dedddd;
 }
@@ -866,7 +866,7 @@ input[type="button"].btn-block{
 }
 
 .book{
-width:27%;
+width:29%;
 margin-left: 39%;
 background-color: #dedddd;
 }
@@ -942,6 +942,11 @@ background-color: #dedddd;
 }
 
 @media screen and (max-width: 672px) {
+  .additional{
+    width: 90%;
+    text-align: left;
+    margin-left: 6%;
+  }
   .town-drop{
     margin:auto;
     width: 100% !important;
@@ -950,10 +955,16 @@ background-color: #dedddd;
     display: flex;
     justify-content: left;
   }
+  .check{
+  display: inherit;
+  width: max-content;
+  margin-left: 6%;
+}
   .rusty{
     width: 28rem;
     margin-left: 0rem;
   }
+
   .left-bt{
     width: 28rem;
     margin-left: -28rem;
@@ -1173,4 +1184,26 @@ background-color: #dedddd;
 .sum-ques{
   width: 55%;
   margin: auto;
+}
+.text-border{
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  border-radius: 0;
+  border-bottom: 1px solid #fff !important;
+  background-color: #dedddd;
+}
+.additional{
+ width: 50%; 
+ text-align: center; 
+ margin-left: 28%; 
+
+ margin-top: -18px;
+ font-weight: normal;
+ font-size: 14px;
+ color: #560d05;
+}
+
+.check{
+  display: block;
 }
