@@ -1,11 +1,13 @@
 <ngx-spinner [name]="spinnerName" [type]="spinnerType"></ngx-spinner>
 
 <div *ngIf="questionItem" class="questiondiv1">
-  <!--<div *ngIf="questionItem.Title__c && qbItem.Progress_Bar__c">
-        <div class="ques-Title" >
+  <div *ngIf="questionItem.Title__c && qbItem.Progress_Bar__c">
+        <h1 class="header1" >
         {{ questionItem.Title__c }}
-      </div>
-  </div>-->
+        </h1>
+        <div class="header2">{{ questionItem.SubTitle__c }}
+        </div>
+  </div>
 
 
 
@@ -50,12 +52,9 @@
       </div>
     </div>
   </div>
-  <div *ngIf="questionItem.Additional_Rich__c && qbItem.Progress_Bar__c" class="additional">
-    <!--<div class="addtional-info ques-alert1">
-      <div class="infodiv" [innerHTML]="innerhtml">-->
-        <div  [innerHTML]="getText(questionItem.Additional_Rich__c)">
-        {{ questionItem.Additional_Rich__c }}
-      </div>
+  <div *ngIf="questionItem.Additional_Rich__c && qbItem.Progress_Bar__c" >
+        <h3 class="additional" [innerHTML]="innerhtml">
+        </h3>
     
   </div>
   <div *ngIf="questionItem.Additional_Rich__c && !qbItem.Progress_Bar__c">
@@ -105,9 +104,9 @@
     </div>
     <div class="dis-flex">
     <div *ngFor="let item of optionValues" class="radio col-md-6 optiondiv">
-      <label class="radiocontainer check" >
+      <label class=" container1 " >{{ item.Value__c }}
         <input type="checkbox" [id]="item.Id" [(ngModel)]="item.checked" (click)="clearError()" />
-        <span>{{ item.Value__c }}</span>
+        <span class='checkmark1'></span>
       </label>
     </div>
   </div>
@@ -318,7 +317,7 @@
           <div *ngIf="ques.Type__c === 'Text'">
           
            
-            <div *ngIf="ques.Question__c === 'Código postal' ">
+           <!-- <div *ngIf="ques.Question__c === 'Código postal' ">
               <div [id]="ques.Id" class="dis-flex;">
                 <div  class="town-drop">
                   <input  id="autocomplete-input" [(ngModel)]="selectedPostalcode" 
@@ -343,11 +342,11 @@
                 <div  class="town-drop">
                   <input  *ngIf="!(places.length > 1)" type="text" id="autocomplete-input" [(ngModel)]="selectedCity"  maxlength="50" class="text-border"
                   style.border-color=" {{ ques.error ? 'red !important' : '#858585' }}" style.color="{{ ques.error ? 'red' : '' }}" 
-                  required=""  placeholder="CITY" autocomplete="address-level2" value="Chennai"  />
+                  required=""  placeholder="Indica población" autocomplete="address-level2" value="Chennai"  />
 
                   <select *ngIf="places.length > 1" id="city" class="text-border" name="gender" style.border-color=" {{ ques.error ? 'red !important' : '#858585' }}" style.color="{{ ques.error ? 'red' : '' }}" [(ngModel)]="selectedCity" >
                   <option value="">Select city</option>
-                        <option *ngFor="let values of places" [value]="values.town" >{{values.town}}</option>
+                        <option *ngFor="let value of places" [value]="value.town" >{{value.town}}</option>
                     </select>
                 </div>
               </div>
@@ -362,13 +361,13 @@
                     </select>
                 </div>
               </div>
-            </div>
+            </div>-->
           
           
 
 
 
-              <!--Text for MYT
+              <!--Text for MYT-->
               <div *ngIf="ques.Question__c === 'Indica población' ">
             <div [id]="ques.Id" class="dis-flex;">
                 <div  class="town-drop">
@@ -387,7 +386,8 @@
                   </div>
                 </div>
                </div>
-            </div>-->
+            </div>
+            </div>
 
           
             <div *ngIf="ques.Question__c != 'Indica población' && ques.Question__c !='Provincia' && ques.Question__c !='Código postal' ">
@@ -515,6 +515,7 @@
 <div *ngIf="summary && summary.length > 0" class="col-md-12" [ngClass]="{
               'col-md-12':!qbItem.Progress_Bar__c
                }">
+    <h1 class="header1" >{{ qbItem.SubTitle__c }}</h1>         
   <div id="progress2" *ngIf="qbItem.Progress_Bar__c">
     <div [ngClass]="{'bgColor summary-top' : qbItem.Progress_Bar__c }" >
       <div id="progress-summary" *ngIf="qbItem.Progress_Bar__c">

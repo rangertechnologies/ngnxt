@@ -943,9 +943,11 @@ background-color: #dedddd;
 
 @media screen and (max-width: 672px) {
   .additional{
-    width: 90%;
-    text-align: left;
-    margin-left: 6%;
+    
+    margin-left: -25%;
+  }
+  .container1{
+    margin-left: -21%;
   }
   .town-drop{
     margin:auto;
@@ -1060,6 +1062,9 @@ background-color: #dedddd;
     width: 27rem;
     margin-left: -27rem;
   }
+  .container1{
+    margin-left: -7%;
+  }
  
   .showminute{
     margin-top: 0.5%;
@@ -1135,7 +1140,9 @@ background-color: #dedddd;
     width: 21rem;
     margin-left: -21rem;
   }
-  
+  .container1{
+    margin-left: 27px;
+  }
   .file-upload-box{
     max-width: 100%;
   }
@@ -1194,16 +1201,108 @@ background-color: #dedddd;
   background-color: #dedddd;
 }
 .additional{
- width: 50%; 
- text-align: center; 
- margin-left: 28%; 
-
- margin-top: -18px;
- font-weight: normal;
- font-size: 14px;
- color: #560d05;
+    line-height: 1;
+    font-size: 14px;
+    text-align: left;
+    padding: 0 32%;
+    color: #560d05;
 }
 
 .check{
   display: block;
 }
+.header2{
+  font-size: 20px;
+  font-weight: 300;
+  text-align: center;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.5;
+  letter-spacing: normal;
+  color: #560d05;
+  max-width: 1100px;
+  margin: auto;
+  padding-bottom: 10px;
+}
+.header1{
+  font-size: 32px;
+  font-weight: bold;
+  text-align: center;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.25;
+  letter-spacing: normal;
+  color: #dd2e13;
+}
+
+
+/* The container */
+.container1 {
+  display: inline-grid;
+  position: relative;
+  cursor: pointer;
+  font-size: 20px;
+  user-select: none;
+}
+
+/* Hide the browser's default checkbox */
+.container1 input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+/* Create a custom checkbox */
+.checkmark1 {
+  position: absolute;
+  top: 1px;
+  left: -35%;
+  height: 21px;
+  width: 21px;
+  background-color: #eee;
+  
+}
+
+/* On mouse-over, add a grey background color */
+.container1:hover input ~ .checkmark1 {
+  background-color: #ccc;
+}
+
+/* When the checkbox is checked, add a blue background */
+.container1 input:checked ~ .checkmark1 {
+  
+   content: '';
+    background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNiIgaGVpZ2h0PSIxMiIgdmlld0JveD0iMCAwIDE2IDEyIj4gIDxwYXRoIGZpbGw9IiM4N0JFMUMiIGZpbGwtcnVsZT0iZXZlbm9kZCIgZD0iTTEyLjI0Mjk1NjUsMTcuNTcyNzczOCBMMjAuOTg1NTM0Nyw5LjEzMjYxNTg1IEMyMS4xNjg1NDM3LDguOTU1OTM3NDEgMjEuNDYyMTgwNyw4Ljk1NTc3NDM2IDIxLjY0NTM5MzYsOS4xMzIyNDk0NCBMMjIuODU5MTUxMywxMC4zMDEzNzAxIEMyMy4wNDY5NDk2LDEwLjQ4MjI2MiAyMy4wNDY5NDk2LDEwLjc3OTA1NjMgMjIuODU5MTUxMywxMC45NTk5NDgyIEwxMi41NzMwNjk2LDIwLjg2Nzc1MDYgQzEyLjM5MDAwNDcsMjEuMDQ0MDgzMSAxMi4wOTY2NTU2LDIxLjA0NDA4MzEgMTEuOTEzNTkwNiwyMC44Njc3NTA2IEw3LjE0MDg0ODc3LDE2LjI3MDUzMDMgQzYuOTU0MTc0MjgsMTYuMDkwNzIwOSA2Ljk1Mjg5MDU1LDE1Ljc5NjA5NTggNy4xMzc5OTEzMywxNS42MTQ3MjgyIEw4LjMzMTE3Njc5LDE0LjQ0NTYwNzUgQzguNTEzODA2NDgsMTQuMjY2NjYxMiA4LjgwOTMzMDgzLDE0LjI2NTQyMjYgOC45OTM1MTMyMiwxNC40NDI4MzE1IEwxMi4yNDI5NTY1LDE3LjU3Mjc3MzggWiIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTcgLTkpIi8+PC9zdmc+);
+    background-position: .17rem .3rem;
+    background-repeat: no-repeat;
+    background-color: #d2d4d6;
+    width: 21px;
+    height: 21px
+  
+}
+
+/* Create the checkmark/indicator (hidden when not checked) */
+.checkmark1:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+/* Show the checkmark when checked */
+.container1 input:checked ~ .checkmark1:after {
+  display: block;
+}
+
+/* Style the checkmark/indicator */
+.container1 .checkmark1:after {
+  left: 9px;
+  top: 5px;
+  width: 5px;
+  height: 10px;
+  border-width: 0 3px 3px 0;
+}
+
+
+
