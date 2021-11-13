@@ -866,9 +866,9 @@ export class QuestionnaireComponent implements OnInit {
               ? Number(this.selectedHour) + 12
               : this.selectedHour) +
             ":" +
-            this.selectedMinute;
+            this.selectedMinute + " PM";
           if (this.selectedMeridiem === "AM" && this.selectedHour === "12") {
-            this.questionItem.input = "00" + ":" + this.selectedMinute;
+            this.questionItem.input = "00" + ":" + this.selectedMinute + " AM";
           }
           if (this.qbItem.Progress_Bar__c) {
             this.inpValue = this.inpValue + " " + this.questionItem.input;
@@ -1466,9 +1466,17 @@ export class QuestionnaireComponent implements OnInit {
         this.hours = this.hours.slice(0, 12);
       }
       if (this.dtFlag && this.inpValue) {
-        var dtVal = this.inpValue.split("T");
+        var dtVal = this.inpValue.split("T"); 
+        var dtval0 = this.inpValue.split(" ");
         this.inpValue = dtVal[0];
+        this.inpValue = dtval0[0];
+        //console.log('inp'+this.inpValue + '=='+dtVal[0])
+        //console.log('inp'+this.inpValue + '=='+dtval0[0])
+
         this.questionItem.input = dtVal[1];
+        this.questionItem.input = dtval0[1];
+        //console.log('inpvalue'+this.questionItem.input +'==' +dtVal[1])
+        //console.log('inpvalue'+this.questionItem.input +'==' +dtval0[1])
       }
       if (
         this.questionItem.Is_Date_Backward__c ||

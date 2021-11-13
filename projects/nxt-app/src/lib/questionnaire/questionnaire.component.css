@@ -16,8 +16,8 @@
   border: none;
   color: #c5281c;
   text-decoration: underline;
-  margin-bottom: -2%;
-  margin-left: 40%;
+  margin-bottom: 1%;
+  margin-left: 50%;
   padding-left: 4% ;
   font-size: 16px;
   cursor: pointer;
@@ -192,6 +192,8 @@
 }
 
 .radioOption{
+  display: flex;
+  align-content: flex-start;
   margin-top: -16px;
   width: 6%;
 }
@@ -342,7 +344,15 @@
   background: #dedddd;
   color: #560d05 ;
   font-size: 15px;
-  padding-bottom: 7px;
+  padding-bottom: 9px;
+  text-align: left;
+}
+.question1{
+  margin-left: 14rem;
+  background: #dedddd;
+  color: #560d05 ;
+  font-size: 15px;
+  padding-bottom: 0px;
   text-align: left;
 }
 
@@ -352,7 +362,23 @@
   margin-right: auto;
   color: #a3a2a2;
   margin-top: -3%;
-  padding-bottom: 3%;
+  padding-bottom: 0;
+  font-size: 14px;
+  font-weight: 400;
+  word-wrap: break-word;
+  text-align: left;
+  background: #dedddd;
+  border-bottom: 1px solid #fff;
+  
+}
+
+.answer1{
+  max-width: 59%;
+  margin-left: auto;
+  margin-right: auto;
+  color: #a3a2a2;
+  margin-top: -3%;
+  padding-bottom: 0;
   font-size: 14px;
   font-weight: 400;
   word-wrap: break-word;
@@ -422,12 +448,17 @@
   margin: auto;
   text-align: left;
   font-weight: 700 ;
+  padding-top: 3%;
   padding-bottom: 1%;
   background-color: #dedddd;
   color:#c5281c;
 }
 .sum-ques{
   width: 55%;
+  margin: auto;
+}
+.sum-ques1{
+  width: 59%;
   margin: auto;
 }
 
@@ -439,7 +470,7 @@
 .file-upload-box{
   max-width: 45%;
   margin-left: 29.5%;
-  height: 56px;
+  height: auto;
   padding: 16px;
   display: flex;
   border: 2px;
@@ -449,6 +480,7 @@
   color: #d8d8d8;
 }
 .file-label{
+  cursor: pointer;
   color: #c5281c;
   text-decoration:underline
 }
@@ -457,14 +489,14 @@
   font-size: 14px ;
   font-weight: normal ;
   max-width: 45%;
-  margin-left: 29%;
+  margin-left: 29.5%;
   height: 56px;
   padding: 16px;
   display: flex;
   border: 2px;
   background-color: #dedddd;
   justify-content: space-between;
-  margin-bottom: 17px;
+  margin-bottom: 0px;
   color: #d8d8d8;
 }
 .uploading-file-name{
@@ -472,6 +504,7 @@
 }
 /*file upload end*/
 .deleteIcon{
+  cursor: pointer;
   height: 24px;
 }
 
@@ -866,7 +899,7 @@ input[type="button"].btn-block{
 }
 
 .book{
-width:29%;
+width:24.2%;
 margin-left: 39%;
 background-color: #dedddd;
 }
@@ -941,11 +974,25 @@ background-color: #dedddd;
   }
 }
 
+@media (max-width: 768px){
+.radioOption{
+  width: 8%;
+}
+.grey{
+  width: 78%;
+  margin-left: 17.5rem;
+}
+}
+
 @media screen and (max-width: 672px) {
   .additional{
     
-    margin-left: -25%;
+    /*margin-left: -25%;*/
+    margin-left: 7%;
+    padding: 0 !important;
+    
   }
+
   .container1{
     margin-left: -21%;
   }
@@ -990,7 +1037,8 @@ background-color: #dedddd;
   .radioOption{
     width: auto;
     margin-top: 0;
-    margin: 0 8px;
+    margin-left: 7%;
+    margin-right: -3%;
   }
 
   .checkmark{
@@ -1020,19 +1068,19 @@ background-color: #dedddd;
 
   .file-upload-box{
     max-width: 85%;
-    margin-left: 0rem;
+    margin-left: 20px;
   }
   .file-uploading-box{
     max-width: 85%;
-    margin-left: 0rem;
+    margin-left: 20px;
   }
-  .subTitle{
+ /* .subTitle{
     margin-left: 8rem;
   }
   .subTitle1{
     margin-left: 70px;
   }
-  /*.summary-groupText{
+  .summary-groupText{
     margin-left: 0rem;
   }*/
   .question{
@@ -1042,7 +1090,8 @@ background-color: #dedddd;
     margin-left: 0rem;
   }*/
   .edit{
-    margin-left: 90%;
+    margin-left: 50%;
+    margin-bottom: 0%;
   }
   .btn-text2{
     width: 21rem;
@@ -1077,9 +1126,9 @@ background-color: #dedddd;
     width: 100%;
     margin-left: 0rem;
   }
-  .subTitle{
+  /*.subTitle{
     margin-left: 6rem;
-  }
+  }*/
   .btn-text2{
     width: 18rem;
     margin-right: 0rem;
@@ -1104,16 +1153,16 @@ background-color: #dedddd;
     margin-left: -26rem;
   }
  
-  .subTitle{
+ /* .subTitle{
     margin-left: 2rem;
-  }
+  }*/
 }
 
 @media screen and (max-width: 480px) {
 
-  .subTitle{
+ /* .subTitle{
     margin-left: 2rem;
-  }
+  }*/
   .rusty{
     width:25rem;
   }
@@ -1127,9 +1176,9 @@ background-color: #dedddd;
   .file-uploading-box{
     max-width: 89%;
   }
-  .subTitle1{
+ /* .subTitle1{
     margin-left: 23rem;
-  }
+  }*/
 }
 
 @media screen and (max-width: 420px)  {
@@ -1141,7 +1190,7 @@ background-color: #dedddd;
     margin-left: -21rem;
   }
   .container1{
-    margin-left: 27px;
+    margin-left: 21px;
   }
   .file-upload-box{
     max-width: 100%;
@@ -1149,12 +1198,12 @@ background-color: #dedddd;
   .file-uploading-box{
     max-width: 100%;
   }
-  .subTitle{
+  /*.subTitle{
     margin-left:0;
   }
   .subTitle1{
     margin-left: 0;
-  }
+  }*/
   
 }
 @media screen and (max-width: 368px)  {
@@ -1178,12 +1227,12 @@ background-color: #dedddd;
   .file-uploading-box{
     max-width: 100%;
   }
-  .subTitle{
+ /* .subTitle{
     margin-left:0;
   }
   .subTitle1{
     margin-left: 0;
-  }
+  }*/
 }
 .mydp .selection {
   padding: 0 !important;
@@ -1201,12 +1250,15 @@ background-color: #dedddd;
   background-color: #dedddd;
 }
 .additional{
-    line-height: 1;
+    display: flex;
     font-size: 14px;
     text-align: left;
-    padding: 0 32%;
+    font-weight: 200;
+    justify-content: center;
     color: #560d05;
+    padding: 0 30%;
 }
+
 
 .check{
   display: block;

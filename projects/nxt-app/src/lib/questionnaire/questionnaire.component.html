@@ -53,8 +53,9 @@
     </div>
   </div>
   <div *ngIf="questionItem.Additional_Rich__c && qbItem.Progress_Bar__c" >
-        <h3 class="additional" [innerHTML]="innerhtml">
-        </h3>
+        <div
+         class="additional " [innerHTML]="innerhtml">
+        </div>
     
   </div>
   <div *ngIf="questionItem.Additional_Rich__c && !qbItem.Progress_Bar__c">
@@ -387,7 +388,7 @@
                 </div>
                </div>
             </div>
-            </div>
+         
 
           
             <div *ngIf="ques.Question__c != 'Indica población' && ques.Question__c !='Provincia' && ques.Question__c !='Código postal' ">
@@ -556,7 +557,7 @@
             </div>
             <div *ngIf="qbItem.Edit__c"
               [ngClass]="{ 'sum-ques question myt-font3 myt-font8': this.abItem.Status__c != 'Completed' }">
-              <div [ngClass]="{ 'sum-ques question summary-completed myt-font3 myt-font8': this.abItem.Status__c === 'Completed' }"
+              <div [ngClass]="{ 'sum-ques1 question1 summary-completed myt-font3 myt-font8': this.abItem.Status__c === 'Completed' }"
                 [innerHTML]="getText(qa.quesValue)">
                 {{ qa.quesValue }}
               </div>
@@ -567,7 +568,7 @@
               </button>
             </div>
            
-            <div [ngClass]="{ 'answer summary-completed ': this.abItem.Status__c === 'Completed' }" >
+            <div [ngClass]="{ 'answer1 summary-completed ': this.abItem.Status__c === 'Completed' }" >
               <div [ngClass]="{ 'answer ': this.abItem.Status__c != 'Completed' }">
                 <div *ngIf="qa.qTyp === 'File'">
                   <img src="https://rnxt.s3.amazonaws.com/MytIcon/icon-doc-img%401.png" class="icon-edit-summary" />
