@@ -725,11 +725,11 @@ export class QuestionnaireComponent implements OnInit {
         console.log('this.selectedValue =>'+this.selectedValue);
         console.log('this.selectedCity =>'+this.selectedCity);
           for(var loc of this.localaddress){
-            if((this.selectedPostalcode == loc.zipCode)){
+            if(this.selectedCity == loc.town){
               console.log('line 729');
               if(this.selectedValue == loc.country){
                 console.log('line 731');
-                if(this.selectedCity == loc.town){
+                if(this.selectedPostalcode == loc.zipCode){
                   console.log(loc.town+'=='+ this.selectedCity)
                   console.log(loc.zipCode +'=='+this.selectedPostalcode)
                   console.log('testing town value'+ this.selectedCity)
