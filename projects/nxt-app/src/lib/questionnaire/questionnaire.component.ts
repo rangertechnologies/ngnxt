@@ -699,45 +699,37 @@ export class QuestionnaireComponent implements OnInit {
     } else if (this.bookFlag) {
       this.inpValue = "";
       var hasMissingInput = false;
-	  var count = 0;
+	  
       for (var item of this.questionItem.Questions__r.records) {
+        var count = 0;
+        // if(item.Type__c== "Text" && item.Question__c === 'Indica población'){
+        //   for(var loc of this.localaddress){
+        //     if(loc.town==this.selectedValue){
+        //       //console.log('testing ')
+        //       item.input=this.selectedValue;
+        //       break;
+        //     }else if(count == this.localaddress.length -1){
+        //     //console.log('error form')
+        //     item.error = new ErrorWrapper();
+        //     hasMissingInput = true;
+        //     return;
+        //     }
+        //     count++;  
+        //   }
+        // }
 
-        /*if(item.Type__c== "Text" && item.Question__c === 'Indica población'){
+      if(item.Type__c== "Text" && item.Question__c === 'Indica población'){
           for(var loc of this.localaddress){
-            if(loc.town==this.selectedValue){
-              //console.log('testing ')
-              item.input=this.selectedValue;
+        
+            console.log('this****'+this.selectedCity+'==');
+            console.log( loc.town )
+            console.log(loc.country)
+            if(((this.selectedPostalcode == loc.zipCode)&&(this.selectedValue == loc.country))||(this.selectedCity==this.selectedProvince)){
+              console.log(loc.town+'=='+ this.selectedCity)
+              console.log(loc.zipCode +'=='+this.selectedPostalcode)
+              console.log('testing town value'+ this.selectedCity)
+              item.input= this.selectedCity;
               break;
-            }else if(count == this.localaddress.length -1){
-            //console.log('error form')
-            item.error = new ErrorWrapper();
-            hasMissingInput = true;
-            return;
-            }
-            count++;  
-          }
-        }*/
-
-
-
-       if(item.Type__c== "Text" && item.Question__c === 'Indica población'){
-        console.log('this.selectedPostalcode =>'+this.selectedPostalcode);
-        console.log('this.selectedValue =>'+this.selectedValue);
-        console.log('this.selectedCity =>'+this.selectedCity);
-          for(var loc of this.localaddress){
-            if(this.selectedCity == loc.town){
-              console.log('line 729');
-              if(this.selectedValue == loc.country){
-                console.log('line 731');
-                if(this.selectedPostalcode == loc.zipCode){
-                  console.log(loc.town+'=='+ this.selectedCity)
-                  console.log(loc.zipCode +'=='+this.selectedPostalcode)
-                  console.log('testing town value'+ this.selectedCity)
-                  item.input= this.selectedCity;
-                  break;
-                }
-              }
-              
             }
             else if(count == this.localaddress.length -1){
               console.log(count)
