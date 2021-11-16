@@ -717,19 +717,27 @@ export class QuestionnaireComponent implements OnInit {
             count++;  
           }
         }*/
-        console.log('this.selectedPostalcode =>'+this.selectedPostalcode);
-        console.log('this.selectedValue =>'+this.selectedValue);
-        console.log('this.selectedCity =>'+this.selectedCity);
+
 
 
        if(item.Type__c== "Text" && item.Question__c === 'Indica población'){
+        console.log('this.selectedPostalcode =>'+this.selectedPostalcode);
+        console.log('this.selectedValue =>'+this.selectedValue);
+        console.log('this.selectedCity =>'+this.selectedCity);
           for(var loc of this.localaddress){
-            if((this.selectedPostalcode == loc.zipCode)&&(this.selectedValue == loc.country)&&(this.selectedCity==loc.town)){
-              console.log(loc.town+'=='+ this.selectedCity)
-              console.log(loc.zipCode +'=='+this.selectedPostalcode)
-              console.log('testing town value'+ this.selectedCity)
-              item.input= this.selectedCity;
-              break;
+            if((this.selectedPostalcode == loc.zipCode)){
+              console.log('line 729');
+              if(this.selectedValue == loc.country){
+                console.log('line 731');
+                if(this.selectedCity == loc.town){
+                  console.log(loc.town+'=='+ this.selectedCity)
+                  console.log(loc.zipCode +'=='+this.selectedPostalcode)
+                  console.log('testing town value'+ this.selectedCity)
+                  item.input= this.selectedCity;
+                  break;
+                }
+              }
+              
             }
             else if(count == this.localaddress.length -1){
               console.log(count)
