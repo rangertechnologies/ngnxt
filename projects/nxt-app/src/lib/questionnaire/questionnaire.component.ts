@@ -702,7 +702,7 @@ export class QuestionnaireComponent implements OnInit {
 	  var count = 0;
       for (var item of this.questionItem.Questions__r.records) {
 
-        if(item.Type__c== "Text" && item.Question__c === 'Indica población'){
+        /*if(item.Type__c== "Text" && item.Question__c === 'Indica población'){
           for(var loc of this.localaddress){
             if(loc.town==this.selectedValue){
               //console.log('testing ')
@@ -716,9 +716,9 @@ export class QuestionnaireComponent implements OnInit {
             }
             count++;  
           }
-        }
+        }*/
 
-      /*  if(item.Type__c== "Text" && item.Question__c === 'Indica población'){
+       if(item.Type__c== "Text" && item.Question__c === 'Indica población'){
           for(var loc of this.localaddress){
         
             console.log('this****'+this.selectedCity+'==');
@@ -778,7 +778,7 @@ export class QuestionnaireComponent implements OnInit {
 				  count++;  
 			  }
 			console.log('testin values=='+item.input)
-		  }*/
+		  }
 			 /* var loctown;
 			  for(let val of this.localaddress){
                         loctown=val.town;

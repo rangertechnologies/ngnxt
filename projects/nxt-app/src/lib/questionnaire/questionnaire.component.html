@@ -318,7 +318,7 @@
           <div *ngIf="ques.Type__c === 'Text'">
           
            
-           <!-- <div *ngIf="ques.Question__c === 'Código postal' ">
+            <div *ngIf="ques.Question__c === 'Código postal' ">
               <div [id]="ques.Id" class="dis-flex;">
                 <div  class="town-drop">
                   <input  id="autocomplete-input" [(ngModel)]="selectedPostalcode" 
@@ -362,13 +362,13 @@
                     </select>
                 </div>
               </div>
-            </div>-->
+            </div>
           
           
 
 
 
-              <!--Text for MYT-->
+              <!--Text for MYT
               <div *ngIf="ques.Question__c === 'Indica población' ">
             <div [id]="ques.Id" class="dis-flex;">
                 <div  class="town-drop">
@@ -388,7 +388,7 @@
                 </div>
                </div>
             </div>
-         
+         -->
 
           
             <div *ngIf="ques.Question__c != 'Indica población' && ques.Question__c !='Provincia' && ques.Question__c !='Código postal' ">
