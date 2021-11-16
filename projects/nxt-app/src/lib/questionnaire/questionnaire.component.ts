@@ -724,7 +724,7 @@ export class QuestionnaireComponent implements OnInit {
             console.log('this****'+this.selectedCity+'==');
             console.log( loc.town )
             console.log(loc.country)
-            if(((this.selectedPostalcode == loc.zipCode)&&(this.selectedValue == loc.country))||(this.selectedCity==this.selectedProvince)){
+            if((this.selectedPostalcode == loc.zipCode)&&(this.selectedValue == loc.country)&&(this.selectedCity==loc.town)){
               console.log(loc.town+'=='+ this.selectedCity)
               console.log(loc.zipCode +'=='+this.selectedPostalcode)
               console.log('testing town value'+ this.selectedCity)
