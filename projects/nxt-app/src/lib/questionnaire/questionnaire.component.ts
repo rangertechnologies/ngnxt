@@ -717,14 +717,14 @@ export class QuestionnaireComponent implements OnInit {
             count++;  
           }
         }*/
+        console.log('this.selectedPostalcode =>'+this.selectedPostalcode);
+        console.log('this.selectedValue =>'+this.selectedValue);
+        console.log('this.selectedCity =>'+this.selectedCity);
+
 
        if(item.Type__c== "Text" && item.Question__c === 'Indica población'){
           for(var loc of this.localaddress){
-        
-            console.log('this****'+this.selectedCity+'==');
-            console.log( loc.town )
-            console.log(loc.country)
-            if(((this.selectedPostalcode == loc.zipCode)&&(this.selectedValue == loc.country))||(this.selectedCity==this.selectedProvince)){
+            if((this.selectedPostalcode == loc.zipCode)&&(this.selectedValue == loc.country)&&(this.selectedCity==loc.town)){
               console.log(loc.town+'=='+ this.selectedCity)
               console.log(loc.zipCode +'=='+this.selectedPostalcode)
               console.log('testing town value'+ this.selectedCity)
