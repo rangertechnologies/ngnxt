@@ -720,29 +720,19 @@ export class QuestionnaireComponent implements OnInit {
 
       if(item.Type__c== "Text" && item.Question__c === 'Indica población'){
           for(var loc of this.localaddress){
-        
-            console.log('this****'+this.selectedCity+'==');
-            console.log( loc.town )
-            console.log(loc.country)
             if((this.selectedPostalcode == loc.zipCode)&&(this.selectedValue == loc.country)&&(this.selectedCity==loc.town)){
-              console.log(loc.town+'=='+ this.selectedCity)
-              console.log(loc.zipCode +'=='+this.selectedPostalcode)
-              console.log('testing town value'+ this.selectedCity)
               item.input= this.selectedCity;
               break;
             }
             else if(count == this.localaddress.length -1){
-              console.log(count)
-              console.log(this.localaddress.length)
-
-            console.log('error form city')
+            //console.log('error form city')
             item.error = new ErrorWrapper();
             hasMissingInput = true;
             return;
             }
             count++;  
           }
-        console.log('testin values=='+item.input)
+        //console.log('testin values=='+item.input)
         } 
 
         if(item.Type__c== "Text" && item.Question__c === 'Código postal'){
