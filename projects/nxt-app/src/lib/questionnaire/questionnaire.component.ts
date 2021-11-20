@@ -699,24 +699,9 @@ export class QuestionnaireComponent implements OnInit {
     } else if (this.bookFlag) {
       this.inpValue = "";
       var hasMissingInput = false;
-	  
+	   
       for (var item of this.questionItem.Questions__r.records) {
         var count = 0;
-        // if(item.Type__c== "Text" && item.Question__c === 'Indica población'){
-        //   for(var loc of this.localaddress){
-        //     if(loc.town==this.selectedValue){
-        //       //console.log('testing ')
-        //       item.input=this.selectedValue;
-        //       break;
-        //     }else if(count == this.localaddress.length -1){
-        //     //console.log('error form')
-        //     item.error = new ErrorWrapper();
-        //     hasMissingInput = true;
-        //     return;
-        //     }
-        //     count++;  
-        //   }
-        // }
 
       if(item.Type__c== "Text" && item.Question__c === 'Indica población'){
           for(var loc of this.localaddress){
@@ -738,36 +723,36 @@ export class QuestionnaireComponent implements OnInit {
         if(item.Type__c== "Text" && item.Question__c === 'Código postal'){
           for(var loc of this.localaddress){
             if(loc.zipCode == this.selectedPostalcode){
-              console.log('testing zipcode value*****'+ this.selectedPostalcode)
+              //console.log('testing zipcode value*****'+ this.selectedPostalcode)
               item.input=this.selectedPostalcode;
               break;
             } else if(count == this.localaddress.length -1){
-            console.log('error form')
+            //console.log('error form')
             item.error = new ErrorWrapper();
             hasMissingInput = true;
             return;
             }
             count++;  
           }
-        console.log('testin values=='+item.input)
+        //console.log('testin values=='+item.input)
         }
         
       
       if(item.Type__c== "Text" && item.Question__c === 'Provincia'){
 			  for(var loc of this.localaddress){
 				  if(loc.province == this.selectedProvince){
-					  console.log('******testing province value'+ this.selectedProvince)
+					  //console.log('******testing province value'+ this.selectedProvince)
 					  item.input=this.selectedProvince;
 					  break;
 				  } else if(count == this.localaddress.length -1){
-					console.log('error form')
+					//console.log('error form')
 					item.error = new ErrorWrapper();
 					hasMissingInput = true;
 					return;
 				  }
 				  count++;  
 			  }
-			console.log('testin values=='+item.input)
+			//console.log('testin values=='+item.input)
 		  }
 			 /* var loctown;
 			  for(let val of this.localaddress){
@@ -955,6 +940,11 @@ export class QuestionnaireComponent implements OnInit {
     this.answerWrap.qTyp = typ;
     this.answerWrap.ansValue = this.inpValue;
     this.answerWrap.groupText = cQuestion.Group__c;
+    /*if (cQuestion.Type__c == 'Book'){
+    for (var qb of cQuestion.Questions__r.records){
+      console.log(qb.Question__c+'****'+"@@##$$")
+    } 
+  }*/
     //this.answerWrap.squesValue = cQuestion.Question__c;
     this.saveAnswer();
   }
@@ -1234,7 +1224,8 @@ export class QuestionnaireComponent implements OnInit {
             ansValue: files,
           };
           this.summary.push(answers);
-        } else if (answer.Question_Type__c == "Book") {
+        } /*else if (answer.Question_Type__c == "Book") {
+          
           for (var bqAnswerValue of answer.Answer_Long__c.split("@@##$$")) {
             answers = {};
             answers = {
@@ -1244,11 +1235,12 @@ export class QuestionnaireComponent implements OnInit {
             };
             this.summary.push(answers);
           }
-        } else {
-          answers = {
+        } */else {
+          var ans1 = answer.Answer_Long__c.split("@@##$$");
+          answers = {      
             groupText:answer.Question_Group_Text__c,
             quesValue: answer.Question_Rich_Text__c,
-            ansValue: answer.Answer_Long__c,
+            ansValue: ans1,
           };
           this.summary.push(answers);
         }
@@ -1948,35 +1940,24 @@ export class QuestionnaireComponent implements OnInit {
       this.selectedValue = value.country;
       this.tempoAddress=[];
 
- /* console.log('this post****='+town+ '=='+this.selectedCity)
-      console.log('this val*****='+province+'=='+this.selectedProvince)
-      console.log('this country****='+this.selectedValue)*/
+ 
       for(var val of this.localaddress){
         if(this.selectedPostalcode == val.zipCode ){
-          console.log('this post='+this.selectedPostalcode)
-          console.log('this val='+this.selectedProvince)
           this.places.push(val);
           this.province.push(val);
           this.selectedValue = val.country;
-          console.log('this country*****='+val.country+'=='+this.selectedValue)
           province = val.province
           town = val.town;
-          console.log('this post123='+town+ '=='+this.selectedCity)
-          console.log('this val123='+province+'=='+this.selectedProvince)
         }
       }
       if(this.places.length == 1){
         
         this.selectedProvince =province;
         this.selectedCity = town;
-        console.log('******+'+this.selectedProvince)
-        console.log('******+'+this.selectedCity)
       }else if(this.places.length >1 || this.places.length ==0){
         
           this.selectedCity ='';
           this.selectedProvince='';
-          console.log('******else+  '+this.selectedProvince)
-        console.log('******else+   '+this.selectedCity)
       }
     }
     closeDropdown() {
