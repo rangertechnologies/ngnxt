@@ -95,6 +95,7 @@ export class Answer {
   Question_Group_Text__c: string;
   Question_Ref__c : string;
   Question_Type__c : string;
+  Question_Text__c:string;
 }
 
 export class AnswerR {

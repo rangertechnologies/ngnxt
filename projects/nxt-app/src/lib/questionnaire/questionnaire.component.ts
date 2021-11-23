@@ -1228,15 +1228,17 @@ export class QuestionnaireComponent implements OnInit {
           };
           this.summary.push(answers);
         } else if (answer.Question_Type__c == "Book") {
-          
+          var quesNo=0
           for (var bqAnswerValue of answer.Answer_Long__c.split("@@##$$")) {
+            var quesValue=answer.Question_Text__c.split("@@##$$")
             answers = {};
             answers = {
-              groupText:answer.Question_Group_Text__c,
-              quesValue: answer.Question_Rich_Text__c,
+             // groupText:answer.Question_Text__c,
+              quesValue: quesValue[quesNo],
               ansValue: bqAnswerValue,
             };
             this.summary.push(answers);
+            quesNo++;
           }
         } else {
           //var ans1 = answer.Answer_Long__c.split("@@##$$");
