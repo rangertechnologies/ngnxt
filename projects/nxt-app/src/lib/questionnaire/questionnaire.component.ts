@@ -649,6 +649,7 @@ export class QuestionnaireComponent implements OnInit {
     //console.log(this.questionItem);
 
     //this.updateProgress();
+    var questionTxt='';
     if (this.currentQuestionId === null) {
       return;
     }
@@ -699,7 +700,6 @@ export class QuestionnaireComponent implements OnInit {
     } else if (this.bookFlag) {
       this.inpValue = "";
       var hasMissingInput = false;
-	   
       for (var item of this.questionItem.Questions__r.records) {
         var count = 0;
 
@@ -814,6 +814,7 @@ export class QuestionnaireComponent implements OnInit {
           // this.attachments = [];
         } //item.input == this.inpValue;
         this.inpValue += (item.input != undefined ? item.input : "") + "@@##$$";
+        questionTxt += item.Question__c + "@@##$$";
         //console.log('inside book1' + this.inpValue)
       }
       if (hasMissingInput) {
@@ -945,7 +946,7 @@ export class QuestionnaireComponent implements OnInit {
       console.log(qb.Question__c+'****'+"@@##$$")
     } 
   }*/
-    //this.answerWrap.squesValue = cQuestion.Question__c;
+    this.answerWrap.squesValue = questionTxt ? questionTxt : cQuestion.Question__c;
     this.saveAnswer();
   }
 
