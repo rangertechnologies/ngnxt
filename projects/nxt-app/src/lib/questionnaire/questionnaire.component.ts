@@ -822,6 +822,7 @@ export class QuestionnaireComponent implements OnInit {
         return;
       }
       this.inpValue = this.trimLastDummy(this.inpValue);
+      questionTxt = questionTxt ? this.trimLastDummy(questionTxt) : questionTxt;
     } else if (this.dropdownFlag) {
       if (this.inpValue.length <= 1) {
         this.inpValue = ".";
@@ -1135,6 +1136,7 @@ export class QuestionnaireComponent implements OnInit {
     //console.log(response)
     this.qbItem = response.questionbook;
     this.abItem = response.answerbook;
+    //console.log(this.abItem.Answers__r.records)
     //console.log('readingQuestion using ' + this.qbItem.First_Question__c);
     if (this.abItem.Status__c == "Pending") {
       if (
@@ -1225,7 +1227,7 @@ export class QuestionnaireComponent implements OnInit {
             ansValue: files,
           };
           this.summary.push(answers);
-        } /*else if (answer.Question_Type__c == "Book") {
+        } else if (answer.Question_Type__c == "Book") {
           
           for (var bqAnswerValue of answer.Answer_Long__c.split("@@##$$")) {
             answers = {};
@@ -1236,12 +1238,12 @@ export class QuestionnaireComponent implements OnInit {
             };
             this.summary.push(answers);
           }
-        } */else {
-          var ans1 = answer.Answer_Long__c.split("@@##$$");
+        } else {
+          //var ans1 = answer.Answer_Long__c.split("@@##$$");
           answers = {      
             groupText:answer.Question_Group_Text__c,
             quesValue: answer.Question_Rich_Text__c,
-            ansValue: ans1,
+            ansValue: answer.Answer_Long__c,
           };
           this.summary.push(answers);
         }
