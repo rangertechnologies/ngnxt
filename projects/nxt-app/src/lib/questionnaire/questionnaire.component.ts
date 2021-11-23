@@ -230,7 +230,7 @@ export class QuestionnaireComponent implements OnInit {
     var typ = cQuestion.Type__c;
     var quesValue = cQuestion.Question_Text__c;
     var mailformat = ('^[^.][a-zA-Z0-9!#$%&\'*+\-\/=?^_`{|}~]+[^.]@[^-][a-zA-Z0-9.-]+[^-]\.[a-zA-Z]{2,}$');
-
+    var questionTxt='';
 
     // Process Inputs
     if (this.checkboxFlag) {
@@ -288,6 +288,7 @@ export class QuestionnaireComponent implements OnInit {
           this.attachments = [];
         }//item.input == this.inpValue;
         this.inpValue += (item.input != undefined ? item.input : '') + '@@##$$';
+        questionTxt += item.Question__c + "@@##$$";
         //console.log('inside book1' + this.inpValue)
       }
       if (hasMissingInput) {
@@ -295,6 +296,7 @@ export class QuestionnaireComponent implements OnInit {
         return;
       }
       this.inpValue = this.trimLastDummy(this.inpValue);
+      questionTxt = questionTxt ? this.trimLastDummy(questionTxt) : questionTxt;
      }
      else if(this.dropdownFlag){
       if(this.inpValue.length <= 1){
@@ -371,6 +373,7 @@ export class QuestionnaireComponent implements OnInit {
     this.answerWrap.quesValue = quesValue;
     this.answerWrap.qTyp = typ;
     this.answerWrap.ansValue = this.inpValue;
+    this.answerWrap.squesValue = questionTxt ? questionTxt : cQuestion.Question__c;
     this.saveAnswer();
   }
 
@@ -530,20 +533,131 @@ export class QuestionnaireComponent implements OnInit {
     this.successReadBook,
     this.failureReadBook);
 
-  private successReadBook = (response) => {
-
-    //console.log(response)
-    this.qbItem = response.questionbook;
-    this.abItem = response.answerbook;
-    //console.log('readingQuestion using ' + this.qbItem.First_Question__c);
-    if(this.abItem.Status__c == 'Pending'){
-      this.readQuestion(this.qbItem.First_Question__c);
-    }
-
-    if(this.abItem.Status__c == 'Completed'){
-      this.readAnswerbook(this.abItem.Id);
-         }
-  }
+    private successReadBook = (response) => {
+      //console.log(response)
+      this.qbItem = response.questionbook;
+      this.abItem = response.answerbook;
+      //console.log(this.abItem.Answers__r.records)
+      //console.log('readingQuestion using ' + this.qbItem.First_Question__c);
+      if (this.abItem.Status__c == "Pending") {
+        if (
+          this.abItem.Answers__r == null ||
+          this.abItem.Answers__r.records.length == 0
+        ) {
+          this.readQuestion(this.qbItem.First_Question__c);
+        } else {
+          // Populate the existing answers
+          var lastQuestionId = "";
+  
+          for (var ansObject of this.abItem.Answers__r.records) {
+            lastQuestionId = ansObject.Question_Ref__c;
+             //console.log("Question: " + ansObject.Question_Rich_Text__c);
+             // console.log("Answer: " + ansObject.Answer_Long__c);
+              //console.log("grouptext: " + ansObject.Question_Group_Text__c);
+  
+            this.questionStack.push(ansObject.Question_Ref__c);
+  
+            this.answerMap.set(ansObject.Question_Ref__c, {
+              quesValue: ansObject.Question_Rich_Text__c,
+              ansValue: ansObject.Answer_Long__c,
+              quesId: ansObject.Question_Ref__c,
+              qTyp: ansObject.Question_Type__c,
+              groupText:ansObject.Question_Group_Text__c,
+            });
+  
+            //console.log(this.questionStack)
+            if (ansObject.Question_Type__c == "Book") {
+              var av1 = ansObject.Answer_Long__c.split("@@##$$");
+              // console.log("book log");
+  
+              //  console.log("bookid" + av1[0]);
+              this.attachmentsMap.set(ansObject.Question_Ref__c, [
+                { attachmentName: av1[1], attachmentId: av1[0] },
+              ]);
+              //  console.log(this.attachmentsMap);
+            } else if (ansObject.Question_Type__c == "File") {
+              //  console.log("inside if");
+              var attList;
+              var att;
+              for (var attVar of ansObject.Answer_Long__c.split(",")) {
+                var attIdName = attVar.split("@@##$$");
+                att.attachmentName = attIdName[1];
+                att.attachmentId = attIdName[0];
+                attList.push(att);
+              }
+              this.attachmentsMap.set(ansObject.Question_Ref__c, attList);
+              //  console.log(this.attachmentsMap);
+            }
+          }
+  
+          this.questionStack.pop();
+          //console.log(this.answerMap);
+          // Read the last answered question
+          this.readQuestion(lastQuestionId);
+        }
+      } else if (this.abItem.Status__c == "Completed") {
+        this.handleEvent.emit("Summaryupdated");
+        // Temporary Fix for duplicate answers on the summary.
+        this.summary = [];
+        //this.percent = 100;
+        //this.progressStyle = "100%";
+  
+        for (var answer of this.abItem.Answers__r.records) {
+          //console.log(answer.Question_Group_Text__c);
+          //console.log('repeat');
+          //console.log(answer.Question_Rich_Text__c);
+          var answers = {};
+          if (answer.Question_Type__c == "File") {
+            var files = "";
+            var fIndex = 0;
+            var fileList = answer.Answer_Long__c.split(",");
+            for (var fileIdName of fileList) {
+              var fileName = fileIdName.split("@#$");
+              if (fIndex == 0) {
+                files = fileName[1];
+              } else {
+                files = files + " ," + fileName[1];
+              }
+  
+              fIndex++;
+            }
+  
+            answers = {
+              groupText:answer.Question_Group_Text__c,
+              quesValue: answer.Question_Rich_Text__c,
+              ansValue: files,
+            };
+            this.summary.push(answers);
+          } else if (answer.Question_Type__c == "Book") {
+            var quesNo=0
+            if(answer.Answer_Long__c.includes("@@##$$")){
+              console.log('line 1223');
+              for (var bqAnswerValue of answer.Answer_Long__c.split("@@##$$")) {
+                console.log('line 1235');
+                var quesValue=answer.Question_Text__c.split("@@##$$");
+                console.log('line 1237');
+                answers = {};
+                answers = {
+                 // groupText:answer.Question_Text__c,
+                  quesValue: quesValue[quesNo],
+                  ansValue: bqAnswerValue,
+                };
+                this.summary.push(answers);
+                quesNo++;
+              }
+            }
+          } else {
+            //var ans1 = answer.Answer_Long__c.split("@@##$$");
+            answers = {      
+              groupText:answer.Question_Group_Text__c,
+              quesValue: answer.Question_Rich_Text__c,
+              ansValue: answer.Answer_Long__c,
+            };
+            this.summary.push(answers);
+          }
+        }
+      }
+    };
 
   private failureReadBook = (response) => {
           //console.log(response);

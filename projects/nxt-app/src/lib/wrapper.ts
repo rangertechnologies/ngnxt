@@ -9,13 +9,17 @@ export class QuestionBook {
   Edit__c : string;
   First_Question__c: string;
   Title__c: string;
+  SubTitle__c:string;
   Next_Tracking_ID__c: string;
   Back_Tracking_ID__c: string;
   Cancel_Tracking_ID__c: string;
   Submit_Tracking_ID__c: string;
   Total_Questions__c: number;
   Summary_Text__c?: string;
+  Summary_Sub_Text__c : string;
   Questions__r?: QuestionR;
+  Possibilities__c : string;
+  Progress_Bar__c : boolean;
 }
 
 export class Question {
@@ -25,6 +29,8 @@ export class Question {
   Question__c : string;
   Question_Text__c : string;
   Type__c: string;
+  Title__c: string;
+  SubTitle__c: string;
   Next_Question__c?: string;
   Is_Optional__c: boolean;
   Is_Title__c: boolean;
@@ -32,9 +38,12 @@ export class Question {
   Error_Message__c: string;
   Is_Date_Backward__c : boolean;
   Is_Date_Forward__c : boolean;
+  Time_Text__c : string;
+  Date_Text__c : string;
   Group__c: string;
   Question_No__c?: string;
   Question_Options__r?: OptionR;
+  Sub_Text__c : string;
   Size__c: number;
   Tracking_ID__c: string;
   Additional_Rich__c? : string;
@@ -83,7 +92,12 @@ export class Answer {
   Id: string;
   Question_Rich_Text__c: string;
   Answer_Long__c : string;
+  Question_Group_Text__c: string;
+  Question_Ref__c : string;
+  Question_Type__c : string;
+  Question_Text__c:string;
 }
+
 export class AnswerR {
   records?: Answer[];
 }
@@ -96,6 +110,8 @@ export class AnswerWrapper {
   quesValue: string;
   qTyp: string;
   ansValue: string;
+  groupText: string;
+  squesValue: string;
 }
 
 export class ErrorWrapper {
