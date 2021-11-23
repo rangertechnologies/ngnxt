@@ -1230,8 +1230,11 @@ export class QuestionnaireComponent implements OnInit {
         } else if (answer.Question_Type__c == "Book") {
           var quesNo=0
           if(answer.Answer_Long__c.includes("@@##$$")){
+            console.log('line 1223');
             for (var bqAnswerValue of answer.Answer_Long__c.split("@@##$$")) {
-              var quesValue=answer.Question_Text__c.split("@@##$$")
+              console.log('line 1235');
+              var quesValue=answer.Question_Text__c.split("@@##$$");
+              console.log('line 1237');
               answers = {};
               answers = {
                // groupText:answer.Question_Text__c,
