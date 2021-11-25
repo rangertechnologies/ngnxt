@@ -1242,13 +1242,20 @@ export class QuestionnaireComponent implements OnInit {
               quesNo++;
               this.summary.push(answers);
             }
+          }else{
+            answers = {      
+              //groupText:answer.Question_Group_Text__c,
+              quesValue: answer.Question_Rich_Text__c,
+              ansValue: answer.Answer_Long__c,
+            };
+            this.summary.push(answers);
           }
         } else {
-          var ans1 = answer.Answer_Long__c.split("@@##$$");
+         // var ans1 = answer.Answer_Long__c.split("@@##$$");
           answers = {      
-            groupText:answer.Question_Group_Text__c,
+            //groupText:answer.Question_Group_Text__c,
             quesValue: answer.Question_Rich_Text__c,
-            ansValue: ans1,
+            ansValue: answer.Answer_Long__c,
           };
           this.summary.push(answers);
         }
