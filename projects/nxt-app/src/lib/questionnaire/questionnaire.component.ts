@@ -1240,7 +1240,7 @@ export class QuestionnaireComponent implements OnInit {
               answers = {};
               answers = {
                // groupText:answer.Question_Text__c,
-                quesValue: "<p>" +quesValue[quesNo]+"</p>",
+                quesValue: "&lt;p&gt;" +quesValue[quesNo]+"&lt;/p&gt;",
                 ansValue: bqAnswerValue,
               };
               quesNo++;
