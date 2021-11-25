@@ -344,7 +344,8 @@
   background: #dedddd;
   color: #560d05 ;
   font-size: 15px;
-  padding-bottom: 9px;
+  padding-bottom: 0px;
+  padding-top: 3%;
   text-align: left;
 }
 .question1{
@@ -352,7 +353,7 @@
   background: #dedddd;
   color: #560d05 ;
   font-size: 15px;
-  padding-bottom: 0px;
+  padding-bottom: 20px;
   text-align: left;
 }
 
@@ -373,7 +374,7 @@
 }
 
 .answer1{
-  max-width: 59%;
+  max-width: 55%;
   margin-left: auto;
   margin-right: auto;
   color: #a3a2a2;
@@ -905,7 +906,7 @@ background-color: #dedddd;
 
 .summary-completed{
   padding-left: 2%;
-  margin-top: -6px;
+  margin-top: 20px;
 }
 
 .town{

@@ -530,7 +530,7 @@
 
       <div *ngIf="qbItem.Summary_Text__c && qbItem.Progress_Bar__c" 
       [ngClass]="{ summaryTitle: qbItem.Progress_Bar__c }">
-        <h3 class="subTitle" >{{ qbItem.Summary_Text__c }}</h3>
+        <h2 class="subTitle" >{{ qbItem.Summary_Text__c }}</h2>
         <div *ngIf="abItem.Status__c != 'Completed'" class="subTitle1" >{{ qbItem.Summary_Sub_Text__c}}</div>
       </div>
     </div>
@@ -568,14 +568,14 @@
               </button>
             </div>
            
-            <div [ngClass]="{ 'answer1 ': this.abItem.Status__c === 'Completed' }" >
-              <div [ngClass]="{ 'answer ': this.abItem.Status__c != 'Completed' }">
+            <div class="answer " >
+            
                 <div *ngIf="qa.qTyp === 'File'">
                   <img src="https://rnxt.s3.amazonaws.com/MytIcon/icon-doc-img%401.png" class="icon-edit-summary" />
                   {{ qa.ansValue }}
                 </div>
                 <div *ngIf="qa.qTyp != 'File'">{{ qa.ansValue }}</div>
-              </div>
+              
           </div>
         </div>
         </div>
