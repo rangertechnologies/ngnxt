@@ -531,7 +531,9 @@
       <div *ngIf="qbItem.Summary_Text__c && qbItem.Progress_Bar__c" 
       [ngClass]="{ summaryTitle: qbItem.Progress_Bar__c }">
         <h3 class="subTitle" >{{ qbItem.Summary_Text__c }}</h3>
+        <div class="" *ngIf="abItem.Status__c != 'Completed'">
         <div class="subTitle1" >{{ qbItem.Summary_Sub_Text__c}}</div>
+      </div>
       </div>
     </div>
     <div *ngIf="!qbItem.Progress_Bar__c">
@@ -541,26 +543,28 @@
     </div>
   </div>
   <div [ngClass]="{ 'full-summary': qbItem.Progress_Bar__c }">
+    <div class="summary-groupText myt-font2">
+      <p>Informe de daños</p>
+    </div>
     <div *ngFor="let qa of summary" >
      
         <div [ngClass]="{ non:  qbItem.Progress_Bar__c }">
           <div [ngClass]="{ summary: this.abItem.Status__c != 'Completed' && !qbItem.Progress_Bar__c }">
-            <div *ngIf="qbItem.Progress_Bar__c"
+            
+           <!-- <div *ngIf="qbItem.Progress_Bar__c"
               [ngClass]="{ 'summary-groupText myt-font2': qbItem.Progress_Bar__c }" >
               {{ qa.groupText }}
-            </div>
+            </div>-->
 
            <div *ngIf="!qbItem.Edit__c"
               [ngClass]="{ 'question sum-ques myt-font3 myt-font8': this.abItem.Status__c != 'Completed' }">
               <a [ngClass]="{ asum: this.abItem.Status__c === 'Completed' }" (click)="handleEditClick(qa.quesId)"
                 [innerHTML]="getText(qa.quesValue)">{{ qa.quesValue }}</a>
             </div>
-            <div *ngIf="qbItem.Edit__c"
-              [ngClass]="{ 'sum-ques question myt-font3 myt-font8': this.abItem.Status__c != 'Completed' }">
-              <div [ngClass]="{ 'sum-ques1 question1 summary-completed myt-font3 myt-font8': this.abItem.Status__c === 'Completed' }"
+            <div *ngIf="qbItem.Edit__c" class="sum-ques1 question1 myt-font3 myt-font8"
                 [innerHTML]="getText(qa.quesValue)">
                 {{ qa.quesValue }}
-              </div>
+             
             </div>
             <div *ngIf="qbItem.Edit__c && this.abItem.Status__c != 'Completed'" style="background: #dedddd;">
               <button class="edit" (click)="handleEditClick(qa.quesId)">
@@ -568,7 +572,7 @@
               </button>
             </div>
            
-            <div [ngClass]="{ 'answer1 summary-completed ': this.abItem.Status__c === 'Completed' }" >
+            <div [ngClass]="{ 'answer1': this.abItem.Status__c === 'Completed' }" >
               <div [ngClass]="{ 'answer ': this.abItem.Status__c != 'Completed' }">
                 <div *ngIf="qa.qTyp === 'File'">
                   <img src="https://rnxt.s3.amazonaws.com/MytIcon/icon-doc-img%401.png" class="icon-edit-summary" />

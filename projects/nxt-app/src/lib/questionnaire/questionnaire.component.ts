@@ -1077,7 +1077,7 @@ export class QuestionnaireComponent implements OnInit {
 
   getText(value) {
     var doc = new DOMParser().parseFromString(value, "text/html");
-    //console.log( doc.documentElement.textContent);
+    console.log( doc.documentElement.textContent);
     return this.sanitizer.bypassSecurityTrustHtml(
       doc.documentElement.textContent
     );
@@ -1222,33 +1222,35 @@ export class QuestionnaireComponent implements OnInit {
           }
 
           answers = {
-            groupText:answer.Question_Group_Text__c,
+            //groupText:answer.Question_Group_Text__c,
             quesValue: answer.Question_Rich_Text__c,
             ansValue: files,
           };
           this.summary.push(answers);
         } else if (answer.Question_Type__c == "Book") {
           var quesNo=0
-          if(answer.Answer_Long__c.includes("@@##$$")){
+         if(answer.Answer_Long__c.includes("@@##$$")){
             console.log('line 1223');
             for (var bqAnswerValue of answer.Answer_Long__c.split("@@##$$")) {
+              console.log(quesValue);
+              console.log(quesNo)
               console.log('line 1235');
               var quesValue=answer.Question_Text__c.split("@@##$$");
               console.log('line 1237');
               answers = {};
               answers = {
                // groupText:answer.Question_Text__c,
-                quesValue: quesValue[quesNo],
+                quesValue: "<p>" +quesValue[quesNo]+"</p>",
                 ansValue: bqAnswerValue,
               };
-              this.summary.push(answers);
               quesNo++;
+              this.summary.push(answers);
             }
           }
         } else {
           //var ans1 = answer.Answer_Long__c.split("@@##$$");
           answers = {      
-            groupText:answer.Question_Group_Text__c,
+            //groupText:answer.Question_Group_Text__c,
             quesValue: answer.Question_Rich_Text__c,
             ansValue: answer.Answer_Long__c,
           };

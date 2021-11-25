@@ -352,16 +352,18 @@
   background: #dedddd;
   color: #560d05 ;
   font-size: 15px;
-  padding-bottom: 0px;
+  padding-bottom: 10px;
+  padding-top: 3%;
   text-align: left;
 }
 
+
 .answer{
-  max-width: 55%;
+  max-width: 59%;
   margin-left: auto;
   margin-right: auto;
   color: #a3a2a2;
-  margin-top: -3%;
+  margin-top: -30px !important; 
   padding-bottom: 0;
   font-size: 14px;
   font-weight: 400;
@@ -369,6 +371,7 @@
   text-align: left;
   background: #dedddd;
   border-bottom: 1px solid #fff;
+  margin-top: 0%;
   
 }
 
@@ -377,7 +380,7 @@
   margin-left: auto;
   margin-right: auto;
   color: #a3a2a2;
-  margin-top: -3%;
+  margin-top: 0; 
   padding-bottom: 0;
   font-size: 14px;
   font-weight: 400;
@@ -385,7 +388,23 @@
   text-align: left;
   background: #dedddd;
   border-bottom: 1px solid #fff;
-  
+  margin-top: 0%;
+}
+
+.answer2{
+  max-width: 59%;
+  margin-left: auto;
+  margin-right: auto;
+  color: #a3a2a2;
+  margin-top: 0; 
+  padding-bottom: 0;
+  font-size: 14px;
+  font-weight: 400;
+  word-wrap: break-word;
+  text-align: left;
+  background: #dedddd;
+  border-bottom: 1px solid #fff;
+  margin-top: 0%;
 }
 
 .myt-font{
@@ -444,12 +463,12 @@
 }
 
 .summary-groupText{
-  width: 55%;
+  width: 59%;
   margin: auto;
   text-align: left;
   font-weight: 700 ;
-  padding-top: 3%;
-  padding-bottom: 1%;
+  padding-top: 0%;
+  padding-bottom: 0% !important;
   background-color: #dedddd;
   color:#c5281c;
 }
