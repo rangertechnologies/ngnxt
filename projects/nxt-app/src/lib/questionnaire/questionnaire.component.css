@@ -357,11 +357,11 @@
 }
 
 .answer{
-  max-width: 59%;
+  max-width: 55%;
   margin-left: auto;
   margin-right: auto;
   color: #a3a2a2;
-  margin-top: -30px !important; 
+  margin-top: -3%;
   padding-bottom: 0;
   font-size: 14px;
   font-weight: 400;
@@ -444,7 +444,7 @@
 }
 
 .summary-groupText{
-  width: 59%;
+  width: 55%;
   margin: auto;
   text-align: left;
   font-weight: 700 ;

@@ -531,7 +531,7 @@
       <div *ngIf="qbItem.Summary_Text__c && qbItem.Progress_Bar__c" 
       [ngClass]="{ summaryTitle: qbItem.Progress_Bar__c }">
         <h3 class="subTitle" >{{ qbItem.Summary_Text__c }}</h3>
-        <div class="subTitle1" >{{ qbItem.Summary_Sub_Text__c}}</div>
+        <div *ngIf="abItem.Status__c != 'Completed'" class="subTitle1" >{{ qbItem.Summary_Sub_Text__c}}</div>
       </div>
     </div>
     <div *ngIf="!qbItem.Progress_Bar__c">
@@ -545,11 +545,11 @@
      
         <div [ngClass]="{ non:  qbItem.Progress_Bar__c }">
           <div [ngClass]="{ summary: this.abItem.Status__c != 'Completed' && !qbItem.Progress_Bar__c }">
-            <div *ngIf="qbItem.Progress_Bar__c"
+         <!--  <div *ngIf="qbItem.Progress_Bar__c"
               [ngClass]="{ 'summary-groupText myt-font2': qbItem.Progress_Bar__c }" >
               {{ qa.groupText }}
             </div>
-
+          -->
            <div *ngIf="!qbItem.Edit__c"
               [ngClass]="{ 'question sum-ques myt-font3 myt-font8': this.abItem.Status__c != 'Completed' }">
               <a [ngClass]="{ asum: this.abItem.Status__c === 'Completed' }" (click)="handleEditClick(qa.quesId)"
@@ -568,7 +568,7 @@
               </button>
             </div>
            
-            <div [ngClass]="{ 'answer1 summary-completed ': this.abItem.Status__c === 'Completed' }" >
+            <div [ngClass]="{ 'answer1 ': this.abItem.Status__c === 'Completed' }" >
               <div [ngClass]="{ 'answer ': this.abItem.Status__c != 'Completed' }">
                 <div *ngIf="qa.qTyp === 'File'">
                   <img src="https://rnxt.s3.amazonaws.com/MytIcon/icon-doc-img%401.png" class="icon-edit-summary" />
