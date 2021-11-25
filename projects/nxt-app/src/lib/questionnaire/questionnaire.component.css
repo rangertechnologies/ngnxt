@@ -449,8 +449,9 @@
   margin: auto;
   text-align: left;
   font-weight: 700 ;
-  padding-top: 3%;
-  padding-bottom: 1%;
+  padding-top: 0%;
+  padding-bottom: 0%;
+  margin-bottom: -2%;
   background-color: #dedddd;
   color:#c5281c;
 }
@@ -534,6 +535,8 @@
 
 .subTitle{
   color: #c5281c;
+  font-weight: 600;
+  margin-top:-3%;
 }
 
 .subTitle1{
@@ -857,7 +860,7 @@ input[type="button"].btn-block{
 }
 
 .summary-top{
-  margin-top: 8%;
+  margin-top: 4%;
 }
 
 .myt-border-r{
@@ -988,13 +991,13 @@ background-color: #dedddd;
   .additional{
     
     /*margin-left: -25%;*/
-    margin-left: 7%;
+    margin-left: 6% !important;
     padding: 0 !important;
     
   }
 
   .container1{
-    margin-left: -21%;
+    margin-left: -35%;
   }
   .town-drop{
     margin:auto;
@@ -1112,7 +1115,7 @@ background-color: #dedddd;
     margin-left: -27rem;
   }
   .container1{
-    margin-left: -7%;
+    margin-left: -24%;
   }
  
   .showminute{
@@ -1147,6 +1150,9 @@ background-color: #dedddd;
 @media screen and (max-width: 525px) {
   .rusty{
     width: 26rem;
+  }
+  .container1{
+    margin-left: -9%;
   }
   .left-bt{
     width: 26rem;
@@ -1193,7 +1199,7 @@ background-color: #dedddd;
     margin-left: -21rem;
   }
   .container1{
-    margin-left: 21px;
+    margin-left: 0%;
   }
   .file-upload-box{
     max-width: 100%;
@@ -1217,7 +1223,9 @@ background-color: #dedddd;
     width: 19rem;
     margin-left: -19rem;
   }
- 
+  .container1{
+    margin-left: 15%;
+  }
   .radiotext{
     margin-top: -45px;
   }
@@ -1257,6 +1265,7 @@ background-color: #dedddd;
     font-size: 14px;
     text-align: left;
     font-weight: 200;
+    margin-left: 4%;
     justify-content: center;
     color: #560d05;
     padding: 0 30%;

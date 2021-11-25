@@ -506,12 +506,12 @@ export class QuestionnaireComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log("RNXT-Claim");
+    //console.log("RNXT-Claim");
     this.inpValue = "";
     this.selectedMeridiem = "AM";
     this.processQB();
     this.localaddress = JSON.parse(localStorage.getItem("address"));
-    console.log('Length='+this.localaddress.length);
+    //console.log('Length='+this.localaddress.length);
     this.allAddress=this.localaddress.filter((item, index) => {
       if (this.localaddress.indexOf(item) == index){
         return item;
@@ -1097,7 +1097,7 @@ export class QuestionnaireComponent implements OnInit {
     //this.stepperCateg();
 
     if (this.summary) {
-      //    console.log('summary true');
+      //console.log('summary true');
       this.summary = [];
     }
 
@@ -1230,13 +1230,9 @@ export class QuestionnaireComponent implements OnInit {
         } else if (answer.Question_Type__c == "Book") {
           var quesNo=0;
          if(answer.Answer_Long__c.includes("@@##$$")){
-            console.log('line 1223');
+            //console.log('line 1223');
             for (var bqAnswerValue of answer.Answer_Long__c.split("@@##$$")) {
-              console.log(quesValue);
-              console.log(quesNo)
-              console.log('line 1235');
               var quesValue=answer.Question_Text__c.split("@@##$$");
-              console.log('line 1237');
               answers = {};
               answers = {
                // groupText:answer.Question_Text__c,
@@ -1886,7 +1882,7 @@ export class QuestionnaireComponent implements OnInit {
 
   townName(area) {
     this.selectedValue = area.town;
-    console.log('this value='+this.selectedValue)
+    //console.log('this value='+this.selectedValue)
     this.tempoAddress = [];
   }
 
