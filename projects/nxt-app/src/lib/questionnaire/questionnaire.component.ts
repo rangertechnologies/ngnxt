@@ -652,7 +652,7 @@ export class QuestionnaireComponent implements OnInit {
     if (this.currentQuestionId === null) {
       return;
     }
-
+    var questionTxt='';
     this.clearError();
     this.handleEvent.emit(this.qbItem.Next_Tracking_ID__c);
     this.recordId = null;
@@ -814,6 +814,7 @@ export class QuestionnaireComponent implements OnInit {
           // this.attachments = [];
         } //item.input == this.inpValue;
         this.inpValue += (item.input != undefined ? item.input : "") + "@@##$$";
+        questionTxt += item.Question__c + "@@##$$";
         //console.log('inside book1' + this.inpValue)
       }
       if (hasMissingInput) {
@@ -821,6 +822,7 @@ export class QuestionnaireComponent implements OnInit {
         return;
       }
       this.inpValue = this.trimLastDummy(this.inpValue);
+      questionTxt = questionTxt ? this.trimLastDummy(questionTxt) : questionTxt;
     } else if (this.dropdownFlag) {
       if (this.inpValue.length <= 1) {
         this.inpValue = ".";
@@ -946,6 +948,7 @@ export class QuestionnaireComponent implements OnInit {
     } 
   }*/
     //this.answerWrap.squesValue = cQuestion.Question__c;
+    this.answerWrap.squesValue = questionTxt ? questionTxt : cQuestion.Question__c;
     this.saveAnswer();
   }
 
@@ -1224,18 +1227,27 @@ export class QuestionnaireComponent implements OnInit {
             ansValue: files,
           };
           this.summary.push(answers);
-        } /*else if (answer.Question_Type__c == "Book") {
-          
-          for (var bqAnswerValue of answer.Answer_Long__c.split("@@##$$")) {
-            answers = {};
-            answers = {
-              groupText:answer.Question_Group_Text__c,
-              quesValue: answer.Question_Rich_Text__c,
-              ansValue: bqAnswerValue,
-            };
-            this.summary.push(answers);
+        } else if (answer.Question_Type__c == "Book") {
+          var quesNo=0;
+         if(answer.Answer_Long__c.includes("@@##$$")){
+            console.log('line 1223');
+            for (var bqAnswerValue of answer.Answer_Long__c.split("@@##$$")) {
+              console.log(quesValue);
+              console.log(quesNo)
+              console.log('line 1235');
+              var quesValue=answer.Question_Text__c.split("@@##$$");
+              console.log('line 1237');
+              answers = {};
+              answers = {
+               // groupText:answer.Question_Text__c,
+                quesValue:  "&lt;p&gt;"+ quesValue[quesNo]+"&lt;p&gt;",
+                ansValue: bqAnswerValue,
+              };
+              quesNo++;
+              this.summary.push(answers);
+            }
           }
-        } */else {
+        } else {
           var ans1 = answer.Answer_Long__c.split("@@##$$");
           answers = {      
             groupText:answer.Question_Group_Text__c,

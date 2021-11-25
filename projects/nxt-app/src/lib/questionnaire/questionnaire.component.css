@@ -701,13 +701,12 @@ input[type="button"].btn-block{
 }
 
 .btn-text{
-    width: 100% ;
+    width: 330px ;
     font-size: 24px;
     background-color: #cd2810;
     color: #fff;
     height: 60px;
     margin-left: auto;
-    margin-right: 16rem;
     margin-top: 0px;
     cursor: pointer;
     border-radius: 40px;
@@ -1184,6 +1183,9 @@ background-color: #dedddd;
 @media screen and (max-width: 420px)  {
   .rusty{
     width:21rem;
+  }
+  .btn-text{
+   width: 245px; 
   }
   .left-bt{
     width: 21rem;
