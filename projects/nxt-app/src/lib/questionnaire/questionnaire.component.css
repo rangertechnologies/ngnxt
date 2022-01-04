@@ -509,7 +509,10 @@
   cursor: pointer;
   height: 24px;
 }
-
+.file-icon{
+  max-width: 24px;
+  height:26px;
+}
 .picture-upload{
   height: 200px ;
   width: 200px ;
@@ -857,6 +860,7 @@ input[type="button"].btn-block{
       color:#6f7072;
       font-size: 14px;
       font-weight: normal;
+      word-break: break-word;
 }
 
 .summary-top{
@@ -1262,12 +1266,12 @@ background-color: #dedddd;
 }
 .additional{
     display: flex;
-    font-size: 14px;
+    font-size: 20px;
     text-align: left;
     font-weight: 200;
     margin-left: 4%;
     justify-content: center;
-    color: #560d05;
+    color: rgb(62, 62, 60);
     padding: 0 30%;
 }
 

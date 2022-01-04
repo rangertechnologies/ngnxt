@@ -2,14 +2,9 @@
 
 <div *ngIf="questionItem" class="questiondiv1">
   <div *ngIf="questionItem.Title__c && qbItem.Progress_Bar__c">
-        <h1 class="header1" >
-        {{ questionItem.Title__c }}
-        </h1>
-        <div class="header2">{{ questionItem.SubTitle__c }}
-        </div>
+        <h1 class="header1" > {{ questionItem.Title__c }} </h1>
+        <div class="header2">{{ questionItem.SubTitle__c }}</div>
   </div>
-
-
 
   <div [ngClass]="{ questiondiv2: !qbItem.Progress_Bar__c }">
     <div [ngClass]="{ bgColor: qbItem.Progress_Bar__c }">
@@ -46,8 +41,8 @@
         {{questionItem.Question_Text__c}}
       </h3>
     </div>
-    <div *ngIf="!questionItem.Is_Title__c" class="question-f-size">
-      <div [innerHTML]="getText(questionItem.Question_Text__c)">
+    <div *ngIf="!questionItem.Is_Title__c" class="question-f-size additional">
+      <div [innerHTML]="getText(questionItem.Question_Text__c)" >
         {{ questionItem.Question_Text__c }}
       </div>
     </div>
@@ -285,23 +280,18 @@
         <span class="uploading-file-name ">{{ attachment.attachmentName }}</span>
         <img src="https://rnxt.s3.amazonaws.com/MytIcon/icon-delete%402x.png" class="deleteIcon"
           (click)="deleteAttachment(attachment.attachmentId)" />
-
-
-
       </div>
       <div class="file-upload-box" style.border-color="{{ this.questionItem.error ? 'red' : '' }}">
       
         <!--<img src="https://rnxt.s3.amazonaws.com/MytIcon/icon-doc-img%402x.png" class="icon-edit1" />-->
-        <span class="f-Name" [innerHTML]="getText(questionItem.Question_Text__c)"> {{ questionItem.Question_Text__c
-          }}</span>
+        <span class="f-Name" [innerHTML]="getText(questionItem.Question_Text__c)"> {{ questionItem.Question_Text__c}}</span>
         <label class="file-label ">
-          <img src="https://rnxt.s3.amazonaws.com/MytIcon/file-upload.png" />
+          <img src="https://rnxt.s3.amazonaws.com/MytIcon/file-upload.png" class="file-icon"/>
           <input name="attachment" type="file" placeholder="Ticket kaufen" multiple
             accept=".pdf, .png, .jpg, .jpeg, .heic, .application/pdf" (change)="uploadFile($event)"
             class="file-upload-btn">
         </label>
       </div>
-
     </div>
   </div>
 
