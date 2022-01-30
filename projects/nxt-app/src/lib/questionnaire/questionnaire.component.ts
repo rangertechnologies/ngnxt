@@ -1236,10 +1236,11 @@ export class QuestionnaireComponent implements OnInit {
               answers = {};
               answers = {
                // groupText:answer.Question_Text__c,
-                quesValue:  "&lt;p&gt;"+ quesValue[quesNo]+"&lt;p&gt;",
+                //quesValue:  "&lt;p&gt;"+ quesValue[quesNo]+"&lt;p&gt;",
+                quesValue: answer.Question_Rich_Text__c,
                 ansValue: bqAnswerValue,
               };
-              quesNo++;
+              //quesNo++;
               this.summary.push(answers);
             }
           }else{
