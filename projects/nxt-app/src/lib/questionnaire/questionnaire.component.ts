@@ -703,7 +703,7 @@ export class QuestionnaireComponent implements OnInit {
       for (var item of this.questionItem.Questions__r.records) {
         var count = 0;
 
-      if(item.Type__c== "Text" && item.Question__c === 'Indica población'){
+      if(item.Type__c== "Text" && item.Question__c === 'Población'){
           for(var loc of this.localaddress){
             if((this.selectedPostalcode == loc.zipCode)&&(this.selectedValue == loc.country)&&(this.selectedCity==loc.town)){
               item.input= this.selectedCity;
