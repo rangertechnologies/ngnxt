@@ -1227,12 +1227,12 @@ export class QuestionnaireComponent implements OnInit {
             ansValue: files,
           };
           this.summary.push(answers);
-        } else if (answer.Question_Type__c == "Book") {
-          var quesNo=0;
+        } /*else if (answer.Question_Type__c == "Book") {
+          //var quesNo=0;
          if(answer.Answer_Long__c.includes("@@##$$")){
             //console.log('line 1223');
             for (var bqAnswerValue of answer.Answer_Long__c.split("@@##$$")) {
-              var quesValue=answer.Question_Text__c.split("@@##$$");
+              //var quesValue=answer.Question_Text__c.split("@@##$$");
               answers = {};
               answers = {
                // groupText:answer.Question_Text__c,
@@ -1251,7 +1251,7 @@ export class QuestionnaireComponent implements OnInit {
             };
             this.summary.push(answers);
           }
-        } else {
+        } */else {
          // var ans1 = answer.Answer_Long__c.split("@@##$$");
           answers = {      
             //groupText:answer.Question_Group_Text__c,
