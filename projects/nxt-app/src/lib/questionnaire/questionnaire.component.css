@@ -1372,5 +1372,15 @@ background-color: #dedddd;
   border-width: 0 3px 3px 0;
 }
 
+.bottomspace1{
+
+  padding-bottom: 14px !important;
+}
+
+.myt-321{
+  font-size: 20px;
+  font-weight: 700;
+  color: #c5281c;
+}
 
 

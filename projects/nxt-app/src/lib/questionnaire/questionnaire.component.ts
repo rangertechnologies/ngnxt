@@ -703,7 +703,7 @@ export class QuestionnaireComponent implements OnInit {
       for (var item of this.questionItem.Questions__r.records) {
         var count = 0;
 
-      if(item.Type__c== "Text" && item.Question__c === 'Indica población'){
+      if(item.Type__c== "Text" && item.Question__c === 'Población'){
           for(var loc of this.localaddress){
             if((this.selectedPostalcode == loc.zipCode)&&(this.selectedValue == loc.country)&&(this.selectedCity==loc.town)){
               item.input= this.selectedCity;
@@ -1228,7 +1228,7 @@ export class QuestionnaireComponent implements OnInit {
           };
           this.summary.push(answers);
         } else if (answer.Question_Type__c == "Book") {
-          var quesNo=0;
+          /*  var quesNo=0;
          if(answer.Answer_Long__c.includes("@@##$$")){
             //console.log('line 1223');
             for (var bqAnswerValue of answer.Answer_Long__c.split("@@##$$")) {
@@ -1242,7 +1242,19 @@ export class QuestionnaireComponent implements OnInit {
               quesNo++;
               this.summary.push(answers);
             }
-          }else{
+           }*/
+          if(answer.Answer_Long__c.includes("@@##$$")){
+            var answervalues = answer.Answer_Long__c.split("@@##$$");
+            //console.log('value')
+            answers = {      
+             //groupText:answer.Question_Group_Text__c,
+             quesValue: answer.Question_Rich_Text__c,
+             ansValue: answervalues,
+           };
+           //console.log(answers)
+           this.summary.push(answers);
+           }
+          else{
             answers = {      
               //groupText:answer.Question_Group_Text__c,
               quesValue: answer.Question_Rich_Text__c,
