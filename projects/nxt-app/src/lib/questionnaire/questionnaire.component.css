@@ -423,6 +423,15 @@
   color: #c5281c;
   text-align: center;
 }
+
+
+.myt-font10{
+  margin-top: -6px;
+  font-weight: normal;
+  font-size: 14px;
+  color: #560d05;
+  margin-top: 10px;
+}
 .myt-font7{
   display: flex;
   justify-content: flex-start;

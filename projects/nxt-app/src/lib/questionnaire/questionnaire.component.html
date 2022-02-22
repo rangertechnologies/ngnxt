@@ -24,7 +24,8 @@
           <h3 class="myt-font6">
             {{ questionItem.Group__c }}
           </h3>
-          <div class="myt-font5">{{questionItem.Sub_Text__c}}</div>
+          <div *ngIf="questionItem.Sub_Text__c != '¿En qué país ocurrió?'" class="myt-font5">{{questionItem.Sub_Text__c}}</div>
+          <div *ngIf="questionItem.Sub_Text__c === '¿En qué país ocurrió?'" class="myt-font10">{{questionItem.Sub_Text__c}}</div>
           <!--<div
             *ngIf="questionItem.Additional_Rich__c && qbItem.Progress_Bar__c"
           >
@@ -396,7 +397,7 @@
          -->
 
           
-            <div *ngIf="ques.Question__c != 'Población' && ques.Question__c !='Provincia' && ques.Question__c !='Código postal' ">
+            <div *ngIf="ques.Question__c != 'Población' && ques.Question__c !='Provincia' && ques.Question__c !='Código postal' && ques.Question__c != '¿Dónde ocurrió?' ">
               <input type="text" [(ngModel)]="ques.input" [ngClass]="{
                'dis-flex dt-line date-line bookText boxoutline myt-font1': qbItem.Progress_Bar__c,
                textBox: !qbItem.Progress_Bar__c
@@ -404,6 +405,17 @@
               style.border-color="{{ ques.error ? 'red' : '' }}" placeholder="{{ ques.Question__c }}"
               oninput="this.value=this.value.replace(/[^a-zA-Z0-9\s.:;,?]/g,'');" />
               </div>
+
+              <div *ngIf="ques.Question__c === '¿Dónde ocurrió?' ">
+                <input type="text" [(ngModel)]="ques.input" [ngClass]="{
+                 'dis-flex dt-line date-line bookText boxoutline myt-font1': qbItem.Progress_Bar__c,
+                 textBox: !qbItem.Progress_Bar__c
+                }" id="text" [id]="ques.Id" required="" (focus)="clearSQError(ques.Id)"
+                style.border-color="{{ ques.error ? 'red' : '' }}" placeholder=" Calle, número,.."
+                oninput="this.value=this.value.replace(/[^a-zA-Z0-9\s.:;,?]/g,'');" />
+                </div>
+
+
             </div>
 
           
