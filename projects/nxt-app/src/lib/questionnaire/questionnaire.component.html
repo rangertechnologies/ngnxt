@@ -486,7 +486,7 @@
                 'dt-line dpDown down myt-dropbox myt-border-r myt-font1': qbItem.Progress_Bar__c,
                 'custom-select': !qbItem.Progress_Bar__c
               }" class="custom-select mr-sm-2 dd-height" id="dropdown" [(ngModel)]="ques.input"
-              (focus)="Dropdown($event); clearSQError(ques.Id)"
+              (change)="Dropdown($event); clearSQError(ques.Id)"
               style.border-color=" {{ ques.error ? 'red ' : '#858585' }}" style.color="{{ ques.error ? 'red' : '' }}">
               <option *ngFor="let opt of ques.Question_Options__r.records" class="option" value="{{ opt.Value__c }}">
                 {{ opt.Value__c }}

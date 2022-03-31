@@ -972,7 +972,7 @@ export class QuestionnaireComponent implements OnInit {
         if (cOpt.Value__c == this.inpValue) {
           //console.log('Match Found using ' + cOpt.Next_Question__c);
           this.recordId = cOpt.Next_Question__c;
-          //console.log('inside'+ recordId);
+          //console.log('conditional record id'+ this.recordId);
         }
       }
       // Could be of type Data and existing value
@@ -986,25 +986,38 @@ export class QuestionnaireComponent implements OnInit {
       //Unconditional  logic
       //console.log("inside unconditional");
       //inside Book Type
-      if (cQuestion.Type__c == "Book") {
+      if (cQuestion.Type__c == "Book" && cQuestion.Question_No__c !='6') {
         //console.log("inside book");
         for (let opt of cQuestion.Questions__r.records) {
           //console.log(opt.Type__c);
           if (opt.Type__c == "Dropdown" || opt.Type__c == "Radio") {
             for (var opt1 of opt.Question_Options__r.records) {
               if (this.valueName == opt1.Value__c) {
-                this.recordId =
-                  opt1.Next_Question__c || cQuestion.Next_Question__c;
+                this.recordId =opt1.Next_Question__c || cQuestion.Next_Question__c;                  
               } else {
                 //console.log('Else'+this.recordId)
                 this.recordId = cQuestion.Next_Question__c;
+                
               }
             }
           } else {
             this.recordId = cQuestion.Next_Question__c;
           }
         }
-      } else {
+      }
+      else if(cQuestion.Type__c == "Book" && cQuestion.Question_No__c =='6' ) {
+        for (let opt of cQuestion.Questions__r.records) {
+          if (opt.Type__c == "Dropdown" || opt.Type__c == "Radio"){
+          for (var opt1 of opt.Question_Options__r.records) {
+            if (this.valueName == opt1.Value__c) {
+            this.recordId = opt1.Next_Question__c;  
+            }
+          }
+        }
+        }
+      }    
+      
+      else {
         this.recordId = cQuestion.Next_Question__c;
       }
     }
