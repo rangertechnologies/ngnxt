@@ -21,11 +21,11 @@
     <div *ngIf="questionItem.Group__c && qbItem.Progress_Bar__c"
         [ngClass]="{ questionalign: !qbItem.Progress_Bar__c }">
         <div class="largeTitle">
-          <h3 class="myt-font6">
+          <h3 class="myt-font6 myt-text3">
             {{ questionItem.Group__c }}
           </h3>
-          <div *ngIf="questionItem.Sub_Text__c != '¿En qué país ocurrió?'" class="myt-font5">{{questionItem.Sub_Text__c}}</div>
-          <div *ngIf="questionItem.Sub_Text__c === '¿En qué país ocurrió?'" class="myt-font10">{{questionItem.Sub_Text__c}}</div>
+          <div *ngIf="questionItem.Sub_Text__c != '¿En qué país ocurrió?'" class="myt-font5 myt-text1">{{questionItem.Sub_Text__c}}</div>
+          <div *ngIf="questionItem.Sub_Text__c === '¿En qué país ocurrió?'" class="myt-font10 myt-text2">{{questionItem.Sub_Text__c}}</div>
           <!--<div
             *ngIf="questionItem.Additional_Rich__c && qbItem.Progress_Bar__c"
           >
@@ -39,8 +39,8 @@
   <!--Question alignment-->
   <div class="questiondiv2">
     <div *ngIf="questionItem.Is_Title__c">
-      <div *ngIf="questionItem.Type__c != 'Book'&&questionItem.Question_No__c!='6'"> 
-      <h3 class="questionalign  myt-font3 myt-align" [innerHTML]="getText(questionItem.Question_Text__c)">
+      <div *ngIf="questionItem.Type__c != 'Book'&&questionItem.Question_No__c!='6' && questionItem.Question_No__c!='9'"> 
+      <h3 class="questionalign  myt-font3 myt-align myt-text4" [innerHTML]="getText(questionItem.Question_Text__c)">
         {{questionItem.Question_Text__c}}
       </h3>
       </div>
@@ -54,6 +54,16 @@
     <div *ngIf="questionItem.Type__c =='Book'">
       <div *ngIf="questionItem.Question_No__c=='6'">
       <h3 class="myt-321" [innerHTML]="getText(questionItem.Question_Text__c)">
+        {{questionItem.Question_Text__c}}
+      </h3>
+      </div>
+  
+    </div>
+
+    
+    <div *ngIf="questionItem.Type__c =='File'">
+      <div *ngIf="questionItem.Question_No__c=='9'">
+      <h3 class="myt-345" [innerHTML]="getText(questionItem.Question_Text__c)">
         {{questionItem.Question_Text__c}}
       </h3>
       </div>
@@ -218,7 +228,7 @@
         <label class="date-time colorf">{{ questionItem.Date_Text__c }}</label>
         <div class="dis-flex">
           <my-date-picker name="mydate" [options]="myDatePickerOptions" id="date" style="font-size: 18px !important;" (dateChanged)="onDateChanged($event)"
-            [(ngModel)]="selDate" class="date-picker" (focus)="clearError()">
+            [(ngModel)]="selDate" class="date-picker" placeholder="Seleccione fecha" (focus)="clearError()">
           </my-date-picker>
           <!-- <i class="fa check-icon2" id="check-icon" aria-hidden="true" *ngIf="
               inpValue?.length === 8 ||
@@ -235,7 +245,7 @@
          <div [ngClass]="{'dt-line date-line dt-time': qbItem.Progress_Bar__c,
                            dateandTime: !qbItem.Progress_Bar__c}" 
               id="dateandTime" [style.border-color]="questionItem.error ? 'red': questionItem?.input?.length > 0 ? '' : ''"
-              (focus)="(clearSQError)">
+              (focus)="(clearSQError) ">
           <select name="hours" class="datetime showHour myt-time myt-hour" [(ngModel)]="selectedHour" id="hour"
             (focus)="clearError()">
             <option value="">HH</option>
@@ -403,7 +413,7 @@
                textBox: !qbItem.Progress_Bar__c
               }" id="text" [id]="ques.Id" required="" (focus)="clearSQError(ques.Id)"
               style.border-color="{{ ques.error ? 'red' : '' }}" placeholder="{{ ques.Question__c }}"
-              oninput="this.value=this.value.replace(/[^a-zA-Z0-9\s.:;,?]/g,'');" />
+              oninput="this.value=this.value.replace(/^[a-zA-Z0-9!áÁéÉíÍóÓúÚñÑüÜ@#$%^&*()_+-=:<>/`~.?;:]{8,20}/g$,'');" />
               </div>
 
               <div *ngIf="ques.Question__c === '¿Dónde ocurrió?' ">
