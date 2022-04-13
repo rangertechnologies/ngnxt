@@ -330,10 +330,64 @@
           <div [ngClass]="{ down2: qbItem.Progress_Bar__c }">
             <span class="dis-flex myt-font3 myt-font7">{{ ques.Question__c }}</span>
           </div>
-          
+
+          <div class="col-md-12 paddingZero myt-dateTimeNew" *ngIf="ques.Type__c === 'Time' || ques.Type__c === 'Date'">
+            <div class="col-md-12" *ngIf="questionItem.error" style="font-size: 18px;
+            color: red;">{{questionItem.error.errorMsg}}</div>
+            <div *ngIf="ques.Type__c === 'Date'">
+              <div class="col-md-12 paddingBottom">
+                <label class="date-time colorf">{{ questionItem.Date_Text__c }}</label>
+                <div class="dis-flex">
+                  <my-date-picker name="mydate" [options]="myDatePickerOptions" id="date" style="font-size: 18px !important;" (dateChanged)="onDateChanged($event)"
+                    [(ngModel)]="selDate" class="date-picker" placeholder="Seleccione fecha" (focus)="clearError()">
+                  </my-date-picker>
+                  <!-- <i class="fa check-icon2" id="check-icon" aria-hidden="true" *ngIf="
+                      inpValue?.length === 8 ||
+                      inpValue?.length === 9 ||
+                      inpValue?.length === 15
+                    "></i> -->
+                </div>
+              </div>
+            </div>
+            <div *ngIf="ques.Type__c === 'Time'">
+              <div class="col-md-12 paddingBottom">
+                <label class="date-time colorf">{{ questionItem.Time_Text__c }}</label>
+                <div class="dis-flex">
+                <div [ngClass]="{'dt-line date-line dt-time': qbItem.Progress_Bar__c,
+                                  dateandTime: !qbItem.Progress_Bar__c}" 
+                      id="dateandTime" [style.border-color]="questionItem.error ? 'red': questionItem?.input?.length > 0 ? '' : ''"
+                      (focus)="(clearSQError) ">
+                  <select name="hours" class="datetime showHour myt-time myt-hour" [(ngModel)]="selectedHour" id="hour"
+                    (focus)="clearError()">
+                    <option value="">HH</option>
+                    <option [value]="hour" *ngFor="let hour of hours">
+                      {{ hour }}
+                    </option>
+                  </select>
+                  <span class="colon"> : </span>
+                  <select name="minutes" class="datetime showminute myt-time" [(ngModel)]="selectedMinute" id="minute"
+                    (focus)="clearError()">
+                    <option value="">MM</option>
+                    <option [value]="minute" *ngFor="let minute of minutes">
+                      {{ minute }}
+                    </option>
+                  </select>
+                  <div [ngClass]="{ colon1: qbItem.Progress_Bar__c }" *ngIf="questionItem.X24_Hours__c == false">
+                    <span class="colon"> : </span>
+                    <select name="AM/PM" class="myt-time" [(ngModel)]="selectedMeridiem" id="meridiem">
+                      <option value="AM">AM</option>
+                      <option value="PM">PM</option>
+                    </select>
+                    <!-- <div [ngClass]="{'': qbItem.Progress_Bar__c, 'dateandTime': !qbItem.Progress_Bar__c}"></div> -->
+                  </div>
+                </div>
+              </div>
+              </div>
+              <i class="fa check-icon3" aria-hidden="true" *ngIf="questionItem?.input?.length > 0"></i>
+            </div>
+          </div>
+
           <div *ngIf="ques.Type__c === 'Text'">
-          
-           
             <div *ngIf="ques.Question__c === 'Código postal' ">
               <div [id]="ques.Id" class="dis-flex;">
                 <div  class="town-drop bottomspace1">

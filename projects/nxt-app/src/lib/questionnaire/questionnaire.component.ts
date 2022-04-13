@@ -482,6 +482,9 @@ export class QuestionnaireComponent implements OnInit {
   }
 
   onDateChanged(event: IMyDateModel) {
+    console.log('Inside the onDateChanged');
+    console.log(event);
+    console.log(this.qbItem);
     //to change the border color
     if (this.qbItem.Progress_Bar__c) {
       this.inpValue =
@@ -503,6 +506,7 @@ export class QuestionnaireComponent implements OnInit {
       this.dateMap.delete(this.questionItem.Id);
       this.answerMap.delete(this.questionItem.Id);
     }
+    console.log(this.inpValue);
   }
 
   ngOnInit() {
@@ -527,6 +531,7 @@ export class QuestionnaireComponent implements OnInit {
     this.processQB();
   }
   date_TimeMap() {
+    console.log('Inside the date_TimeMap');
     this.selectedhourMap.set(this.questionItem.Id, this.selectedHour);
     this.selectedminuteMap.set(this.questionItem.Id, this.selectedMinute);
   }
@@ -646,6 +651,11 @@ export class QuestionnaireComponent implements OnInit {
   }
 
   handleNextClick() {
+    console.log('Inside the handleNextClick');
+    console.log(this.questionItem);
+    console.log(this.qbItem);
+    console.log(this.currentQuestionId);
+
     //console.log(this.questionItem);
 
     //this.updateProgress();
@@ -697,13 +707,87 @@ export class QuestionnaireComponent implements OnInit {
         return;
       }
     } else if (this.bookFlag) {
-      this.inpValue = "";
+
+      //this.inpValue = "";
       var hasMissingInput = false;
-	   
+      console.log('hasMissingInput = '+hasMissingInput);
+      console.log(this.questionItem.Questions__r.records.length);
       for (var item of this.questionItem.Questions__r.records) {
+        console.log(item);
         var count = 0;
+      
+        if(item.Type__c == "Date" || item.Type__c == "Time") {
+          console.log('Inside the Date/Time if cond');
+          console.log(this.inpValue);
+          //this one
+          this.change();
+          if(this.inpValue) {
+            this.selectedHour = this.getProperTime("12", this.selectedHour);
+            this.selectedMinute = this.getProperTime("00", this.selectedMinute);
+            this.selectedMeridiem = this.getProperTime("AM", this.selectedMeridiem);
+            //console.log(this.inpValue.length);
+
+          if (this.questionItem.X24_Hours__c === false) {
+              this.questionItem.input =
+                (this.selectedMeridiem === "PM" && this.selectedHour != "12"
+                  ? Number(this.selectedHour) + 12
+                  : this.selectedHour) +
+                ":" +
+                this.selectedMinute + " PM";
+              if (this.selectedMeridiem === "AM" && this.selectedHour === "12") {
+                this.questionItem.input = "00" + ":" + this.selectedMinute + " AM";
+              }
+              if (this.qbItem.Progress_Bar__c) {
+                this.inpValue = this.inpValue + " " + this.questionItem.input;
+              } else {
+                this.inpValue = this.inpValue + "T" + this.questionItem.input;
+              }
+            }
+            if (this.questionItem.X24_Hours__c === true) {
+              this.questionItem.input =
+                this.selectedHour + ":" + this.selectedMinute;
+              if (this.qbItem.Progress_Bar__c) {
+                this.inpValue = this.inpValue + " " + this.questionItem.input;
+              } else {
+                this.inpValue = this.inpValue + "T" + this.questionItem.input;
+              }
+            }
+            if (this.qbItem.Progress_Bar__c) {
+              console.log("ans => " + this.inpValue);
+              var date1: any = this.inpValue.split(" ");
+              date1 = date1[0].split("/");
+              date1 = [date1[2], date1[1], date1[0]].join("-");
+              date1 = new Date(date1);
+              console.log(date1);
+              var date2: any = this.insuranceStartDate.split(" ");
+              date2 = new Date(date2[0]);
+              console.log(date2);
+              if (date1 < date2) {
+                this.questionItem.error = new ErrorWrapper();
+                this.questionItem.error.errorMsg =
+                  "No es posible dar de alta la reclamación debido a que la fecha del incidente es anterior a la fecha de contratación de la póliza";
+                console.log('inside');
+                return;
+              }
+            }
+            console.log('selDate = '+this.selDate);
+            console.log('inpValue = '+this.inpValue);
+            if (this.selDate === null || !this.inpValue) {
+              console.log('Avoided cond');
+              this.questionItem.error = new ErrorWrapper();
+              return;
+            }
+            this.date_TimeMap();
+          }
+      }else{
+        this.inpValue = "";
+      }
+      console.log('After the Date/Time if cond');
+      console.log('hasMissingInput = '+hasMissingInput);
+
 
       if(item.Type__c== "Text" && item.Question__c === 'Población'){
+        console.log('Inside the unexpected cond6');
           for(var loc of this.localaddress){
             if((this.selectedPostalcode == loc.zipCode)&&(this.selectedValue == loc.country)&&(this.selectedCity==loc.town)){
               item.input= this.selectedCity;
@@ -721,6 +805,7 @@ export class QuestionnaireComponent implements OnInit {
         } 
 
         if(item.Type__c== "Text" && item.Question__c === 'Código postal'){
+          console.log('Inside the unexpected cond7');
           for(var loc of this.localaddress){
             if(loc.zipCode == this.selectedPostalcode){
               //console.log('testing zipcode value*****'+ this.selectedPostalcode)
@@ -739,6 +824,7 @@ export class QuestionnaireComponent implements OnInit {
         
       
       if(item.Type__c== "Text" && item.Question__c === 'Provincia'){
+        console.log('Inside the unexpected cond8');
 			  for(var loc of this.localaddress){
 				  if(loc.province == this.selectedProvince){
 					  //console.log('******testing province value'+ this.selectedProvince)
@@ -770,21 +856,29 @@ export class QuestionnaireComponent implements OnInit {
 			  }
 			}
 		  }*/
+        console.log(item.Is_Optional__c);
+        console.log(item.Type__c);
+        console.log(item.input);
+        console.log(this.attachments);
+
         if (
           !item.Is_Optional__c &&
-          ((item.Type__c != "File" && !item.input) ||
+          ((item.Type__c != "File" && !item.input && item.Type__c != 'Date' && item.Type__c != 'Time') ||
             (item.Type__c == "File" && this.attachments.length == 0))
         ) {
+          console.log('Inside the unexpected cond9');
           item.error = new ErrorWrapper();
           hasMissingInput = true;
         }
         if (item.Type__c == "Radio") {
+          console.log('Inside the unexpected cond10');
           if (!item.input) {
             item.error = new ErrorWrapper();
             hasMissingInput = true;
           }
         }
         if (item.Type__c == "Dropdown") {
+          console.log('Inside the unexpected cond1');
           if (!item.input) {
             item.input = "";
             item.error = new ErrorWrapper();
@@ -792,6 +886,7 @@ export class QuestionnaireComponent implements OnInit {
           }
         }
         if (item.Type__c == "Email") {
+          console.log('Inside the unexpected cond2');
           if (item.input && item.input.match(mailformat)) {
             this.recordId = cQuestion.Next_Question__c;
           } else {
@@ -800,6 +895,7 @@ export class QuestionnaireComponent implements OnInit {
           }
         }
         if (item.Type__c == "File" && this.attachments.length > 0) {
+          console.log('Inside the unexpected cond3');
           for (var attachmentItem of this.attachments) {
             this.inpValue +=
               attachmentItem.attachmentId +
@@ -813,22 +909,27 @@ export class QuestionnaireComponent implements OnInit {
           }
           // this.attachments = [];
         } //item.input == this.inpValue;
+
+
         this.inpValue += (item.input != undefined ? item.input : "") + "@@##$$";
         questionTxt += item.Question__c + "@@##$$";
         //console.log('inside book1' + this.inpValue)
       }
+      console.log('hasMissingInput = '+hasMissingInput);
       if (hasMissingInput) {
-        //console.log('file two')
+        console.log('Inside the hasMissingInput cond')
         return;
       }
       this.inpValue = this.trimLastDummy(this.inpValue);
       questionTxt = questionTxt ? this.trimLastDummy(questionTxt) : questionTxt;
     } else if (this.dropdownFlag) {
+      console.log('Inside the unexpected cond4');
       if (this.inpValue.length <= 1) {
         this.inpValue = ".";
         this.questionItem.error = new ErrorWrapper();
       }
     } else if (this.dtFlag && this.dateFlag && this.timeFlag) {
+      console.log('Inside the unexpected cond5');
       //this one
       this.change();
       if (this.inpValue) {
@@ -926,14 +1027,20 @@ export class QuestionnaireComponent implements OnInit {
         return;
       }
     }
-    //console.log('before calling saveAnswer with ' + this.inpValue);
+    console.log('before calling saveAnswer with ' + this.inpValue);
+    console.log(this.questionItem.Is_Optional__c);
+    console.log(this.inpValue);
+    console.log(this.questionItem.error);
 
     // Check for the answer before saving to the DB
     if (!this.questionItem.Is_Optional__c && !this.inpValue) {
+      console.log('Inside the wrond if cond');
       // Show error that the question must be answered
       this.questionItem.error = new ErrorWrapper();
       return;
     }
+
+    console.log('After the if cond');
     // Save the Answer in the DB
     this.answerWrap = new AnswerWrapper();
     this.answerWrap.abId = this.abItem.Id;
@@ -949,6 +1056,7 @@ export class QuestionnaireComponent implements OnInit {
   }*/
     //this.answerWrap.squesValue = cQuestion.Question__c;
     this.answerWrap.squesValue = questionTxt ? questionTxt : cQuestion.Question__c;
+    console.log('Before calling saveAnswer');
     this.saveAnswer();
   }
 
@@ -1453,6 +1561,75 @@ export class QuestionnaireComponent implements OnInit {
       this.setOptions(this.questionItem.Question_Options__r.records);
     } else if (this.bookFlag) {
       // Set the SubQuestions
+      console.log('Before calling setSubQuestions');
+      console.log(this.dtFlag);
+        if (this.dtFlag) {
+          this.selectedHour = "";
+          this.selectedMinute = "";
+          this.selDate = "";
+          // 2021-5-16T00:00
+          if (this.dateMap.has(this.questionItem.Id)) {
+            this.selDate = this.dateMap.get(this.questionItem.Id);
+          }
+          if (this.selectedhourMap.has(this.questionItem.Id)) {
+            this.selectedHour = this.selectedhourMap.get(this.questionItem.Id);
+          }
+          if (this.selectedminuteMap.has(this.questionItem.Id)) {
+            this.selectedMinute = this.selectedminuteMap.get(this.questionItem.Id);
+          }
+          if (this.questionItem.X24_Hours__c === true) {
+            this.hours.push(
+              "13",
+              "14",
+              "15",
+              "16",
+              "17",
+              "18",
+              "19",
+              "20",
+              "21",
+              "22",
+              "23",
+              "00"
+            );
+          }
+          if (this.questionItem.X24_Hours__c === false) {
+            this.hours = this.hours.slice(0, 12);
+          }
+          if (this.dtFlag && this.inpValue) {
+            var dtVal = this.inpValue.split("T"); 
+            var dtval0 = this.inpValue.split(" ");
+            this.inpValue = dtVal[0];
+            this.inpValue = dtval0[0];
+            //console.log('inp'+this.inpValue + '=='+dtVal[0])
+            //console.log('inp'+this.inpValue + '=='+dtval0[0])
+
+            this.questionItem.input = dtVal[1];
+            this.questionItem.input = dtval0[1];
+            //console.log('inpvalue'+this.questionItem.input +'==' +dtVal[1])
+            //console.log('inpvalue'+this.questionItem.input +'==' +dtval0[1])
+          }
+          if (
+            this.questionItem.Is_Date_Backward__c ||
+            this.questionItem.Is_Date_Forward__c
+          ) {
+            if (this.questionItem.Is_Date_Backward__c === true) {
+              this.myDatePickerOptions.disableSince = {
+                year: this.today.getFullYear(),
+                month: this.today.getMonth() + 1,
+                day: this.today.getDate() + 1,
+              };
+            }
+            if (this.questionItem.Is_Date_Forward__c === true) {
+              this.myDatePickerOptions.disableUntil = {
+                year: this.today.getFullYear(),
+                month: this.today.getMonth() + 1,
+                day: this.today.getDate(),
+              };
+            }
+          }
+      }
+      
       this.setSubQuestions(this.questionItem.Questions__r.records);
     } else if (this.dtFlag) {
       this.selectedHour = "";
