@@ -775,7 +775,7 @@ export class QuestionnaireComponent implements OnInit {
         }
       }
     
-        if (item.Type__c == "Time") {
+        if (item.Type__c == "Time"|| (this.timeFlag && this.dtFlag && !this.dateFlag)) {
           console.log('NO data')
               console.log(this.selectedHour);
               console.log(this.selectedMinute);
