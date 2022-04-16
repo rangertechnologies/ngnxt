@@ -764,6 +764,9 @@ export class QuestionnaireComponent implements OnInit {
       // }
 
             if (item.Type__c == "Time") {
+              console.log('selectedHour='+this.selectedHour);
+              console.log('selectedMinute='+this.selectedMinute);
+              console.log('selectedMeridiem='+this.selectedMeridiem);
         this.date_TimeMap();
         if (this.questionItem.X24_Hours__c === false) {
           this.inpValue =
@@ -781,6 +784,7 @@ export class QuestionnaireComponent implements OnInit {
         }
       } 
       if (item.Type__c == "Date") {
+        console.log('selDate'+this.selDate);
         this.change();
         if (this.inpValue.length < 7 || this.selDate === null) {
           this.questionItem.error = new ErrorWrapper();
