@@ -332,14 +332,13 @@
           </div>
 
           <div class="col-md-12 paddingZero myt-dateTimeNew" *ngIf="ques.Type__c === 'Time' || ques.Type__c === 'Date'">
-            <div class="col-md-12" *ngIf="questionItem.error" style="font-size: 18px;
-            color: red;">{{questionItem.error.errorMsg}}</div>
+            <div class="col-md-12" *ngIf="questionItem.error" style="font-size: 18px; color: red;">{{ques.Error_Message__c}}</div>
             <div *ngIf="ques.Type__c === 'Date'">
               <div class="col-md-12 paddingBottom">
-                <label class="date-time colorf">{{ questionItem.Date_Text__c }}</label>
+                <label class="date-time colorf">{{ ques.Date_Text__c }}</label>
                 <div class="dis-flex">
                   <my-date-picker name="mydate" [options]="myDatePickerOptions" id="date" style="font-size: 18px !important;" (dateChanged)="onDateChanged($event)"
-                    [(ngModel)]="selDate" class="date-picker" placeholder="Seleccione fecha" (focus)="clearError()">
+                    [(ngModel)]="selDate" class="date-picker" placeholder="Seleccione fecha" (focus)="clearSQError(ques.Id)">
                   </my-date-picker>
                   <!-- <i class="fa check-icon2" id="check-icon" aria-hidden="true" *ngIf="
                       inpValue?.length === 8 ||
@@ -351,14 +350,14 @@
             </div>
             <div *ngIf="ques.Type__c === 'Time'">
               <div class="col-md-12 paddingBottom">
-                <label class="date-time colorf">{{ questionItem.Time_Text__c }}</label>
+                <label class="date-time colorf">{{ ques.Time_Text__c }}</label>
                 <div class="dis-flex">
                 <div [ngClass]="{'dt-line date-line dt-time': qbItem.Progress_Bar__c,
                                   dateandTime: !qbItem.Progress_Bar__c}" 
                       id="dateandTime" [style.border-color]="questionItem.error ? 'red': questionItem?.input?.length > 0 ? '' : ''"
                       (focus)="(clearSQError) ">
                   <select name="hours" class="datetime showHour myt-time myt-hour" [(ngModel)]="selectedHour" id="hour"
-                    (focus)="clearError()">
+                    (focus)="clearSQError(ques.Id)">
                     <option value="">HH</option>
                     <option [value]="hour" *ngFor="let hour of hours">
                       {{ hour }}
@@ -366,7 +365,7 @@
                   </select>
                   <span class="colon"> : </span>
                   <select name="minutes" class="datetime showminute myt-time" [(ngModel)]="selectedMinute" id="minute"
-                    (focus)="clearError()">
+                    (focus)="clearSQError(ques.Id)">
                     <option value="">MM</option>
                     <option [value]="minute" *ngFor="let minute of minutes">
                       {{ minute }}
