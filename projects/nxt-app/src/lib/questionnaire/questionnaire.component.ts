@@ -759,34 +759,12 @@ export class QuestionnaireComponent implements OnInit {
             }
             this.date_TimeMap();
           }
-      }
+       }
       // else{
       //   this.inpValue = "";
       // }
 
-            if (item.Type__c == "Time") {
-              console.log(this.selectedHour);
-              console.log(this.selectedMinute);
-              console.log(this.selectedMeridiem);
-        this.date_TimeMap();
-        if (this.questionItem.X24_Hours__c === false) {
-          this.inpValue =
-            (this.selectedMeridiem === "PM" && this.selectedHour != "12"
-              ? Number(this.selectedHour) + 12
-              : this.selectedHour) +
-            ":" +
-            this.selectedMinute;
-        } else {
-          this.inpValue = this.selectedHour + ":" + this.selectedMinute;
-        }
-        if (this.inpValue.length < 5) {
-          this.questionItem.error = new ErrorWrapper();
-          return;
-        }
-      } else{
-        item.input="";
-        console.log(item.input);
-      }
+    
       if (item.Type__c == "Date") {
         console.log('selDate');
         console.log(this.selDate);
@@ -797,7 +775,23 @@ export class QuestionnaireComponent implements OnInit {
         }
       }
     
-
+        if (item.Type__c == "Time") {
+          console.log('NO data')
+              console.log(this.selectedHour);
+              console.log(this.selectedMinute);
+              console.log(this.selectedMeridiem);
+        this.date_TimeMap();
+        if (item.X24_Hours__c === false) {
+          item.input =
+            (this.selectedMeridiem === "PM" && this.selectedHour != "12" ? Number(this.selectedHour) + 12 : this.selectedHour) + ":" + this.selectedMinute;
+        } else {
+          item.input = this.selectedHour + ":" + this.selectedMinute;
+        }
+        if (item.input.length < 5) {
+          item.error = new ErrorWrapper();
+          return;
+        }
+      } 
 
       if(item.Type__c== "Text" && item.Question__c === 'Población'){
           for(var loc of this.localaddress){
