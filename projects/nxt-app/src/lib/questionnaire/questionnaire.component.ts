@@ -699,12 +699,12 @@ export class QuestionnaireComponent implements OnInit {
       }
     } else if (this.bookFlag) {
 
-      //this.inpValue = "";
+      this.inpValue = "";
       var hasMissingInput = false;
       for (var item of this.questionItem.Questions__r.records) {
         var count = 0;
       
-        if(item.Type__c == "Date" || item.Type__c == "Time") {
+        if(item.Type__c == "DateTime") {
           //this one
           this.change();
           if(this.inpValue) {
@@ -758,9 +758,36 @@ export class QuestionnaireComponent implements OnInit {
             }
             this.date_TimeMap();
           }
-      }else{
-        this.inpValue = "";
       }
+      // else{
+      //   this.inpValue = "";
+      // }
+
+            if (item.Type__c == "Time") {
+        this.date_TimeMap();
+        if (this.questionItem.X24_Hours__c === false) {
+          this.inpValue =
+            (this.selectedMeridiem === "PM" && this.selectedHour != "12"
+              ? Number(this.selectedHour) + 12
+              : this.selectedHour) +
+            ":" +
+            this.selectedMinute;
+        } else {
+          this.inpValue = this.selectedHour + ":" + this.selectedMinute;
+        }
+        if (this.inpValue.length < 5) {
+          this.questionItem.error = new ErrorWrapper();
+          return;
+        }
+      } 
+      if (item.Type__c == "Date") {
+        this.change();
+        if (this.inpValue.length < 7 || this.selDate === null) {
+          this.questionItem.error = new ErrorWrapper();
+          return;
+        }
+      }
+    
 
 
       if(item.Type__c== "Text" && item.Question__c === 'Población'){
