@@ -332,7 +332,7 @@
           </div>
 
           <div class="col-md-12 paddingZero myt-dateTimeNew" *ngIf="ques.Type__c === 'Time' || ques.Type__c === 'Date'">
-            <div class="col-md-12" *ngIf="questionItem.error" style="font-size: 18px; color: red;">{{ques.Error_Message__c}}</div>
+            <div class="col-md-12" *ngIf="ques.error" style="font-size: 18px; color: red;">{{ques.Error_Message__c}}</div>
             <div *ngIf="ques.Type__c === 'Date'">
               <div class="col-md-12 paddingBottom">
                 <label class="date-time colorf">{{ ques.Date_Text__c }}</label>
@@ -354,8 +354,8 @@
                 <div class="dis-flex">
                 <div [ngClass]="{'dt-line date-line dt-time': qbItem.Progress_Bar__c,
                                   dateandTime: !qbItem.Progress_Bar__c}" 
-                      id="dateandTime" [style.border-color]="questionItem.error ? 'red': questionItem?.input?.length > 0 ? '' : ''"
-                      (focus)="(clearSQError) ">
+                      id="dateandTime" [style.border-color]="ques.error ? 'red': ques?.input?.length > 0 ? '' : ''"
+                      (focus)="clearSQError(ques.Id)">
                   <select name="hours" class="datetime showHour myt-time myt-hour" [(ngModel)]="selectedHour" id="hour"
                     (focus)="clearSQError(ques.Id)">
                     <option value="">HH</option>
@@ -371,7 +371,7 @@
                       {{ minute }}
                     </option>
                   </select>
-                  <div [ngClass]="{ colon1: qbItem.Progress_Bar__c }" *ngIf="questionItem.X24_Hours__c == false">
+                  <div [ngClass]="{ colon1: qbItem.Progress_Bar__c }" *ngIf="ques.X24_Hours__c == false">
                     <span class="colon"> : </span>
                     <select name="AM/PM" class="myt-time" [(ngModel)]="selectedMeridiem" id="meridiem">
                       <option value="AM">AM</option>
@@ -382,7 +382,7 @@
                 </div>
               </div>
               </div>
-              <i class="fa check-icon3" aria-hidden="true" *ngIf="questionItem?.input?.length > 0"></i>
+              <i class="fa check-icon3" aria-hidden="true" *ngIf="ques?.input?.length > 0"></i>
             </div>
           </div>
 

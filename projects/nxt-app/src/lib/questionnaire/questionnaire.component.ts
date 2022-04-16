@@ -698,11 +698,12 @@ export class QuestionnaireComponent implements OnInit {
         return;
       }
     } else if (this.bookFlag) {
-
+      console.log(this.questionItem);
       this.inpValue = "";
       var hasMissingInput = false;
       for (var item of this.questionItem.Questions__r.records) {
         var count = 0;
+        console.log(item);
       
         if(item.Type__c == "DateTime") {
           //this one
@@ -764,9 +765,9 @@ export class QuestionnaireComponent implements OnInit {
       // }
 
             if (item.Type__c == "Time") {
-              console.log('selectedHour='+this.selectedHour);
-              console.log('selectedMinute='+this.selectedMinute);
-              console.log('selectedMeridiem='+this.selectedMeridiem);
+              console.log(this.selectedHour);
+              console.log(this.selectedMinute);
+              console.log(this.selectedMeridiem);
         this.date_TimeMap();
         if (this.questionItem.X24_Hours__c === false) {
           this.inpValue =
@@ -782,9 +783,13 @@ export class QuestionnaireComponent implements OnInit {
           this.questionItem.error = new ErrorWrapper();
           return;
         }
-      } 
+      } else{
+        item.input="";
+        console.log(item.input);
+      }
       if (item.Type__c == "Date") {
-        console.log('selDate'+this.selDate);
+        console.log('selDate');
+        console.log(this.selDate);
         this.change();
         if (this.inpValue.length < 7 || this.selDate === null) {
           this.questionItem.error = new ErrorWrapper();
@@ -864,7 +869,7 @@ export class QuestionnaireComponent implements OnInit {
 
         if (
           !item.Is_Optional__c &&
-          ((item.Type__c != "File" && !item.input && item.Type__c != 'Date' && item.Type__c != 'Time') ||
+          ((item.Type__c != "File" && !item.input) ||
             (item.Type__c == "File" && this.attachments.length == 0))
         ) {
           item.error = new ErrorWrapper();
