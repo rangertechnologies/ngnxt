@@ -705,7 +705,6 @@ export class QuestionnaireComponent implements OnInit {
         var count = 0;
       
         if(item.Type__c == "DateTime") {
-          console.log('DT'+this.inpValue+'=='+item.input+'==value')
           //this one
           this.change();
           if(this.inpValue) {
@@ -765,10 +764,8 @@ export class QuestionnaireComponent implements OnInit {
       // }
 
             if (item.Type__c == "Time") {
-              console.log('Time'+this.inpValue+'=='+item.input+'==value')
         this.date_TimeMap();
-        if(item.X24_Hours__c === false){
-        //if (this.questionItem.X24_Hours__c === false) {
+        if (this.questionItem.X24_Hours__c === false) {
           this.inpValue =
             (this.selectedMeridiem === "PM" && this.selectedHour != "12"
               ? Number(this.selectedHour) + 12
@@ -779,18 +776,15 @@ export class QuestionnaireComponent implements OnInit {
           this.inpValue = this.selectedHour + ":" + this.selectedMinute;
         }
         if (this.inpValue.length < 5) {
-          item.error = new ErrorWrapper();
-            hasMissingInput = true;
-            return;
+          this.questionItem.error = new ErrorWrapper();
+          return;
         }
       } 
       if (item.Type__c == "Date") {
         this.change();
-        console.log('Date'+this.inpValue+'=='+item.input+'==value')
         if (this.inpValue.length < 7 || this.selDate === null) {
-          item.error = new ErrorWrapper();
-            hasMissingInput = true;
-            return;
+          this.questionItem.error = new ErrorWrapper();
+          return;
         }
       }
     
