@@ -765,7 +765,23 @@ export class QuestionnaireComponent implements OnInit {
       // }
 
     
-      if (item.Type__c == "Date") {
+      if (item.Type__c == "Date"|| item.Type__c=="Time") {
+        this.selectedHour = this.getProperTime("12", this.selectedHour);
+        this.selectedMinute = this.getProperTime("00", this.selectedMinute);
+        this.selectedMeridiem = this.getProperTime("AM", this.selectedMeridiem);
+
+        this.date_TimeMap();
+        if (item.X24_Hours__c === false) {
+          item.input =
+            (this.selectedMeridiem === "PM" && this.selectedHour != "12" ? Number(this.selectedHour) + 12 : this.selectedHour) + ":" + this.selectedMinute;
+        } else {
+          item.input = this.selectedHour + ":" + this.selectedMinute;
+        }
+        if (item.input.length < 5) {
+          item.error = new ErrorWrapper();
+          return;
+        }
+
         console.log('selDate');
         console.log(this.selDate);
         this.change();
