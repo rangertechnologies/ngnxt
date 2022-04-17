@@ -106,6 +106,7 @@ export class QuestionnaireComponent implements OnInit {
   public summary = [];
   //public sques: string;
   public selDate: any = {};
+  public selectDate: string;
   private today: Date = new Date();
   private el: HTMLElement;
   public innerhtml: any;
@@ -484,9 +485,16 @@ export class QuestionnaireComponent implements OnInit {
   onDateChanged(event: IMyDateModel) {
     //to change the border color
     if (this.qbItem.Progress_Bar__c) {
+     
       this.inpValue =
         event.date.day + "/" + event.date.month + "/" + event.date.year;
+        if(this.questionItem.Type__c =="Book"){
+        this.selectDate =  event.date.day + "/" + event.date.month + "/" + event.date.year;
+        }
     } else {
+      if(this.questionItem.Type__c =="Book"){
+        this.selectDate =  event.date.day + "-" + event.date.month + "-" + event.date.year;
+        }
       this.inpValue =
         event.date.year + "-" + event.date.month + "-" + event.date.day;
     }
@@ -698,8 +706,9 @@ export class QuestionnaireComponent implements OnInit {
         return;
       }
     } else if (this.bookFlag) {
-
-      //this.inpValue = "";
+      //console.log(this.questionItem.Type__c)
+   
+       this.inpValue = "";
       var hasMissingInput = false;
       for (var item of this.questionItem.Questions__r.records) {
         var count = 0;
@@ -707,12 +716,15 @@ export class QuestionnaireComponent implements OnInit {
         if(item.Type__c == "Date" || item.Type__c == "Time") {
           //this one
           this.change();
-          if(this.inpValue) {
-            this.selectedHour = this.getProperTime("12", this.selectedHour);
-            this.selectedMinute = this.getProperTime("00", this.selectedMinute);
-            this.selectedMeridiem = this.getProperTime("AM", this.selectedMeridiem);
-            //console.log(this.inpValue.length);
-
+            if(item.Type__c == "Date"){
+            this.inpValue = this.selectDate;
+            console.log(this.inpValue)
+            console.log(this.selectDate)
+          
+            }
+           if(item.Type__c == "Time"){
+             console.log(this.selectedHour+this.selectedMeridiem+this.selectedMinute)
+             
           if (this.questionItem.X24_Hours__c === false) {
               this.questionItem.input =
                 (this.selectedMeridiem === "PM" && this.selectedHour != "12"
@@ -724,20 +736,30 @@ export class QuestionnaireComponent implements OnInit {
                 this.questionItem.input = "00" + ":" + this.selectedMinute + " AM";
               }
               if (this.qbItem.Progress_Bar__c) {
-                this.inpValue = this.inpValue + " " + this.questionItem.input;
+                if(this.selectDate){
+                  this.inpValue = this.selectDate+" "+this.questionItem.input;
+                }else{
+                this.inpValue = " "+this.questionItem.input;
+                }
               } else {
-                this.inpValue = this.inpValue + "T" + this.questionItem.input;
+                if(this.selectDate){
+                  this.inpValue = this.selectDate+" "+this.questionItem.input;
+                }else{
+                  this.inpValue = " "+this.questionItem.input;
+                }
+                
               }
             }
             if (this.questionItem.X24_Hours__c === true) {
               this.questionItem.input =
                 this.selectedHour + ":" + this.selectedMinute;
               if (this.qbItem.Progress_Bar__c) {
-                this.inpValue = this.inpValue + " " + this.questionItem.input;
+                this.inpValue = this.questionItem.input;
               } else {
-                this.inpValue = this.inpValue + "T" + this.questionItem.input;
+                this.inpValue = this.questionItem.input;
               }
             }
+          }
             if (this.qbItem.Progress_Bar__c) {
               var date1: any = this.inpValue.split(" ");
               date1 = date1[0].split("/");
@@ -752,14 +774,11 @@ export class QuestionnaireComponent implements OnInit {
                 return;
               }
             }
-            if (this.selDate === null || !this.inpValue) {
+            if (this.selDate === null || !this.inpValue || !this.selectedHour || !this.selectedMinute) {
               this.questionItem.error = new ErrorWrapper();
               return;
             }
             this.date_TimeMap();
-          }
-      }else{
-        this.inpValue = "";
       }
 
 
