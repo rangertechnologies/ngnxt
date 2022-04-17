@@ -333,6 +333,7 @@
 
           <div class="col-md-12 paddingZero myt-dateTimeNew" *ngIf="ques.Type__c === 'Time' || ques.Type__c === 'Date'">
             <div class="col-md-12" *ngIf="ques.error" style="font-size: 18px; color: red;">{{ques.Error_Message__c}}</div>
+            
             <div *ngIf="ques.Type__c === 'Date'">
               <div class="col-md-12 paddingBottom">
                 <label class="date-time colorf">{{ ques.Date_Text__c }}</label>
@@ -348,6 +349,7 @@
                 </div>
               </div>
             </div>
+
             <div *ngIf="ques.Type__c === 'Time'">
               <div class="col-md-12 paddingBottom">
                 <label class="date-time colorf">{{ ques.Time_Text__c }}</label>

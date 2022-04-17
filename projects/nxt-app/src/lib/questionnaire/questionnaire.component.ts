@@ -698,7 +698,7 @@ export class QuestionnaireComponent implements OnInit {
         return;
       }
     } else if (this.bookFlag) {
-      console.log(this.questionItem);
+      //console.log(this.questionItem);
       this.inpValue = "";
       var hasMissingInput = false;
       for (var item of this.questionItem.Questions__r.records) {
@@ -765,42 +765,26 @@ export class QuestionnaireComponent implements OnInit {
       // }
 
     
-      if (item.Type__c == "Date"|| item.Type__c=="Time") {
-        this.selectedHour = this.getProperTime("12", this.selectedHour);
-        this.selectedMinute = this.getProperTime("00", this.selectedMinute);
-        this.selectedMeridiem = this.getProperTime("AM", this.selectedMeridiem);
-
-        this.date_TimeMap();
-        if (item.X24_Hours__c === false) {
-          item.input =
-            (this.selectedMeridiem === "PM" && this.selectedHour != "12" ? Number(this.selectedHour) + 12 : this.selectedHour) + ":" + this.selectedMinute;
-        } else {
-          item.input = this.selectedHour + ":" + this.selectedMinute;
-        }
-        if (item.input.length < 5) {
-          item.error = new ErrorWrapper();
-          return;
-        }
-
+      if (item.Type__c == "Date") {
         console.log('selDate');
         console.log(this.selDate);
         this.change();
-        if (this.inpValue.length < 7 || this.selDate === null) {
-          this.questionItem.error = new ErrorWrapper();
+        item.input = this.selDate;
+        if (item.input.length < 7 || this.selDate === null) {
+          console.log('inside error')
+          item.error = new ErrorWrapper();
           return;
         }
       }
     
-        if (item.Type__c == "Time"|| (this.timeFlag && this.dtFlag && !this.dateFlag)) {
-          console.log('NO data')
-              console.log(this.selectedHour);
-              console.log(this.selectedMinute);
-              console.log(this.selectedMeridiem);
+        if (item.Type__c == "Time") {
         this.date_TimeMap();
         if (item.X24_Hours__c === false) {
+          console.log('clock'+item.input)
           item.input =
             (this.selectedMeridiem === "PM" && this.selectedHour != "12" ? Number(this.selectedHour) + 12 : this.selectedHour) + ":" + this.selectedMinute;
         } else {
+          console.log('clock else'+item.input)
           item.input = this.selectedHour + ":" + this.selectedMinute;
         }
         if (item.input.length < 5) {
