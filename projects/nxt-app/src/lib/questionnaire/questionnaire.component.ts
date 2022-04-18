@@ -718,12 +718,12 @@ export class QuestionnaireComponent implements OnInit {
           this.change();
             if(item.Type__c == "Date"){
             this.inpValue = this.selectDate;
-            console.log(this.inpValue)
-            console.log(this.selectDate)
+           // console.log(this.inpValue)
+            //console.log(this.selectDate)
           
             }
            if(item.Type__c == "Time"){
-             console.log(this.selectedHour+this.selectedMeridiem+this.selectedMinute)
+             //console.log(this.selectedHour+this.selectedMeridiem+this.selectedMinute)
              
           if (this.questionItem.X24_Hours__c === false) {
               this.questionItem.input =
@@ -774,7 +774,7 @@ export class QuestionnaireComponent implements OnInit {
                 return;
               }
             }
-            if (this.selDate === null || !this.inpValue || !this.selectedHour || !this.selectedMinute) {
+            if (this.selDate === null || this.selDate === undefined || !this.inpValue || !this.selectedHour || !this.selectedMinute) {
               this.questionItem.error = new ErrorWrapper();
               return;
             }
