@@ -486,17 +486,17 @@ export class QuestionnaireComponent implements OnInit {
   }
 
   onDateChanged(event: IMyDateModel) {
-    console.log('Inside the onDateChanged');
+    //console.log('Inside the onDateChanged');
     //to change the border color
     if (this.qbItem.Progress_Bar__c) {
-      console.log('Inside the progressBar cond');
+      //console.log('Inside the progressBar cond');
       this.inpValue =
         event.date.day + "/" + event.date.month + "/" + event.date.year;
         if(this.questionItem.Type__c =="Book"){
         this.selectDate =  event.date.day + "/" + event.date.month + "/" + event.date.year;
         }
     } else {
-      console.log('Inside the ELSE of progressBar cond');
+      //console.log('Inside the ELSE of progressBar cond');
       if(this.questionItem.Type__c =="Book"){
         this.selectDate =  event.date.day + "-" + event.date.month + "-" + event.date.year;
         }
@@ -516,12 +516,12 @@ export class QuestionnaireComponent implements OnInit {
       this.dateMap.delete(this.questionItem.Id);
       this.answerMap.delete(this.questionItem.Id);
     }
-    console.log('this.inpValue = '+this.inpValue);
-    console.log('this.selectDate = '+this.selectDate);
+    //console.log('this.inpValue = '+this.inpValue);
+    //console.log('this.selectDate = '+this.selectDate);
   }
 
   ngOnInit() {
-    console.log('Inside the ngOnInit');
+    //console.log('Inside the ngOnInit');
     //console.log("RNXT-Claim");
     this.inpValue = "";
     this.selectedMeridiem = "AM";
@@ -608,18 +608,18 @@ export class QuestionnaireComponent implements OnInit {
   // }
 
   processQB() {
-    console.log('ProcessQB');
+    //console.log('ProcessQB');
     //this.qbItem
 
     //console.log(this.qbId);
     //console.log('Version in process is 8bf11efa7f91a391d957bf6b5078edc7e656b67c');
     if (this.qbId) {
-      console.log('Inside the if part: qbId = '+this.qbId);
+      //console.log('Inside the if part: qbId = '+this.qbId);
       if (this.qbId.length == 18) {
         //console.log('Before Calling readQuestionBook() using ' + this.qbId);
         this.readQuestionBook(this.qbId);
       } else {
-        console.log('Inside the else part');
+        //console.log('Inside the else part');
         //console.log('Setting the Question Directly for testing');
         this.questionItem = DTQUESTION;
         this.qbItem = TESTQB;
@@ -665,8 +665,8 @@ export class QuestionnaireComponent implements OnInit {
   }
 
   handleNextClick() {
-    console.log('Inside the handleNextClick');
-    console.log(this.bookFlag);
+    //console.log('Inside the handleNextClick');
+    //console.log(this.bookFlag);
     //console.log(this.questionItem);
 
     //this.updateProgress();
@@ -719,11 +719,11 @@ export class QuestionnaireComponent implements OnInit {
       }
     } else if (this.bookFlag) {
       //console.log(this.questionItem.Type__c)
-      console.log('Inside the bookFlag cond');
-      console.log('this.inpValue = '+this.inpValue);
-      console.log('this.selectDate = '+this.selectDate);
-      console.log('this.selDate = ');
-      console.log(this.selDate);
+      //console.log('Inside the bookFlag cond');
+      //console.log('this.inpValue = '+this.inpValue);
+      //console.log('this.selectDate = '+this.selectDate);
+      //console.log('this.selDate = ');
+      //console.log(this.selDate);
       this.inpValue = "";
       var hasMissingInput = false;
       for (var item of this.questionItem.Questions__r.records) {
@@ -733,7 +733,7 @@ export class QuestionnaireComponent implements OnInit {
           //this one
           this.change();
             if(item.Type__c == "Date"){
-              console.log('Inside the date type cond = '+this.selectDate);
+              //console.log('Inside the date type cond = '+this.selectDate);
               this.inpValue = this.selectDate;
               //console.log(this.inpValue)
               //console.log(this.selectDate)
@@ -778,11 +778,11 @@ export class QuestionnaireComponent implements OnInit {
             }
           }
 
-          console.log('this.qbItem.Progress_Bar__c = '+this.qbItem.Progress_Bar__c);
-          console.log('this.selDate = '+this.selDate);
-          console.log('this.inpValue = '+this.inpValue);
-          console.log('this.selectedHour = '+this.selectedHour);
-          console.log('this.selectedMinute = '+this.selectedMinute);
+          //console.log('this.qbItem.Progress_Bar__c = '+this.qbItem.Progress_Bar__c);
+          //console.log('this.selDate = '+this.selDate);
+          //console.log('this.inpValue = '+this.inpValue);
+          //console.log('this.selectedHour = '+this.selectedHour);
+          //console.log('this.selectedMinute = '+this.selectedMinute);
 
           if (this.qbItem.Progress_Bar__c && this.inpValue && this.insuranceStartDate) {
             var date1: any = this.inpValue.split(" ");
@@ -799,7 +799,7 @@ export class QuestionnaireComponent implements OnInit {
             }
           }
           if (this.selDate === null || this.selDate === undefined || !this.inpValue || !this.selectedHour || !this.selectedMinute || !this.selectDate) {
-            console.log('Inside the null condition of input');
+            //console.log('Inside the null condition of input');
             this.questionItem.error = new ErrorWrapper();
             const htmlElement = window.document.getElementsByClassName("mydp");
             htmlElement
@@ -867,12 +867,12 @@ export class QuestionnaireComponent implements OnInit {
                         loctown=val.town;
 			  
 			  if(this.selectedValue==loctown){
-				  console.log('log'+loctown)
+				  //console.log('log'+loctown)
 				item.input=this.selectedValue;
 			  }
               
 			  if (!item.input) {
-				  console.log('error form')
+				  //console.log('error form')
 				item.error = new ErrorWrapper();
 				hasMissingInput = true;
 			  }
@@ -1054,7 +1054,7 @@ export class QuestionnaireComponent implements OnInit {
     this.answerWrap.groupText = cQuestion.Group__c;
     /*if (cQuestion.Type__c == 'Book'){
     for (var qb of cQuestion.Questions__r.records){
-      console.log(qb.Question__c+'****'+"@@##$$")
+      //console.log(qb.Question__c+'****'+"@@##$$")
     } 
   }*/
     //this.answerWrap.squesValue = cQuestion.Question__c;
@@ -1241,7 +1241,7 @@ export class QuestionnaireComponent implements OnInit {
 
   private successupdateAB = (response) => {
     //console.log(response);
-    // console.log('status success')
+    // //console.log('status success')
     //this.abItem.Status__c = "Completed";
   };
   private failureupdateAB = (response) => {
@@ -1257,8 +1257,8 @@ export class QuestionnaireComponent implements OnInit {
     );
 
   private successReadBook = (response) => {
-    console.log('Inside the successReadBook');
-    console.log(response)
+    //console.log('Inside the successReadBook');
+    //console.log(response)
     this.qbItem = response.questionbook;
     this.abItem = response.answerbook;
     //console.log('readingQuestion using ' + this.qbItem.First_Question__c);
@@ -1275,7 +1275,7 @@ export class QuestionnaireComponent implements OnInit {
         for (var ansObject of this.abItem.Answers__r.records) {
           lastQuestionId = ansObject.Question_Ref__c;
            //console.log("Question: " + ansObject.Question_Rich_Text__c);
-           // console.log("Answer: " + ansObject.Answer_Long__c);
+           // //console.log("Answer: " + ansObject.Answer_Long__c);
             //console.log("grouptext: " + ansObject.Question_Group_Text__c);
 
           this.questionStack.push(ansObject.Question_Ref__c);
@@ -1291,15 +1291,15 @@ export class QuestionnaireComponent implements OnInit {
           //console.log(this.questionStack)
           if (ansObject.Question_Type__c == "Book") {
             var av1 = ansObject.Answer_Long__c.split("@@##$$");
-            // console.log("book log");
+            // //console.log("book log");
 
-            //  console.log("bookid" + av1[0]);
+            //  //console.log("bookid" + av1[0]);
             this.attachmentsMap.set(ansObject.Question_Ref__c, [
               { attachmentName: av1[1], attachmentId: av1[0] },
             ]);
-            //  console.log(this.attachmentsMap);
+            //  //console.log(this.attachmentsMap);
           } else if (ansObject.Question_Type__c == "File") {
-            //  console.log("inside if");
+            //  //console.log("inside if");
             var attList;
             var att;
             for (var attVar of ansObject.Answer_Long__c.split(",")) {
@@ -1309,7 +1309,7 @@ export class QuestionnaireComponent implements OnInit {
               attList.push(att);
             }
             this.attachmentsMap.set(ansObject.Question_Ref__c, attList);
-            //  console.log(this.attachmentsMap);
+            //  //console.log(this.attachmentsMap);
           }
         }
 
@@ -1437,8 +1437,8 @@ export class QuestionnaireComponent implements OnInit {
     );
 
   private successRead = (response) => {
-    console.log('Inside the successRead');
-    console.log(response);
+    //console.log('Inside the successRead');
+    //console.log(response);
     // Reset the Variables
 
     if (this.questionItem) {
@@ -1518,9 +1518,9 @@ export class QuestionnaireComponent implements OnInit {
   };
 
   private processQuestion = () => {
-    console.log('Inside the processQuestion');
-    console.log('bookFlag = '+this.bookFlag);
-    console.log(this.questionItem);
+    //console.log('Inside the processQuestion');
+    //console.log('bookFlag = '+this.bookFlag);
+    //console.log(this.questionItem);
     this.pop = true;
 
     // if(!this.back){
@@ -1547,11 +1547,11 @@ export class QuestionnaireComponent implements OnInit {
 
     // Set the Flags to show right fields
     this.setFlag(this.questionItem.Type__c);
-    console.log('After the setFlag method dtFlag = '+this.dtFlag);
+    //console.log('After the setFlag method dtFlag = '+this.dtFlag);
 
     // Check the existing answer from answerMap
     if (this.answerMap.has(this.questionItem.Id)) {
-      //  console.log("existing answer found for this.questionItem.Name");
+      //  //console.log("existing answer found for this.questionItem.Name");
       var eAnswer = this.answerMap.get(this.questionItem.Id);
       // Get the existing answer from the Map
       this.inpValue = eAnswer.ansValue;
@@ -1568,11 +1568,11 @@ export class QuestionnaireComponent implements OnInit {
       // Set the Options for Checkbox
       this.setOptions(this.questionItem.Question_Options__r.records);
     } else if (this.bookFlag) {
-      console.log('Inise the expected bookFlag cond');
-      console.log('dtFlag = '+this.dtFlag);
+      //console.log('Inise the expected bookFlag cond');
+      //console.log('dtFlag = '+this.dtFlag);
       // Set the SubQuestions
         /*if (this.dtFlag || this.questionItem.Type__c == 'Date ' || this.questionItem.Type__c == 'Time') {
-          console.log('Inise the expected dtFlag cond');
+          //console.log('Inise the expected dtFlag cond');
           this.selectedHour = "";
           this.selectedMinute = "";
           this.selDate = "";
@@ -1622,9 +1622,9 @@ export class QuestionnaireComponent implements OnInit {
             this.questionItem.Is_Date_Backward__c ||
             this.questionItem.Is_Date_Forward__c
           ) {
-            console.log('Inside the date backward/forward cond');
+            //console.log('Inside the date backward/forward cond');
             if (this.questionItem.Is_Date_Backward__c === true) {
-              console.log('Inside the Is_Date_Backward__c');
+              //console.log('Inside the Is_Date_Backward__c');
               this.myDatePickerOptions.disableSince = {
                 year: this.today.getFullYear(),
                 month: this.today.getMonth() + 1,
@@ -1632,20 +1632,20 @@ export class QuestionnaireComponent implements OnInit {
               };
             }
             if (this.questionItem.Is_Date_Forward__c === true) {
-              console.log('Inside the Is_Date_Forward__c');
+              //console.log('Inside the Is_Date_Forward__c');
               this.myDatePickerOptions.disableUntil = {
                 year: this.today.getFullYear(),
                 month: this.today.getMonth() + 1,
                 day: this.today.getDate(),
               };
             }
-            console.log(this.myDatePickerOptions);
+            //console.log(this.myDatePickerOptions);
           }
       }*/
       
       this.setSubQuestions(this.questionItem.Questions__r.records);
     } else if (this.dtFlag) {
-      console.log('Inise the unexpected dtFlag cond');
+      //console.log('Inise the unexpected dtFlag cond');
       this.selectedHour = "";
       this.selectedMinute = "";
       this.selDate = "";
@@ -1723,7 +1723,7 @@ export class QuestionnaireComponent implements OnInit {
   };
 
   setFlag(typ) {
-    console.log('inside setFlag for ' + typ);
+    //console.log('inside setFlag for ' + typ);
 
     if (typ) {
       // Set the Flags
@@ -1754,15 +1754,15 @@ export class QuestionnaireComponent implements OnInit {
       } else if (typ == "Book") {
         this.bookFlag = true;
       } else if (typ == "Time") {
-        console.log('Inside the Time cond');
+        //console.log('Inside the Time cond');
         this.dtFlag = true;
         this.timeFlag = true;
-        console.log(this.dtFlag);
+        //console.log(this.dtFlag);
       } else if (typ == "Date") {
-        console.log('Inside the Date cond');
+        //console.log('Inside the Date cond');
         this.dtFlag = true;
         this.dateFlag = true;
-        console.log(this.dtFlag);
+        //console.log(this.dtFlag);
       }
     }
   }
@@ -1831,11 +1831,11 @@ export class QuestionnaireComponent implements OnInit {
   }
 
   setSubQuestions(records) {
-    console.log('inside setSubQuestions');
-    console.log(records);
+    //console.log('inside setSubQuestions');
+    //console.log(records);
 
     var qaMap = new Map();
-    console.log(this.inpValue);
+    //console.log(this.inpValue);
     if (this.inpValue) {
       var aIndex = 0;
       if (this.inpValue.search(", ") == -1) {
@@ -1854,7 +1854,7 @@ export class QuestionnaireComponent implements OnInit {
     }
 
     for (var ques of records) {
-      console.log(ques);
+      //console.log(ques);
       var sQues = new Question();
       sQues.Id = ques.Id;
       sQues.Name = ques.Name;
@@ -1880,9 +1880,9 @@ export class QuestionnaireComponent implements OnInit {
 
 
       if ((ques.Type__c === "Date") && (ques.Is_Date_Backward__c || ques.Is_Date_Forward__c)) {
-        console.log('Inside the date backward/forward cond');
+        //console.log('Inside the date backward/forward cond');
         if (ques.Is_Date_Backward__c === true) {
-          console.log('Inside the Is_Date_Backward__c');
+          //console.log('Inside the Is_Date_Backward__c');
           this.myDatePickerOptions.disableSince = {
             year: this.today.getFullYear(),
             month: this.today.getMonth() + 1,
@@ -1890,14 +1890,14 @@ export class QuestionnaireComponent implements OnInit {
           };
         }
         if (ques.Is_Date_Forward__c === true) {
-          console.log('Inside the Is_Date_Forward__c');
+          //console.log('Inside the Is_Date_Forward__c');
           this.myDatePickerOptions.disableUntil = {
             year: this.today.getFullYear(),
             month: this.today.getMonth() + 1,
             day: this.today.getDate(),
           };
         }
-        console.log(this.myDatePickerOptions);
+        //console.log(this.myDatePickerOptions);
       }
 
       this.subQuestions.push(ques);
@@ -1920,7 +1920,7 @@ export class QuestionnaireComponent implements OnInit {
 
     this.handleEvent.emit(radioTrackingId);
     this.clearError();
-    // console.log('inside optionChange using ' + selValue);
+    // //console.log('inside optionChange using ' + selValue);
 
     this.inpValue = selValue;
   }
