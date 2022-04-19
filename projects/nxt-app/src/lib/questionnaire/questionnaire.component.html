@@ -325,6 +325,8 @@
   <div *ngIf="bookFlag">
     <div class="form-group">
       <div class="form-row">
+        <div class="col-md-12" *ngIf="questionItem.error" style="font-size: 18px;
+            color: red;">{{questionItem.error.errorMsg}}</div>
         <div class="myt-align3" [class]="'col-md-' + ques.Size__c + ' paddingnone'"
           *ngFor="let ques of subQuestions">
           <div [ngClass]="{ down2: qbItem.Progress_Bar__c }">
@@ -332,14 +334,14 @@
           </div>
 
           <div class="col-md-12 paddingZero myt-dateTimeNew" *ngIf="ques.Type__c === 'Time' || ques.Type__c === 'Date'">
-            <div class="col-md-12" *ngIf="questionItem.error" style="font-size: 18px;
-            color: red;">{{questionItem.error.errorMsg}}</div>
+            <!--<div class="col-md-12" *ngIf="questionItem.error" style="font-size: 18px;
+            color: red;">{{questionItem.error.errorMsg}}</div>-->
             <div *ngIf="ques.Type__c === 'Date'">
               <div class="col-md-12 paddingBottom">
                 <label class="date-time colorf">{{ questionItem.Date_Text__c }}</label>
                 <div class="dis-flex dateandtime">
                   <my-date-picker name="mydate" [options]="myDatePickerOptions" id="date" style="font-size: 18px !important;" (dateChanged)="onDateChanged($event)"
-                    [(ngModel)]="selDate" class="date-picker" placeholder="Seleccione fecha"  (focus)="clearError()">
+                    [(ngModel)]="selDate" class="date-picker" placeholder="Seleccione fecha"  (focus)="clearError()" >
                   </my-date-picker>
                   <!-- <i class="fa check-icon2" id="check-icon" aria-hidden="true" *ngIf="
                       inpValue?.length === 8 ||

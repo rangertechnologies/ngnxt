@@ -6,6 +6,7 @@ import {
   Output,
   EventEmitter,
   ViewEncapsulation,
+  ElementRef,
 } from "@angular/core";
 import { ActivatedRoute, Params } from "@angular/router";
 import { SalesforceService } from "../services/salesforce.service";
@@ -13,6 +14,7 @@ import { IMyDateModel, IMyDpOptions } from "mydatepicker";
 import { DomSanitizer, SafeHtml } from "@angular/platform-browser";
 import { FormBuilder } from "@angular/forms";
 import { NgxSpinnerService } from "ngx-spinner";
+
 
 import {
   Question,
@@ -476,22 +478,25 @@ export class QuestionnaireComponent implements OnInit {
     private route: ActivatedRoute,
     private sanitizer: DomSanitizer,
     private spinner: NgxSpinnerService,
-    private _formBuilder: FormBuilder
+    private _formBuilder: FormBuilder,
+    el: ElementRef
   ) {
     this.spinnerName = "sp1";
     this.spinnerType = "ball-spin-clockwise";
   }
 
   onDateChanged(event: IMyDateModel) {
+    console.log('Inside the onDateChanged');
     //to change the border color
     if (this.qbItem.Progress_Bar__c) {
-     
+      console.log('Inside the progressBar cond');
       this.inpValue =
         event.date.day + "/" + event.date.month + "/" + event.date.year;
         if(this.questionItem.Type__c =="Book"){
         this.selectDate =  event.date.day + "/" + event.date.month + "/" + event.date.year;
         }
     } else {
+      console.log('Inside the ELSE of progressBar cond');
       if(this.questionItem.Type__c =="Book"){
         this.selectDate =  event.date.day + "-" + event.date.month + "-" + event.date.year;
         }
@@ -511,9 +516,12 @@ export class QuestionnaireComponent implements OnInit {
       this.dateMap.delete(this.questionItem.Id);
       this.answerMap.delete(this.questionItem.Id);
     }
+    console.log('this.inpValue = '+this.inpValue);
+    console.log('this.selectDate = '+this.selectDate);
   }
 
   ngOnInit() {
+    console.log('Inside the ngOnInit');
     //console.log("RNXT-Claim");
     this.inpValue = "";
     this.selectedMeridiem = "AM";
@@ -600,15 +608,18 @@ export class QuestionnaireComponent implements OnInit {
   // }
 
   processQB() {
+    console.log('ProcessQB');
     //this.qbItem
 
     //console.log(this.qbId);
     //console.log('Version in process is 8bf11efa7f91a391d957bf6b5078edc7e656b67c');
     if (this.qbId) {
+      console.log('Inside the if part: qbId = '+this.qbId);
       if (this.qbId.length == 18) {
         //console.log('Before Calling readQuestionBook() using ' + this.qbId);
         this.readQuestionBook(this.qbId);
       } else {
+        console.log('Inside the else part');
         //console.log('Setting the Question Directly for testing');
         this.questionItem = DTQUESTION;
         this.qbItem = TESTQB;
@@ -654,7 +665,8 @@ export class QuestionnaireComponent implements OnInit {
   }
 
   handleNextClick() {
-
+    console.log('Inside the handleNextClick');
+    console.log(this.bookFlag);
     //console.log(this.questionItem);
 
     //this.updateProgress();
@@ -707,8 +719,12 @@ export class QuestionnaireComponent implements OnInit {
       }
     } else if (this.bookFlag) {
       //console.log(this.questionItem.Type__c)
-   
-       this.inpValue = "";
+      console.log('Inside the bookFlag cond');
+      console.log('this.inpValue = '+this.inpValue);
+      console.log('this.selectDate = '+this.selectDate);
+      console.log('this.selDate = ');
+      console.log(this.selDate);
+      this.inpValue = "";
       var hasMissingInput = false;
       for (var item of this.questionItem.Questions__r.records) {
         var count = 0;
@@ -717,9 +733,10 @@ export class QuestionnaireComponent implements OnInit {
           //this one
           this.change();
             if(item.Type__c == "Date"){
-            this.inpValue = this.selectDate;
-           // console.log(this.inpValue)
-            //console.log(this.selectDate)
+              console.log('Inside the date type cond = '+this.selectDate);
+              this.inpValue = this.selectDate;
+              //console.log(this.inpValue)
+              //console.log(this.selectDate)
           
             }
            if(item.Type__c == "Time"){
@@ -739,7 +756,7 @@ export class QuestionnaireComponent implements OnInit {
                 if(this.selectDate){
                   this.inpValue = this.selectDate+" "+this.questionItem.input;
                 }else{
-                this.inpValue = " "+this.questionItem.input;
+                  this.inpValue = " "+this.questionItem.input;
                 }
               } else {
                 if(this.selectDate){
@@ -760,25 +777,37 @@ export class QuestionnaireComponent implements OnInit {
               }
             }
           }
-            if (this.qbItem.Progress_Bar__c) {
-              var date1: any = this.inpValue.split(" ");
-              date1 = date1[0].split("/");
-              date1 = [date1[2], date1[1], date1[0]].join("-");
-              date1 = new Date(date1);
-              var date2: any = this.insuranceStartDate.split(" ");
-              date2 = new Date(date2[0]);
-              if (date1 < date2) {
-                this.questionItem.error = new ErrorWrapper();
-                this.questionItem.error.errorMsg =
-                  "No es posible dar de alta la reclamación debido a que la fecha del incidente es anterior a la fecha de contratación de la póliza";
-                return;
-              }
-            }
-            if (this.selDate === null || this.selDate === undefined || !this.inpValue || !this.selectedHour || !this.selectedMinute) {
+
+          console.log('this.qbItem.Progress_Bar__c = '+this.qbItem.Progress_Bar__c);
+          console.log('this.selDate = '+this.selDate);
+          console.log('this.inpValue = '+this.inpValue);
+          console.log('this.selectedHour = '+this.selectedHour);
+          console.log('this.selectedMinute = '+this.selectedMinute);
+
+          if (this.qbItem.Progress_Bar__c && this.inpValue && this.insuranceStartDate) {
+            var date1: any = this.inpValue.split(" ");
+            date1 = date1[0].split("/");
+            date1 = [date1[2], date1[1], date1[0]].join("-");
+            date1 = new Date(date1);
+            var date2: any = this.insuranceStartDate.split(" ");
+            date2 = new Date(date2[0]);
+            if (date1 < date2) {
               this.questionItem.error = new ErrorWrapper();
+              this.questionItem.error.errorMsg =
+                "No es posible dar de alta la reclamación debido a que la fecha del incidente es anterior a la fecha de contratación de la póliza";
               return;
             }
-            this.date_TimeMap();
+          }
+          if (this.selDate === null || this.selDate === undefined || !this.inpValue || !this.selectedHour || !this.selectedMinute || !this.selectDate) {
+            console.log('Inside the null condition of input');
+            this.questionItem.error = new ErrorWrapper();
+            const htmlElement = window.document.getElementsByClassName("mydp");
+            htmlElement
+              .item(0)
+              .setAttribute("style", "width:100%;border-bottom: 1px solid red !important;");
+            return;
+          }
+          this.date_TimeMap();
       }
 
 
@@ -1228,7 +1257,8 @@ export class QuestionnaireComponent implements OnInit {
     );
 
   private successReadBook = (response) => {
-    //console.log(response)
+    console.log('Inside the successReadBook');
+    console.log(response)
     this.qbItem = response.questionbook;
     this.abItem = response.answerbook;
     //console.log('readingQuestion using ' + this.qbItem.First_Question__c);
@@ -1407,7 +1437,8 @@ export class QuestionnaireComponent implements OnInit {
     );
 
   private successRead = (response) => {
-    // console.log(response);
+    console.log('Inside the successRead');
+    console.log(response);
     // Reset the Variables
 
     if (this.questionItem) {
@@ -1487,6 +1518,9 @@ export class QuestionnaireComponent implements OnInit {
   };
 
   private processQuestion = () => {
+    console.log('Inside the processQuestion');
+    console.log('bookFlag = '+this.bookFlag);
+    console.log(this.questionItem);
     this.pop = true;
 
     // if(!this.back){
@@ -1513,6 +1547,7 @@ export class QuestionnaireComponent implements OnInit {
 
     // Set the Flags to show right fields
     this.setFlag(this.questionItem.Type__c);
+    console.log('After the setFlag method dtFlag = '+this.dtFlag);
 
     // Check the existing answer from answerMap
     if (this.answerMap.has(this.questionItem.Id)) {
@@ -1533,8 +1568,11 @@ export class QuestionnaireComponent implements OnInit {
       // Set the Options for Checkbox
       this.setOptions(this.questionItem.Question_Options__r.records);
     } else if (this.bookFlag) {
+      console.log('Inise the expected bookFlag cond');
+      console.log('dtFlag = '+this.dtFlag);
       // Set the SubQuestions
-        if (this.dtFlag) {
+        /*if (this.dtFlag || this.questionItem.Type__c == 'Date ' || this.questionItem.Type__c == 'Time') {
+          console.log('Inise the expected dtFlag cond');
           this.selectedHour = "";
           this.selectedMinute = "";
           this.selDate = "";
@@ -1567,7 +1605,7 @@ export class QuestionnaireComponent implements OnInit {
           if (this.questionItem.X24_Hours__c === false) {
             this.hours = this.hours.slice(0, 12);
           }
-          if (this.dtFlag && this.inpValue) {
+          if ((this.dtFlag || this.questionItem.Type__c == 'Date ' || this.questionItem.Type__c == 'Time') && this.inpValue) {
             var dtVal = this.inpValue.split("T"); 
             var dtval0 = this.inpValue.split(" ");
             this.inpValue = dtVal[0];
@@ -1584,7 +1622,9 @@ export class QuestionnaireComponent implements OnInit {
             this.questionItem.Is_Date_Backward__c ||
             this.questionItem.Is_Date_Forward__c
           ) {
+            console.log('Inside the date backward/forward cond');
             if (this.questionItem.Is_Date_Backward__c === true) {
+              console.log('Inside the Is_Date_Backward__c');
               this.myDatePickerOptions.disableSince = {
                 year: this.today.getFullYear(),
                 month: this.today.getMonth() + 1,
@@ -1592,17 +1632,20 @@ export class QuestionnaireComponent implements OnInit {
               };
             }
             if (this.questionItem.Is_Date_Forward__c === true) {
+              console.log('Inside the Is_Date_Forward__c');
               this.myDatePickerOptions.disableUntil = {
                 year: this.today.getFullYear(),
                 month: this.today.getMonth() + 1,
                 day: this.today.getDate(),
               };
             }
+            console.log(this.myDatePickerOptions);
           }
-      }
+      }*/
       
       this.setSubQuestions(this.questionItem.Questions__r.records);
     } else if (this.dtFlag) {
+      console.log('Inise the unexpected dtFlag cond');
       this.selectedHour = "";
       this.selectedMinute = "";
       this.selDate = "";
@@ -1680,7 +1723,7 @@ export class QuestionnaireComponent implements OnInit {
   };
 
   setFlag(typ) {
-    //console.log('inside setFlag for ' + typ);
+    console.log('inside setFlag for ' + typ);
 
     if (typ) {
       // Set the Flags
@@ -1711,11 +1754,15 @@ export class QuestionnaireComponent implements OnInit {
       } else if (typ == "Book") {
         this.bookFlag = true;
       } else if (typ == "Time") {
+        console.log('Inside the Time cond');
         this.dtFlag = true;
         this.timeFlag = true;
+        console.log(this.dtFlag);
       } else if (typ == "Date") {
+        console.log('Inside the Date cond');
         this.dtFlag = true;
         this.dateFlag = true;
+        console.log(this.dtFlag);
       }
     }
   }
@@ -1784,9 +1831,11 @@ export class QuestionnaireComponent implements OnInit {
   }
 
   setSubQuestions(records) {
-    //console.log('inside setSubQuestions');
+    console.log('inside setSubQuestions');
+    console.log(records);
 
     var qaMap = new Map();
+    console.log(this.inpValue);
     if (this.inpValue) {
       var aIndex = 0;
       if (this.inpValue.search(", ") == -1) {
@@ -1805,6 +1854,7 @@ export class QuestionnaireComponent implements OnInit {
     }
 
     for (var ques of records) {
+      console.log(ques);
       var sQues = new Question();
       sQues.Id = ques.Id;
       sQues.Name = ques.Name;
@@ -1826,6 +1876,28 @@ export class QuestionnaireComponent implements OnInit {
         if (ques.Type__c != "File") {
           ques.input = qaMap.get(ques.Question_No__c);
         }
+      }
+
+
+      if ((ques.Type__c === "Date") && (ques.Is_Date_Backward__c || ques.Is_Date_Forward__c)) {
+        console.log('Inside the date backward/forward cond');
+        if (ques.Is_Date_Backward__c === true) {
+          console.log('Inside the Is_Date_Backward__c');
+          this.myDatePickerOptions.disableSince = {
+            year: this.today.getFullYear(),
+            month: this.today.getMonth() + 1,
+            day: this.today.getDate() + 1,
+          };
+        }
+        if (ques.Is_Date_Forward__c === true) {
+          console.log('Inside the Is_Date_Forward__c');
+          this.myDatePickerOptions.disableUntil = {
+            year: this.today.getFullYear(),
+            month: this.today.getMonth() + 1,
+            day: this.today.getDate(),
+          };
+        }
+        console.log(this.myDatePickerOptions);
       }
 
       this.subQuestions.push(ques);
