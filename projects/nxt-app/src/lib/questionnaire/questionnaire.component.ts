@@ -521,10 +521,12 @@ export class QuestionnaireComponent implements OnInit {
   }
 
   ngOnInit() {
-    //console.log('Inside the ngOnInit');
+    console.log('Inside the ngOnInit');
     //console.log("RNXT-Claim");
     this.inpValue = "";
+    console.log(this.selectedMeridiem);
     this.selectedMeridiem = "AM";
+    console.log(this.selectedMeridiem);
     this.processQB();
     this.localaddress = JSON.parse(localStorage.getItem("address"));
     //console.log('Length='+this.localaddress.length);
@@ -665,7 +667,8 @@ export class QuestionnaireComponent implements OnInit {
   }
 
   handleNextClick() {
-    //console.log('Inside the handleNextClick');
+    console.log('Inside the handleNextClick');
+    console.log(this.selectedMeridiem);
     //console.log(this.bookFlag);
     //console.log(this.questionItem);
 
@@ -718,9 +721,9 @@ export class QuestionnaireComponent implements OnInit {
         return;
       }
     } else if (this.bookFlag) {
-      //console.log(this.questionItem.Type__c)
-      //console.log('Inside the bookFlag cond');
-      //console.log('this.inpValue = '+this.inpValue);
+      console.log('Inside the bookFlag cond');
+      console.log('this.inpValue = '+this.inpValue);
+      console.log(this.questionItem);
       //console.log('this.selectDate = '+this.selectDate);
       //console.log('this.selDate = ');
       //console.log(this.selDate);
@@ -732,26 +735,53 @@ export class QuestionnaireComponent implements OnInit {
         if(item.Type__c == "Date" || item.Type__c == "Time") {
           //this one
           this.change();
+          this.selectedHour = this.getProperTime("12", this.selectedHour);
+          this.selectedMinute = this.getProperTime("00", this.selectedMinute);
+          this.selectedMeridiem = this.getProperTime("AM", this.selectedMeridiem);
             if(item.Type__c == "Date"){
-              //console.log('Inside the date type cond = '+this.selectDate);
+              console.log('Inside the date type cond = '+this.selectDate);
               this.inpValue = this.selectDate;
               //console.log(this.inpValue)
               //console.log(this.selectDate)
           
             }
            if(item.Type__c == "Time"){
-             //console.log(this.selectedHour+this.selectedMeridiem+this.selectedMinute)
+             console.log('Inside the time type cond = ');
+             console.log(this.selectedHour+this.selectedMeridiem+this.selectedMinute)
              
           if (this.questionItem.X24_Hours__c === false) {
+            console.log('Inside the X24_Hours__c');
+            console.log('1. this.questionItem.input = '+this.questionItem.input);
+            console.log(this.selectedMeridiem);
+            console.log(this.selectedHour);
+            console.log( Number(this.selectedHour) + 12);
+
+            if(this.selectedMeridiem === "PM"){
               this.questionItem.input =
-                (this.selectedMeridiem === "PM" && this.selectedHour != "12"
+                (this.selectedHour != "12"
                   ? Number(this.selectedHour) + 12
                   : this.selectedHour) +
                 ":" +
                 this.selectedMinute + " PM";
+            }else if(this.selectedMeridiem === "AM"){
+              this.questionItem.input = this.selectedHour + ":" + this.selectedMinute + " AM";
+            }
+              /*this.questionItem.input =
+                (this.selectedMeridiem === "PM" && this.selectedHour != "12"
+                  ? Number(this.selectedHour) + 12
+                  : this.selectedHour) +
+                ":" +
+                this.selectedMinute + " PM";*/
+
+              
+              console.log('2. this.questionItem.input = '+this.questionItem.input);
               if (this.selectedMeridiem === "AM" && this.selectedHour === "12") {
                 this.questionItem.input = "00" + ":" + this.selectedMinute + " AM";
               }
+
+
+              console.log('3. this.questionItem.input = '+this.questionItem.input);
+
               if (this.qbItem.Progress_Bar__c) {
                 if(this.selectDate){
                   this.inpValue = this.selectDate+" "+this.questionItem.input;
@@ -780,7 +810,7 @@ export class QuestionnaireComponent implements OnInit {
 
           //console.log('this.qbItem.Progress_Bar__c = '+this.qbItem.Progress_Bar__c);
           //console.log('this.selDate = '+this.selDate);
-          //console.log('this.inpValue = '+this.inpValue);
+          console.log('this.inpValue = '+this.inpValue);
           //console.log('this.selectedHour = '+this.selectedHour);
           //console.log('this.selectedMinute = '+this.selectedMinute);
 
@@ -1050,6 +1080,7 @@ export class QuestionnaireComponent implements OnInit {
     this.answerWrap.quesId = cQuestion.Id;
     this.answerWrap.quesValue = quesValue;
     this.answerWrap.qTyp = typ;
+    console.log('this.inpValue = '+this.inpValue);
     this.answerWrap.ansValue = this.inpValue;
     this.answerWrap.groupText = cQuestion.Group__c;
     /*if (cQuestion.Type__c == 'Book'){
@@ -1483,6 +1514,9 @@ export class QuestionnaireComponent implements OnInit {
   };
 
   private saveAnswer = () => {
+    console.log('Inside the saveAnswer');
+    console.log(this.selectedMeridiem);
+    console.log(JSON.stringify(this.answerWrap));
     // Set the Answer Number based on the Question Stack Length
     if (this.inpValue != ".") {
       this.currentQuestionId = null;
