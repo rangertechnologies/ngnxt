@@ -14,6 +14,9 @@ import { IMyDateModel, IMyDpOptions } from "mydatepicker";
 import { DomSanitizer, SafeHtml } from "@angular/platform-browser";
 import { FormBuilder } from "@angular/forms";
 import { NgxSpinnerService } from "ngx-spinner";
+import { NgxIndexedDBService, IndexDetails} from 'ngx-indexed-db';
+import { DeviceDetectorService } from 'ngx-device-detector';
+
 
 
 import {
@@ -53,6 +56,7 @@ export class QuestionnaireComponent implements OnInit {
 
   params: Params;
 
+  public deviceInfo = null;
   public abItem: AnswerBook;
   public qbItem: QuestionBook;
   public questionItem: Question;
@@ -479,6 +483,8 @@ export class QuestionnaireComponent implements OnInit {
     private sanitizer: DomSanitizer,
     private spinner: NgxSpinnerService,
     private _formBuilder: FormBuilder,
+    private dbService: NgxIndexedDBService,
+    private deviceService: DeviceDetectorService,
     el: ElementRef
   ) {
     this.spinnerName = "sp1";
@@ -521,21 +527,49 @@ export class QuestionnaireComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.deviceInfo = this.deviceService.getDeviceInfo();
     //console.log('Inside the ngOnInit');
     //console.log("RNXT-Claim");
     this.inpValue = "";
     this.selectedMeridiem = "AM";
     this.processQB();
-    this.localaddress = JSON.parse(localStorage.getItem("address"));
-    //console.log('Length='+this.localaddress.length);
-    this.allAddress=this.localaddress.filter((item, index) => {
-      if (this.localaddress.indexOf(item) == index){
-        return item;
+    //console.log(localStorage.getItem('address'));
+    if(localStorage.getItem("address")){
+      this.localaddress = JSON.parse(localStorage.getItem("address"));
+      //console.log('Length='+this.localaddress.length);
+      this.allAddress=this.localaddress.filter((item, index) => {
+        if (this.localaddress.indexOf(item) == index){
+          return item;
+        }
+      }); 
+      this.allAddress.sort(function(a, b){
+        return a.zipCode - b.zipCode
+      });
+    }
+    else if(this.deviceInfo.os === 'iOS'){
+            let openRequest = indexedDB.open("addressDB");
+            openRequest.onsuccess = (event) => {
+              const targetNew = event.target as IDBRequest;
+              let dbNew = targetNew.result;
+              const requestNew = dbNew.transaction('addressTable')
+                   .objectStore('addressTable')
+                   .get(1);
+              requestNew.onsuccess = ()=> {
+                  const tempVar = requestNew.result;
+                  this.localaddress = JSON.parse(tempVar.wholeAddressString);
+                  this.allAddress=this.localaddress.filter((item, index) => {
+                    if (this.localaddress.indexOf(item) == index){
+                      return item;
+                    }
+                  }); 
+                  this.allAddress.sort(function(a, b){
+                    return a.zipCode - b.zipCode
+                  });
+
+              }
+            };
       }
-    }); 
-    this.allAddress.sort(function(a, b){
-      return a.zipCode - b.zipCode
-    });
+   
   }
 
   ngOnChanges() {

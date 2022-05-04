@@ -38,6 +38,8 @@
     "gulp-zip": "^5.1.0",
     "mydatepicker": "^9.0.2",
     "ng-circle-progress": "^1.6.0",
+    "ngx-device-detector": "^3.0.0",
+    "ngx-indexed-db": "^10.0.0",
     "ngx-spinner": "^11.0.1",
     "rxjs": "^6.6.3",
     "tslib": "^2.0.3",
