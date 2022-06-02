@@ -557,7 +557,7 @@
               <option *ngFor="let opt of ques.Question_Options__r.records" class="option" value="{{ opt.Value__c }}">
                 {{ opt.Value__c }}
               </option>
-              <option value="" disabled hidden>
+              <option value="" disabled hidden> <!--*ngIf="ques.Error_Message__c" -->
                 {{ ques.Error_Message__c }}
               </option>
             </select>
@@ -650,7 +650,8 @@
             </div>
             <div *ngIf="qbItem.Edit__c && this.abItem.Status__c != 'Completed'" style="background: #dedddd;">
               <button class="edit" (click)="handleEditClick(qa.quesId)">
-                <img src="https://rnxt.s3.amazonaws.com/MytIcon/icon-edit%402x.png" class="icon-edit" />
+                <img *ngIf="deviceInfo.os === 'iOS'" src="https://rnxt.s3.amazonaws.com/MytIcon/icon-edit%402x.png" style="width:50%!important;" />
+                <img *ngIf="deviceInfo.os !== 'iOS'" src="https://rnxt.s3.amazonaws.com/MytIcon/icon-edit%402x.png" class="icon-edit" />
               </button>
             </div>
            
