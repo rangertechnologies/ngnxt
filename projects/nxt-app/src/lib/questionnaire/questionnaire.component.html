@@ -1,4 +1,11 @@
 <ngx-spinner [name]="spinnerName" [type]="spinnerType"></ngx-spinner>
+<div *ngIf="!backicon && abItem.Status__c != 'Completed' " >
+<div class="backicon" [style.visibility]="questionStack.length > 0 ? 'visible' : 'hidden'">
+  <button (click)="handleBackClick()" class="app-back1">
+    <img class="icon-arrow-back" src="https://rnxt.s3.amazonaws.com/MytIcon/icon-arrow-back.png" alt="Scroll down"> {{ qbItem.Back__c }}
+  </button>
+</div>
+</div>
 
 <div *ngIf="questionItem" class="questiondiv1">
   <div *ngIf="questionItem.Title__c && qbItem.Progress_Bar__c">
@@ -581,7 +588,7 @@
         </button>
       </div>
     </div>
-    <div [ngClass]="{ 'col-md-6': !qbItem.Progress_Bar__c }"
+    <div class="backbutton" [ngClass]="{ 'col-md-6': !qbItem.Progress_Bar__c }"
       [style.visibility]="questionStack.length > 0 ? 'visible' : 'hidden'">
       <div [ngClass]="{}">
         <button [ngClass]="{
@@ -599,7 +606,7 @@
 <div *ngIf="summary && summary.length > 0" class="col-md-12" [ngClass]="{
               'col-md-12':!qbItem.Progress_Bar__c
                }">
-    <h1 class="header1" >{{ qbItem.SubTitle__c }}</h1>         
+    <h1 class="header1 summarypadd" >{{ qbItem.SubTitle__c }}</h1>         
   <div id="progress2" *ngIf="qbItem.Progress_Bar__c">
     <div [ngClass]="{'bgColor summary-top' : qbItem.Progress_Bar__c }" >
       <div id="progress-summary" *ngIf="qbItem.Progress_Bar__c">
@@ -650,7 +657,7 @@
             </div>
             <div *ngIf="qbItem.Edit__c && this.abItem.Status__c != 'Completed'" style="background: #dedddd;">
               <button class="edit" (click)="handleEditClick(qa.quesId)">
-                <img *ngIf="deviceInfo.os === 'iOS'" src="https://rnxt.s3.amazonaws.com/MytIcon/icon-edit%402x.png" style="width:50%!important;" />
+                <img *ngIf="deviceInfo.os === 'iOS'" src="https://rnxt.s3.amazonaws.com/MytIcon/icon-edit%402x.png" style="width:50%!important;" class="icon-editios"/>
                 <img *ngIf="deviceInfo.os !== 'iOS'" src="https://rnxt.s3.amazonaws.com/MytIcon/icon-edit%402x.png" class="icon-edit" />
               </button>
             </div>
@@ -671,7 +678,7 @@
   </div>
 
 
-  <div class="flexer" *ngIf="abItem">
+  <div class="flexer1" *ngIf="abItem">
     <div class="" *ngIf="abItem.Status__c == 'Completed'">
       <div class="col-md-12">
         <button [ngClass]="{'btn-text': qbItem.Progress_Bar__c,
@@ -693,8 +700,8 @@
       <div class="col-md-6">
         <button [ngClass]="{'grey': qbItem.Progress_Bar__c,
                              'nxt-btn btn-primary btn-lg btn-block btn-back-color': !qbItem.Progress_Bar__c}" 
-                (click)="handleBackClick()">
-          {{ qbItem.Back__c }}
+                (click)="handleBackClickNew()">
+          {{ qbItem.Edit__c }}
         </button>
       </div>
    </div>

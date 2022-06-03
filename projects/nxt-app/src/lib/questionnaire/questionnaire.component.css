@@ -62,6 +62,9 @@
 #progress-summary{
   padding-left: 12px;
 }
+.backicon{
+display: none;
+}
 
 }
 
@@ -369,6 +372,8 @@
   padding-bottom: 20px;
   text-align: left;
 }
+
+
 
 .answer{
   max-width: 55%;
@@ -760,7 +765,13 @@ input[type="button"].btn-block{
   display: flex;
   justify-content: center;
 }
-
+.flexer1{
+  max-width: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-top: 32px;
+}
 .btn-r{
   right: 0rem;
 }
@@ -1029,19 +1040,22 @@ background-color: #dedddd;
 @media screen and (max-width: 672px) {
   .header1{
     font-size: 23px !important;
-    padding-top: 30px;
+    padding-top: 4px;
+  }
+  .summarypadd{
+    padding-top: 30px !important;
   }
 
   .answer{
     margin-top: -5% !important;
   }
 
-.icon-edit{
-  margin: 0 6px 0px -13% !important;
-}
+  .icon-edit{
+    margin: 0 6px 0px -13% !important;
+  }
 
   .subTitle1{
-    width: 90% !important;
+    width: 95% !important;
   }
   .additional{
     
@@ -1066,13 +1080,14 @@ background-color: #dedddd;
   display: inherit;
   width: max-content;
   margin-left: 6%;
-}
+  }
   .rusty{
     width: 28rem;
     margin-left: 0rem;
     height: 68px !important;
     font-size: 20px !important;
     font-weight: bold !important;
+    margin-bottom: 37px;
   }
 
   .left-bt{
@@ -1089,28 +1104,28 @@ background-color: #dedddd;
 
   .questionalign{
     margin-top: 1rem !important;
-}
+ }
 
-.largeTitle{
+  .largeTitle{
   padding-left: 0px !important;
-}
+  }
 
-.myt-align{
+  .myt-align{
   margin-left: 0% !important;
 
-}
+  } 
 
-.myt-text1{
+  .myt-text1{
   margin-top: -22px;
-}
+  }
 
-.myt-text2{
+  .myt-text2{
   margin-top: -20px;
-}
+  }
 
-.myt-text3{
+  .myt-text3{
   margin-bottom: 21px;
-}
+  }
 
   .date-picker{
     width: 100%;
@@ -1179,25 +1194,23 @@ background-color: #dedddd;
   /*.answer{
     margin-left: 0rem;
   }*/
-  .edit{
-    margin-left: 50%;
-    margin-bottom: 0%;
-  }
+  
   .btn-text2{
-    width: 21rem;
+    width: 28rem;
     margin-right: 0rem;
     margin-left: 0;
     height: 68px !important;
     font-size: 20px !important;
-    font-weight: bold !important;
+    font-weight: bold !important;   
 
   }
   .grey{
-    width: 21rem;
+    width: 28rem;
     margin: 0 0 0 0;
     height: 68px !important;
     font-size: 20px !important;
     font-weight: bold !important;
+    margin-top: -21px;
   }
 }
 @media screen and (max-width: 580px) {
@@ -1234,7 +1247,7 @@ background-color: #dedddd;
     margin-left: 6rem;
   }*/
   .btn-text2{
-    width: 18rem;
+    width: 27rem;
     margin-right: 0rem;
     margin-left: 0;
     height: 68px !important;
@@ -1242,12 +1255,19 @@ background-color: #dedddd;
     font-weight: bold !important;
   }
   .grey{
-    width: 18rem;
+    width: 27rem;
     margin: 0 0 0 0;
     height: 68px !important;
     font-size: 20px !important;
     font-weight: bold !important;
+    margin-top: -21px;
   }  
+  .btn-text{
+    width: 27rem; 
+    height: 68px !important;
+     font-size: 20px !important;
+     font-weight: bold !important;
+   }
 }
 @media screen and (max-width: 672px) {
   .questiondiv1{
@@ -1334,7 +1354,10 @@ background-color: #dedddd;
     font-weight: bold !important;
   }
   .btn-text{
-   width: 245px; 
+   width: 21rem; 
+   height: 68px !important;
+    font-size: 20px !important;
+    font-weight: bold !important;
   }
   .left-bt{
     width: 21rem;
@@ -1376,12 +1399,31 @@ background-color: #dedddd;
     padding-left: 0rem;
     margin-left: -3.5%;
   }
+  .grey{
+    width: 21rem;
+    margin: 0 0 0 0;
+    height: 68px !important;
+    font-size: 20px !important;
+    font-weight: bold !important;
+    margin-top: -21px;
+  }
+  .btn-text2{
+    width: 21rem;
+    margin-right: 0rem;
+    margin-left: 0;
+    height: 68px !important;
+    font-size: 20px !important;
+    font-weight: bold !important;
+  }
   
 }
 @media screen and (max-width: 368px)  {
 
   .icon-edit{
-    margin: 0 6px -4px 35% !important;
+    margin: 0 6px 3px 35% !important;
+  }
+  .icon-editios{
+    margin-bottom: 4px;
   }
   .rusty{
     width:19rem;
@@ -1417,14 +1459,33 @@ background-color: #dedddd;
   .subTitle1{
     margin-left: 0;
   }*/
+  .grey{
+    width: 19rem;
+    margin: 0 0 0 0;
+    height: 68px !important;
+    font-size: 20px !important;
+    font-weight: bold !important;
+    margin-top: -21px;
+  }
+  .btn-text2{
+    width: 19rem;
+    margin-right: 0rem;
+    margin-left: 0;
+    height: 68px !important;
+    font-size: 20px !important;
+    font-weight: bold !important;
+  }
+  .btn-text{
+    width: 19rem; 
+    height: 68px !important;
+     font-size: 20px !important;
+     font-weight: bold !important;
+   }
 }
 .mydp .selection {
   padding: 0 !important;
 }
-.sum-ques{
-  width: 55%;
-  margin: auto;
-}
+
 .text-border{
   border-top: none;
   border-left: none;
@@ -1556,5 +1617,85 @@ background-color: #dedddd;
 
   display: none;
 }
+
+@media (min-width: 300px) and (max-width: 399px){
+.selbtngroup{
+  padding-left: 1.2% !important;
+}
+}
+@media (min-width: 400px) and (max-width: 480px){
+  .selbtngroup{
+    padding-left: 0.6% !important;
+  }
+  }
+
+  @media screen and (max-width: 689px) {
+    .answer{
+      max-width: 95% !important;
+      margin-left: 0px !important;
+      margin-right: 15px;
+    }
+    #progress2{
+      margin-left: 12px !important;
+    }
+    .edit{
+      margin-left: 85% !important;
+      margin-bottom: 0% !important;
+    }
+    .sum-ques{
+      width: 100% !important;
+      margin: auto;
+    }
+    .sum-ques1{
+      width: 100% !important;
+      margin: auto ;
+    }
+    .summary-completed{
+      padding-left: 0px !important;
+      padding-bottom: 17px;
+      margin-top: 9px;
+    }
+    .summary-top{
+    margin-top: 10%;
+  }
+  .subTitle1{
+    font-size: 18px !important;
+    line-height: 1.38 !important;
+    text-align: center;
+    letter-spacing: normal;
+    color: #560d05 !important;
+    font-weight: 300;
+  }
+
+  .backbutton{
+    display: none;
+  }
+  .rusty{
+    margin-bottom: 37px;
+  }
+  }
+
+  .app-back1 {
+    line-height: 2;
+    cursor: pointer;
+    width: 100%;
+    max-width: 1200px;
+    margin-right: auto;
+    margin-left: -10px;
+    display: flex;
+    font-family: Helvetica;
+    font-size: 21px;
+    font-weight: bold;
+    align-items: center;
+    font-stretch: normal;
+    font-style: normal;
+    letter-spacing: normal;
+    color: #dd2e13;
+    z-index: 1;
+}
+  
+  
+
+  
 
 

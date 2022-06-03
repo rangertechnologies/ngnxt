@@ -100,6 +100,7 @@ export class QuestionnaireComponent implements OnInit {
   public fileExceededLimit: boolean = false;
   public fileTypeIncorrect: boolean = false;
   public back: boolean = false;
+  public backicon: boolean = false;
   public check: boolean;
   public pop: boolean;
   public localDate: string;
@@ -1181,6 +1182,7 @@ export class QuestionnaireComponent implements OnInit {
       this.readQuestion(this.recordId);
       this.pop = true;
     } else {
+      this.backicon = true;
       this.pop = false;
       //console.log('Summary Page Logic');
       // Reset the Variables
@@ -1246,7 +1248,6 @@ export class QuestionnaireComponent implements OnInit {
     if (this.pop === true) {
       this.questionName.pop();
     }
-
     this.handleEvent.emit(this.qbItem.Back_Tracking_ID__c);
     this.answerCount--;
     this.updateProgress();
@@ -1257,10 +1258,15 @@ export class QuestionnaireComponent implements OnInit {
       //console.log('summary true');
       this.summary = [];
     }
+    
 
     // Read the previous question from DB
     this.readQuestion(this.questionStack.pop());
     //console.log(this.questionStack);
+  }
+
+  handleBackClickNew() {
+    this.handleEvent.emit(this.qbItem.Edit__c);
   }
 
   //updating status once Q&A completed.
@@ -1696,6 +1702,9 @@ export class QuestionnaireComponent implements OnInit {
         this.numberFlag = true;
       } else if (typ == "Alphanumeric") {
         this.alphanumericFlag = true;
+        if(this.inpValue.length === 0){
+          this.inpValue='ES'
+        }
       } else if (typ == "Email") {
         this.emailFlag = true;
       } else if (typ == "File") {
