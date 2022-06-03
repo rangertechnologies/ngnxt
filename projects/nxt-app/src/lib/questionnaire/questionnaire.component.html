@@ -557,7 +557,7 @@
               <option *ngFor="let opt of ques.Question_Options__r.records" class="option" value="{{ opt.Value__c }}">
                 {{ opt.Value__c }}
               </option>
-              <option value="" disabled hidden> <!--*ngIf="ques.Error_Message__c" -->
+              <option *ngIf="ques.Error_Message__c" value="" disabled hidden>
                 {{ ques.Error_Message__c }}
               </option>
             </select>
