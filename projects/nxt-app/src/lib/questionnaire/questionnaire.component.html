@@ -193,16 +193,24 @@
 
 
   <div *ngIf="alphanumericFlag" class="col-md-12">
+    <!--<div style="position:relative;">
+      <input type=text placeholder="0 of 0" style="padding:5px 5px 5px 150px;" id="youridhere"/>
+      <label for="youridhere" style="position:absolute;left:10px;font-weight:bold;font-size:0.8em;color:#444;top:9px;">Get this label to appear</label>
+    </div> -->
     <div class="book">
-      <input placeholder="ES00 0000 0000 0000 0000 0000" type="Text" [ngClass]="{ boxoutline: qbItem.Progress_Bar__c }"
-        [(ngModel)]="inpValue" id="number-input-id" (ngModelChange)="CCOnChange($event)" required="" maxlength="29"
-        (focus)="clearError()" style="width:-webkit-fill-available; background-color: #dedddd" style.border-color="{{
-          (this.questionItem.error || this.notValidAccNum)
-            ? 'red'
-            : inpValue?.length > 0
-            ? '#87be1c'
-            : ''
-        }}" />
+      <div style="position:relative;">
+        <input placeholder="00 0000 0000 0000 0000 0000" type="Text" [ngClass]="{ boxoutline: qbItem.Progress_Bar__c }"
+          [(ngModel)]="inpValue" id="number-input-id" (ngModelChange)="CCOnChange($event)" required="" maxlength="27"
+          oninput="this.value=this.value.replace(/[^0-9]/g,'');"
+          (focus)="clearError()" style="width:-webkit-fill-available; background-color: #dedddd;padding-left:30px;" style.border-color="{{
+            (this.questionItem.error || this.notValidAccNum)
+              ? 'red'
+              : inpValue?.length > 0
+              ? '#87be1c'
+              : ''
+          }}" />
+        <label for="youridhere" style="position:absolute;left:10px;font-weight:bold;font-size:0.8em;color:#444;top:12px;">ES</label>
+      </div>
       <div *ngIf="notValidAccNum">
         {{ questionItem.Error_Message__c }}
       </div>

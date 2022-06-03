@@ -1702,9 +1702,9 @@ export class QuestionnaireComponent implements OnInit {
         this.numberFlag = true;
       } else if (typ == "Alphanumeric") {
         this.alphanumericFlag = true;
-        if(this.inpValue.length === 0){
+        /*if(this.inpValue.length === 0){
           this.inpValue='ES'
-        }
+        }*/
       } else if (typ == "Email") {
         this.emailFlag = true;
       } else if (typ == "File") {
@@ -1902,15 +1902,34 @@ export class QuestionnaireComponent implements OnInit {
   }
 
   CCOnChange(inpValue: string) {
-    //console.log("Inside calling CCOnChange");
-    //console.log("inpValue = " + inpValue);
-    inpValue = inpValue.replace(/\s+/g, "");
-    if (inpValue.length > 0) {
+    console.log("Inside calling CCOnChange");
+    console.log("inpValue = " + inpValue);
+    //inpValue = inpValue.replace(/\s+/g, "");
+    for (let i = 0; i < inpValue.length; i++) {
+      const character = inpValue.charAt(i);
+      if (i == 1) {
+        this.inpValue += " ";
+      }
+      if(i == 6){
+        this.inpValue += " ";
+      }
+      if(i ==11){
+        this.inpValue += " ";
+      }
+      if(i == 16){
+        this.inpValue += " ";
+      }
+    }
+
+    /*if (inpValue.length > 0) {
+      if (inpValue.length % 2 == 0) {
+        this.inpValue += " ";
+      }
       //console.log("inpValue.length = " + inpValue.length);
       if (inpValue.length % 4 == 0 && inpValue.length < 24) {
         this.inpValue += " ";
       }
-    }
+    }*/
   }
 
   isNotValidAccNumber(s: string) {
