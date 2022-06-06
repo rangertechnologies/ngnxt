@@ -1901,25 +1901,78 @@ export class QuestionnaireComponent implements OnInit {
     }
   }
 
+  inputValidate(e) {
+    console.log("Inside inputValidate");
+    var keyCode = e.keyCode || e.which;
+    //var errorMsg = document.getElementById("lblErrorMsg");
+    //errorMsg.innerHTML = "";
+
+    // Only ASCII character in that range allowed
+    var ASCIICode = (e.which) ? e.which : e.keyCode
+    console.log('ASCIICode = '+ASCIICode);
+    if (ASCIICode > 31 && (ASCIICode < 48 || ASCIICode > 57)){
+      console.log("Inside the if cond");
+      return false;
+    }else{
+      console.log("Inside the else cond");
+      //errorMsg.innerHTML = "Invalid Attempt, only numeric and space are allowed.";
+      return true;
+    }
+  }
+
   CCOnChange(inpValue: string) {
+    // <!--oninput="this.value=this.value.replace(/[^0-9]/g,'');"-->
+    //0000 0000 0000 0000 0000 0000
+    //inpValue = inpValue.replace(/\s+/g, "");
     console.log("Inside calling CCOnChange");
     console.log("inpValue = " + inpValue);
-    //inpValue = inpValue.replace(/\s+/g, "");
-    for (let i = 0; i < inpValue.length; i++) {
-      const character = inpValue.charAt(i);
-      if (i == 1) {
-        this.inpValue += " ";
+    if(inpValue.length > 2 && !inpValue.includes(' ')){
+      console.log('Inside the space not includes cond');
+      let tempInp = '';
+      for (let i = 2; i <= inpValue.length; i++) {
+        const character = inpValue.charAt(i);
+        console.log('character = '+character);
+        tempInp += character;
+        if (i == 2) {
+          tempInp += " ";
+        }
+        else if(i == 7){
+          tempInp += " ";
+        }
+        else if(i == 12){
+          tempInp += " ";
+        }
+        else if(i == 17){
+          tempInp += " ";
+        }
+        else if (i == 22) {
+          tempInp += " ";
+        }
       }
-      if(i == 6){
-        this.inpValue += " ";
-      }
-      if(i ==11){
-        this.inpValue += " ";
-      }
-      if(i == 16){
-        this.inpValue += " ";
-      }
+      this.inpValue = tempInp;
     }
+
+
+
+    else if (inpValue.length == 2) {
+      this.inpValue += " ";
+    }
+    else if (inpValue.length == 7) {
+      this.inpValue += " ";
+    }
+    else if (inpValue.length == 12) {
+      this.inpValue += " ";
+    }
+    else if (inpValue.length == 17) {
+      this.inpValue += " ";
+    }
+    else if (inpValue.length == 22) {
+      this.inpValue += " ";
+    }
+
+    console.log("After change inpValue = " + inpValue);
+    console.log("inpValue.length = "+inpValue.length);
+    //inpValue = inpValue.replace(/\s+/g, "");
 
     /*if (inpValue.length > 0) {
       if (inpValue.length % 2 == 0) {

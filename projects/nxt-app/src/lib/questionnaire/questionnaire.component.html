@@ -201,7 +201,7 @@
       <div style="position:relative;">
         <input placeholder="00 0000 0000 0000 0000 0000" type="Text" [ngClass]="{ boxoutline: qbItem.Progress_Bar__c }"
           [(ngModel)]="inpValue" id="number-input-id" (ngModelChange)="CCOnChange($event)" required="" maxlength="27"
-          oninput="this.value=this.value.replace(/[^0-9]/g,'');"
+          (keypress)="inputValidate($event)"
           (focus)="clearError()" style="width:-webkit-fill-available; background-color: #dedddd;padding-left:30px;" style.border-color="{{
             (this.questionItem.error || this.notValidAccNum)
               ? 'red'
