@@ -84,7 +84,7 @@ display: none;
 
 .largeTitle{
   padding-left: 16px;
-  padding-top: 14px;
+  padding-top: 12px;
 }
 
 .question-f-size{
@@ -1040,7 +1040,7 @@ background-color: #dedddd;
 @media screen and (max-width: 672px) {
   .header1{
     font-size: 23px !important;
-    padding-top: 4px;
+    padding-top: 39px;
   }
   .summarypadd{
     padding-top: 30px !important;
@@ -1611,6 +1611,7 @@ background-color: #dedddd;
   font-size: 20px;
   font-weight: 700;
   color: #c5281c;
+  margin-top: 11px;
 }
 
 .myt-345{
@@ -1676,7 +1677,7 @@ background-color: #dedddd;
   }
 
   .app-back1 {
-    line-height: 2;
+    line-height: 1.5;
     cursor: pointer;
     width: 100%;
     max-width: 1200px;
@@ -1692,6 +1693,8 @@ background-color: #dedddd;
     letter-spacing: normal;
     color: #dd2e13;
     z-index: 1;
+    position: fixed;
+    background-color: #dedddd;
 }
   
   
