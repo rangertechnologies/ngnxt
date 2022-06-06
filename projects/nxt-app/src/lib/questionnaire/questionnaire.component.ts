@@ -1902,60 +1902,19 @@ export class QuestionnaireComponent implements OnInit {
   }
 
   inputValidate(e) {
-    console.log("Inside inputValidate");
     var keyCode = e.keyCode || e.which;
-    //var errorMsg = document.getElementById("lblErrorMsg");
-    //errorMsg.innerHTML = "";
-
     // Only ASCII character in that range allowed
     var ASCIICode = (e.which) ? e.which : e.keyCode
     console.log('ASCIICode = '+ASCIICode);
     if (ASCIICode > 31 && (ASCIICode < 48 || ASCIICode > 57)){
-      console.log("Inside the if cond");
       return false;
     }else{
-      console.log("Inside the else cond");
-      //errorMsg.innerHTML = "Invalid Attempt, only numeric and space are allowed.";
       return true;
     }
   }
 
 
   CCOnChange(inpValue: string) {
-    // <!--oninput="this.value=this.value.replace(/[^0-9]/g,'');"-->
-    //0000 0000 0000 0000 0000 0000
-    //inpValue = inpValue.replace(/\s+/g, "");
-    console.log("Inside calling CCOnChange");
-    console.log("inpValue = " + inpValue);
-    /*let isNumAndOnlySpace = /^(?=.*\d)[\d ]+$/.test(inpValue);
-    console.log("isNumAndOnlySpace = "+isNumAndOnlySpace);
-    if(!isNumAndOnlySpace){
-      this.inpValue = "";
-      return; //return incase if the autoSuggest input contain alphabets
-    }else{
-      if(inpValue.length > 2 && !inpValue.includes(' ')){
-        console.log('Inside the space not includes cond');
-        let tempInp = '';
-        let n = 2;
-        for (let i = 1; i <= 24; i++) {
-          console.log('inpValue.charAt('+i+') = '+inpValue.charAt(i));
-          tempInp += inpValue.charAt(i);
-          console.log('tempInp = '+tempInp);
-
-          if (i == 2) {
-            tempInp += " ";
-          }
-          else if(i == n+4){
-            n = n+4;
-            tempInp += " ";
-          }
-          
-        }
-        this.inpValue = tempInp;
-      }*/
-
-
-
       if (inpValue.length == 2) {
         this.inpValue += " ";
       }
@@ -1971,33 +1930,26 @@ export class QuestionnaireComponent implements OnInit {
       else if (inpValue.length == 22) {
         this.inpValue += " ";
       }
-
-      console.log("After change inpValue = " + inpValue);
-      console.log("inpValue.length = "+inpValue.length);
-    //}
   }
 
   isNotValidAccNumber(s: string) {
-    console.log('Inside the isNotValidAccNumber');
-    console.log('Before '+s);
     s = s.replace(/\s+/g, "");
     s = 'ES' + s;
-    console.log('After '+s);
     var isNotValidStr = false;
     if (s.length == 24) {
       for (var i = 0; i < s.length; i++) {
         if (i <= 1 && /[a-zA-Z]/.test(s.charAt(i))) {
-          console.log("Valid char: " + s.charAt(i));
+          //console.log("Valid char: " + s.charAt(i));
         } else if (i > 1 && /[0-9]/.test(s.charAt(i))) {
-          console.log("Valid numeric: " + s.charAt(i));
+          //console.log("Valid numeric: " + s.charAt(i));
         } else {
           isNotValidStr = true;
-          console.log("Not a valid char");
+          //console.log("Not a valid char");
         }
       }
     } else {
       isNotValidStr = true;
-      console.log("Not a valid acc number");
+      //console.log("Not a valid acc number");
     }
     return isNotValidStr;
   }
