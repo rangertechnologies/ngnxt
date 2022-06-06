@@ -1920,88 +1920,84 @@ export class QuestionnaireComponent implements OnInit {
     }
   }
 
+
   CCOnChange(inpValue: string) {
     // <!--oninput="this.value=this.value.replace(/[^0-9]/g,'');"-->
     //0000 0000 0000 0000 0000 0000
     //inpValue = inpValue.replace(/\s+/g, "");
     console.log("Inside calling CCOnChange");
     console.log("inpValue = " + inpValue);
-    if(inpValue.length > 2 && !inpValue.includes(' ')){
-      console.log('Inside the space not includes cond');
-      let tempInp = '';
-      for (let i = 1; i <= inpValue.length; i++) {
-        const character = inpValue.charAt(i);
-        console.log('character = '+character);
-        tempInp += character;
-        if (i == 2) {
-          tempInp += " ";
+    /*let isNumAndOnlySpace = /^(?=.*\d)[\d ]+$/.test(inpValue);
+    console.log("isNumAndOnlySpace = "+isNumAndOnlySpace);
+    if(!isNumAndOnlySpace){
+      this.inpValue = "";
+      return; //return incase if the autoSuggest input contain alphabets
+    }else{
+      if(inpValue.length > 2 && !inpValue.includes(' ')){
+        console.log('Inside the space not includes cond');
+        let tempInp = '';
+        let n = 2;
+        for (let i = 1; i <= 24; i++) {
+          console.log('inpValue.charAt('+i+') = '+inpValue.charAt(i));
+          tempInp += inpValue.charAt(i);
+          console.log('tempInp = '+tempInp);
+
+          if (i == 2) {
+            tempInp += " ";
+          }
+          else if(i == n+4){
+            n = n+4;
+            tempInp += " ";
+          }
+          
         }
-        else if(i == 7){
-          tempInp += " ";
-        }
-        else if(i == 12){
-          tempInp += " ";
-        }
-        else if(i == 17){
-          tempInp += " ";
-        }
-        else if (i == 22) {
-          tempInp += " ";
-        }
-      }
-      this.inpValue = tempInp;
-    }
+        this.inpValue = tempInp;
+      }*/
 
 
 
-    else if (inpValue.length == 2) {
-      this.inpValue += " ";
-    }
-    else if (inpValue.length == 7) {
-      this.inpValue += " ";
-    }
-    else if (inpValue.length == 12) {
-      this.inpValue += " ";
-    }
-    else if (inpValue.length == 17) {
-      this.inpValue += " ";
-    }
-    else if (inpValue.length == 22) {
-      this.inpValue += " ";
-    }
-
-    console.log("After change inpValue = " + inpValue);
-    console.log("inpValue.length = "+inpValue.length);
-    //inpValue = inpValue.replace(/\s+/g, "");
-
-    /*if (inpValue.length > 0) {
-      if (inpValue.length % 2 == 0) {
+      if (inpValue.length == 2) {
         this.inpValue += " ";
       }
-      //console.log("inpValue.length = " + inpValue.length);
-      if (inpValue.length % 4 == 0 && inpValue.length < 24) {
+      else if (inpValue.length == 7) {
         this.inpValue += " ";
       }
-    }*/
+      else if (inpValue.length == 12) {
+        this.inpValue += " ";
+      }
+      else if (inpValue.length == 17) {
+        this.inpValue += " ";
+      }
+      else if (inpValue.length == 22) {
+        this.inpValue += " ";
+      }
+
+      console.log("After change inpValue = " + inpValue);
+      console.log("inpValue.length = "+inpValue.length);
+    //}
   }
 
   isNotValidAccNumber(s: string) {
+    console.log('Inside the isNotValidAccNumber');
+    console.log('Before '+s);
     s = s.replace(/\s+/g, "");
+    s = 'ES' + s;
+    console.log('After '+s);
     var isNotValidStr = false;
     if (s.length == 24) {
       for (var i = 0; i < s.length; i++) {
         if (i <= 1 && /[a-zA-Z]/.test(s.charAt(i))) {
-          //console.log("Valid char: " + s.charAt(i));
+          console.log("Valid char: " + s.charAt(i));
         } else if (i > 1 && /[0-9]/.test(s.charAt(i))) {
-          //console.log("Valid numeric: " + s.charAt(i));
+          console.log("Valid numeric: " + s.charAt(i));
         } else {
           isNotValidStr = true;
-          //console.log("Not a valid char");
+          console.log("Not a valid char");
         }
       }
     } else {
       isNotValidStr = true;
-      //console.log("Not a valid acc number");
+      console.log("Not a valid acc number");
     }
     return isNotValidStr;
   }
