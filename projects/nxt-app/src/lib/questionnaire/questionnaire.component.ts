@@ -110,6 +110,7 @@ export class QuestionnaireComponent implements OnInit {
   public count: number;
   public taFocusOut: boolean = false;
   public notValidAccNum: boolean = false;
+  public splCCBackClick: boolean = false;
   public summary = [];
   //public sques: string;
   public selDate: any = {};
@@ -738,7 +739,6 @@ export class QuestionnaireComponent implements OnInit {
       }
     } else if (this.alphanumericFlag) {
       var isNotValidAccNum = this.isNotValidAccNumber(this.inpValue);
-
       if (isNotValidAccNum) {
         this.notValidAccNum = true;
         this.recordId = this.questionItem.Next_Question__c;
@@ -1087,7 +1087,8 @@ export class QuestionnaireComponent implements OnInit {
     this.answerWrap.qTyp = typ;
     this.answerWrap.ansValue = this.inpValue;
     this.answerWrap.groupText = cQuestion.Group__c;
-    if(this.answerWrap.qTyp == "Alphanumeric" && !this.inpValue){
+    this.answerWrap.ansValue = this.inpValue;
+   if(this.answerWrap.qTyp == "Alphanumeric"){
       this.answerWrap.ansValue = 'ES'+ this.inpValue;
       console.log('Bank condition');
       console.log(this.answerWrap.ansValue);
@@ -1482,8 +1483,9 @@ export class QuestionnaireComponent implements OnInit {
     );
 
   private successRead = (response) => {
-    //console.log('Inside the successRead');
-    //console.log(response);
+    console.log('Inside the successRead');
+    console.log(response);
+    console.log(this.questionItem);
     // Reset the Variables
 
     if (this.questionItem) {
@@ -1494,6 +1496,12 @@ export class QuestionnaireComponent implements OnInit {
       this.resetFlag(this.questionItem.Type__c);
     }
     this.questionItem = response.question;
+    console.log(this.questionItem);
+
+    if(this.questionItem.Type__c === 'Alphanumeric'){
+      this.splCCBackClick = true;
+    }
+
     this.currentQuestionId = this.questionItem.Id;
     this.handlePage.emit(this.questionItem.Tracking_ID__c);
     // Handle the subQuestion options
@@ -1563,8 +1571,8 @@ export class QuestionnaireComponent implements OnInit {
   };
 
   private processQuestion = () => {
-    //console.log('Inside the processQuestion');
-    //console.log('bookFlag = '+this.bookFlag);
+    console.log('Inside the processQuestion');
+    console.log('splCCBackClick = '+this.splCCBackClick);
     //console.log(this.questionItem);
     this.pop = true;
 
@@ -1607,6 +1615,12 @@ export class QuestionnaireComponent implements OnInit {
     } else {
       //console.log('inside removing attachment array');
       this.attachments = [];
+    }
+    console.log(this.inpValue);
+    if(this.splCCBackClick && this.inpValue && this.inpValue.includes('ES')){
+      console.log('Inside the if cond');
+      this.splCCBackClick = false;
+      this.inpValue = this.inpValue.replace('ES','');
     }
 
     if (this.checkboxFlag) {
