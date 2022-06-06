@@ -1929,7 +1929,7 @@ export class QuestionnaireComponent implements OnInit {
     if(inpValue.length > 2 && !inpValue.includes(' ')){
       console.log('Inside the space not includes cond');
       let tempInp = '';
-      for (let i = 2; i <= inpValue.length; i++) {
+      for (let i = 1; i <= inpValue.length; i++) {
         const character = inpValue.charAt(i);
         console.log('character = '+character);
         tempInp += character;
