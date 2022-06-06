@@ -1087,6 +1087,11 @@ export class QuestionnaireComponent implements OnInit {
     this.answerWrap.qTyp = typ;
     this.answerWrap.ansValue = this.inpValue;
     this.answerWrap.groupText = cQuestion.Group__c;
+    if(this.answerWrap.qTyp == "Alphanumeric" && !this.inpValue){
+      this.answerWrap.ansValue = 'ES'+ this.inpValue;
+      console.log('Bank condition');
+      console.log(this.answerWrap.ansValue);
+    }
     /*if (cQuestion.Type__c == 'Book'){
     for (var qb of cQuestion.Questions__r.records){
       //console.log(qb.Question__c+'****'+"@@##$$")

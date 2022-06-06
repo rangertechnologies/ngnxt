@@ -1040,7 +1040,6 @@ background-color: #dedddd;
 @media screen and (max-width: 672px) {
   .header1{
     font-size: 23px !important;
-    padding-top: 39px;
   }
   .summarypadd{
     padding-top: 30px !important;
@@ -1637,7 +1636,7 @@ background-color: #dedddd;
       margin-right: 15px;
     }
     #progress2{
-      margin-left: 12px !important;
+      margin-left: 8.5px !important;
     }
     .edit{
       margin-left: 85% !important;
@@ -1674,8 +1673,28 @@ background-color: #dedddd;
   .rusty{
     margin-bottom: 37px;
   }
+
+  .ES-style{
+    position: absolute;
+    left: 8px;
+    font-size: 0.97rem;
+    color: #555;
+    top: 8px;
+  }
+}
+
+@media screen and (min-width: 689px) {
+  .ES-style{
+    position: absolute;
+    left: 7px;
+    font-size: 0.8rem;
+    color: #555;
+    top: 8px;
   }
 
+}
+
+@media screen and (max-width: 380px) {
   .app-back1 {
     line-height: 1.5;
     cursor: pointer;
@@ -1695,10 +1714,38 @@ background-color: #dedddd;
     z-index: 1;
     position: fixed;
     background-color: #dedddd;
+    border-radius: 0px !important;
+ }
+ .header1{
+  padding-top: 39px;
+
 }
-  
-  
+}
 
-  
+@media (min-width: 381px) and (max-width: 689px){
+  .app-back1 {
+    line-height: 1.5;
+    cursor: pointer;
+    width: 100%;
+    max-width: 1200px;
+    margin-right: auto;
+    margin-left: -10px;
+    display: flex;
+    font-family: Helvetica;
+    font-size: 21px;
+    font-weight: bold;
+    align-items: center;
+    font-stretch: normal;
+    font-style: normal;
+    letter-spacing: normal;
+    color: #dd2e13;
+    z-index: 1;
+    border-radius: 0px !important;
+    
+ }
 
+ .header1{
+  padding-top: 19px;
 
+}
+}

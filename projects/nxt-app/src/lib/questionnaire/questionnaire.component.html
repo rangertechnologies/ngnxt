@@ -1,10 +1,10 @@
 <ngx-spinner [name]="spinnerName" [type]="spinnerType"></ngx-spinner>
 <div *ngIf="!backicon && abItem.Status__c != 'Completed' " >
-<div class="backicon" [style.visibility]="questionStack.length > 0 ? 'visible' : 'hidden'">
-  <button (click)="handleBackClick()" class="app-back1">
+  <div class="backicon" [style.visibility]="questionStack.length > 0 ? 'visible' : 'hidden'">
+    <button (click)="handleBackClick()" class="app-back1">
     <img class="icon-arrow-back" src="https://rnxt.s3.amazonaws.com/MytIcon/icon-arrow-back.png" alt="Scroll down"> {{ qbItem.Back__c }}
-  </button>
-</div>
+    </button>
+  </div>
 </div>
 
 <div *ngIf="questionItem" class="questiondiv1">
@@ -210,7 +210,7 @@
               ? '#87be1c'
               : ''
           }}" />
-        <label for="youridhere" style="position:absolute;left:10px;font-weight:bold;font-size:0.8em;color:#444;top:12px;">ES</label>
+        <label for="youridhere" class="ES-style">ES</label>
       </div>
       <div *ngIf="notValidAccNum">
         {{ questionItem.Error_Message__c }}
