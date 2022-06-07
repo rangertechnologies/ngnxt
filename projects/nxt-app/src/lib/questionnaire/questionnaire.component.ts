@@ -676,6 +676,7 @@ export class QuestionnaireComponent implements OnInit {
 
   //Summary Question Clickable Logic
   handleEditClick(value: string) {
+    this.backicon = false;
     if (this.abItem.Status__c == "Pending") {
       if (value == null) {
         return;
@@ -1180,6 +1181,7 @@ export class QuestionnaireComponent implements OnInit {
     this.answerCount++;
     this.updateProgress();
 
+
     // CATEGORIZATION
     //this.stepperCateg();
 
@@ -1188,7 +1190,6 @@ export class QuestionnaireComponent implements OnInit {
       this.readQuestion(this.recordId);
       this.pop = true;
     } else {
-      this.backicon = true;
       this.pop = false;
       //console.log('Summary Page Logic');
       // Reset the Variables
@@ -1236,6 +1237,7 @@ export class QuestionnaireComponent implements OnInit {
           }
           ansWrap.ansValue = newStr;
           this.summary.push(ansWrap);
+          this.backicon = true;
         }
       }
     }

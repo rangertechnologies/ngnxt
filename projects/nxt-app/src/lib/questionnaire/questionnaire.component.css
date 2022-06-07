@@ -1673,26 +1673,31 @@ background-color: #dedddd;
   .rusty{
     margin-bottom: 37px;
   }
-
-  .ES-style{
-    position: absolute;
-    left: 8px;
-    font-size: 0.97rem;
-    color: #555;
-    top: 8px;
-  }
 }
 
-@media screen and (min-width: 689px) {
+@media screen and (min-width: 1024px) {
   .ES-style{
     position: absolute;
     left: 7px;
-    font-size: 0.8rem;
+    font-size: 0.9rem;
     color: #555;
-    top: 8px;
+    top: 9px;
   }
 
 }
+
+@media screen and (max-width: 1024px) {
+
+  .ES-style{
+    position: absolute;
+    left: 9px;
+    font-size: .95rem;
+    color: #555;
+    top: 0.5rem;
+  }
+  
+}
+
 
 @media screen and (max-width: 380px) {
   .app-back1 {
