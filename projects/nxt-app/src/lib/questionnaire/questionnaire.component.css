@@ -1620,14 +1620,26 @@ background-color: #dedddd;
 
 @media (min-width: 300px) and (max-width: 399px){
 .selbtngroup{
-  padding-left: 1.2% !important;
+  padding-left: 1.3% !important;
 }
 }
 @media (min-width: 400px) and (max-width: 480px){
   .selbtngroup{
-    padding-left: 0.6% !important;
+    padding-left: 0.9% !important;
   }
   }
+  @media (min-width: 481px) and (max-width: 580px){
+    .selbtngroup{
+      padding-left: 0.2% !important;
+    }
+    }
+
+    @media screen and (min-width: 871px) {
+      .selbtngroup{
+        padding-right: 6px !important;
+      }
+
+    }
 
   @media screen and (max-width: 689px) {
     .answer{
