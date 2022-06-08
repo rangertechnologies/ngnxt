@@ -201,8 +201,8 @@
       <div style="position:relative;">
         <input placeholder="00 0000 0000 0000 0000 0000" type="Text" [ngClass]="{ boxoutline: qbItem.Progress_Bar__c }"
           [(ngModel)]="inpValue" id="number-input-id" (ngModelChange)="CCOnChange($event)" required="" maxlength="27"
-          (keypress)="inputValidate($event)"
-          autocomplete="off"
+          oninput="this.value=this.value.replace(/[a-zA-Z]/,'')"
+          autocomplete="off" 
           (focus)="clearError()" style="width:-webkit-fill-available; background-color: #dedddd;padding-left:30px;" style.border-color="{{
             (this.questionItem.error || this.notValidAccNum)
               ? 'red'
@@ -210,7 +210,18 @@
               ? '#87be1c'
               : ''
           }}" />
-        <label for="youridhere" class="ES-style">ES</label>
+          <!--<input *ngIf="deviceInfo.os !== 'Android'" placeholder="00 0000 0000 0000 0000 0000" type="Text" [ngClass]="{ boxoutline: qbItem.Progress_Bar__c }"
+          [(ngModel)]="inpValue" id="number-input-id" (ngModelChange)="CCOnChange($event)" required="" maxlength="27"
+          (keypress)="inputValidate($event)"
+          autocomplete="off" 
+          (focus)="clearError()" style="width:-webkit-fill-available; background-color: #dedddd;padding-left:30px;" style.border-color="{{
+            (this.questionItem.error || this.notValidAccNum)
+              ? 'red'
+              : inpValue?.length > 0
+              ? '#87be1c'
+              : ''
+          }}" />-->
+        <label class="ES-style">ES</label>
       </div>
       <div *ngIf="notValidAccNum">
         {{ questionItem.Error_Message__c }}

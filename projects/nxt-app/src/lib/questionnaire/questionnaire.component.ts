@@ -125,6 +125,7 @@ export class QuestionnaireComponent implements OnInit {
     "02",
     "03",
     "04",
+    
     "05",
     "06",
     "07",
@@ -1925,8 +1926,7 @@ export class QuestionnaireComponent implements OnInit {
   inputValidate(e) {
     var keyCode = e.keyCode || e.which;
     // Only ASCII character in that range allowed
-    var ASCIICode = (e.which) ? e.which : e.keyCode
-    console.log('ASCIICode = '+ASCIICode);
+    var ASCIICode = (e.which) ? e.which : e.keyCode;
     if (ASCIICode > 31 && (ASCIICode < 48 || ASCIICode > 57)){
       return false;
     }else{
@@ -1934,8 +1934,8 @@ export class QuestionnaireComponent implements OnInit {
     }
   }
 
-
   CCOnChange(inpValue: string) {
+
       if (inpValue.length == 2) {
         this.inpValue += " ";
       }
@@ -1951,6 +1951,7 @@ export class QuestionnaireComponent implements OnInit {
       else if (inpValue.length == 22) {
         this.inpValue += " ";
       }
+
   }
 
   isNotValidAccNumber(s: string) {
