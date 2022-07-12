@@ -1636,7 +1636,7 @@ background-color: #dedddd;
 
     @media screen and (min-width: 871px) {
       .selbtngroup{
-        padding-right: 6px !important;
+        padding-right: 4px !important;
       }
 
     }
@@ -1711,7 +1711,7 @@ background-color: #dedddd;
 }
 
 
-@media screen and (max-width: 380px) {
+@media screen and (max-width: 689px) {
   .app-back1 {
     line-height: 1.5;
     cursor: pointer;
@@ -1732,6 +1732,7 @@ background-color: #dedddd;
     position: fixed;
     background-color: #dedddd;
     border-radius: 0px !important;
+    padding-top: 0.2rem;
  }
  .header1{
   padding-top: 39px;
@@ -1739,30 +1740,3 @@ background-color: #dedddd;
 }
 }
 
-@media (min-width: 381px) and (max-width: 689px){
-  .app-back1 {
-    line-height: 1.5;
-    cursor: pointer;
-    width: 100%;
-    max-width: 1200px;
-    margin-right: auto;
-    margin-left: -10px;
-    display: flex;
-    font-family: Helvetica;
-    font-size: 21px;
-    font-weight: bold;
-    align-items: center;
-    font-stretch: normal;
-    font-style: normal;
-    letter-spacing: normal;
-    color: #dd2e13;
-    z-index: 1;
-    border-radius: 0px !important;
-    
- }
-
- .header1{
-  padding-top: 19px;
-
-}
-}

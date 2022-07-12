@@ -1258,6 +1258,13 @@ export class QuestionnaireComponent implements OnInit {
       this.questionName.pop();
     }
     this.handleEvent.emit(this.qbItem.Back_Tracking_ID__c);
+    var cQuestion: Question = new Question();
+    cQuestion = this.questionItem;
+    if(cQuestion.Question_No__c =='1'){
+      this.handleEvent.emit(this.qbItem.Back__c);
+    }
+    
+
     this.answerCount--;
     this.updateProgress();
     // CATEGORIZATION

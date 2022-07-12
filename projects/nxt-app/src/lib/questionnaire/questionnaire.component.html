@@ -1,6 +1,6 @@
 <ngx-spinner [name]="spinnerName" [type]="spinnerType"></ngx-spinner>
 <div *ngIf="backicon == false" >
-  <div class="backicon" [style.visibility]="questionStack.length > 0 ? 'visible' : 'hidden'">
+  <div class="backicon" [style.visibility]="questionStack.length >= 0 ? 'visible' : 'hidden'">
     <button (click)="handleBackClick()" class="app-back1">
     <img class="icon-arrow-back" src="https://rnxt.s3.amazonaws.com/MytIcon/icon-arrow-back.png" alt="Scroll down"> {{ qbItem.Back__c }}
     </button>
@@ -609,7 +609,7 @@
       </div>
     </div>
     <div class="backbutton" [ngClass]="{ 'col-md-6': !qbItem.Progress_Bar__c }"
-      [style.visibility]="questionStack.length > 0 ? 'visible' : 'hidden'">
+      [style.visibility]="questionStack.length >= 0 ? 'visible' : 'hidden'">
       <div [ngClass]="{}">
         <button [ngClass]="{
             'left-bt': qbItem.Progress_Bar__c,
