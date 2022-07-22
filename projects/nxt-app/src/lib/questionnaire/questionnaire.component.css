@@ -65,6 +65,9 @@
 .backicon{
 display: none;
 }
+.dt-time{
+  background-position: 98% !important;
+}
 
 }
 
@@ -280,7 +283,6 @@ display: none;
   background-image: url("https://rnxt.s3.amazonaws.com/MytIcon/icon-clock%402x.png") !important;
   background-size: 25px !important;
   background-repeat: no-repeat !important;
-  background-position: 97.5% center !important;
   background: #dedddd;
 }
 
@@ -1042,7 +1044,7 @@ background-color: #dedddd;
     font-size: 23px !important;
   }
   .summarypadd{
-    padding-top: 30px !important;
+    padding-top: 50px !important;
   }
 
   .answer{
@@ -1732,11 +1734,19 @@ background-color: #dedddd;
     position: fixed;
     background-color: #dedddd;
     border-radius: 0px !important;
-    padding-top: 0.2rem;
+    padding-top: 1.8rem;
  }
  .header1{
-  padding-top: 39px;
+  padding-top: 75px;
 
 }
+
+.dt-time{
+  background-position: 100% !important;
+}
+}
+
+.summary-volver{
+  display: none;
 }
 
