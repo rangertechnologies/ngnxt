@@ -7,7 +7,7 @@
   </div>
 </div>
 
-<div *ngIf="questionItem" class="questiondiv1">
+<div *ngIf="questionItem" class="questiondiv1" style="padding-bottom:6rem !important;padding-top:2rem !important;">
   <div *ngIf="questionItem.Title__c && qbItem.Progress_Bar__c">
         <h1 class="header1" > {{ questionItem.Title__c }} </h1>
         <div class="header2">{{ questionItem.SubTitle__c }}</div>
@@ -623,7 +623,7 @@
   </div>
 </div>
 
-<div *ngIf="summary && summary.length > 0" class="col-md-12" [ngClass]="{
+<div *ngIf="summary && summary.length > 0" height="100% !important" class="col-md-12" [ngClass]="{
               'col-md-12':!qbItem.Progress_Bar__c
                }">
     <h1 class="header1 summarypadd" >{{ qbItem.SubTitle__c }}</h1>         
