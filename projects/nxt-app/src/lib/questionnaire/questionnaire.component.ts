@@ -530,6 +530,9 @@ export class QuestionnaireComponent implements OnInit {
   }
 
   ngOnInit() {
+    console.log('Inside the ngOnInit');
+    console.log('this.percent '+this.percent);
+
     this.deviceInfo = this.deviceService.getDeviceInfo();
     //console.log('Inside the ngOnInit');
     //console.log("RNXT-Claim");
@@ -576,7 +579,7 @@ export class QuestionnaireComponent implements OnInit {
   }
 
   ngOnChanges() {
-    //console.log('inside Questionnaire ngOnChanges');
+    console.log('inside Questionnaire ngOnChanges');
     this.processQB();
   }
   date_TimeMap() {
@@ -645,19 +648,19 @@ export class QuestionnaireComponent implements OnInit {
   // }
 
   processQB() {
-    //console.log('ProcessQB');
+    console.log('ProcessQB');
     //this.qbItem
 
     //console.log(this.qbId);
     //console.log('Version in process is 8bf11efa7f91a391d957bf6b5078edc7e656b67c');
     if (this.qbId) {
-      //console.log('Inside the if part: qbId = '+this.qbId);
+      console.log('Inside the if part: qbId = '+this.qbId);
       if (this.qbId.length == 18) {
         //console.log('Before Calling readQuestionBook() using ' + this.qbId);
         this.readQuestionBook(this.qbId);
       } else {
-        //console.log('Inside the else part');
-        //console.log('Setting the Question Directly for testing');
+        console.log('Inside the else part');
+        console.log('Setting the Question Directly for testing');
         this.questionItem = DTQUESTION;
         this.qbItem = TESTQB;
         this.processQuestion();
@@ -1106,6 +1109,7 @@ export class QuestionnaireComponent implements OnInit {
   }
 
   next() {
+    console.log('Next method');
     var cQuestion: Question = new Question();
     cQuestion = this.questionItem;
     var typ = cQuestion.Type__c;
@@ -1113,8 +1117,12 @@ export class QuestionnaireComponent implements OnInit {
     if (this.questionItem.error) {
       return;
     }
+    console.log('before pusing into this.questionStack');
+    
+    //OLD ==> this.questionStack.push(cQuestion.Id);
+    if (this.questionStack.indexOf(cQuestion.Id) === -1) this.questionStack.push(cQuestion.Id);
 
-    this.questionStack.push(cQuestion.Id);
+   
     //  this.questionName.push(cQuestion.Name);
 
     // CONDITIONAL vs OPTIONONLY & UNCONDITIONAL
@@ -1253,6 +1261,7 @@ export class QuestionnaireComponent implements OnInit {
   }
 
   handleBackClick() {
+    console.log('On HandleBackClick');
     this.back = true;
     if (this.pop === true) {
       this.questionName.pop();
@@ -1313,28 +1322,40 @@ export class QuestionnaireComponent implements OnInit {
     );
 
   private successReadBook = (response) => {
-    //console.log('Inside the successReadBook');
-    //console.log(response)
+    console.log('Inside the successReadBook');
+    console.log(response)
     this.qbItem = response.questionbook;
     this.abItem = response.answerbook;
     //console.log('readingQuestion using ' + this.qbItem.First_Question__c);
     if (this.abItem.Status__c == "Pending") {
+      console.log('Inside the pending');
       if (
         this.abItem.Answers__r == null ||
         this.abItem.Answers__r.records.length == 0
       ) {
         this.readQuestion(this.qbItem.First_Question__c);
       } else {
+        console.log('Inside the else part of pending');
+
+
+        if((!this.questionName || this.questionName.length <= 0) && localStorage.getItem('TempAnsWrap')){
+          console.log('Inside the questionName setup cond in ngOnInit');
+          this.questionName = JSON.parse(localStorage.getItem('TempAnsWrap'));
+          localStorage.removeItem('TempAnsWrap');
+        }
+        
         // Populate the existing answers
         var lastQuestionId = "";
 
         for (var ansObject of this.abItem.Answers__r.records) {
           lastQuestionId = ansObject.Question_Ref__c;
-           //console.log("Question: " + ansObject.Question_Rich_Text__c);
-           // //console.log("Answer: " + ansObject.Answer_Long__c);
-            //console.log("grouptext: " + ansObject.Question_Group_Text__c);
+           console.log("Question: " + ansObject.Question_Rich_Text__c);
+           console.log("Answer: " + ansObject.Answer_Long__c);
+           console.log("grouptext: " + ansObject.Question_Group_Text__c);
+           console.log("Question_Ref__c: " + ansObject.Question_Ref__c);
 
-          this.questionStack.push(ansObject.Question_Ref__c);
+          //this.questionStack.push(ansObject.Question_Ref__c);
+          if (this.questionStack.indexOf(ansObject.Question_Ref__c) === -1) this.questionStack.push(ansObject.Question_Ref__c);
 
           this.answerMap.set(ansObject.Question_Ref__c, {
             quesValue: ansObject.Question_Rich_Text__c,
@@ -1344,7 +1365,9 @@ export class QuestionnaireComponent implements OnInit {
             groupText:ansObject.Question_Group_Text__c,
           });
 
-          //console.log(this.questionStack)
+          console.log('this.questionStack');
+          console.log(this.questionStack);
+
           if (ansObject.Question_Type__c == "Book") {
             var av1 = ansObject.Answer_Long__c.split("@@##$$");
             // //console.log("book log");
@@ -1370,7 +1393,11 @@ export class QuestionnaireComponent implements OnInit {
         }
 
         this.questionStack.pop();
-        //console.log(this.answerMap);
+        console.log(this.answerMap);
+
+        console.log('LAST = this.questionStack');
+        console.log(this.questionStack);
+        console.log('lastQuestionId = '+lastQuestionId);
         // Read the last answered question
         this.readQuestion(lastQuestionId);
       }
@@ -1533,6 +1560,7 @@ export class QuestionnaireComponent implements OnInit {
       this.questionItem.Additional_Rich__c
     );
     this.trackId();
+    //this.updateProgress();
   };
 
   trackId() {
@@ -1583,24 +1611,41 @@ export class QuestionnaireComponent implements OnInit {
   private processQuestion = () => {
     console.log('Inside the processQuestion');
     console.log('splCCBackClick = '+this.splCCBackClick);
-    //console.log(this.questionItem);
+    console.log('this.questionItem');
+    console.log(this.questionItem);
     this.pop = true;
 
     // if(!this.back){
     //   this.questionName.push(this.questionItem.Name)
     // }
-
+    
+    console.log('this.qbItem');
+    console.log(this.qbItem);
+    console.log('this.questionName');
+    console.log(this.questionName);
     if (this.qbItem.Progress_Bar__c === true) {
+      console.log('Inside the progressBar cond');
       if (!this.back) {
+        console.log('Inside back cond');
         this.questionName.push(this.questionItem.Name);
       }
       this.back = false;
       if (this.questionName[0] === this.questionName[1]) {
+        console.log('this.questionName[0] === this.questionName[1] cond');
         this.questionName.pop();
       }
 
+
+      console.log('this.questionName');
+      console.log(this.questionName);
+      localStorage.setItem('TempAnsWrap',JSON.stringify(this.questionName));
+
       this.currentName = this.questionItem.Name;
+      console.log('this.currentName = '+this.currentName);
       this.pathquestion = this.questionName.indexOf(this.currentName);
+      console.log('this.pathquestion = '+this.pathquestion);
+      console.log('this.qbItem.Possibilities__c');
+      console.log(this.qbItem.Possibilities__c);
       this.possibilities = JSON.parse(this.qbItem.Possibilities__c);
     }
 
@@ -2122,32 +2167,69 @@ export class QuestionnaireComponent implements OnInit {
 
   // Update Function for the Progress Bar
   updateProgress() {
+    console.log('updateProgress');
+    console.log(this.questionStack);
     if (this.qbItem.Progress_Bar__c === true) {
       let j = [];
+      console.log('this.possibilities');
+      console.log(this.possibilities);
+      console.log('this.currentName = '+this.currentName);
+      console.log('this.questionStack.length = '+this.questionStack.length);
+      console.log('this.pathquestion = '+this.pathquestion);
+      console.log(this.possibilities.total);
       for (let i = 0; i < this.possibilities.total; i++) {
+        console.log('Inside the for loop');
         var pathposs = Object.values(this.possibilities.paths[i].questions);
+        console.log('pathposs');
+        console.log(pathposs);
+        console.log('pathposs[this.pathquestion] = '+pathposs[this.pathquestion]);
         if (pathposs[this.pathquestion] === this.currentName) {
+          console.log('Inside the push cond');
           j.push(i);
           this.check = true;
         } else {
           this.check = false;
         }
       }
+      console.log('j '+j.length);
       if (j.length === 1) {
         this.count = j[0];
       }
       if (j.length > 1) {
+        console.log('Inside the j length GT 1');
+        console.log(this.questionStack.length);
+        console.log(this.possibilities.maxQuestions);
+        console.log((this.questionStack.length / this.possibilities.maxQuestions));
         var width =
           90 * (this.questionStack.length / this.possibilities.maxQuestions);
+          console.log(width);
         this.progressStyle = Math.round(width) + "%";
       } else if (j.length === 1) {
+        console.log('Inside the j length EQUALS 1');
+        console.log(this.questionStack.length);
+        console.log(this.possibilities.paths[this.count].count);
+        console.log((this.questionStack.length /
+            this.possibilities.paths[this.count].count));
         var width =
           90 *
           (this.questionStack.length /
             this.possibilities.paths[this.count].count);
+          console.log(width);
         this.progressStyle = Math.round(width) + "%";
       }
+      console.log(width);
       this.percent = +Math.round(width);
+      console.log('After the calculation on handleNext');
+      console.log('this.percent '+this.percent);
+      /*if(this.percent == NaN && localStorage.getItem('currentPercentage')){
+        this.percent = +localStorage.getItem('currentPercentage');
+      }
+      if(this.percent != NaN){
+        console.log('Inside the not NaN cond');
+        localStorage.setItem('currentPercentage',''+this.percent);
+        console.log(localStorage.getItem('currentPercentage'));
+      }*/
+      
     }
   }
 
