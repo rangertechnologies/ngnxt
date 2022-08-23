@@ -2,12 +2,12 @@
 /* tslint:disable */
 export const VERSION = {
     "dirty": true,
-    "raw": "be4108a-dirty",
-    "hash": "be4108a",
+    "raw": "7be0083-dirty",
+    "hash": "7be0083",
     "distance": null,
     "tag": null,
     "semver": null,
-    "suffix": "be4108a-dirty",
+    "suffix": "7be0083-dirty",
     "semverString": null,
     "version": "2.0.11"
 };
