@@ -54,3 +54,5 @@ Thumbs.db
 
 # Ignore files related to API keys
 .env
+
+.angular/*

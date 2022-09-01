@@ -3,15 +3,16 @@ import { NxtAppComponent } from './nxt-app.component';
 import { QuestionnaireComponent } from './questionnaire/questionnaire.component';
 import { CommonModule } from "@angular/common";
 import { FormsModule,ReactiveFormsModule } from '@angular/forms';
-import { MyDatePickerModule } from 'mydatepicker';
+// import { MyDatePickerModule } from 'mydatepicker';
 import { NgCircleProgressModule } from 'ng-circle-progress';
-import { NgxSpinnerModule } from "ngx-spinner";
+// import { NgxSpinnerModule } from "ngx-spinner";
 @NgModule({
   declarations: [NxtAppComponent, QuestionnaireComponent],
   imports: [
     CommonModule, FormsModule,
-    MyDatePickerModule,
-    ReactiveFormsModule, NgxSpinnerModule,
+    // MyDatePickerModule,
+    ReactiveFormsModule, 
+    // NgxSpinnerModule,
     /*NgCircleProgressModule.forRoot({
       "backgroundPadding": -10,
       "radius": 60,

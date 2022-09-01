@@ -10,10 +10,10 @@ import {
 } from "@angular/core";
 import { ActivatedRoute, Params } from "@angular/router";
 import { SalesforceService } from "../services/salesforce.service";
-import { IMyDateModel, IMyDpOptions } from "mydatepicker";
+// import { IMyDateModel, IMyDpOptions } from "mydatepicker";
 import { DomSanitizer, SafeHtml } from "@angular/platform-browser";
 import { FormBuilder } from "@angular/forms";
-import { NgxSpinnerService } from "ngx-spinner";
+// import { NgxSpinnerService } from "ngx-spinner";
 import { NgxIndexedDBService, IndexDetails} from 'ngx-indexed-db';
 import { DeviceDetectorService } from 'ngx-device-detector';
 
@@ -478,13 +478,13 @@ export class QuestionnaireComponent implements OnInit {
   public progressStyle: string = "0%";
   public answerCount: number = 0;
 
-  public myDatePickerOptions: IMyDpOptions = {};
+  // public myDatePickerOptions: IMyDpOptions = {};
 
   constructor(
     private sfService: SalesforceService,
     private route: ActivatedRoute,
     private sanitizer: DomSanitizer,
-    private spinner: NgxSpinnerService,
+    // private spinner: NgxSpinnerService,
     private _formBuilder: FormBuilder,
     private dbService: NgxIndexedDBService,
     private deviceService: DeviceDetectorService,
@@ -494,40 +494,40 @@ export class QuestionnaireComponent implements OnInit {
     this.spinnerType = "ball-spin-clockwise";
   }
 
-  onDateChanged(event: IMyDateModel) {
-    //console.log('Inside the onDateChanged');
-    //to change the border color
-    if (this.qbItem.Progress_Bar__c) {
-      //console.log('Inside the progressBar cond');
-      this.inpValue =
-        event.date.day + "/" + event.date.month + "/" + event.date.year;
-        if(this.questionItem.Type__c =="Book"){
-        this.selectDate =  event.date.day + "/" + event.date.month + "/" + event.date.year;
-        }
-    } else {
-      //console.log('Inside the ELSE of progressBar cond');
-      if(this.questionItem.Type__c =="Book"){
-        this.selectDate =  event.date.day + "-" + event.date.month + "-" + event.date.year;
-        }
-      this.inpValue =
-        event.date.year + "-" + event.date.month + "-" + event.date.day;
-    }
-    const htmlElement = window.document.getElementsByClassName("mydp");
-    htmlElement
-      .item(0)
-      .setAttribute("style", "border-color:#87be1c;width:100%");
-    this.dateMap.set(this.questionItem.Id, event);
-    if (
-      event.date.day === 0 &&
-      event.date.month === 0 &&
-      event.date.year === 0
-    ) {
-      this.dateMap.delete(this.questionItem.Id);
-      this.answerMap.delete(this.questionItem.Id);
-    }
-    //console.log('this.inpValue = '+this.inpValue);
-    //console.log('this.selectDate = '+this.selectDate);
-  }
+  // onDateChanged(event: IMyDateModel) {
+  //   //console.log('Inside the onDateChanged');
+  //   //to change the border color
+  //   if (this.qbItem.Progress_Bar__c) {
+  //     //console.log('Inside the progressBar cond');
+  //     this.inpValue =
+  //       event.date.day + "/" + event.date.month + "/" + event.date.year;
+  //       if(this.questionItem.Type__c =="Book"){
+  //       this.selectDate =  event.date.day + "/" + event.date.month + "/" + event.date.year;
+  //       }
+  //   } else {
+  //     //console.log('Inside the ELSE of progressBar cond');
+  //     if(this.questionItem.Type__c =="Book"){
+  //       this.selectDate =  event.date.day + "-" + event.date.month + "-" + event.date.year;
+  //       }
+  //     this.inpValue =
+  //       event.date.year + "-" + event.date.month + "-" + event.date.day;
+  //   }
+  //   const htmlElement = window.document.getElementsByClassName("mydp");
+  //   htmlElement
+  //     .item(0)
+  //     .setAttribute("style", "border-color:#87be1c;width:100%");
+  //   this.dateMap.set(this.questionItem.Id, event);
+  //   if (
+  //     event.date.day === 0 &&
+  //     event.date.month === 0 &&
+  //     event.date.year === 0
+  //   ) {
+  //     this.dateMap.delete(this.questionItem.Id);
+  //     this.answerMap.delete(this.questionItem.Id);
+  //   }
+  //   //console.log('this.inpValue = '+this.inpValue);
+  //   //console.log('this.selectDate = '+this.selectDate);
+  // }
 
   ngOnInit() {
     this.deviceInfo = this.deviceService.getDeviceInfo();
@@ -585,46 +585,46 @@ export class QuestionnaireComponent implements OnInit {
   }
 
   day() {
-    this.myDatePickerOptions = {
-      dateFormat: "dd.mm.yyyy",
-      sunHighlight: false,
-      disableDateRanges: [],
-      showClearDateBtn: false,
-      disableSince: {
-        year: 0,
-        month: 0,
-        day: 0,
-      },
-      disableUntil: {
-        year: 0,
-        month: 0,
-        day: 0,
-      },
-      showTodayBtn: false,
-      dayLabels: {
-        su: "Dom",
-        mo: "Lun",
-        tu: "Mar",
-        we: "Mié",
-        th: "Jue",
-        fr: "Vie",
-        sa: "Sáb",
-      },
-      monthLabels: {
-        1: "Ene",
-        2: "Feb",
-        3: "Mar",
-        4: "Abr",
-        5: "Mayo",
-        6: "Jun",
-        7: "Jul",
-        8: "Ago",
-        9: "Sep",
-        10: "Oct",
-        11: "Nov",
-        12: "Dic",
-      },
-    };
+    // this.myDatePickerOptions = {
+    //   dateFormat: "dd.mm.yyyy",
+    //   sunHighlight: false,
+    //   disableDateRanges: [],
+    //   showClearDateBtn: false,
+    //   disableSince: {
+    //     year: 0,
+    //     month: 0,
+    //     day: 0,
+    //   },
+    //   disableUntil: {
+    //     year: 0,
+    //     month: 0,
+    //     day: 0,
+    //   },
+    //   showTodayBtn: false,
+    //   dayLabels: {
+    //     su: "Dom",
+    //     mo: "Lun",
+    //     tu: "Mar",
+    //     we: "Mié",
+    //     th: "Jue",
+    //     fr: "Vie",
+    //     sa: "Sáb",
+    //   },
+    //   monthLabels: {
+    //     1: "Ene",
+    //     2: "Feb",
+    //     3: "Mar",
+    //     4: "Abr",
+    //     5: "Mayo",
+    //     6: "Jun",
+    //     7: "Jul",
+    //     8: "Ago",
+    //     9: "Sep",
+    //     10: "Oct",
+    //     11: "Nov",
+    //     12: "Dic",
+    //   },
+    // };
   }
   change() {
     const htmlElement = window.document.getElementsByClassName("mydp");
@@ -1604,7 +1604,7 @@ export class QuestionnaireComponent implements OnInit {
       this.possibilities = JSON.parse(this.qbItem.Possibilities__c);
     }
 
-    this.myDatePickerOptions;
+    // this.myDatePickerOptions;
     this.day();
     //console.log('processing question ' + this.questionItem.Name + ' existing answers are ' + this.answerMap.size); // => ' + JSON.stringify(this.questionItem));
 
@@ -1692,18 +1692,18 @@ export class QuestionnaireComponent implements OnInit {
         this.questionItem.Is_Date_Forward__c
       ) {
         if (this.questionItem.Is_Date_Backward__c === true) {
-          this.myDatePickerOptions.disableSince = {
-            year: this.today.getFullYear(),
-            month: this.today.getMonth() + 1,
-            day: this.today.getDate() + 1,
-          };
+          // this.myDatePickerOptions.disableSince = {
+          //   year: this.today.getFullYear(),
+          //   month: this.today.getMonth() + 1,
+          //   day: this.today.getDate() + 1,
+          // };
         }
         if (this.questionItem.Is_Date_Forward__c === true) {
-          this.myDatePickerOptions.disableUntil = {
-            year: this.today.getFullYear(),
-            month: this.today.getMonth() + 1,
-            day: this.today.getDate(),
-          };
+          // this.myDatePickerOptions.disableUntil = {
+          //   year: this.today.getFullYear(),
+          //   month: this.today.getMonth() + 1,
+          //   day: this.today.getDate(),
+          // };
         }
       }
     } else if (this.fileFlag) {
@@ -1882,19 +1882,19 @@ export class QuestionnaireComponent implements OnInit {
         //console.log('Inside the date backward/forward cond');
         if (ques.Is_Date_Backward__c === true) {
           //console.log('Inside the Is_Date_Backward__c');
-          this.myDatePickerOptions.disableSince = {
-            year: this.today.getFullYear(),
-            month: this.today.getMonth() + 1,
-            day: this.today.getDate() + 1,
-          };
+          // this.myDatePickerOptions.disableSince = {
+          //   year: this.today.getFullYear(),
+          //   month: this.today.getMonth() + 1,
+          //   day: this.today.getDate() + 1,
+          // };
         }
         if (ques.Is_Date_Forward__c === true) {
           //console.log('Inside the Is_Date_Forward__c');
-          this.myDatePickerOptions.disableUntil = {
-            year: this.today.getFullYear(),
-            month: this.today.getMonth() + 1,
-            day: this.today.getDate(),
-          };
+          // this.myDatePickerOptions.disableUntil = {
+          //   year: this.today.getFullYear(),
+          //   month: this.today.getMonth() + 1,
+          //   day: this.today.getDate(),
+          // };
         }
         //console.log(this.myDatePickerOptions);
       }
@@ -2035,7 +2035,7 @@ export class QuestionnaireComponent implements OnInit {
         local.createAttachment(fileWrapper);
       }
     };
-    this.spinner.show(this.spinnerName);
+    // this.spinner.show(this.spinnerName);
     reader.readAsDataURL(event.target.files[0]);
   }
 
@@ -2047,7 +2047,7 @@ export class QuestionnaireComponent implements OnInit {
     );
     this.attachments.push(createdAttachment);
     this.attachmentsMap.set(this.questionItem.Id, this.attachments);
-    this.spinner.hide(this.spinnerName);
+    // this.spinner.hide(this.spinnerName);
   };
 
   private successAttachmentDelete = (response) => {
