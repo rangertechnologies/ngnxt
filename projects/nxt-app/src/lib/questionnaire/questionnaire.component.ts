@@ -14,7 +14,7 @@ import { SalesforceService } from "../services/salesforce.service";
 import { DomSanitizer, SafeHtml } from "@angular/platform-browser";
 import { FormBuilder } from "@angular/forms";
 // import { NgxSpinnerService } from "ngx-spinner";
-import { NgxIndexedDBService, IndexDetails} from 'ngx-indexed-db';
+// import { NgxIndexedDBService, IndexDetails} from 'ngx-indexed-db';
 import { DeviceDetectorService } from 'ngx-device-detector';
 
 
@@ -486,7 +486,7 @@ export class QuestionnaireComponent implements OnInit {
     private sanitizer: DomSanitizer,
     // private spinner: NgxSpinnerService,
     private _formBuilder: FormBuilder,
-    private dbService: NgxIndexedDBService,
+    // private dbService: NgxIndexedDBService,
     private deviceService: DeviceDetectorService,
     el: ElementRef
   ) {
@@ -1261,7 +1261,7 @@ export class QuestionnaireComponent implements OnInit {
     var cQuestion: Question = new Question();
     cQuestion = this.questionItem;
     if(cQuestion.Question_No__c =='1'){
-      this.handleEvent.emit(this.qbItem.Back__c);
+      this.handleEvent.emit(this.qbItem?.Back__c);
     }
     
 

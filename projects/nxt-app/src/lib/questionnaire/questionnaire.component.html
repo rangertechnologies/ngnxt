@@ -1,8 +1,8 @@
 <ngx-spinner [name]="spinnerName" [type]="spinnerType"></ngx-spinner>
 <div *ngIf="backicon == false" >
   <div class="backicon" [style.visibility]="questionStack.length >=0 ? 'visible' : 'hidden'">
-    <button (click)="handleBackClick()" [class]=" abItem.Status__c == 'Completed' ? 'summary-volver':'app-back1'">
-    <img class="icon-arrow-back" src="https://rnxt.s3.amazonaws.com/MytIcon/icon-arrow-back.png" alt="Scroll down"> {{ qbItem.Back__c }}
+    <button (click)="handleBackClick()" [class]=" abItem?.Status__c == 'Completed' ? 'summary-volver':'app-back1'">
+    <img class="icon-arrow-back" src="https://rnxt.s3.amazonaws.com/MytIcon/icon-arrow-back.png" alt="Scroll down"> {{ qbItem?.Back__c }}
     </button>
   </div>
 </div>
@@ -616,7 +616,7 @@
             'nxt-btn btn-primary btn-lg btn-block btn-back-color':
               !qbItem.Progress_Bar__c
           }" (click)="handleBackClick()">
-          {{ qbItem.Back__c }}
+          {{ qbItem?.Back__c }}
         </button>
       </div>
     </div>
