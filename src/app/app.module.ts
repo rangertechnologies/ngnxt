@@ -17,8 +17,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     NxtAppModule,
     MyDatePickerModule,
     RouterModule.forRoot([
-      {path: '**', component: AppComponent}
-    ]),
+    { path: '**', component: AppComponent }
+], { relativeLinkResolution: 'legacy' }),
     BrowserAnimationsModule
   ],
   providers: [],
