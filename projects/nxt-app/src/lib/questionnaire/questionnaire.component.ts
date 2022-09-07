@@ -19,6 +19,12 @@ import { DeviceDetectorService } from 'ngx-device-detector';
 
 
 
+declare global {
+    interface Window {
+      dataLayer:any;
+  }
+}
+
 import {
   Question,
   QuestionBook,
@@ -480,6 +486,13 @@ export class QuestionnaireComponent implements OnInit {
 
   public myDatePickerOptions: IMyDpOptions = {};
 
+  public temp: any[] = [];
+  public clientId: string;
+  public logintrack: string;
+  public currentLoggedUserId: string;
+  public currentUserSessionId: string;
+  public appType: string;
+
   constructor(
     private sfService: SalesforceService,
     private route: ActivatedRoute,
@@ -492,6 +505,25 @@ export class QuestionnaireComponent implements OnInit {
   ) {
     this.spinnerName = "sp1";
     this.spinnerType = "ball-spin-clockwise";
+
+
+    this.deviceInfo = this.deviceService.getDeviceInfo();
+    const value = ('; '+document.cookie).split(`; _ga`).pop().split(';')[0];
+    this.temp = value.split(".");
+    this.clientId = this.temp[2]+'.'+this.temp[3];
+    this.currentLoggedUserId = localStorage.getItem("currentUserId");
+    this.currentUserSessionId =localStorage.getItem("userSessionIdTrack");
+    if(localStorage.getItem("currentUser") != null){
+      this.logintrack = 'logged';
+    }else{
+      this.logintrack = 'not logged';
+    }
+    if((localStorage.getItem('fromMobileLogin') || localStorage.getItem('fromMobile'))  && (this.deviceInfo.os === 'iOS' || this.deviceInfo.os === 'Android')){
+      this.appType = 'MIG';
+    }else{
+      this.appType = 'AGW';
+    }
+
   }
 
   onDateChanged(event: IMyDateModel) {
@@ -531,7 +563,7 @@ export class QuestionnaireComponent implements OnInit {
 
   ngOnInit() {
     this.deviceInfo = this.deviceService.getDeviceInfo();
-    //console.log('Inside the ngOnInit');
+    console.log('Inside the ngOnInit');
     //console.log("RNXT-Claim");
     this.inpValue = "";
     this.selectedMeridiem = "AM";
@@ -645,15 +677,15 @@ export class QuestionnaireComponent implements OnInit {
   // }
 
   processQB() {
-    //console.log('ProcessQB');
+    console.log('ProcessQB');
     //this.qbItem
 
-    //console.log(this.qbId);
+    console.log(this.qbId);
     //console.log('Version in process is 8bf11efa7f91a391d957bf6b5078edc7e656b67c');
     if (this.qbId) {
       //console.log('Inside the if part: qbId = '+this.qbId);
       if (this.qbId.length == 18) {
-        //console.log('Before Calling readQuestionBook() using ' + this.qbId);
+        console.log('Before Calling readQuestionBook() using ' + this.qbId);
         this.readQuestionBook(this.qbId);
       } else {
         //console.log('Inside the else part');
@@ -708,6 +740,9 @@ export class QuestionnaireComponent implements OnInit {
     //console.log(this.questionItem);
 
     //this.updateProgress();
+
+    let dateValueForGA = null;
+
     if (this.currentQuestionId === null) {
       return;
     }
@@ -755,10 +790,10 @@ export class QuestionnaireComponent implements OnInit {
         return;
       }
     } else if (this.bookFlag) {
-      //console.log(this.questionItem.Type__c)
-      //console.log('Inside the bookFlag cond');
-      //console.log('this.inpValue = '+this.inpValue);
-      //console.log('this.selectDate = '+this.selectDate);
+      console.log(this.questionItem.Type__c)
+      console.log('1st Inside the bookFlag cond');
+      console.log('this.inpValue = '+this.inpValue);
+      console.log('this.selectDate = '+this.selectDate);
       //console.log('this.selDate = ');
       //console.log(this.selDate);
       this.inpValue = "";
@@ -815,9 +850,9 @@ export class QuestionnaireComponent implements OnInit {
             }
           }
 
-          //console.log('this.qbItem.Progress_Bar__c = '+this.qbItem.Progress_Bar__c);
-          //console.log('this.selDate = '+this.selDate);
-          //console.log('this.inpValue = '+this.inpValue);
+          console.log('this.qbItem.Progress_Bar__c = '+this.qbItem.Progress_Bar__c);
+          console.log('this.selDate = '+this.selDate);
+          console.log('this.inpValue = '+this.inpValue);
           //console.log('this.selectedHour = '+this.selectedHour);
           //console.log('this.selectedMinute = '+this.selectedMinute);
 
@@ -982,7 +1017,9 @@ export class QuestionnaireComponent implements OnInit {
         this.selectedHour = this.getProperTime("12", this.selectedHour);
         this.selectedMinute = this.getProperTime("00", this.selectedMinute);
         this.selectedMeridiem = this.getProperTime("AM", this.selectedMeridiem);
-        //console.log(this.inpValue.length);
+
+        console.log('On 2nd elseif');
+        console.log(this.inpValue.length);
 
         if (this.questionItem.X24_Hours__c === false) {
           this.questionItem.input =
@@ -1035,6 +1072,11 @@ export class QuestionnaireComponent implements OnInit {
       }
     } else if (this.timeFlag && this.dtFlag && !this.dateFlag) {
       this.date_TimeMap();
+
+
+        console.log('On 3rd elseif');
+        console.log(this.inpValue.length);
+
       if (this.questionItem.X24_Hours__c === false) {
         this.inpValue =
           (this.selectedMeridiem === "PM" && this.selectedHour != "12"
@@ -1051,6 +1093,10 @@ export class QuestionnaireComponent implements OnInit {
       }
     } else if (this.dateFlag && this.dtFlag && !this.timeFlag) {
       this.change();
+
+        console.log('On 4th elseif');
+        console.log(this.inpValue.length);
+
       if (this.inpValue.length < 7 || this.selDate === null) {
         this.questionItem.error = new ErrorWrapper();
         return;
@@ -1102,10 +1148,13 @@ export class QuestionnaireComponent implements OnInit {
   }*/
     //this.answerWrap.squesValue = cQuestion.Question__c;
     this.answerWrap.squesValue = questionTxt ? questionTxt : cQuestion.Question__c;
+    console.log('Question'+this.answerWrap.squesValue);
+    console.log('Date = '+this.selectDate);
     this.saveAnswer();
   }
 
   next() {
+    console.log('Inside NXT');
     var cQuestion: Question = new Question();
     cQuestion = this.questionItem;
     var typ = cQuestion.Type__c;
@@ -1187,12 +1236,13 @@ export class QuestionnaireComponent implements OnInit {
     //this.stepperCateg();
 
     if (this.recordId) {
+      console.log('Normal nxt');
       //console.log('Before Calling readQuestion() using ' + recordId);
       this.readQuestion(this.recordId);
       this.pop = true;
     } else {
+      console.log('Summary Page Logic');
       this.pop = false;
-      //console.log('Summary Page Logic');
       // Reset the Variables
       this.inpValue = "";
       this.answerWrap = new AnswerWrapper();
@@ -1206,7 +1256,7 @@ export class QuestionnaireComponent implements OnInit {
       for (var q of this.questionStack) {
         var ansWrap = this.answerMap.get(q);
         if (ansWrap) {
-          //console.log("Handling Answer for " + ansWrap.quesId + " of type " + ansWrap.qTyp);
+          console.log("Handling Answer for " + ansWrap.quesId + " of type " + ansWrap.qTyp);
           var newStr = "";
 
           for (var ansStr of ansWrap.ansValue.split("@@##$$")) {
@@ -1241,6 +1291,23 @@ export class QuestionnaireComponent implements OnInit {
           this.backicon = true;
         }
       }
+
+      window.dataLayer.push({
+          'event':'virtualPage',
+          'path': '/my-treasures/my-claims/new-claim/step7-summary',
+          'url_real': window.location.href,
+          'logged': this.logintrack,
+          'userId': this.currentLoggedUserId,
+          'Sesion id': this.currentUserSessionId,
+          'section1': "mytreasure",
+          'section2': "mis tesoros",
+          'section3': "incidencia",
+          'section4': "resumen",
+          'pageType': "mis tesoros",
+          'clientID': this.clientId,
+          'appType': this.appType
+        });
+      
     }
   }
 
@@ -1296,7 +1363,50 @@ export class QuestionnaireComponent implements OnInit {
     );
 
   private successupdateAB = (response) => {
-    //console.log(response);
+    console.log('Inside the successupdateAB');
+    console.log(response);
+    console.log(this.abItem);
+    console.log(this.abItem.Status__c);
+
+    if(response.status == "success" && response.AnswerBook && response.AnswerBook.Status__c == "Completed"){
+      console.log('Inside the completed state cond')
+      var today = new Date();
+      var dd = String(today.getDate()).padStart(2, '0');
+      var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+      var yyyy = today.getFullYear();
+      let tdyDTStr = dd + '-' + mm + '-' + yyyy;
+      console.log('Before datalayer push');
+      window.dataLayer.push({
+        'event':'virtualPage',
+        'path': '/my-treasures/my-claims/detail',
+        'url_real': window.location.href,
+        'logged': this.logintrack,
+        'userId': this.currentLoggedUserId,
+        'Sesion id': this.currentUserSessionId,
+        'section1': "mytreasure",
+        'section2': "mis tesoros",
+        'section3': "incidencia",
+        'section4': "fin",
+        'pageType': "mis tesoros",
+        'clientID': this.clientId,
+        'fechaSiniestro': tdyDTStr,
+        'appType': this.appType
+      });
+
+       window.dataLayer.push({ 
+        'event':'eventGA', 
+        'eventCat': 'incidencia', 
+        'eventAct': 'fin', 
+        'eventLbl': localStorage.getItem("claimObject"),
+        'clientID': this.clientId,
+        'appType': this.appType,
+        'logged': this.logintrack,
+        'userId': this.currentLoggedUserId,
+        'Sesion id': this.currentUserSessionId
+      });
+
+    }
+    
     // //console.log('status success')
     //this.abItem.Status__c = "Completed";
   };
@@ -1313,8 +1423,8 @@ export class QuestionnaireComponent implements OnInit {
     );
 
   private successReadBook = (response) => {
-    //console.log('Inside the successReadBook');
-    //console.log(response)
+    console.log('Inside the successReadBook');
+    console.log(response);
     this.qbItem = response.questionbook;
     this.abItem = response.answerbook;
     //console.log('readingQuestion using ' + this.qbItem.First_Question__c);
@@ -1375,6 +1485,8 @@ export class QuestionnaireComponent implements OnInit {
         this.readQuestion(lastQuestionId);
       }
     } else if (this.abItem.Status__c == "Completed") {
+      console.log('Inside the completed cond');
+      console.log(this.abItem);
       this.handleEvent.emit("Summaryupdated");
       // Temporary Fix for duplicate answers on the summary.
       this.summary = [];
@@ -1452,6 +1564,7 @@ export class QuestionnaireComponent implements OnInit {
           this.summary.push(answers);
         }
       }
+
     }
   };
 
@@ -1546,6 +1659,8 @@ export class QuestionnaireComponent implements OnInit {
   };
 
   private saveAnswer = () => {
+    console.log('Inside the saveAnswer');
+    console.log(JSON.stringify(this.answerWrap));
     // Set the Answer Number based on the Question Stack Length
     if (this.inpValue != ".") {
       this.currentQuestionId = null;
@@ -1565,9 +1680,150 @@ export class QuestionnaireComponent implements OnInit {
   }
 
   private successSave = (response) => {
+    console.log('Inside the successSave');
+    console.log(response);
     if (response.status == "success") {
       //this.abItem = response.answerbook;
       this.answerMap.set(response.answer.quesId, response.answer);
+
+      if(response.answer.groupText == '¿Cuándo ocurrió?' && response.answer.ansValue){
+        let tempAns = response.answer.ansValue.split(" ");
+        window.dataLayer.push({
+          'event':'virtualPage',
+          'path': '/my-treasures/my-claims/new-claim/step2-date',
+          'url_real': window.location.href,
+          'logged': this.logintrack,
+          'userId': this.currentLoggedUserId,
+          'Sesion id': this.currentUserSessionId,
+          'section1': "mytreasure",
+          'section2': "mis tesoros",
+          'section3': "incidencia",
+          'section4': "fecha y hora",
+          'pageType': "mis tesoros",
+          'damage_date': tempAns[0],
+          'clientID': this.clientId,
+          'appType': this.appType
+        });
+      }else if(response.answer.groupText == 'Lugar del suceso' && response.answer.ansValue && response.answer.quesValue){
+        let tempAns = response.answer.ansValue == 'Si' ? 'ok' : 'ko';
+        if(response.answer.quesValue.includes('¿Ha ocurrido en tu domicilio?')){
+          window.dataLayer.push({
+            'event':'virtualPage',
+            'path': '/my-treasures/my-claims/new-claim/step3-location1',
+            'url_real': window.location.href,
+            'logged': this.logintrack,
+            'userId': this.currentLoggedUserId,
+            'Sesion id': this.currentUserSessionId,
+            'section1': "mytreasure",
+            'section2': "mis tesoros",
+            'section3': "incidencia",
+            'section4': "domicilio",
+            'pageType': "mis tesoros",
+            'damage_residence': tempAns,
+            'clientID': this.clientId,
+            'appType': this.appType
+          });
+        }else if(response.answer.quesValue.includes('¿Ha ocurrido en España?')){
+          window.dataLayer.push({
+            'event':'virtualPage',
+            'path': '/my-treasures/my-claims/new-claim/step3-location2',
+            'url_real': window.location.href,
+            'logged': this.logintrack,
+            'userId': this.currentLoggedUserId,
+            'Sesion id': this.currentUserSessionId,
+            'section1': "mytreasure",
+            'section2': "mis tesoros",
+            'section3': "incidencia",
+            'section4': "domicilio",
+            'pageType': "mis tesoros",
+            'clientID': this.clientId,
+            'appType': this.appType
+          });
+        }else if(response.answer.quesValue.includes('Selecciona el país')){
+          window.dataLayer.push({
+            'event':'virtualPage',
+            'path': '/my-treasures/my-claims/new-claim/step3-location3',
+            'url_real': window.location.href,
+            'logged': this.logintrack,
+            'userId': this.currentLoggedUserId,
+            'Sesion id': this.currentUserSessionId,
+            'section1': "mytreasure",
+            'section2': "mis tesoros",
+            'section3': "incidencia",
+            'section4': "pais",
+            'pageType': "mis tesoros",
+            'clientID': this.clientId,
+            'appType': this.appType
+          });
+        }
+      }else if(response.answer.quesValue.includes('Detalle de los daños') && response.answer.ansValue){
+        let tempType = response.answer.ansValue.split("@@##$$")[0] == 'Mi tesoro se ha dañado' ? 'rotura':'robo';
+        window.dataLayer.push({
+          'event':'virtualPage',
+          'path': '/my-treasures/my-claims/new-claim/step4-detail-damage',
+          'url_real': window.location.href,
+          'logged': this.logintrack,
+          'userId': this.currentLoggedUserId,
+          'Sesion id': this.currentUserSessionId,
+          'section1': "mytreasure",
+          'section2': "mis tesoros",
+          'section3': "incidencia",
+          'section4': "robo-daño",
+          'pageType': "mis tesoros",
+          'siniestroOcurridoEspecifico' : tempType,
+          'clientID': this.clientId,
+          'appType': this.appType
+        });
+      }else if(response.answer.groupText == 'Denuncia o foto de los daños'){
+        window.dataLayer.push({
+          'event':'virtualPage',
+          'path': '/my-treasures/my-claims/new-claim/step5-attach',
+          'url_real': window.location.href,
+          'logged': this.logintrack,
+          'userId': this.currentLoggedUserId,
+          'Sesion id': this.currentUserSessionId,
+          'section1': "mytreasure",
+          'section2': "mis tesoros",
+          'section3': "incidencia",
+          'section4': "foto",
+          'pageType': "mis tesoros",
+          'clientID': this.clientId,
+          'appType': this.appType
+        });
+      }else if(response.answer.groupText == 'Detalle de la cuenta bancaria'){
+        window.dataLayer.push({
+          'event':'virtualPage',
+          'path': '/my-treasures/my-claims/new-claim/step6-bank-account1',
+          'url_real': window.location.href,
+          'logged': this.logintrack,
+          'userId': this.currentLoggedUserId,
+          'Sesion id': this.currentUserSessionId,
+          'section1': "mytreasure",
+          'section2': "mis tesoros",
+          'section3': "incidencia",
+          'section4': "numero cuenta",
+          'pageType': "mis tesoros",
+          'clientID': this.clientId,
+          'appType': this.appType
+        });
+      }else if(response.answer.groupText == 'Certificado de titularidad de la cuenta bancaria'){
+        window.dataLayer.push({
+          'event':'virtualPage',
+          'path': '/my-treasures/my-claims/new-claim/step6-bank-account2',
+          'url_real': window.location.href,
+          'logged': this.logintrack,
+          'userId': this.currentLoggedUserId,
+          'Sesion id': this.currentUserSessionId,
+          'section1': "mytreasure",
+          'section2': "mis tesoros",
+          'section3': "incidencia",
+          'section4': "certificado",
+          'pageType': "mis tesoros",
+          'clientID': this.clientId,
+          'appType': this.appType
+        });
+      }
+
     } else {
       this.questionItem.error = new ErrorWrapper();
       this.questionItem.error.errorMsg = response.error.errorMsg;
@@ -2067,6 +2323,9 @@ export class QuestionnaireComponent implements OnInit {
   };
 
   handleSubmitClick() {
+
+    console.log('Inside the handleSubmitClick');
+    console.log(this.abItem);
     this.handleEvent.emit(this.qbItem.Submit_Tracking_ID__c);
     this.updateAnswerBook(this.abItem.Id);
   }

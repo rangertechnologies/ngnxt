@@ -17,8 +17,8 @@ export class AppComponent {
 
   ngOnInit() {
     this.route.queryParams.subscribe((params: Params) => {
-      //console.log('App params', params);
-      //console.log('id', params['id']);
+      console.log('App params', params);
+      console.log('id', params['id']);
       this.qbId = params['id'];
     });
   }
