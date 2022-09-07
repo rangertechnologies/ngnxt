@@ -3,7 +3,7 @@ import { ActivatedRoute, Params } from '@angular/router';
 import { SalesforceService } from '../services/salesforce.service';
 import { IMyDateModel, IMyDpOptions } from 'mydatepicker';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
-import { FormBuilder } from '@angular/forms';
+import { UntypedFormBuilder } from '@angular/forms';
 
 import {
 Question,
@@ -113,7 +113,7 @@ export class QuestionnaireComponent implements OnInit {
 
   };
 
-  constructor(private sfService: SalesforceService, private route: ActivatedRoute, private sanitizer: DomSanitizer, private _formBuilder: FormBuilder){
+  constructor(private sfService: SalesforceService, private route: ActivatedRoute, private sanitizer: DomSanitizer, private _formBuilder: UntypedFormBuilder){
 
    }
 
