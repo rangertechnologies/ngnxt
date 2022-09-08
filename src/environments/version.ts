@@ -1,13 +1,13 @@
 // IMPORTANT: THIS FILE IS AUTO GENERATED! DO NOT MANUALLY EDIT OR CHECKIN!
 /* tslint:disable */
 export const VERSION = {
-    "dirty": false,
-    "raw": "bad02ca",
-    "hash": "bad02ca",
+    "dirty": true,
+    "raw": "0514e41-dirty",
+    "hash": "0514e41",
     "distance": null,
     "tag": null,
     "semver": null,
-    "suffix": "bad02ca",
+    "suffix": "0514e41-dirty",
     "semverString": null,
     "version": "2.0.21"
 };

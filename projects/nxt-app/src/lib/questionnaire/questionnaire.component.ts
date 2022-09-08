@@ -12,7 +12,7 @@ import { ActivatedRoute, Params } from "@angular/router";
 import { SalesforceService } from "../services/salesforce.service";
 import { IMyDateModel, IMyDpOptions } from "mydatepicker";
 import { DomSanitizer, SafeHtml } from "@angular/platform-browser";
-import { FormBuilder } from "@angular/forms";
+import { UntypedFormBuilder } from "@angular/forms";
 import { NgxSpinnerService } from "ngx-spinner";
 import { NgxIndexedDBService, IndexDetails} from 'ngx-indexed-db';
 import { DeviceDetectorService } from 'ngx-device-detector';
@@ -485,7 +485,7 @@ export class QuestionnaireComponent implements OnInit {
     private route: ActivatedRoute,
     private sanitizer: DomSanitizer,
     private spinner: NgxSpinnerService,
-    private _formBuilder: FormBuilder,
+    private _formBuilder: UntypedFormBuilder,
     private dbService: NgxIndexedDBService,
     private deviceService: DeviceDetectorService,
     el: ElementRef
