@@ -14,7 +14,7 @@ import { IMyDateModel, IMyDpOptions } from "mydatepicker";
 import { DomSanitizer, SafeHtml } from "@angular/platform-browser";
 import { UntypedFormBuilder } from "@angular/forms";
 import { NgxSpinnerService } from "ngx-spinner";
-import { NgxIndexedDBService, IndexDetails} from 'ngx-indexed-db';
+//import { NgxIndexedDBService, IndexDetails} from 'ngx-indexed-db';
 import { DeviceDetectorService } from 'ngx-device-detector';
 
 
@@ -486,7 +486,7 @@ export class QuestionnaireComponent implements OnInit {
     private sanitizer: DomSanitizer,
     private spinner: NgxSpinnerService,
     private _formBuilder: UntypedFormBuilder,
-    private dbService: NgxIndexedDBService,
+    //private dbService: NgxIndexedDBService,
     private deviceService: DeviceDetectorService,
     el: ElementRef
   ) {
@@ -678,7 +678,7 @@ export class QuestionnaireComponent implements OnInit {
   //Summary Question Clickable Logic
   handleEditClick(value: string) {
     this.backicon = false;
-    if (this.abItem.Status__c == "Pending") {
+    if (this.abItem?.Status__c == "Pending") {
       if (value == null) {
         return;
       }
@@ -1318,7 +1318,7 @@ export class QuestionnaireComponent implements OnInit {
     this.qbItem = response.questionbook;
     this.abItem = response.answerbook;
     //console.log('readingQuestion using ' + this.qbItem.First_Question__c);
-    if (this.abItem.Status__c == "Pending") {
+    if (this.abItem?.Status__c == "Pending") {
       if (
         this.abItem.Answers__r == null ||
         this.abItem.Answers__r.records.length == 0
@@ -1374,7 +1374,7 @@ export class QuestionnaireComponent implements OnInit {
         // Read the last answered question
         this.readQuestion(lastQuestionId);
       }
-    } else if (this.abItem.Status__c == "Completed") {
+    } else if (this.abItem?.Status__c == "Completed") {
       this.handleEvent.emit("Summaryupdated");
       // Temporary Fix for duplicate answers on the summary.
       this.summary = [];
@@ -1468,7 +1468,7 @@ export class QuestionnaireComponent implements OnInit {
     );
 
   private successAnswerBookRead = (response) => {
-    if (this.abItem.Status__c == "Completed") {
+    if (this.abItem?.Status__c == "Completed") {
       for (var answer of this.abItem.Answers__r.records) {
         var av = answer.Answer_Long__c.split("@@##$$");
         var answers = { quesValue: answer.Question_Rich_Text__c, ansValue: av, groupText:answer.Question_Group_Text__c };
