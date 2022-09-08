@@ -6,6 +6,11 @@ const { resolve, relative } = require('path');
 const { writeFileSync } = require('fs-extra');
 
 import forceDeploy from 'gulp-jsforce-deploy';
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 const gitInfo = gitDescribeSync({
     dirtyMark: false,
