@@ -499,7 +499,7 @@ export class QuestionnaireComponent implements OnInit {
     private sanitizer: DomSanitizer,
     private spinner: NgxSpinnerService,
     private _formBuilder: FormBuilder,
-    private dbService: NgxIndexedDBService,
+    //private dbService: NgxIndexedDBService,
     private deviceService: DeviceDetectorService,
     el: ElementRef
   ) {
