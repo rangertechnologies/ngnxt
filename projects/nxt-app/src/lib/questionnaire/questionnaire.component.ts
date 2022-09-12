@@ -497,16 +497,16 @@ export class QuestionnaireComponent implements OnInit {
   onDateChanged(event: IMyDateModel) {
     //console.log('Inside the onDateChanged');
     //to change the border color
-    if (this.qbItem.Progress_Bar__c) {
+    if (this.qbItem.RFAB__Progress_Bar__c) {
       //console.log('Inside the progressBar cond');
       this.inpValue =
         event.date.day + "/" + event.date.month + "/" + event.date.year;
-        if(this.questionItem.Type__c =="Book"){
+        if(this.questionItem.RFAB__Type__c =="Book"){
         this.selectDate =  event.date.day + "/" + event.date.month + "/" + event.date.year;
         }
     } else {
       //console.log('Inside the ELSE of progressBar cond');
-      if(this.questionItem.Type__c =="Book"){
+      if(this.questionItem.RFAB__Type__c =="Book"){
         this.selectDate =  event.date.day + "-" + event.date.month + "-" + event.date.year;
         }
       this.inpValue =
@@ -678,7 +678,7 @@ export class QuestionnaireComponent implements OnInit {
   //Summary Question Clickable Logic
   handleEditClick(value: string) {
     this.backicon = false;
-    if (this.abItem?.Status__c == "Pending") {
+    if (this.abItem?.RFAB__Status__c == "Pending") {
       if (value == null) {
         return;
       }
@@ -692,7 +692,7 @@ export class QuestionnaireComponent implements OnInit {
       for (let i = arrayLength; i > lengthValue; i--) {
         this.questionStack.pop();
       }
-      if (this.qbItem.Progress_Bar__c === true) {
+      if (this.qbItem.RFAB__Progress_Bar__c === true) {
         var arrayLength1 = this.questionName.length;
         for (let j = arrayLength1; j > lengthValue; j--) {
           this.questionName.pop();
@@ -713,13 +713,13 @@ export class QuestionnaireComponent implements OnInit {
     }
     var questionTxt='';
     this.clearError();
-    this.handleEvent.emit(this.qbItem.Next_Tracking_ID__c);
+    this.handleEvent.emit(this.qbItem.RFAB__Next_Tracking_ID__c);
     this.recordId = null;
     var cQuestion: Question = new Question();
     cQuestion = this.questionItem;
-    var typ = cQuestion.Type__c;
-    // this.sques += cQuestion.Question__c + '@@##$$';
-    var quesValue = cQuestion.Question_Text__c;
+    var typ = cQuestion.RFAB__Type__c;
+    // this.sques += cQuestion.RFAB__Question__c + '@@##$$';
+    var quesValue = cQuestion.RFAB__Question_Text__c;
     var mailformat =
       "^[^.][a-zA-Z0-9!#$%&'*+-/=?^_`{|}~]+[^.]@[^-][a-zA-Z0-9.-]+[^-].[a-zA-Z]{2,}$";
 
@@ -728,13 +728,13 @@ export class QuestionnaireComponent implements OnInit {
       this.inpValue = "";
       // Save all the selected options in the inpValue
       for (var ov of this.optionValues.filter((item) => item.checked)) {
-        this.inpValue += ov.Value__c + "@@##$$";
-        this.recordId = ov.Next_Question__c;
+        this.inpValue += ov.RFAB__Value__c + "@@##$$";
+        this.recordId = ov.RFAB__Next_Question__c;
       }
       this.inpValue = this.trimLastDummy(this.inpValue);
     } else if (this.emailFlag) {
       if (this.inpValue && this.inpValue.match(mailformat)) {
-        this.recordId = this.questionItem.Next_Question__c;
+        this.recordId = this.questionItem.RFAB__Next_Question__c;
       } else {
         this.questionItem.error = new ErrorWrapper();
         return;
@@ -743,19 +743,19 @@ export class QuestionnaireComponent implements OnInit {
       var isNotValidAccNum = this.isNotValidAccNumber(this.inpValue);
       if (isNotValidAccNum) {
         this.notValidAccNum = true;
-        this.recordId = this.questionItem.Next_Question__c;
+        this.recordId = this.questionItem.RFAB__Next_Question__c;
         return;
       }
       this.notValidAccNum = false;
     } else if (this.numberFlag) {
       if (this.inpValue) {
-        this.recordId = this.questionItem.Next_Question__c;
+        this.recordId = this.questionItem.RFAB__Next_Question__c;
       } else {
         this.questionItem.error = new ErrorWrapper();
         return;
       }
     } else if (this.bookFlag) {
-      //console.log(this.questionItem.Type__c)
+      //console.log(this.questionItem.RFAB__Type__c)
       //console.log('Inside the bookFlag cond');
       //console.log('this.inpValue = '+this.inpValue);
       //console.log('this.selectDate = '+this.selectDate);
@@ -763,23 +763,23 @@ export class QuestionnaireComponent implements OnInit {
       //console.log(this.selDate);
       this.inpValue = "";
       var hasMissingInput = false;
-      for (var item of this.questionItem.Questions__r.records) {
+      for (var item of this.questionItem.RFAB__Questions__r.records) {
         var count = 0;
       
-        if(item.Type__c == "Date" || item.Type__c == "Time") {
+        if(item.RFAB__Type__c == "Date" || item.RFAB__Type__c == "Time") {
           //this one
           this.change();
-            if(item.Type__c == "Date"){
+            if(item.RFAB__Type__c == "Date"){
               //console.log('Inside the date type cond = '+this.selectDate);
               this.inpValue = this.selectDate;
               //console.log(this.inpValue)
               //console.log(this.selectDate)
           
             }
-           if(item.Type__c == "Time"){
+           if(item.RFAB__Type__c == "Time"){
              //console.log(this.selectedHour+this.selectedMeridiem+this.selectedMinute)
              
-          if (this.questionItem.X24_Hours__c === false) {
+          if (this.questionItem.RFAB__X24_Hours__c === false) {
               this.questionItem.input =
                 (this.selectedMeridiem === "PM" && this.selectedHour != "12"
                   ? Number(this.selectedHour) + 12
@@ -789,7 +789,7 @@ export class QuestionnaireComponent implements OnInit {
               if (this.selectedMeridiem === "AM" && this.selectedHour === "12") {
                 this.questionItem.input = "00" + ":" + this.selectedMinute + " AM";
               }
-              if (this.qbItem.Progress_Bar__c) {
+              if (this.qbItem.RFAB__Progress_Bar__c) {
                 if(this.selectDate){
                   this.inpValue = this.selectDate+" "+this.questionItem.input;
                 }else{
@@ -804,10 +804,10 @@ export class QuestionnaireComponent implements OnInit {
                 
               }
             }
-            if (this.questionItem.X24_Hours__c === true) {
+            if (this.questionItem.RFAB__X24_Hours__c === true) {
               this.questionItem.input =
                 this.selectedHour + ":" + this.selectedMinute;
-              if (this.qbItem.Progress_Bar__c) {
+              if (this.qbItem.RFAB__Progress_Bar__c) {
                 this.inpValue = this.questionItem.input;
               } else {
                 this.inpValue = this.questionItem.input;
@@ -815,13 +815,13 @@ export class QuestionnaireComponent implements OnInit {
             }
           }
 
-          //console.log('this.qbItem.Progress_Bar__c = '+this.qbItem.Progress_Bar__c);
+          //console.log('this.qbItem.RFAB__Progress_Bar__c = '+this.qbItem.RFAB__Progress_Bar__c);
           //console.log('this.selDate = '+this.selDate);
           //console.log('this.inpValue = '+this.inpValue);
           //console.log('this.selectedHour = '+this.selectedHour);
           //console.log('this.selectedMinute = '+this.selectedMinute);
 
-          if (this.qbItem.Progress_Bar__c && this.inpValue && this.insuranceStartDate) {
+          if (this.qbItem.RFAB__Progress_Bar__c && this.inpValue && this.insuranceStartDate) {
             var date1: any = this.inpValue.split(" ");
             date1 = date1[0].split("/");
             date1 = [date1[2], date1[1], date1[0]].join("-");
@@ -848,7 +848,7 @@ export class QuestionnaireComponent implements OnInit {
       }
 
 
-      if(item.Type__c== "Text" && item.Question__c === 'Población'){
+      if(item.RFAB__Type__c== "Text" && item.RFAB__Question__c === 'Población'){
           for(var loc of this.localaddress){
             if((this.selectedPostalcode == loc.zipCode)&&(this.selectedValue == loc.country)&&(this.selectedCity==loc.town)){
               item.input= this.selectedCity;
@@ -865,7 +865,7 @@ export class QuestionnaireComponent implements OnInit {
         //console.log('testin values=='+item.input)
         } 
 
-        if(item.Type__c== "Text" && item.Question__c === 'Código postal'){
+        if(item.RFAB__Type__c== "Text" && item.RFAB__Question__c === 'Código postal'){
           for(var loc of this.localaddress){
             if(loc.zipCode == this.selectedPostalcode){
               //console.log('testing zipcode value*****'+ this.selectedPostalcode)
@@ -883,7 +883,7 @@ export class QuestionnaireComponent implements OnInit {
         }
         
       
-      if(item.Type__c== "Text" && item.Question__c === 'Provincia'){
+      if(item.RFAB__Type__c== "Text" && item.RFAB__Question__c === 'Provincia'){
 			  for(var loc of this.localaddress){
 				  if(loc.province == this.selectedProvince){
 					  //console.log('******testing province value'+ this.selectedProvince)
@@ -917,35 +917,35 @@ export class QuestionnaireComponent implements OnInit {
 		  }*/
 
         if (
-          !item.Is_Optional__c &&
-          ((item.Type__c != "File" && !item.input && item.Type__c != 'Date' && item.Type__c != 'Time') ||
-            (item.Type__c == "File" && this.attachments.length == 0))
+          !item.RFAB__Is_Optional__c &&
+          ((item.RFAB__Type__c != "File" && !item.input && item.RFAB__Type__c != 'Date' && item.RFAB__Type__c != 'Time') ||
+            (item.RFAB__Type__c == "File" && this.attachments.length == 0))
         ) {
           item.error = new ErrorWrapper();
           hasMissingInput = true;
         }
-        if (item.Type__c == "Radio") {
+        if (item.RFAB__Type__c == "Radio") {
           if (!item.input) {
             item.error = new ErrorWrapper();
             hasMissingInput = true;
           }
         }
-        if (item.Type__c == "Dropdown") {
+        if (item.RFAB__Type__c == "Dropdown") {
           if (!item.input) {
             item.input = "";
             item.error = new ErrorWrapper();
             hasMissingInput = true;
           }
         }
-        if (item.Type__c == "Email") {
+        if (item.RFAB__Type__c == "Email") {
           if (item.input && item.input.match(mailformat)) {
-            this.recordId = cQuestion.Next_Question__c;
+            this.recordId = cQuestion.RFAB__Next_Question__c;
           } else {
             item.error = new ErrorWrapper();
             hasMissingInput = true;
           }
         }
-        if (item.Type__c == "File" && this.attachments.length > 0) {
+        if (item.RFAB__Type__c == "File" && this.attachments.length > 0) {
           for (var attachmentItem of this.attachments) {
             this.inpValue +=
               attachmentItem.attachmentId +
@@ -953,7 +953,7 @@ export class QuestionnaireComponent implements OnInit {
               attachmentItem.attachmentName +
               ",";
             if (item.input == this.inpValue) {
-              this.recordId = cQuestion.Next_Question__c;
+              this.recordId = cQuestion.RFAB__Next_Question__c;
               //console.log('inside' + recordId);
             }
           }
@@ -962,7 +962,7 @@ export class QuestionnaireComponent implements OnInit {
 
 
         this.inpValue += (item.input != undefined ? item.input : "") + "@@##$$";
-        questionTxt += item.Question__c + "@@##$$";
+        questionTxt += item.RFAB__Question__c + "@@##$$";
         //console.log('inside book1' + this.inpValue)
       }
       if (hasMissingInput) {
@@ -984,7 +984,7 @@ export class QuestionnaireComponent implements OnInit {
         this.selectedMeridiem = this.getProperTime("AM", this.selectedMeridiem);
         //console.log(this.inpValue.length);
 
-        if (this.questionItem.X24_Hours__c === false) {
+        if (this.questionItem.RFAB__X24_Hours__c === false) {
           this.questionItem.input =
             (this.selectedMeridiem === "PM" && this.selectedHour != "12"
               ? Number(this.selectedHour) + 12
@@ -994,22 +994,22 @@ export class QuestionnaireComponent implements OnInit {
           if (this.selectedMeridiem === "AM" && this.selectedHour === "12") {
             this.questionItem.input = "00" + ":" + this.selectedMinute + " AM";
           }
-          if (this.qbItem.Progress_Bar__c) {
+          if (this.qbItem.RFAB__Progress_Bar__c) {
             this.inpValue = this.inpValue + " " + this.questionItem.input;
           } else {
             this.inpValue = this.inpValue + "T" + this.questionItem.input;
           }
         }
-        if (this.questionItem.X24_Hours__c === true) {
+        if (this.questionItem.RFAB__X24_Hours__c === true) {
           this.questionItem.input =
             this.selectedHour + ":" + this.selectedMinute;
-          if (this.qbItem.Progress_Bar__c) {
+          if (this.qbItem.RFAB__Progress_Bar__c) {
             this.inpValue = this.inpValue + " " + this.questionItem.input;
           } else {
             this.inpValue = this.inpValue + "T" + this.questionItem.input;
           }
         }
-        if (this.qbItem.Progress_Bar__c) {
+        if (this.qbItem.RFAB__Progress_Bar__c) {
           //console.log("ans => " + this.inpValue);
           var date1: any = this.inpValue.split(" ");
           date1 = date1[0].split("/");
@@ -1035,7 +1035,7 @@ export class QuestionnaireComponent implements OnInit {
       }
     } else if (this.timeFlag && this.dtFlag && !this.dateFlag) {
       this.date_TimeMap();
-      if (this.questionItem.X24_Hours__c === false) {
+      if (this.questionItem.RFAB__X24_Hours__c === false) {
         this.inpValue =
           (this.selectedMeridiem === "PM" && this.selectedHour != "12"
             ? Number(this.selectedHour) + 12
@@ -1075,7 +1075,7 @@ export class QuestionnaireComponent implements OnInit {
     }
 
     // Check for the answer before saving to the DB
-    if (!this.questionItem.Is_Optional__c && !this.inpValue) {
+    if (!this.questionItem.RFAB__Is_Optional__c && !this.inpValue) {
       // Show error that the question must be answered
       this.questionItem.error = new ErrorWrapper();
       return;
@@ -1088,27 +1088,27 @@ export class QuestionnaireComponent implements OnInit {
     this.answerWrap.quesValue = quesValue;
     this.answerWrap.qTyp = typ;
     this.answerWrap.ansValue = this.inpValue;
-    this.answerWrap.groupText = cQuestion.Group__c;
+    this.answerWrap.groupText = cQuestion.RFAB__Group__c;
     this.answerWrap.ansValue = this.inpValue;
    if(this.answerWrap.qTyp == "Alphanumeric"){
       this.answerWrap.ansValue = 'ES'+ this.inpValue;
       console.log('Bank condition');
       console.log(this.answerWrap.ansValue);
     }
-    /*if (cQuestion.Type__c == 'Book'){
-    for (var qb of cQuestion.Questions__r.records){
-      //console.log(qb.Question__c+'****'+"@@##$$")
+    /*if (cQuestion.RFAB__Type__c == 'Book'){
+    for (var qb of cQuestion.RFAB__Questions__r.records){
+      //console.log(qb.RFAB__Question__c+'****'+"@@##$$")
     } 
   }*/
-    //this.answerWrap.squesValue = cQuestion.Question__c;
-    this.answerWrap.squesValue = questionTxt ? questionTxt : cQuestion.Question__c;
+    //this.answerWrap.squesValue = cQuestion.RFAB__Question__c;
+    this.answerWrap.squesValue = questionTxt ? questionTxt : cQuestion.RFAB__Question__c;
     this.saveAnswer();
   }
 
   next() {
     var cQuestion: Question = new Question();
     cQuestion = this.questionItem;
-    var typ = cQuestion.Type__c;
+    var typ = cQuestion.RFAB__Type__c;
     // If no error then move to next steps
     if (this.questionItem.error) {
       return;
@@ -1119,51 +1119,51 @@ export class QuestionnaireComponent implements OnInit {
 
     // CONDITIONAL vs OPTIONONLY & UNCONDITIONAL
     if (cQuestion.RecordType.Name == "CONDITIONAL") {
-      for (var cOpt of cQuestion.Question_Options__r.records) {
+      for (var cOpt of cQuestion.RFAB__Question_Options__r.records) {
         // Radio / Data
-        //console.log('Option => ' + cOpt.Value__c + ' matching with ' + ansVal);
-        if (cOpt.Value__c == this.inpValue) {
-          //console.log('Match Found using ' + cOpt.Next_Question__c);
-          this.recordId = cOpt.Next_Question__c;
+        //console.log('Option => ' + cOpt.RFAB__Value__c + ' matching with ' + ansVal);
+        if (cOpt.RFAB__Value__c == this.inpValue) {
+          //console.log('Match Found using ' + cOpt.RFAB__Next_Question__c);
+          this.recordId = cOpt.RFAB__Next_Question__c;
           //console.log('conditional record id'+ this.recordId);
         }
       }
       // Could be of type Data and existing value
       if (this.recordId && typ == "Data") {
-        this.recordId = cQuestion.Next_Question__c;
+        this.recordId = cQuestion.RFAB__Next_Question__c;
       }
     } else if (cQuestion.RecordType.Name == "OPTIONONLY") {
       //  OPTIONONLY logic
-      this.recordId = cQuestion.Next_Question__c;
+      this.recordId = cQuestion.RFAB__Next_Question__c;
     } else if (cQuestion.RecordType.Name == "UNCONDITIONAL") {
       //Unconditional  logic
       //console.log("inside unconditional");
       //inside Book Type
-      if (cQuestion.Type__c == "Book" && cQuestion.Question_No__c !='6') {
+      if (cQuestion.RFAB__Type__c == "Book" && cQuestion.RFAB__Question_No__c !='6') {
         //console.log("inside book");
-        for (let opt of cQuestion.Questions__r.records) {
-          //console.log(opt.Type__c);
-          if (opt.Type__c == "Dropdown" || opt.Type__c == "Radio") {
-            for (var opt1 of opt.Question_Options__r.records) {
-              if (this.valueName == opt1.Value__c) {
-                this.recordId =opt1.Next_Question__c || cQuestion.Next_Question__c;                  
+        for (let opt of cQuestion.RFAB__Questions__r.records) {
+          //console.log(opt.RFAB__Type__c);
+          if (opt.RFAB__Type__c == "Dropdown" || opt.RFAB__Type__c == "Radio") {
+            for (var opt1 of opt.RFAB__Question_Options__r.records) {
+              if (this.valueName == opt1.RFAB__Value__c) {
+                this.recordId =opt1.RFAB__Next_Question__c || cQuestion.RFAB__Next_Question__c;                  
               } else {
                 //console.log('Else'+this.recordId)
-                this.recordId = cQuestion.Next_Question__c;
+                this.recordId = cQuestion.RFAB__Next_Question__c;
                 
               }
             }
           } else {
-            this.recordId = cQuestion.Next_Question__c;
+            this.recordId = cQuestion.RFAB__Next_Question__c;
           }
         }
       }
-      else if(cQuestion.Type__c == "Book" && cQuestion.Question_No__c =='6' ) {
-        for (let opt of cQuestion.Questions__r.records) {
-          if (opt.Type__c == "Dropdown" || opt.Type__c == "Radio"){
-          for (var opt1 of opt.Question_Options__r.records) {
-            if (this.valueName == opt1.Value__c) {
-            this.recordId = opt1.Next_Question__c;  
+      else if(cQuestion.RFAB__Type__c == "Book" && cQuestion.RFAB__Question_No__c =='6' ) {
+        for (let opt of cQuestion.RFAB__Questions__r.records) {
+          if (opt.RFAB__Type__c == "Dropdown" || opt.RFAB__Type__c == "Radio"){
+          for (var opt1 of opt.RFAB__Question_Options__r.records) {
+            if (this.valueName == opt1.RFAB__Value__c) {
+            this.recordId = opt1.RFAB__Next_Question__c;  
             }
           }
         }
@@ -1171,7 +1171,7 @@ export class QuestionnaireComponent implements OnInit {
       }    
       
       else {
-        this.recordId = cQuestion.Next_Question__c;
+        this.recordId = cQuestion.RFAB__Next_Question__c;
       }
     }
 
@@ -1257,11 +1257,11 @@ export class QuestionnaireComponent implements OnInit {
     if (this.pop === true) {
       this.questionName.pop();
     }
-    this.handleEvent.emit(this.qbItem.Back_Tracking_ID__c);
+    this.handleEvent.emit(this.qbItem.RFAB__Back_Tracking_ID__c);
     var cQuestion: Question = new Question();
     cQuestion = this.questionItem;
-    if(cQuestion.Question_No__c =='1'){
-      this.handleEvent.emit(this.qbItem.Back__c);
+    if(cQuestion.RFAB__Question_No__c =='1'){
+      this.handleEvent.emit(this.qbItem.RFAB__Back__c);
     }
     
 
@@ -1282,7 +1282,7 @@ export class QuestionnaireComponent implements OnInit {
   }
 
   handleBackClickNew() {
-    this.handleEvent.emit(this.qbItem.Edit__c);
+    this.handleEvent.emit(this.qbItem.RFAB__Edit__c);
   }
 
   //updating status once Q&A completed.
@@ -1298,7 +1298,7 @@ export class QuestionnaireComponent implements OnInit {
   private successupdateAB = (response) => {
     //console.log(response);
     // //console.log('status success')
-    //this.abItem.Status__c = "Completed";
+    //this.abItem.RFAB__Status__c = "Completed";
   };
   private failureupdateAB = (response) => {
     //console.log('status failed')
@@ -1317,54 +1317,54 @@ export class QuestionnaireComponent implements OnInit {
     //console.log(response)
     this.qbItem = response.questionbook;
     this.abItem = response.answerbook;
-    //console.log('readingQuestion using ' + this.qbItem.First_Question__c);
-    if (this.abItem?.Status__c == "Pending") {
+    //console.log('readingQuestion using ' + this.qbItem.RFAB__First_Question__c);
+    if (this.abItem?.RFAB__Status__c == "Pending") {
       if (
-        this.abItem.Answers__r == null ||
-        this.abItem.Answers__r.records.length == 0
+        this.abItem.RFAB__Answers__r == null ||
+        this.abItem.RFAB__Answers__r.records.length == 0
       ) {
-        this.readQuestion(this.qbItem.First_Question__c);
+        this.readQuestion(this.qbItem.RFAB__First_Question__c);
       } else {
         // Populate the existing answers
         var lastQuestionId = "";
 
-        for (var ansObject of this.abItem.Answers__r.records) {
-          lastQuestionId = ansObject.Question_Ref__c;
-           //console.log("Question: " + ansObject.Question_Rich_Text__c);
-           // //console.log("Answer: " + ansObject.Answer_Long__c);
-            //console.log("grouptext: " + ansObject.Question_Group_Text__c);
+        for (var ansObject of this.abItem.RFAB__Answers__r.records) {
+          lastQuestionId = ansObject.RFAB__Question_Ref__c;
+           //console.log("Question: " + ansObject.RFAB__Question_Rich_Text__c);
+           // //console.log("Answer: " + ansObject.RFAB__Answer_Long__c);
+            //console.log("grouptext: " + ansObject.RFAB__Question_Group_Text__c);
 
-          this.questionStack.push(ansObject.Question_Ref__c);
+          this.questionStack.push(ansObject.RFAB__Question_Ref__c);
 
-          this.answerMap.set(ansObject.Question_Ref__c, {
-            quesValue: ansObject.Question_Rich_Text__c,
-            ansValue: ansObject.Answer_Long__c,
-            quesId: ansObject.Question_Ref__c,
-            qTyp: ansObject.Question_Type__c,
-            groupText:ansObject.Question_Group_Text__c,
+          this.answerMap.set(ansObject.RFAB__Question_Ref__c, {
+            quesValue: ansObject.RFAB__Question_Rich_Text__c,
+            ansValue: ansObject.RFAB__Answer_Long__c,
+            quesId: ansObject.RFAB__Question_Ref__c,
+            qTyp: ansObject.RFAB__Question_Type__c,
+            groupText:ansObject.RFAB__Question_Group_Text__c,
           });
 
           //console.log(this.questionStack)
-          if (ansObject.Question_Type__c == "Book") {
-            var av1 = ansObject.Answer_Long__c.split("@@##$$");
+          if (ansObject.RFAB__Question_Type__c == "Book") {
+            var av1 = ansObject.RFAB__Answer_Long__c.split("@@##$$");
             // //console.log("book log");
 
             //  //console.log("bookid" + av1[0]);
-            this.attachmentsMap.set(ansObject.Question_Ref__c, [
+            this.attachmentsMap.set(ansObject.RFAB__Question_Ref__c, [
               { attachmentName: av1[1], attachmentId: av1[0] },
             ]);
             //  //console.log(this.attachmentsMap);
-          } else if (ansObject.Question_Type__c == "File") {
+          } else if (ansObject.RFAB__Question_Type__c == "File") {
             //  //console.log("inside if");
             var attList;
             var att;
-            for (var attVar of ansObject.Answer_Long__c.split(",")) {
+            for (var attVar of ansObject.RFAB__Answer_Long__c.split(",")) {
               var attIdName = attVar.split("@@##$$");
               att.attachmentName = attIdName[1];
               att.attachmentId = attIdName[0];
               attList.push(att);
             }
-            this.attachmentsMap.set(ansObject.Question_Ref__c, attList);
+            this.attachmentsMap.set(ansObject.RFAB__Question_Ref__c, attList);
             //  //console.log(this.attachmentsMap);
           }
         }
@@ -1374,22 +1374,22 @@ export class QuestionnaireComponent implements OnInit {
         // Read the last answered question
         this.readQuestion(lastQuestionId);
       }
-    } else if (this.abItem?.Status__c == "Completed") {
+    } else if (this.abItem?.RFAB__Status__c == "Completed") {
       this.handleEvent.emit("Summaryupdated");
       // Temporary Fix for duplicate answers on the summary.
       this.summary = [];
       this.percent = 100;
       this.progressStyle = "100%";
 
-      for (var answer of this.abItem.Answers__r.records) {
-        //console.log(answer.Question_Group_Text__c);
+      for (var answer of this.abItem.RFAB__Answers__r.records) {
+        //console.log(answer.RFAB__Question_Group_Text__c);
         //console.log('repeat');
-        //console.log(answer.Question_Rich_Text__c);
+        //console.log(answer.RFAB__Question_Rich_Text__c);
         var answers = {};
-        if (answer.Question_Type__c == "File") {
+        if (answer.RFAB__Question_Type__c == "File") {
           var files = "";
           var fIndex = 0;
-          var fileList = answer.Answer_Long__c.split(",");
+          var fileList = answer.RFAB__Answer_Long__c.split(",");
           for (var fileIdName of fileList) {
             var fileName = fileIdName.split("@#$");
             if (fIndex == 0) {
@@ -1402,16 +1402,16 @@ export class QuestionnaireComponent implements OnInit {
           }
 
           answers = {
-            groupText:answer.Question_Group_Text__c,
-            quesValue: answer.Question_Rich_Text__c,
+            groupText:answer.RFAB__Question_Group_Text__c,
+            quesValue: answer.RFAB__Question_Rich_Text__c,
             ansValue: files,
           };
           this.summary.push(answers);
-        } else if (answer.Question_Type__c == "Book") {
+        } else if (answer.RFAB__Question_Type__c == "Book") {
           /*  var quesNo=0;
-         if(answer.Answer_Long__c.includes("@@##$$")){
+         if(answer.RFAB__Answer_Long__c.includes("@@##$$")){
             //console.log('line 1223');
-            for (var bqAnswerValue of answer.Answer_Long__c.split("@@##$$")) {
+            for (var bqAnswerValue of answer.RFAB__Answer_Long__c.split("@@##$$")) {
               var quesValue=answer.Question_Text__c.split("@@##$$");
               answers = {};
               answers = {
@@ -1423,12 +1423,12 @@ export class QuestionnaireComponent implements OnInit {
               this.summary.push(answers);
             }
            }*/
-          if(answer.Answer_Long__c.includes("@@##$$")){
-            var answervalues = answer.Answer_Long__c.split("@@##$$");
+          if(answer.RFAB__Answer_Long__c.includes("@@##$$")){
+            var answervalues = answer.RFAB__Answer_Long__c.split("@@##$$");
             //console.log('value')
             answers = {      
-             //groupText:answer.Question_Group_Text__c,
-             quesValue: answer.Question_Rich_Text__c,
+             //groupText:answer.RFAB__Question_Group_Text__c,
+             quesValue: answer.RFAB__Question_Rich_Text__c,
              ansValue: answervalues,
            };
            //console.log(answers)
@@ -1436,18 +1436,18 @@ export class QuestionnaireComponent implements OnInit {
            }
           else{
             answers = {      
-              //groupText:answer.Question_Group_Text__c,
-              quesValue: answer.Question_Rich_Text__c,
-              ansValue: answer.Answer_Long__c,
+              //groupText:answer.RFAB__Question_Group_Text__c,
+              quesValue: answer.RFAB__Question_Rich_Text__c,
+              ansValue: answer.RFAB__Answer_Long__c,
             };
             this.summary.push(answers);
           }
         } else {
-         // var ans1 = answer.Answer_Long__c.split("@@##$$");
+         // var ans1 = answer.RFAB__Answer_Long__c.split("@@##$$");
           answers = {      
-            //groupText:answer.Question_Group_Text__c,
-            quesValue: answer.Question_Rich_Text__c,
-            ansValue: answer.Answer_Long__c,
+            //groupText:answer.RFAB__Question_Group_Text__c,
+            quesValue: answer.RFAB__Question_Rich_Text__c,
+            ansValue: answer.RFAB__Answer_Long__c,
           };
           this.summary.push(answers);
         }
@@ -1468,10 +1468,10 @@ export class QuestionnaireComponent implements OnInit {
     );
 
   private successAnswerBookRead = (response) => {
-    if (this.abItem?.Status__c == "Completed") {
-      for (var answer of this.abItem.Answers__r.records) {
-        var av = answer.Answer_Long__c.split("@@##$$");
-        var answers = { quesValue: answer.Question_Rich_Text__c, ansValue: av, groupText:answer.Question_Group_Text__c };
+    if (this.abItem?.RFAB__Status__c == "Completed") {
+      for (var answer of this.abItem.RFAB__Answers__r.records) {
+        var av = answer.RFAB__Answer_Long__c.split("@@##$$");
+        var answers = { quesValue: answer.RFAB__Question_Rich_Text__c, ansValue: av, groupText:answer.RFAB__Question_Group_Text__c };
         //console.log(answers)
         this.summary.push(answers);
       }
@@ -1503,40 +1503,40 @@ export class QuestionnaireComponent implements OnInit {
       this.answerWrap = new AnswerWrapper();
       this.optionValues = [];
       this.subQuestions = [];
-      this.resetFlag(this.questionItem.Type__c);
+      this.resetFlag(this.questionItem.RFAB__Type__c);
     }
     this.questionItem = response.question;
     console.log(this.questionItem);
 
-    if(this.questionItem.Type__c === 'Alphanumeric'){
+    if(this.questionItem.RFAB__Type__c === 'Alphanumeric'){
       this.splCCBackClick = true;
     }
 
     this.currentQuestionId = this.questionItem.Id;
-    this.handlePage.emit(this.questionItem.Tracking_ID__c);
+    this.handlePage.emit(this.questionItem.RFAB__Tracking_ID__c);
     // Handle the subQuestion options
     if (response.sqOptions) {
       //var newRecords = [];
-      for (var q of this.questionItem.Questions__r.records) {
+      for (var q of this.questionItem.RFAB__Questions__r.records) {
         //console.log(q.Name);
         var sq = response.sqOptions[q.Id];
         if (sq) {
           //console.log('found options for subquestion ' + q.Name);
-          if (!q.Question_Options__r) {
-            q.Question_Options__r = sq.Question_Options__r;
+          if (!q.RFAB__Question_Options__r) {
+            q.RFAB__Question_Options__r = sq.RFAB__Question_Options__r;
           }
         }
       }
     }
     this.processQuestion();
     this.innerhtml = this.sanitizer.bypassSecurityTrustHtml(
-      this.questionItem.Additional_Rich__c
+      this.questionItem.RFAB__Additional_Rich__c
     );
     this.trackId();
   };
 
   trackId() {
-    var qtrackId = this.questionItem.Tracking_ID__c;
+    var qtrackId = this.questionItem.RFAB__Tracking_ID__c;
     //console.log('trackId-question'+qtrackId);
   }
 
@@ -1590,7 +1590,7 @@ export class QuestionnaireComponent implements OnInit {
     //   this.questionName.push(this.questionItem.Name)
     // }
 
-    if (this.qbItem.Progress_Bar__c === true) {
+    if (this.qbItem.RFAB__Progress_Bar__c === true) {
       if (!this.back) {
         this.questionName.push(this.questionItem.Name);
       }
@@ -1601,7 +1601,7 @@ export class QuestionnaireComponent implements OnInit {
 
       this.currentName = this.questionItem.Name;
       this.pathquestion = this.questionName.indexOf(this.currentName);
-      this.possibilities = JSON.parse(this.qbItem.Possibilities__c);
+      this.possibilities = JSON.parse(this.qbItem.RFAB__Possibilities__c);
     }
 
     this.myDatePickerOptions;
@@ -1609,7 +1609,7 @@ export class QuestionnaireComponent implements OnInit {
     //console.log('processing question ' + this.questionItem.Name + ' existing answers are ' + this.answerMap.size); // => ' + JSON.stringify(this.questionItem));
 
     // Set the Flags to show right fields
-    this.setFlag(this.questionItem.Type__c);
+    this.setFlag(this.questionItem.RFAB__Type__c);
     //console.log('After the setFlag method dtFlag = '+this.dtFlag);
 
     // Check the existing answer from answerMap
@@ -1635,11 +1635,11 @@ export class QuestionnaireComponent implements OnInit {
 
     if (this.checkboxFlag) {
       // Set the Options for Checkbox
-      this.setOptions(this.questionItem.Question_Options__r.records);
+      this.setOptions(this.questionItem.RFAB__Question_Options__r.records);
     } else if (this.bookFlag) {
       //console.log('Inise the expected bookFlag cond');
       //console.log('dtFlag = '+this.dtFlag);
-      this.setSubQuestions(this.questionItem.Questions__r.records);
+      this.setSubQuestions(this.questionItem.RFAB__Questions__r.records);
     } else if (this.dtFlag) {
       //console.log('Inise the unexpected dtFlag cond');
       this.selectedHour = "";
@@ -1655,7 +1655,7 @@ export class QuestionnaireComponent implements OnInit {
       if (this.selectedminuteMap.has(this.questionItem.Id)) {
         this.selectedMinute = this.selectedminuteMap.get(this.questionItem.Id);
       }
-      if (this.questionItem.X24_Hours__c === true) {
+      if (this.questionItem.RFAB__X24_Hours__c === true) {
         this.hours.push(
           "13",
           "14",
@@ -1671,7 +1671,7 @@ export class QuestionnaireComponent implements OnInit {
           "00"
         );
       }
-      if (this.questionItem.X24_Hours__c === false) {
+      if (this.questionItem.RFAB__X24_Hours__c === false) {
         this.hours = this.hours.slice(0, 12);
       }
       if (this.dtFlag && this.inpValue) {
@@ -1688,17 +1688,17 @@ export class QuestionnaireComponent implements OnInit {
         //console.log('inpvalue'+this.questionItem.input +'==' +dtval0[1])
       }
       if (
-        this.questionItem.Is_Date_Backward__c ||
-        this.questionItem.Is_Date_Forward__c
+        this.questionItem.RFAB__Is_Date_Backward__c ||
+        this.questionItem.RFAB__Is_Date_Forward__c
       ) {
-        if (this.questionItem.Is_Date_Backward__c === true) {
+        if (this.questionItem.RFAB__Is_Date_Backward__c === true) {
           this.myDatePickerOptions.disableSince = {
             year: this.today.getFullYear(),
             month: this.today.getMonth() + 1,
             day: this.today.getDate() + 1,
           };
         }
-        if (this.questionItem.Is_Date_Forward__c === true) {
+        if (this.questionItem.RFAB__Is_Date_Forward__c === true) {
           this.myDatePickerOptions.disableUntil = {
             year: this.today.getFullYear(),
             month: this.today.getMonth() + 1,
@@ -1710,10 +1710,10 @@ export class QuestionnaireComponent implements OnInit {
       this.fileUI();
       // logic
       this.allowedFileExtension =
-        this.questionItem.Allowed_File_Extensions__c.split(";");
+        this.questionItem.RFAB__Allowed_File_Extensions__c.split(";");
       //console.log(this.allowedFileExtension);
     }
-    if (this.qbItem.Progress_Bar__c === true) {
+    if (this.qbItem.RFAB__Progress_Bar__c === true) {
       this.updateProgress();
     }
   };
@@ -1809,13 +1809,13 @@ export class QuestionnaireComponent implements OnInit {
       var ov = new OptionValue();
       ov.Id = opt.Id;
       ov.Name = opt.Name;
-      ov.Value__c = opt.Value__c;
-      ov.Next_Question__c = opt.Next_Question__c;
+      ov.RFAB__Value__c = opt.RFAB__Value__c;
+      ov.RFAB__Next_Question__c = opt.RFAB__Next_Question__c;
       ov.checked = false;
 
       if (
         this.inpValue &&
-        this.inpValue.split("@@##$$").includes(opt.Value__c)
+        this.inpValue.split("@@##$$").includes(opt.RFAB__Value__c)
       ) {
         ov.checked = true;
       }
@@ -1857,30 +1857,30 @@ export class QuestionnaireComponent implements OnInit {
       var sQues = new Question();
       sQues.Id = ques.Id;
       sQues.Name = ques.Name;
-      sQues.Question__c = ques.Question__c;
-      sQues.Error_Message__c = ques.Error_Message__c;
-      sQues.Type__c = ques.Type__c;
-      sQues.Next_Question__c = ques.Next_Question__c;
-      sQues.Is_Optional__c = ques.Is_Optional__c;
-      sQues.Group__c = ques.Group__c;
-      sQues.Question_No__c = ques.Question_No__c;
-      sQues.Allowed_File_Extensions__c = ques.Allowed_File_Extensions__c;
-      if (ques.Type__c == "File") {
-        this.valueName1 = ques.Allowed_File_Extensions__c;
+      sQues.RFAB__Question__c = ques.RFAB__Question__c;
+      sQues.RFAB__Error_Message__c = ques.RFAB__Error_Message__c;
+      sQues.RFAB__Type__c = ques.RFAB__Type__c;
+      sQues.RFAB__Next_Question__c = ques.RFAB__Next_Question__c;
+      sQues.RFAB__Is_Optional__c = ques.RFAB__Is_Optional__c;
+      sQues.RFAB__Group__c = ques.RFAB__Group__c;
+      sQues.RFAB__Question_No__c = ques.RFAB__Question_No__c;
+      sQues.RFAB__Allowed_File_Extensions__c = ques.RFAB__Allowed_File_Extensions__c;
+      if (ques.RFAB__Type__c == "File") {
+        this.valueName1 = ques.RFAB__Allowed_File_Extensions__c;
         //console.log(this.valueName1);
       }
 
-      if (qaMap.has(ques.Question_No__c)) {
-        //console.log('Setting input for the subQuestion ' + ques.Question_No__c + ' with ' + ansStr);
-        if (ques.Type__c != "File") {
-          ques.input = qaMap.get(ques.Question_No__c);
+      if (qaMap.has(ques.RFAB__Question_No__c)) {
+        //console.log('Setting input for the subQuestion ' + ques.RFAB__Question_No__c + ' with ' + ansStr);
+        if (ques.RFAB__Type__c != "File") {
+          ques.input = qaMap.get(ques.RFAB__Question_No__c);
         }
       }
 
 
-      if ((ques.Type__c === "Date") && (ques.Is_Date_Backward__c || ques.Is_Date_Forward__c)) {
+      if ((ques.RFAB__Type__c === "Date") && (ques.RFAB__Is_Date_Backward__c || ques.RFAB__Is_Date_Forward__c)) {
         //console.log('Inside the date backward/forward cond');
-        if (ques.Is_Date_Backward__c === true) {
+        if (ques.RFAB__Is_Date_Backward__c === true) {
           //console.log('Inside the Is_Date_Backward__c');
           this.myDatePickerOptions.disableSince = {
             year: this.today.getFullYear(),
@@ -1888,7 +1888,7 @@ export class QuestionnaireComponent implements OnInit {
             day: this.today.getDate() + 1,
           };
         }
-        if (ques.Is_Date_Forward__c === true) {
+        if (ques.RFAB__Is_Date_Forward__c === true) {
           //console.log('Inside the Is_Date_Forward__c');
           this.myDatePickerOptions.disableUntil = {
             year: this.today.getFullYear(),
@@ -1909,11 +1909,11 @@ export class QuestionnaireComponent implements OnInit {
 
   optionChange(selValue) {
     let radioTrackingId: string = "";
-    for (var opt of this.questionItem.Question_Options__r.records) {
-      //console.log('optionChange TrackingId'+opt.Tracking_ID__c);
-      if (opt.Value__c == selValue) {
-        //console.log('inside if'+opt.Tracking_ID__c)
-        radioTrackingId = opt.Tracking_ID__c;
+    for (var opt of this.questionItem.RFAB__Question_Options__r.records) {
+      //console.log('optionChange TrackingId'+opt.RFAB__Tracking_ID__c);
+      if (opt.RFAB__Value__c == selValue) {
+        //console.log('inside if'+opt.RFAB__Tracking_ID__c)
+        radioTrackingId = opt.RFAB__Tracking_ID__c;
       }
     }
 
@@ -2067,12 +2067,12 @@ export class QuestionnaireComponent implements OnInit {
   };
 
   handleSubmitClick() {
-    this.handleEvent.emit(this.qbItem.Submit_Tracking_ID__c);
+    this.handleEvent.emit(this.qbItem.RFAB__Submit_Tracking_ID__c);
     this.updateAnswerBook(this.abItem.Id);
   }
 
   handleCancelClick() {
-    this.handleEvent.emit(this.qbItem.Cancel_Tracking_ID__c);
+    this.handleEvent.emit(this.qbItem.RFAB__Cancel_Tracking_ID__c);
   }
 
   private createAttachment = (fileWrapper: any) =>
@@ -2122,7 +2122,7 @@ export class QuestionnaireComponent implements OnInit {
 
   // Update Function for the Progress Bar
   updateProgress() {
-    if (this.qbItem.Progress_Bar__c === true) {
+    if (this.qbItem.RFAB__Progress_Bar__c === true) {
       let j = [];
       for (let i = 0; i < this.possibilities.total; i++) {
         var pathposs = Object.values(this.possibilities.paths[i].questions);
