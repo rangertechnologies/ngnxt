@@ -1311,7 +1311,7 @@ export class QuestionnaireComponent implements OnInit {
           'section4': "resumen",
           'pageType': "mis tesoros",
           'clientID': this.clientId,
-          'appType': this.appType
+          'appType': "" //'appType': this.appType,
         });
       
     }
@@ -1401,7 +1401,7 @@ export class QuestionnaireComponent implements OnInit {
         'pageType': "mis tesoros",
         'clientID': this.clientId,
         'fechaSiniestro': tdyDTStr,
-        'appType': this.appType
+        'appType': "" //'appType': this.appType,
       });
 
        window.dataLayer.push({ 
@@ -1414,7 +1414,7 @@ export class QuestionnaireComponent implements OnInit {
         'eventAct': 'fin', 
         'eventLbl': localStorage.getItem("claimObject"),
         'clientID': this.clientId,
-        'appType': this.appType,
+        'appType': "", //'appType': this.appType,,
         'logged': this.logintrack,
         'userId': this.currentLoggedUserId,
         'Sesion id': this.currentUserSessionId
@@ -1723,7 +1723,7 @@ export class QuestionnaireComponent implements OnInit {
           'pageType': "mis tesoros",
           'damage_date': tempAns[0],
           'clientID': this.clientId,
-          'appType': this.appType
+          'appType': "" //'appType': this.appType,
         });
       }else if(response.answer.groupText == 'Lugar del suceso' && response.answer.ansValue && response.answer.quesValue){
         let tempAns = response.answer.ansValue == 'Si' ? 'ok' : 'ko';
@@ -1747,7 +1747,7 @@ export class QuestionnaireComponent implements OnInit {
             'pageType': "mis tesoros",
             'damage_residence': tempAns,
             'clientID': this.clientId,
-            'appType': this.appType
+            'appType': "" //'appType': this.appType,
           });
         }else if(response.answer.quesValue.includes('¿Ha ocurrido en España?')){
           window.dataLayer.push({
@@ -1768,7 +1768,7 @@ export class QuestionnaireComponent implements OnInit {
             'section4': "domicilio",
             'pageType': "mis tesoros",
             'clientID': this.clientId,
-            'appType': this.appType
+            'appType': "" //'appType': this.appType,
           });
         }else if(response.answer.quesValue.includes('Selecciona el país')){
           window.dataLayer.push({
@@ -1789,7 +1789,7 @@ export class QuestionnaireComponent implements OnInit {
             'section4': "pais",
             'pageType': "mis tesoros",
             'clientID': this.clientId,
-            'appType': this.appType
+            'appType': "" //'appType': this.appType,
           });
         }
       }else if(response.answer.quesValue.includes('Detalle de los daños') && response.answer.ansValue){
@@ -1813,7 +1813,7 @@ export class QuestionnaireComponent implements OnInit {
           'pageType': "mis tesoros",
           'siniestroOcurridoEspecifico' : tempType,
           'clientID': this.clientId,
-          'appType': this.appType
+          'appType': "" //'appType': this.appType,
         });
       }else if(response.answer.groupText == 'Denuncia o foto de los daños'){
         window.dataLayer.push({
@@ -1834,7 +1834,7 @@ export class QuestionnaireComponent implements OnInit {
           'section4': "foto",
           'pageType': "mis tesoros",
           'clientID': this.clientId,
-          'appType': this.appType
+          'appType': "" //'appType': this.appType,
         });
       }else if(response.answer.groupText == 'Detalle de la cuenta bancaria'){
         window.dataLayer.push({
@@ -1855,7 +1855,7 @@ export class QuestionnaireComponent implements OnInit {
           'section4': "numero cuenta",
           'pageType': "mis tesoros",
           'clientID': this.clientId,
-          'appType': this.appType
+          'appType': "" //'appType': this.appType,
         });
       }else if(response.answer.groupText == 'Certificado de titularidad de la cuenta bancaria'){
         window.dataLayer.push({
@@ -1876,7 +1876,7 @@ export class QuestionnaireComponent implements OnInit {
           'section4': "certificado",
           'pageType': "mis tesoros",
           'clientID': this.clientId,
-          'appType': this.appType
+          'appType': "" //'appType': this.appType,
         });
       }
 
