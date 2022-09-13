@@ -8,7 +8,7 @@ import {
   ViewEncapsulation,
   ElementRef,
 } from "@angular/core";
-import { ActivatedRoute, Params } from "@angular/router";
+import { ActivatedRoute, Params, Router } from "@angular/router";
 import { SalesforceService } from "../services/salesforce.service";
 import { IMyDateModel, IMyDpOptions } from "mydatepicker";
 import { DomSanitizer, SafeHtml } from "@angular/platform-browser";
@@ -499,6 +499,7 @@ export class QuestionnaireComponent implements OnInit {
     private sanitizer: DomSanitizer,
     private spinner: NgxSpinnerService,
     private _formBuilder: FormBuilder,
+    private _router: Router,
     //private dbService: NgxIndexedDBService,
     private deviceService: DeviceDetectorService,
     el: ElementRef
@@ -563,7 +564,7 @@ export class QuestionnaireComponent implements OnInit {
 
   ngOnInit() {
     this.deviceInfo = this.deviceService.getDeviceInfo();
-    console.log('Inside the ngOnInit');
+    console.log('Inside the ngOnInit of RNXT-Claim');
     //console.log("RNXT-Claim");
     this.inpValue = "";
     this.selectedMeridiem = "AM";
@@ -1293,6 +1294,11 @@ export class QuestionnaireComponent implements OnInit {
       }
 
       window.dataLayer.push({
+          'pagina': '#'+this._router.url,
+          'propiedadDestino': localStorage.getItem("gtmId"),
+          'producto': 'my treasure',
+          'ramoAgrupado': "mis tesoros",
+
           'event':'virtualPage',
           'path': '/my-treasures/my-claims/new-claim/step7-summary',
           'url_real': window.location.href,
@@ -1377,6 +1383,11 @@ export class QuestionnaireComponent implements OnInit {
       let tdyDTStr = dd + '-' + mm + '-' + yyyy;
       console.log('Before datalayer push');
       window.dataLayer.push({
+        'pagina': '#'+this._router.url,
+        'propiedadDestino': localStorage.getItem("gtmId"),
+        'producto': 'my treasure',
+        'ramoAgrupado': "mis tesoros",
+
         'event':'virtualPage',
         'path': '/my-treasures/my-claims/detail',
         'url_real': window.location.href,
@@ -1394,6 +1405,10 @@ export class QuestionnaireComponent implements OnInit {
       });
 
        window.dataLayer.push({ 
+        'pagina': '#'+this._router.url,
+        'propiedadDestino': localStorage.getItem("gtmId"),
+        'producto': 'my treasure',
+
         'event':'eventGA', 
         'eventCat': 'incidencia', 
         'eventAct': 'fin', 
@@ -1606,7 +1621,7 @@ export class QuestionnaireComponent implements OnInit {
     );
 
   private successRead = (response) => {
-    console.log('Inside the successRead');
+    console.log('Inside the successRead New');
     console.log(response);
     console.log(this.questionItem);
     // Reset the Variables
@@ -1687,8 +1702,14 @@ export class QuestionnaireComponent implements OnInit {
       this.answerMap.set(response.answer.quesId, response.answer);
 
       if(response.answer.groupText == '¿Cuándo ocurrió?' && response.answer.ansValue){
+        console.log('Inside the first dateTime ques');
         let tempAns = response.answer.ansValue.split(" ");
         window.dataLayer.push({
+          'pagina': '#'+this._router.url,
+          'propiedadDestino': localStorage.getItem("gtmId"),
+          'producto': 'my treasure',
+          'ramoAgrupado': "mis tesoros",
+      
           'event':'virtualPage',
           'path': '/my-treasures/my-claims/new-claim/step2-date',
           'url_real': window.location.href,
@@ -1708,6 +1729,11 @@ export class QuestionnaireComponent implements OnInit {
         let tempAns = response.answer.ansValue == 'Si' ? 'ok' : 'ko';
         if(response.answer.quesValue.includes('¿Ha ocurrido en tu domicilio?')){
           window.dataLayer.push({
+            'pagina': '#'+this._router.url,
+            'propiedadDestino': localStorage.getItem("gtmId"),
+            'producto': 'my treasure',
+            'ramoAgrupado': "mis tesoros",
+
             'event':'virtualPage',
             'path': '/my-treasures/my-claims/new-claim/step3-location1',
             'url_real': window.location.href,
@@ -1725,6 +1751,11 @@ export class QuestionnaireComponent implements OnInit {
           });
         }else if(response.answer.quesValue.includes('¿Ha ocurrido en España?')){
           window.dataLayer.push({
+            'pagina': '#'+this._router.url,
+            'propiedadDestino': localStorage.getItem("gtmId"),
+            'producto': 'my treasure',
+            'ramoAgrupado': "mis tesoros",
+
             'event':'virtualPage',
             'path': '/my-treasures/my-claims/new-claim/step3-location2',
             'url_real': window.location.href,
@@ -1741,6 +1772,11 @@ export class QuestionnaireComponent implements OnInit {
           });
         }else if(response.answer.quesValue.includes('Selecciona el país')){
           window.dataLayer.push({
+            'pagina': '#'+this._router.url,
+            'propiedadDestino': localStorage.getItem("gtmId"),
+            'producto': 'my treasure',
+            'ramoAgrupado': "mis tesoros",
+
             'event':'virtualPage',
             'path': '/my-treasures/my-claims/new-claim/step3-location3',
             'url_real': window.location.href,
@@ -1759,6 +1795,11 @@ export class QuestionnaireComponent implements OnInit {
       }else if(response.answer.quesValue.includes('Detalle de los daños') && response.answer.ansValue){
         let tempType = response.answer.ansValue.split("@@##$$")[0] == 'Mi tesoro se ha dañado' ? 'rotura':'robo';
         window.dataLayer.push({
+          'pagina': '#'+this._router.url,
+          'propiedadDestino': localStorage.getItem("gtmId"),
+          'producto': 'my treasure',
+          'ramoAgrupado': "mis tesoros",
+
           'event':'virtualPage',
           'path': '/my-treasures/my-claims/new-claim/step4-detail-damage',
           'url_real': window.location.href,
@@ -1776,6 +1817,11 @@ export class QuestionnaireComponent implements OnInit {
         });
       }else if(response.answer.groupText == 'Denuncia o foto de los daños'){
         window.dataLayer.push({
+          'pagina': '#'+this._router.url,
+          'propiedadDestino': localStorage.getItem("gtmId"),
+          'producto': 'my treasure',
+          'ramoAgrupado': "mis tesoros",
+
           'event':'virtualPage',
           'path': '/my-treasures/my-claims/new-claim/step5-attach',
           'url_real': window.location.href,
@@ -1792,6 +1838,11 @@ export class QuestionnaireComponent implements OnInit {
         });
       }else if(response.answer.groupText == 'Detalle de la cuenta bancaria'){
         window.dataLayer.push({
+          'pagina': '#'+this._router.url,
+          'propiedadDestino': localStorage.getItem("gtmId"),
+          'producto': 'my treasure',
+          'ramoAgrupado': "mis tesoros",
+
           'event':'virtualPage',
           'path': '/my-treasures/my-claims/new-claim/step6-bank-account1',
           'url_real': window.location.href,
@@ -1808,6 +1859,11 @@ export class QuestionnaireComponent implements OnInit {
         });
       }else if(response.answer.groupText == 'Certificado de titularidad de la cuenta bancaria'){
         window.dataLayer.push({
+          'pagina': '#'+this._router.url,
+          'propiedadDestino': localStorage.getItem("gtmId"),
+          'producto': 'my treasure',
+          'ramoAgrupado': "mis tesoros",
+
           'event':'virtualPage',
           'path': '/my-treasures/my-claims/new-claim/step6-bank-account2',
           'url_real': window.location.href,
