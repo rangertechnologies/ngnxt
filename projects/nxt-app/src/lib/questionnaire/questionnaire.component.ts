@@ -531,8 +531,8 @@ export class QuestionnaireComponent implements OnInit {
 
   ngOnInit() {
     this.deviceInfo = this.deviceService.getDeviceInfo();
-    //console.log('Inside the ngOnInit');
-    //console.log("RNXT-Claim");
+    console.log('Inside the ngOnInit');
+    console.log("RNXT-Claim");
     this.inpValue = "";
     this.selectedMeridiem = "AM";
     this.processQB();
