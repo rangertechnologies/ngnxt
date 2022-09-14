@@ -2061,7 +2061,7 @@ export class QuestionnaireComponent implements OnInit {
   };
 
   handleSubmitClick() {
-    this.handleEvent.emit(this.qbItem.Submit_Tracking_ID__c);
+    this.handleEvent.emit('Submitted');
     this.updateAnswerBook(this.abItem.Id);
   }
 
