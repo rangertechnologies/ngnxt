@@ -43,7 +43,6 @@
   </div>
 
   <!--Question alignment-->
-  <!--Question alignment-->
   <div class="questiondiv2">
     <div *ngIf="questionItem.Is_Title__c">
       <div *ngIf="questionItem.Type__c != 'Book'&&questionItem.Question_No__c!='6' && questionItem.Question_No__c!='9'"> 
@@ -247,7 +246,7 @@
     </div>
   </div>
 
-  <div class="col-md-12 paddingZero myt-time1" *ngIf="dtFlag">
+  <div *ngIf="dtFlag" class="col-md-12 paddingZero myt-time1" >
     <div class="col-md-12" *ngIf="questionItem.error" style="font-size: 18px;
     color: red;">{{questionItem?.error?.errorMsg}}</div>
     <div *ngIf="dateFlag">
@@ -302,6 +301,7 @@
       <i class="fa check-icon3" aria-hidden="true" *ngIf="questionItem?.input?.length > 0"></i>
     </div>
   </div>
+
   <div *ngIf="fileFlag">
     <div *ngIf="!qbItem.Progress_Bar__c">
       <div class="info-alert" style.border-color="{{ this.questionItem?.error ? 'red' : '' }}">
@@ -417,102 +417,13 @@
           </div>
 
           <div *ngIf="ques.Type__c === 'Text'">
-            <div *ngIf="ques.Question__c === 'Código postal' ">
-              <div [id]="ques.Id" class="dis-flex;">
-                <div  class="town-drop bottomspace1">
-                  <input  id="autocomplete-input" [(ngModel)]="selectedPostalcode" 
-                  style.border-color=" {{ ques?.error ? 'red !important' : '#858585' }}" style.color="{{ ques?.error ? 'red' : '' }}" 
-                  required=""  oninput="this.value=this.value.replace(/[^a-zA-Z\s.:;,?]/g,'')" (focus)="clearSQError(ques.Id)"
-                  (focusin)="getCode()" placeholder="Indica población" (blur)="closeDropdown()"
-                    (input)="getCode()" type="text" name="name" class="town"
-                    autocomplete="postal-code" maxlength="5" oninput="this.value=this.value.replace(/[^0-9]/g,'');" />
-                  <div id="selectList" class="listFlow">
-                    <div *ngFor="let value of tempoAddress" class="townArea" (click)="getPostalcode(value)">
-                      <div>
-                        <div>{{value.zipCode}}</div>
-                      </div>
-                    </div>
-                  </div>
-              </div>
-             </div>
-            </div>
-         
-             <div *ngIf="ques.Question__c === 'Población' ">
-              <div [id]="ques.Id" class="dis-flex;">
-                <div  class="town-drop">
-                  <input  *ngIf="!(places.length > 1)" type="text" id="autocomplete-input" [(ngModel)]="selectedCity"  maxlength="50" class="text-border"
-                  style.border-color=" {{ ques.error ? 'red !important' : '#858585' }}" style.color="{{ ques.error ? 'red' : '' }}" 
-                  required=""  placeholder="Población" autocomplete="address-level2" value="Chennai"  />
-
-                  <select *ngIf="places.length > 1" id="city" class="text-border" name="gender" style.border-color=" {{ ques.error ? 'red !important' : '#858585' }}" style.color="{{ ques.error ? 'red' : '' }}" [(ngModel)]="selectedCity" >
-                  <option value="">Select city</option>
-                        <option *ngFor="let value of places" [value]="value.town" >{{value.town}}</option>
-                    </select>
-                </div>
-              </div>
-             </div>
-          
-            <div *ngIf="ques.Question__c === 'Provincia' ">
-              <div [id]="ques.Id" class="dis-flex;">
-                <div  class="town-drop ">
-                  <select class="text-border" placeholder="provinca" style.border-color=" {{ ques.error ? 'red !important' : '#858585' }}" style.color="{{ ques.error ? 'red' : '' }}" [(ngModel)]="selectedProvince" >
-                  <option  value="">select Province</option>
-                        <option *ngFor="let values of province" [value]="values.province">{{values.province}}</option>
-                    </select>
-                </div>
-              </div>
-            </div>
-          
-          
-
-
-
-              <!--Text for MYT
-              <div *ngIf="ques.Question__c === 'Indica población' ">
-            <div [id]="ques.Id" class="dis-flex;">
-                <div  class="town-drop">
-                  <input  id="autocomplete-input" [(ngModel)]="selectedValue" (ngModelChange)="selectedValue=$event.toUpperCase()"
-                  style.border-color=" {{ ques.error ? 'red !important' : '#858585' }}" style.color="{{ ques.error ? 'red' : '' }}" 
-                  required=""  oninput="this.value=this.value.replace(/[^a-zA-Z\s.:;,?]/g,'')" (focus)="clearSQError(ques.Id)"
-                  (focusin)="getTownLocal()" placeholder="Indica población" (blur)="clearList()"
-                    (input)="getTownLocal()" type="text" name="name" class="town"
-                    autocomplete="town" />
-                  <div id="selectList" class="listFlow">
-                    <div *ngFor="let area of tempoAddress" class="townArea" (click)="townName(area)">
-                      <div>
-                        <div>{{area.town}}</div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-               </div>
-            </div>
-         -->
-
-          
-            <div *ngIf="ques.Question__c != 'Población' && ques.Question__c !='Provincia' && ques.Question__c !='Código postal' && ques.Question__c != '¿Dónde ocurrió?' ">
               <input type="text" [(ngModel)]="ques.input" [ngClass]="{
                'dis-flex dt-line date-line bookText boxoutline myt-font1': qbItem.Progress_Bar__c,
                textBox: !qbItem.Progress_Bar__c
               }" id="text" [id]="ques.Id" required="" (focus)="clearSQError(ques.Id)"
               style.border-color="{{ ques.error ? 'red' : '' }}" placeholder="{{ ques.Question__c }}"
-              oninput="this.value=this.value.replace(/^[a-zA-Z0-9!áÁéÉíÍóÓúÚñÑüÜ@#$%^&*()_+-=:<>/`~.?;:]{8,20}/g$,'');" />
-              </div>
-
-              <div *ngIf="ques.Question__c === '¿Dónde ocurrió?' ">
-                <input type="text" [(ngModel)]="ques.input" [ngClass]="{
-                 'dis-flex dt-line date-line bookText boxoutline myt-font1': qbItem.Progress_Bar__c,
-                 textBox: !qbItem.Progress_Bar__c
-                }" id="text" [id]="ques.Id" required="" (focus)="clearSQError(ques.Id)"
-                style.border-color="{{ ques.error ? 'red' : '' }}" placeholder=" Calle, número,.."
-                oninput="this.value=this.value.replace(/[^a-zA-Z0-9\s.:;,?]/g,'');" />
-                </div>
-
-
+              oninput="this.value=this.value.replace(/[^a-zA-Z0-9\s.:;,?]/g,'');" />
             </div>
-
-          
-          
 
           <div *ngIf="ques.Type__c === 'Email'">
             <input type="email" [(ngModel)]="ques.input" [id]="ques.Id" required="" (focus)="clearSQError(ques.Id)"
@@ -627,7 +538,53 @@
               'col-md-12':!qbItem.Progress_Bar__c
                }">
     <h1 class="header1 summarypadd" >{{ qbItem.SubTitle__c }}</h1>         
-  <div id="progress2" *ngIf="qbItem.Progress_Bar__c">
+  <div id="progress2" *ngIf="!qbItem.Progress_Bar__c ">
+  <div [ngClass]="{ 'full-summary': qbItem.Progress_Bar__c }">
+    <div *ngFor="let qa of summary" >
+     
+        <div [ngClass]="{ non:  qbItem.Progress_Bar__c }">
+          <div [ngClass]="{ summary: this.abItem.Status__c != 'Completed' && !qbItem.Progress_Bar__c }">
+         <!--  <div *ngIf="qbItem.Progress_Bar__c"
+              [ngClass]="{ 'summary-groupText myt-font2': qbItem.Progress_Bar__c }" >
+              {{ qa.groupText }}
+            </div>
+          -->
+           <div *ngIf="!qbItem.Edit__c"
+              [ngClass]="{ 'question sum-ques myt-font3 myt-font8': this.abItem.Status__c != 'Completed' }">
+              <a [ngClass]="{ asum: this.abItem.Status__c === 'Completed' }" (click)="handleEditClick(qa.quesId)"
+                [innerHTML]="getText(qa.quesValue)">{{ qa.quesValue }}</a>
+            </div>
+            <div *ngIf="qbItem.Edit__c"
+              [ngClass]="{ 'sum-ques question myt-font3 myt-font8': this.abItem.Status__c != 'Completed' }">
+              <div [ngClass]="{ 'sum-ques1 question1 summary-completed myt-font3 myt-font8': this.abItem.Status__c === 'Completed' }"
+                [innerHTML]="getText(qa.quesValue)">
+                {{ qa.quesValue }}
+              </div>
+            </div>
+            <div *ngIf="qbItem.Edit__c && this.abItem.Status__c != 'Completed'" style="background: #dedddd;">
+              <button class="edit" (click)="handleEditClick(qa.quesId)">
+                <img *ngIf="deviceInfo.os === 'iOS'" src="https://rnxt.s3.amazonaws.com/MytIcon/icon-edit%402x.png" style="width:50%!important;" class="icon-editios"/>
+                <img *ngIf="deviceInfo.os !== 'iOS'" src="https://rnxt.s3.amazonaws.com/MytIcon/icon-edit%402x.png" class="icon-edit" />
+              </button>
+            </div>
+           
+            <div class="answer " >
+            
+                <div *ngIf="qa.qTyp === 'File'">
+                  <img src="https://rnxt.s3.amazonaws.com/MytIcon/icon-doc-img%401.png" class="icon-edit-summary" />
+                  {{ qa.ansValue }}
+                </div>
+                <div *ngIf="qa.qTyp != 'File'">{{ qa.ansValue }}</div>
+              
+          </div>
+        </div>
+        </div>
+    </div>
+    </div>
+  </div>
+
+
+  <div id="progress2" *ngIf="qbItem.Progress_Bar__c ">
     <div [ngClass]="{'bgColor summary-top' : qbItem.Progress_Bar__c }" >
       <div id="progress-summary" *ngIf="qbItem.Progress_Bar__c">
         <circle-progress class="titlebar" [percent]="this.percent" [radius]="40" [space]="-4" [outerStrokeWidth]="4"
@@ -696,6 +653,7 @@
     </div>
     </div>
   </div>
+
 
 
   <div class="flexer1" *ngIf="abItem">

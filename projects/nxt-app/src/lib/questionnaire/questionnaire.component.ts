@@ -638,11 +638,6 @@ export class QuestionnaireComponent implements OnInit {
         .setAttribute("style", "border: 1px solid #87be1c ;width:100%");
     }
   }
-  //   function IncreaseTextboxSize() {
-  //     var textsize = $('#txtwidth').val();
-  //     $("#txtname").css("width", textsize);
-  //     $("#message").html("Currently textbox Size is " + textsize + "px.");
-  // }
 
   processQB() {
     //console.log('ProcessQB');
@@ -663,8 +658,6 @@ export class QuestionnaireComponent implements OnInit {
         this.processQuestion();
       }
     }
-    // CATEGORIZATION
-    //this.stepperCateg();
   }
 
   trimLastDummy(input: string) {
@@ -820,8 +813,8 @@ export class QuestionnaireComponent implements OnInit {
           //console.log('this.inpValue = '+this.inpValue);
           //console.log('this.selectedHour = '+this.selectedHour);
           //console.log('this.selectedMinute = '+this.selectedMinute);
-
-          if (this.qbItem.Progress_Bar__c && this.inpValue && this.insuranceStartDate) {
+//MYT code
+         /* if (this.qbItem.Progress_Bar__c && this.inpValue && this.insuranceStartDate) {
             var date1: any = this.inpValue.split(" ");
             date1 = date1[0].split("/");
             date1 = [date1[2], date1[1], date1[0]].join("-");
@@ -834,7 +827,8 @@ export class QuestionnaireComponent implements OnInit {
                 "No es posible dar de alta la reclamación debido a que la fecha del incidente es anterior a la fecha de contratación de la póliza";
               return;
             }
-          }
+          }*/
+
           if (this.selDate === null || this.selDate === undefined || !this.inpValue || !this.selectedHour || !this.selectedMinute || !this.selectDate) {
             //console.log('Inside the null condition of input');
             this.questionItem.error = new ErrorWrapper();
