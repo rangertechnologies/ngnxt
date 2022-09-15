@@ -212,13 +212,9 @@
           <input type="text" [(ngModel)]="ques.input"  class="textBox" id="text" [id]="ques.Id" required="" (focus)="clearSQError(ques.Id)"
             style.border-color="{{ques.error ? 'red' : ''}}" placeholder="{{ques.Question__c}}"
             oninput="this.value=this.value.replace(/[^a-zA-Z0-9\s.:;,?]/g,'');" />
+            <button (click)="addInputBox()">add</button>
         </div>
        </div>
-
-        <div *ngIf="ques.Type__c === 'Email'">
-          <input type="email" [(ngModel)]="ques.input" [id]="ques.Id" required="" (focus)="clearSQError(ques.Id)"
-            style.border-color="{{ques.error ? 'red' : ''}}" placeholder="{{ques.Question__c}}"/>
-        </div>
 
         <div *ngIf="ques.Type__c === 'File'">
           <div>
@@ -238,27 +234,10 @@
               class="attach-list" (click)="deleteAttachment(attachment.attachmentId)">X</span></li>
         </ul>
 
-        <div *ngIf="ques.Type__c === 'Radio'" class="">
-          <div *ngIf="ques.error" class="cond-div2" >{{ques.Error_Message__c}}</div>
-          <div *ngFor="let opt of ques.Question_Options__r.records" class="radio col-md-6 optiondiv" >
-            <label class="radiocontainer">
-              <input type="radio" [id]="ques.Id" [(ngModel)]="ques.input" value="{{opt.Value__c}}" (change)="Dropdown($event); clearSQError(ques.Id)">
-              <span class="checkmark">{{opt.Value__c}}</span>
-            </label>
-          </div>
-        </div>
 
-        <div *ngIf="ques.Type__c === 'Dropdown'"class="">
-          <select class="custom-select mr-sm-2 dd-height" id="dropdown" [(ngModel)]="ques.input" (focus)="Dropdown($event); clearSQError(ques.Id)"style.border-color=" {{ques.error ? 'red'  : '#858585'}}"
-            style.color="{{ques.error ? 'red'  : ''}}" >
-            <option *ngFor="let opt of ques.Question_Options__r.records" class="option"  value="{{opt.Value__c}}">{{opt.Value__c}}
-            </option>
-            <option value="" disabled hidden >{{ques.Error_Message__c}}</option>
-          </select>
-        </div>
         <i class="fa fa-check check-icon4" aria-hidden="true" *ngIf="questionItem?.input?.length > 0"></i>
       </div>
-      <button (click)="addInputBox()">add</button>
+     
     </div>
   </div>
 </div>
