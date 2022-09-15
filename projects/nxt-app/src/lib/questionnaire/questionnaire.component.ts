@@ -102,8 +102,13 @@ export class QuestionnaireComponent implements OnInit {
   public bookFlagAccept: string[];
   public recordId:string;
   public currentQuestionId: string;
-
-
+  //List type 
+  public listFlag: boolean= false;
+  itemList = [{
+    id:'',
+    subQuesId:'',
+    answerValue:''
+  }]
 
   // REQ-01 PROGRESS BAR
   public progressStyle: string = '0%';
@@ -127,10 +132,12 @@ export class QuestionnaireComponent implements OnInit {
       this.answerMap.delete(this.questionItem.Id);
     }
    }
+
   ngOnInit() {
-   this.inpValue="";
+    this.inpValue="";
     this.selectedMeridiem = "AM";
     this.processQB();
+    console.log('EMBI-Changes Testing')
   }
 
   ngOnChanges() {
@@ -530,20 +537,153 @@ export class QuestionnaireComponent implements OnInit {
     this.successReadBook,
     this.failureReadBook);
 
-  private successReadBook = (response) => {
+  // private successReadBook = (response) => {
 
-    //console.log(response)
-    this.qbItem = response.questionbook;
-    this.abItem = response.answerbook;
-    //console.log('readingQuestion using ' + this.qbItem.First_Question__c);
-    if(this.abItem.Status__c == 'Pending'){
-      this.readQuestion(this.qbItem.First_Question__c);
-    }
+  //   //console.log(response)
+  //   this.qbItem = response.questionbook;
+  //   this.abItem = response.answerbook;
+  //   //console.log('readingQuestion using ' + this.qbItem.First_Question__c);
+  //   if(this.abItem.Status__c == 'Pending'){
+  //     this.readQuestion(this.qbItem.First_Question__c);
+  //   }
 
-    if(this.abItem.Status__c == 'Completed'){
-      this.readAnswerbook(this.abItem.Id);
-         }
-  }
+  //   if(this.abItem.Status__c == 'Completed'){
+  //     this.readAnswerbook(this.abItem.Id);
+  //        }
+  // }
+  private successReadBook = (response) => {	
+    //console.log('Inside the successReadBook');	
+    //console.log(response)	
+    this.qbItem = response.questionbook;	
+    this.abItem = response.answerbook;	
+    //console.log('readingQuestion using ' + this.qbItem.First_Question__c);	
+    if (this.abItem?.Status__c == "Pending") {	
+      if (	
+        this.abItem.Answers__r == null ||	
+        this.abItem.Answers__r.records.length == 0	
+      ) {	
+        this.readQuestion(this.qbItem.First_Question__c);	
+      } else {	
+        // Populate the existing answers	
+        var lastQuestionId = "";	
+        for (var ansObject of this.abItem.Answers__r.records) {	
+          lastQuestionId = ansObject.Question_Ref__c;	
+           //console.log("Question: " + ansObject.Question_Rich_Text__c);	
+           // //console.log("Answer: " + ansObject.Answer_Long__c);	
+            //console.log("grouptext: " + ansObject.Question_Group_Text__c);	
+          this.questionStack.push(ansObject.Question_Ref__c);	
+          this.answerMap.set(ansObject.Question_Ref__c, {	
+            quesValue: ansObject.Question_Rich_Text__c,	
+            ansValue: ansObject.Answer_Long__c,	
+            quesId: ansObject.Question_Ref__c,	
+            qTyp: ansObject.Question_Type__c,	
+            groupText:ansObject.Question_Group_Text__c,	
+          });	
+          //console.log(this.questionStack)	
+          if (ansObject.Question_Type__c == "Book") {	
+            var av1 = ansObject.Answer_Long__c.split("@@##$$");	
+            // //console.log("book log");	
+            //  //console.log("bookid" + av1[0]);	
+            this.attachmentsMap.set(ansObject.Question_Ref__c, [	
+              { attachmentName: av1[1], attachmentId: av1[0] },	
+            ]);	
+            //  //console.log(this.attachmentsMap);	
+          } else if (ansObject.Question_Type__c == "File") {	
+            //  //console.log("inside if");	
+            var attList;	
+            var att;	
+            for (var attVar of ansObject.Answer_Long__c.split(",")) {	
+              var attIdName = attVar.split("@@##$$");	
+              att.attachmentName = attIdName[1];	
+              att.attachmentId = attIdName[0];	
+              attList.push(att);	
+            }	
+            this.attachmentsMap.set(ansObject.Question_Ref__c, attList);	
+            //  //console.log(this.attachmentsMap);	
+          }	
+        }	
+        this.questionStack.pop();	
+        //console.log(this.answerMap);	
+        // Read the last answered question	
+        this.readQuestion(lastQuestionId);	
+      }	
+    } else if (this.abItem?.Status__c == "Completed") {	
+      this.handleEvent.emit("Summaryupdated");	
+      // Temporary Fix for duplicate answers on the summary.	
+      this.summary = [];	
+      //this.percent = 100;	
+      this.progressStyle = "100%";	
+      for (var answer of this.abItem.Answers__r.records) {	
+        //console.log(answer.Question_Group_Text__c);	
+        //console.log('repeat');	
+        //console.log(answer.Question_Rich_Text__c);	
+        var answers = {};	
+        if (answer.Question_Type__c == "File") {	
+          var files = "";	
+          var fIndex = 0;	
+          var fileList = answer.Answer_Long__c.split(",");	
+          for (var fileIdName of fileList) {	
+            var fileName = fileIdName.split("@#$");	
+            if (fIndex == 0) {	
+              files = fileName[1];	
+            } else {	
+              files = files + " ," + fileName[1];	
+            }	
+            fIndex++;	
+          }	
+          answers = {	
+            groupText:answer.Question_Group_Text__c,	
+            quesValue: answer.Question_Rich_Text__c,	
+            ansValue: files,	
+          };	
+          this.summary.push(answers);	
+        } else if (answer.Question_Type__c == "Book") {	
+          /*  var quesNo=0;	
+         if(answer.Answer_Long__c.includes("@@##$$")){	
+            //console.log('line 1223');	
+            for (var bqAnswerValue of answer.Answer_Long__c.split("@@##$$")) {	
+              var quesValue=answer.Question_Text__c.split("@@##$$");	
+              answers = {};	
+              answers = {	
+               // groupText:answer.Question_Text__c,	
+                quesValue:  "&lt;p&gt;"+ quesValue[quesNo]+"&lt;p&gt;",	
+                ansValue: bqAnswerValue,	
+              };	
+              quesNo++;	
+              this.summary.push(answers);	
+            }	
+           }*/	
+          if(answer.Answer_Long__c.includes("@@##$$")){	
+            var answervalues = answer.Answer_Long__c.split("@@##$$");	
+            //console.log('value')	
+            answers = {      	
+             //groupText:answer.Question_Group_Text__c,	
+             quesValue: answer.Question_Rich_Text__c,	
+             ansValue: answervalues,	
+           };	
+           //console.log(answers)	
+           this.summary.push(answers);	
+           }	
+          else{	
+            answers = {      	
+              //groupText:answer.Question_Group_Text__c,	
+              quesValue: answer.Question_Rich_Text__c,	
+              ansValue: answer.Answer_Long__c,	
+            };	
+            this.summary.push(answers);	
+          }	
+        } else {	
+         // var ans1 = answer.Answer_Long__c.split("@@##$$");	
+          answers = {      	
+            //groupText:answer.Question_Group_Text__c,	
+            quesValue: answer.Question_Rich_Text__c,	
+            ansValue: answer.Answer_Long__c,	
+          };	
+          this.summary.push(answers);	
+        }	
+      }	
+    }	
+  };
 
   private failureReadBook = (response) => {
           //console.log(response);
@@ -760,6 +900,8 @@ export class QuestionnaireComponent implements OnInit {
       }else if (typ == 'Date') {
         this.dtFlag = true;
         this.dateFlag = true;
+      }else if (typ == 'List'){
+        this.listFlag = true;
       }
 
     }
@@ -794,8 +936,9 @@ export class QuestionnaireComponent implements OnInit {
       } else if (typ == 'Date') {
         this.dtFlag= false;
         this.dateFlag= false;
+      } else if (typ == 'List'){
+        this.listFlag = false;
       }
-
     }
   }
 
