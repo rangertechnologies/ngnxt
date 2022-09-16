@@ -104,12 +104,14 @@ export class QuestionnaireComponent implements OnInit {
   public currentQuestionId: string;
   //List type 
   public listFlag: boolean= false;
-  itemList = [{
-    id:'',
+  public itemList: any[] = [{
+    id: 1,
     subQuesId:'',
     answerValue:''
-  }]
-
+  }];
+ public keyIndex: number = 0;
+ values = [];
+ items: Object[];
   // REQ-01 PROGRESS BAR
   public progressStyle: string = '0%';
   public answerCount: number = 0;
@@ -119,7 +121,7 @@ export class QuestionnaireComponent implements OnInit {
   };
 
   constructor(private sfService: SalesforceService, private route: ActivatedRoute, private sanitizer: DomSanitizer, private _formBuilder: FormBuilder){
-
+    this.items = [];
    }
 
    onDateChanged(event: IMyDateModel) { //to change the border color
@@ -138,6 +140,7 @@ export class QuestionnaireComponent implements OnInit {
     this.selectedMeridiem = "AM";
     this.processQB();
     console.log('EMBI-Changes Testing')
+
   }
 
   ngOnChanges() {
@@ -1200,11 +1203,31 @@ export class QuestionnaireComponent implements OnInit {
     //$('#progress #bar').animate({'width':width + '%'});
   }
 
-  handleInputChange(){
-
+  handleInputChange(event){
+    let index = event.target.dataset.index;
+    let fieldName = event.target.name;
+    console.log('index '+ index +' fieldName '+fieldName);
+    
   }
 
   addInputBox(){
+    this.keyIndex++;
+    console.log(this.itemList);
+    this.itemList.push({
+      id: this.itemList.length + 1,
+      subQuesId: this.questionItem.Id,
+      answerValue: this.inpValue
+    });
+    console.log(this.itemList);
+  }
 
+  removeInputBox(i: number) {
+    this.itemList.splice(i, 1);
+  }
+  addNew(): void {
+    this.items.push({
+      name:'',
+      id: this.items.length + 1
+    }) // push what ever you want
   }
 }

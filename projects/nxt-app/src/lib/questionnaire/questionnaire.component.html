@@ -204,37 +204,18 @@
 <div *ngIf="listFlag">
   <div class="form-group">
     <div class="form-row">
-      <div class="questionalign" [class]="'col-md-'+ ques.Size__c + ' paddingnone'" *ngFor="let ques of subQuestions">
+      <div class="questionalign" [class]="'col-md-'+ ques.Size__c + ' paddingnone'" *ngFor="let ques of subQuestions; let i=index">
         <span class="colorf">{{ques.Question__c}}</span>
 
-        <div *ngFor="let item of itemList">
-        <div *ngIf="ques.Type__c === 'Text'">
-          <input type="text" [(ngModel)]="ques.input"  class="textBox" id="text" [id]="ques.Id" required="" (focus)="clearSQError(ques.Id)"
+       <div *ngIf="ques.Type__c === 'Text'">
+          <button (click)="addInputBox()">add</button>
+          <div *ngFor="let item of itemList; let indexOfelement=index;">
+            ngFor index: {{indexOfelement}} value : {{item.name}}
+          <input name="name{{i}}" type="text" [(ngModel)]="item.answerValue"  class="textBox" id="text" [id]="ques.Id" required="" (focus)="clearSQError(ques.Id)"
             style.border-color="{{ques.error ? 'red' : ''}}" placeholder="{{ques.Question__c}}"
             oninput="this.value=this.value.replace(/[^a-zA-Z0-9\s.:;,?]/g,'');" />
-            <button (click)="addInputBox()">add</button>
         </div>
        </div>
-
-        <div *ngIf="ques.Type__c === 'File'">
-          <div>
-            <label class="picture-upload custom-file-upload bgcolor-w" for="file-upload">
-              <span class="picture-upload-child">
-                <i class="fa fa-file-image-o fa-5x icolor" aria-hidden="true"></i>
-              </span>
-              <span class="fa fa-plus fa-2x picture-upload-child pic-upload icolor">
-                <i class="" aria-hidden="true"></i>
-              </span>
-            </label>
-            <input id="file-upload" type="file" accept="{{bookFlagAccept}}" (change)="uploadFile($event)" />
-          </div>
-        </div>
-        <ul *ngIf="attachments?.length > 0 && ques.Type__c === 'File'" class="attach-ulist col-md-12">
-          <li *ngFor="let attachment of attachments" class="align-l">{{attachment.attachmentName}}<span
-              class="attach-list" (click)="deleteAttachment(attachment.attachmentId)">X</span></li>
-        </ul>
-
-
         <i class="fa fa-check check-icon4" aria-hidden="true" *ngIf="questionItem?.input?.length > 0"></i>
       </div>
      
