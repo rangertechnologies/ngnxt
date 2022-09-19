@@ -143,13 +143,15 @@
   <div *ngIf="bookFlag">
     <div class="form-group">
       <div class="form-row">
-        <div class="questionalign" [class]="'col-md-'+ ques.Size__c + ' paddingnone'" *ngFor="let ques of subQuestions">
+        <div class="questionalign" [class]="'col-md-'+ ques.Size__c + ' paddingnone'" *ngFor="let ques of subQuestions;let i=index; trackBy:trackByFn">
           <span class="colorf">{{ques.Question__c}}</span>
 
           <div *ngIf="ques.Type__c === 'Text'">
-            <input type="text" [(ngModel)]="ques.input"  class="textBox" id="text" [id]="ques.Id" required="" (focus)="clearSQError(ques.Id)"
+            <input type="text" name="{{'name'+ i}}" [(ngModel)]="ques.input"  class="textBox" id="text" [id]="ques.Id" required="" (focus)="clearSQError(ques.Id)"
               style.border-color="{{ques.error ? 'red' : ''}}" placeholder="{{ques.Question__c}}"
               oninput="this.value=this.value.replace(/[^a-zA-Z0-9\s.:;,?]/g,'');" />
+              {{ques.input}}
+              <button (click)="addInputBox(ques)">add</button>
           </div>
 
           <div *ngIf="ques.Type__c === 'Email'">
@@ -197,11 +199,12 @@
         </div>
       </div>
     </div>
+    
   </div>
 
 <!--List Type Starts-->
 
-<div *ngIf="listFlag">
+<!-- <div *ngIf="listFlag">
   <div class="form-group">
     <div class="form-row">
       <div class="questionalign" [class]="'col-md-'+ ques.Size__c + ' paddingnone'" *ngFor="let ques of subQuestions; let i=index">
@@ -221,7 +224,7 @@
      
     </div>
   </div>
-</div>
+</div> -->
 
 <!--List Type Ends-->
 

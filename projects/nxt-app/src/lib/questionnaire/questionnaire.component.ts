@@ -259,6 +259,7 @@ export class QuestionnaireComponent implements OnInit {
         return;}
      }else if (this.bookFlag) {
       this.inpValue = '';
+      console.log( this.inpValue);
       var hasMissingInput = false;
       for (var item of this.questionItem.Questions__r.records) {
         if (!item.Is_Optional__c &&
@@ -1054,15 +1055,17 @@ export class QuestionnaireComponent implements OnInit {
       sQues.Group__c = ques.Group__c;
       sQues.Question_No__c = ques.Question_No__c;
       sQues.Allowed_File_Extensions__c = ques.Allowed_File_Extensions__c;
+
       if(ques.Type__c =='File'){
       this.valueName1 = ques.Allowed_File_Extensions__c;
       //console.log(this.valueName1);
       }
 
       if (qaMap.has(ques.Question_No__c)) {
-        //console.log('Setting input for the subQuestion ' + ques.Question_No__c + ' with ' + ansStr);
+        console.log('Setting input for the subQuestion ' + ques.Question_No__c + ' with ' + ansStr);
         if(ques.Type__c !='File'){
         ques.input = qaMap.get(ques.Question_No__c);
+        console.log('input'+ques.input);
         }
       }
 
@@ -1210,24 +1213,28 @@ export class QuestionnaireComponent implements OnInit {
     
   }
 
-  addInputBox(){
-    this.keyIndex++;
-    console.log(this.itemList);
-    this.itemList.push({
-      id: this.itemList.length + 1,
-      subQuesId: this.questionItem.Id,
-      answerValue: this.inpValue
-    });
-    console.log(this.itemList);
+  addInputBox(question: any){
+    console.log(this.subQuestions);
+    console.log(question);
+    console.log(this.subQuestions.indexOf(question));
+    var questIndex = this.subQuestions.indexOf(question);
+    // this.keyIndex++;
+    // console.log(this.itemList);
+    // // this.itemList.push({
+    //   id: this.itemList.length + 1,
+    //   subQuesId: this.questionItem.Id,
+    //   answerValue: ''
+    // // });
+    this.subQuestions.splice(questIndex+1, 0, question);
+    // this.subQuestions.push(question);
+    console.log(this.subQuestions);
   }
 
   removeInputBox(i: number) {
     this.itemList.splice(i, 1);
   }
-  addNew(): void {
-    this.items.push({
-      name:'',
-      id: this.items.length + 1
-    }) // push what ever you want
+
+  trackByFn(index: any) {
+    return index;
   }
 }
