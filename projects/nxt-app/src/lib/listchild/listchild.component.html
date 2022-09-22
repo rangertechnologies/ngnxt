@@ -1,0 +1,21 @@
+<p>listchild works!</p>
+<div *ngIf="textType" class="col-md-12">
+   <div *ngFor="let item of itemList; let i = index" [attr.data-index]="i">
+
+    
+
+    <span class="colorf">{{questionItem.Question__c}}</span> 
+
+    <div class="col-md-12" class="dis-flex" [class]="'col-md-'+ questionItem.Size__c + ' paddingnone'">
+        <input name="item_{{i}}" type="text" [(ngModel)]="item.answerValue" class="textBox1" id="text-input-id" required="" 
+          style.border-color="{{this.questionItem.error ? 'red' : (item.answerValue?.length > 0 ? '#87be1c' : '')}}"
+          oninput="this.value=this.value.replace(/[^a-zA-Z0-9\s.:;,?]/g,'');"  (change)="handleInputChange($event)" />
+        <i class="fa fa-check check-icon" aria-hidden="true" *ngIf="item.answerValue?.length > 0"></i>
+      </div>
+      <div>
+        <button (click)="addInputBox()" class="btn"><i class="fa fa-plus" ></i>Add</button>
+       <!-- <button type="button"  (click)="removeAddress(i)">Remove</button>-->
+        <button (click)="removeAddress(i)" class="btn"><i class="fa fa-trash"></i> Remove</button>
+      </div>
+   </div>
+</div>

@@ -200,28 +200,32 @@
   </div>
 
 <!--List Type Starts-->
-
 <div *ngIf="listFlag">
+  <lib-list [questionItemData] = "questionItem"></lib-list>
+</div>
+
+<!--<div *ngIf="listFlag">
   <div class="form-group">
     <div class="form-row">
       <div class="questionalign" [class]="'col-md-'+ ques.Size__c + ' paddingnone'" *ngFor="let ques of subQuestions; let i=index">
-        <span class="colorf">{{ques.Question__c}}</span>
+        <span class="colorf">{{ques.Question__c}}</span> 
 
-       <div *ngIf="ques.Type__c === 'Text'">
-          <button (click)="addInputBox()">add</button>
+       <div *ngIf="ques.Type__c === 'Text'"> 
+           <button (click)="addInputBox()">add</button>
           <div *ngFor="let item of itemList; let indexOfelement=index;">
             ngFor index: {{indexOfelement}} value : {{item.name}}
           <input name="name{{i}}" type="text" [(ngModel)]="item.answerValue"  class="textBox" id="text" [id]="ques.Id" required="" (focus)="clearSQError(ques.Id)"
             style.border-color="{{ques.error ? 'red' : ''}}" placeholder="{{ques.Question__c}}"
             oninput="this.value=this.value.replace(/[^a-zA-Z0-9\s.:;,?]/g,'');" />
         </div>
+       
        </div>
         <i class="fa fa-check check-icon4" aria-hidden="true" *ngIf="questionItem?.input?.length > 0"></i>
       </div>
      
     </div>
   </div>
-</div>
+</div>-->
 
 <!--List Type Ends-->
 
