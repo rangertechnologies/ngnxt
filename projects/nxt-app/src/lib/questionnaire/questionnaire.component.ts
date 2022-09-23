@@ -72,6 +72,8 @@ export class QuestionnaireComponent implements OnInit {
   public inpValue: string;
   public answerMap = new Map();
   public subAnsMap = new Map();
+  public localSubQuestionsMap = new Map();
+  public keyIndexMap = new Map();
   public dateMap = new Map();
   public selectedhourMap = new Map();
   public selectedminuteMap= new Map();
@@ -108,6 +110,7 @@ export class QuestionnaireComponent implements OnInit {
   //List type 
   public listFlag: boolean= false;
  public keyIndex: number = 0;
+ public keyIndexNew: number = 1;
  values = [];
  items: Object[];
   // REQ-01 PROGRESS BAR
@@ -258,10 +261,11 @@ export class QuestionnaireComponent implements OnInit {
      }else if (this.bookFlag) {
       
       this.inpValue = '';
-      console.log('inside book')
-      console.log( this.inpValue);
+      // console.log('inside book')
+      // console.log( this.inpValue);
       var hasMissingInput = false;
       if(this.localSubQuestions.length > 0){
+        this.subAnsMap = new Map();
         for (var localQues of this.localSubQuestions){
           if (!localQues.Is_Optional__c &&
             ((localQues.Type__c != 'File' && !localQues.input) ||
@@ -269,7 +273,7 @@ export class QuestionnaireComponent implements OnInit {
                 localQues.error = new ErrorWrapper();
             hasMissingInput = true;
           }
-          console.log(localQues);
+          // console.log(localQues);
           // if(item.Type__c == 'Text'){
           //   if(!item.input){
           //       item.error = new ErrorWrapper();
@@ -280,10 +284,10 @@ export class QuestionnaireComponent implements OnInit {
           // 2  - 2157 
           // 3  - 2158
           if(!this.subAnsMap.has(localQues.Id)){
-            console.log('inside ans map')
+            // console.log('inside ans map')
             this.subAnsMap.set(localQues.Id,localQues.input);
           } else {
-            console.log('inside ans map else')
+            // console.log('inside ans map else')
             this.subAnsMap.set(localQues.Id,this.subAnsMap.get(localQues.Id) + '$$@@##'+localQues.input);
           }
        
@@ -297,17 +301,17 @@ export class QuestionnaireComponent implements OnInit {
          
         // this.inpValue += (localQues.input != undefined ? localQues.input : '') + '@@##$$';
         // console.log(localQues.input)
-         console.log(this.inpValue)
+        //  console.log(this.inpValue)
       
         }
         this.subAnsMap.forEach((value, key) => {
-          console.log('inside Map' );
-          console.log(value);
+          // console.log('inside Map' );
+          // console.log(value);
           this.inpValue += (value != undefined ? value : '') + '@@##$$';
          });
       }else{
       for (var item of this.questionItem.Questions__r.records) {
-        console.log(item.input);
+        // console.log(item.input);
         if (!item.Is_Optional__c &&
           ((item.Type__c != 'File' && !item.input) ||
             (item.Type__c == 'File' && this.attachments.length == 0))) {
@@ -353,7 +357,7 @@ export class QuestionnaireComponent implements OnInit {
         return;
       }
       this.inpValue = this.trimLastDummy(this.inpValue);
-      console.log('out for = '+this.inpValue)
+      // console.log('out for = '+this.inpValue)
      }else if (this.listFlag) {
       this.inpValue = '';
       var hasMissingInput = false;
@@ -459,9 +463,9 @@ export class QuestionnaireComponent implements OnInit {
       this.questionItem.error = new ErrorWrapper();
       return;
     }
-    console.log('before save');
-    console.log(this.questionItem);
-    console.log(this.localSubQuestions);
+    // console.log('before save');
+    // console.log(this.questionItem);
+    // console.log(this.localSubQuestions);
     // Save the Answer in the DB
     this.answerWrap = new AnswerWrapper();
     this.answerWrap.abId = this.abItem.Id;
@@ -469,8 +473,8 @@ export class QuestionnaireComponent implements OnInit {
     this.answerWrap.quesValue = quesValue;
     this.answerWrap.qTyp = typ;
     this.answerWrap.ansValue = this.inpValue;
-    console.log('before saving answer is');
-    console.log(this.inpValue);
+    // console.log('before saving answer is');
+    // console.log(this.inpValue);
     this.saveAnswer();
   }
 
@@ -555,7 +559,8 @@ export class QuestionnaireComponent implements OnInit {
       //console.log('Before Calling readQuestion() using ' + recordId);
       this.readQuestion(this.recordId);
     } else {
-      //console.log('Summary Page Logic');
+      // console.log('Summary Page Logic');
+      // console.log(this.answerMap);
       // Reset the Variables
       this.inpValue = '';
       this.answerWrap = new AnswerWrapper();
@@ -575,19 +580,20 @@ export class QuestionnaireComponent implements OnInit {
           if(ansWrap.qTyp == 'File' || ansWrap.qTyp == 'Book'||ansWrap.qTyp == 'List'){
             var newStr = '';
             for (var ansStr of ansWrap.ansValue.split('@@##$$')) {
-              if (ansStr.length > 0) {
-                if (newStr.length == 0) {
-                  newStr = ansStr;
-                } else {
-                  newStr += ', ' + ansStr;
-
-                  if(this.attachmentsMap.has(ansWrap.quesId)){
-                    for(var att of this.attachmentsMap.get(ansWrap.quesId)){
-                      newStr = newStr.replace(att.attachmentId,'');
+              for (var ansStr1 of ansStr.split('$$@@##')) {
+                if (ansStr1.length > 0) {
+                  if (newStr.length == 0) {
+                    newStr = ansStr1;
+                  } else {
+                    newStr += ', ' + ansStr1;
+                    if(this.attachmentsMap.has(ansWrap.quesId)){
+                      for(var att of this.attachmentsMap.get(ansWrap.quesId)){
+                        newStr = newStr.replace(att.attachmentId,'');
+                      }
                     }
+                    newStr = (newStr.replace(',,',', ')).replace(', ,',', ');
+                    newStr = newStr.startsWith(',') ? newStr.substring(1, newStr.length) : (newStr.endsWith(',') ? newStr.substring(0, newStr.length - 1) : newStr);
                   }
-                  newStr = (newStr.replace(',,',', ')).replace(', ,',', ');
-                  newStr = newStr.startsWith(',') ? newStr.substring(1, newStr.length) : (newStr.endsWith(',') ? newStr.substring(0, newStr.length - 1) : newStr);
                 }
               }
             }ansWrap.ansValue = newStr;
@@ -596,7 +602,8 @@ export class QuestionnaireComponent implements OnInit {
 
       }
       }
-
+      // console.log('final summary is ');
+      // console.log(this.summary);
       // Show Thank you Note
     }
   }
@@ -608,10 +615,10 @@ export class QuestionnaireComponent implements OnInit {
   }
 
   handleBackClick() {
-    console.log('inside handle back click ');
-    console.log(this.localSubQuestions);
-    console.log(this.questionStack);
-    console.log(this.answerMap);
+    // console.log('inside handle back click ');
+    // console.log(this.localSubQuestions);
+    // console.log(this.questionStack);
+    // console.log(this.answerMap);
     this.handleEvent.emit(this.qbItem.Back_Tracking_ID__c);
     this.answerCount--;
     this.updateProgress();
@@ -691,10 +698,10 @@ export class QuestionnaireComponent implements OnInit {
             qTyp: ansObject.Question_Type__c,	
             groupText:ansObject.Question_Group_Text__c,	
           });	
-          //console.log(this.questionStack)	
+          // console.log(this.questionStack);
           if (ansObject.Question_Type__c == "Book") {	
             var av1 = ansObject.Answer_Long__c.split("@@##$$");	
-            // //console.log("book log");	
+            // console.log("book log");	
             //  //console.log("bookid" + av1[0]);	
             this.attachmentsMap.set(ansObject.Question_Ref__c, [	
               { attachmentName: av1[1], attachmentId: av1[0] },	
@@ -893,6 +900,8 @@ export class QuestionnaireComponent implements OnInit {
   private successSave = (response) => {
     if (response.status == 'success') {
       //this.abItem = response.answerbook;
+      // console.log('on sucess save');
+      // console.log(this.answerMap);
       this.answerMap.set(response.answer.quesId, response.answer);
     } else {
       this.questionItem.error = new ErrorWrapper();
@@ -922,7 +931,7 @@ export class QuestionnaireComponent implements OnInit {
       var eAnswer = this.answerMap.get(this.questionItem.Id);
       // Get the existing answer from the Map
       this.inpValue = eAnswer.ansValue;
-      //console.log('inpValue has been set to ' + this.inpValue);
+      // console.log('inpValue has been set to ' + this.inpValue);
       if(this.attachmentsMap.has(this.questionItem.Id)){
         this.attachments = this.attachmentsMap.get(this.questionItem.Id);
       }
@@ -937,8 +946,10 @@ export class QuestionnaireComponent implements OnInit {
       this.setOptions(this.questionItem.Question_Options__r.records);
     } else if (this.bookFlag) {
       // Set the SubQuestions
-      
-      this.setSubQuestions(this.questionItem.Questions__r.records);
+      // console.log('inside process question going to set sub questions again');
+      if(this.localSubQuestions.length == 0){
+        this.setSubQuestions(this.questionItem.Questions__r.records);
+      }
      }else if (this.listFlag) {
       // Set the SubQuestions
       this.setSubQuestions(this.questionItem.Questions__r.records);
@@ -1090,7 +1101,7 @@ export class QuestionnaireComponent implements OnInit {
         for (var ansStr of this.inpValue.split('@@##$$')) {
           aIndex++;
           qaMap.set(aIndex, ansStr);
-          //console.log('Setting the qaMap for ' + aIndex + ' with ' + ansStr);
+          // console.log('Setting the qaMap for ' + aIndex + ' with ' + ansStr);
         }
       } else {
         for (var ansStr of this.inpValue.split(', ')) {
@@ -1121,24 +1132,24 @@ export class QuestionnaireComponent implements OnInit {
       }
 
       if (qaMap.has(ques.Question_No__c)) {
-        console.log('Setting input for the subQuestion ' + ques.Question_No__c + ' with ' + ansStr);
+        // console.log('Setting input for the subQuestion ' + ques.Question_No__c + ' with ' + ansStr);
         if(ques.Type__c !='File'){
         ques.input = qaMap.get(ques.Question_No__c);
-        console.log('input'+ques.input);
+        // console.log('input'+ques.input);
         }
       }
 
       this.subQuestions.push(ques);
       
       // console.log('inside setting localsub questions');
-      console.log(this.subQuestions);
+      // console.log(this.subQuestions);
       // console.log(this.localSubQuestions);
     }
     if(this.valueName1.length >0){
        this.bookFlagAccept = this.valueName1.split(';');
     //console.log(this.subQuestions);
     }
-    this.structLocalSubQuestion();
+    this.structLocalSubQuestion(null);
   }
 
   optionChange(selValue) {
@@ -1273,79 +1284,172 @@ export class QuestionnaireComponent implements OnInit {
   handleInputChange(event){
     let index = event.target.dataset.index;
     let fieldName = event.target.name;
-    console.log('index '+ index +' fieldName '+fieldName);
+    // console.log('index '+ index +' fieldName '+fieldName);
     
   }
 
-  structLocalSubQuestion(){
-    var qaMap = new Map();
-    if (this.inpValue) {
-      var aIndex = 0;
-      if (this.inpValue.search(', ') == -1) {
-        for (var ansStr of this.inpValue.split('@@##$$')) {
-          aIndex++;
-          qaMap.set(aIndex, ansStr);
-          console.log('Setting the qaMap for ' + aIndex + ' with ' + ansStr);
+  structLocalSubQuestion(ques: LocalQuestion){
+    // var qaMap = new Map();
+    var keyIndexNew = 1;
+    console.log('inside structLocalSubQuestion');
+    // console.log(this.questionItem.Id);
+    console.log(this.localSubQuestions);
+    // this.localSubQuestions = [];
+    // if(ques != null){
+    //   localSubQuestion.Id = ques.Id;
+    //   localSubQuestion.Name = ques.Name;
+    //   localSubQuestion.Question__c = ques.Question__c;
+    //   localSubQuestion.Question_Text__c = ques.Question_Text__c;
+    //   localSubQuestion.Type__c = ques.Type__c;
+    //   localSubQuestion.Title__c = ques.Title__c;
+    //   localSubQuestion.SubTitle__c = ques.SubTitle__c;
+    //   localSubQuestion.Is_Optional__c = ques.Is_Optional__c;
+    //   localSubQuestion.Error_Message__c = ques.Error_Message__c;
+    //   localSubQuestion.Next_Question__c = ques.Next_Question__c;
+    //   localSubQuestion.Group__c = ques.Group__c;
+    //   localSubQuestion.Question_No__c = ques.Question_No__c;
+    //   localSubQuestion.Allowed_File_Extensions__c = ques.Allowed_File_Extensions__c;
+    //   localSubQuestion.uniqueSubQId = ques.Id + this.keyIndex; 
+    //   this.localSubQuestions.push(localSubQuestion);
+    //   this.keyIndex++;
+    // } else {
+    if(this.localSubQuestions.length > 0){
+      
+      // var question  = new LocalQuestion();
+      // question = ques;
+      // if(!this.keyIndexMap.has(question.Id)){
+      //   this.keyIndexMap.set(question.Id, keyIndexNew);
+      //   // keyIndexNew++;
+      // } else {
+      //   this.keyIndexMap.set(question.Id, (this.keyIndexMap.get(question.Id)+1));
+      // }
+      
+      // // question.input = '';
+      // var questIndex = this.localSubQuestions.indexOf(ques);
+      // // question.uniqueSubQId = ques.Id+(questIndex+2);
+      // question.uniqueSubQId = ques.Id + this.keyIndexMap.get(ques.Id); 
+      // this.localSubQuestions.splice(questIndex+1, 0, question);   
+      // // let obj = this.localSubQuestions.find(o => o.uniqueSubQId === ques.Id+(this.keyIndex));
+      // // console.log(obj);
+      let obj1 = this.localSubQuestions.find((o, i) => {
+        if (o.Id === ques.Id) {
+          console.log('object found');
+          // console.log(o);
+          var qu = ques;
+          console.log(o.uniqueSubQId.substring(18));
+
+          qu.uniqueSubQId = ques.Id + Number(o.uniqueSubQId.substring(18))+1;
+          // o.uniqueSubQId = ques.Id+(questIndex+2);
+          // console.log(o);
+          this.localSubQuestions.splice(i+1, 0, qu); 
+          // console.log(i);
+          // o.input = '';
         }
-      } else {
-        for (var ansStr of this.inpValue.split(', ')) {
-          aIndex++;
-          qaMap.set(aIndex, ansStr);
-          console.log('Setting the qaMap ' + aIndex + ' with ' + ansStr);
-        }
+      });
+      console.log('after adding index');
+      console.log(this.localSubQuestions);
+    } else {
+      // for(var subQ of this.subQuestions){
+      //   // console.log('inside for structLocalSubQuestion');
+      //   // console.log(subQ);
+      //   var localSubQuestion = new LocalQuestion();
+      //   //localSubQuestion = sentSubQuestions[i];
+      //   localSubQuestion.Id = subQ.Id;
+      //   localSubQuestion.Name = subQ.Name;
+      //   localSubQuestion.Question__c = subQ.Question__c;
+      //   localSubQuestion.Question_Text__c = subQ.Question_Text__c;
+      //   localSubQuestion.Type__c = subQ.Type__c;
+      //   localSubQuestion.Title__c = subQ.Title__c;
+      //   localSubQuestion.SubTitle__c = subQ.SubTitle__c;
+      //   localSubQuestion.Is_Optional__c = subQ.Is_Optional__c;
+      //   localSubQuestion.Error_Message__c = subQ.Error_Message__c;
+      //   localSubQuestion.Next_Question__c = subQ.Next_Question__c;
+      //   //localSubQuestion.Is_Optional__c = subQ.Is_Optional__c;
+      //   localSubQuestion.Group__c = subQ.Group__c;
+      //   localSubQuestion.Question_No__c = subQ.Question_No__c;
+      //   localSubQuestion.Allowed_File_Extensions__c = subQ.Allowed_File_Extensions__c;
+
+      //   if(!this.keyIndexMap.has(subQ.Id)){
+      //     this.keyIndexMap.set(subQ.Id, keyIndexNew);
+      //     // keyIndexNew++;
+      //   } else {
+      //     this.keyIndexMap.set(subQ.Id,(this.keyIndexMap.get(subQ.Id)+1));
+      //   }
+      //   localSubQuestion.uniqueSubQId = subQ.Id + this.keyIndexMap.get(subQ.Id); 
+      //   // console.log(localSubQuestion);
+      //   // if (qaMap.has(subQ.Question_No__c)) {
+      //   //   // console.log('Setting input for the subQuestion ' + subQ.Question_No__c + ' with ' + ansStr);
+      //   //   if(subQ.Type__c !='File'){
+      //   //   subQ.input = qaMap.get(subQ.Question_No__c);
+      //   //   // console.log('input'+subQ.input);
+      //   //   }
+      //   // }
+        
+      //   this.localSubQuestions.push(localSubQuestion);
+      //   this.localSubQuestionsMap.set(localSubQuestion.Id,this.localSubQuestions);
+      //   this.keyIndex++;
+      // }
+      for(var i = 0; i < this.subQuestions.length; i++){
+        var localSubQuestion = new LocalQuestion();
+          //localSubQuestion = sentSubQuestions[i];
+          localSubQuestion.Id = this.subQuestions[i].Id;
+          localSubQuestion.Name = this.subQuestions[i].Name;
+          localSubQuestion.Question__c = this.subQuestions[i].Question__c;
+          localSubQuestion.Question_Text__c = this.subQuestions[i].Question_Text__c;
+          localSubQuestion.Type__c = this.subQuestions[i].Type__c;
+          localSubQuestion.Title__c = this.subQuestions[i].Title__c;
+          localSubQuestion.SubTitle__c = this.subQuestions[i].SubTitle__c;
+          localSubQuestion.Is_Optional__c = this.subQuestions[i].Is_Optional__c;
+          localSubQuestion.Error_Message__c = this.subQuestions[i].Error_Message__c;
+          localSubQuestion.Next_Question__c = this.subQuestions[i].Next_Question__c;
+          //localSubQuestion.Is_Optional__c = this.subQuestions[i].Is_Optional__c;
+          localSubQuestion.Group__c = this.subQuestions[i].Group__c;
+          localSubQuestion.Question_No__c = this.subQuestions[i].Question_No__c;
+          localSubQuestion.Allowed_File_Extensions__c = this.subQuestions[i].Allowed_File_Extensions__c;
+          localSubQuestion.uniqueSubQId = this.subQuestions[i].Id + i; 
+          this.localSubQuestions.push(localSubQuestion);
       }
     }
-    // console.log('inside structLocalSubQuestion');
-    // console.log(this.subQuestions);
-    // console.log(this.subQuestions.length);
-    this.localSubQuestions = [];
-    for(var subQ of this.subQuestions){
-      // console.log('inside for structLocalSubQuestion');
-      // console.log(sentSubQuestions[i]);
-      var localSubQuestion = new LocalQuestion();
-      //localSubQuestion = sentSubQuestions[i];
-      localSubQuestion.Id = subQ.Id;
-      localSubQuestion.Name = subQ.Name;
-      localSubQuestion.Question__c = subQ.Question__c;
-      localSubQuestion.Question_Text__c = subQ.Question_Text__c;
-      localSubQuestion.Type__c = subQ.Type__c;
-      localSubQuestion.Title__c = subQ.Title__c;
-      localSubQuestion.SubTitle__c = subQ.SubTitle__c;
-      localSubQuestion.Is_Optional__c = subQ.Is_Optional__c;
-      localSubQuestion.Error_Message__c = subQ.Error_Message__c;
-      localSubQuestion.Next_Question__c = subQ.Next_Question__c;
-      //localSubQuestion.Is_Optional__c = subQ.Is_Optional__c;
-      localSubQuestion.Group__c = subQ.Group__c;
-      localSubQuestion.Question_No__c = subQ.Question_No__c;
-      localSubQuestion.Allowed_File_Extensions__c = subQ.Allowed_File_Extensions__c;
-      localSubQuestion.uniqueSubQId = subQ.Id + this.keyIndex; 
-      // console.log(localSubQuestion);
-      if (qaMap.has(subQ.Question_No__c)) {
-        // console.log('Setting input for the subQuestion ' + subQ.Question_No__c + ' with ' + ansStr);
-        if(subQ.Type__c !='File'){
-        subQ.input = qaMap.get(subQ.Question_No__c);
-        // console.log('input'+subQ.input);
-        }
-      }
-
-      this.localSubQuestions.push(localSubQuestion);
-      this.keyIndex++;
-    }
-
+   
+    // console.log('final displayed localsubquestions');
+    // console.log(this.localSubQuestions);
+    // console.log('final sub questions map');
+    // console.log(this.localSubQuestionsMap);
+  // }
+  console.log('final local sub questions');
+  console.log(this.localSubQuestions);
+  console.log('final key index map');
+  // console.log(this.keyIndexMap);
   }
   addInputBox(question: LocalQuestion){
-    console.log(this.subQuestions);
-    console.log(question);
-    console.log(this.subQuestions.indexOf(question));
-    var questIndex = this.subQuestions.indexOf(question);
+    // console.log('inside add input box');
+    // console.log(this.subQuestions);
+    // console.log('in local sub question');
+    // console.log(this.localSubQuestions);
+    if(this.localSubQuestions.length == 0){
+      var questIndex = this.subQuestions.indexOf(question);
+      this.subQuestions.splice(questIndex+1, 0, question);
+    }
+    
     // var localQuestion = new Question;
     // localQuestion = question;
     // localQuestion.Name = question.Name + this.keyIndex;
     // this.keyIndex++;
-    this.subQuestions.splice(questIndex+1, 0, question);
+    
+    
     // this.subQuestions.push(question);
-    console.log(this.subQuestions);
-    this.structLocalSubQuestion();
+    // console.log('after adding input field');
+    // console.log(this.localSubQuestions);
+    this.structLocalSubQuestion(question);
+  }
+
+  removeAddress() {
+    if (this.localSubQuestions.length >= 2) {
+      this.keyIndex--;
+    const index = this.localSubQuestions.findIndex((item) => item.Id);
+    this.localSubQuestions.splice(index, 1);
+    }
+    console.log(this.localSubQuestions);
   }
 
 }
