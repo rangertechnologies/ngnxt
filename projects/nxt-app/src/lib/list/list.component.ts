@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'lib-list',
@@ -15,6 +15,7 @@ export class ListComponent implements OnInit {
   public data:any;
 
   @Input() questionItemData;
+  @Output() ToQuestionnarie:EventEmitter<any> = new EventEmitter()
   constructor() { }
   
   ngOnInit(): void {
@@ -46,6 +47,15 @@ export class ListComponent implements OnInit {
       }
       
     }
+    listChildData(event){
+      console.log('inside parent event');
+      console.log(event);
+      
+      this.answerMap.set(event.quesId,event.ansValue ? event.ansValue : null)
+      console.log('inside this answer in parent')
+      console.log(this.answerMap)
+      this.shareToHome();
+    }
 
     getData(event){
       var response = event.detail;
@@ -70,10 +80,12 @@ export class ListComponent implements OnInit {
           quesId:this.questionItemData.Id,
           quesValue:this.questionItemData.Question_Text__c,
           qTyp:this.questionItemData.Type__c,
-          ansValue: !nullExist ? answer.join('$$++') : null,
+          ansValue:  answer+'@#$$#@',
           nextQues:this.questionItemData.Next_Question__c
           //ansValue:event.target.value
       };
+      console.log(data)
+      this.ToQuestionnarie.emit(data);
      console.log('TextValue = '+ this.textValue +'ansval = ' +data.ansValue)
       this.textValue = data.ansValue;
   } 

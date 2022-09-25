@@ -1,5 +1,4 @@
-<p>list works!</p>
 <div *ngFor="let question of questionList" [attr.data-question-id]="question.id">
-    {{ question.Question__c }}
-    <lib-listchild data-id="question" ongetquestiondata={getData} [questiondata] = "question"></lib-listchild>
+    <lib-listchild (DataList)="listChildData($event)" data-id="question" ongetquestiondata={getData} [questiondata] = "question"></lib-listchild>
+    
 </div>

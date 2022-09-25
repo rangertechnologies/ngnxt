@@ -115,6 +115,7 @@ export class QuestionnaireComponent implements OnInit {
   // REQ-01 PROGRESS BAR
   public progressStyle: string = '0%';
   public answerCount: number = 0;
+  public listAnswer;
 
   public myDatePickerOptions: IMyDpOptions = {
 
@@ -139,7 +140,7 @@ export class QuestionnaireComponent implements OnInit {
     this.inpValue="";
     this.selectedMeridiem = "AM";
     this.processQB();
-    console.log('EMBI-Changes Testing')
+    console.log('EMBI-Changes Testing tech')
 
   }
 
@@ -306,36 +307,8 @@ export class QuestionnaireComponent implements OnInit {
       }
       this.inpValue = this.trimLastDummy(this.inpValue);
      }else if (this.listFlag) {
-      this.inpValue = '';
+      this.inpValue = this.listAnswer;
       var hasMissingInput = false;
-      for (var item of this.questionItem.Questions__r.records) {
-        if (!item.Is_Optional__c &&
-          ((item.Type__c != 'File' && !item.input) ||
-            (item.Type__c == 'File' && this.attachments.length == 0))) {
-          item.error = new ErrorWrapper();
-          hasMissingInput = true;
-        }
-   
-       /* if (item.Type__c == 'Text'){
-          if(item.input && item.input.match(mailformat)){
-             this.recordId = cQuestion.Next_Question__c;
-            }else{
-              item.error = new ErrorWrapper();
-              hasMissingInput = true;}
-        }*/
-        if (item.Type__c == 'File' && this.attachments.length > 0) {
-          for (var attachmentItem of this.attachments) {
-            this.inpValue += attachmentItem.attachmentId + '@@##$$' + attachmentItem.attachmentName + ',';
-            if (item.input == this.inpValue) {
-              this.recordId = cQuestion.Next_Question__c;
-              //console.log('inside' + recordId);
-            }
-          }
-          this.attachments = [];
-        }//item.input == this.inpValue;
-        this.inpValue += (item.input != undefined ? item.input : '') + '@@##$$';
-        //console.log('inside book1' + this.inpValue)
-      }
       if (hasMissingInput) {
         //console.log('file two')
         return;
@@ -468,9 +441,9 @@ export class QuestionnaireComponent implements OnInit {
           }
         }
       }  if (cQuestion.Type__c == "List") {
-        //console.log("inside book");
+        console.log("inside List");
         for (let opt of cQuestion.Questions__r.records) {
-          //console.log(opt.Type__c);
+          console.log(opt.Type__c);
            if (opt.Type__c == "Dropdown"||opt.Type__c == "Radio") {
             for (var opt1 of opt.Question_Options__r.records) {
               if (this.valueName == opt1.Value__c) {
@@ -1070,7 +1043,8 @@ export class QuestionnaireComponent implements OnInit {
     }
     if(this.valueName1.length >0){
        this.bookFlagAccept = this.valueName1.split(';');
-    //console.log(this.subQuestions);
+       console.log('book flag')
+    console.log(this.subQuestions);
     }
   }
 
@@ -1229,5 +1203,11 @@ export class QuestionnaireComponent implements OnInit {
       name:'',
       id: this.items.length + 1
     }) // push what ever you want
+  }
+
+  listData(event){
+    console.log(event);
+    console.log('inside questionnarie');
+    this.listAnswer = event.ansValue;
   }
 }

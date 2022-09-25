@@ -1,9 +1,6 @@
 <p>listchild works!</p>
 <div *ngIf="textType" class="col-md-12">
    <div *ngFor="let item of itemList; let i = index" [attr.data-index]="i">
-
-    
-
     <span class="colorf">{{questionItem.Question__c}}</span> 
 
     <div class="col-md-12" class="dis-flex" [class]="'col-md-'+ questionItem.Size__c + ' paddingnone'">

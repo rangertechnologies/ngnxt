@@ -201,7 +201,7 @@
 
 <!--List Type Starts-->
 <div *ngIf="listFlag">
-  <lib-list [questionItemData] = "questionItem"></lib-list>
+  <lib-list (ToQuestionnarie)="listData($event)" [questionItemData] = "questionItem"></lib-list>
 </div>
 
 <!--<div *ngIf="listFlag">

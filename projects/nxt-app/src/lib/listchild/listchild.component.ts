@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input , Output, EventEmitter} from '@angular/core';
 
 @Component({
   selector: 'lib-listchild',
@@ -16,10 +16,12 @@ export class ListchildComponent implements OnInit {
   public keyIndex = 0;
   public itemList: any[] = [{
     id: 0,
-    subQuesId:'',
+    subQuesId: '',
     answerValue:''
   }];
+
   @Input() questiondata;
+  @Output() DataList:EventEmitter<any> = new EventEmitter()
   constructor() { }
 
   ngOnInit(): void {
@@ -56,11 +58,26 @@ setType(typ) {
 }
 
 handleInputChange(event){
-  let index = event.target.value;
-  console.log('index = '+index);
-  this.itemList[index].quesId = this.questionItem.Id;
-  this.itemList[index].ansValue = event.target.value;
-  
+  var objIndex = this.itemList.findIndex((obj => obj.id == 0));
+//Update object's name property.
+this.itemList[objIndex].subQuesId = this.questionItem.Id;
+
+// Log object to console again.
+// console.log("After update: ", this.itemList[objIndex])
+console.log(this.itemList)
+var answerList='' ;
+for(let i=0; i< this.itemList.length; i++){
+ console.log(this.itemList[i].answerValue)
+ answerList += this.itemList[i].answerValue +'@#$$#@'; 
+}//console.log('answer= '+answerList)
+this.inpValue = answerList.substring(0, answerList.length - 6);
+console.log(this.inpValue );  
+let data = {
+  quesId: this.questionItem.Id,
+  qTyp: this.questionItem.Type__c,
+  ansValue: this.inpValue,
+};
+this.DataList.emit(data);
 }
 
 addInputBox(){
@@ -68,11 +85,12 @@ addInputBox(){
   console.log(this.keyIndex)
   //console.log(this.itemList);
   this.itemList.push({
-    id: this.itemList.length +1,
+    id: this.keyIndex,
     subQuesId: this.questionItem.Id,
-    answerValue: this.inpValue
+    answerValue: ''
   });
   console.log(this.itemList);
+
 }
 
 removeAddress(uId: number) {
