@@ -79,6 +79,7 @@ export class QuestionnaireComponent implements OnInit {
   public selectedminuteMap= new Map();
   public attachmentsMap = new Map();
   public sqOptions = new Map();
+  public localSubQMap = new Map();
   public questionStack = [];
   public attachments: any[] = [];
   public attachmentIdList: any[] = [];
@@ -264,9 +265,9 @@ export class QuestionnaireComponent implements OnInit {
       // console.log('inside book')
       // console.log( this.inpValue);
       var hasMissingInput = false;
-      if(this.localSubQuestions.length > 0){
+      if(this.localSubQMap.has(this.questionItem.Id)){
         this.subAnsMap = new Map();
-        for (var localQues of this.localSubQuestions){
+        for (var localQues of this.localSubQMap.get(this.questionItem.Id)){
           if (!localQues.Is_Optional__c &&
             ((localQues.Type__c != 'File' && !localQues.input) ||
               (localQues.Type__c == 'File' && this.attachments.length == 0))) {
@@ -946,10 +947,10 @@ export class QuestionnaireComponent implements OnInit {
       this.setOptions(this.questionItem.Question_Options__r.records);
     } else if (this.bookFlag) {
       // Set the SubQuestions
-      // console.log('inside process question going to set sub questions again');
-      if(this.localSubQuestions.length == 0){
+      console.log('inside process question going to set sub questions again');
+      // if(this.localSubQuestions.length == 0){
         this.setSubQuestions(this.questionItem.Questions__r.records);
-      }
+      // }
      }else if (this.listFlag) {
       // Set the SubQuestions
       this.setSubQuestions(this.questionItem.Questions__r.records);
@@ -1141,14 +1142,15 @@ export class QuestionnaireComponent implements OnInit {
 
       this.subQuestions.push(ques);
       
-      // console.log('inside setting localsub questions');
-      // console.log(this.subQuestions);
+      console.log('inside setting localsub questions');
+      console.log(this.subQuestions);
       // console.log(this.localSubQuestions);
     }
     if(this.valueName1.length >0){
        this.bookFlagAccept = this.valueName1.split(';');
     //console.log(this.subQuestions);
     }
+    
     this.structLocalSubQuestion(null);
   }
 
@@ -1290,10 +1292,10 @@ export class QuestionnaireComponent implements OnInit {
 
   structLocalSubQuestion(ques: LocalQuestion){
     // var qaMap = new Map();
-    var keyIndexNew = 1;
+    // var keyIndexNew = 1;
     console.log('inside structLocalSubQuestion');
     // console.log(this.questionItem.Id);
-    console.log(this.localSubQuestions);
+    // console.log(this.localSubQuestions);
     // this.localSubQuestions = [];
     // if(ques != null){
     //   localSubQuestion.Id = ques.Id;
@@ -1313,7 +1315,7 @@ export class QuestionnaireComponent implements OnInit {
     //   this.localSubQuestions.push(localSubQuestion);
     //   this.keyIndex++;
     // } else {
-    if(this.localSubQuestions.length > 0){
+    // if(this.localSubQuestions.length > 0){
       
       // var question  = new LocalQuestion();
       // question = ques;
@@ -1331,24 +1333,24 @@ export class QuestionnaireComponent implements OnInit {
       // this.localSubQuestions.splice(questIndex+1, 0, question);   
       // // let obj = this.localSubQuestions.find(o => o.uniqueSubQId === ques.Id+(this.keyIndex));
       // // console.log(obj);
-      let obj1 = this.localSubQuestions.find((o, i) => {
-        if (o.Id === ques.Id) {
-          console.log('object found');
-          // console.log(o);
-          var qu = ques;
-          console.log(o.uniqueSubQId.substring(18));
+      // let obj1 = this.localSubQuestions.find((o, i) => {
+      //   if (o.Id === ques.Id) {
+      //     console.log('object found');
+      //     // console.log(o);
+      //     var qu = ques;
+      //     console.log(o.uniqueSubQId.substring(18));
 
-          qu.uniqueSubQId = ques.Id + Number(o.uniqueSubQId.substring(18))+1;
-          // o.uniqueSubQId = ques.Id+(questIndex+2);
-          // console.log(o);
-          this.localSubQuestions.splice(i+1, 0, qu); 
-          // console.log(i);
-          // o.input = '';
-        }
-      });
-      console.log('after adding index');
-      console.log(this.localSubQuestions);
-    } else {
+      //     qu.uniqueSubQId = ques.Id + Number(o.uniqueSubQId.substring(18))+1;
+      //     // o.uniqueSubQId = ques.Id+(questIndex+2);
+      //     // console.log(o);
+      //     this.localSubQuestions.splice(i+1, 0, qu); 
+      //     // console.log(i);
+      //     // o.input = '';
+      //   }
+      // });
+    //   console.log('after adding index');
+    //   console.log(this.localSubQuestions);
+    // } else {
       // for(var subQ of this.subQuestions){
       //   // console.log('inside for structLocalSubQuestion');
       //   // console.log(subQ);
@@ -1409,7 +1411,7 @@ export class QuestionnaireComponent implements OnInit {
           localSubQuestion.uniqueSubQId = this.subQuestions[i].Id + i; 
           this.localSubQuestions.push(localSubQuestion);
       }
-    }
+    // }
    
     // console.log('final displayed localsubquestions');
     // console.log(this.localSubQuestions);
@@ -1418,8 +1420,13 @@ export class QuestionnaireComponent implements OnInit {
   // }
   console.log('final local sub questions');
   console.log(this.localSubQuestions);
-  console.log('final key index map');
+
   // console.log(this.keyIndexMap);
+  console.log(this.questionItem.Id);
+  this.localSubQMap.set(this.questionItem.Id,this.localSubQuestions);
+  this.localSubQuestions = [];
+  console.log('final key localSubQMap map');
+  console.log(this.localSubQMap);
   }
   addInputBox(question: LocalQuestion){
     // console.log('inside add input box');
@@ -1452,4 +1459,7 @@ export class QuestionnaireComponent implements OnInit {
     console.log(this.localSubQuestions);
   }
 
+  getLocalSubQuestions(id: String){
+    return this.localSubQMap.get(id);
+  }
 }
