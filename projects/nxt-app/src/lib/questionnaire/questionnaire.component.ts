@@ -72,8 +72,8 @@ export class QuestionnaireComponent implements OnInit {
   public inpValue: string;
   public answerMap = new Map();
   public subAnsMap = new Map();
-  public localSubQuestionsMap = new Map();
-  public keyIndexMap = new Map();
+  // public localSubQuestionsMap = new Map();
+  // public keyIndexMap = new Map();
   public dateMap = new Map();
   public selectedhourMap = new Map();
   public selectedminuteMap= new Map();
@@ -111,9 +111,9 @@ export class QuestionnaireComponent implements OnInit {
   //List type 
   public listFlag: boolean= false;
  public keyIndex: number = 0;
- public keyIndexNew: number = 1;
- values = [];
- items: Object[];
+//  public keyIndexNew: number = 1;
+//  values = [];
+//  items: Object[];
   // REQ-01 PROGRESS BAR
   public progressStyle: string = '0%';
   public answerCount: number = 0;
@@ -123,7 +123,7 @@ export class QuestionnaireComponent implements OnInit {
   };
 
   constructor(private sfService: SalesforceService, private route: ActivatedRoute, private sanitizer: DomSanitizer, private _formBuilder: FormBuilder){
-    this.items = [];
+    // this.items = [];
    }
 
    onDateChanged(event: IMyDateModel) { //to change the border color
@@ -231,6 +231,8 @@ export class QuestionnaireComponent implements OnInit {
   }
 
   handleNextClick() {
+    console.log('inside handlenext click');
+    console.log(this.localSubQMap);
     if(this.currentQuestionId === null){
       return;
     }
@@ -358,7 +360,7 @@ export class QuestionnaireComponent implements OnInit {
         return;
       }
       this.inpValue = this.trimLastDummy(this.inpValue);
-      // console.log('out for = '+this.inpValue)
+      console.log('out for = '+this.inpValue)
      }else if (this.listFlag) {
       this.inpValue = '';
       var hasMissingInput = false;
@@ -948,9 +950,9 @@ export class QuestionnaireComponent implements OnInit {
     } else if (this.bookFlag) {
       // Set the SubQuestions
       console.log('inside process question going to set sub questions again');
-      // if(this.localSubQuestions.length == 0){
+      if(!this.localSubQMap.has(this.questionItem.Id)){
         this.setSubQuestions(this.questionItem.Questions__r.records);
-      // }
+      }
      }else if (this.listFlag) {
       // Set the SubQuestions
       this.setSubQuestions(this.questionItem.Questions__r.records);
@@ -1408,7 +1410,7 @@ export class QuestionnaireComponent implements OnInit {
           localSubQuestion.Group__c = this.subQuestions[i].Group__c;
           localSubQuestion.Question_No__c = this.subQuestions[i].Question_No__c;
           localSubQuestion.Allowed_File_Extensions__c = this.subQuestions[i].Allowed_File_Extensions__c;
-          localSubQuestion.uniqueSubQId = this.subQuestions[i].Id + i; 
+          localSubQuestion.uniqueSubQId = ''+this.subQuestions[i].Id + i; 
           this.localSubQuestions.push(localSubQuestion);
       }
     // }
@@ -1428,15 +1430,29 @@ export class QuestionnaireComponent implements OnInit {
   console.log('final key localSubQMap map');
   console.log(this.localSubQMap);
   }
-  addInputBox(question: LocalQuestion){
-    // console.log('inside add input box');
+  addInputBox(question: LocalQuestion, index: number){
+    console.log('inside add input box');
+    console.log(this.questionItem.Id);
+    console.log(question);
+    console.log(index);
+    var arra = this.localSubQMap.get(this.questionItem.Id);
+    var qIndex = arra.indexOf(question);
+    var ques: LocalQuestion = new LocalQuestion();
+    Object.assign(ques, question);
+    console.log((ques.uniqueSubQId).substring(18, (ques.uniqueSubQId).length));
+    //  ques.uniqueSubQId = ques.Id + String((Number((ques.uniqueSubQId).substring(18, (ques.uniqueSubQId).length)) + 1));
+    ques.uniqueSubQId = ques.Id + (String(index+1));
+    ques.input = '';
+    arra.splice(qIndex+1, 0, ques);
+
+    this.localSubQMap.set(this.questionItem.Id,arra);
     // console.log(this.subQuestions);
     // console.log('in local sub question');
     // console.log(this.localSubQuestions);
-    if(this.localSubQuestions.length == 0){
-      var questIndex = this.subQuestions.indexOf(question);
-      this.subQuestions.splice(questIndex+1, 0, question);
-    }
+    // if(this.localSubQuestions.length == 0){
+    //   var questIndex = this.subQuestions.indexOf(question);
+    //   this.subQuestions.splice(questIndex+1, 0, question);
+    // }
     
     // var localQuestion = new Question;
     // localQuestion = question;
@@ -1447,7 +1463,8 @@ export class QuestionnaireComponent implements OnInit {
     // this.subQuestions.push(question);
     // console.log('after adding input field');
     // console.log(this.localSubQuestions);
-    this.structLocalSubQuestion(question);
+    // this.structLocalSubQuestion(question);
+    console.log(this.localSubQMap);
   }
 
   removeAddress() {

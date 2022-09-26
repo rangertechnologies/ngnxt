@@ -143,7 +143,7 @@
   <div *ngIf="bookFlag">
     <div class="form-group">
       <div class="form-row">
-        <div class="questionalign" [class]="'col-md-'+ ques.Size__c + ' paddingnone'" *ngFor="let ques of getLocalSubQuestions(questionItem.Id)">
+        <div class="questionalign" [class]="'col-md-'+ ques.Size__c + ' paddingnone'" *ngFor="let ques of getLocalSubQuestions(questionItem.Id);let i = index">
           <span class="colorf">{{ques.Question__c}}</span>
 
           <div *ngIf="ques.Type__c === 'Text'">
@@ -151,7 +151,7 @@
               style.border-color="{{ques.error ? 'red' : ''}}" placeholder="{{ques.Question__c}}"
               oninput="this.value=this.value.replace(/[^a-zA-Z0-9\s.:;,?]/g,'');" />
               <div>
-                <button (click)="addInputBox(ques)" class="btn"><i class="fa fa-plus" ></i>Add</button>
+                <button (click)="addInputBox(ques, i)" class="btn"><i class="fa fa-plus" ></i>Add</button>
                 <button (click)="removeAddress()" class="btn"><i class="fa fa-trash"></i> Remove</button>
               </div>
           </div>
