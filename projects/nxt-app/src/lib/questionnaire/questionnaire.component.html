@@ -152,7 +152,7 @@
               oninput="this.value=this.value.replace(/[^a-zA-Z0-9\s.:;,?]/g,'');" />
               <div>
                 <button (click)="addInputBox(ques, i)" class="btn"><i class="fa fa-plus" ></i>Add</button>
-                <button (click)="removeAddress()" class="btn"><i class="fa fa-trash"></i> Remove</button>
+                <button (click)="removeAddress(ques.uniqueSubQId, ques.Name)" class="btn"><i class="fa fa-trash"></i> Remove</button>
               </div>
           </div>
 

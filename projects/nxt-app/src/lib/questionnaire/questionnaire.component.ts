@@ -262,10 +262,7 @@ export class QuestionnaireComponent implements OnInit {
           this.questionItem.error = new ErrorWrapper();
         return;}
      }else if (this.bookFlag) {
-      
       this.inpValue = '';
-      // console.log('inside book')
-      // console.log( this.inpValue);
       var hasMissingInput = false;
       if(this.localSubQMap.has(this.questionItem.Id)){
         this.subAnsMap = new Map();
@@ -276,16 +273,6 @@ export class QuestionnaireComponent implements OnInit {
                 localQues.error = new ErrorWrapper();
             hasMissingInput = true;
           }
-          // console.log(localQues);
-          // if(item.Type__c == 'Text'){
-          //   if(!item.input){
-          //       item.error = new ErrorWrapper();
-          //     hasMissingInput = true;
-          //       }
-          // }
-          // 1  - 2157 + 'lal'
-          // 2  - 2157 
-          // 3  - 2158
           if(!this.subAnsMap.has(localQues.Id)){
             // console.log('inside ans map')
             this.subAnsMap.set(localQues.Id,localQues.input);
@@ -293,19 +280,6 @@ export class QuestionnaireComponent implements OnInit {
             // console.log('inside ans map else')
             this.subAnsMap.set(localQues.Id,this.subAnsMap.get(localQues.Id) + '$$@@##'+localQues.input);
           }
-       
-          
-          // for(var str of this.subAnsMap){
-
-          // console.log(str);
-          //   //this.inpValue +=  + '@@##$$';
-          // }
-          
-         
-        // this.inpValue += (localQues.input != undefined ? localQues.input : '') + '@@##$$';
-        // console.log(localQues.input)
-        //  console.log(this.inpValue)
-      
         }
         this.subAnsMap.forEach((value, key) => {
           // console.log('inside Map' );
@@ -371,14 +345,6 @@ export class QuestionnaireComponent implements OnInit {
           item.error = new ErrorWrapper();
           hasMissingInput = true;
         }
-   
-       /* if (item.Type__c == 'Text'){
-          if(item.input && item.input.match(mailformat)){
-             this.recordId = cQuestion.Next_Question__c;
-            }else{
-              item.error = new ErrorWrapper();
-              hasMissingInput = true;}
-        }*/
         if (item.Type__c == 'File' && this.attachments.length > 0) {
           for (var attachmentItem of this.attachments) {
             this.inpValue += attachmentItem.attachmentId + '@@##$$' + attachmentItem.attachmentName + ',';
@@ -703,9 +669,27 @@ export class QuestionnaireComponent implements OnInit {
           });	
           // console.log(this.questionStack);
           if (ansObject.Question_Type__c == "Book") {	
+            // var ansList1;	
+            // var ans
             var av1 = ansObject.Answer_Long__c.split("@@##$$");	
+            console.log(av1)
+            //var av2 = ansObject.Answer_Long__c.split("$$@@##");
+            // if(ansObject.Answer_Long__c.includes("$$@@##")){
+            //   for (var ansVar of ansObject.Answer_Long__c.split("@@##$$")) {	
+            //     console.log(ansVar)
+            //     var ansList0 = ansVar.split("$$@@##");	
+            //     console.log(ansList0)
+            //    // ansList1.push(ansList0);
+            //   }
+            //   //this.localSubQMap.set(ansObject.Question_Ref__c, ansList1);
+            //   console.log(this.localSubQMap);
+            // }
+          
             // console.log("book log");	
             //  //console.log("bookid" + av1[0]);	
+
+            this.localSubQMap.set(ansObject.Question_Ref__c, av1)
+          
             this.attachmentsMap.set(ansObject.Question_Ref__c, [	
               { attachmentName: av1[1], attachmentId: av1[0] },	
             ]);	
@@ -852,6 +836,8 @@ export class QuestionnaireComponent implements OnInit {
       this.resetFlag(this.questionItem.Type__c);
     }
     this.questionItem = response.question;
+    console.log('inside read question');
+    console.log(this.questionItem);
     this.currentQuestionId = this.questionItem.Id;
     this.handlePage.emit(this.questionItem.Tracking_ID__c);
     // Handle the subQuestion options
@@ -950,6 +936,8 @@ export class QuestionnaireComponent implements OnInit {
     } else if (this.bookFlag) {
       // Set the SubQuestions
       console.log('inside process question going to set sub questions again');
+      console.log(this.questionItem);
+      console.log(this.inpValue);
       if(!this.localSubQMap.has(this.questionItem.Id)){
         this.setSubQuestions(this.questionItem.Questions__r.records);
       }
@@ -1293,109 +1281,9 @@ export class QuestionnaireComponent implements OnInit {
   }
 
   structLocalSubQuestion(ques: LocalQuestion){
-    // var qaMap = new Map();
-    // var keyIndexNew = 1;
     console.log('inside structLocalSubQuestion');
-    // console.log(this.questionItem.Id);
-    // console.log(this.localSubQuestions);
-    // this.localSubQuestions = [];
-    // if(ques != null){
-    //   localSubQuestion.Id = ques.Id;
-    //   localSubQuestion.Name = ques.Name;
-    //   localSubQuestion.Question__c = ques.Question__c;
-    //   localSubQuestion.Question_Text__c = ques.Question_Text__c;
-    //   localSubQuestion.Type__c = ques.Type__c;
-    //   localSubQuestion.Title__c = ques.Title__c;
-    //   localSubQuestion.SubTitle__c = ques.SubTitle__c;
-    //   localSubQuestion.Is_Optional__c = ques.Is_Optional__c;
-    //   localSubQuestion.Error_Message__c = ques.Error_Message__c;
-    //   localSubQuestion.Next_Question__c = ques.Next_Question__c;
-    //   localSubQuestion.Group__c = ques.Group__c;
-    //   localSubQuestion.Question_No__c = ques.Question_No__c;
-    //   localSubQuestion.Allowed_File_Extensions__c = ques.Allowed_File_Extensions__c;
-    //   localSubQuestion.uniqueSubQId = ques.Id + this.keyIndex; 
-    //   this.localSubQuestions.push(localSubQuestion);
-    //   this.keyIndex++;
-    // } else {
-    // if(this.localSubQuestions.length > 0){
-      
-      // var question  = new LocalQuestion();
-      // question = ques;
-      // if(!this.keyIndexMap.has(question.Id)){
-      //   this.keyIndexMap.set(question.Id, keyIndexNew);
-      //   // keyIndexNew++;
-      // } else {
-      //   this.keyIndexMap.set(question.Id, (this.keyIndexMap.get(question.Id)+1));
-      // }
-      
-      // // question.input = '';
-      // var questIndex = this.localSubQuestions.indexOf(ques);
-      // // question.uniqueSubQId = ques.Id+(questIndex+2);
-      // question.uniqueSubQId = ques.Id + this.keyIndexMap.get(ques.Id); 
-      // this.localSubQuestions.splice(questIndex+1, 0, question);   
-      // // let obj = this.localSubQuestions.find(o => o.uniqueSubQId === ques.Id+(this.keyIndex));
-      // // console.log(obj);
-      // let obj1 = this.localSubQuestions.find((o, i) => {
-      //   if (o.Id === ques.Id) {
-      //     console.log('object found');
-      //     // console.log(o);
-      //     var qu = ques;
-      //     console.log(o.uniqueSubQId.substring(18));
-
-      //     qu.uniqueSubQId = ques.Id + Number(o.uniqueSubQId.substring(18))+1;
-      //     // o.uniqueSubQId = ques.Id+(questIndex+2);
-      //     // console.log(o);
-      //     this.localSubQuestions.splice(i+1, 0, qu); 
-      //     // console.log(i);
-      //     // o.input = '';
-      //   }
-      // });
-    //   console.log('after adding index');
-    //   console.log(this.localSubQuestions);
-    // } else {
-      // for(var subQ of this.subQuestions){
-      //   // console.log('inside for structLocalSubQuestion');
-      //   // console.log(subQ);
-      //   var localSubQuestion = new LocalQuestion();
-      //   //localSubQuestion = sentSubQuestions[i];
-      //   localSubQuestion.Id = subQ.Id;
-      //   localSubQuestion.Name = subQ.Name;
-      //   localSubQuestion.Question__c = subQ.Question__c;
-      //   localSubQuestion.Question_Text__c = subQ.Question_Text__c;
-      //   localSubQuestion.Type__c = subQ.Type__c;
-      //   localSubQuestion.Title__c = subQ.Title__c;
-      //   localSubQuestion.SubTitle__c = subQ.SubTitle__c;
-      //   localSubQuestion.Is_Optional__c = subQ.Is_Optional__c;
-      //   localSubQuestion.Error_Message__c = subQ.Error_Message__c;
-      //   localSubQuestion.Next_Question__c = subQ.Next_Question__c;
-      //   //localSubQuestion.Is_Optional__c = subQ.Is_Optional__c;
-      //   localSubQuestion.Group__c = subQ.Group__c;
-      //   localSubQuestion.Question_No__c = subQ.Question_No__c;
-      //   localSubQuestion.Allowed_File_Extensions__c = subQ.Allowed_File_Extensions__c;
-
-      //   if(!this.keyIndexMap.has(subQ.Id)){
-      //     this.keyIndexMap.set(subQ.Id, keyIndexNew);
-      //     // keyIndexNew++;
-      //   } else {
-      //     this.keyIndexMap.set(subQ.Id,(this.keyIndexMap.get(subQ.Id)+1));
-      //   }
-      //   localSubQuestion.uniqueSubQId = subQ.Id + this.keyIndexMap.get(subQ.Id); 
-      //   // console.log(localSubQuestion);
-      //   // if (qaMap.has(subQ.Question_No__c)) {
-      //   //   // console.log('Setting input for the subQuestion ' + subQ.Question_No__c + ' with ' + ansStr);
-      //   //   if(subQ.Type__c !='File'){
-      //   //   subQ.input = qaMap.get(subQ.Question_No__c);
-      //   //   // console.log('input'+subQ.input);
-      //   //   }
-      //   // }
-        
-      //   this.localSubQuestions.push(localSubQuestion);
-      //   this.localSubQuestionsMap.set(localSubQuestion.Id,this.localSubQuestions);
-      //   this.keyIndex++;
-      // }
       for(var i = 0; i < this.subQuestions.length; i++){
         var localSubQuestion = new LocalQuestion();
-          //localSubQuestion = sentSubQuestions[i];
           localSubQuestion.Id = this.subQuestions[i].Id;
           localSubQuestion.Name = this.subQuestions[i].Name;
           localSubQuestion.Question__c = this.subQuestions[i].Question__c;
@@ -1406,74 +1294,61 @@ export class QuestionnaireComponent implements OnInit {
           localSubQuestion.Is_Optional__c = this.subQuestions[i].Is_Optional__c;
           localSubQuestion.Error_Message__c = this.subQuestions[i].Error_Message__c;
           localSubQuestion.Next_Question__c = this.subQuestions[i].Next_Question__c;
-          //localSubQuestion.Is_Optional__c = this.subQuestions[i].Is_Optional__c;
           localSubQuestion.Group__c = this.subQuestions[i].Group__c;
           localSubQuestion.Question_No__c = this.subQuestions[i].Question_No__c;
           localSubQuestion.Allowed_File_Extensions__c = this.subQuestions[i].Allowed_File_Extensions__c;
           localSubQuestion.uniqueSubQId = ''+this.subQuestions[i].Id + i; 
           this.localSubQuestions.push(localSubQuestion);
       }
-    // }
-   
-    // console.log('final displayed localsubquestions');
-    // console.log(this.localSubQuestions);
-    // console.log('final sub questions map');
-    // console.log(this.localSubQuestionsMap);
-  // }
   console.log('final local sub questions');
   console.log(this.localSubQuestions);
-
-  // console.log(this.keyIndexMap);
   console.log(this.questionItem.Id);
   this.localSubQMap.set(this.questionItem.Id,this.localSubQuestions);
   this.localSubQuestions = [];
   console.log('final key localSubQMap map');
   console.log(this.localSubQMap);
   }
+
   addInputBox(question: LocalQuestion, index: number){
-    console.log('inside add input box');
-    console.log(this.questionItem.Id);
-    console.log(question);
-    console.log(index);
+    // console.log('inside add input box');
+    // console.log(this.questionItem.Id);
+    // console.log(question);
+    // console.log(index);
     var arra = this.localSubQMap.get(this.questionItem.Id);
     var qIndex = arra.indexOf(question);
     var ques: LocalQuestion = new LocalQuestion();
     Object.assign(ques, question);
-    console.log((ques.uniqueSubQId).substring(18, (ques.uniqueSubQId).length));
-    //  ques.uniqueSubQId = ques.Id + String((Number((ques.uniqueSubQId).substring(18, (ques.uniqueSubQId).length)) + 1));
-    ques.uniqueSubQId = ques.Id + (String(index+1));
+    //console.log((ques.uniqueSubQId).substring(18, (ques.uniqueSubQId).length)+1);
+    if(this.keyIndex == index){
+      ques.uniqueSubQId = ques.Id + (String(index+1));
+      this.keyIndex++;
+    }else{
+      this.keyIndex++;
+      ques.uniqueSubQId = ques.Id + (String(this.keyIndex));
+    }
     ques.input = '';
     arra.splice(qIndex+1, 0, ques);
 
     this.localSubQMap.set(this.questionItem.Id,arra);
-    // console.log(this.subQuestions);
-    // console.log('in local sub question');
-    // console.log(this.localSubQuestions);
-    // if(this.localSubQuestions.length == 0){
-    //   var questIndex = this.subQuestions.indexOf(question);
-    //   this.subQuestions.splice(questIndex+1, 0, question);
-    // }
-    
-    // var localQuestion = new Question;
-    // localQuestion = question;
-    // localQuestion.Name = question.Name + this.keyIndex;
-    // this.keyIndex++;
-    
-    
-    // this.subQuestions.push(question);
-    // console.log('after adding input field');
-    // console.log(this.localSubQuestions);
-    // this.structLocalSubQuestion(question);
-    console.log(this.localSubQMap);
+    //console.log(this.localSubQMap);
   }
 
-  removeAddress() {
-    if (this.localSubQuestions.length >= 2) {
-      this.keyIndex--;
-    const index = this.localSubQuestions.findIndex((item) => item.Id);
-    this.localSubQuestions.splice(index, 1);
+  removeAddress(quesUniqueId: string, qName: string) {
+    //console.log(quesUniqueId)
+    var val = this.localSubQMap.get(this.questionItem.Id);
+    var keyindex = 0;
+
+    for(let i=0; i<val.length; i++){
+      if(val[i].Name == qName){
+        keyindex++;
+      }
     }
-    console.log(this.localSubQuestions);
+
+    if(this.localSubQMap.has(this.questionItem.Id) && keyindex >1){
+      var reorder = val.filter((item) => item.uniqueSubQId !== quesUniqueId)
+      this.localSubQMap.set(this.questionItem.Id,reorder);
+      keyindex--;
+    }
   }
 
   getLocalSubQuestions(id: String){
