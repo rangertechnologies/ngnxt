@@ -142,18 +142,14 @@
 
   <div *ngIf="bookFlag">
     <div class="form-group">
-      <div class="form-row">
-        <div class="questionalign" [class]="'col-md-'+ ques.Size__c + ' paddingnone'" *ngFor="let ques of getLocalSubQuestions(questionItem.Id);let i = index">
+      <div class="form-row">   let ques of subQuestions
+        <div class="questionalign" [class]="'col-md-'+ ques.Size__c + ' paddingnone'" *ngFor="let ques of subQuestions">
           <span class="colorf">{{ques.Question__c}}</span>
 
           <div *ngIf="ques.Type__c === 'Text'">
-            <input type="text" [(ngModel)]="ques.input"  class="textBox" [id]="ques.uniqueSubQId" required="" (focus)="clearSQError(ques.Id)"
+            <input type="text" [(ngModel)]="ques.input"  class="textBox" [id]="ques.Id" required="" (focus)="clearSQError(ques.Id)"
               style.border-color="{{ques.error ? 'red' : ''}}" placeholder="{{ques.Question__c}}"
               oninput="this.value=this.value.replace(/[^a-zA-Z0-9\s.:;,?]/g,'');" />
-              <div>
-                <button (click)="addInputBox(ques, i)" class="btn"><i class="fa fa-plus" ></i>Add</button>
-                <button (click)="removeAddress(ques.uniqueSubQId, ques.Name)" class="btn"><i class="fa fa-trash"></i> Remove</button>
-              </div>
           </div>
 
           <div *ngIf="ques.Type__c === 'Email'">
@@ -206,27 +202,26 @@
 
 <!--List Type Starts-->
 
-<!-- <div *ngIf="listFlag">
+<div *ngIf="listFlag">
   <div class="form-group">
     <div class="form-row">
-      <div class="questionalign" [class]="'col-md-'+ ques.Size__c + ' paddingnone'" *ngFor="let ques of subQuestions; let i=index">
+      <div class="questionalign" [class]="'col-md-'+ ques.Size__c + ' paddingnone'" *ngFor="let ques of getLocalSubQuestions(questionItem.Id);let i = index">
         <span class="colorf">{{ques.Question__c}}</span>
 
-       <div *ngIf="ques.Type__c === 'Text'">
-          <button (click)="addInputBox()">add</button>
-          <div *ngFor="let item of itemList; let indexOfelement=index;">
-            ngFor index: {{indexOfelement}} value : {{item.name}}
-          <input name="name{{i}}" type="text" [(ngModel)]="item.answerValue"  class="textBox" id="text" [id]="ques.Id" required="" (focus)="clearSQError(ques.Id)"
+        <div *ngIf="ques.Type__c === 'Text'">
+          <input type="text" [(ngModel)]="ques.input"  class="textBox" [id]="ques.uniqueSubQId" required="" (focus)="clearSQError(ques.Id)"
             style.border-color="{{ques.error ? 'red' : ''}}" placeholder="{{ques.Question__c}}"
             oninput="this.value=this.value.replace(/[^a-zA-Z0-9\s.:;,?]/g,'');" />
+            <div>
+              <button (click)="addInputBox(ques, i)" class="btn"><i class="fa fa-plus" ></i>Add</button>
+              <button (click)="removeAddress(ques.uniqueSubQId, ques.Name)" class="btn"><i class="fa fa-trash"></i> Remove</button>
+            </div>
         </div>
-       </div>
         <i class="fa fa-check check-icon4" aria-hidden="true" *ngIf="questionItem?.input?.length > 0"></i>
-      </div>
-     
+     </div>
     </div>
   </div>
-</div> -->
+</div>
 
 <!--List Type Ends-->
 

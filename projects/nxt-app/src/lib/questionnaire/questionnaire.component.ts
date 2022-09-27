@@ -264,29 +264,6 @@ export class QuestionnaireComponent implements OnInit {
      }else if (this.bookFlag) {
       this.inpValue = '';
       var hasMissingInput = false;
-      if(this.localSubQMap.has(this.questionItem.Id)){
-        this.subAnsMap = new Map();
-        for (var localQues of this.localSubQMap.get(this.questionItem.Id)){
-          if (!localQues.Is_Optional__c &&
-            ((localQues.Type__c != 'File' && !localQues.input) ||
-              (localQues.Type__c == 'File' && this.attachments.length == 0))) {
-                localQues.error = new ErrorWrapper();
-            hasMissingInput = true;
-          }
-          if(!this.subAnsMap.has(localQues.Id)){
-            // console.log('inside ans map')
-            this.subAnsMap.set(localQues.Id,localQues.input);
-          } else {
-            // console.log('inside ans map else')
-            this.subAnsMap.set(localQues.Id,this.subAnsMap.get(localQues.Id) + '$$@@##'+localQues.input);
-          }
-        }
-        this.subAnsMap.forEach((value, key) => {
-          // console.log('inside Map' );
-          // console.log(value);
-          this.inpValue += (value != undefined ? value : '') + '@@##$$';
-         });
-      }else{
       for (var item of this.questionItem.Questions__r.records) {
         // console.log(item.input);
         if (!item.Is_Optional__c &&
@@ -328,7 +305,6 @@ export class QuestionnaireComponent implements OnInit {
         this.inpValue += (item.input != undefined ? item.input : '') + '@@##$$';
         //console.log('inside book1' + this.inpValue)
       }
-    }
       if (hasMissingInput) {
         //console.log('file two')
         return;
@@ -338,31 +314,30 @@ export class QuestionnaireComponent implements OnInit {
      }else if (this.listFlag) {
       this.inpValue = '';
       var hasMissingInput = false;
-      for (var item of this.questionItem.Questions__r.records) {
-        if (!item.Is_Optional__c &&
-          ((item.Type__c != 'File' && !item.input) ||
-            (item.Type__c == 'File' && this.attachments.length == 0))) {
-          item.error = new ErrorWrapper();
-          hasMissingInput = true;
-        }
-        if (item.Type__c == 'File' && this.attachments.length > 0) {
-          for (var attachmentItem of this.attachments) {
-            this.inpValue += attachmentItem.attachmentId + '@@##$$' + attachmentItem.attachmentName + ',';
-            if (item.input == this.inpValue) {
-              this.recordId = cQuestion.Next_Question__c;
-              //console.log('inside' + recordId);
-            }
+
+      if(this.localSubQMap.has(this.questionItem.Id)){
+        this.subAnsMap = new Map();
+        for (var localQues of this.localSubQMap.get(this.questionItem.Id)){
+          if (!localQues.Is_Optional__c &&
+            ((localQues.Type__c != 'File' && !localQues.input) ||
+              (localQues.Type__c == 'File' && this.attachments.length == 0))) {
+                localQues.error = new ErrorWrapper();
+            hasMissingInput = true;
           }
-          this.attachments = [];
-        }//item.input == this.inpValue;
-        this.inpValue += (item.input != undefined ? item.input : '') + '@@##$$';
-        //console.log('inside book1' + this.inpValue)
+          if(!this.subAnsMap.has(localQues.Id)){
+            // console.log('inside ans map')
+            this.subAnsMap.set(localQues.Id,localQues.input);
+          } else {
+            // console.log('inside ans map else')
+            this.subAnsMap.set(localQues.Id,this.subAnsMap.get(localQues.Id) + '$$@@##'+localQues.input);
+          }
+        }
+        this.subAnsMap.forEach((value, key) => {
+          // console.log('inside Map' );
+          // console.log(value);
+          this.inpValue += (value != undefined ? value : '') + '@@##$$';
+         });
       }
-      if (hasMissingInput) {
-        //console.log('file two')
-        return;
-      }
-      this.inpValue = this.trimLastDummy(this.inpValue);
      }
      else if(this.dropdownFlag){
       if(this.inpValue.length <= 1){
@@ -432,9 +407,6 @@ export class QuestionnaireComponent implements OnInit {
       this.questionItem.error = new ErrorWrapper();
       return;
     }
-    // console.log('before save');
-    // console.log(this.questionItem);
-    // console.log(this.localSubQuestions);
     // Save the Answer in the DB
     this.answerWrap = new AnswerWrapper();
     this.answerWrap.abId = this.abItem.Id;
@@ -442,8 +414,6 @@ export class QuestionnaireComponent implements OnInit {
     this.answerWrap.quesValue = quesValue;
     this.answerWrap.qTyp = typ;
     this.answerWrap.ansValue = this.inpValue;
-    // console.log('before saving answer is');
-    // console.log(this.inpValue);
     this.saveAnswer();
   }
 
@@ -816,9 +786,6 @@ export class QuestionnaireComponent implements OnInit {
           //console.log(response);
         }
 
-  
-
-
   private readQuestion = (uuid: string) => this.sfService.remoteAction('NxtController.process',
     ['Question', 'read', uuid],
     this.successRead,
@@ -888,9 +855,6 @@ export class QuestionnaireComponent implements OnInit {
 
   private successSave = (response) => {
     if (response.status == 'success') {
-      //this.abItem = response.answerbook;
-      // console.log('on sucess save');
-      // console.log(this.answerMap);
       this.answerMap.set(response.answer.quesId, response.answer);
     } else {
       this.questionItem.error = new ErrorWrapper();
@@ -935,15 +899,12 @@ export class QuestionnaireComponent implements OnInit {
       this.setOptions(this.questionItem.Question_Options__r.records);
     } else if (this.bookFlag) {
       // Set the SubQuestions
-      console.log('inside process question going to set sub questions again');
-      console.log(this.questionItem);
-      console.log(this.inpValue);
+      this.setSubQuestions(this.questionItem.Questions__r.records);
+     }else if (this.listFlag) {
+      // Set the LocalSubQuestions
       if(!this.localSubQMap.has(this.questionItem.Id)){
         this.setSubQuestions(this.questionItem.Questions__r.records);
       }
-     }else if (this.listFlag) {
-      // Set the SubQuestions
-      this.setSubQuestions(this.questionItem.Questions__r.records);
      }
       else if (this.dtFlag) {
          this.selectedHour ="";
@@ -989,7 +950,6 @@ export class QuestionnaireComponent implements OnInit {
   }
   setFlag(typ) {
     //console.log('inside setFlag for ' + typ);
-
     if (typ) {
       // Set the Flags
       if (typ == 'Text') {
@@ -1021,7 +981,6 @@ export class QuestionnaireComponent implements OnInit {
       }else if (typ == 'List'){
         this.listFlag = true;
       }
-
     }
   }
 
@@ -1084,7 +1043,6 @@ export class QuestionnaireComponent implements OnInit {
 
   setSubQuestions(records) {
     //console.log('inside setSubQuestions');
-
     var qaMap = new Map();
     if (this.inpValue) {
       var aIndex = 0;
@@ -1140,8 +1098,11 @@ export class QuestionnaireComponent implements OnInit {
        this.bookFlagAccept = this.valueName1.split(';');
     //console.log(this.subQuestions);
     }
+
+    if(this.questionItem.Type__c == 'List'){
+      this.structLocalSubQuestion(null);
+    }
     
-    this.structLocalSubQuestion(null);
   }
 
   optionChange(selValue) {
@@ -1273,13 +1234,6 @@ export class QuestionnaireComponent implements OnInit {
     //$('#progress #bar').animate({'width':width + '%'});
   }
 
-  handleInputChange(event){
-    let index = event.target.dataset.index;
-    let fieldName = event.target.name;
-    // console.log('index '+ index +' fieldName '+fieldName);
-    
-  }
-
   structLocalSubQuestion(ques: LocalQuestion){
     console.log('inside structLocalSubQuestion');
       for(var i = 0; i < this.subQuestions.length; i++){
@@ -1310,10 +1264,6 @@ export class QuestionnaireComponent implements OnInit {
   }
 
   addInputBox(question: LocalQuestion, index: number){
-    // console.log('inside add input box');
-    // console.log(this.questionItem.Id);
-    // console.log(question);
-    // console.log(index);
     var arra = this.localSubQMap.get(this.questionItem.Id);
     var qIndex = arra.indexOf(question);
     var ques: LocalQuestion = new LocalQuestion();
