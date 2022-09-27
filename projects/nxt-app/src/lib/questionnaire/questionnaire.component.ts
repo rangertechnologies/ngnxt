@@ -14,7 +14,8 @@ ErrorWrapper,
 Option,
 OptionValue,
 AttachmentWrapper,
-Attachment
+Attachment,
+LocalQuestion
 } from '../wrapper';
 
 import {
@@ -65,8 +66,10 @@ export class QuestionnaireComponent implements OnInit {
   public fileFlag: boolean = false;
   public emailFlag: boolean = false;
   public bookFlag: boolean = false;
+  public listFlag: boolean= false;
   public optionValues: OptionValue[] = [];
   public subQuestions: Question[] = [];
+  public localSubQuestions: LocalQuestion[] = [];
   public inpValue: string;
   public answerMap = new Map();
   public dateMap = new Map();
@@ -74,6 +77,9 @@ export class QuestionnaireComponent implements OnInit {
   public selectedminuteMap= new Map();
   public attachmentsMap = new Map();
   public sqOptions = new Map();
+  public subAnsMap = new Map();
+  public localSubQMap = new Map();
+  public keyIndex: number = 0;
   public questionStack = [];
   public attachments: any[] = [];
   public attachmentIdList: any[] = [];
@@ -295,6 +301,32 @@ export class QuestionnaireComponent implements OnInit {
         return;
       }
       this.inpValue = this.trimLastDummy(this.inpValue);
+    }else if (this.listFlag) {
+      this.inpValue = '';
+      var hasMissingInput = false;
+      if(this.localSubQMap.has(this.questionItem.Id)){
+        this.subAnsMap = new Map();
+        for (var localQues of this.localSubQMap.get(this.questionItem.Id)){
+          if (!localQues.Is_Optional__c &&
+            ((localQues.Type__c != 'File' && !localQues.input) ||
+              (localQues.Type__c == 'File' && this.attachments.length == 0))) {
+                localQues.error = new ErrorWrapper();
+            hasMissingInput = true;
+          }
+          if(!this.subAnsMap.has(localQues.Id)){
+            // console.log('inside ans map')
+            this.subAnsMap.set(localQues.Id,localQues.input);
+          } else {
+            // console.log('inside ans map else')
+            this.subAnsMap.set(localQues.Id,this.subAnsMap.get(localQues.Id) + '$$@@##'+localQues.input);
+          }
+        }
+        this.subAnsMap.forEach((value, key) => {
+          // console.log('inside Map' );
+          // console.log(value);
+          this.inpValue += (value != undefined ? value : '') + '@@##$$';
+         });
+      }
      }
      else if(this.dropdownFlag){
       if(this.inpValue.length <= 1){
@@ -421,6 +453,20 @@ export class QuestionnaireComponent implements OnInit {
             this.recordId = cQuestion.Next_Question__c;
           }
         }
+      }  if (cQuestion.Type__c == "List") {
+        //console.log("inside book");
+        for (let opt of cQuestion.Questions__r.records) {
+          //console.log(opt.Type__c);
+           if (opt.Type__c == "Dropdown"||opt.Type__c == "Radio") {
+            for (var opt1 of opt.Question_Options__r.records) {
+              if (this.valueName == opt1.Value__c) {
+                this.recordId = opt1.Next_Question__c || cQuestion.Next_Question__c;
+              }
+            }
+          } else {
+            this.recordId = cQuestion.Next_Question__c;
+          }
+        }
       } else {
         this.recordId = cQuestion.Next_Question__c;
       }
@@ -450,41 +496,39 @@ export class QuestionnaireComponent implements OnInit {
       this.resetFlag(typ);
       this.questionItem = null;
 
-      // Show Summary
-      for (var q of this.questionStack) {
-        //console.log('Handling Question => ' + q);
-
-        var ansWrap = this.answerMap.get(q);
-        if (ansWrap) {
-          //console.log('Handling Answer for ' + ansWrap.quesId + ' of type ' + ansWrap.qTyp);
-          if(ansWrap.qTyp == 'File' || ansWrap.qTyp == 'Book'){
-            var newStr = '';
-            for (var ansStr of ansWrap.ansValue.split('@@##$$')) {
-              if (ansStr.length > 0) {
-                if (newStr.length == 0) {
-                  newStr = ansStr;
-                } else {
-                  newStr += ', ' + ansStr;
-
-                  if(this.attachmentsMap.has(ansWrap.quesId)){
-                    for(var att of this.attachmentsMap.get(ansWrap.quesId)){
-                      newStr = newStr.replace(att.attachmentId,'');
+	      // Show Summary
+        for (var q of this.questionStack) {
+          //console.log('Handling Question => ' + q);
+          var ansWrap = this.answerMap.get(q);
+          if (ansWrap) {
+            //console.log('Handling Answer for ' + ansWrap.quesId + ' of type ' + ansWrap.qTyp);
+            if(ansWrap.qTyp == 'File' || ansWrap.qTyp == 'Book'|| ansWrap.qTyp == 'List'){
+              var newStr = '';
+              for (var ansStr of ansWrap.ansValue.split('@@##$$')) {
+                for (var ansStr1 of ansStr.split('$$@@##')) {
+                  if (ansStr1.length > 0) {
+                    if (newStr.length == 0) {
+                      newStr = ansStr1;
+                    } else {
+                      newStr += ', ' + ansStr1;
+                      if(this.attachmentsMap.has(ansWrap.quesId)){
+                        for(var att of this.attachmentsMap.get(ansWrap.quesId)){
+                          newStr = newStr.replace(att.attachmentId,'');
+                        }
+                      }
+                      newStr = (newStr.replace(',,',', ')).replace(', ,',', ');
+                      newStr = newStr.startsWith(',') ? newStr.substring(1, newStr.length) : (newStr.endsWith(',') ? newStr.substring(0, newStr.length - 1) : newStr);
                     }
                   }
-                  newStr = (newStr.replace(',,',', ')).replace(', ,',', ');
-                  newStr = newStr.startsWith(',') ? newStr.substring(1, newStr.length) : (newStr.endsWith(',') ? newStr.substring(0, newStr.length - 1) : newStr);
                 }
-              }
-            }ansWrap.ansValue = newStr;
+              }ansWrap.ansValue = newStr;
+          }
+            this.summary.push(ansWrap);
         }
-          this.summary.push(ansWrap);
-
+        }
+        // Show Thank you Note
       }
-      }
-
-      // Show Thank you Note
     }
-  }
 
   getText(value){
     var doc = new DOMParser().parseFromString(value, "text/html");
@@ -530,20 +574,156 @@ export class QuestionnaireComponent implements OnInit {
     this.successReadBook,
     this.failureReadBook);
 
-  private successReadBook = (response) => {
-
-    //console.log(response)
-    this.qbItem = response.questionbook;
-    this.abItem = response.answerbook;
-    //console.log('readingQuestion using ' + this.qbItem.First_Question__c);
-    if(this.abItem.Status__c == 'Pending'){
-      this.readQuestion(this.qbItem.First_Question__c);
-    }
-
-    if(this.abItem.Status__c == 'Completed'){
-      this.readAnswerbook(this.abItem.Id);
-         }
-  }
+  private successReadBook = (response) => { 
+    //console.log('Inside the successReadBook');  
+    //console.log(response) 
+    this.qbItem = response.questionbook;  
+    this.abItem = response.answerbook;  
+    //console.log('readingQuestion using ' + this.qbItem.First_Question__c);  
+    if (this.abItem?.Status__c == "Pending") {  
+      if (  
+        this.abItem.Answers__r == null || 
+        this.abItem.Answers__r.records.length == 0  
+      ) { 
+        this.readQuestion(this.qbItem.First_Question__c); 
+      } else {  
+        // Populate the existing answers  
+        var lastQuestionId = "";  
+        for (var ansObject of this.abItem.Answers__r.records) { 
+          lastQuestionId = ansObject.Question_Ref__c; 
+           //console.log("Question: " + ansObject.Question_Rich_Text__c); 
+           // //console.log("Answer: " + ansObject.Answer_Long__c); 
+            //console.log("grouptext: " + ansObject.Question_Group_Text__c);  
+          this.questionStack.push(ansObject.Question_Ref__c); 
+          this.answerMap.set(ansObject.Question_Ref__c, { 
+            quesValue: ansObject.Question_Rich_Text__c, 
+            ansValue: ansObject.Answer_Long__c, 
+            quesId: ansObject.Question_Ref__c,  
+            qTyp: ansObject.Question_Type__c, 
+            groupText:ansObject.Question_Group_Text__c, 
+          }); 
+          // console.log(this.questionStack);
+          if (ansObject.Question_Type__c == "Book") { 
+            // var ansList1;  
+            // var ans
+            var av1 = ansObject.Answer_Long__c.split("@@##$$"); 
+            console.log(av1)
+            //var av2 = ansObject.Answer_Long__c.split("$$@@##");
+            // if(ansObject.Answer_Long__c.includes("$$@@##")){
+            //   for (var ansVar of ansObject.Answer_Long__c.split("@@##$$")) { 
+            //     console.log(ansVar)
+            //     var ansList0 = ansVar.split("$$@@##"); 
+            //     console.log(ansList0)
+            //    // ansList1.push(ansList0);
+            //   }
+            //   //this.localSubQMap.set(ansObject.Question_Ref__c, ansList1);
+            //   console.log(this.localSubQMap);
+            // }
+          
+            // console.log("book log"); 
+            //  //console.log("bookid" + av1[0]); 
+            this.localSubQMap.set(ansObject.Question_Ref__c, av1)
+          
+            this.attachmentsMap.set(ansObject.Question_Ref__c, [  
+              { attachmentName: av1[1], attachmentId: av1[0] }, 
+            ]); 
+            //  //console.log(this.attachmentsMap); 
+          } else if (ansObject.Question_Type__c == "File") {  
+            //  //console.log("inside if"); 
+            var attList;  
+            var att;  
+            for (var attVar of ansObject.Answer_Long__c.split(",")) { 
+              var attIdName = attVar.split("@@##$$"); 
+              att.attachmentName = attIdName[1];  
+              att.attachmentId = attIdName[0];  
+              attList.push(att);  
+            } 
+            this.attachmentsMap.set(ansObject.Question_Ref__c, attList);  
+            //  //console.log(this.attachmentsMap); 
+          } 
+        } 
+        this.questionStack.pop(); 
+        //console.log(this.answerMap);  
+        // Read the last answered question  
+        this.readQuestion(lastQuestionId);  
+      } 
+    } else if (this.abItem?.Status__c == "Completed") { 
+      this.handleEvent.emit("Summaryupdated");  
+      // Temporary Fix for duplicate answers on the summary.  
+      this.summary = [];  
+      //this.percent = 100; 
+      this.progressStyle = "100%";  
+      for (var answer of this.abItem.Answers__r.records) {  
+        //console.log(answer.Question_Group_Text__c); 
+        //console.log('repeat');  
+        //console.log(answer.Question_Rich_Text__c);  
+        var answers = {}; 
+        if (answer.Question_Type__c == "File") {  
+          var files = ""; 
+          var fIndex = 0; 
+          var fileList = answer.Answer_Long__c.split(",");  
+          for (var fileIdName of fileList) {  
+            var fileName = fileIdName.split("@#$"); 
+            if (fIndex == 0) {  
+              files = fileName[1];  
+            } else {  
+              files = files + " ," + fileName[1]; 
+            } 
+            fIndex++; 
+          } 
+          answers = { 
+            groupText:answer.Question_Group_Text__c,  
+            quesValue: answer.Question_Rich_Text__c,  
+            ansValue: files,  
+          };  
+          this.summary.push(answers); 
+        } else if (answer.Question_Type__c == "Book") { 
+          /*  var quesNo=0; 
+         if(answer.Answer_Long__c.includes("@@##$$")){  
+            //console.log('line 1223'); 
+            for (var bqAnswerValue of answer.Answer_Long__c.split("@@##$$")) {  
+              var quesValue=answer.Question_Text__c.split("@@##$$");  
+              answers = {}; 
+              answers = { 
+               // groupText:answer.Question_Text__c,  
+                quesValue:  "&lt;p&gt;"+ quesValue[quesNo]+"&lt;p&gt;", 
+                ansValue: bqAnswerValue,  
+              };  
+              quesNo++; 
+              this.summary.push(answers); 
+            } 
+           }*/  
+          if(answer.Answer_Long__c.includes("@@##$$")){ 
+            var answervalues = answer.Answer_Long__c.split("@@##$$"); 
+            //console.log('value')  
+            answers = {       
+             //groupText:answer.Question_Group_Text__c, 
+             quesValue: answer.Question_Rich_Text__c, 
+             ansValue: answervalues,  
+           }; 
+           //console.log(answers) 
+           this.summary.push(answers);  
+           }  
+          else{ 
+            answers = {       
+              //groupText:answer.Question_Group_Text__c,  
+              quesValue: answer.Question_Rich_Text__c,  
+              ansValue: answer.Answer_Long__c,  
+            };  
+            this.summary.push(answers); 
+          } 
+        } else {  
+         // var ans1 = answer.Answer_Long__c.split("@@##$$"); 
+          answers = {       
+            //groupText:answer.Question_Group_Text__c,  
+            quesValue: answer.Question_Rich_Text__c,  
+            ansValue: answer.Answer_Long__c,  
+          };  
+          this.summary.push(answers); 
+        } 
+      } 
+    } 
+  };
 
   private failureReadBook = (response) => {
           //console.log(response);
@@ -569,9 +749,6 @@ export class QuestionnaireComponent implements OnInit {
           //console.log('inside failureread');
           //console.log(response);
         }
-
-  
-
 
   private readQuestion = (uuid: string) => this.sfService.remoteAction('NxtController.process',
     ['Question', 'read', uuid],
@@ -680,13 +857,17 @@ export class QuestionnaireComponent implements OnInit {
     }
 
     if (this.checkboxFlag) {
-
       // Set the Options for Checkbox
       this.setOptions(this.questionItem.Question_Options__r.records);
     } else if (this.bookFlag) {
       // Set the SubQuestions
       this.setSubQuestions(this.questionItem.Questions__r.records);
-     }
+     } else if (this.listFlag) {
+      // Set the LocalSubQuestions
+      if(!this.localSubQMap.has(this.questionItem.Id)){
+        this.setSubQuestions(this.questionItem.Questions__r.records);
+      }
+    }
       else if (this.dtFlag) {
          this.selectedHour ="";
         this.selectedMinute ="";
@@ -760,8 +941,9 @@ export class QuestionnaireComponent implements OnInit {
       }else if (typ == 'Date') {
         this.dtFlag = true;
         this.dateFlag = true;
+      }else if (typ == 'List'){
+        this.listFlag = true;
       }
-
     }
   }
 
@@ -794,8 +976,9 @@ export class QuestionnaireComponent implements OnInit {
       } else if (typ == 'Date') {
         this.dtFlag= false;
         this.dateFlag= false;
+      } else if (typ == 'List'){
+        this.listFlag = false;
       }
-
     }
   }
 
@@ -867,12 +1050,21 @@ export class QuestionnaireComponent implements OnInit {
       }
 
       this.subQuestions.push(ques);
+      
+      console.log('inside setting localsub questions');
+      console.log(this.subQuestions);
+      // console.log(this.localSubQuestions);
     }
     if(this.valueName1.length >0){
        this.bookFlagAccept = this.valueName1.split(';');
     //console.log(this.subQuestions);
     }
+    if(this.questionItem.Type__c == 'List'){
+      this.structLocalSubQuestion(null);
+    }
+    
   }
+
 
   optionChange(selValue) {
     let radioTrackingId: string = '';
@@ -1002,5 +1194,70 @@ export class QuestionnaireComponent implements OnInit {
     this.progressStyle = Math.round(width) + '%';
     //$('#progress #bar').animate({'width':width + '%'});
   }
+
+  structLocalSubQuestion(ques: LocalQuestion){
+    console.log('inside structLocalSubQuestion');
+      for(var i = 0; i < this.subQuestions.length; i++){
+  var localSubQuestion = new LocalQuestion();
+  localSubQuestion.Id = this.subQuestions[i].Id;
+  localSubQuestion.Name = this.subQuestions[i].Name;
+  localSubQuestion.Question__c = this.subQuestions[i].Question__c;
+  localSubQuestion.Question_Text__c = this.subQuestions[i].Question_Text__c;
+  localSubQuestion.Type__c = this.subQuestions[i].Type__c;
+  localSubQuestion.Title__c = this.subQuestions[i].Title__c;
+  localSubQuestion.SubTitle__c = this.subQuestions[i].SubTitle__c;
+  localSubQuestion.Is_Optional__c = this.subQuestions[i].Is_Optional__c;
+  localSubQuestion.Error_Message__c = this.subQuestions[i].Error_Message__c;
+  localSubQuestion.Next_Question__c = this.subQuestions[i].Next_Question__c;
+  localSubQuestion.Group__c = this.subQuestions[i].Group__c;
+  localSubQuestion.Question_No__c = this.subQuestions[i].Question_No__c;
+  localSubQuestion.Allowed_File_Extensions__c = this.subQuestions[i].Allowed_File_Extensions__c;
+  localSubQuestion.uniqueSubQId = ''+this.subQuestions[i].Id + i; 
+  this.localSubQuestions.push(localSubQuestion);
+}
+console.log('final local sub questions');
+console.log(this.localSubQuestions);
+console.log(this.questionItem.Id);
+this.localSubQMap.set(this.questionItem.Id,this.localSubQuestions);
+this.localSubQuestions = [];
+console.log('final key localSubQMap map');
+console.log(this.localSubQMap);
+}
+addInputBox(question: LocalQuestion, index: number){
+var arra = this.localSubQMap.get(this.questionItem.Id);
+var qIndex = arra.indexOf(question);
+var ques: LocalQuestion = new LocalQuestion();
+Object.assign(ques, question);
+//console.log((ques.uniqueSubQId).substring(18, (ques.uniqueSubQId).length)+1);
+if(this.keyIndex == index){
+ques.uniqueSubQId = ques.Id + (String(index+1));
+this.keyIndex++;
+}else{
+this.keyIndex++;
+ques.uniqueSubQId = ques.Id + (String(this.keyIndex));
+}
+ques.input = '';
+arra.splice(qIndex+1, 0, ques);
+this.localSubQMap.set(this.questionItem.Id,arra);
+//console.log(this.localSubQMap);
+}
+removeAddress(quesUniqueId: string, qName: string) {
+//console.log(quesUniqueId)
+var val = this.localSubQMap.get(this.questionItem.Id);
+var keyindex = 0;
+for(let i=0; i<val.length; i++){
+if(val[i].Name == qName){
+keyindex++;
+}
+}
+if(this.localSubQMap.has(this.questionItem.Id) && keyindex >1){
+var reorder = val.filter((item) => item.uniqueSubQId !== quesUniqueId)
+this.localSubQMap.set(this.questionItem.Id,reorder);
+keyindex--;
+}
+}
+getLocalSubQuestions(id: String){
+return this.localSubQMap.get(id);
+}
 }
 
