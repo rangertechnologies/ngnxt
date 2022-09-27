@@ -66,20 +66,20 @@ export class QuestionnaireComponent implements OnInit {
   public fileFlag: boolean = false;
   public emailFlag: boolean = false;
   public bookFlag: boolean = false;
+  public listFlag: boolean= false;
   public optionValues: OptionValue[] = [];
   public subQuestions: Question[] = [];
   public localSubQuestions: LocalQuestion[] = [];
   public inpValue: string;
   public answerMap = new Map();
   public subAnsMap = new Map();
-  // public localSubQuestionsMap = new Map();
-  // public keyIndexMap = new Map();
   public dateMap = new Map();
   public selectedhourMap = new Map();
   public selectedminuteMap= new Map();
   public attachmentsMap = new Map();
   public sqOptions = new Map();
   public localSubQMap = new Map();
+  public keyIndex: number = 0;
   public questionStack = [];
   public attachments: any[] = [];
   public attachmentIdList: any[] = [];
@@ -108,12 +108,7 @@ export class QuestionnaireComponent implements OnInit {
   public bookFlagAccept: string[];
   public recordId:string;
   public currentQuestionId: string;
-  //List type 
-  public listFlag: boolean= false;
- public keyIndex: number = 0;
-//  public keyIndexNew: number = 1;
-//  values = [];
-//  items: Object[];
+ 
   // REQ-01 PROGRESS BAR
   public progressStyle: string = '0%';
   public answerCount: number = 0;
@@ -123,7 +118,7 @@ export class QuestionnaireComponent implements OnInit {
   };
 
   constructor(private sfService: SalesforceService, private route: ActivatedRoute, private sanitizer: DomSanitizer, private _formBuilder: FormBuilder){
-    // this.items = [];
+    
    }
 
    onDateChanged(event: IMyDateModel) { //to change the border color
@@ -595,20 +590,6 @@ export class QuestionnaireComponent implements OnInit {
     this.successReadBook,
     this.failureReadBook);
 
-  // private successReadBook = (response) => {
-
-  //   //console.log(response)
-  //   this.qbItem = response.questionbook;
-  //   this.abItem = response.answerbook;
-  //   //console.log('readingQuestion using ' + this.qbItem.First_Question__c);
-  //   if(this.abItem.Status__c == 'Pending'){
-  //     this.readQuestion(this.qbItem.First_Question__c);
-  //   }
-
-  //   if(this.abItem.Status__c == 'Completed'){
-  //     this.readAnswerbook(this.abItem.Id);
-  //        }
-  // }
   private successReadBook = (response) => {	
     //console.log('Inside the successReadBook');	
     //console.log(response)	
