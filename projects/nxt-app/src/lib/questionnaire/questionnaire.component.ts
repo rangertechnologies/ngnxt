@@ -67,6 +67,8 @@ export class QuestionnaireComponent implements OnInit {
   public emailFlag: boolean = false;
   public bookFlag: boolean = false;
   public listFlag: boolean= false;
+  //Back button
+  public backButtonFlag: boolean = false;
   public optionValues: OptionValue[] = [];
   public subQuestions: Question[] = [];
   public localSubQuestions: LocalQuestion[] = [];
@@ -227,7 +229,13 @@ export class QuestionnaireComponent implements OnInit {
   }
 
   handleNextClick() {
+    this.backButtonFlag = false;
+    this.AnswerSave();
+  }
+
+  AnswerSave(){
     // console.log('inside handlenext click');
+    // console.log(this.questionItem);
     // console.log(this.localSubQMap);
     if(this.currentQuestionId === null){
       return;
@@ -244,6 +252,7 @@ export class QuestionnaireComponent implements OnInit {
 
     // Process Inputs
     if (this.checkboxFlag) {
+
       this.inpValue = '';
       // Save all the selected options in the inpValue
       for (var ov of this.optionValues.filter(item => item.checked)) {
@@ -553,9 +562,12 @@ export class QuestionnaireComponent implements OnInit {
   }
 
   handleBackClick() {
-    // console.log('inside handle back click ');
+    console.log('inside handle back click ');
+    this.backButtonFlag = true;
+    this.AnswerSave();
     // console.log(this.localSubQuestions);
-    // console.log(this.questionStack);
+    // console.log(this.questionItem)
+    //  console.log(this.questionStack);
     // console.log(this.answerMap);
     this.handleEvent.emit(this.qbItem.Back_Tracking_ID__c);
     this.answerCount--;
@@ -871,7 +883,9 @@ export class QuestionnaireComponent implements OnInit {
       this.questionItem.error = new ErrorWrapper();
       this.questionItem.error.errorMsg = response.error.errorMsg;
     }
-    this.next();
+    if(!this.backButtonFlag){
+      this.next();
+    }
   }
 
   private failureSave = (response) => {
