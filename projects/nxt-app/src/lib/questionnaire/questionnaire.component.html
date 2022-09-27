@@ -147,7 +147,7 @@
           <span class="colorf">{{ques.Question__c}}</span>
 
           <div *ngIf="ques.Type__c === 'Text'">
-            <input type="text" [(ngModel)]="ques.input"  class="textBox" id="text" [id]="ques.Id" required="" (focus)="clearSQError(ques.Id)"
+            <input type="text" [(ngModel)]="ques.input"  class="textBox" [id]="ques.Id" [id]="ques.Id" required="" (focus)="clearSQError(ques.Id)"
               style.border-color="{{ques.error ? 'red' : ''}}" placeholder="{{ques.Question__c}}"
               oninput="this.value=this.value.replace(/[^a-zA-Z0-9\s.:;,?]/g,'');" />
           </div>
@@ -208,7 +208,7 @@
         <span class="colorf">{{ques.Question__c}}</span>
 
         <div *ngIf="ques.Type__c === 'Text'">
-          <input type="text" [(ngModel)]="ques.input"  class="textBox" [id]="ques.uniqueSubQId" required="" (focus)="clearSQError(ques.Id)"
+          <input type="text" [(ngModel)]="ques.input"  class="textBox" [id]="ques.uniqueSubQId" required=""  (focus)="clearLocalSubQuesError(ques)"
             style.border-color="{{ques.error ? 'red' : ''}}" placeholder="{{ques.Question__c}}"
             oninput="this.value=this.value.replace(/[^a-zA-Z0-9\s.:;,?]/g,'');" />
             <div>

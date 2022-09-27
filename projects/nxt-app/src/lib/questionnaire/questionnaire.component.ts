@@ -67,6 +67,8 @@ export class QuestionnaireComponent implements OnInit {
   public emailFlag: boolean = false;
   public bookFlag: boolean = false;
   public listFlag: boolean= false;
+  //Back button
+  public backButtonFlag: boolean = false;
   public optionValues: OptionValue[] = [];
   public subQuestions: Question[] = [];
   public localSubQuestions: LocalQuestion[] = [];
@@ -225,6 +227,11 @@ export class QuestionnaireComponent implements OnInit {
   }
 
   handleNextClick() {
+    this.backButtonFlag = false;
+    this.AnswerSave();
+  }
+
+  AnswerSave(){
     if(this.currentQuestionId === null){
       return;
     }
@@ -307,12 +314,10 @@ export class QuestionnaireComponent implements OnInit {
       if(this.localSubQMap.has(this.questionItem.Id)){
         this.subAnsMap = new Map();
         for (var localQues of this.localSubQMap.get(this.questionItem.Id)){
-          if (!localQues.Is_Optional__c &&
-            ((localQues.Type__c != 'File' && !localQues.input) ||
-              (localQues.Type__c == 'File' && this.attachments.length == 0))) {
-                localQues.error = new ErrorWrapper();
-            hasMissingInput = true;
-          }
+        if(!localQues.input){
+              localQues.error = new ErrorWrapper();
+              hasMissingInput = true;
+                }
           if(!this.subAnsMap.has(localQues.Id)){
             // console.log('inside ans map')
             this.subAnsMap.set(localQues.Id,localQues.input);
@@ -321,6 +326,11 @@ export class QuestionnaireComponent implements OnInit {
             this.subAnsMap.set(localQues.Id,this.subAnsMap.get(localQues.Id) + '$$@@##'+localQues.input);
           }
         }
+        if (hasMissingInput) {
+          //console.log('file two')
+          return;
+        }
+
         this.subAnsMap.forEach((value, key) => {
           // console.log('inside Map' );
           // console.log(value);
@@ -537,6 +547,8 @@ export class QuestionnaireComponent implements OnInit {
   }
 
   handleBackClick() {
+    this.backButtonFlag = true;
+    this.AnswerSave();
     this.handleEvent.emit(this.qbItem.Back_Tracking_ID__c);
     this.answerCount--;
     this.updateProgress();
@@ -823,7 +835,9 @@ export class QuestionnaireComponent implements OnInit {
       this.questionItem.error = new ErrorWrapper();
       this.questionItem.error.errorMsg = response.error.errorMsg;
     }
-    this.next();
+    if(!this.backButtonFlag){
+      this.next();
+    }
   }
 
   private failureSave = (response) => {
@@ -1095,6 +1109,10 @@ export class QuestionnaireComponent implements OnInit {
       sq.error = null;
     }
   }
+
+  clearLocalSubQuesError(quesId) {
+    quesId.error = null;
+}
 
   uploadFile(event) {
     //console.log('inside upload');
