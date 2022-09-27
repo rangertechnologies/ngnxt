@@ -313,12 +313,11 @@ export class QuestionnaireComponent implements OnInit {
       if(this.localSubQMap.has(this.questionItem.Id)){
         this.subAnsMap = new Map();
         for (var localQues of this.localSubQMap.get(this.questionItem.Id)){
-          if (!localQues.Is_Optional__c &&
-            ((localQues.Type__c != 'File' && !localQues.input) ||
-              (localQues.Type__c == 'File' && this.attachments.length == 0))) {
-                localQues.error = new ErrorWrapper();
-            hasMissingInput = true;
-          }
+         
+            if(!localQues.input){
+              localQues.error = new ErrorWrapper();
+              hasMissingInput = true;
+                }
           if(!this.subAnsMap.has(localQues.Id)){
             // console.log('inside ans map')
             this.subAnsMap.set(localQues.Id,localQues.input);
@@ -326,6 +325,10 @@ export class QuestionnaireComponent implements OnInit {
             // console.log('inside ans map else')
             this.subAnsMap.set(localQues.Id,this.subAnsMap.get(localQues.Id) + '$$@@##'+localQues.input);
           }
+        }
+        if (hasMissingInput) {
+          //console.log('file two')
+          return;
         }
         this.subAnsMap.forEach((value, key) => {
           // console.log('inside Map' );
@@ -1116,6 +1119,10 @@ export class QuestionnaireComponent implements OnInit {
     }
   }
 
+  clearLocalSubQuesError(quesId) {
+      quesId.error = null;
+  }
+
   uploadFile(event) {
     //console.log('inside upload');
     this.clearError();
@@ -1237,11 +1244,11 @@ export class QuestionnaireComponent implements OnInit {
       }
   console.log('final local sub questions');
   console.log(this.localSubQuestions);
-  console.log(this.questionItem.Id);
+  // console.log(this.questionItem.Id);
   this.localSubQMap.set(this.questionItem.Id,this.localSubQuestions);
   this.localSubQuestions = [];
-  console.log('final key localSubQMap map');
-  console.log(this.localSubQMap);
+  // console.log('final key localSubQMap map');
+  // console.log(this.localSubQMap);
   }
 
   addInputBox(question: LocalQuestion, index: number){
