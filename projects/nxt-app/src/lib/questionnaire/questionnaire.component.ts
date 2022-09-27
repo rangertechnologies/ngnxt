@@ -344,6 +344,7 @@ export class QuestionnaireComponent implements OnInit {
           // console.log(value);
           this.inpValue += (value != undefined ? value : '') + '@@##$$';
          });
+         this.inpValue = this.trimLastDummy(this.inpValue);
       }
      }
      else if(this.dropdownFlag){
