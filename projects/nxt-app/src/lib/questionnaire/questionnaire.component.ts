@@ -29,6 +29,7 @@ import {
   OptionValue,
   AttachmentWrapper,
   Attachment,
+  LocalQuestion
 } from "../wrapper";
 
 import {
@@ -81,6 +82,9 @@ export class QuestionnaireComponent implements OnInit {
   public numberFlag: boolean = false;
   public alphanumericFlag: boolean = false;
   public bookFlag: boolean = false;
+  public listFlag: boolean= false;
+  //Back button
+  public backButtonFlag: boolean = false;
   public optionValues: OptionValue[] = [];
   public subQuestions: Question[] = [];
   public inpValue: string;
@@ -90,6 +94,8 @@ export class QuestionnaireComponent implements OnInit {
   public selectedminuteMap = new Map();
   public attachmentsMap = new Map();
   public sqOptions = new Map();
+  public subAnsMap = new Map();
+  public localSubQuestions: LocalQuestion[] = [];
   public questionStack = [];
   public questionName = [];
   public attachments: any[] = [];
@@ -112,6 +118,8 @@ export class QuestionnaireComponent implements OnInit {
   public notValidAccNum: boolean = false;
   public splCCBackClick: boolean = false;
   public summary = [];
+  public localSubQMap = new Map();
+  public keyIndex: number = 0;
   //public sques: string;
   public selDate: any = {};
   public selectDate: string;
@@ -696,6 +704,11 @@ export class QuestionnaireComponent implements OnInit {
   }
 
   handleNextClick() {
+    this.backButtonFlag = false;
+    this.AnswerSave();
+  }
+
+  AnswerSave(){
     //console.log('Inside the handleNextClick');
     //console.log(this.bookFlag);
     //console.log(this.questionItem);
@@ -964,7 +977,40 @@ export class QuestionnaireComponent implements OnInit {
       }
       this.inpValue = this.trimLastDummy(this.inpValue);
       questionTxt = questionTxt ? this.trimLastDummy(questionTxt) : questionTxt;
-    } else if (this.dropdownFlag) {
+    } else if (this.listFlag) {
+    this.inpValue = '';
+    var hasMissingInput = false;
+    if(this.localSubQMap.has(this.questionItem.Id)){
+      this.subAnsMap = new Map();
+      for (var localQues of this.localSubQMap.get(this.questionItem.Id)){
+       
+          if(!localQues.input){
+            localQues.error = new ErrorWrapper();
+            hasMissingInput = true;
+              }
+        if(!this.subAnsMap.has(localQues.Id)){
+          // console.log('inside ans map')
+          this.subAnsMap.set(localQues.Id,localQues.input);
+        } else {
+          // console.log('inside ans map else')
+          this.subAnsMap.set(localQues.Id,this.subAnsMap.get(localQues.Id) + '$$@@##'+localQues.input);
+        }
+      }
+      if (hasMissingInput) {
+        //console.log('file two')
+        return;
+      }
+      this.subAnsMap.forEach((value, key) => {
+        // console.log('inside Map' );
+        // console.log(value);
+        this.inpValue += (value != undefined ? value : '') + '@@##$$';
+       });
+       this.inpValue = this.trimLastDummy(this.inpValue);
+    }
+   }
+    
+    
+    else if (this.dropdownFlag) {
       if (this.inpValue.length <= 1) {
         this.inpValue = ".";
         this.questionItem.error = new ErrorWrapper();
@@ -1198,39 +1244,31 @@ export class QuestionnaireComponent implements OnInit {
 
       // Show Summary
       for (var q of this.questionStack) {
+        //console.log('Handling Question => ' + q);
         var ansWrap = this.answerMap.get(q);
         if (ansWrap) {
-          //console.log("Handling Answer for " + ansWrap.quesId + " of type " + ansWrap.qTyp);
-          var newStr = "";
-
-          for (var ansStr of ansWrap.ansValue.split("@@##$$")) {
-            if (ansStr.length > 0) {
-              if (newStr.length == 0) {
-                newStr = ansStr;
-                //for file assignment
-                if (this.attachmentsMap.has(ansWrap.quesId)) {
-                  for (var att of this.attachmentsMap.get(ansWrap.quesId)) {
-                    newStr = newStr.replace(att.attachmentId + "@#$", "");
+          //console.log('Handling Answer for ' + ansWrap.quesId + ' of type ' + ansWrap.qTyp);
+          if(ansWrap.qTyp == 'File' || ansWrap.qTyp == 'Book'||ansWrap.qTyp == 'List'){
+            var newStr = '';
+            for (var ansStr of ansWrap.ansValue.split('@@##$$')) {
+              for (var ansStr1 of ansStr.split('$$@@##')) {
+                if (ansStr1.length > 0) {
+                  if (newStr.length == 0) {
+                    newStr = ansStr1;
+                  } else {
+                    newStr += ', ' + ansStr1;
+                    if(this.attachmentsMap.has(ansWrap.quesId)){
+                      for(var att of this.attachmentsMap.get(ansWrap.quesId)){
+                        newStr = newStr.replace(att.attachmentId,'');
+                      }
+                    }
+                    newStr = (newStr.replace(',,',', ')).replace(', ,',', ');
+                    newStr = newStr.startsWith(',') ? newStr.substring(1, newStr.length) : (newStr.endsWith(',') ? newStr.substring(0, newStr.length - 1) : newStr);
                   }
                 }
-              } else {
-                newStr += ", " + ansStr;
-                //for file assignment
-                if (this.attachmentsMap.has(ansWrap.quesId)) {
-                  for (var att of this.attachmentsMap.get(ansWrap.quesId)) {
-                    newStr = newStr.replace(att.attachmentId + "@#$", "");
-                  }
-                }
-                newStr = newStr.replace(",,", ", ").replace(", ,", ", ");
-                newStr = newStr.startsWith(",")
-                  ? newStr.substring(1, newStr.length)
-                  : newStr.endsWith(",")
-                  ? newStr.substring(0, newStr.length - 1)
-                  : newStr;
               }
-            }
-          }
-          ansWrap.ansValue = newStr;
+            }ansWrap.ansValue = newStr;
+        }
           this.summary.push(ansWrap);
           this.backicon = true;
         }
@@ -1566,7 +1604,9 @@ export class QuestionnaireComponent implements OnInit {
       this.questionItem.error = new ErrorWrapper();
       this.questionItem.error.errorMsg = response.error.errorMsg;
     }
-    this.next();
+    if(!this.backButtonFlag){
+      this.next();
+    }
   };
 
   private failureSave = (response) => {
@@ -1634,7 +1674,12 @@ export class QuestionnaireComponent implements OnInit {
       //console.log('Inise the expected bookFlag cond');
       //console.log('dtFlag = '+this.dtFlag);
       this.setSubQuestions(this.questionItem.Questions__r.records);
-    } else if (this.dtFlag) {
+    }else if (this.listFlag) {
+      // Set the LocalSubQuestions
+      if(!this.localSubQMap.has(this.questionItem.Id)){
+        this.setSubQuestions(this.questionItem.Questions__r.records);
+    } 
+  }else if (this.dtFlag) {
       //console.log('Inise the unexpected dtFlag cond');
       this.selectedHour = "";
       this.selectedMinute = "";
@@ -1746,6 +1791,8 @@ export class QuestionnaireComponent implements OnInit {
         this.checkboxFlag = true;
       } else if (typ == "Book") {
         this.bookFlag = true;
+      }else if (typ == 'List'){
+        this.listFlag = true;
       } else if (typ == "Time") {
         //console.log('Inside the Time cond');
         this.dtFlag = true;
@@ -1788,6 +1835,8 @@ export class QuestionnaireComponent implements OnInit {
         this.checkboxFlag = false;
       } else if (typ == "Book") {
         this.bookFlag = false;
+      } else if (typ == 'List'){
+        this.listFlag = false;
       } else if (typ == "Time") {
         this.dtFlag = false;
         this.timeFlag = false;
@@ -1899,6 +1948,7 @@ export class QuestionnaireComponent implements OnInit {
       this.bookFlagAccept = this.valueName1.split(";");
       //console.log(this.subQuestions);
     }
+    this.structLocalSubQuestion(null);
   }
 
   optionChange(selValue) {
@@ -1922,6 +1972,10 @@ export class QuestionnaireComponent implements OnInit {
     if (this.questionItem.error) {
       this.questionItem.error = null;
     }
+  }
+
+  clearLocalSubQuesError(quesId) {
+    quesId.error = null;
   }
 
   inputValidate(e) {
@@ -2242,4 +2296,77 @@ export class QuestionnaireComponent implements OnInit {
       document.getElementById('selectList').style.display = "none";
     }, 500);
    }
+
+
+   //Plus button implementation.
+   structLocalSubQuestion(ques: LocalQuestion){
+    console.log('inside structLocalSubQuestion');
+      for(var i = 0; i < this.subQuestions.length; i++){
+        var localSubQuestion = new LocalQuestion();
+          localSubQuestion.Id = this.subQuestions[i].Id;
+          localSubQuestion.Name = this.subQuestions[i].Name;
+          localSubQuestion.Question__c = this.subQuestions[i].Question__c;
+          localSubQuestion.Question_Text__c = this.subQuestions[i].Question_Text__c;
+          localSubQuestion.Type__c = this.subQuestions[i].Type__c;
+          localSubQuestion.Title__c = this.subQuestions[i].Title__c;
+          localSubQuestion.SubTitle__c = this.subQuestions[i].SubTitle__c;
+          localSubQuestion.Is_Optional__c = this.subQuestions[i].Is_Optional__c;
+          localSubQuestion.Error_Message__c = this.subQuestions[i].Error_Message__c;
+          localSubQuestion.Next_Question__c = this.subQuestions[i].Next_Question__c;
+          localSubQuestion.Group__c = this.subQuestions[i].Group__c;
+          localSubQuestion.Question_No__c = this.subQuestions[i].Question_No__c;
+          localSubQuestion.Allowed_File_Extensions__c = this.subQuestions[i].Allowed_File_Extensions__c;
+          localSubQuestion.uniqueSubQId = ''+this.subQuestions[i].Id + i; 
+          this.localSubQuestions.push(localSubQuestion);
+      }
+  console.log('final local sub questions');
+  console.log(this.localSubQuestions);
+  // console.log(this.questionItem.Id);
+  this.localSubQMap.set(this.questionItem.Id,this.localSubQuestions);
+  this.localSubQuestions = [];
+  // console.log('final key localSubQMap map');
+  // console.log(this.localSubQMap);
+  }
+
+  addInputBox(question: LocalQuestion, index: number){
+    var arra = this.localSubQMap.get(this.questionItem.Id);
+    var qIndex = arra.indexOf(question);
+    var ques: LocalQuestion = new LocalQuestion();
+    Object.assign(ques, question);
+    //console.log((ques.uniqueSubQId).substring(18, (ques.uniqueSubQId).length)+1);
+    if(this.keyIndex == index){
+      ques.uniqueSubQId = ques.Id + (String(index+1));
+      this.keyIndex++;
+    }else{
+      this.keyIndex++;
+      ques.uniqueSubQId = ques.Id + (String(this.keyIndex));
+    }
+    ques.input = '';
+    arra.splice(qIndex+1, 0, ques);
+
+    this.localSubQMap.set(this.questionItem.Id,arra);
+    //console.log(this.localSubQMap);
+  }
+
+  removeAddress(quesUniqueId: string, qName: string) {
+    //console.log(quesUniqueId)
+    var val = this.localSubQMap.get(this.questionItem.Id);
+    var keyindex = 0;
+
+    for(let i=0; i<val.length; i++){
+      if(val[i].Name == qName){
+        keyindex++;
+      }
+    }
+
+    if(this.localSubQMap.has(this.questionItem.Id) && keyindex >1){
+      var reorder = val.filter((item) => item.uniqueSubQId !== quesUniqueId)
+      this.localSubQMap.set(this.questionItem.Id,reorder);
+      keyindex--;
+    }
+  }
+
+  getLocalSubQuestions(id: String){
+    return this.localSubQMap.get(id);
+  }
   }

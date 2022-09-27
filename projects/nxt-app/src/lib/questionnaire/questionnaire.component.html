@@ -507,6 +507,38 @@
     </div>
   </div>
 
+  <!--List start-->
+  <div *ngIf="ListFlag">
+    <div class="form-group">
+      <div class="form-row">
+        <div class="col-md-12" *ngIf="questionItem.error" style="font-size: 18px;
+            color: red;">{{questionItem?.error?.errorMsg}}</div>
+        <div class="myt-align3" [class]="'col-md-' + ques.Size__c + ' paddingnone'"
+          *ngFor="let ques of getLocalSubQuestions(questionItem.Id);let i = index">
+          <div [ngClass]="{ down2: qbItem?.Progress_Bar__c }">
+            <span class="dis-flex myt-font3 myt-font7">{{ ques?.Question__c }}</span>
+          </div>
+
+
+          <div *ngIf="ques.Type__c === 'Text'">
+            <input type="text" [(ngModel)]="ques.input" [ngClass]="{
+             'dis-flex dt-line date-line bookText boxoutline myt-font1': qbItem.Progress_Bar__c,
+             textBox: !qbItem.Progress_Bar__c
+            }" id="text" [id]="ques.uniqueSubQId" required="" (focus)="clearLocalSubQuesError(ques)"
+            style.border-color="{{ ques.error ? 'red' : '' }}" placeholder="{{ ques.Question__c }}"
+            oninput="this.value=this.value.replace(/[^a-zA-Z0-9\s.:;,?]/g,'');" />
+            <div>
+              <button (click)="addInputBox(ques, i)" class="btn"><i class="fa fa-plus" ></i>Add</button>
+              <button (click)="removeAddress(ques.uniqueSubQId, ques.Name)" class="btn"><i class="fa fa-trash"></i> Remove</button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+    </div>
+  <!--List End-->
+
   <div class="flexer">
     <div [ngClass]="{ 'col-md-6': !qbItem.Progress_Bar__c }">
       <div>

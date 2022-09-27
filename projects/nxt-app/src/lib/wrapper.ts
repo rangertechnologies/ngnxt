@@ -80,6 +80,41 @@ export class OptionValue {
   checked: boolean;
 }
 
+export class LocalQuestion {
+  Id: string;
+  Name: string;
+  Allowed_File_Extensions__c :string;
+  Question__c : string;
+  Question_Text__c : string;
+  Type__c: string;
+  Title__c: string;
+  SubTitle__c: string;
+  Next_Question__c?: string;
+  Is_Optional__c: boolean;
+  Is_Title__c: boolean;
+  X24_Hours__c: boolean;
+  Error_Message__c: string;
+  Is_Date_Backward__c : boolean;
+  Is_Date_Forward__c : boolean;
+  Time_Text__c : string;
+  Date_Text__c : string;
+  Group__c: string;
+  Question_No__c?: string;
+  Question_Options__r?: OptionR;
+  Sub_Text__c : string;
+  Size__c: number;
+  Tracking_ID__c: string;
+  Additional_Rich__c? : string;
+  Questions__r?: QuestionR;
+  RecordType: {
+    Name: string;
+  };
+  input?: string;
+  error?: ErrorWrapper;
+  static X24_Hours__c: boolean;
+  uniqueSubQId: string;
+}
+
 export class AnswerBook {
   Id: string;
   Question_Book__c: string;
