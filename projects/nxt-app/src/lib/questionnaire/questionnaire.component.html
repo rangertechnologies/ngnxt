@@ -515,7 +515,7 @@
             color: red;">{{questionItem?.error?.errorMsg}}</div>
         <div class="myt-align3" [class]="'col-md-' + ques.Size__c + ' paddingnone'"
           *ngFor="let ques of getLocalSubQuestions(questionItem.Id);let i = index">
-          <div [ngClass]="{ down2: qbItem?.Progress_Bar__c }">
+          <div >
             <span class="dis-flex myt-font3 myt-font7">{{ ques?.Question__c }}</span>
           </div>
 
