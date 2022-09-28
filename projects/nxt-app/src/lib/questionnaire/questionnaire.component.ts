@@ -1248,7 +1248,7 @@ export class QuestionnaireComponent implements OnInit {
         var ansWrap = this.answerMap.get(q);
         if (ansWrap) {
           //console.log('Handling Answer for ' + ansWrap.quesId + ' of type ' + ansWrap.qTyp);
-          if(ansWrap.qTyp == 'File' || ansWrap.qTyp == 'Book'||ansWrap.qTyp == 'List'){
+          if(ansWrap.qTyp == 'File' || ansWrap.qTyp == 'Book'||ansWrap.qTyp == 'List' || ansWrap.qTyp == 'Checkbox'){
             var newStr = '';
             for (var ansStr of ansWrap.ansValue.split('@@##$$')) {
               for (var ansStr1 of ansStr.split('$$@@##')) {
@@ -1896,29 +1896,24 @@ export class QuestionnaireComponent implements OnInit {
     }
 
     for (var ques of records) {
-      //console.log(ques);
-      var sQues = new Question();
-      sQues.Id = ques.Id;
-      sQues.Name = ques.Name;
-      sQues.Question__c = ques.Question__c;
-      sQues.Error_Message__c = ques.Error_Message__c;
-      sQues.Type__c = ques.Type__c;
-      sQues.Next_Question__c = ques.Next_Question__c;
-      sQues.Is_Optional__c = ques.Is_Optional__c;
-      sQues.Group__c = ques.Group__c;
-      sQues.Question_No__c = ques.Question_No__c;
-      sQues.Allowed_File_Extensions__c = ques.Allowed_File_Extensions__c;
       if (ques.Type__c == "File") {
         this.valueName1 = ques.Allowed_File_Extensions__c;
         //console.log(this.valueName1);
       }
 
+      var ans = '';
       if (qaMap.has(ques.Question_No__c)) {
-        //console.log('Setting input for the subQuestion ' + ques.Question_No__c + ' with ' + ansStr);
-        if (ques.Type__c != "File") {
           ques.input = qaMap.get(ques.Question_No__c);
+          
+          if(ques.input.indexOf('$$@@##') > 0){
+            // console.log('answer supposed to be trimmed');
+            // console.log(ques.input);
+            ans = ques.input.substring(ques.input.indexOf('$$@@##')+6,ques.input.length);
+            // console.log(ans);
+            ques.input = ques.input.substring(0,ques.input.indexOf('$$@@##'));
+            // console.log(ques.input);
+          }
         }
-      }
 
 
       if ((ques.Type__c === "Date") && (ques.Is_Date_Backward__c || ques.Is_Date_Forward__c)) {
@@ -1943,6 +1938,14 @@ export class QuestionnaireComponent implements OnInit {
       }
 
       this.subQuestions.push(ques);
+      if(ans != ''){
+        for(var an of (ans.split('$$@@##'))){
+          var sQ = new Question();
+          Object.assign(sQ,ques);
+          sQ.input = an;
+          this.subQuestions.push(sQ);
+        }
+      }
     }
     if (this.valueName1.length > 0) {
       this.bookFlagAccept = this.valueName1.split(";");
@@ -2300,7 +2303,7 @@ export class QuestionnaireComponent implements OnInit {
 
    //Plus button implementation.
    structLocalSubQuestion(ques: LocalQuestion){
-    console.log('inside structLocalSubQuestion');
+    // console.log('inside structLocalSubQuestion');
       for(var i = 0; i < this.subQuestions.length; i++){
         var localSubQuestion = new LocalQuestion();
           localSubQuestion.Id = this.subQuestions[i].Id;
@@ -2319,8 +2322,8 @@ export class QuestionnaireComponent implements OnInit {
           localSubQuestion.uniqueSubQId = ''+this.subQuestions[i].Id + i; 
           this.localSubQuestions.push(localSubQuestion);
       }
-  console.log('final local sub questions');
-  console.log(this.localSubQuestions);
+  // console.log('final local sub questions');
+  // console.log(this.localSubQuestions);
   // console.log(this.questionItem.Id);
   this.localSubQMap.set(this.questionItem.Id,this.localSubQuestions);
   this.localSubQuestions = [];
