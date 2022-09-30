@@ -539,8 +539,8 @@ export class QuestionnaireComponent implements OnInit {
 
   ngOnInit() {
     this.deviceInfo = this.deviceService.getDeviceInfo();
-    console.log('Inside the ngOnInit');
-    console.log("RNXT-Claim");
+    // console.log('Inside the ngOnInit');
+    // console.log("RNXT-Claim");
     this.inpValue = "";
     this.selectedMeridiem = "AM";
     this.processQB();
@@ -1132,8 +1132,8 @@ export class QuestionnaireComponent implements OnInit {
     this.answerWrap.ansValue = this.inpValue;
    if(this.answerWrap.qTyp == "Alphanumeric"){
       this.answerWrap.ansValue = 'ES'+ this.inpValue;
-      console.log('Bank condition');
-      console.log(this.answerWrap.ansValue);
+      // console.log('Bank condition');
+      // console.log(this.answerWrap.ansValue);
     }
     /*if (cQuestion.Type__c == 'Book'){
     for (var qb of cQuestion.Questions__r.records){
@@ -1345,8 +1345,8 @@ export class QuestionnaireComponent implements OnInit {
     );
 
   private successReadBook = (response) => {
-    //console.log('Inside the successReadBook');
-    //console.log(response)
+    // console.log('Inside the successReadBook');
+    // console.log(response);
     this.qbItem = response.questionbook;
     this.abItem = response.answerbook;
     //console.log('readingQuestion using ' + this.qbItem.First_Question__c);
@@ -1525,9 +1525,9 @@ export class QuestionnaireComponent implements OnInit {
     );
 
   private successRead = (response) => {
-    console.log('Inside the successRead');
-    console.log(response);
-    console.log(this.questionItem);
+    // console.log('Inside the successRead new');
+    // console.log(response);
+    // console.log(this.questionItem);
     // Reset the Variables
 
     if (this.questionItem) {
@@ -1538,7 +1538,7 @@ export class QuestionnaireComponent implements OnInit {
       this.resetFlag(this.questionItem.Type__c);
     }
     this.questionItem = response.question;
-    console.log(this.questionItem);
+    // console.log(this.questionItem);
 
     if(this.questionItem.Type__c === 'Alphanumeric'){
       this.splCCBackClick = true;
@@ -1615,8 +1615,9 @@ export class QuestionnaireComponent implements OnInit {
   };
 
   private processQuestion = () => {
-    console.log('Inside the processQuestion');
-    console.log('splCCBackClick = '+this.splCCBackClick);
+    // console.log('Inside the processQuestion');
+    // console.log('splCCBackClick = '+this.splCCBackClick);
+    // console.log(this.questionStack);
     //console.log(this.questionItem);
     this.pop = true;
 
@@ -1660,9 +1661,9 @@ export class QuestionnaireComponent implements OnInit {
       //console.log('inside removing attachment array');
       this.attachments = [];
     }
-    console.log(this.inpValue);
+    // console.log(this.inpValue);
     if(this.splCCBackClick && this.inpValue && this.inpValue.includes('ES')){
-      console.log('Inside the if cond');
+      // console.log('Inside the if cond');
       this.splCCBackClick = false;
       this.inpValue = this.inpValue.replace('ES','');
     }
@@ -1676,6 +1677,9 @@ export class QuestionnaireComponent implements OnInit {
       this.setSubQuestions(this.questionItem.Questions__r.records);
     }else if (this.listFlag) {
       // Set the LocalSubQuestions
+      // console.log('inside list flag');
+      // console.log(this.questionItem.Questions__r.records);
+      // console.log(this.abItem.Questions__r.records);
       if(!this.localSubQMap.has(this.questionItem.Id)){
         this.setSubQuestions(this.questionItem.Questions__r.records);
     } 
@@ -1873,11 +1877,11 @@ export class QuestionnaireComponent implements OnInit {
   }
 
   setSubQuestions(records) {
-    //console.log('inside setSubQuestions');
-    //console.log(records);
+    // console.log('inside setSubQuestions');
+    // console.log(records);
 
     var qaMap = new Map();
-    //console.log(this.inpValue);
+    // console.log(this.inpValue);
     if (this.inpValue) {
       var aIndex = 0;
       if (this.inpValue.search(", ") == -1) {
@@ -1894,6 +1898,8 @@ export class QuestionnaireComponent implements OnInit {
         }
       }
     }
+    // console.log('after setting values from inpvalue qa map are');
+    // console.log(qaMap);
 
     for (var ques of records) {
       if (ques.Type__c == "File") {
@@ -1904,7 +1910,8 @@ export class QuestionnaireComponent implements OnInit {
       var ans = '';
       if (qaMap.has(ques.Question_No__c)) {
           ques.input = qaMap.get(ques.Question_No__c);
-          
+          // console.log('after fetching map values');
+          // console.log(ques.input);
           if(ques.input.indexOf('$$@@##') > 0){
             // console.log('answer supposed to be trimmed');
             // console.log(ques.input);
@@ -2320,6 +2327,7 @@ export class QuestionnaireComponent implements OnInit {
           localSubQuestion.Question_No__c = this.subQuestions[i].Question_No__c;
           localSubQuestion.Allowed_File_Extensions__c = this.subQuestions[i].Allowed_File_Extensions__c;
           localSubQuestion.uniqueSubQId = ''+this.subQuestions[i].Id + i; 
+          localSubQuestion.input = this.subQuestions[i].input;
           this.localSubQuestions.push(localSubQuestion);
       }
   // console.log('final local sub questions');
