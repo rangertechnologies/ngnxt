@@ -1297,7 +1297,7 @@ export class QuestionnaireComponent implements OnInit {
           'pagina': '#'+this._router.url,
           'propiedadDestino': localStorage.getItem("gtmId"),
           'producto': 'my treasure',
-          'ramoAgrupado': "mis tesoros",
+          'ramoAgrupado': "my treasure",
 
           'event':'virtualPage',
           'path': '/my-treasures/my-claims/new-claim/step7-summary',
@@ -1386,7 +1386,7 @@ export class QuestionnaireComponent implements OnInit {
         'pagina': '#'+this._router.url,
         'propiedadDestino': localStorage.getItem("gtmId"),
         'producto': 'my treasure',
-        'ramoAgrupado': "mis tesoros",
+        'ramoAgrupado': "my treasure",
 
         'event':'virtualPage',
         'path': '/my-treasures/my-claims/detail',
@@ -1708,7 +1708,7 @@ export class QuestionnaireComponent implements OnInit {
           'pagina': '#'+this._router.url,
           'propiedadDestino': localStorage.getItem("gtmId"),
           'producto': 'my treasure',
-          'ramoAgrupado': "mis tesoros",
+          'ramoAgrupado': "my treasure",
       
           'event':'virtualPage',
           'path': '/my-treasures/my-claims/new-claim/step2-date',
@@ -1732,7 +1732,7 @@ export class QuestionnaireComponent implements OnInit {
             'pagina': '#'+this._router.url,
             'propiedadDestino': localStorage.getItem("gtmId"),
             'producto': 'my treasure',
-            'ramoAgrupado': "mis tesoros",
+            'ramoAgrupado': "my treasure",
 
             'event':'virtualPage',
             'path': '/my-treasures/my-claims/new-claim/step3-location1',
@@ -1754,7 +1754,7 @@ export class QuestionnaireComponent implements OnInit {
             'pagina': '#'+this._router.url,
             'propiedadDestino': localStorage.getItem("gtmId"),
             'producto': 'my treasure',
-            'ramoAgrupado': "mis tesoros",
+            'ramoAgrupado': "my treasure",
 
             'event':'virtualPage',
             'path': '/my-treasures/my-claims/new-claim/step3-location2',
@@ -1775,7 +1775,7 @@ export class QuestionnaireComponent implements OnInit {
             'pagina': '#'+this._router.url,
             'propiedadDestino': localStorage.getItem("gtmId"),
             'producto': 'my treasure',
-            'ramoAgrupado': "mis tesoros",
+            'ramoAgrupado': "my treasure",
 
             'event':'virtualPage',
             'path': '/my-treasures/my-claims/new-claim/step3-location3',
@@ -1798,7 +1798,7 @@ export class QuestionnaireComponent implements OnInit {
           'pagina': '#'+this._router.url,
           'propiedadDestino': localStorage.getItem("gtmId"),
           'producto': 'my treasure',
-          'ramoAgrupado': "mis tesoros",
+          'ramoAgrupado': "my treasure",
 
           'event':'virtualPage',
           'path': '/my-treasures/my-claims/new-claim/step4-detail-damage',
@@ -1820,7 +1820,7 @@ export class QuestionnaireComponent implements OnInit {
           'pagina': '#'+this._router.url,
           'propiedadDestino': localStorage.getItem("gtmId"),
           'producto': 'my treasure',
-          'ramoAgrupado': "mis tesoros",
+          'ramoAgrupado': "my treasure",
 
           'event':'virtualPage',
           'path': '/my-treasures/my-claims/new-claim/step5-attach',
@@ -1841,7 +1841,7 @@ export class QuestionnaireComponent implements OnInit {
           'pagina': '#'+this._router.url,
           'propiedadDestino': localStorage.getItem("gtmId"),
           'producto': 'my treasure',
-          'ramoAgrupado': "mis tesoros",
+          'ramoAgrupado': "my treasure",
 
           'event':'virtualPage',
           'path': '/my-treasures/my-claims/new-claim/step6-bank-account1',
@@ -1862,7 +1862,7 @@ export class QuestionnaireComponent implements OnInit {
           'pagina': '#'+this._router.url,
           'propiedadDestino': localStorage.getItem("gtmId"),
           'producto': 'my treasure',
-          'ramoAgrupado': "mis tesoros",
+          'ramoAgrupado': "my treasure",
 
           'event':'virtualPage',
           'path': '/my-treasures/my-claims/new-claim/step6-bank-account2',
