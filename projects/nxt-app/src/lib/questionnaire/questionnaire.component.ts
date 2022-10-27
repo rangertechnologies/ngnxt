@@ -488,6 +488,8 @@ export class QuestionnaireComponent implements OnInit {
 
   public temp: any[] = [];
   public clientId: string;
+  public propertyDestination: string;
+  public temp2: any[] = [];
   public logintrack: string;
   public currentLoggedUserId: string;
   public currentUserSessionId: string;
@@ -509,9 +511,14 @@ export class QuestionnaireComponent implements OnInit {
 
 
     this.deviceInfo = this.deviceService.getDeviceInfo();
-    const value = ('; '+document.cookie).split(`; _ga`).pop().split(';')[0];
+    const value = ('; '+document.cookie).split(`; _ga=`).pop().split(';')[0];
     this.temp = value.split(".");
     this.clientId = this.temp[2]+'.'+this.temp[3];
+    
+    const value2 = ('; '+document.cookie).split(`; _gat_gtag_UA_13199202_15`).pop().split(';')[0];
+    this.temp2 = value2.split("=");
+    this.propertyDestination = this.temp2[1];
+    
     this.currentLoggedUserId = localStorage.getItem("currentUserId");
     this.currentUserSessionId =localStorage.getItem("userSessionIdTrack");
     if(localStorage.getItem("currentUser") != null){
@@ -1295,7 +1302,7 @@ export class QuestionnaireComponent implements OnInit {
 
       window.dataLayer.push({
           'pagina': '#'+this._router.url,
-          'propiedadDestino': localStorage.getItem("gtmId"),
+          'propiedadDestino': this.propertyDestination,
           'producto': 'my treasure',
           'ramoAgrupado': "my treasure",
 
@@ -1384,7 +1391,7 @@ export class QuestionnaireComponent implements OnInit {
       console.log('Before datalayer push');
       window.dataLayer.push({
         'pagina': '#'+this._router.url,
-        'propiedadDestino': localStorage.getItem("gtmId"),
+        'propiedadDestino': this.propertyDestination,
         'producto': 'my treasure',
         'ramoAgrupado': "my treasure",
 
@@ -1406,7 +1413,7 @@ export class QuestionnaireComponent implements OnInit {
 
        window.dataLayer.push({ 
         'pagina': '#'+this._router.url,
-        'propiedadDestino': localStorage.getItem("gtmId"),
+        'propiedadDestino': this.propertyDestination,
         'producto': 'my treasure',
 
         'event':'eventGA', 
@@ -1701,12 +1708,15 @@ export class QuestionnaireComponent implements OnInit {
       //this.abItem = response.answerbook;
       this.answerMap.set(response.answer.quesId, response.answer);
 
+      console.log(response.answer.quesValue);
+      console.log(response.answer.quesValue.includes('Dónde ocurrió'));
+
       if(response.answer.groupText == '¿Cuándo ocurrió?' && response.answer.ansValue){
         console.log('Inside the first dateTime ques');
         let tempAns = response.answer.ansValue.split(" ");
         window.dataLayer.push({
           'pagina': '#'+this._router.url,
-          'propiedadDestino': localStorage.getItem("gtmId"),
+          'propiedadDestino': this.propertyDestination,
           'producto': 'my treasure',
           'ramoAgrupado': "my treasure",
       
@@ -1730,7 +1740,7 @@ export class QuestionnaireComponent implements OnInit {
         if(response.answer.quesValue.includes('¿Ha ocurrido en tu domicilio?')){
           window.dataLayer.push({
             'pagina': '#'+this._router.url,
-            'propiedadDestino': localStorage.getItem("gtmId"),
+            'propiedadDestino': this.propertyDestination,
             'producto': 'my treasure',
             'ramoAgrupado': "my treasure",
 
@@ -1752,7 +1762,7 @@ export class QuestionnaireComponent implements OnInit {
         }else if(response.answer.quesValue.includes('¿Ha ocurrido en España?')){
           window.dataLayer.push({
             'pagina': '#'+this._router.url,
-            'propiedadDestino': localStorage.getItem("gtmId"),
+            'propiedadDestino': this.propertyDestination,
             'producto': 'my treasure',
             'ramoAgrupado': "my treasure",
 
@@ -1773,7 +1783,7 @@ export class QuestionnaireComponent implements OnInit {
         }else if(response.answer.quesValue.includes('Selecciona el país')){
           window.dataLayer.push({
             'pagina': '#'+this._router.url,
-            'propiedadDestino': localStorage.getItem("gtmId"),
+            'propiedadDestino': this.propertyDestination,
             'producto': 'my treasure',
             'ramoAgrupado': "my treasure",
 
@@ -1791,12 +1801,34 @@ export class QuestionnaireComponent implements OnInit {
             'clientID': this.clientId,
             'appType': "" //'appType': this.appType,
           });
+        }else if(response.answer.quesValue.includes('Dónde ocurrió')){
+          console.log('INSIDE THE EXPECTED COND');
+          window.dataLayer.push({
+            'pagina': '#'+this._router.url,
+            'propiedadDestino': this.propertyDestination,
+            'producto': 'my treasure',
+            'ramoAgrupado': "my treasure",
+
+            'event':'virtualPage',
+            'path': '/my-treasures/my-claims/new-claim/step3-location3b',
+            'url_real': window.location.href,
+            'logged': this.logintrack,
+            'userId': this.currentLoggedUserId,
+            'Sesion id': this.currentUserSessionId,
+            'section1': "mytreasure",
+            'section2': "mis tesoros",
+            'section3': "incidencia",
+            //'section4': "pais",
+            'pageType': "mis tesoros",
+            'clientID': this.clientId,
+            'appType': "" //'appType': this.appType,
+          });
         }
       }else if(response.answer.quesValue.includes('Detalle de los daños') && response.answer.ansValue){
         let tempType = response.answer.ansValue.split("@@##$$")[0] == 'Mi tesoro se ha dañado' ? 'rotura':'robo';
         window.dataLayer.push({
           'pagina': '#'+this._router.url,
-          'propiedadDestino': localStorage.getItem("gtmId"),
+          'propiedadDestino': this.propertyDestination,
           'producto': 'my treasure',
           'ramoAgrupado': "my treasure",
 
@@ -1818,7 +1850,7 @@ export class QuestionnaireComponent implements OnInit {
       }else if(response.answer.groupText == 'Denuncia o foto de los daños'){
         window.dataLayer.push({
           'pagina': '#'+this._router.url,
-          'propiedadDestino': localStorage.getItem("gtmId"),
+          'propiedadDestino': this.propertyDestination,
           'producto': 'my treasure',
           'ramoAgrupado': "my treasure",
 
@@ -1839,7 +1871,7 @@ export class QuestionnaireComponent implements OnInit {
       }else if(response.answer.groupText == 'Detalle de la cuenta bancaria'){
         window.dataLayer.push({
           'pagina': '#'+this._router.url,
-          'propiedadDestino': localStorage.getItem("gtmId"),
+          'propiedadDestino': this.propertyDestination,
           'producto': 'my treasure',
           'ramoAgrupado': "my treasure",
 
@@ -1860,7 +1892,7 @@ export class QuestionnaireComponent implements OnInit {
       }else if(response.answer.groupText == 'Certificado de titularidad de la cuenta bancaria'){
         window.dataLayer.push({
           'pagina': '#'+this._router.url,
-          'propiedadDestino': localStorage.getItem("gtmId"),
+          'propiedadDestino': this.propertyDestination,
           'producto': 'my treasure',
           'ramoAgrupado': "my treasure",
 
