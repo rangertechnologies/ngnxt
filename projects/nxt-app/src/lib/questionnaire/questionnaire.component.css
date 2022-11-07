@@ -100,7 +100,7 @@ display: none;
 
 #progress2{
   display: block;
-  margin-top: -26px;
+  /* margin-top: -26px; */
   margin-bottom: 6px;
   background-color: #dedddd;
   width: 96%;
@@ -1751,4 +1751,30 @@ background-color: #dedddd;
 .summary-volver{
   display: none;
 }
-
+.flex-profile{
+  display: flex;
+  justify-content: space-around;
+}
+.divHover:hover {
+  background-color: bisque;
+}
+.fa-check::before {
+  content: "";
+}
+.fa-icon-style{
+  font-size: 23px !important;
+  color: #1573db;
+}
+.packUser-Input{
+  height: 25px !important;
+  width: 300px;
+  border: none;
+  background: #dedddd !important;
+  outline: none;
+}
+.editDiv{
+  flex: 1;
+  display: flex;
+  justify-content: flex-end;align-items: flex-end;
+  padding-bottom: 5px;
+}

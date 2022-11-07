@@ -111,6 +111,7 @@ export class QuestionnaireComponent implements OnInit {
   public pop: boolean;
   public localDate: string;
   public currentName: string;
+  public navigatePage: string = '';
   public pathquestion: number;
   public percent: number;
   public count: number;
@@ -128,6 +129,8 @@ export class QuestionnaireComponent implements OnInit {
   public innerhtml: any;
   public possibilities: any;
   public innerhtml1: any;
+  public profileData: any = {}; // profile section EMBI-17
+  public checkEdit: string = '';
   public hours: any[] = [
     "01",
     "02",
@@ -538,9 +541,19 @@ export class QuestionnaireComponent implements OnInit {
   }
 
   ngOnInit() {
+    if(localStorage.getItem('ProfileData') != null){
+      this.profileData = JSON.parse(localStorage.getItem('ProfileData'));
+      console.log('Local Storage',this.profileData);
+      localStorage.removeItem('ProfileData');
+    }
+    if(localStorage.getItem('gotoPage') != null){
+      this.navigatePage = localStorage.getItem('gotoPage');
+      console.log('Local Storage',this.navigatePage);
+      localStorage.removeItem('gotoPage');
+    }
     this.deviceInfo = this.deviceService.getDeviceInfo();
-    // console.log('Inside the ngOnInit');
-    // console.log("RNXT-Claim");
+    console.log('Inside the ngOnInit');
+    console.log("RNXT-Claim");
     this.inpValue = "";
     this.selectedMeridiem = "AM";
     this.processQB();
@@ -582,6 +595,40 @@ export class QuestionnaireComponent implements OnInit {
       }
    
   }
+
+
+  edit(value: string){
+    console.log('value',value);
+    if(value == 'bankName'){
+      this.checkEdit = 'bankName';
+    }else if(value == 'bankAddress'){
+      this.checkEdit = 'bankAddress';
+    }else if(value == 'gender'){
+      this.checkEdit = 'gender';
+    }else if(value == 'civilStatus'){
+      this.checkEdit = 'civilStatus';
+    }else if(value == 'firstName'){
+      this.checkEdit = 'firstName';
+    }else if(value == 'lastName'){
+      this.checkEdit = 'lastName';
+    }else if(value == 'dob'){
+      this.checkEdit = 'dob';
+    }else if(value == 'address'){
+      this.checkEdit = 'address';
+    }else if(value == 'country'){
+      this.checkEdit = 'country';
+    }else if(value == 'postalCode'){
+      this.checkEdit = 'postalCode';
+    }else if(value == 'nationality'){
+      this.checkEdit = 'nationality';
+    }else if(value == 'email'){
+      this.checkEdit = 'email';
+    }else if(value == 'phone'){
+      this.checkEdit = 'phone';
+    }
+    console.log('checkEdit',this.checkEdit);
+  }
+
 
   ngOnChanges() {
     //console.log('inside Questionnaire ngOnChanges');
@@ -650,15 +697,17 @@ export class QuestionnaireComponent implements OnInit {
   processQB() {
     //console.log('ProcessQB');
     //this.qbItem
-
+    console.log('in 666', this.qbId);
     //console.log(this.qbId);
     //console.log('Version in process is 8bf11efa7f91a391d957bf6b5078edc7e656b67c');
     if (this.qbId) {
       //console.log('Inside the if part: qbId = '+this.qbId);
       if (this.qbId.length == 18) {
+        console.log('in 672');
         //console.log('Before Calling readQuestionBook() using ' + this.qbId);
         this.readQuestionBook(this.qbId);
       } else {
+        console.log('in 676');
         //console.log('Inside the else part');
         //console.log('Setting the Question Directly for testing');
         this.questionItem = DTQUESTION;
@@ -699,6 +748,7 @@ export class QuestionnaireComponent implements OnInit {
           this.questionName.pop();
         }
       }
+      this.navigatePage = ''; //kaja edit from embi component
       this.summary = [];
     }
   }
@@ -708,6 +758,9 @@ export class QuestionnaireComponent implements OnInit {
     this.AnswerSave();
   }
 
+  showPdf(item: any){
+      window.open(item, '_self');
+  }
   AnswerSave(){
     //console.log('Inside the handleNextClick');
     //console.log(this.bookFlag);
@@ -1132,8 +1185,8 @@ export class QuestionnaireComponent implements OnInit {
     this.answerWrap.ansValue = this.inpValue;
    if(this.answerWrap.qTyp == "Alphanumeric"){
       this.answerWrap.ansValue = 'ES'+ this.inpValue;
-      // console.log('Bank condition');
-      // console.log(this.answerWrap.ansValue);
+      console.log('Bank condition');
+      console.log(this.answerWrap.ansValue);
     }
     /*if (cQuestion.Type__c == 'Book'){
     for (var qb of cQuestion.Questions__r.records){
@@ -1148,13 +1201,18 @@ export class QuestionnaireComponent implements OnInit {
   next() {
     var cQuestion: Question = new Question();
     cQuestion = this.questionItem;
+    console.log('1204 questionItem', this.questionItem);
     var typ = cQuestion.Type__c;
     // If no error then move to next steps
     if (this.questionItem.error) {
       return;
     }
-
+    console.log('1209 this.questionStack', this.questionStack);
     this.questionStack.push(cQuestion.Id);
+    console.log('1211 this.questionStack', this.questionStack);
+    this.questionStack=this.questionStack.filter((item,
+      index) => this.questionStack.indexOf(item) === index);
+      console.log('1215 this.questionStack sort', this.questionStack);
     //  this.questionName.push(cQuestion.Name);
 
     // CONDITIONAL vs OPTIONONLY & UNCONDITIONAL
@@ -1243,6 +1301,7 @@ export class QuestionnaireComponent implements OnInit {
       this.questionItem = null;
 
       // Show Summary
+      console.log('1299 this.questionStack', this.questionStack);
       for (var q of this.questionStack) {
         //console.log('Handling Question => ' + q);
         var ansWrap = this.answerMap.get(q);
@@ -1270,9 +1329,15 @@ export class QuestionnaireComponent implements OnInit {
             }ansWrap.ansValue = newStr;
         }
           this.summary.push(ansWrap);
+          
+          //this.handleEvent.emit('profilePageCall');
           this.backicon = true;
         }
       }
+      console.log('this.summary', this.summary);
+      localStorage.setItem('summaryList',JSON.stringify(this.summary));
+      let person = {fromPage:"profilePageCall"};
+      this.handleEvent.emit(JSON.stringify(person));
     }
   }
 
@@ -1345,10 +1410,20 @@ export class QuestionnaireComponent implements OnInit {
     );
 
   private successReadBook = (response) => {
-    // console.log('Inside the successReadBook');
-    // console.log(response);
+    //console.log('Inside the successReadBook');
+    //console.log(response)
     this.qbItem = response.questionbook;
+    //console.log('in 1378',this.qbItem);
     this.abItem = response.answerbook;
+    console.log('in 1413 abItem',this.abItem);
+    if(this.navigatePage){
+      if(localStorage.getItem('summaryList') != null){
+        this.summary = JSON.parse(localStorage.getItem('summaryList'));
+        console.log('Local Storage summary',this.summary);
+        localStorage.removeItem('summaryList');
+      }
+    }
+  
     //console.log('readingQuestion using ' + this.qbItem.First_Question__c);
     if (this.abItem?.Status__c == "Pending") {
       if (
@@ -1400,8 +1475,9 @@ export class QuestionnaireComponent implements OnInit {
             //  //console.log(this.attachmentsMap);
           }
         }
-
+        console.log('1475 this.questionStack', this.questionStack);
         this.questionStack.pop();
+        console.log('1475 this.questionStack', this.questionStack);
         //console.log(this.answerMap);
         // Read the last answered question
         this.readQuestion(lastQuestionId);
@@ -1525,9 +1601,9 @@ export class QuestionnaireComponent implements OnInit {
     );
 
   private successRead = (response) => {
-    // console.log('Inside the successRead new');
-    // console.log(response);
-    // console.log(this.questionItem);
+    console.log('Inside the successRead');
+    console.log(response);
+    console.log(this.questionItem);
     // Reset the Variables
 
     if (this.questionItem) {
@@ -1538,7 +1614,7 @@ export class QuestionnaireComponent implements OnInit {
       this.resetFlag(this.questionItem.Type__c);
     }
     this.questionItem = response.question;
-    // console.log(this.questionItem);
+    //console.log('after',this.questionItem);
 
     if(this.questionItem.Type__c === 'Alphanumeric'){
       this.splCCBackClick = true;
@@ -1582,6 +1658,10 @@ export class QuestionnaireComponent implements OnInit {
     if (this.inpValue != ".") {
       this.currentQuestionId = null;
     }
+    // remove duplicate of question id array of this.questionStack 
+    this.questionStack=this.questionStack.filter((item,
+      index) => this.questionStack.indexOf(item) === index);
+      
     this.answerWrap.ansNumber = this.questionStack.length + 1;
 
     this.sfService.remoteAction(
@@ -1615,9 +1695,8 @@ export class QuestionnaireComponent implements OnInit {
   };
 
   private processQuestion = () => {
-    // console.log('Inside the processQuestion');
-    // console.log('splCCBackClick = '+this.splCCBackClick);
-    // console.log(this.questionStack);
+    console.log('Inside the processQuestion');
+    console.log('splCCBackClick = '+this.splCCBackClick);
     //console.log(this.questionItem);
     this.pop = true;
 
@@ -1661,9 +1740,9 @@ export class QuestionnaireComponent implements OnInit {
       //console.log('inside removing attachment array');
       this.attachments = [];
     }
-    // console.log(this.inpValue);
+    console.log(this.inpValue);
     if(this.splCCBackClick && this.inpValue && this.inpValue.includes('ES')){
-      // console.log('Inside the if cond');
+      console.log('Inside the if cond');
       this.splCCBackClick = false;
       this.inpValue = this.inpValue.replace('ES','');
     }
@@ -2125,7 +2204,9 @@ export class QuestionnaireComponent implements OnInit {
   };
 
   handleSubmitClick() {
-    this.handleEvent.emit(this.qbItem.Submit_Tracking_ID__c);
+    Object.assign(this.profileData, {fromPage: this.qbItem.Submit_Tracking_ID__c});
+    this.handleEvent.emit(JSON.stringify(this.profileData));
+    //this.handleEvent.emit(this.qbItem.Submit_Tracking_ID__c);
     this.updateAnswerBook(this.abItem.Id);
   }
 

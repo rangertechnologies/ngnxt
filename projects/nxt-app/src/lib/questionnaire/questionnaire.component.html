@@ -7,7 +7,7 @@
   </div>
 </div>
 
-<div *ngIf="questionItem" class="questiondiv1" style="padding-bottom:6rem !important;padding-top:2rem !important;">
+<div *ngIf="questionItem && navigatePage == '' " class="questiondiv1" style="padding-bottom:6rem !important;padding-top:2rem !important;">
   <div *ngIf="questionItem.Title__c && qbItem.Progress_Bar__c">
         <h1 class="header1" > {{ questionItem?.Title__c }} </h1>
         <div class="header2">{{ questionItem?.SubTitle__c }}</div>
@@ -540,17 +540,7 @@
   <!--List End-->
 
   <div class="flexer">
-    <div [ngClass]="{ 'col-md-6': !qbItem.Progress_Bar__c }">
-      <div>
-        <button [ngClass]="{
-            'rusty': qbItem.Progress_Bar__c,
-            'nxt-btn btn-primary btn-lg btn-block btn-back-color':
-              !qbItem.Progress_Bar__c
-          }" (click)="handleNextClick()">
-          {{ qbItem.Next__c }}
-        </button>
-      </div>
-    </div>
+    
     <div class="backbutton" [ngClass]="{ 'col-md-6': !qbItem.Progress_Bar__c }"
       [style.visibility]="questionStack.length > 0 ? 'visible' : 'hidden'">
       <div [ngClass]="{}">
@@ -563,10 +553,365 @@
         </button>
       </div>
     </div>
+
+    <div [ngClass]="{ 'col-md-6': !qbItem.Progress_Bar__c }">
+      <div>
+        <button [ngClass]="{
+            'rusty': qbItem.Progress_Bar__c,
+            'nxt-btn btn-primary btn-lg btn-block btn-back-color':
+              !qbItem.Progress_Bar__c
+          }" (click)="handleNextClick()">
+          {{ qbItem.Next__c }}
+        </button>
+      </div>
+    </div>
+
   </div>
 </div>
 
-<div *ngIf="summary && summary.length > 0" height="100% !important" class="col-md-12" [ngClass]="{
+
+<!-- EMBI Profile Section -->
+
+<div *ngIf="summary && summary.length > 0" height="100% !important" [ngClass]="{
+  'col-md-12':!qbItem.Progress_Bar__c
+   }">
+   
+  <div>
+    <h1 style="text-align: center;">Profile</h1>
+    <div id="progress2">
+      <div class="summary">
+        <div class="question sum-ques" style="display: flex;">
+          <div>
+            <div>
+              Bank Name
+            </div>
+            <div>
+            <input class="packUser-Input form-control" type="text"  maxlength="40" id="bankName" [(ngModel)]="profileData.bankName" name="bankName" size="50"
+                required [readonly]="checkEdit == 'bankName' ? false : true " />
+            </div>
+          </div>
+
+          <div class="editDiv">
+          <button class="edit"(click)="edit('bankName')">
+            <img *ngIf="deviceInfo.os === 'iOS'" src="https://rnxt.s3.amazonaws.com/MytIcon/icon-edit%402x.png" style="width:50%!important;" class="icon-editios"/>
+            <img *ngIf="deviceInfo.os !== 'iOS'" src="https://rnxt.s3.amazonaws.com/MytIcon/icon-edit%402x.png" class="icon-edit" />
+          </button>
+          </div>
+
+          <div style="display: flex;flex: 1;">
+
+          </div>
+          
+        </div>
+
+        <div class="question sum-ques" style="display: flex;">
+          <div>
+            <div>
+                Bank Address
+            </div>
+            <div>
+            <input class="packUser-Input form-control" type="text"  maxlength="40" id="bankAddress" [(ngModel)]="profileData.bankAddress" style="width: 300px;" name="bankAddress" size="50"
+                  required [readonly]="checkEdit == 'bankAddress' ? false : true " />
+            </div>
+          </div>
+
+          <div class="editDiv">
+          <button class="edit"(click)="edit('bankAddress')">
+            <img *ngIf="deviceInfo.os === 'iOS'" src="https://rnxt.s3.amazonaws.com/MytIcon/icon-edit%402x.png" style="width:50%!important;" class="icon-editios"/>
+            <img *ngIf="deviceInfo.os !== 'iOS'" src="https://rnxt.s3.amazonaws.com/MytIcon/icon-edit%402x.png" class="icon-edit" />
+          </button>
+          </div>
+
+          <div style="display: flex;flex: 1;">
+
+          </div>
+
+        </div>
+
+        <div class="question sum-ques" style="display: flex;">
+          <div>
+            <div>
+              Gender
+            </div>
+            <div>
+            <input class="packUser-Input form-control" type="text"  maxlength="40" id="gender" [(ngModel)]="profileData.gender" style="width: 300px;" name="gender" size="50"
+                  required [readonly]="checkEdit == 'gender' ? false : true " />
+            </div>
+          </div>
+          <div class="editDiv">
+            <button class="edit"(click)="edit('gender')">
+              <img *ngIf="deviceInfo.os === 'iOS'" src="https://rnxt.s3.amazonaws.com/MytIcon/icon-edit%402x.png" style="width:50%!important;" class="icon-editios"/>
+              <img *ngIf="deviceInfo.os !== 'iOS'" src="https://rnxt.s3.amazonaws.com/MytIcon/icon-edit%402x.png" class="icon-edit" />
+            </button>
+          </div>
+
+          <div style="display: flex;flex: 1;">
+
+          </div>
+           
+        </div>
+
+        <div class="question sum-ques" style="display: flex;">
+          <div>
+              <div>
+                Civil Status
+              </div>
+              <div>
+              <input class="packUser-Input form-control" type="text"  maxlength="40" id="civilStatus" [(ngModel)]="profileData.civilStatus" style="width: 300px;" name="civilStatus" size="50"
+                    required [readonly]="checkEdit == 'civilStatus' ? false : true " />
+              </div>
+          </div>
+          <div class="editDiv">
+            <button class="edit"(click)="edit('civilStatus')">
+              <img *ngIf="deviceInfo.os === 'iOS'" src="https://rnxt.s3.amazonaws.com/MytIcon/icon-edit%402x.png" style="width:50%!important;" class="icon-editios"/>
+              <img *ngIf="deviceInfo.os !== 'iOS'" src="https://rnxt.s3.amazonaws.com/MytIcon/icon-edit%402x.png" class="icon-edit" />
+            </button>
+          </div>
+
+          <div style="display: flex;flex: 1;">
+
+          </div>
+          
+        </div>
+
+        <div class="question sum-ques" style="display: flex;">
+          <div>
+            <div>
+              First Name
+            </div>
+            <div>
+            <input class="packUser-Input form-control" type="text"  maxlength="40" id="firstName" [(ngModel)]="profileData.firstName" style="width: 300px;" name="firstName" size="50"
+                  required [readonly]="checkEdit == 'firstName' ? false : true " />
+            </div>
+          </div>
+          <div class="editDiv">
+            <button class="edit"(click)="edit('firstName')">
+              <img *ngIf="deviceInfo.os === 'iOS'" src="https://rnxt.s3.amazonaws.com/MytIcon/icon-edit%402x.png" style="width:50%!important;" class="icon-editios"/>
+              <img *ngIf="deviceInfo.os !== 'iOS'" src="https://rnxt.s3.amazonaws.com/MytIcon/icon-edit%402x.png" class="icon-edit" />
+            </button>
+          </div>
+
+          <div style="display: flex;flex: 1;">
+
+          </div>
+          
+        </div>
+
+        <div class="question sum-ques" style="display: flex;">
+          <div>
+            <div>
+              Last Name
+            </div>
+            <div>
+            <input class="packUser-Input form-control" type="text"  maxlength="40" id="lastName" [(ngModel)]="profileData.lastName" style="width: 300px;" name="lastName" size="50"
+                  required [readonly]="checkEdit == 'lastName' ? false : true " />
+            </div>
+          </div>
+          <div class="editDiv">
+            <button class="edit"(click)="edit('lastName')">
+              <img *ngIf="deviceInfo.os === 'iOS'" src="https://rnxt.s3.amazonaws.com/MytIcon/icon-edit%402x.png" style="width:50%!important;" class="icon-editios"/>
+              <img *ngIf="deviceInfo.os !== 'iOS'" src="https://rnxt.s3.amazonaws.com/MytIcon/icon-edit%402x.png" class="icon-edit" />
+            </button>
+          </div>
+
+          <div style="display: flex;flex: 1;">
+
+          </div>
+          
+        </div>
+
+        <div class="question sum-ques" style="display: flex;">
+          <div>
+            <div>
+              Birth Date
+            </div>
+            <div>
+            <input class="packUser-Input form-control" type="text"  maxlength="40" id="dob" [(ngModel)]="profileData.dob" style="width: 300px;" name="dob" size="50"
+                  required [readonly]="checkEdit == 'dob' ? false : true " />
+            </div>
+          </div>
+          <div class="editDiv">
+            <button class="edit"(click)="edit('dob')">
+              <img *ngIf="deviceInfo.os === 'iOS'" src="https://rnxt.s3.amazonaws.com/MytIcon/icon-edit%402x.png" style="width:50%!important;" class="icon-editios"/>
+              <img *ngIf="deviceInfo.os !== 'iOS'" src="https://rnxt.s3.amazonaws.com/MytIcon/icon-edit%402x.png" class="icon-edit" />
+            </button>
+          </div>
+
+          <div style="display: flex;flex: 1;">
+
+          </div>
+        </div>
+
+        <div class="question sum-ques" style="display: flex;">
+          <div>
+            <div>
+              Address
+            </div>
+            <div>
+            <input class="packUser-Input form-control" type="text"  maxlength="40" id="address" [(ngModel)]="profileData.address" style="width: 300px;" name="address" size="50"
+                  required [readonly]="checkEdit == 'address' ? false : true " />
+            </div>
+          </div>
+          <div class="editDiv">
+            <button class="edit"(click)="edit('address')">
+              <img *ngIf="deviceInfo.os === 'iOS'" src="https://rnxt.s3.amazonaws.com/MytIcon/icon-edit%402x.png" style="width:50%!important;" class="icon-editios"/>
+              <img *ngIf="deviceInfo.os !== 'iOS'" src="https://rnxt.s3.amazonaws.com/MytIcon/icon-edit%402x.png" class="icon-edit" />
+            </button>
+          </div>
+
+          <div style="display: flex;flex: 1;">
+
+          </div>
+          
+        </div>
+
+        <div class="question sum-ques" style="display: flex;">
+          <div>
+            <div>
+              Country
+            </div>
+            <div>
+            <input class="packUser-Input form-control" type="text"  maxlength="40" id="country" [(ngModel)]="profileData.country" style="width: 300px;" name="country" size="50"
+                  required [readonly]="checkEdit == 'country' ? false : true " />
+            </div>
+          </div>
+          <div class="editDiv">
+            <button class="edit"(click)="edit('country')">
+              <img *ngIf="deviceInfo.os === 'iOS'" src="https://rnxt.s3.amazonaws.com/MytIcon/icon-edit%402x.png" style="width:50%!important;" class="icon-editios"/>
+              <img *ngIf="deviceInfo.os !== 'iOS'" src="https://rnxt.s3.amazonaws.com/MytIcon/icon-edit%402x.png" class="icon-edit" />
+            </button>
+          </div>
+
+          <div style="display: flex;flex: 1;">
+
+          </div>
+        </div>
+
+        <div class="question sum-ques" style="display: flex;">
+          <div>
+            <div>
+              Post Code
+            </div>
+            <div>
+            <input class="packUser-Input form-control" type="text"  maxlength="40" id="postalCode" [(ngModel)]="profileData.postalCode" style="width: 300px;" name="postalCode" size="50"
+                  required [readonly]="checkEdit == 'postalCode' ? false : true " />
+            </div>
+          </div>
+          <div class="editDiv">
+            <button class="edit"(click)="edit('postalCode')">
+              <img *ngIf="deviceInfo.os === 'iOS'" src="https://rnxt.s3.amazonaws.com/MytIcon/icon-edit%402x.png" style="width:50%!important;" class="icon-editios"/>
+              <img *ngIf="deviceInfo.os !== 'iOS'" src="https://rnxt.s3.amazonaws.com/MytIcon/icon-edit%402x.png" class="icon-edit" />
+            </button>
+          </div>
+
+          <div style="display: flex;flex: 1;">
+
+          </div>
+        </div>
+
+        <div class="question sum-ques" style="display: flex;">
+          <div>
+            <div>
+              Nationality 
+            </div>
+            <div>
+            <input class="packUser-Input form-control" type="text"  maxlength="40" id="nationality" [(ngModel)]="profileData.nationality" style="width: 300px;" name="nationality" size="50"
+                  required [readonly]="checkEdit == 'nationality' ? false : true " />
+            </div>
+          </div>
+          <div class="editDiv">
+            <button class="edit"(click)="edit('nationality')">
+              <img *ngIf="deviceInfo.os === 'iOS'" src="https://rnxt.s3.amazonaws.com/MytIcon/icon-edit%402x.png" style="width:50%!important;" class="icon-editios"/>
+              <img *ngIf="deviceInfo.os !== 'iOS'" src="https://rnxt.s3.amazonaws.com/MytIcon/icon-edit%402x.png" class="icon-edit" />
+            </button>
+          </div>
+
+          <div style="display: flex;flex: 1;">
+
+          </div>
+          
+        </div>
+
+        <div class="question sum-ques" style="display: flex;">
+          <div>
+            <div>
+              Email
+            </div>
+            <div>
+            <input class="packUser-Input form-control" type="email"  maxlength="40" id="email" [(ngModel)]="profileData.email" style="width: 300px;" name="email" size="50"
+                  required [readonly]="checkEdit == 'email' ? false : true " />
+            </div>
+          </div>
+          <div class="editDiv">
+            <button class="edit"(click)="edit('email')">
+              <img *ngIf="deviceInfo.os === 'iOS'" src="https://rnxt.s3.amazonaws.com/MytIcon/icon-edit%402x.png" style="width:50%!important;" class="icon-editios"/>
+              <img *ngIf="deviceInfo.os !== 'iOS'" src="https://rnxt.s3.amazonaws.com/MytIcon/icon-edit%402x.png" class="icon-edit" />
+            </button>
+          </div>
+
+          <div style="display: flex;flex: 1;">
+
+          </div>
+          
+        </div>
+
+        <div class="question sum-ques" style="display: flex;">
+          <div>
+            <div>
+              Phone
+            </div>
+            <div>
+            <input class="packUser-Input form-control" type="number"  maxlength="10" id="phone" [(ngModel)]="profileData.phone" style="width: 300px;" name="phone" size="50"
+                  required [readonly]="checkEdit == 'phone' ? false : true " />
+            </div>
+          </div>
+          <div class="editDiv">
+            <button class="edit"(click)="edit('phone')">
+              <img *ngIf="deviceInfo.os === 'iOS'" src="https://rnxt.s3.amazonaws.com/MytIcon/icon-edit%402x.png" style="width:50%!important;" class="icon-editios"/>
+              <img *ngIf="deviceInfo.os !== 'iOS'" src="https://rnxt.s3.amazonaws.com/MytIcon/icon-edit%402x.png" class="icon-edit" />
+            </button>
+          </div>
+
+          <div style="display: flex;flex: 1;">
+
+          </div>
+          
+        </div>
+
+        <div class="question sum-ques">
+          <div>
+            Terms and Conditions (Unterlagen herunterladen)
+          </div>
+          <div style="display: flex;justify-content: space-around;">
+            <div style="display: flex;gap: 10px">
+              <em class="fa fa-check fa-icon-style"></em>
+              <div class="divHover">
+                Vertragsinformationen
+              </div>  
+            </div>
+           
+            <div style="display: flex;gap: 10px">
+              <em class="fa fa-check fa-icon-style"></em>
+              <div class="divHover">
+                Beratungsprotokoll
+                </div>
+            </div>
+            
+
+          </div>
+          
+        </div>
+    </div>
+
+    </div>
+   
+
+
+  </div>
+
+   </div>
+
+<div *ngIf="summary && summary.length > 0 && navigatePage == 'summaryPage' " height="100% !important" class="col-md-12" [ngClass]="{
               'col-md-12':!qbItem.Progress_Bar__c
                }">
     <h1 class="header1 summarypadd" >{{ qbItem.SubTitle__c }}</h1>         
@@ -717,3 +1062,4 @@
    </div>
   </div>
 </div>
+
