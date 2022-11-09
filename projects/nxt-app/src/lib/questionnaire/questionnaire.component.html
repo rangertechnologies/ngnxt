@@ -966,6 +966,13 @@
     </div>
   </div>
 
+        <div  style="background: #dedddd;">
+              <button class="edit" (click)="editPaymentCoverage()">
+                <img *ngIf="deviceInfo.os === 'iOS'" src="https://rnxt.s3.amazonaws.com/MytIcon/icon-edit%402x.png" style="width:50%!important;" class="icon-editios"/>
+                <img *ngIf="deviceInfo.os !== 'iOS'" src="https://rnxt.s3.amazonaws.com/MytIcon/icon-edit%402x.png" class="icon-edit" />
+              </button>
+            </div>
+
              
   <div class="answer "  style="margin-top: 1px;">
             
@@ -982,6 +989,13 @@
   >
   ausgewählt Erwerbsunfähigkeitsversicherung
 </div>
+</div>
+
+<div  style="background: #dedddd;">
+  <button class="edit" (click)="editPaymentCoverage()">
+    <img *ngIf="deviceInfo.os === 'iOS'" src="https://rnxt.s3.amazonaws.com/MytIcon/icon-edit%402x.png" style="width:50%!important;" class="icon-editios"/>
+    <img *ngIf="deviceInfo.os !== 'iOS'" src="https://rnxt.s3.amazonaws.com/MytIcon/icon-edit%402x.png" class="icon-edit" />
+  </button>
 </div>
 
          

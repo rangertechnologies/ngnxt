@@ -2461,4 +2461,10 @@ export class QuestionnaireComponent implements OnInit {
   getLocalSubQuestions(id: String){
     return this.localSubQMap.get(id);
   }
+
+  editPaymentCoverage(){
+    localStorage.setItem('summaryList',JSON.stringify(this.summary));
+    let person = {fromPage:"PaymentOverviewOptionSelectedComponent"};
+    this.handleEvent.emit(JSON.stringify(person));
+  }
   }
