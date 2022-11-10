@@ -488,7 +488,6 @@ export class QuestionnaireComponent implements OnInit {
 
   public temp: any[] = [];
   public clientId: string;
-  public propertyDestination: string;
   public temp2: any[] = [];
   public logintrack: string;
   public currentLoggedUserId: string;
@@ -514,10 +513,6 @@ export class QuestionnaireComponent implements OnInit {
     const value = ('; '+document.cookie).split(`; _ga=`).pop().split(';')[0];
     this.temp = value.split(".");
     this.clientId = this.temp[2]+'.'+this.temp[3];
-    
-    const value2 = ('; '+document.cookie).split(`; _gat_gtag_UA_13199202_15`).pop().split(';')[0];
-    this.temp2 = value2.split("=");
-    this.propertyDestination = this.temp2[1];
     
     this.currentLoggedUserId = localStorage.getItem("currentUserId");
     this.currentUserSessionId =localStorage.getItem("userSessionIdTrack");
@@ -1302,7 +1297,7 @@ export class QuestionnaireComponent implements OnInit {
 
       window.dataLayer.push({
           'pagina': '#'+this._router.url,
-          'propiedadDestino': this.propertyDestination,
+          'propiedadDestino': 'UA-13199202-15',
           'producto': 'my treasure',
           'ramoAgrupado': "my treasure",
 
@@ -1391,7 +1386,7 @@ export class QuestionnaireComponent implements OnInit {
       //console.log('Before datalayer push');
       window.dataLayer.push({
         'pagina': '#'+this._router.url,
-        'propiedadDestino': this.propertyDestination,
+        'propiedadDestino': 'UA-13199202-15',
         'producto': 'my treasure',
         'ramoAgrupado': "my treasure",
 
@@ -1413,7 +1408,7 @@ export class QuestionnaireComponent implements OnInit {
 
        window.dataLayer.push({ 
         'pagina': '#'+this._router.url,
-        'propiedadDestino': this.propertyDestination,
+        'propiedadDestino': 'UA-13199202-15',
         'producto': 'my treasure',
 
         'event':'eventGA', 
@@ -1718,7 +1713,7 @@ export class QuestionnaireComponent implements OnInit {
         let tempAns = response.answer.ansValue.split(" ");
         window.dataLayer.push({
           'pagina': '#'+this._router.url,
-          'propiedadDestino': this.propertyDestination,
+          'propiedadDestino': 'UA-13199202-15',
           'producto': 'my treasure',
           'ramoAgrupado': "my treasure",
       
@@ -1742,7 +1737,7 @@ export class QuestionnaireComponent implements OnInit {
         if(response.answer.quesValue.includes('¿Ha ocurrido en tu domicilio?')){
           window.dataLayer.push({
             'pagina': '#'+this._router.url,
-            'propiedadDestino': this.propertyDestination,
+            'propiedadDestino': 'UA-13199202-15',
             'producto': 'my treasure',
             'ramoAgrupado': "my treasure",
 
@@ -1764,7 +1759,7 @@ export class QuestionnaireComponent implements OnInit {
         }else if(response.answer.quesValue.includes('¿Ha ocurrido en España?')){
           window.dataLayer.push({
             'pagina': '#'+this._router.url,
-            'propiedadDestino': this.propertyDestination,
+            'propiedadDestino': 'UA-13199202-15',
             'producto': 'my treasure',
             'ramoAgrupado': "my treasure",
 
@@ -1785,7 +1780,7 @@ export class QuestionnaireComponent implements OnInit {
         }else if(response.answer.quesValue.includes('Selecciona el país')){
           window.dataLayer.push({
             'pagina': '#'+this._router.url,
-            'propiedadDestino': this.propertyDestination,
+            'propiedadDestino': 'UA-13199202-15',
             'producto': 'my treasure',
             'ramoAgrupado': "my treasure",
 
@@ -1807,7 +1802,7 @@ export class QuestionnaireComponent implements OnInit {
           //console.log('INSIDE THE EXPECTED COND');
           window.dataLayer.push({
             'pagina': '#'+this._router.url,
-            'propiedadDestino': this.propertyDestination,
+            'propiedadDestino': 'UA-13199202-15',
             'producto': 'my treasure',
             'ramoAgrupado': "my treasure",
 
@@ -1820,7 +1815,7 @@ export class QuestionnaireComponent implements OnInit {
             'section1': "mytreasure",
             'section2': "mis tesoros",
             'section3': "incidencia",
-            //'section4': "pais",
+            'section4': "local",
             'pageType': "mis tesoros",
             'clientID': this.clientId,
             'appType': "" //'appType': this.appType,
@@ -1830,7 +1825,7 @@ export class QuestionnaireComponent implements OnInit {
         let tempType = response.answer.ansValue.split("@@##$$")[0] == 'Mi tesoro se ha dañado' ? 'rotura':'robo';
         window.dataLayer.push({
           'pagina': '#'+this._router.url,
-          'propiedadDestino': this.propertyDestination,
+          'propiedadDestino': 'UA-13199202-15',
           'producto': 'my treasure',
           'ramoAgrupado': "my treasure",
 
@@ -1852,7 +1847,7 @@ export class QuestionnaireComponent implements OnInit {
       }else if(response.answer.groupText == 'Denuncia o foto de los daños'){
         window.dataLayer.push({
           'pagina': '#'+this._router.url,
-          'propiedadDestino': this.propertyDestination,
+          'propiedadDestino': 'UA-13199202-15',
           'producto': 'my treasure',
           'ramoAgrupado': "my treasure",
 
@@ -1873,7 +1868,7 @@ export class QuestionnaireComponent implements OnInit {
       }else if(response.answer.groupText == 'Detalle de la cuenta bancaria'){
         window.dataLayer.push({
           'pagina': '#'+this._router.url,
-          'propiedadDestino': this.propertyDestination,
+          'propiedadDestino': 'UA-13199202-15',
           'producto': 'my treasure',
           'ramoAgrupado': "my treasure",
 
@@ -1894,7 +1889,7 @@ export class QuestionnaireComponent implements OnInit {
       }else if(response.answer.groupText == 'Certificado de titularidad de la cuenta bancaria'){
         window.dataLayer.push({
           'pagina': '#'+this._router.url,
-          'propiedadDestino': this.propertyDestination,
+          'propiedadDestino': 'UA-13199202-15',
           'producto': 'my treasure',
           'ramoAgrupado': "my treasure",
 
