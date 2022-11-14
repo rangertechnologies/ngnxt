@@ -130,6 +130,7 @@ export class QuestionnaireComponent implements OnInit {
   public possibilities: any;
   public innerhtml1: any;
   public profileData: any = {}; // profile section EMBI-17
+  public productList : any = [];// product summary details EMBI-72
   public checkEdit: string = '';
   public hours: any[] = [
     "01",
@@ -545,6 +546,32 @@ export class QuestionnaireComponent implements OnInit {
       this.profileData = JSON.parse(localStorage.getItem('ProfileData'));
       console.log('Local Storage',this.profileData);
       localStorage.removeItem('ProfileData');
+    }
+    if(localStorage.getItem('productDetails') != null){
+      let products =[];
+      products.push(JSON.parse(localStorage.getItem('productDetails'))) ;
+      console.log('products[0]',products[0]);
+      
+      this.productList = products[0];
+      console.log('productList',this.productList);
+      if(localStorage.getItem('editiedProduct') != null){
+        this.productList[0].forEach(element => {
+          let localProdName = JSON.parse(localStorage.getItem('editiedProduct'));
+          let localSelectedCoverage = JSON.parse(localStorage.getItem('selectedCoverage'))
+          if (element.Product_Name__c == localProdName ) {
+              element.CoverageLevel__c = localSelectedCoverage;
+            
+          }
+          
+        });
+        localStorage.removeItem('editiedProduct');
+        localStorage.removeItem('selectedCoverage');
+
+        console.log('productListUpdated',this.productList);
+
+      }
+      
+      localStorage.removeItem('productDetails');
     }
     if(localStorage.getItem('gotoPage') != null){
       this.navigatePage = localStorage.getItem('gotoPage');
@@ -2462,9 +2489,18 @@ export class QuestionnaireComponent implements OnInit {
     return this.localSubQMap.get(id);
   }
 
-  editPaymentCoverage(){
+  editPaymentCoverage(event){
+    console.log('prod event',event);
+
+    let prod ={};
+    Object.assign(prod, {Product_Name__c: event.Product_Name__c});
+    Object.assign(prod, {CoverageLevel__c: event.CoverageLevel__c});
+    Object.assign(prod, {Id: event.Id});
+  
+    
     localStorage.setItem('summaryList',JSON.stringify(this.summary));
+    localStorage.setItem('product',JSON.stringify(prod));
     let person = {fromPage:"PaymentOverviewOptionSelectedComponent"};
-    this.handleEvent.emit(JSON.stringify(person));
+   this.handleEvent.emit(JSON.stringify(person));
   }
   }
