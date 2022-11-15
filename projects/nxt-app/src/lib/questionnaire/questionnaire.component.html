@@ -423,7 +423,7 @@
               }" id="text" [id]="ques.Id" required="" (focus)="clearSQError(ques.Id)"
               style.border-color="{{ ques.error ? 'red' : '' }}" placeholder="{{ ques.Question__c }}"
               oninput="this.value=this.value.replace(/[^a-zA-Z0-9\s.:;,?]/g,'');" />
-            </div>
+          </div>
 
           <div *ngIf="ques.Type__c === 'Email'">
             <input type="email" [(ngModel)]="ques.input" [id]="ques.Id" required="" (focus)="clearSQError(ques.Id)"
@@ -540,12 +540,14 @@
   <!--List End-->
 
   <div class="flexer">
-    
-    <div class="backbutton" [ngClass]="{ 'col-md-6': !qbItem.Progress_Bar__c }"
+    <!-- <div class="backbutton" [ngClass]="{ 'col-md-6': !qbItem.Progress_Bar__c }"
+    [style.visibility]="questionStack.length > 0 ? 'visible' : 'hidden'"> -->
+    <div class="backbutton"
       [style.visibility]="questionStack.length > 0 ? 'visible' : 'hidden'">
-      <div [ngClass]="{}">
+      <div [ngClass]="{}" class="arrow-center">
+        <p><i class="arrow left"></i></p>
         <button [ngClass]="{
-            'left-bt': qbItem.Progress_Bar__c,
+            'left-bt': qbItem.Progress_Bar__c,  
             'nxt-btn btn-primary btn-lg btn-block btn-back-color':
               !qbItem.Progress_Bar__c
           }" (click)="handleBackClick()">
@@ -553,12 +555,12 @@
         </button>
       </div>
     </div>
-
-    <div [ngClass]="{ 'col-md-6': !qbItem.Progress_Bar__c }">
+    <!-- <div [ngClass]="{ 'col-md-6': !qbItem.Progress_Bar__c }"> for in 15-11-22 embi changes -->
+    <div >
       <div>
         <button [ngClass]="{
             'rusty': qbItem.Progress_Bar__c,
-            'nxt-btn btn-primary btn-lg btn-block btn-back-color':
+            'nxt-btn btn-primary btn-lg btn-block btn-next-color':
               !qbItem.Progress_Bar__c
           }" (click)="handleNextClick()">
           {{ qbItem.Next__c }}

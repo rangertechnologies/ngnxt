@@ -671,9 +671,9 @@ input[type="button"].btn-block{
   padding-left: 0.75rem ;
 }
 
-.btn-primary:hover{
+/* .btn-primary:hover{
   color: #fff;
-}
+} */
 .btn-primary:focus,
 .btn-primary.focus{
   color: #fff;
@@ -695,7 +695,7 @@ input[type="button"].btn-block{
 }
 
 .btn-back-color{
-  display: block ;
+  /* display: block ;
   width: 100% ;
   padding: 0.5rem 1rem ;
   padding-top: 0.5rem ;
@@ -706,7 +706,50 @@ input[type="button"].btn-block{
   line-height: 1.5 ;
   text-align: center ;
   border-radius: 0.3rem ;
+  margin: 0 ; */
+  display: block;
+  width: 148px;
+  height: 48px;
+  padding: 0.5rem 1rem;
+  font-size: 1.25rem;
+  border: none;
+  outline: none;
+  background-color: #ffff;
+  color: #000000;
+  line-height: 1.5;
+  text-align: left;
   margin: 0 ;
+}
+.btn-next-color{
+  display: block;
+  width: 148px;
+  height: 48px;
+  background: #C12017;
+  color: #FFFFFF;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 120%;
+  border-radius: 8px;
+  text-align: center;
+  border: none;
+}
+ /* for left arrow */
+.arrow {
+  border: solid black;
+  border-width: 0 3px 3px 0;
+  display: inline-block;
+  padding: 3px;
+  width:13px;
+  height:13px;
+}
+.arrow-center{
+  display: flex;
+  align-items: center;
+}
+
+.left {
+  transform: rotate(135deg);
+  -webkit-transform: rotate(135deg);
 }
 
 .fa-plus:hover{
@@ -717,9 +760,9 @@ input[type="button"].btn-block{
   color: #99b5ce ;
 }
 
-.btn-primary{
-  border-color: #007bff ;
-}
+/* .btn-primary{
+  border-color: #007bff ;     embi changes 15-11-22
+} */
 
 .ques-Title{
   text-align: left;
@@ -762,10 +805,13 @@ input[type="button"].btn-block{
 }
 
 .flexer{
-  max-width: 100%;
-  width: 100%;
+  /* max-width: 100%;
+  width: 100%; */
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
+  padding-top: 260px;
+  padding-left: 10px;
+  padding-right: 10px;
 }
 .flexer1{
   max-width: 100%;
@@ -924,7 +970,9 @@ input[type="button"].btn-block{
 
 .myt-align3{
   width: 100% ;
+  text-align: center;
 }
+
 
 .myt-book1{
   margin-top: -20px ;
@@ -1681,9 +1729,9 @@ background-color: #dedddd;
     font-weight: 300;
   }
 
-  .backbutton{
+  /* .backbutton{
     display: none;
-  }
+  } */
   .rusty{
     margin-bottom: 37px;
   }
@@ -1715,7 +1763,7 @@ background-color: #dedddd;
 
 @media screen and (max-width: 689px) {
   .app-back1 {
-    line-height: 1.5;
+    /* line-height: 1.5;
     cursor: pointer;
     width: 100%;
     max-width: 1200px;
@@ -1735,8 +1783,9 @@ background-color: #dedddd;
     background-color: #dedddd;
     border-radius: 0px !important;
     margin-top: -12px;
-    padding-top: .8rem;
+    padding-top: .8rem; */
     /*padding-top: 1.8rem;*/
+    display: none;
  }
  .header1{
   padding-top: 75px;
