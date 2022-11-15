@@ -115,13 +115,20 @@
       {{ questionItem?.Error_Message__c }}
     </div>
     <div class="dis-flex">
-    <div *ngFor="let opt of questionItem.Question_Options__r.records" class="radio radioOption" >
-      
-      <label class="radiocontainer container  myt-font4">{{ opt.Value__c }}
+    <!-- <div class="switch-field"  >
+    
+      <label *ngFor="let opt of questionItem.Question_Options__r.records" for="{{opt.Id}}">{{ opt.Value__c }}
         <input type="radio" [id]="opt.Id" [(ngModel)]="inpValue" name="inpValue" value="{{ opt.Value__c }}"
-          (change)="optionChange(opt.Value__c)" />
-        <span class="checkmark"></span>
+        (change)="optionChange(opt.Value__c)" />
+  
       </label>
+    </div> -->
+    <div class="switch-field">
+      <div  *ngFor="let opt of questionItem.Question_Options__r.records" > 
+        <input type="radio" [id]="opt.Id"  [(ngModel)]="inpValue"  (change)="optionChange(opt.Value__c)" name="inpValue" value="{{ opt.Value__c }}" />
+        <label for="{{ opt.Id }}">{{ opt.Value__c }}</label>
+      </div>
+     
     </div>
   </div>
   </div>
