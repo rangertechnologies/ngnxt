@@ -1884,6 +1884,7 @@ background-color: #dedddd;
 .switch-field {
 	display: flex;
 	margin-bottom: 36px;
+  padding-top: 20px;
 }
 
 .switch-field input {
@@ -1926,4 +1927,17 @@ background-color: #dedddd;
 .switch-field label:last-of-type {
   /* border-radius: 0 6px 4px 0; */
   border-radius: 6px;
+}
+
+.image-upload>input {
+  display: none;
+}
+.image-upload{
+  display: flex;
+  justify-content: center;
+  padding-top: 40px;
+  padding-bottom: 40px;
+}
+.uploade-content{
+  padding-left: 10px;
 }

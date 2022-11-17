@@ -377,6 +377,8 @@
                   <my-date-picker name="mydate" [options]="myDatePickerOptions" id="date" style="font-size: 18px !important;" (dateChanged)="onDateChanged($event)"
                     [(ngModel)]="selDate" class="date-picker" placeholder="Seleccione fecha"  (focus)="clearError()" >
                   </my-date-picker>
+                  <!-- <label for="birthday">Birthday:</label>
+                  <input type="date" id="birthday" name="birthday"> -->
                   <!-- <i class="fa check-icon2" id="check-icon" aria-hidden="true" *ngIf="
                       inpValue?.length === 8 ||
                       inpValue?.length === 9 ||
@@ -424,9 +426,8 @@
           </div>
 
           <div *ngIf="ques.Type__c === 'Text'" class="center">
-              <input type="text" [(ngModel)]="ques.input" [ngClass]="{
-               'dis-flex dt-line date-line bookText boxoutline myt-font1': qbItem.Progress_Bar__c,
-               inputbox: !qbItem.Progress_Bar__c
+              <input type="text" [(ngModel)]="ques.input" class="
+               inputbox
               }" id="text" [id]="ques.Id" required="" (focus)="clearSQError(ques.Id)"
               style.border-color="{{ ques.error ? 'red' : '' }}" placeholder="{{ ques.Question__c }}"
               oninput="this.value=this.value.replace(/[^a-zA-Z0-9\s.:;,?]/g,'');" />
@@ -438,7 +439,7 @@
           </div>
 
           <div *ngIf="ques.Type__c === 'File'">
-            <div *ngIf="!qbItem.Progress_Bar__c">
+            <!-- <div *ngIf="!qbItem.Progress_Bar__c">
               <label class="picture-upload custom-file-upload bgcolor-w" for="file-upload">
                 <span class="picture-upload-child">
                   <i class="fa fa-file-image-o fa-5x icolor" aria-hidden="true"></i>
@@ -453,8 +454,14 @@
                 </span>
               </label>
               <input id="file-upload" type="file" accept="{{ bookFlagAccept }}" (change)="uploadFile($event)" />
+            </div> -->
+            <div>
+              <label for="file-input" class="image-upload">
+                <img src="https://lingscrm--embi.sandbox.file.force.com/sfc/dist/version/download/?oid=00D7Y0000001Van&ids=0687Y000002OV62QAG&d=%2Fa%2F7Y000000HK3x%2FTTDygOGN7kNdH2iQvfklIb6412.ndu44h7t3qvuKpIQ&operationContext=DELIVERY&viewId=05H7Y000000HAVXUA4&dpt="/>
+                <input id="file-input" type="file"  accept="{{ bookFlagAccept }}" (change)="uploadFile($event)"  />
+                <p class="uploade-content">upload documents</p>
+              </label>
             </div>
-
             <ul *ngIf="
                 attachments?.length > 0 &&
                 ques.Type__c === 'File' &&
@@ -465,7 +472,7 @@
                 }}<span class="attach-list" (click)="deleteAttachment(attachment.attachmentId)">X</span>
               </li>
             </ul>
-            <div class="myt-box" *ngIf="qbItem.Progress_Bar__c">
+            <!-- <div class="myt-box" *ngIf="qbItem.Progress_Bar__c">
 
               <div *ngFor="let attachment of attachments" class="file-uploading-box">
                 <img src="https://rnxt.s3.amazonaws.com/MytIcon/icon-doc-img%402x.png" class="icon-edit1" />
@@ -488,7 +495,15 @@
                     class="file-upload-btn">
                 </label>
               </div>
-            </div>
+            </div>  -->
+
+
+             <!-- <label for="fileToUpload">
+              <img src="https://rnxt.s3.amazonaws.com/MytIcon/file-upload.png" />
+            </label>
+            <input id="file-upload" type="file" accept="{{ bookFlagAccept }}" (change)="uploadFile($event)"> -->
+
+
           </div>
 
           <div *ngIf="ques.Type__c === 'Dropdown'" class="">
@@ -528,8 +543,8 @@
 
 
           <div *ngIf="ques.Type__c === 'Text'">
-            <input type="text" [(ngModel)]="ques.input" [ngClass]="{
-             'dis-flex dt-line date-line bookText boxoutline myt-font1': qbItem.Progress_Bar__c,
+            <input type="text" [(ngModel)]="ques.input" class="{
+            
              textBox: !qbItem.Progress_Bar__c
             }" id="text" [id]="ques.uniqueSubQId" required="" (focus)="clearLocalSubQuesError(ques)"
             style.border-color="{{ ques.error ? 'red' : '' }}" placeholder="{{ ques.Question__c }}"
@@ -553,11 +568,8 @@
       [style.visibility]="questionStack.length > 0 ? 'visible' : 'hidden'">
       <div [ngClass]="{}" class="arrow-center">
         <p><i class="arrow left"></i></p>
-        <button [ngClass]="{
-            'left-bt': qbItem.Progress_Bar__c,  
-            'nxt-btn btn-primary btn-lg btn-block btn-back-color':
-              !qbItem.Progress_Bar__c
-          }" (click)="handleBackClick()">
+        <button class="nxt-btn btn-primary btn-lg btn-block btn-back-color
+            " (click)="handleBackClick()">
           {{ qbItem?.Back__c }}
         </button>
       </div>
@@ -565,11 +577,9 @@
     <!-- <div [ngClass]="{ 'col-md-6': !qbItem.Progress_Bar__c }"> for in 15-11-22 embi changes -->
     <div >
       <div>
-        <button [ngClass]="{
-            'rusty': qbItem.Progress_Bar__c,
-            'nxt-btn btn-primary btn-lg btn-block btn-next-color':
-              !qbItem.Progress_Bar__c
-          }" (click)="handleNextClick()">
+        <button class="
+            nxt-btn btn-primary btn-lg btn-block btn-next-color
+              " (click)="handleNextClick()">
           {{ qbItem.Next__c }}
         </button>
       </div>
