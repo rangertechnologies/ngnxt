@@ -1941,3 +1941,35 @@ background-color: #dedddd;
 .uploade-content{
   padding-left: 10px;
 }
+.holddate {
+	position:relative;
+  
+}
+.top{
+  margin-top: 10px;
+  max-width: 400px;
+}
+@media screen and (max-width: 428px){
+  
+  .User-Input{
+    width:100% ;
+  }
+  .top{
+    margin-top: 0px;
+  }
+  }
+  .holder:invalid+span:after {
+    content: attr(id);
+    position:absolute;
+    padding-left: 10px;
+    padding-top: 9px;
+    font-size: 16px;
+    left:0;
+    top:0;
+  }
+  .holder:focus:invalid+span:after {
+    display:none;
+  }
+  .holder:not(:focus):invalid {
+    color:transparent;
+  }

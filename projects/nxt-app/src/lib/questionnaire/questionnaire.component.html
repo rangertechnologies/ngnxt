@@ -374,9 +374,18 @@
               <div class="col-md-12 paddingBottom">
                 <label class="date-time colorf">{{ questionItem?.Date_Text__c }}</label>
                 <div class="dis-flex dateandtime">
-                  <my-date-picker name="mydate" [options]="myDatePickerOptions" id="date" style="font-size: 18px !important;" (dateChanged)="onDateChanged($event)"
+                  <my-date-picker name="mydate" id="date" style="font-size: 18px !important;" (dateChanged)="onDateChanged($event)"
                     [(ngModel)]="selDate" class="date-picker" placeholder="Seleccione fecha"  (focus)="clearError()" >
                   </my-date-picker>
+                  <!-- <my-date-picker name="mydate"  [options]="myDatePickerOptions" placeholder="Seleccione fecha" [(ngModel)]="selDate" required (dateChanged)="onDateChanged($event)"
+                 >
+                  </my-date-picker> -->
+
+                  <!-- <div class="holddate top" >
+                    <input class="User-Input form-control holder" type="date"   [(ngModel)]="selDate" (focus)="clearError()" (change)="onInputDateChange($event)" 
+                    required/>
+                  </div> -->
+
                   <!-- <label for="birthday">Birthday:</label>
                   <input type="date" id="birthday" name="birthday"> -->
                   <!-- <i class="fa check-icon2" id="check-icon" aria-hidden="true" *ngIf="

@@ -16,6 +16,8 @@ import { UntypedFormBuilder } from "@angular/forms";
 import { NgxSpinnerService } from "ngx-spinner";
 //import { NgxIndexedDBService, IndexDetails} from 'ngx-indexed-db';
 import { DeviceDetectorService } from 'ngx-device-detector';
+import { NgControl} from '@angular/forms';
+
 
 
 
@@ -493,6 +495,7 @@ export class QuestionnaireComponent implements OnInit {
   public myDatePickerOptions: IMyDpOptions = {};
 
   constructor(
+    public ngControl: NgControl,
     private sfService: SalesforceService,
     private route: ActivatedRoute,
     private sanitizer: DomSanitizer,
@@ -506,7 +509,54 @@ export class QuestionnaireComponent implements OnInit {
     this.spinnerType = "ball-spin-clockwise";
   }
 
+  onInputDateChange(event) {
+    console.log('onchange value ||');
+    
+    console.log(event.target.value);
+    
+    //console.log('Inside the onDateChanged');
+    //to change the border color
+    if (this.qbItem.Progress_Bar__c) {
+      //console.log('Inside the progressBar cond');
+      this.inpValue = event.target.value;
+      //REMOVED DUE TO EMBI
+       // event.date.day + "/" + event.date.month + "/" + event.date.year;
+        if(this.questionItem.Type__c =="Book"){
+
+        //this.selectDate =  event.date.day + "/" + event.date.month + "/" + event.date.year;
+        this.selectDate= event.target.value;
+        }
+    } else {
+      //console.log('Inside the ELSE of progressBar cond');
+      if(this.questionItem.Type__c =="Book"){
+        this.selectDate = event.target.value;
+       // this.selectDate =  event.date.day + "-" + event.date.month + "-" + event.date.year;
+        }
+      this.inpValue = event.target.value;
+        //REMOVED DUE TO EMBI
+        //event.date.year + "-" + event.date.month + "-" + event.date.day;
+    }
+    //removed Due to EMBI error
+    // const htmlElement = window.document.getElementsByClassName("mydp");
+    // htmlElement
+    //   .item(0)
+    //   .setAttribute("style", "border-color:#87be1c;width:100%");
+    this.dateMap.set(this.questionItem.Id, event);
+    if (
+      event.target.value === null ||       event.target.value === undefined
+      // event.date.day === 0 &&
+      // event.date.month === 0 &&
+      // event.date.year === 0
+    ) {
+      this.dateMap.delete(this.questionItem.Id);
+      this.answerMap.delete(this.questionItem.Id);
+    }
+    //console.log('this.inpValue = '+this.inpValue);
+    //console.log('this.selectDate = '+this.selectDate);
+  }
   onDateChanged(event: IMyDateModel) {
+    console.log(event);
+    
     //console.log('Inside the onDateChanged');
     //to change the border color
     if (this.qbItem.Progress_Bar__c) {
@@ -524,10 +574,11 @@ export class QuestionnaireComponent implements OnInit {
       this.inpValue =
         event.date.year + "-" + event.date.month + "-" + event.date.day;
     }
-    const htmlElement = window.document.getElementsByClassName("mydp");
-    htmlElement
-      .item(0)
-      .setAttribute("style", "border-color:#87be1c;width:100%");
+    //removed Due to EMBI error
+    // const htmlElement = window.document.getElementsByClassName("mydp");
+    // htmlElement
+    //   .item(0)
+    //   .setAttribute("style", "border-color:#87be1c;width:100%");
     this.dateMap.set(this.questionItem.Id, event);
     if (
       event.date.day === 0 &&
@@ -853,7 +904,7 @@ export class QuestionnaireComponent implements OnInit {
         var count = 0;
       
         if(item.Type__c == "Date" || item.Type__c == "Time") {
-          //this one
+          //this one removed due to error
           this.change();
             if(item.Type__c == "Date"){
               //console.log('Inside the date type cond = '+this.selectDate);
@@ -921,7 +972,11 @@ export class QuestionnaireComponent implements OnInit {
               return;
             }
           }*/
-
+          console.log('seldate',this.selDate);
+          console.log('inpValue',this.inpValue);
+          console.log('selectedHour',this.selectedHour);
+          console.log('selectedMinute',this.selectedMinute);
+          console.log('selectDate',this.selectDate);
           if (this.selDate === null || this.selDate === undefined || !this.inpValue || !this.selectedHour || !this.selectedMinute || !this.selectDate) {
             //console.log('Inside the null condition of input');
             this.questionItem.error = new ErrorWrapper();
@@ -1096,7 +1151,7 @@ export class QuestionnaireComponent implements OnInit {
         this.questionItem.error = new ErrorWrapper();
       }
     } else if (this.dtFlag && this.dateFlag && this.timeFlag) {
-      //this one
+      //this one removed to due to EMBI Error
       this.change();
       if (this.inpValue) {
         this.selectedHour = this.getProperTime("12", this.selectedHour);
@@ -1170,6 +1225,7 @@ export class QuestionnaireComponent implements OnInit {
         return;
       }
     } else if (this.dateFlag && this.dtFlag && !this.timeFlag) {
+      //this is removed due to EMBI error
       this.change();
       if (this.inpValue.length < 7 || this.selDate === null) {
         this.questionItem.error = new ErrorWrapper();
@@ -2288,6 +2344,8 @@ export class QuestionnaireComponent implements OnInit {
 
   // Update Function for the Progress Bar
   updateProgress() {
+    console.log('update');
+    
     if (this.qbItem.Progress_Bar__c === true) {
       let j = [];
       for (let i = 0; i < this.possibilities.total; i++) {
