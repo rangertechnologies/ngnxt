@@ -377,6 +377,8 @@
                   <my-date-picker name="mydate" [options]="myDatePickerOptions" id="date" style="font-size: 18px !important;" (dateChanged)="onDateChanged($event)"
                     [(ngModel)]="selDate" class="date-picker" placeholder="Seleccione fecha"  (focus)="clearError()" >
                   </my-date-picker>
+                  <!-- <label for="birthday">Birthday:</label>
+                  <input type="date" id="birthday" name="birthday"> -->
                   <!-- <i class="fa check-icon2" id="check-icon" aria-hidden="true" *ngIf="
                       inpValue?.length === 8 ||
                       inpValue?.length === 9 ||
@@ -424,9 +426,8 @@
           </div>
 
           <div *ngIf="ques.Type__c === 'Text'" class="center">
-              <input type="text" [(ngModel)]="ques.input" [ngClass]="{
-               'dis-flex dt-line date-line bookText boxoutline myt-font1': qbItem.Progress_Bar__c,
-               inputbox: !qbItem.Progress_Bar__c
+              <input type="text" [(ngModel)]="ques.input" class="
+               inputbox
               }" id="text" [id]="ques.Id" required="" (focus)="clearSQError(ques.Id)"
               style.border-color="{{ ques.error ? 'red' : '' }}" placeholder="{{ ques.Question__c }}"
               oninput="this.value=this.value.replace(/[^a-zA-Z0-9\s.:;,?]/g,'');" />
@@ -438,7 +439,7 @@
           </div>
 
           <div *ngIf="ques.Type__c === 'File'">
-            <div *ngIf="!qbItem.Progress_Bar__c">
+            <!-- <div *ngIf="!qbItem.Progress_Bar__c">
               <label class="picture-upload custom-file-upload bgcolor-w" for="file-upload">
                 <span class="picture-upload-child">
                   <i class="fa fa-file-image-o fa-5x icolor" aria-hidden="true"></i>
@@ -453,8 +454,14 @@
                 </span>
               </label>
               <input id="file-upload" type="file" accept="{{ bookFlagAccept }}" (change)="uploadFile($event)" />
+            </div> -->
+            <div>
+              <label for="file-input" class="image-upload">
+                <img src="https://lingscrm--embi.sandbox.file.force.com/sfc/dist/version/download/?oid=00D7Y0000001Van&ids=0687Y000002OV62QAG&d=%2Fa%2F7Y000000HK3x%2FTTDygOGN7kNdH2iQvfklIb6412.ndu44h7t3qvuKpIQ&operationContext=DELIVERY&viewId=05H7Y000000HAVXUA4&dpt="/>
+                <input id="file-input" type="file"  accept="{{ bookFlagAccept }}" (change)="uploadFile($event)"  />
+                <p class="uploade-content">upload documents</p>
+              </label>
             </div>
-
             <ul *ngIf="
                 attachments?.length > 0 &&
                 ques.Type__c === 'File' &&
@@ -465,7 +472,7 @@
                 }}<span class="attach-list" (click)="deleteAttachment(attachment.attachmentId)">X</span>
               </li>
             </ul>
-            <div class="myt-box" *ngIf="qbItem.Progress_Bar__c">
+            <!-- <div class="myt-box" *ngIf="qbItem.Progress_Bar__c">
 
               <div *ngFor="let attachment of attachments" class="file-uploading-box">
                 <img src="https://rnxt.s3.amazonaws.com/MytIcon/icon-doc-img%402x.png" class="icon-edit1" />
@@ -488,7 +495,15 @@
                     class="file-upload-btn">
                 </label>
               </div>
-            </div>
+            </div>  -->
+
+
+             <!-- <label for="fileToUpload">
+              <img src="https://rnxt.s3.amazonaws.com/MytIcon/file-upload.png" />
+            </label>
+            <input id="file-upload" type="file" accept="{{ bookFlagAccept }}" (change)="uploadFile($event)"> -->
+
+
           </div>
 
           <div *ngIf="ques.Type__c === 'Dropdown'" class="">
@@ -528,8 +543,8 @@
 
 
           <div *ngIf="ques.Type__c === 'Text'">
-            <input type="text" [(ngModel)]="ques.input" [ngClass]="{
-             'dis-flex dt-line date-line bookText boxoutline myt-font1': qbItem.Progress_Bar__c,
+            <input type="text" [(ngModel)]="ques.input" class="{
+            
              textBox: !qbItem.Progress_Bar__c
             }" id="text" [id]="ques.uniqueSubQId" required="" (focus)="clearLocalSubQuesError(ques)"
             style.border-color="{{ ques.error ? 'red' : '' }}" placeholder="{{ ques.Question__c }}"
@@ -553,11 +568,8 @@
       [style.visibility]="questionStack.length > 0 ? 'visible' : 'hidden'">
       <div [ngClass]="{}" class="arrow-center">
         <p><i class="arrow left"></i></p>
-        <button [ngClass]="{
-            'left-bt': qbItem.Progress_Bar__c,  
-            'nxt-btn btn-primary btn-lg btn-block btn-back-color':
-              !qbItem.Progress_Bar__c
-          }" (click)="handleBackClick()">
+        <button class="nxt-btn btn-primary btn-lg btn-block btn-back-color
+            " (click)="handleBackClick()">
           {{ qbItem?.Back__c }}
         </button>
       </div>
@@ -565,11 +577,9 @@
     <!-- <div [ngClass]="{ 'col-md-6': !qbItem.Progress_Bar__c }"> for in 15-11-22 embi changes -->
     <div >
       <div>
-        <button [ngClass]="{
-            'rusty': qbItem.Progress_Bar__c,
-            'nxt-btn btn-primary btn-lg btn-block btn-next-color':
-              !qbItem.Progress_Bar__c
-          }" (click)="handleNextClick()">
+        <button class="
+            nxt-btn btn-primary btn-lg btn-block btn-next-color
+              " (click)="handleNextClick()">
           {{ qbItem.Next__c }}
         </button>
       </div>
@@ -589,309 +599,194 @@
     <h1 style="text-align: center;">Profile</h1>
     <div id="progress2">
       <div class="summary">
-        <div class="question sum-ques" style="display: flex;">
-          <div>
-            <div>
-              Bank Name
+        <div class="question">
+            <div class="name">
+              Bank Name:
             </div>
-            <div>
+            <div class="input-center">
             <input class="packUser-Input form-control" type="text"  maxlength="40" id="bankName" [(ngModel)]="profileData.bankName" name="bankName" size="50"
                 required [readonly]="checkEdit == 'bankName' ? false : true " />
+                <button class="edit"(click)="edit('bankName')">
+                  <img *ngIf="deviceInfo.os === 'iOS'" src="https://lingscrm--embi.sandbox.file.force.com/sfc/dist/version/download/?oid=00D7Y0000001Van&ids=0687Y000002OYZTQA4&d=%2Fa%2F7Y000000HK5F%2FF5JWdsOhqXhkxe0zLMEIzod84Ne3sJaAdoWXBs9iZJI&operationContext=DELIVERY&viewId=05H7Y000000HAVmUAO&dpt=" />
+                  <img *ngIf="deviceInfo.os !== 'iOS'" src="https://lingscrm--embi.sandbox.file.force.com/sfc/dist/version/download/?oid=00D7Y0000001Van&ids=0687Y000002OYZTQA4&d=%2Fa%2F7Y000000HK5F%2FF5JWdsOhqXhkxe0zLMEIzod84Ne3sJaAdoWXBs9iZJI&operationContext=DELIVERY&viewId=05H7Y000000HAVmUAO&dpt="  />
+                </button>
             </div>
           </div>
 
-          <div class="editDiv">
-          <button class="edit"(click)="edit('bankName')">
-            <img *ngIf="deviceInfo.os === 'iOS'" src="https://rnxt.s3.amazonaws.com/MytIcon/icon-edit%402x.png" style="width:50%!important;" class="icon-editios"/>
-            <img *ngIf="deviceInfo.os !== 'iOS'" src="https://rnxt.s3.amazonaws.com/MytIcon/icon-edit%402x.png" class="icon-edit" />
-          </button>
-          </div>
-
-          <div style="display: flex;flex: 1;">
-
-          </div>
           
-        </div>
-
-        <div class="question sum-ques" style="display: flex;">
-          <div>
-            <div>
-                Bank Address
+        <div class="question">
+            <div class="name">
+                Bank Address:
             </div>
-            <div>
-            <input class="packUser-Input form-control" type="text"  maxlength="40" id="bankAddress" [(ngModel)]="profileData.bankAddress" style="width: 300px;" name="bankAddress" size="50"
+            <div class="input-center">
+                <input class="packUser-Input form-control" type="text"  maxlength="40" id="bankAddress" [(ngModel)]="profileData.bankAddress" style="width: 300px;" name="bankAddress" size="50"
                   required [readonly]="checkEdit == 'bankAddress' ? false : true " />
+                  <button class="edit"(click)="edit('bankAddress')">
+                  <img *ngIf="deviceInfo.os === 'iOS'" src="https://lingscrm--embi.sandbox.file.force.com/sfc/dist/version/download/?oid=00D7Y0000001Van&ids=0687Y000002OYZTQA4&d=%2Fa%2F7Y000000HK5F%2FF5JWdsOhqXhkxe0zLMEIzod84Ne3sJaAdoWXBs9iZJI&operationContext=DELIVERY&viewId=05H7Y000000HAVmUAO&dpt=" />
+                  <img *ngIf="deviceInfo.os !== 'iOS'" src="https://lingscrm--embi.sandbox.file.force.com/sfc/dist/version/download/?oid=00D7Y0000001Van&ids=0687Y000002OYZTQA4&d=%2Fa%2F7Y000000HK5F%2FF5JWdsOhqXhkxe0zLMEIzod84Ne3sJaAdoWXBs9iZJI&operationContext=DELIVERY&viewId=05H7Y000000HAVmUAO&dpt="  />
+                  </button>
             </div>
           </div>
 
-          <div class="editDiv">
-          <button class="edit"(click)="edit('bankAddress')">
-            <img *ngIf="deviceInfo.os === 'iOS'" src="https://rnxt.s3.amazonaws.com/MytIcon/icon-edit%402x.png" style="width:50%!important;" class="icon-editios"/>
-            <img *ngIf="deviceInfo.os !== 'iOS'" src="https://rnxt.s3.amazonaws.com/MytIcon/icon-edit%402x.png" class="icon-edit" />
-          </button>
-          </div>
-
-          <div style="display: flex;flex: 1;">
-
-          </div>
-
-        </div>
-
-        <div class="question sum-ques" style="display: flex;">
-          <div>
-            <div>
-              Gender
+        <div class="question">
+            <div class="name">
+              Gender:
             </div>
-            <div>
+            <div class="input-center">
             <input class="packUser-Input form-control" type="text"  maxlength="40" id="gender" [(ngModel)]="profileData.gender" style="width: 300px;" name="gender" size="50"
                   required [readonly]="checkEdit == 'gender' ? false : true " />
+                  <button class="edit"(click)="edit('gender')">
+                  <img *ngIf="deviceInfo.os === 'iOS'" src="https://lingscrm--embi.sandbox.file.force.com/sfc/dist/version/download/?oid=00D7Y0000001Van&ids=0687Y000002OYZTQA4&d=%2Fa%2F7Y000000HK5F%2FF5JWdsOhqXhkxe0zLMEIzod84Ne3sJaAdoWXBs9iZJI&operationContext=DELIVERY&viewId=05H7Y000000HAVmUAO&dpt=" />
+                  <img *ngIf="deviceInfo.os !== 'iOS'" src="https://lingscrm--embi.sandbox.file.force.com/sfc/dist/version/download/?oid=00D7Y0000001Van&ids=0687Y000002OYZTQA4&d=%2Fa%2F7Y000000HK5F%2FF5JWdsOhqXhkxe0zLMEIzod84Ne3sJaAdoWXBs9iZJI&operationContext=DELIVERY&viewId=05H7Y000000HAVmUAO&dpt=" />
+                </button>
             </div>
-          </div>
-          <div class="editDiv">
-            <button class="edit"(click)="edit('gender')">
-              <img *ngIf="deviceInfo.os === 'iOS'" src="https://rnxt.s3.amazonaws.com/MytIcon/icon-edit%402x.png" style="width:50%!important;" class="icon-editios"/>
-              <img *ngIf="deviceInfo.os !== 'iOS'" src="https://rnxt.s3.amazonaws.com/MytIcon/icon-edit%402x.png" class="icon-edit" />
-            </button>
-          </div>
-
-          <div style="display: flex;flex: 1;">
-
-          </div>
-           
         </div>
 
-        <div class="question sum-ques" style="display: flex;">
-          <div>
-              <div>
+        <div class="question">
+              <div class="name">
                 Civil Status
               </div>
-              <div>
+              <div class="input-center">
               <input class="packUser-Input form-control" type="text"  maxlength="40" id="civilStatus" [(ngModel)]="profileData.civilStatus" style="width: 300px;" name="civilStatus" size="50"
                     required [readonly]="checkEdit == 'civilStatus' ? false : true " />
-              </div>
-          </div>
-          <div class="editDiv">
-            <button class="edit"(click)="edit('civilStatus')">
-              <img *ngIf="deviceInfo.os === 'iOS'" src="https://rnxt.s3.amazonaws.com/MytIcon/icon-edit%402x.png" style="width:50%!important;" class="icon-editios"/>
-              <img *ngIf="deviceInfo.os !== 'iOS'" src="https://rnxt.s3.amazonaws.com/MytIcon/icon-edit%402x.png" class="icon-edit" />
-            </button>
-          </div>
-
-          <div style="display: flex;flex: 1;">
-
-          </div>
-          
+                  <button class="edit"(click)="edit('civilStatus')">
+                    <img *ngIf="deviceInfo.os === 'iOS'" src="https://lingscrm--embi.sandbox.file.force.com/sfc/dist/version/download/?oid=00D7Y0000001Van&ids=0687Y000002OYZTQA4&d=%2Fa%2F7Y000000HK5F%2FF5JWdsOhqXhkxe0zLMEIzod84Ne3sJaAdoWXBs9iZJI&operationContext=DELIVERY&viewId=05H7Y000000HAVmUAO&dpt=" />
+                    <img *ngIf="deviceInfo.os !== 'iOS'" src="https://lingscrm--embi.sandbox.file.force.com/sfc/dist/version/download/?oid=00D7Y0000001Van&ids=0687Y000002OYZTQA4&d=%2Fa%2F7Y000000HK5F%2FF5JWdsOhqXhkxe0zLMEIzod84Ne3sJaAdoWXBs9iZJI&operationContext=DELIVERY&viewId=05H7Y000000HAVmUAO&dpt=" />
+                  </button>
+           </div>
         </div>
 
-        <div class="question sum-ques" style="display: flex;">
-          <div>
-            <div>
-              First Name
+        <div class="question">
+            <div class="name">
+              First Name:
             </div>
-            <div>
+            <div class="input-center">
             <input class="packUser-Input form-control" type="text"  maxlength="40" id="firstName" [(ngModel)]="profileData.firstName" style="width: 300px;" name="firstName" size="50"
                   required [readonly]="checkEdit == 'firstName' ? false : true " />
+                <button class="edit"(click)="edit('firstName')">
+                  <img *ngIf="deviceInfo.os === 'iOS'" src="https://lingscrm--embi.sandbox.file.force.com/sfc/dist/version/download/?oid=00D7Y0000001Van&ids=0687Y000002OYZTQA4&d=%2Fa%2F7Y000000HK5F%2FF5JWdsOhqXhkxe0zLMEIzod84Ne3sJaAdoWXBs9iZJI&operationContext=DELIVERY&viewId=05H7Y000000HAVmUAO&dpt=" />
+                  <img *ngIf="deviceInfo.os !== 'iOS'" src="https://lingscrm--embi.sandbox.file.force.com/sfc/dist/version/download/?oid=00D7Y0000001Van&ids=0687Y000002OYZTQA4&d=%2Fa%2F7Y000000HK5F%2FF5JWdsOhqXhkxe0zLMEIzod84Ne3sJaAdoWXBs9iZJI&operationContext=DELIVERY&viewId=05H7Y000000HAVmUAO&dpt="  />
+                </button>
             </div>
-          </div>
-          <div class="editDiv">
-            <button class="edit"(click)="edit('firstName')">
-              <img *ngIf="deviceInfo.os === 'iOS'" src="https://rnxt.s3.amazonaws.com/MytIcon/icon-edit%402x.png" style="width:50%!important;" class="icon-editios"/>
-              <img *ngIf="deviceInfo.os !== 'iOS'" src="https://rnxt.s3.amazonaws.com/MytIcon/icon-edit%402x.png" class="icon-edit" />
-            </button>
-          </div>
-
-          <div style="display: flex;flex: 1;">
-
-          </div>
-          
         </div>
 
-        <div class="question sum-ques" style="display: flex;">
-          <div>
-            <div>
+        <div class="question">
+            <div class="name">
               Last Name
             </div>
-            <div>
+            <div class="input-center">
             <input class="packUser-Input form-control" type="text"  maxlength="40" id="lastName" [(ngModel)]="profileData.lastName" style="width: 300px;" name="lastName" size="50"
                   required [readonly]="checkEdit == 'lastName' ? false : true " />
+                <button class="edit"(click)="edit('lastName')">
+                  <img *ngIf="deviceInfo.os === 'iOS'" src="https://lingscrm--embi.sandbox.file.force.com/sfc/dist/version/download/?oid=00D7Y0000001Van&ids=0687Y000002OYZTQA4&d=%2Fa%2F7Y000000HK5F%2FF5JWdsOhqXhkxe0zLMEIzod84Ne3sJaAdoWXBs9iZJI&operationContext=DELIVERY&viewId=05H7Y000000HAVmUAO&dpt=" />
+                  <img *ngIf="deviceInfo.os !== 'iOS'" src="https://lingscrm--embi.sandbox.file.force.com/sfc/dist/version/download/?oid=00D7Y0000001Van&ids=0687Y000002OYZTQA4&d=%2Fa%2F7Y000000HK5F%2FF5JWdsOhqXhkxe0zLMEIzod84Ne3sJaAdoWXBs9iZJI&operationContext=DELIVERY&viewId=05H7Y000000HAVmUAO&dpt="  />
+                </button>
             </div>
-          </div>
-          <div class="editDiv">
-            <button class="edit"(click)="edit('lastName')">
-              <img *ngIf="deviceInfo.os === 'iOS'" src="https://rnxt.s3.amazonaws.com/MytIcon/icon-edit%402x.png" style="width:50%!important;" class="icon-editios"/>
-              <img *ngIf="deviceInfo.os !== 'iOS'" src="https://rnxt.s3.amazonaws.com/MytIcon/icon-edit%402x.png" class="icon-edit" />
-            </button>
-          </div>
-
-          <div style="display: flex;flex: 1;">
-
-          </div>
-          
         </div>
 
-        <div class="question sum-ques" style="display: flex;">
-          <div>
-            <div>
-              Birth Date
+        <div class="question">
+            <div class="name">
+              Birth Date:
             </div>
-            <div>
+            <div class="input-center">
             <input class="packUser-Input form-control" type="text"  maxlength="40" id="dob" [(ngModel)]="profileData.dob" style="width: 300px;" name="dob" size="50"
                   required [readonly]="checkEdit == 'dob' ? false : true " />
-            </div>
-          </div>
-          <div class="editDiv">
-            <button class="edit"(click)="edit('dob')">
-              <img *ngIf="deviceInfo.os === 'iOS'" src="https://rnxt.s3.amazonaws.com/MytIcon/icon-edit%402x.png" style="width:50%!important;" class="icon-editios"/>
-              <img *ngIf="deviceInfo.os !== 'iOS'" src="https://rnxt.s3.amazonaws.com/MytIcon/icon-edit%402x.png" class="icon-edit" />
-            </button>
-          </div>
-
-          <div style="display: flex;flex: 1;">
-
+                <button class="edit"(click)="edit('dob')">
+                  <img *ngIf="deviceInfo.os === 'iOS'" src="https://lingscrm--embi.sandbox.file.force.com/sfc/dist/version/download/?oid=00D7Y0000001Van&ids=0687Y000002OYZTQA4&d=%2Fa%2F7Y000000HK5F%2FF5JWdsOhqXhkxe0zLMEIzod84Ne3sJaAdoWXBs9iZJI&operationContext=DELIVERY&viewId=05H7Y000000HAVmUAO&dpt=" />
+                  <img *ngIf="deviceInfo.os !== 'iOS'" src="https://lingscrm--embi.sandbox.file.force.com/sfc/dist/version/download/?oid=00D7Y0000001Van&ids=0687Y000002OYZTQA4&d=%2Fa%2F7Y000000HK5F%2FF5JWdsOhqXhkxe0zLMEIzod84Ne3sJaAdoWXBs9iZJI&operationContext=DELIVERY&viewId=05H7Y000000HAVmUAO&dpt="  />
+                </button>
           </div>
         </div>
 
-        <div class="question sum-ques" style="display: flex;">
-          <div>
-            <div>
-              Address
+        <div class="question">
+            <div class="name">
+              Address:
             </div>
-            <div>
+            <div class="input-center">
             <input class="packUser-Input form-control" type="text"  maxlength="40" id="address" [(ngModel)]="profileData.address" style="width: 300px;" name="address" size="50"
                   required [readonly]="checkEdit == 'address' ? false : true " />
+                <button class="edit"(click)="edit('address')">
+                  <img *ngIf="deviceInfo.os === 'iOS'" src="https://lingscrm--embi.sandbox.file.force.com/sfc/dist/version/download/?oid=00D7Y0000001Van&ids=0687Y000002OYZTQA4&d=%2Fa%2F7Y000000HK5F%2FF5JWdsOhqXhkxe0zLMEIzod84Ne3sJaAdoWXBs9iZJI&operationContext=DELIVERY&viewId=05H7Y000000HAVmUAO&dpt=" />
+                  <img *ngIf="deviceInfo.os !== 'iOS'" src="https://lingscrm--embi.sandbox.file.force.com/sfc/dist/version/download/?oid=00D7Y0000001Van&ids=0687Y000002OYZTQA4&d=%2Fa%2F7Y000000HK5F%2FF5JWdsOhqXhkxe0zLMEIzod84Ne3sJaAdoWXBs9iZJI&operationContext=DELIVERY&viewId=05H7Y000000HAVmUAO&dpt="  />
+                </button>
             </div>
-          </div>
-          <div class="editDiv">
-            <button class="edit"(click)="edit('address')">
-              <img *ngIf="deviceInfo.os === 'iOS'" src="https://rnxt.s3.amazonaws.com/MytIcon/icon-edit%402x.png" style="width:50%!important;" class="icon-editios"/>
-              <img *ngIf="deviceInfo.os !== 'iOS'" src="https://rnxt.s3.amazonaws.com/MytIcon/icon-edit%402x.png" class="icon-edit" />
-            </button>
-          </div>
-
-          <div style="display: flex;flex: 1;">
-
-          </div>
-          
         </div>
 
-        <div class="question sum-ques" style="display: flex;">
-          <div>
-            <div>
-              Country
+        <div class="question">
+            <div class="name">
+              Country:
             </div>
-            <div>
+            <div class="input-center">
             <input class="packUser-Input form-control" type="text"  maxlength="40" id="country" [(ngModel)]="profileData.country" style="width: 300px;" name="country" size="50"
                   required [readonly]="checkEdit == 'country' ? false : true " />
+                <button class="edit"(click)="edit('country')">
+                  <img *ngIf="deviceInfo.os === 'iOS'" src="https://lingscrm--embi.sandbox.file.force.com/sfc/dist/version/download/?oid=00D7Y0000001Van&ids=0687Y000002OYZTQA4&d=%2Fa%2F7Y000000HK5F%2FF5JWdsOhqXhkxe0zLMEIzod84Ne3sJaAdoWXBs9iZJI&operationContext=DELIVERY&viewId=05H7Y000000HAVmUAO&dpt=" />
+                  <img *ngIf="deviceInfo.os !== 'iOS'" src="https://lingscrm--embi.sandbox.file.force.com/sfc/dist/version/download/?oid=00D7Y0000001Van&ids=0687Y000002OYZTQA4&d=%2Fa%2F7Y000000HK5F%2FF5JWdsOhqXhkxe0zLMEIzod84Ne3sJaAdoWXBs9iZJI&operationContext=DELIVERY&viewId=05H7Y000000HAVmUAO&dpt="  />
+                </button>
             </div>
-          </div>
-          <div class="editDiv">
-            <button class="edit"(click)="edit('country')">
-              <img *ngIf="deviceInfo.os === 'iOS'" src="https://rnxt.s3.amazonaws.com/MytIcon/icon-edit%402x.png" style="width:50%!important;" class="icon-editios"/>
-              <img *ngIf="deviceInfo.os !== 'iOS'" src="https://rnxt.s3.amazonaws.com/MytIcon/icon-edit%402x.png" class="icon-edit" />
-            </button>
-          </div>
-
-          <div style="display: flex;flex: 1;">
-
-          </div>
         </div>
 
-        <div class="question sum-ques" style="display: flex;">
-          <div>
-            <div>
-              Post Code
+        <div class="question">
+            <div class="name">
+              Post Code:
             </div>
-            <div>
+            <div class="input-center">
             <input class="packUser-Input form-control" type="text"  maxlength="40" id="postalCode" [(ngModel)]="profileData.postalCode" style="width: 300px;" name="postalCode" size="50"
                   required [readonly]="checkEdit == 'postalCode' ? false : true " />
+                <button class="edit"(click)="edit('postalCode')">
+                  <img *ngIf="deviceInfo.os === 'iOS'" src="https://lingscrm--embi.sandbox.file.force.com/sfc/dist/version/download/?oid=00D7Y0000001Van&ids=0687Y000002OYZTQA4&d=%2Fa%2F7Y000000HK5F%2FF5JWdsOhqXhkxe0zLMEIzod84Ne3sJaAdoWXBs9iZJI&operationContext=DELIVERY&viewId=05H7Y000000HAVmUAO&dpt="/>
+                  <img *ngIf="deviceInfo.os !== 'iOS'" src="https://lingscrm--embi.sandbox.file.force.com/sfc/dist/version/download/?oid=00D7Y0000001Van&ids=0687Y000002OYZTQA4&d=%2Fa%2F7Y000000HK5F%2FF5JWdsOhqXhkxe0zLMEIzod84Ne3sJaAdoWXBs9iZJI&operationContext=DELIVERY&viewId=05H7Y000000HAVmUAO&dpt="  />
+                </button>
             </div>
-          </div>
-          <div class="editDiv">
-            <button class="edit"(click)="edit('postalCode')">
-              <img *ngIf="deviceInfo.os === 'iOS'" src="https://rnxt.s3.amazonaws.com/MytIcon/icon-edit%402x.png" style="width:50%!important;" class="icon-editios"/>
-              <img *ngIf="deviceInfo.os !== 'iOS'" src="https://rnxt.s3.amazonaws.com/MytIcon/icon-edit%402x.png" class="icon-edit" />
-            </button>
-          </div>
-
-          <div style="display: flex;flex: 1;">
-
-          </div>
         </div>
 
-        <div class="question sum-ques" style="display: flex;">
-          <div>
-            <div>
-              Nationality 
+        <div class="question">
+            <div class="name">
+              Nationality:
             </div>
-            <div>
+            <div class="input-center">
             <input class="packUser-Input form-control" type="text"  maxlength="40" id="nationality" [(ngModel)]="profileData.nationality" style="width: 300px;" name="nationality" size="50"
-                  required [readonly]="checkEdit == 'nationality' ? false : true " />
+                required [readonly]="checkEdit == 'nationality' ? false : true " />
+                <button class="edit"(click)="edit('nationality')">
+                  <img *ngIf="deviceInfo.os === 'iOS'" src="https://lingscrm--embi.sandbox.file.force.com/sfc/dist/version/download/?oid=00D7Y0000001Van&ids=0687Y000002OYZTQA4&d=%2Fa%2F7Y000000HK5F%2FF5JWdsOhqXhkxe0zLMEIzod84Ne3sJaAdoWXBs9iZJI&operationContext=DELIVERY&viewId=05H7Y000000HAVmUAO&dpt=" />
+                  <img *ngIf="deviceInfo.os !== 'iOS'" src="https://lingscrm--embi.sandbox.file.force.com/sfc/dist/version/download/?oid=00D7Y0000001Van&ids=0687Y000002OYZTQA4&d=%2Fa%2F7Y000000HK5F%2FF5JWdsOhqXhkxe0zLMEIzod84Ne3sJaAdoWXBs9iZJI&operationContext=DELIVERY&viewId=05H7Y000000HAVmUAO&dpt=" />
+                </button>
             </div>
-          </div>
-          <div class="editDiv">
-            <button class="edit"(click)="edit('nationality')">
-              <img *ngIf="deviceInfo.os === 'iOS'" src="https://rnxt.s3.amazonaws.com/MytIcon/icon-edit%402x.png" style="width:50%!important;" class="icon-editios"/>
-              <img *ngIf="deviceInfo.os !== 'iOS'" src="https://rnxt.s3.amazonaws.com/MytIcon/icon-edit%402x.png" class="icon-edit" />
-            </button>
-          </div>
-
-          <div style="display: flex;flex: 1;">
-
-          </div>
-          
         </div>
 
-        <div class="question sum-ques" style="display: flex;">
-          <div>
-            <div>
+        <div class="question">
+            <div class="name">
               Email
             </div>
-            <div>
+            <div class="input-center">
             <input class="packUser-Input form-control" type="email"  maxlength="40" id="email" [(ngModel)]="profileData.email" style="width: 300px;" name="email" size="50"
                   required [readonly]="checkEdit == 'email' ? false : true " />
+                <button class="edit"(click)="edit('email')">
+                  <img *ngIf="deviceInfo.os === 'iOS'" src="https://lingscrm--embi.sandbox.file.force.com/sfc/dist/version/download/?oid=00D7Y0000001Van&ids=0687Y000002OYZTQA4&d=%2Fa%2F7Y000000HK5F%2FF5JWdsOhqXhkxe0zLMEIzod84Ne3sJaAdoWXBs9iZJI&operationContext=DELIVERY&viewId=05H7Y000000HAVmUAO&dpt=" />
+                  <img *ngIf="deviceInfo.os !== 'iOS'" src="https://lingscrm--embi.sandbox.file.force.com/sfc/dist/version/download/?oid=00D7Y0000001Van&ids=0687Y000002OYZTQA4&d=%2Fa%2F7Y000000HK5F%2FF5JWdsOhqXhkxe0zLMEIzod84Ne3sJaAdoWXBs9iZJI&operationContext=DELIVERY&viewId=05H7Y000000HAVmUAO&dpt="/>
+                </button>
             </div>
-          </div>
-          <div class="editDiv">
-            <button class="edit"(click)="edit('email')">
-              <img *ngIf="deviceInfo.os === 'iOS'" src="https://rnxt.s3.amazonaws.com/MytIcon/icon-edit%402x.png" style="width:50%!important;" class="icon-editios"/>
-              <img *ngIf="deviceInfo.os !== 'iOS'" src="https://rnxt.s3.amazonaws.com/MytIcon/icon-edit%402x.png" class="icon-edit" />
-            </button>
-          </div>
-
-          <div style="display: flex;flex: 1;">
-
-          </div>
-          
         </div>
 
-        <div class="question sum-ques" style="display: flex;">
-          <div>
-            <div>
-              Phone
+        <div class="question">
+            <div class="name">
+              Phone:
             </div>
-            <div>
+            <div class="input-center">
             <input class="packUser-Input form-control" type="number"  maxlength="10" id="phone" [(ngModel)]="profileData.phone" style="width: 300px;" name="phone" size="50"
                   required [readonly]="checkEdit == 'phone' ? false : true " />
+                <button class="edit"(click)="edit('phone')">
+                  <img *ngIf="deviceInfo.os === 'iOS'" src="https://lingscrm--embi.sandbox.file.force.com/sfc/dist/version/download/?oid=00D7Y0000001Van&ids=0687Y000002OYZTQA4&d=%2Fa%2F7Y000000HK5F%2FF5JWdsOhqXhkxe0zLMEIzod84Ne3sJaAdoWXBs9iZJI&operationContext=DELIVERY&viewId=05H7Y000000HAVmUAO&dpt=" />
+                  <img *ngIf="deviceInfo.os !== 'iOS'" src="https://lingscrm--embi.sandbox.file.force.com/sfc/dist/version/download/?oid=00D7Y0000001Van&ids=0687Y000002OYZTQA4&d=%2Fa%2F7Y000000HK5F%2FF5JWdsOhqXhkxe0zLMEIzod84Ne3sJaAdoWXBs9iZJI&operationContext=DELIVERY&viewId=05H7Y000000HAVmUAO&dpt="  />
+                </button>
             </div>
-          </div>
-          <div class="editDiv">
-            <button class="edit"(click)="edit('phone')">
-              <img *ngIf="deviceInfo.os === 'iOS'" src="https://rnxt.s3.amazonaws.com/MytIcon/icon-edit%402x.png" style="width:50%!important;" class="icon-editios"/>
-              <img *ngIf="deviceInfo.os !== 'iOS'" src="https://rnxt.s3.amazonaws.com/MytIcon/icon-edit%402x.png" class="icon-edit" />
-            </button>
-          </div>
-
-          <div style="display: flex;flex: 1;">
-
-          </div>
-          
         </div>
 
-        <div class="question sum-ques">
+        <div class="terms">
           <div>
             Terms and Conditions (Unterlagen herunterladen)
           </div>
-          <div style="display: flex;justify-content: space-around;">
+          <div class="tick">
             <div style="display: flex;gap: 10px">
               <em class="fa fa-check fa-icon-style"></em>
               <div class="divHover">
@@ -936,33 +831,44 @@
             </div>
           -->
            <div *ngIf="!qbItem.Edit__c"
-              [ngClass]="{ 'question sum-ques myt-font3 myt-font8': this.abItem.Status__c != 'Completed' }">
-              <a [ngClass]="{ asum: this.abItem.Status__c === 'Completed' }" (click)="handleEditClick(qa.quesId)"
+              [ngClass]="{ 'question  myt-font': this.abItem.Status__c != 'Completed' }">
+              <!-- <a [ngClass]="{ asum: this.abItem.Status__c === 'Completed' }" (click)="handleEditClick(qa.quesId)"
+                [innerHTML]="getText(qa.quesValue)">{{ qa.quesValue }}</a> -->
+                <a class="content-width" (click)="handleEditClick(qa.quesId)"
                 [innerHTML]="getText(qa.quesValue)">{{ qa.quesValue }}</a>
             </div>
             <div *ngIf="qbItem.Edit__c"
-              [ngClass]="{ 'sum-ques question myt-font3 myt-font8': this.abItem.Status__c != 'Completed' }">
-              <div [ngClass]="{ 'sum-ques1 question1 summary-completed myt-font3 myt-font8': this.abItem.Status__c === 'Completed' }"
-                [innerHTML]="getText(qa.quesValue)">
+              [ngClass]="{ 'question myt-font': this.abItem.Status__c != 'Completed' }">
+              <!-- <div [ngClass]="{ 'sum-ques1 question1 summary-completed content-width': this.abItem.Status__c === 'Completed' }"
+                [innerHTML]="getText(qa.quesValue)"> -->
+                <div Class="content-width" [innerHTML]="getText(qa.quesValue)">
                 {{ qa.quesValue }}
               </div>
             </div>
-            <div *ngIf="qbItem.Edit__c && this.abItem.Status__c != 'Completed'" style="background: #dedddd;">
-              <button class="edit" (click)="handleEditClick(qa.quesId)">
-                <img *ngIf="deviceInfo.os === 'iOS'" src="https://rnxt.s3.amazonaws.com/MytIcon/icon-edit%402x.png" style="width:50%!important;" class="icon-editios"/>
-                <img *ngIf="deviceInfo.os !== 'iOS'" src="https://rnxt.s3.amazonaws.com/MytIcon/icon-edit%402x.png" class="icon-edit" />
-              </button>
+
+            <div *ngIf="qbItem.Edit__c && this.abItem.Status__c != 'Completed'" class="aligncen">
+
+              <div class="answer">
+                <div *ngIf="qa.qTyp === 'File'">
+                  <img src="https://lingscrm--embi.sandbox.file.force.com/sfc/dist/version/download/?oid=00D7Y0000001Van&ids=0687Y000002OYZTQA4&d=%2Fa%2F7Y000000HK5F%2FF5JWdsOhqXhkxe0zLMEIzod84Ne3sJaAdoWXBs9iZJI&operationContext=DELIVERY&viewId=05H7Y000000HAVmUAO&dpt=" class="icon-edit-summary" />
+                  {{ qa.ansValue }}
+                </div>
+                <div *ngIf="qa.qTyp != 'File'">{{ qa.ansValue }}</div>
+                <button class="edit"  (click)="handleEditClick(qa.quesId)">
+                  <img *ngIf="deviceInfo.os === 'iOS'" src="https://lingscrm--embi.sandbox.file.force.com/sfc/dist/version/download/?oid=00D7Y0000001Van&ids=0687Y000002OYZTQA4&d=%2Fa%2F7Y000000HK5F%2FF5JWdsOhqXhkxe0zLMEIzod84Ne3sJaAdoWXBs9iZJI&operationContext=DELIVERY&viewId=05H7Y000000HAVmUAO&dpt=" />
+                  <img *ngIf="deviceInfo.os !== 'iOS'" src="https://lingscrm--embi.sandbox.file.force.com/sfc/dist/version/download/?oid=00D7Y0000001Van&ids=0687Y000002OYZTQA4&d=%2Fa%2F7Y000000HK5F%2FF5JWdsOhqXhkxe0zLMEIzod84Ne3sJaAdoWXBs9iZJI&operationContext=DELIVERY&viewId=05H7Y000000HAVmUAO&dpt="  />
+                </button>
+              </div>
             </div>
            
-            <div class="answer " >
+            <!-- <div class="answer">
             
                 <div *ngIf="qa.qTyp === 'File'">
                   <img src="https://rnxt.s3.amazonaws.com/MytIcon/icon-doc-img%401.png" class="icon-edit-summary" />
                   {{ qa.ansValue }}
                 </div>
                 <div *ngIf="qa.qTyp != 'File'">{{ qa.ansValue }}</div>
-              
-          </div>
+          </div> -->
         </div>
         </div>
     </div>
@@ -971,42 +877,33 @@
       <div
         *ngIf="qbItem.Edit__c"
         [ngClass]="{
-          'sum-ques question myt-font3 myt-font8':
+          'align-question myt-font':
             this.abItem.Status__c != 'Completed'
         }"
       >
-        <div
-          [ngClass]="{
-            'sum-ques1 question1 summary-completed myt-font3 myt-font8':
-              this.abItem.Status__c === 'Completed'
-          }"
-        >
+        <div Class="content-width">
           {{ prod.Product_Name__c }}
         </div>
-      </div>
-
-      <div style="background: #dedddd">
-        <button class="edit" (click)="editPaymentCoverage(prod)">
-          <img
-            *ngIf="deviceInfo.os === 'iOS'"
-            src="https://rnxt.s3.amazonaws.com/MytIcon/icon-edit%402x.png"
-            style="width: 50% !important"
-            class="icon-editios"
-          />
-          <img
-            *ngIf="deviceInfo.os !== 'iOS'"
-            src="https://rnxt.s3.amazonaws.com/MytIcon/icon-edit%402x.png"
-            class="icon-edit"
-          />
-        </button>
-      </div>
-
-      <div class="answer" style="margin-top: 1px">
-        <!-- <div *ngIf="qa.qTyp === 'File'">
-    <img src="https://rnxt.s3.amazonaws.com/MytIcon/icon-doc-img%401.png" class="icon-edit-summary" />
-    {{ qa.ansValue }}
-  </div> -->
-        <div>  {{ prod.CoverageLevel__c }}</div>
+        <div class="align-answer">
+          <!-- <div *ngIf="qa.qTyp === 'File'">
+      <img src="https://rnxt.s3.amazonaws.com/MytIcon/icon-doc-img%401.png" class="icon-edit-summary" />
+      {{ qa.ansValue }}
+    </div> -->
+          <div>{{ prod.CoverageLevel__c }}</div>
+          <button class="edit" (click)="editPaymentCoverage(prod)">
+            <img
+              *ngIf="deviceInfo.os === 'iOS'"
+              src="https://lingscrm--embi.sandbox.file.force.com/sfc/dist/version/download/?oid=00D7Y0000001Van&ids=0687Y000002OYZTQA4&d=%2Fa%2F7Y000000HK5F%2FF5JWdsOhqXhkxe0zLMEIzod84Ne3sJaAdoWXBs9iZJI&operationContext=DELIVERY&viewId=05H7Y000000HAVmUAO&dpt="
+              style="width: 50% !important"
+              class="icon-editios"
+            />
+            <img
+              *ngIf="deviceInfo.os !== 'iOS'"
+              src="https://lingscrm--embi.sandbox.file.force.com/sfc/dist/version/download/?oid=00D7Y0000001Van&ids=0687Y000002OYZTQA4&d=%2Fa%2F7Y000000HK5F%2FF5JWdsOhqXhkxe0zLMEIzod84Ne3sJaAdoWXBs9iZJI&operationContext=DELIVERY&viewId=05H7Y000000HAVmUAO&dpt="
+              class="icon-edit"
+            />
+          </button>
+        </div>
       </div>
     </div>
     </div>
@@ -1086,31 +983,35 @@
 
 
   <div class="flexer1" *ngIf="abItem">
-    <div class="" *ngIf="abItem.Status__c == 'Completed'">
-      <div class="col-md-12">
+    <div  *ngIf="abItem.Status__c == 'Completed'">
+      <div>
         <button [ngClass]="{'btn-text': qbItem.Progress_Bar__c,
-                            'nxt-btn btn-primary btn-lg btn-block btn-back-color': !qbItem.Progress_Bar__c}"
+                            'nxt-btn btn-primary btn-lg btn-block btnsubmit': !qbItem.Progress_Bar__c}"
           (click)="handleCancelClick()">
           {{ qbItem.Cancel__c }}
         </button>
       </div>
     </div>
 
-    <div class="" *ngIf="abItem.Status__c != 'Completed'">
-      <div class="col-md-6">
-        <button [ngClass]="{ 'btn-text2': qbItem.Progress_Bar__c,
-                              'nxt-btn btn-primary btn-lg btn-block btn-back-color': !qbItem.Progress_Bar__c }" 
+    <div  *ngIf="abItem.Status__c != 'Completed'" class="btn-set">
+        <!-- <button [ngClass]="{ 'btn-text2': qbItem.Progress_Bar__c,
+                              'nxt-btn btn-primary btn-lg btn-block btn-submit': !qbItem.Progress_Bar__c }" 
           (click)="handleSubmitClick()">
           {{ qbItem.Submit__c }}
+        </button> -->
+        <button class="btn-submit"
+        (click)="handleSubmitClick()">
+        {{ qbItem.Submit__c }}
         </button>
-      </div>
-      <div class="col-md-6">
-        <button [ngClass]="{'grey': qbItem.Progress_Bar__c,
-                             'nxt-btn btn-primary btn-lg btn-block btn-back-color': !qbItem.Progress_Bar__c}" 
+        <!-- <button [ngClass]="{'grey': qbItem.Progress_Bar__c,
+                             'nxt-btn btn-primary btn-lg btn-block btnsubmit': !qbItem.Progress_Bar__c}" 
                 (click)="handleBackClickNew()">
           {{ qbItem.Edit__c }}
-        </button>
-      </div>
+        </button> -->
+        <button class="btn-submit" 
+        (click)="handleBackClickNew()">
+        {{ qbItem.Edit__c }}
+        </button> 
    </div>
   </div>
 
