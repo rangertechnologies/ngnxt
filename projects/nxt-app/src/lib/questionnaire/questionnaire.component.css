@@ -79,7 +79,7 @@ display: none;
 
 .bgColor{
   text-align: center;
-  background-color: #dedddd;
+  /* background-color: #dedddd; */
 }
 
 .questionalign{
@@ -2029,6 +2029,53 @@ background-color: #dedddd;
   flex-direction: column;
   padding-top: 10px;
 }
+
+/* progress bar */
+
+.Progress-main {
+  background-color: #E6E6E6;
+  border-radius: 100px;
+  width: 600px;
+  height:8px;
+}
+.Progress-main::-moz-progress-bar { 
+  background: #C12017;
+  border-radius: 100px;
+}
+.Progress-main::-webkit-progress-bar {
+  background: #E6E6E6;
+  border-radius: 100px;
+
+}
+.Progress-main::-webkit-progress-value {
+  background: #C12017;
+  border-radius: 100px;
+}
+.Progress-main::-ms-fill { 
+  background: #C12017;
+  border-radius: 100px;
+}
+
+
+/* .progress{
+  height: 8px;
+  width: 600px;
+  background: #C12017;
+  border-radius: 100px;
+ }
+ progress::-moz-progress-bar { 
+ background: #C12017;
+  border-radius: 100px;
+ }
+ progress::-webkit-progress-value {
+ background: r#C12017; 
+ border-radius: 100px;
+ }
+ progress { 
+ color: #C12017;
+ border-radius: 100px;
+ } */
+
 
 @media screen and (max-width: 490px){
 .packUser-Input{

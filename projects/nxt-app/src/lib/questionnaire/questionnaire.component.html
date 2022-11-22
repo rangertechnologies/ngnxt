@@ -16,13 +16,14 @@
   <div [ngClass]="{ questiondiv2: !qbItem?.Progress_Bar__c }">
     <div [ngClass]="{ bgColor: qbItem?.Progress_Bar__c }">
       <div id="progress" *ngIf="qbItem?.Progress_Bar__c">
-        
-        <circle-progress class="titlebar" [percent]="this.percent" [radius]="40" [space]="-4" [outerStrokeWidth]="4"
+        <!-- <circle-progress class="titlebar" [percent]="this.percent" [radius]="40" [space]="-4" [outerStrokeWidth]="4"
         [innerStrokeWidth]="4" [outerStrokeColor]="'#e0b1b0'" [innerStrokeColor]="'#e7e8ea'" [animation]="true" [backgroundPadding]= "0"
         [backgroundColor]= "'#dd2e13'" [backgroundGradientStopColor]="'#f9bfbd'" [titleColor]="'#f3eded'" 
         class="ng-star-inserted" [title]="this.percent+'%'" [showSubtitle]="false" [showBackground]="true" [animationDuration]="300"
         [startFromZero]="false" [responsive]="false" >
-      </circle-progress>
+      </circle-progress> -->
+      <progress class="Progress-main" id="file" [value]="this.percent" max="100"></progress>
+      
        </div>
     </div>
     <div *ngIf="questionItem.Group__c && qbItem.Progress_Bar__c"
@@ -913,12 +914,14 @@
   <div id="progress2" *ngIf="qbItem.Progress_Bar__c ">
     <div [ngClass]="{'bgColor summary-top' : qbItem.Progress_Bar__c }" >
       <div id="progress-summary" *ngIf="qbItem.Progress_Bar__c">
-        <circle-progress class="titlebar" [percent]="this.percent" [radius]="40" [space]="-4" [outerStrokeWidth]="4"
+        <!-- <circle-progress class="titlebar" [percent]="this.percent" [radius]="40" [space]="-4" [outerStrokeWidth]="4"
         [innerStrokeWidth]="4" [outerStrokeColor]="'#e0b1b0'" [innerStrokeColor]="'#e7e8ea'" [animation]="true" [backgroundPadding]= "0"
         [backgroundColor]= "'#dd2e13'" [backgroundGradientStopColor]="'#f9bfbd'" [titleColor]="'#f3eded'" 
         class="ng-star-inserted" [title]="this.percent+'%'" [showSubtitle]="false" [showBackground]="true" [animationDuration]="300"
         [startFromZero]="false" [responsive]="false" >
-      </circle-progress>
+      </circle-progress> -->
+
+      <progress class="Progress-main" id="file" [value]="this.percent" max="100"> </progress>
       
 
       <div *ngIf="qbItem.Summary_Text__c && qbItem.Progress_Bar__c" 
