@@ -1257,6 +1257,16 @@ export class QuestionnaireComponent implements OnInit {
       if (this.recordId && typ == "Data") {
         this.recordId = cQuestion.Next_Question__c;
       }
+      console.log('1260 this.productList',this.productList);
+      this.productList[0].forEach(element => {
+        if(element.Product_Name__c == 'Erwerbsunfähigkeitsversicherung' && this.productList[0].length == 1){
+          if(this.removeTags(cQuestion.Question_Text__c) == 'Ist Ihre Arbeitsfähigkeit (im Beruf und/oder im Haushalt) heute eingeschränkt?' && this.inpValue == 'Ja'){
+            let person = {fromPage:"splExistFromEmbi"};
+            this.handleEvent.emit(JSON.stringify(person));
+          }
+        }
+      });
+
     } else if (cQuestion.RecordType.Name == "OPTIONONLY") {
       //  OPTIONONLY logic
       this.recordId = cQuestion.Next_Question__c;
@@ -1366,6 +1376,15 @@ export class QuestionnaireComponent implements OnInit {
       let person = {fromPage:"profilePageCall"};
       this.handleEvent.emit(JSON.stringify(person));
     }
+  }
+
+  //to remove tags
+  removeTags(str: string){
+    if ((str===null) || (str===''))
+        return false;
+    else
+        str = str.toString();
+    return str.replace( /(<([^>]+)>)/ig, '');
   }
 
   getText(value) {
