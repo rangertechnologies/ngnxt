@@ -53,17 +53,17 @@
 }
 
 .questiondiv2{
-  padding-top: 0px; 
   padding-bottom: 20px ; 
+  padding-top: 20px;
   padding-left: 11px; 
 }
 
 
 
 @media screen and (min-width: 689px) {
-  #progress{
+  /* #progress{
   padding-left: 12px;
-}
+} */
 #progress-summary{
   padding-left: 12px;
 }
@@ -79,7 +79,7 @@ display: none;
 
 .bgColor{
   text-align: center;
-  background-color: #dedddd;
+  /* background-color: #dedddd; */
 }
 
 .questionalign{
@@ -1415,12 +1415,12 @@ background-color: #dedddd;
      font-weight: bold !important;
    }
 }
-@media screen and (max-width: 672px) {
+/* @media screen and (max-width: 672px) {
   .questiondiv1{
     padding: 0;
   }
   
-}
+} */
 @media screen and (max-width: 525px) {
   .rusty{
     width: 26rem;
@@ -2029,6 +2029,65 @@ background-color: #dedddd;
   flex-direction: column;
   padding-top: 10px;
 }
+.add{
+  display: flex;
+  font-size: 20px;
+  text-align: justify;
+  font-weight: 400;
+  justify-content: center;
+  color: #000000;
+}
+.add-width{
+  width: 600px;
+  text-align: center;
+}
+
+/* progress bar */
+
+.Progress-main {
+  background-color: #E6E6E6;
+  border-radius: 100px;
+  width: 600px;
+  height:8px;
+}
+.Progress-main::-moz-progress-bar { 
+  background: #C12017;
+  border-radius: 100px;
+}
+.Progress-main::-webkit-progress-bar {
+  background: #E6E6E6;
+  border-radius: 100px;
+
+}
+.Progress-main::-webkit-progress-value {
+  background: #C12017;
+  border-radius: 100px;
+}
+.Progress-main::-ms-fill { 
+  background: #C12017;
+  border-radius: 100px;
+}
+
+
+/* .progress{
+  height: 8px;
+  width: 600px;
+  background: #C12017;
+  border-radius: 100px;
+ }
+ progress::-moz-progress-bar { 
+ background: #C12017;
+  border-radius: 100px;
+ }
+ progress::-webkit-progress-value {
+ background: r#C12017; 
+ border-radius: 100px;
+ }
+ progress { 
+ color: #C12017;
+ border-radius: 100px;
+ } */
+
 
 @media screen and (max-width: 490px){
 .packUser-Input{
@@ -2045,3 +2104,9 @@ background-color: #dedddd;
   }
 
 }
+
+@media screen and (max-width: 700px){
+   .Progress-main,.add-width{
+      width: 100%;
+   }
+  }
