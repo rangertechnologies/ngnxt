@@ -592,13 +592,10 @@
 
 <!-- EMBI Profile Section -->
 
-<div *ngIf="summary && summary.length > 0" height="100% !important" [ngClass]="{
-  'col-md-12':!qbItem.Progress_Bar__c
-   }">
-   
+<div *ngIf="summary && summary.length > 0" height="100% !important">
   <div>
     <h1 style="text-align: center;">Profile</h1>
-    <div id="progress2">
+    <div id="progress2">  
       <div class="summary">
         <div class="question">
             <div class="name">
@@ -824,7 +821,7 @@
   <div [ngClass]="{ 'full-summary': qbItem.Progress_Bar__c }">
     <div *ngFor="let qa of summary" >
      
-        <div [ngClass]="{ non:  qbItem.Progress_Bar__c }">
+        <div class="pad-both">
           <div [ngClass]="{ summary: this.abItem.Status__c != 'Completed' && !qbItem.Progress_Bar__c }">
          <!--  <div *ngIf="qbItem.Progress_Bar__c"
               [ngClass]="{ 'summary-groupText myt-font2': qbItem.Progress_Bar__c }" >
