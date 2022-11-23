@@ -22,7 +22,7 @@
         class="ng-star-inserted" [title]="this.percent+'%'" [showSubtitle]="false" [showBackground]="true" [animationDuration]="300"
         [startFromZero]="false" [responsive]="false" >
       </circle-progress> -->
-      <progress class="Progress-main" id="file" [value]="this.percent" max="100"></progress>
+      <progress class="Progress-main" id="file" value="{{percent}}" max="100"></progress>
       
        </div>
     </div>
@@ -52,8 +52,8 @@
       </h3>
       </div>
     </div>
-    <div *ngIf="!questionItem.Is_Title__c" class="question-f-size additional">
-      <div [innerHTML]="getText(questionItem?.Question_Text__c)" >
+    <div *ngIf="!questionItem.Is_Title__c" class="add">
+      <div [innerHTML]="getText(questionItem?.Question_Text__c)" class="add-width" >
         {{ questionItem?.Question_Text__c }}
       </div>
     </div>
@@ -820,7 +820,7 @@
               'col-md-12':!qbItem.Progress_Bar__c
                }">
     <h1 class="header1 summarypadd" >{{ qbItem.SubTitle__c }}</h1>         
-  <div id="progress2" *ngIf="!qbItem.Progress_Bar__c ">
+  <div id="progress2" *ngIf="qbItem.Progress_Bar__c ">
   <div [ngClass]="{ 'full-summary': qbItem.Progress_Bar__c }">
     <div *ngFor="let qa of summary" >
      
@@ -911,7 +911,7 @@
   </div>
 
 
-  <div id="progress2" *ngIf="qbItem.Progress_Bar__c ">
+  <div id="progress2" *ngIf="!qbItem.Progress_Bar__c ">
     <div [ngClass]="{'bgColor summary-top' : qbItem.Progress_Bar__c }" >
       <div id="progress-summary" *ngIf="qbItem.Progress_Bar__c">
         <!-- <circle-progress class="titlebar" [percent]="this.percent" [radius]="40" [space]="-4" [outerStrokeWidth]="4"
@@ -921,7 +921,7 @@
         [startFromZero]="false" [responsive]="false" >
       </circle-progress> -->
 
-      <progress class="Progress-main" id="file" [value]="this.percent" max="100"> </progress>
+      <progress class="Progress-main" id="file" value="{{percent}}" max="100"> </progress>
       
 
       <div *ngIf="qbItem.Summary_Text__c && qbItem.Progress_Bar__c" 
