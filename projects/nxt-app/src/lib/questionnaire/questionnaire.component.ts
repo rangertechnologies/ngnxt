@@ -542,8 +542,6 @@ export class QuestionnaireComponent implements OnInit {
   }
 
   ngOnInit() {
-    // FOR EMBI DATE PICKER SIZE 
-  
     if(localStorage.getItem('ProfileData') != null){
       this.profileData = JSON.parse(localStorage.getItem('ProfileData'));
       console.log('Local Storage',this.profileData);
@@ -1228,7 +1226,6 @@ export class QuestionnaireComponent implements OnInit {
   }
 
   next() {
-    
     var cQuestion: Question = new Question();
     cQuestion = this.questionItem;
     console.log('1204 questionItem', this.questionItem);
@@ -1278,21 +1275,6 @@ export class QuestionnaireComponent implements OnInit {
       //console.log("inside unconditional");
       //inside Book Type
       if (cQuestion.Type__c == "Book" && cQuestion.Question_No__c !='6') {
-        console.log('book loaded');
-        
-        try {
-          console.log('style applying sathik');
-          
-        
-          const htmlElement = window.document.getElementsByClassName("mydp");
-          htmlElement
-            .item(0)
-            .setAttribute("style", "border-color:#87be1c;width:100%");
-        } catch (error) {
-          console.log('catch error', error);
-          
-        }
-    
         //console.log("inside book");
         for (let opt of cQuestion.Questions__r.records) {
           //console.log(opt.Type__c);
@@ -1301,34 +1283,17 @@ export class QuestionnaireComponent implements OnInit {
               if (this.valueName == opt1.Value__c) {
                 this.recordId =opt1.Next_Question__c || cQuestion.Next_Question__c;                  
               } else {
-               
                 //console.log('Else'+this.recordId)
                 this.recordId = cQuestion.Next_Question__c;
                 
               }
             }
           } else {
-            console.log('else activated sathik');
-
             this.recordId = cQuestion.Next_Question__c;
           }
         }
       }
       else if(cQuestion.Type__c == "Book" && cQuestion.Question_No__c =='6' ) {
-         
-        try {
-          console.log('style 2 applying sathik');
-          
-        
-          const htmlElement = window.document.getElementsByClassName("mydp");
-          htmlElement
-            .item(0)
-            .setAttribute("style", "border-color:#87be1c;width:100%");
-        } catch (error) {
-          console.log('catch error', error);
-          
-        }
-    
         for (let opt of cQuestion.Questions__r.records) {
           if (opt.Type__c == "Dropdown" || opt.Type__c == "Radio"){
           for (var opt1 of opt.Question_Options__r.records) {
@@ -1491,18 +1456,6 @@ export class QuestionnaireComponent implements OnInit {
     );
 
   private successReadBook = (response) => {
-    // try {
-    //   console.log('style applying sathik');
-      
-    
-    //   const htmlElement = window.document.getElementsByClassName("mydp");
-    //   htmlElement
-    //   .item(0)
-    //   .setAttribute("style", "border-bottom: 1px solid black !important;background:red"); 
-    // } catch (error) {
-    //   console.log('catch error', error);
-      
-    // }
     //console.log('Inside the successReadBook');
     //console.log(response)
     this.qbItem = response.questionbook;
@@ -1546,8 +1499,6 @@ export class QuestionnaireComponent implements OnInit {
 
           //console.log(this.questionStack)
           if (ansObject.Question_Type__c == "Book") {
-           
-          
             var av1 = ansObject.Answer_Long__c.split("@@##$$");
             // //console.log("book log");
 
@@ -1794,26 +1745,6 @@ export class QuestionnaireComponent implements OnInit {
     console.log('splCCBackClick = '+this.splCCBackClick);
     //console.log(this.questionItem);
     this.pop = true;
-     
-    try {
-      console.log('style applying sathik');
-      
-    
-      // const htmlElement = window.document.getElementsByClassName("mydp");
-      // htmlElement
-      //   .item(0)
-      //   .setAttribute("style", "border-color:#87be1c;width:100%");
-       setTimeout(() => {
-        const elm = document.querySelector<HTMLElement>('.mydp')!;
-        elm.style.border = 'none';
-       }, 500);
-       
-        
-    } catch (error) {
-      console.log('catch error', error);
-      
-    }
-
 
     // if(!this.back){
     //   this.questionName.push(this.questionItem.Name)
@@ -1878,8 +1809,6 @@ export class QuestionnaireComponent implements OnInit {
         this.setSubQuestions(this.questionItem.Questions__r.records);
     } 
   }else if (this.dtFlag) {
-    console.log('date flag loaded');
-    
       //console.log('Inise the unexpected dtFlag cond');
       this.selectedHour = "";
       this.selectedMinute = "";
@@ -1951,23 +1880,10 @@ export class QuestionnaireComponent implements OnInit {
       this.allowedFileExtension =
         this.questionItem.Allowed_File_Extensions__c.split(";");
       //console.log(this.allowedFileExtension);
-    }else if(this.bookFlag){
-      console.log('book flag loaded sathik');
-      console.log('question record sathik down');
-      
-      console.log(this.questionItem.Questions__r.records);
-      
-
-      // if () {
-        
-      // }
-      
-
     }
     if (this.qbItem.Progress_Bar__c === true) {
       this.updateProgress();
     }
-
   };
 
   setFlag(typ) {

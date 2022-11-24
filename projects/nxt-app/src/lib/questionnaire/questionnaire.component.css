@@ -291,12 +291,11 @@ display: none;
   background: #dedddd;
 }
 
-.picker{
-  width: 400px;
+.date-picker{
+  width: 57% ;
   margin-left: 2.5%;
   height: 44px ;
-  border-bottom: 1px solid;
-  margin-top: 40px;
+  border-radius: 5px;
 }
 
 .datetime:focus{
@@ -313,10 +312,7 @@ display: none;
   display: flex ;
   justify-content: center;
 }
-.flex-center{
-  display: flex ;
-  justify-content: center;
-}
+
 .textBox{
   width: 100% ;
   height: 36px;
@@ -742,7 +738,6 @@ display: none;
 .tspan:nth-child(2){
   display: none ;
 }
-
 
 .pic-upload{
   position: absolute ;
