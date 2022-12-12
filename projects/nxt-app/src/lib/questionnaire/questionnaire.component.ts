@@ -2380,4 +2380,21 @@ export class QuestionnaireComponent implements OnInit {
   getLocalSubQuestions(id: String){
     return this.localSubQMap.get(id);
   }
+
+  //Single Add button functionality for List type
+  Add(question: LocalQuestion){
+    var arra = this.localSubQMap.get(this.questionItem.Id);
+    var index  = arra.length;
+    
+    for (var i = 0; i < index ; i++) {
+      var ques: LocalQuestion = new LocalQuestion();
+      Object.assign(ques, question[i]);
+      this.keyIndex++;
+      ques.uniqueSubQId = ques.Id + (String(this.keyIndex));
+      ques.input = '';
+      arra.splice(index+1, 0, ques);
+      this.localSubQMap.set(this.questionItem.Id,arra);
+    } 
+  }
+
   }
