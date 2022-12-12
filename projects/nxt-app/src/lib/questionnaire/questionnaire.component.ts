@@ -82,7 +82,6 @@ export class QuestionnaireComponent implements OnInit {
   public sqOptions = new Map();
   public localSubQMap = new Map();
   public keyIndex: number = 0;
-  public keyInd: number = 1;
   public questionStack = [];
   public attachments: any[] = [];
   public attachmentIdList: any[] = [];
@@ -1209,7 +1208,6 @@ export class QuestionnaireComponent implements OnInit {
   }
 
   addInputBox(question: LocalQuestion, index: number){
-    console.log(index);
     var arra = this.localSubQMap.get(this.questionItem.Id);
     var qIndex = arra.indexOf(question);
     console.log(qIndex)
@@ -1224,7 +1222,6 @@ export class QuestionnaireComponent implements OnInit {
     }
     ques.input = '';
     arra.splice(qIndex+1, 0, ques);
-console.log(arra)
     this.localSubQMap.set(this.questionItem.Id,arra);
   }
 
@@ -1254,35 +1251,27 @@ console.log(arra)
     
     var arra = this.localSubQMap.get(this.questionItem.Id);
     var index  = arra.length;
-    console.log(arra.length);
+    // console.log(arra.length);
     var ind = arra.find(item => item.Question_No__c === index);
     //arra.findIndex(item => item.Question_No__c === index);
-    console.log(index);
+    // console.log(index);
    //console.log(ind.Question_No__c);
     
     for (var i = 0; i < index ; i++) {
      
       var ques: LocalQuestion = new LocalQuestion();
-    Object.assign(ques, question[i]);
-    // if(this.keyIndex == index){
-    //   console.log('inside for if');
-    //   console.log('Before = '+ques.uniqueSubQId )
-    //   ques.uniqueSubQId = ques.Id + (String(index+1));
-    //   console.log('After = '+ques.uniqueSubQId )
-    //   this.keyIndex++;
-    // }else{
-      
-      console.log('inside for else');
+      Object.assign(ques, question[i]);
+      //console.log('inside for else');
       this.keyIndex++;
-      console.log('Before = '+ques.uniqueSubQId )
+      //console.log('Before = '+ques.uniqueSubQId )
       ques.uniqueSubQId = ques.Id + (String(this.keyIndex));
-      console.log('After = '+ques.uniqueSubQId )
-    //}
-    ques.input = '';
-    arra.splice(index+1, 0, ques);
-    console.log(arra)
+      //console.log('After = '+ques.uniqueSubQId )
+  
+      ques.input = '';
+      arra.splice(index+1, 0, ques);
+    //console.log(arra)
     this.localSubQMap.set(this.questionItem.Id,arra);
     }
-    console.log(arra)  
+    //console.log(arra)  
   }
 }
