@@ -219,7 +219,10 @@
         </div>
         <i class="fa fa-check check-icon4" aria-hidden="true" *ngIf="questionItem?.input?.length > 0"></i>
      </div>
-     <button (click)="Add(getLocalSubQuestions(questionItem.Id), subQuestions.length)" class="btn"><i class="fa fa-plus" ></i>Add</button>
+     <div class="" *ngIf=" addFlag ">
+      <button (click)="Add(getLocalSubQuestions(questionItem.Id))" class="btn"><i class="fa fa-plus" ></i>Add</button>
+     </div>
+     
     </div>
   </div>
 </div>
