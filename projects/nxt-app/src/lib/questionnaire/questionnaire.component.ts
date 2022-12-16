@@ -1209,20 +1209,25 @@ export class QuestionnaireComponent implements OnInit {
 
   addInputBox(question: LocalQuestion, index: number){
     var arra = this.localSubQMap.get(this.questionItem.Id);
+    console.log(arra);
     var qIndex = arra.indexOf(question);
+    console.log(qIndex)
     var ques: LocalQuestion = new LocalQuestion();
     Object.assign(ques, question);
     if(this.keyIndex == index){
       ques.uniqueSubQId = ques.Id + (String(index+1));
+      console.log('inside if unique==>'+ques.uniqueSubQId)
       this.keyIndex++;
     }else{
       this.keyIndex++;
       ques.uniqueSubQId = ques.Id + (String(this.keyIndex));
+      console.log('inside else unique==>'+ques.uniqueSubQId)
     }
     ques.input = '';
     arra.splice(qIndex+1, 0, ques);
 
     this.localSubQMap.set(this.questionItem.Id,arra);
+    console.log(this.localSubQMap);
   }
 
   removeAddress(quesUniqueId: string, qName: string) {
