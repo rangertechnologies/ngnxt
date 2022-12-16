@@ -1247,31 +1247,18 @@ export class QuestionnaireComponent implements OnInit {
     return this.localSubQMap.get(id);
   }
 
-  Add(question: LocalQuestion){
-    
+  Add(question: LocalQuestion, val: number){
+    console.log('inside button')
     var arra = this.localSubQMap.get(this.questionItem.Id);
     var index  = arra.length;
-    // console.log(arra.length);
-    var ind = arra.find(item => item.Question_No__c === index);
-    //arra.findIndex(item => item.Question_No__c === index);
-    // console.log(index);
-   //console.log(ind.Question_No__c);
-    
-    for (var i = 0; i < index ; i++) {
-     
+    for (var i = 0; i < val ; i++) {
       var ques: LocalQuestion = new LocalQuestion();
       Object.assign(ques, question[i]);
-      //console.log('inside for else');
       this.keyIndex++;
-      //console.log('Before = '+ques.uniqueSubQId )
       ques.uniqueSubQId = ques.Id + (String(this.keyIndex));
-      //console.log('After = '+ques.uniqueSubQId )
-  
       ques.input = '';
-      arra.splice(index+1, 0, ques);
-    //console.log(arra)
+      arra.splice(index+(val-1), 0, ques);
     this.localSubQMap.set(this.questionItem.Id,arra);
-    }
-    //console.log(arra)  
+    }  
   }
 }
