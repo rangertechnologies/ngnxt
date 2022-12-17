@@ -534,7 +534,9 @@
           </div>
 
         </div>
-        <button (click)="Add(getLocalSubQuestions(questionItem.Id))" class="btn"><i class="fa fa-plus" ></i>Add</button>
+        <div class="" *ngIf=" addFlag ">
+          <button (click)="Add(getLocalSubQuestions(questionItem.Id))" class="btn"><i class="fa fa-plus" ></i>Add</button>
+         </div>
       </div>
     </div>
     </div>

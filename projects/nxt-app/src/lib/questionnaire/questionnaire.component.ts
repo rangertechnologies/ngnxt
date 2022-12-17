@@ -485,6 +485,8 @@ export class QuestionnaireComponent implements OnInit {
   // REQ-01 PROGRESS BAR
   public progressStyle: string = "0%";
   public answerCount: number = 0;
+  public indexCount: number = 0;
+  public addFlag: boolean = true;
 
   public myDatePickerOptions: IMyDpOptions = {};
 
@@ -2382,19 +2384,23 @@ export class QuestionnaireComponent implements OnInit {
   }
 
   //Single Add button functionality for List type
-  Add(question: LocalQuestion){
+Add(question: LocalQuestion){
+    this.addFlag =  false;
     var arra = this.localSubQMap.get(this.questionItem.Id);
     var index  = arra.length;
+    var a = arra.slice(-1).pop();
+    this.indexCount  = a.Question_No__c;
     
-    for (var i = 0; i < index ; i++) {
+    for (var i = 0; i < this.indexCount ; i++) {
       var ques: LocalQuestion = new LocalQuestion();
       Object.assign(ques, question[i]);
       this.keyIndex++;
       ques.uniqueSubQId = ques.Id + (String(this.keyIndex));
       ques.input = '';
-      arra.splice(index+1, 0, ques);
-      this.localSubQMap.set(this.questionItem.Id,arra);
-    } 
+      arra.splice(index+(this.indexCount-1), 0, ques);
+    this.localSubQMap.set(this.questionItem.Id,arra);
+    }  
+    this.addFlag = true;
   }
 
   }
