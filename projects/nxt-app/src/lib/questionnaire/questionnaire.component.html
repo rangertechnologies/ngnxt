@@ -550,13 +550,16 @@
             }" id="text" [id]="ques.uniqueSubQId" required="" (focus)="clearLocalSubQuesError(ques)"
             style.border-color="{{ ques.error ? 'red' : '' }}" placeholder="{{ ques.Question__c }}"
             oninput="this.value=this.value.replace(/[^a-zA-Z0-9\s.:;,?]/g,'');" />
-            <div>
+            <!-- <div>
               <button (click)="addInputBox(ques, i)" class="btn"><i class="fa fa-plus" ></i>Add</button>
               <button (click)="removeAddress(ques.uniqueSubQId, ques.Name)" class="btn"><i class="fa fa-trash"></i> Remove</button>
-            </div>
+            </div> -->
           </div>
 
         </div>
+        <div class="" *ngIf=" addFlag ">
+          <button (click)="Add(getLocalSubQuestions(questionItem.Id))" class="btn"><i class="fa fa-plus" ></i>Add</button>
+         </div>
       </div>
     </div>
     </div>
