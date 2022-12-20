@@ -298,6 +298,14 @@ display: none;
   border-radius: 5px;
 }
 
+.picker{
+  width: 400px;
+  margin-left: 2.5%;
+  height: 44px ;
+  border-bottom: 1px solid;
+  margin-top: 40px;
+}
+
 .datetime:focus{
   border: none ;
   box-shadow: none ;

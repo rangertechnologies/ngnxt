@@ -524,10 +524,10 @@ export class QuestionnaireComponent implements OnInit {
       this.inpValue =
         event.date.year + "-" + event.date.month + "-" + event.date.day;
     }
-    const htmlElement = window.document.getElementsByClassName("mydp");
-    htmlElement
-      .item(0)
-      .setAttribute("style", "border-color:#87be1c;width:100%");
+    // const htmlElement = window.document.getElementsByClassName("mydp");
+    // htmlElement
+    //   .item(0)
+    //   .setAttribute("style", "border-color:#87be1c;width:100%");
     this.dateMap.set(this.questionItem.Id, event);
     if (
       event.date.day === 0 &&
@@ -537,8 +537,8 @@ export class QuestionnaireComponent implements OnInit {
       this.dateMap.delete(this.questionItem.Id);
       this.answerMap.delete(this.questionItem.Id);
     }
-    //console.log('this.inpValue = '+this.inpValue);
-    //console.log('this.selectDate = '+this.selectDate);
+    console.log('this.inpValue = '+this.inpValue);
+    console.log('this.selectDate = '+this.selectDate);
   }
 
   ngOnInit() {
@@ -709,16 +709,16 @@ export class QuestionnaireComponent implements OnInit {
     };
   }
   change() {
-    const htmlElement = window.document.getElementsByClassName("mydp");
-    if (this.selDate === null || this.inpValue.length === 0) {
-      htmlElement
-        .item(0)
-        .setAttribute("style", "width:100%;border: 1px solid red");
-    } else {
-      htmlElement
-        .item(0)
-        .setAttribute("style", "border: 1px solid #87be1c ;width:100%");
-    }
+    // const htmlElement = window.document.getElementsByClassName("mydp");
+    // if (this.selDate === null || this.inpValue.length === 0) {
+    //   htmlElement
+    //     .item(0)
+    //     .setAttribute("style", "width:100%;border: 1px solid red");
+    // } else {
+    //   htmlElement
+    //     .item(0)
+    //     .setAttribute("style", "border: 1px solid #87be1c ;width:100%");
+    // }
   }
 
   processQB() {
@@ -899,13 +899,24 @@ export class QuestionnaireComponent implements OnInit {
                 this.inpValue = this.questionItem.input;
               }
             }
+            if (this.selDate === null || this.selDate === undefined || !this.inpValue || !this.selectedHour || !this.selectedMinute || !this.selectDate) {
+              //console.log('Inside the null condition of input');
+              this.questionItem.error = new ErrorWrapper();
+              const htmlElement = window.document.getElementsByClassName("mydp");
+              htmlElement
+                .item(0)
+                .setAttribute("style", "width:100%;border-bottom: 1px solid red !important;");
+              return;
+            }
           }
 
           //console.log('this.qbItem.Progress_Bar__c = '+this.qbItem.Progress_Bar__c);
-          //console.log('this.selDate = '+this.selDate);
-          //console.log('this.inpValue = '+this.inpValue);
-          //console.log('this.selectedHour = '+this.selectedHour);
-          //console.log('this.selectedMinute = '+this.selectedMinute);
+          console.log('this.selDate = '+this.selDate);
+          console.log('this.inpValue = '+this.inpValue);
+          console.log('this.selectedHour = '+this.selectedHour);
+          console.log('this.selectedMinute = '+this.selectedMinute);
+          console.log('this.selectDate',this.selectDate);
+          
 //MYT code
          /* if (this.qbItem.Progress_Bar__c && this.inpValue && this.insuranceStartDate) {
             var date1: any = this.inpValue.split(" ");
@@ -922,13 +933,13 @@ export class QuestionnaireComponent implements OnInit {
             }
           }*/
 
-          if (this.selDate === null || this.selDate === undefined || !this.inpValue || !this.selectedHour || !this.selectedMinute || !this.selectDate) {
+          if (this.selDate === null || this.selDate === undefined || !this.inpValue ||  !this.selectDate) {
             //console.log('Inside the null condition of input');
             this.questionItem.error = new ErrorWrapper();
-            const htmlElement = window.document.getElementsByClassName("mydp");
+            const htmlElement = window.document.getElementsByClassName("picker");
             htmlElement
               .item(0)
-              .setAttribute("style", "width:100%;border-bottom: 1px solid red !important;");
+              .setAttribute("style", "border-bottom: 1px solid red !important;");
             return;
           }
           this.date_TimeMap();
@@ -1148,6 +1159,8 @@ export class QuestionnaireComponent implements OnInit {
           }
         }
         if (this.selDate === null || !this.inpValue) {
+          console.log('seldate sathik',this.selDate);
+          
           this.questionItem.error = new ErrorWrapper();
           return;
         }
@@ -1226,6 +1239,11 @@ export class QuestionnaireComponent implements OnInit {
   }
 
   next() {
+    console.log('percent');
+    
+    console.log(this.percent);
+    
+    
     var cQuestion: Question = new Question();
     cQuestion = this.questionItem;
     console.log('1204 questionItem', this.questionItem);
@@ -1745,6 +1763,24 @@ export class QuestionnaireComponent implements OnInit {
     console.log('splCCBackClick = '+this.splCCBackClick);
     //console.log(this.questionItem);
     this.pop = true;
+    try {
+      console.log('style applying sathik');
+      
+    
+      // const htmlElement = window.document.getElementsByClassName("mydp");
+      // htmlElement
+      //   .item(0)
+      //   .setAttribute("style", "border-color:#87be1c;width:100%");
+       setTimeout(() => {
+        const elm = document.querySelector<HTMLElement>('.mydp')!;
+        elm.style.border = 'none';
+       }, 100);
+       
+        
+    } catch (error) {
+      console.log('catch error', error);
+      
+    }
 
     // if(!this.back){
     //   this.questionName.push(this.questionItem.Name)
@@ -1761,7 +1797,15 @@ export class QuestionnaireComponent implements OnInit {
 
       this.currentName = this.questionItem.Name;
       this.pathquestion = this.questionName.indexOf(this.currentName);
+      console.log('this.qbitem value ');
+      
+      console.log(this.qbItem);
+      
       this.possibilities = JSON.parse(this.qbItem.Possibilities__c);
+      console.log('after parse');
+      
+      console.log(this.possibilities);
+      
     }
 
     this.myDatePickerOptions;
@@ -2308,7 +2352,15 @@ export class QuestionnaireComponent implements OnInit {
   // Update Function for the Progress Bar
   updateProgress() {
     if (this.qbItem.Progress_Bar__c === true) {
+      console.log('update progress true ');
+      
       let j = [];
+      console.log('this.possibilities');
+      console.log(this.possibilities);
+      
+      console.log('this.possibilities.total');
+      console.log(this.possibilities.total);
+      
       for (let i = 0; i < this.possibilities.total; i++) {
         var pathposs = Object.values(this.possibilities.paths[i].questions);
         if (pathposs[this.pathquestion] === this.currentName) {
