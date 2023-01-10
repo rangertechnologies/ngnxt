@@ -560,9 +560,10 @@ export class QuestionnaireComponent implements OnInit {
         this.productList[0].forEach(element => {
           let localProdName = JSON.parse(localStorage.getItem('editiedProduct'));
           let localSelectedCoverage = JSON.parse(localStorage.getItem('selectedCoverage'))
+          let localSelectedStartDate = JSON.parse(localStorage.getItem('selectedInsurenceStartDate'))
           if (element.Product_Name__c == localProdName ) {
               element.CoverageLevel__c = localSelectedCoverage;
-            
+              element.dateOfProduct = localSelectedStartDate;
           }
           
         });
