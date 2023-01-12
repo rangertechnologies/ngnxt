@@ -80,7 +80,7 @@
     
 
   </div>
-  <div *ngIf="questionItem.Additional_Rich__c && qbItem.Progress_Bar__c" >
+  <div class="additional-contents" *ngIf="questionItem.Additional_Rich__c && qbItem.Progress_Bar__c" >
         <div
          class="additional " [innerHTML]="innerhtml">
         </div>
@@ -456,17 +456,16 @@
               </label>
               <input id="file-upload" type="file" accept="{{ bookFlagAccept }}" (change)="uploadFile($event)" />
             </div> -->
-            <div>
+            <div >
               <label for="file-input" class="image-upload">
                 <img src="https://lingscrm--embi.sandbox.file.force.com/sfc/dist/version/download/?oid=00D7Y0000001Van&ids=0687Y000002OV62QAG&d=%2Fa%2F7Y000000HK3x%2FTTDygOGN7kNdH2iQvfklIb6412.ndu44h7t3qvuKpIQ&operationContext=DELIVERY&viewId=05H7Y000000HAVXUA4&dpt="/>
                 <input id="file-input" type="file"  accept="{{ bookFlagAccept }}" (change)="uploadFile($event)"  />
-                <p class="uploade-content">upload documents</p>
+                <p class="uploade-content" style.color="{{  ques.error ? 'red' : '' }}">{{ ques.Question__c }}</p>
               </label>
             </div>
             <ul *ngIf="
                 attachments?.length > 0 &&
-                ques.Type__c === 'File' &&
-                !qbItem.Progress_Bar__c
+                ques.Type__c === 'File'
               " class="attach-ulist col-md-12">
               <li *ngFor="let attachment of attachments" class="align-l">
                 {{ attachment.attachmentName
@@ -538,16 +537,15 @@
             color: red;">{{questionItem?.error?.errorMsg}}</div>
         <div class="myt-align3" [class]="'col-md-' + ques.Size__c + ' paddingnone'"
           *ngFor="let ques of getLocalSubQuestions(questionItem.Id);let i = index">
-          <div >
+          <!-- <div >
             <span class="dis-flex myt-font3 myt-font7">{{ ques?.Question__c }}</span>
-          </div>
+          </div> -->
 
 
           <div *ngIf="ques.Type__c === 'Text'">
-            <input type="text" [(ngModel)]="ques.input" class="{
-            
-             textBox: !qbItem.Progress_Bar__c
-            }" id="text" [id]="ques.uniqueSubQId" required="" (focus)="clearLocalSubQuesError(ques)"
+            <input type="text" [(ngModel)]="ques.input" class="
+            inputbox
+           }" id="text" [id]="ques.uniqueSubQId" required="" (focus)="clearLocalSubQuesError(ques)"
             style.border-color="{{ ques.error ? 'red' : '' }}" placeholder="{{ ques.Question__c }}"
             oninput="this.value=this.value.replace(/[^a-zA-Z0-9\s.:;,?]/g,'');" />
             <!-- <div>
@@ -558,7 +556,7 @@
 
         </div>
         <div class="" *ngIf=" addFlag ">
-          <button (click)="Add(getLocalSubQuestions(questionItem.Id))" class="btn"><i class="fa fa-plus" ></i>Add</button>
+          <button (click)="Add(getLocalSubQuestions(questionItem.Id))" class="addBookButton">+ Weitere hinzufügen</button>
          </div>
       </div>
     </div>
@@ -783,29 +781,7 @@
             </div>
         </div>
 
-        <div class="terms">
-          <div>
-            Terms and Conditions (Unterlagen herunterladen)
-          </div>
-          <div class="tick">
-            <div style="display: flex;gap: 10px">
-              <em class="fa fa-check fa-icon-style"></em>
-              <div class="divHover">
-                Vertragsinformationen
-              </div>  
-            </div>
-           
-            <div style="display: flex;gap: 10px">
-              <em class="fa fa-check fa-icon-style"></em>
-              <div class="divHover">
-                Beratungsprotokoll
-                </div>
-            </div>
-            
-
-          </div>
-          
-        </div>
+ 
     </div>
 
     </div>
@@ -906,6 +882,21 @@
           </button>
         </div>
       </div>
+    </div>
+    <div class="terms">
+      <!-- <div>
+        Terms and Conditions (Unterlagen herunterladen)
+      </div> -->
+      <div class="tick">
+        <div style="display: flex;gap: 10px">
+       
+          <div class="divHover">
+            Datenschutzbestimmungen zugestimmt
+          </div> 
+          <em class="fa fa-check fa-icon-style"></em> 
+        </div>
+      </div>
+      
     </div>
     </div>
   </div>
