@@ -866,7 +866,15 @@
       <img src="https://rnxt.s3.amazonaws.com/MytIcon/icon-doc-img%401.png" class="icon-edit-summary" />
       {{ qa.ansValue }}
     </div> -->
-          <div>{{ prod.CoverageLevel__c }}</div>
+          <div>
+            <p>{{ prod.CoverageLevel__c }}</p>
+            <div style="font-size: 16px;
+            font-weight: 400;">
+              Versicherungsbeginn
+            </div>
+            <div>{{ prod.dateOfProduct }}</div>
+          </div>
+          
           <button class="edit" (click)="editPaymentCoverage(prod)">
             <img
               *ngIf="deviceInfo.os === 'iOS'"
@@ -898,6 +906,9 @@
       </div>
       
     </div>
+
+
+
     </div>
   </div>
 
@@ -1002,10 +1013,10 @@
                 (click)="handleBackClickNew()">
           {{ qbItem.Edit__c }}
         </button> -->
-        <button class="btn-submit" 
+        <!-- <button class="btn-submit" 
         (click)="handleBackClickNew()">
         {{ qbItem.Edit__c }}
-        </button> 
+        </button>  -->
    </div>
   </div>
 
