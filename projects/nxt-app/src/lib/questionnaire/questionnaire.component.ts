@@ -12,13 +12,6 @@ import { ActivatedRoute, Params } from "@angular/router";
 import { SalesforceService } from "../services/salesforce.service";
 import { IMyDateModel, IMyDpOptions } from "mydatepicker";
 import { DomSanitizer, SafeHtml } from "@angular/platform-browser";
-import { UntypedFormBuilder } from "@angular/forms";
-import { NgxSpinnerService } from "ngx-spinner";
-//import { NgxIndexedDBService, IndexDetails} from 'ngx-indexed-db';
-import { DeviceDetectorService } from 'ngx-device-detector';
-
-
-
 import {
   Question,
   QuestionBook,
@@ -87,15 +80,17 @@ export class QuestionnaireComponent implements OnInit {
   public backButtonFlag: boolean = false;
   public optionValues: OptionValue[] = [];
   public subQuestions: Question[] = [];
+  public localSubQuestions: LocalQuestion[] = [];
   public inpValue: string;
   public answerMap = new Map();
+  public subAnsMap = new Map();
   public dateMap = new Map();
   public selectedhourMap = new Map();
   public selectedminuteMap = new Map();
   public attachmentsMap = new Map();
   public sqOptions = new Map();
-  public subAnsMap = new Map();
-  public localSubQuestions: LocalQuestion[] = [];
+  public localSubQMap = new Map();
+  public keyIndex: number = 0;
   public questionStack = [];
   public questionName = [];
   public attachments: any[] = [];
@@ -118,8 +113,6 @@ export class QuestionnaireComponent implements OnInit {
   public notValidAccNum: boolean = false;
   public splCCBackClick: boolean = false;
   public summary = [];
-  public localSubQMap = new Map();
-  public keyIndex: number = 0;
   //public sques: string;
   public selDate: any = {};
   public selectDate: string;
@@ -482,9 +475,13 @@ export class QuestionnaireComponent implements OnInit {
   public places: any[] = [];
   public province:any[]=[];
  
+  // public qMap = new Map();
+  // public aMap = new Map();
   // REQ-01 PROGRESS BAR
   public progressStyle: string = "0%";
   public answerCount: number = 0;
+  public indexCount: number = 0;
+  public addFlag: boolean = true;
 
   public myDatePickerOptions: IMyDpOptions = {};
 
@@ -492,10 +489,6 @@ export class QuestionnaireComponent implements OnInit {
     private sfService: SalesforceService,
     private route: ActivatedRoute,
     private sanitizer: DomSanitizer,
-    private spinner: NgxSpinnerService,
-    private _formBuilder: UntypedFormBuilder,
-    //private dbService: NgxIndexedDBService,
-    private deviceService: DeviceDetectorService,
     el: ElementRef
   ) {
     this.spinnerName = "sp1";
@@ -538,7 +531,6 @@ export class QuestionnaireComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.deviceInfo = this.deviceService.getDeviceInfo();
     console.log('Inside the ngOnInit');
     console.log("RNXT-Claim");
     this.inpValue = "";
@@ -648,11 +640,6 @@ export class QuestionnaireComponent implements OnInit {
   }
 
   processQB() {
-    //console.log('ProcessQB');
-    //this.qbItem
-
-    //console.log(this.qbId);
-    //console.log('Version in process is 8bf11efa7f91a391d957bf6b5078edc7e656b67c');
     if (this.qbId) {
       //console.log('Inside the if part: qbId = '+this.qbId);
       if (this.qbId.length == 18) {
@@ -709,12 +696,7 @@ export class QuestionnaireComponent implements OnInit {
   }
 
   AnswerSave(){
-    //console.log('Inside the handleNextClick');
-    //console.log(this.bookFlag);
-    //console.log(this.questionItem);
-
-    //this.updateProgress();
-    if (this.currentQuestionId === null) {
+    if(this.currentQuestionId === null){
       return;
     }
     var questionTxt='';
@@ -722,7 +704,7 @@ export class QuestionnaireComponent implements OnInit {
     this.handleEvent.emit(this.qbItem.Next_Tracking_ID__c);
     this.recordId = null;
     var cQuestion: Question = new Question();
-    cQuestion = this.questionItem;
+    cQuestion = this.questionItem; 
     var typ = cQuestion.Type__c;
     // this.sques += cQuestion.Question__c + '@@##$$';
     var quesValue = cQuestion.Question_Text__c;
@@ -1000,12 +982,45 @@ export class QuestionnaireComponent implements OnInit {
         //console.log('file two')
         return;
       }
-      this.subAnsMap.forEach((value, key) => {
-        // console.log('inside Map' );
-        // console.log(value);
-        this.inpValue += (value != undefined ? value : '') + '@@##$$';
-       });
-       this.inpValue = this.trimLastDummy(this.inpValue);
+      this.inpValue = this.trimLastDummy(this.inpValue);
+      // console.log('out for = '+this.inpValue)
+     }else if (this.listFlag) {
+      this.inpValue = '';
+      var hasMissingInput = false;
+
+      if(this.localSubQMap.has(this.questionItem.Id)){
+        this.subAnsMap = new Map();
+        for (var localQues of this.localSubQMap.get(this.questionItem.Id)){
+         
+            if(!localQues.input){
+              localQues.error = new ErrorWrapper();
+              hasMissingInput = true;
+                }
+          if(!this.subAnsMap.has(localQues.Id)){
+            // console.log('inside ans map')
+            this.subAnsMap.set(localQues.Id,localQues.input);
+          } else {
+            // console.log('inside ans map else')
+            this.subAnsMap.set(localQues.Id,this.subAnsMap.get(localQues.Id) + '$$@@##'+localQues.input);
+          }
+        }
+        if (hasMissingInput) {
+          //console.log('file two')
+          return;
+        }
+        this.subAnsMap.forEach((value, key) => {
+          // console.log('inside Map' );
+          // console.log(value);
+          this.inpValue += (value != undefined ? value : '') + '@@##$$';
+         });
+         this.inpValue = this.trimLastDummy(this.inpValue);
+      }
+     }
+     else if(this.dropdownFlag){
+      if(this.inpValue.length <= 1){
+       this.inpValue=".";  
+      this.questionItem.error = new ErrorWrapper();
+      }
     }
    }
     
@@ -1197,19 +1212,21 @@ export class QuestionnaireComponent implements OnInit {
             this.recordId = cQuestion.Next_Question__c;
           }
         }
-      }
-      else if(cQuestion.Type__c == "Book" && cQuestion.Question_No__c =='6' ) {
+      }  if (cQuestion.Type__c == "List") {
+        //console.log("inside book");
         for (let opt of cQuestion.Questions__r.records) {
-          if (opt.Type__c == "Dropdown" || opt.Type__c == "Radio"){
-          for (var opt1 of opt.Question_Options__r.records) {
-            if (this.valueName == opt1.Value__c) {
-            this.recordId = opt1.Next_Question__c;  
+          //console.log(opt.Type__c);
+           if (opt.Type__c == "Dropdown"||opt.Type__c == "Radio") {
+            for (var opt1 of opt.Question_Options__r.records) {
+              if (this.valueName == opt1.Value__c) {
+                this.recordId = opt1.Next_Question__c || cQuestion.Next_Question__c;
+              }
             }
+          } else {
+            this.recordId = cQuestion.Next_Question__c;
           }
         }
-        }
-      }    
-      
+      }
       else {
         this.recordId = cQuestion.Next_Question__c;
       }
@@ -1233,6 +1250,8 @@ export class QuestionnaireComponent implements OnInit {
     } else {
       this.pop = false;
       //console.log('Summary Page Logic');
+      // console.log('Summary Page Logic');
+      // console.log(this.answerMap);
       // Reset the Variables
       this.inpValue = "";
       this.answerWrap = new AnswerWrapper();
@@ -1289,6 +1308,9 @@ export class QuestionnaireComponent implements OnInit {
     if (this.pop === true) {
       this.questionName.pop();
     }
+    console.log('inside handle back click ');
+    this.backButtonFlag = true;
+    this.AnswerSave();
     this.handleEvent.emit(this.qbItem.Back_Tracking_ID__c);
     var cQuestion: Question = new Question();
     cQuestion = this.questionItem;
@@ -1759,7 +1781,6 @@ export class QuestionnaireComponent implements OnInit {
 
   setFlag(typ) {
     //console.log('inside setFlag for ' + typ);
-
     if (typ) {
       // Set the Flags
       if (typ == "Text") {
@@ -1802,7 +1823,6 @@ export class QuestionnaireComponent implements OnInit {
         //console.log('Inside the Date cond');
         this.dtFlag = true;
         this.dateFlag = true;
-        //console.log(this.dtFlag);
       }
     }
   }
@@ -1873,9 +1893,8 @@ export class QuestionnaireComponent implements OnInit {
   }
 
   setSubQuestions(records) {
-    //console.log('inside setSubQuestions');
-    //console.log(records);
-
+    console.log('inside setSubQuestions');
+    console.log(records);
     var qaMap = new Map();
     //console.log(this.inpValue);
     if (this.inpValue) {
@@ -1884,7 +1903,7 @@ export class QuestionnaireComponent implements OnInit {
         for (var ansStr of this.inpValue.split("@@##$$")) {
           aIndex++;
           qaMap.set(aIndex, ansStr);
-          //console.log('Setting the qaMap for ' + aIndex + ' with ' + ansStr);
+          // console.log('Setting the qaMap for ' + aIndex + ' with ' + ansStr);
         }
       } else {
         for (var ansStr of this.inpValue.split(", ")) {
@@ -1894,7 +1913,6 @@ export class QuestionnaireComponent implements OnInit {
         }
       }
     }
-
     for (var ques of records) {
       if (ques.Type__c == "File") {
         this.valueName1 = ques.Allowed_File_Extensions__c;
@@ -1914,42 +1932,18 @@ export class QuestionnaireComponent implements OnInit {
             // console.log(ques.input);
           }
         }
-
-
-      if ((ques.Type__c === "Date") && (ques.Is_Date_Backward__c || ques.Is_Date_Forward__c)) {
-        //console.log('Inside the date backward/forward cond');
-        if (ques.Is_Date_Backward__c === true) {
-          //console.log('Inside the Is_Date_Backward__c');
-          this.myDatePickerOptions.disableSince = {
-            year: this.today.getFullYear(),
-            month: this.today.getMonth() + 1,
-            day: this.today.getDate() + 1,
-          };
+        this.subQuestions.push(ques);
+        if(ans != ''){
+          for(var an of (ans.split('$$@@##'))){
+            var sQ = new Question();
+            Object.assign(sQ,ques);
+            sQ.input = an;
+            this.subQuestions.push(sQ);
+          }
         }
-        if (ques.Is_Date_Forward__c === true) {
-          //console.log('Inside the Is_Date_Forward__c');
-          this.myDatePickerOptions.disableUntil = {
-            year: this.today.getFullYear(),
-            month: this.today.getMonth() + 1,
-            day: this.today.getDate(),
-          };
-        }
-        //console.log(this.myDatePickerOptions);
-      }
-
-      this.subQuestions.push(ques);
-      if(ans != ''){
-        for(var an of (ans.split('$$@@##'))){
-          var sQ = new Question();
-          Object.assign(sQ,ques);
-          sQ.input = an;
-          this.subQuestions.push(sQ);
-        }
-      }
     }
-    if (this.valueName1.length > 0) {
-      this.bookFlagAccept = this.valueName1.split(";");
-      //console.log(this.subQuestions);
+    if(this.valueName1.length >0){
+       this.bookFlagAccept = this.valueName1.split(';');
     }
     this.structLocalSubQuestion(null);
   }
@@ -1975,10 +1969,6 @@ export class QuestionnaireComponent implements OnInit {
     if (this.questionItem.error) {
       this.questionItem.error = null;
     }
-  }
-
-  clearLocalSubQuesError(quesId) {
-    quesId.error = null;
   }
 
   inputValidate(e) {
@@ -2041,6 +2031,10 @@ export class QuestionnaireComponent implements OnInit {
     }
   }
 
+  clearLocalSubQuesError(quesId) {
+      quesId.error = null;
+  }
+
   uploadFile(event) {
     //console.log('inside upload');
     this.clearError();
@@ -2086,7 +2080,7 @@ export class QuestionnaireComponent implements OnInit {
         local.createAttachment(fileWrapper);
       }
     };
-    this.spinner.show(this.spinnerName);
+
     reader.readAsDataURL(event.target.files[0]);
   }
 
@@ -2098,7 +2092,7 @@ export class QuestionnaireComponent implements OnInit {
     );
     this.attachments.push(createdAttachment);
     this.attachmentsMap.set(this.questionItem.Id, this.attachments);
-    this.spinner.hide(this.spinnerName);
+    
   };
 
   private successAttachmentDelete = (response) => {
@@ -2320,23 +2314,19 @@ export class QuestionnaireComponent implements OnInit {
           localSubQuestion.Question_No__c = this.subQuestions[i].Question_No__c;
           localSubQuestion.Allowed_File_Extensions__c = this.subQuestions[i].Allowed_File_Extensions__c;
           localSubQuestion.uniqueSubQId = ''+this.subQuestions[i].Id + i; 
+          localSubQuestion.input = this.subQuestions[i].input;
           this.localSubQuestions.push(localSubQuestion);
       }
-  // console.log('final local sub questions');
-  // console.log(this.localSubQuestions);
-  // console.log(this.questionItem.Id);
-  this.localSubQMap.set(this.questionItem.Id,this.localSubQuestions);
-  this.localSubQuestions = [];
-  // console.log('final key localSubQMap map');
-  // console.log(this.localSubQMap);
+      this.localSubQMap.set(this.questionItem.Id,this.localSubQuestions);
+      this.localSubQuestions = [];
   }
 
   addInputBox(question: LocalQuestion, index: number){
     var arra = this.localSubQMap.get(this.questionItem.Id);
     var qIndex = arra.indexOf(question);
+    console.log(qIndex)
     var ques: LocalQuestion = new LocalQuestion();
     Object.assign(ques, question);
-    //console.log((ques.uniqueSubQId).substring(18, (ques.uniqueSubQId).length)+1);
     if(this.keyIndex == index){
       ques.uniqueSubQId = ques.Id + (String(index+1));
       this.keyIndex++;
@@ -2372,4 +2362,23 @@ export class QuestionnaireComponent implements OnInit {
   getLocalSubQuestions(id: String){
     return this.localSubQMap.get(id);
   }
+
+  Add(question: LocalQuestion){
+    this.addFlag =  false;
+    var arra = this.localSubQMap.get(this.questionItem.Id);
+    var index  = arra.length;
+    var a = arra.slice(-1).pop();
+    this.indexCount  = a.Question_No__c;
+    
+    for (var i = 0; i < this.indexCount ; i++) {
+      var ques: LocalQuestion = new LocalQuestion();
+      Object.assign(ques, question[i]);
+      this.keyIndex++;
+      ques.uniqueSubQId = ques.Id + (String(this.keyIndex));
+      ques.input = '';
+      arra.splice(index+(this.indexCount-1), 0, ques);
+    this.localSubQMap.set(this.questionItem.Id,arra);
+    }  
+    this.addFlag = true;
   }
+}
