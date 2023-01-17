@@ -57,7 +57,9 @@
         {{ questionItem?.Question_Text__c }}
       </div>
     </div>
-
+    <div *ngIf="haveAnteileError" class="AnteileErrorMessage">
+      Bitte Anteile in % {{anteilesum}}. Die Summe muss 100% ergeben
+    </div>
     <div *ngIf="questionItem.Type__c =='Book'">
       <div *ngIf="questionItem.Question_No__c=='6'">
       <h3 class="myt-321" [innerHTML]="getText(questionItem?.Question_Text__c)">

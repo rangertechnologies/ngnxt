@@ -102,6 +102,8 @@ export class QuestionnaireComponent implements OnInit {
   public attachmentIdList: any[] = [];
   public attachmentId: string = "";
   public attachment: any;
+  public addCount: any = 1;
+  public anteilesum: any = 0;
   public allowedFileExtension: string[];
   public fileExceededLimit: boolean = false;
   public fileTypeIncorrect: boolean = false;
@@ -118,6 +120,9 @@ export class QuestionnaireComponent implements OnInit {
   public taFocusOut: boolean = false;
   public notValidAccNum: boolean = false;
   public splCCBackClick: boolean = false;
+  public AnteileShow : boolean = false;
+  public haveAnteileError : boolean = false;
+  public hasAnteile : boolean = false;
   public summary = [];
   public localSubQMap = new Map();
   public keyIndex: number = 0;
@@ -569,6 +574,7 @@ export class QuestionnaireComponent implements OnInit {
         });
         localStorage.removeItem('editiedProduct');
         localStorage.removeItem('selectedCoverage');
+        localStorage.removeItem('selectedInsurenceStartDate');
 
         console.log('productListUpdated',this.productList);
 
@@ -784,6 +790,8 @@ export class QuestionnaireComponent implements OnInit {
   }
 
   handleNextClick() {
+    console.log('Next click', this.addCount);
+    this.addCount = 1;
     this.backButtonFlag = false;
     this.AnswerSave();
   }
@@ -792,6 +800,7 @@ export class QuestionnaireComponent implements OnInit {
       window.open(item, '_self');
   }
   AnswerSave(){
+    this.anteilesum = 0;
     //console.log('Inside the handleNextClick');
     //console.log(this.bookFlag);
     //console.log(this.questionItem);
@@ -1000,7 +1009,7 @@ export class QuestionnaireComponent implements OnInit {
 			  }
 			//console.log('testin values=='+item.input)
 		  }
-			 /* var loctown;
+      			 /* var loctown;
 			  for(let val of this.localaddress){
                         loctown=val.town;
 			  
@@ -1082,6 +1091,13 @@ export class QuestionnaireComponent implements OnInit {
             localQues.error = new ErrorWrapper();
             hasMissingInput = true;
               }
+              if(localQues.Type__c== "Text" && localQues.Question__c === 'Anteil Prozentsatz'){
+                this.hasAnteile = true;
+                this.anteilesum += +localQues.input;
+              }
+              else{
+                this.hasAnteile = false;
+              }        
         if(!this.subAnsMap.has(localQues.Id)){
           // console.log('inside ans map')
           this.subAnsMap.set(localQues.Id,localQues.input);
@@ -1090,6 +1106,23 @@ export class QuestionnaireComponent implements OnInit {
           this.subAnsMap.set(localQues.Id,this.subAnsMap.get(localQues.Id) + '$$@@##'+localQues.input);
         }
       }
+      if(this.hasAnteile){
+        if(this.anteilesum != 100){
+          console.log('throw error');
+          for (var ele of this.localSubQMap.get(this.questionItem.Id)){
+            if(ele.Type__c== "Text" && ele.Question__c === 'Anteil Prozentsatz'){
+              ele.error = new ErrorWrapper();
+              hasMissingInput = true;
+              this.haveAnteileError = true;
+            }  
+          }
+        }
+        else{
+          this.haveAnteileError = false;
+          console.log('throw success');
+        }
+      }  
+      
       if (hasMissingInput) {
         //console.log('file two')
         return;
@@ -1250,6 +1283,12 @@ export class QuestionnaireComponent implements OnInit {
     var cQuestion: Question = new Question();
     cQuestion = this.questionItem;
     console.log('1204 questionItem', this.questionItem);
+    if(this.removeTags(cQuestion.Question_Text__c) == 'Möchten Sie die standard Begünstigung ändern?'){
+      this.AnteileShow = true;
+    }
+    else{
+      this.AnteileShow = false;
+    }
     var typ = cQuestion.Type__c;
     // If no error then move to next steps
     if (this.questionItem.error) {
@@ -2560,6 +2599,14 @@ export class QuestionnaireComponent implements OnInit {
   }
 
   getLocalSubQuestions(id: String){
+    if(this.AnteileShow){
+    var subQuestionsList = this.localSubQMap.get(id);
+    subQuestionsList.forEach(item => {
+      if(item.Question__c == 'Anteil Prozentsatz'){
+        this.hasAnteile = true;
+      }
+    });
+    }
     return this.localSubQMap.get(id);
   }
 
@@ -2579,6 +2626,7 @@ export class QuestionnaireComponent implements OnInit {
   }
   //Single Add button functionality for List type
 Add(question: LocalQuestion){
+    this.addCount++;
     this.addFlag =  false;
     var arra = this.localSubQMap.get(this.questionItem.Id);
     var index  = arra.length;

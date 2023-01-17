@@ -2101,6 +2101,13 @@ background-color: #dedddd;
   border-radius: 100px;
 }
 
+.AnteileErrorMessage{
+  font-size: 15px;
+    padding-top: 10px;
+    color: red;
+    text-align: center;
+}
+
 
 /* .progress{
   height: 8px;
