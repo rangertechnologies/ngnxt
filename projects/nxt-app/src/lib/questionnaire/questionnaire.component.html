@@ -58,7 +58,8 @@
       </div>
     </div>
     <div *ngIf="haveAnteileError" class="AnteileErrorMessage">
-      Bitte Anteile in % {{anteilesum}}. Die Summe muss 100% ergeben
+      <!-- Bitte Anteile in % {{anteilesum}}. Die Summe muss 100% ergeben -->
+      Die Summe muss 100% betragen. Ihre Angaben ergeben: {{anteilesum}}%
     </div>
     <div *ngIf="questionItem.Type__c =='Book'">
       <div *ngIf="questionItem.Question_No__c=='6'">
