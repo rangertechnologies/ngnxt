@@ -597,70 +597,15 @@
 <!-- EMBI Profile Section -->
 
 <div *ngIf="summary && summary.length > 0" height="100% !important">
+  <!-- EMBI-169 -SA- 2/2/23  rearranging summary persnol informations -->
   <div>
-    <h1 style="text-align: center;">Profile</h1>
+    <h1 class="heading">Bitte überprüfen Sie die Daten</h1>
     <div id="progress2">  
       <div class="summary">
+       
         <div class="question">
             <div class="name">
-              Bank Name:
-            </div>
-            <div class="input-center">
-            <input class="packUser-Input form-control" type="text"  maxlength="40" id="bankName" [(ngModel)]="profileData.bankName" name="bankName" size="50"
-                required [readonly]="checkEdit == 'bankName' ? false : true " />
-                <button class="edit"(click)="edit('bankName')">
-                  <img *ngIf="deviceInfo.os === 'iOS'" src="https://lingscrm--embi.sandbox.file.force.com/sfc/dist/version/download/?oid=00D7Y0000001Van&ids=0687Y000002OYZTQA4&d=%2Fa%2F7Y000000HK5F%2FF5JWdsOhqXhkxe0zLMEIzod84Ne3sJaAdoWXBs9iZJI&operationContext=DELIVERY&viewId=05H7Y000000HAVmUAO&dpt=" />
-                  <img *ngIf="deviceInfo.os !== 'iOS'" src="https://lingscrm--embi.sandbox.file.force.com/sfc/dist/version/download/?oid=00D7Y0000001Van&ids=0687Y000002OYZTQA4&d=%2Fa%2F7Y000000HK5F%2FF5JWdsOhqXhkxe0zLMEIzod84Ne3sJaAdoWXBs9iZJI&operationContext=DELIVERY&viewId=05H7Y000000HAVmUAO&dpt="  />
-                </button>
-            </div>
-          </div>
-
-          
-        <div class="question">
-            <div class="name">
-                Bank Address:
-            </div>
-            <div class="input-center">
-                <input class="packUser-Input form-control" type="text"  maxlength="40" id="bankAddress" [(ngModel)]="profileData.bankAddress" style="width: 300px;" name="bankAddress" size="50"
-                  required [readonly]="checkEdit == 'bankAddress' ? false : true " />
-                  <button class="edit"(click)="edit('bankAddress')">
-                  <img *ngIf="deviceInfo.os === 'iOS'" src="https://lingscrm--embi.sandbox.file.force.com/sfc/dist/version/download/?oid=00D7Y0000001Van&ids=0687Y000002OYZTQA4&d=%2Fa%2F7Y000000HK5F%2FF5JWdsOhqXhkxe0zLMEIzod84Ne3sJaAdoWXBs9iZJI&operationContext=DELIVERY&viewId=05H7Y000000HAVmUAO&dpt=" />
-                  <img *ngIf="deviceInfo.os !== 'iOS'" src="https://lingscrm--embi.sandbox.file.force.com/sfc/dist/version/download/?oid=00D7Y0000001Van&ids=0687Y000002OYZTQA4&d=%2Fa%2F7Y000000HK5F%2FF5JWdsOhqXhkxe0zLMEIzod84Ne3sJaAdoWXBs9iZJI&operationContext=DELIVERY&viewId=05H7Y000000HAVmUAO&dpt="  />
-                  </button>
-            </div>
-          </div>
-
-        <div class="question">
-            <div class="name">
-              Gender:
-            </div>
-            <div class="input-center">
-            <input class="packUser-Input form-control" type="text"  maxlength="40" id="gender" [(ngModel)]="profileData.gender" style="width: 300px;" name="gender" size="50"
-                  required [readonly]="checkEdit == 'gender' ? false : true " />
-                  <button class="edit"(click)="edit('gender')">
-                  <img *ngIf="deviceInfo.os === 'iOS'" src="https://lingscrm--embi.sandbox.file.force.com/sfc/dist/version/download/?oid=00D7Y0000001Van&ids=0687Y000002OYZTQA4&d=%2Fa%2F7Y000000HK5F%2FF5JWdsOhqXhkxe0zLMEIzod84Ne3sJaAdoWXBs9iZJI&operationContext=DELIVERY&viewId=05H7Y000000HAVmUAO&dpt=" />
-                  <img *ngIf="deviceInfo.os !== 'iOS'" src="https://lingscrm--embi.sandbox.file.force.com/sfc/dist/version/download/?oid=00D7Y0000001Van&ids=0687Y000002OYZTQA4&d=%2Fa%2F7Y000000HK5F%2FF5JWdsOhqXhkxe0zLMEIzod84Ne3sJaAdoWXBs9iZJI&operationContext=DELIVERY&viewId=05H7Y000000HAVmUAO&dpt=" />
-                </button>
-            </div>
-        </div>
-
-        <div class="question">
-              <div class="name">
-                Civil Status
-              </div>
-              <div class="input-center">
-              <input class="packUser-Input form-control" type="text"  maxlength="40" id="civilStatus" [(ngModel)]="profileData.civilStatus" style="width: 300px;" name="civilStatus" size="50"
-                    required [readonly]="checkEdit == 'civilStatus' ? false : true " />
-                  <button class="edit"(click)="edit('civilStatus')">
-                    <img *ngIf="deviceInfo.os === 'iOS'" src="https://lingscrm--embi.sandbox.file.force.com/sfc/dist/version/download/?oid=00D7Y0000001Van&ids=0687Y000002OYZTQA4&d=%2Fa%2F7Y000000HK5F%2FF5JWdsOhqXhkxe0zLMEIzod84Ne3sJaAdoWXBs9iZJI&operationContext=DELIVERY&viewId=05H7Y000000HAVmUAO&dpt=" />
-                    <img *ngIf="deviceInfo.os !== 'iOS'" src="https://lingscrm--embi.sandbox.file.force.com/sfc/dist/version/download/?oid=00D7Y0000001Van&ids=0687Y000002OYZTQA4&d=%2Fa%2F7Y000000HK5F%2FF5JWdsOhqXhkxe0zLMEIzod84Ne3sJaAdoWXBs9iZJI&operationContext=DELIVERY&viewId=05H7Y000000HAVmUAO&dpt=" />
-                  </button>
-           </div>
-        </div>
-
-        <div class="question">
-            <div class="name">
-              First Name:
+              Vorname:
             </div>
             <div class="input-center">
             <input class="packUser-Input form-control" type="text"  maxlength="40" id="firstName" [(ngModel)]="profileData.firstName" style="width: 300px;" name="firstName" size="50"
@@ -674,7 +619,7 @@
 
         <div class="question">
             <div class="name">
-              Last Name
+              Nachname:
             </div>
             <div class="input-center">
             <input class="packUser-Input form-control" type="text"  maxlength="40" id="lastName" [(ngModel)]="profileData.lastName" style="width: 300px;" name="lastName" size="50"
@@ -687,104 +632,162 @@
         </div>
 
         <div class="question">
-            <div class="name">
-              Birth Date:
-            </div>
-            <div class="input-center">
-            <input class="packUser-Input form-control" type="text"  maxlength="40" id="dob" [(ngModel)]="profileData.dob" style="width: 300px;" name="dob" size="50"
-                  required [readonly]="checkEdit == 'dob' ? false : true " />
-                <button class="edit"(click)="edit('dob')">
-                  <img *ngIf="deviceInfo.os === 'iOS'" src="https://lingscrm--embi.sandbox.file.force.com/sfc/dist/version/download/?oid=00D7Y0000001Van&ids=0687Y000002OYZTQA4&d=%2Fa%2F7Y000000HK5F%2FF5JWdsOhqXhkxe0zLMEIzod84Ne3sJaAdoWXBs9iZJI&operationContext=DELIVERY&viewId=05H7Y000000HAVmUAO&dpt=" />
-                  <img *ngIf="deviceInfo.os !== 'iOS'" src="https://lingscrm--embi.sandbox.file.force.com/sfc/dist/version/download/?oid=00D7Y0000001Van&ids=0687Y000002OYZTQA4&d=%2Fa%2F7Y000000HK5F%2FF5JWdsOhqXhkxe0zLMEIzod84Ne3sJaAdoWXBs9iZJI&operationContext=DELIVERY&viewId=05H7Y000000HAVmUAO&dpt="  />
-                </button>
+          <div class="name">
+            Adresse:
           </div>
-        </div>
+          <div class="input-center">
+          <input class="packUser-Input form-control" type="text"  maxlength="40" id="address" [(ngModel)]="profileData.address" style="width: 300px;" name="address" size="50"
+                required [readonly]="checkEdit == 'address' ? false : true " />
+              <button class="edit"(click)="edit('address')">
+                <img *ngIf="deviceInfo.os === 'iOS'" src="https://lingscrm--embi.sandbox.file.force.com/sfc/dist/version/download/?oid=00D7Y0000001Van&ids=0687Y000002OYZTQA4&d=%2Fa%2F7Y000000HK5F%2FF5JWdsOhqXhkxe0zLMEIzod84Ne3sJaAdoWXBs9iZJI&operationContext=DELIVERY&viewId=05H7Y000000HAVmUAO&dpt=" />
+                <img *ngIf="deviceInfo.os !== 'iOS'" src="https://lingscrm--embi.sandbox.file.force.com/sfc/dist/version/download/?oid=00D7Y0000001Van&ids=0687Y000002OYZTQA4&d=%2Fa%2F7Y000000HK5F%2FF5JWdsOhqXhkxe0zLMEIzod84Ne3sJaAdoWXBs9iZJI&operationContext=DELIVERY&viewId=05H7Y000000HAVmUAO&dpt="  />
+              </button>
+          </div>
+      </div>
 
-        <div class="question">
-            <div class="name">
-              Address:
-            </div>
-            <div class="input-center">
-            <input class="packUser-Input form-control" type="text"  maxlength="40" id="address" [(ngModel)]="profileData.address" style="width: 300px;" name="address" size="50"
-                  required [readonly]="checkEdit == 'address' ? false : true " />
-                <button class="edit"(click)="edit('address')">
-                  <img *ngIf="deviceInfo.os === 'iOS'" src="https://lingscrm--embi.sandbox.file.force.com/sfc/dist/version/download/?oid=00D7Y0000001Van&ids=0687Y000002OYZTQA4&d=%2Fa%2F7Y000000HK5F%2FF5JWdsOhqXhkxe0zLMEIzod84Ne3sJaAdoWXBs9iZJI&operationContext=DELIVERY&viewId=05H7Y000000HAVmUAO&dpt=" />
-                  <img *ngIf="deviceInfo.os !== 'iOS'" src="https://lingscrm--embi.sandbox.file.force.com/sfc/dist/version/download/?oid=00D7Y0000001Van&ids=0687Y000002OYZTQA4&d=%2Fa%2F7Y000000HK5F%2FF5JWdsOhqXhkxe0zLMEIzod84Ne3sJaAdoWXBs9iZJI&operationContext=DELIVERY&viewId=05H7Y000000HAVmUAO&dpt="  />
-                </button>
-            </div>
+      <div class="question">
+        <div class="name">
+          PLZ/Ort:
         </div>
-
-        <div class="question">
-            <div class="name">
-              Country:
-            </div>
-            <div class="input-center">
-            <input class="packUser-Input form-control" type="text"  maxlength="40" id="country" [(ngModel)]="profileData.country" style="width: 300px;" name="country" size="50"
-                  required [readonly]="checkEdit == 'country' ? false : true " />
-                <button class="edit"(click)="edit('country')">
-                  <img *ngIf="deviceInfo.os === 'iOS'" src="https://lingscrm--embi.sandbox.file.force.com/sfc/dist/version/download/?oid=00D7Y0000001Van&ids=0687Y000002OYZTQA4&d=%2Fa%2F7Y000000HK5F%2FF5JWdsOhqXhkxe0zLMEIzod84Ne3sJaAdoWXBs9iZJI&operationContext=DELIVERY&viewId=05H7Y000000HAVmUAO&dpt=" />
-                  <img *ngIf="deviceInfo.os !== 'iOS'" src="https://lingscrm--embi.sandbox.file.force.com/sfc/dist/version/download/?oid=00D7Y0000001Van&ids=0687Y000002OYZTQA4&d=%2Fa%2F7Y000000HK5F%2FF5JWdsOhqXhkxe0zLMEIzod84Ne3sJaAdoWXBs9iZJI&operationContext=DELIVERY&viewId=05H7Y000000HAVmUAO&dpt="  />
-                </button>
-            </div>
+        <div class="input-center">
+        <input class="packUser-Input form-control" type="text"  maxlength="40" id="postalCode" [(ngModel)]="profileData.postalCode" style="width: 300px;" name="postalCode" size="50"
+              required [readonly]="checkEdit == 'postalCode' ? false : true " />
+            <button class="edit"(click)="edit('postalCode')">
+              <img *ngIf="deviceInfo.os === 'iOS'" src="https://lingscrm--embi.sandbox.file.force.com/sfc/dist/version/download/?oid=00D7Y0000001Van&ids=0687Y000002OYZTQA4&d=%2Fa%2F7Y000000HK5F%2FF5JWdsOhqXhkxe0zLMEIzod84Ne3sJaAdoWXBs9iZJI&operationContext=DELIVERY&viewId=05H7Y000000HAVmUAO&dpt="/>
+              <img *ngIf="deviceInfo.os !== 'iOS'" src="https://lingscrm--embi.sandbox.file.force.com/sfc/dist/version/download/?oid=00D7Y0000001Van&ids=0687Y000002OYZTQA4&d=%2Fa%2F7Y000000HK5F%2FF5JWdsOhqXhkxe0zLMEIzod84Ne3sJaAdoWXBs9iZJI&operationContext=DELIVERY&viewId=05H7Y000000HAVmUAO&dpt="  />
+            </button>
         </div>
+    </div>
 
-        <div class="question">
-            <div class="name">
-              Post Code:
-            </div>
-            <div class="input-center">
-            <input class="packUser-Input form-control" type="text"  maxlength="40" id="postalCode" [(ngModel)]="profileData.postalCode" style="width: 300px;" name="postalCode" size="50"
-                  required [readonly]="checkEdit == 'postalCode' ? false : true " />
-                <button class="edit"(click)="edit('postalCode')">
-                  <img *ngIf="deviceInfo.os === 'iOS'" src="https://lingscrm--embi.sandbox.file.force.com/sfc/dist/version/download/?oid=00D7Y0000001Van&ids=0687Y000002OYZTQA4&d=%2Fa%2F7Y000000HK5F%2FF5JWdsOhqXhkxe0zLMEIzod84Ne3sJaAdoWXBs9iZJI&operationContext=DELIVERY&viewId=05H7Y000000HAVmUAO&dpt="/>
-                  <img *ngIf="deviceInfo.os !== 'iOS'" src="https://lingscrm--embi.sandbox.file.force.com/sfc/dist/version/download/?oid=00D7Y0000001Van&ids=0687Y000002OYZTQA4&d=%2Fa%2F7Y000000HK5F%2FF5JWdsOhqXhkxe0zLMEIzod84Ne3sJaAdoWXBs9iZJI&operationContext=DELIVERY&viewId=05H7Y000000HAVmUAO&dpt="  />
-                </button>
-            </div>
+
+    <div class="question">
+      <div class="name">
+        Land:
+      </div>
+      <div class="input-center">
+      <input class="packUser-Input form-control" type="text"  maxlength="40" id="country" [(ngModel)]="profileData.country" style="width: 300px;" name="country" size="50"
+            required [readonly]="checkEdit == 'country' ? false : true " />
+          <button class="edit"(click)="edit('country')">
+            <img *ngIf="deviceInfo.os === 'iOS'" src="https://lingscrm--embi.sandbox.file.force.com/sfc/dist/version/download/?oid=00D7Y0000001Van&ids=0687Y000002OYZTQA4&d=%2Fa%2F7Y000000HK5F%2FF5JWdsOhqXhkxe0zLMEIzod84Ne3sJaAdoWXBs9iZJI&operationContext=DELIVERY&viewId=05H7Y000000HAVmUAO&dpt=" />
+            <img *ngIf="deviceInfo.os !== 'iOS'" src="https://lingscrm--embi.sandbox.file.force.com/sfc/dist/version/download/?oid=00D7Y0000001Van&ids=0687Y000002OYZTQA4&d=%2Fa%2F7Y000000HK5F%2FF5JWdsOhqXhkxe0zLMEIzod84Ne3sJaAdoWXBs9iZJI&operationContext=DELIVERY&viewId=05H7Y000000HAVmUAO&dpt="  />
+          </button>
+      </div>
+    </div>
+
+      <div class="question">
+        <div class="name">
+          Geburtsdatum:
         </div>
+        <div class="input-center">
+        <input class="packUser-Input form-control" type="text"  maxlength="40" id="dob" [(ngModel)]="profileData.dob" style="width: 300px;" name="dob" size="50"
+              required [readonly]="checkEdit == 'dob' ? false : true " />
+            <button class="edit"(click)="edit('dob')">
+              <img *ngIf="deviceInfo.os === 'iOS'" src="https://lingscrm--embi.sandbox.file.force.com/sfc/dist/version/download/?oid=00D7Y0000001Van&ids=0687Y000002OYZTQA4&d=%2Fa%2F7Y000000HK5F%2FF5JWdsOhqXhkxe0zLMEIzod84Ne3sJaAdoWXBs9iZJI&operationContext=DELIVERY&viewId=05H7Y000000HAVmUAO&dpt=" />
+              <img *ngIf="deviceInfo.os !== 'iOS'" src="https://lingscrm--embi.sandbox.file.force.com/sfc/dist/version/download/?oid=00D7Y0000001Van&ids=0687Y000002OYZTQA4&d=%2Fa%2F7Y000000HK5F%2FF5JWdsOhqXhkxe0zLMEIzod84Ne3sJaAdoWXBs9iZJI&operationContext=DELIVERY&viewId=05H7Y000000HAVmUAO&dpt="  />
+            </button>
+      </div>
+    </div>
+    <div class="question">
+      <div class="name">
+        Geschlecht:
+      </div>
+      <div class="input-center">
+      <input class="packUser-Input form-control" type="text"  maxlength="40" id="gender" [(ngModel)]="profileData.gender" style="width: 300px;" name="gender" size="50"
+            required [readonly]="checkEdit == 'gender' ? false : true " />
+            <button class="edit"(click)="edit('gender')">
+            <img *ngIf="deviceInfo.os === 'iOS'" src="https://lingscrm--embi.sandbox.file.force.com/sfc/dist/version/download/?oid=00D7Y0000001Van&ids=0687Y000002OYZTQA4&d=%2Fa%2F7Y000000HK5F%2FF5JWdsOhqXhkxe0zLMEIzod84Ne3sJaAdoWXBs9iZJI&operationContext=DELIVERY&viewId=05H7Y000000HAVmUAO&dpt=" />
+            <img *ngIf="deviceInfo.os !== 'iOS'" src="https://lingscrm--embi.sandbox.file.force.com/sfc/dist/version/download/?oid=00D7Y0000001Van&ids=0687Y000002OYZTQA4&d=%2Fa%2F7Y000000HK5F%2FF5JWdsOhqXhkxe0zLMEIzod84Ne3sJaAdoWXBs9iZJI&operationContext=DELIVERY&viewId=05H7Y000000HAVmUAO&dpt=" />
+          </button>
+      </div>
+    </div>
 
-        <div class="question">
-            <div class="name">
-              Nationality:
-            </div>
-            <div class="input-center">
-            <input class="packUser-Input form-control" type="text"  maxlength="40" id="nationality" [(ngModel)]="profileData.nationality" style="width: 300px;" name="nationality" size="50"
-                required [readonly]="checkEdit == 'nationality' ? false : true " />
-                <button class="edit"(click)="edit('nationality')">
-                  <img *ngIf="deviceInfo.os === 'iOS'" src="https://lingscrm--embi.sandbox.file.force.com/sfc/dist/version/download/?oid=00D7Y0000001Van&ids=0687Y000002OYZTQA4&d=%2Fa%2F7Y000000HK5F%2FF5JWdsOhqXhkxe0zLMEIzod84Ne3sJaAdoWXBs9iZJI&operationContext=DELIVERY&viewId=05H7Y000000HAVmUAO&dpt=" />
-                  <img *ngIf="deviceInfo.os !== 'iOS'" src="https://lingscrm--embi.sandbox.file.force.com/sfc/dist/version/download/?oid=00D7Y0000001Van&ids=0687Y000002OYZTQA4&d=%2Fa%2F7Y000000HK5F%2FF5JWdsOhqXhkxe0zLMEIzod84Ne3sJaAdoWXBs9iZJI&operationContext=DELIVERY&viewId=05H7Y000000HAVmUAO&dpt=" />
-                </button>
-            </div>
-        </div>
+    <div class="question">
+      <div class="name">
+        Zivilstatus:
+      </div>
+      <div class="input-center">
+      <input class="packUser-Input form-control" type="text"  maxlength="40" id="civilStatus" [(ngModel)]="profileData.civilStatus" style="width: 300px;" name="civilStatus" size="50"
+            required [readonly]="checkEdit == 'civilStatus' ? false : true " />
+          <button class="edit"(click)="edit('civilStatus')">
+            <img *ngIf="deviceInfo.os === 'iOS'" src="https://lingscrm--embi.sandbox.file.force.com/sfc/dist/version/download/?oid=00D7Y0000001Van&ids=0687Y000002OYZTQA4&d=%2Fa%2F7Y000000HK5F%2FF5JWdsOhqXhkxe0zLMEIzod84Ne3sJaAdoWXBs9iZJI&operationContext=DELIVERY&viewId=05H7Y000000HAVmUAO&dpt=" />
+            <img *ngIf="deviceInfo.os !== 'iOS'" src="https://lingscrm--embi.sandbox.file.force.com/sfc/dist/version/download/?oid=00D7Y0000001Van&ids=0687Y000002OYZTQA4&d=%2Fa%2F7Y000000HK5F%2FF5JWdsOhqXhkxe0zLMEIzod84Ne3sJaAdoWXBs9iZJI&operationContext=DELIVERY&viewId=05H7Y000000HAVmUAO&dpt=" />
+          </button>
+    </div>
+    </div>
 
-        <div class="question">
-            <div class="name">
-              Email
-            </div>
-            <div class="input-center">
-            <input class="packUser-Input form-control" type="email"  maxlength="40" id="email" [(ngModel)]="profileData.email" style="width: 300px;" name="email" size="50"
-                  required [readonly]="checkEdit == 'email' ? false : true " />
-                <button class="edit"(click)="edit('email')">
-                  <img *ngIf="deviceInfo.os === 'iOS'" src="https://lingscrm--embi.sandbox.file.force.com/sfc/dist/version/download/?oid=00D7Y0000001Van&ids=0687Y000002OYZTQA4&d=%2Fa%2F7Y000000HK5F%2FF5JWdsOhqXhkxe0zLMEIzod84Ne3sJaAdoWXBs9iZJI&operationContext=DELIVERY&viewId=05H7Y000000HAVmUAO&dpt=" />
-                  <img *ngIf="deviceInfo.os !== 'iOS'" src="https://lingscrm--embi.sandbox.file.force.com/sfc/dist/version/download/?oid=00D7Y0000001Van&ids=0687Y000002OYZTQA4&d=%2Fa%2F7Y000000HK5F%2FF5JWdsOhqXhkxe0zLMEIzod84Ne3sJaAdoWXBs9iZJI&operationContext=DELIVERY&viewId=05H7Y000000HAVmUAO&dpt="/>
-                </button>
-            </div>
-        </div>
+    <div class="question">
+      <div class="name">
+        Nationalität:
+      </div>
+      <div class="input-center">
+      <input class="packUser-Input form-control" type="text"  maxlength="40" id="nationality" [(ngModel)]="profileData.nationality" style="width: 300px;" name="nationality" size="50"
+          required [readonly]="checkEdit == 'nationality' ? false : true " />
+          <button class="edit"(click)="edit('nationality')">
+            <img *ngIf="deviceInfo.os === 'iOS'" src="https://lingscrm--embi.sandbox.file.force.com/sfc/dist/version/download/?oid=00D7Y0000001Van&ids=0687Y000002OYZTQA4&d=%2Fa%2F7Y000000HK5F%2FF5JWdsOhqXhkxe0zLMEIzod84Ne3sJaAdoWXBs9iZJI&operationContext=DELIVERY&viewId=05H7Y000000HAVmUAO&dpt=" />
+            <img *ngIf="deviceInfo.os !== 'iOS'" src="https://lingscrm--embi.sandbox.file.force.com/sfc/dist/version/download/?oid=00D7Y0000001Van&ids=0687Y000002OYZTQA4&d=%2Fa%2F7Y000000HK5F%2FF5JWdsOhqXhkxe0zLMEIzod84Ne3sJaAdoWXBs9iZJI&operationContext=DELIVERY&viewId=05H7Y000000HAVmUAO&dpt=" />
+          </button>
+      </div>
+    </div>
 
-        <div class="question">
-            <div class="name">
-              Phone:
-            </div>
-            <div class="input-center">
-            <input class="packUser-Input form-control" type="number"  maxlength="10" id="phone" [(ngModel)]="profileData.phone" style="width: 300px;" name="phone" size="50"
-                  required [readonly]="checkEdit == 'phone' ? false : true " />
-                <button class="edit"(click)="edit('phone')">
-                  <img *ngIf="deviceInfo.os === 'iOS'" src="https://lingscrm--embi.sandbox.file.force.com/sfc/dist/version/download/?oid=00D7Y0000001Van&ids=0687Y000002OYZTQA4&d=%2Fa%2F7Y000000HK5F%2FF5JWdsOhqXhkxe0zLMEIzod84Ne3sJaAdoWXBs9iZJI&operationContext=DELIVERY&viewId=05H7Y000000HAVmUAO&dpt=" />
-                  <img *ngIf="deviceInfo.os !== 'iOS'" src="https://lingscrm--embi.sandbox.file.force.com/sfc/dist/version/download/?oid=00D7Y0000001Van&ids=0687Y000002OYZTQA4&d=%2Fa%2F7Y000000HK5F%2FF5JWdsOhqXhkxe0zLMEIzod84Ne3sJaAdoWXBs9iZJI&operationContext=DELIVERY&viewId=05H7Y000000HAVmUAO&dpt="  />
-                </button>
-            </div>
-        </div>
 
- 
+    <div class="question">
+      <div class="name">
+        E-Mail Adresse:
+      </div>
+      <div class="input-center">
+      <input class="packUser-Input form-control" type="email"  maxlength="40" id="email" [(ngModel)]="profileData.email" style="width: 300px;" name="email" size="50"
+            required [readonly]="checkEdit == 'email' ? false : true " />
+          <button class="edit"(click)="edit('email')">
+            <img *ngIf="deviceInfo.os === 'iOS'" src="https://lingscrm--embi.sandbox.file.force.com/sfc/dist/version/download/?oid=00D7Y0000001Van&ids=0687Y000002OYZTQA4&d=%2Fa%2F7Y000000HK5F%2FF5JWdsOhqXhkxe0zLMEIzod84Ne3sJaAdoWXBs9iZJI&operationContext=DELIVERY&viewId=05H7Y000000HAVmUAO&dpt=" />
+            <img *ngIf="deviceInfo.os !== 'iOS'" src="https://lingscrm--embi.sandbox.file.force.com/sfc/dist/version/download/?oid=00D7Y0000001Van&ids=0687Y000002OYZTQA4&d=%2Fa%2F7Y000000HK5F%2FF5JWdsOhqXhkxe0zLMEIzod84Ne3sJaAdoWXBs9iZJI&operationContext=DELIVERY&viewId=05H7Y000000HAVmUAO&dpt="/>
+          </button>
+      </div>
+    </div>
+
+    <div class="question">
+      <div class="name">
+        Telefonnummer:
+      </div>
+      <div class="input-center">
+      <input class="packUser-Input form-control" type="number"  maxlength="10" id="phone" [(ngModel)]="profileData.phone" style="width: 300px;" name="phone" size="50"
+            required [readonly]="checkEdit == 'phone' ? false : true " />
+          <button class="edit"(click)="edit('phone')">
+            <img *ngIf="deviceInfo.os === 'iOS'" src="https://lingscrm--embi.sandbox.file.force.com/sfc/dist/version/download/?oid=00D7Y0000001Van&ids=0687Y000002OYZTQA4&d=%2Fa%2F7Y000000HK5F%2FF5JWdsOhqXhkxe0zLMEIzod84Ne3sJaAdoWXBs9iZJI&operationContext=DELIVERY&viewId=05H7Y000000HAVmUAO&dpt=" />
+            <img *ngIf="deviceInfo.os !== 'iOS'" src="https://lingscrm--embi.sandbox.file.force.com/sfc/dist/version/download/?oid=00D7Y0000001Van&ids=0687Y000002OYZTQA4&d=%2Fa%2F7Y000000HK5F%2FF5JWdsOhqXhkxe0zLMEIzod84Ne3sJaAdoWXBs9iZJI&operationContext=DELIVERY&viewId=05H7Y000000HAVmUAO&dpt="  />
+          </button>
+      </div>
+    </div>
+
+
+
+            <div class="question">
+              <div class="name">
+                Hypothekbank:
+              </div>
+              <div class="input-center">
+              <input class="packUser-Input form-control" type="text"  maxlength="40" id="bankName" [(ngModel)]="profileData.bankName" name="bankName" size="50"
+                  required [readonly]="checkEdit == 'bankName' ? false : true " />
+                  <button class="edit"(click)="edit('bankName')">
+                    <img *ngIf="deviceInfo.os === 'iOS'" src="https://lingscrm--embi.sandbox.file.force.com/sfc/dist/version/download/?oid=00D7Y0000001Van&ids=0687Y000002OYZTQA4&d=%2Fa%2F7Y000000HK5F%2FF5JWdsOhqXhkxe0zLMEIzod84Ne3sJaAdoWXBs9iZJI&operationContext=DELIVERY&viewId=05H7Y000000HAVmUAO&dpt=" />
+                    <img *ngIf="deviceInfo.os !== 'iOS'" src="https://lingscrm--embi.sandbox.file.force.com/sfc/dist/version/download/?oid=00D7Y0000001Van&ids=0687Y000002OYZTQA4&d=%2Fa%2F7Y000000HK5F%2FF5JWdsOhqXhkxe0zLMEIzod84Ne3sJaAdoWXBs9iZJI&operationContext=DELIVERY&viewId=05H7Y000000HAVmUAO&dpt="  />
+                  </button>
+              </div>
+            </div>
+
+            
+          <div class="question">
+              <div class="name">
+                Adresse der Bank:
+              </div>
+              <div class="input-center">
+                  <input class="packUser-Input form-control" type="text"  maxlength="40" id="bankAddress" [(ngModel)]="profileData.bankAddress" style="width: 300px;" name="bankAddress" size="50"
+                    required [readonly]="checkEdit == 'bankAddress' ? false : true " />
+                    <button class="edit"(click)="edit('bankAddress')">
+                    <img *ngIf="deviceInfo.os === 'iOS'" src="https://lingscrm--embi.sandbox.file.force.com/sfc/dist/version/download/?oid=00D7Y0000001Van&ids=0687Y000002OYZTQA4&d=%2Fa%2F7Y000000HK5F%2FF5JWdsOhqXhkxe0zLMEIzod84Ne3sJaAdoWXBs9iZJI&operationContext=DELIVERY&viewId=05H7Y000000HAVmUAO&dpt=" />
+                    <img *ngIf="deviceInfo.os !== 'iOS'" src="https://lingscrm--embi.sandbox.file.force.com/sfc/dist/version/download/?oid=00D7Y0000001Van&ids=0687Y000002OYZTQA4&d=%2Fa%2F7Y000000HK5F%2FF5JWdsOhqXhkxe0zLMEIzod84Ne3sJaAdoWXBs9iZJI&operationContext=DELIVERY&viewId=05H7Y000000HAVmUAO&dpt="  />
+                    </button>
+              </div>
+            </div>
     </div>
 
     </div>
@@ -894,10 +897,9 @@
         </div>
       </div>
     </div>
-    <div class="terms">
-      <!-- <div>
-        Terms and Conditions (Unterlagen herunterladen)
-      </div> -->
+
+      <!-- EMBI-170 -SA- 2/2/23  removing check and document icon -->
+    <!-- <div class="terms">
       <div class="tick">
         <div style="display: flex;gap: 10px">
        
@@ -908,7 +910,7 @@
         </div>
       </div>
       
-    </div>
+    </div> -->
 
 
 
