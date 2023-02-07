@@ -8,7 +8,7 @@ import {
   ViewEncapsulation,
   ElementRef,
 } from "@angular/core";
-import { ActivatedRoute, Params } from "@angular/router";
+import { ActivatedRoute, NavigationStart, Params, Router } from "@angular/router";
 import { SalesforceService } from "../services/salesforce.service";
 import { IMyDateModel, IMyDpOptions } from "mydatepicker";
 import { DomSanitizer, SafeHtml } from "@angular/platform-browser";
@@ -507,10 +507,19 @@ export class QuestionnaireComponent implements OnInit {
     private _formBuilder: UntypedFormBuilder,
     //private dbService: NgxIndexedDBService,
     private deviceService: DeviceDetectorService,
+    private _router: Router,
     el: ElementRef
   ) {
     this.spinnerName = "sp1";
     this.spinnerType = "ball-spin-clockwise";
+
+    _router.events
+    .subscribe((event: NavigationStart) => {
+      if (event.navigationTrigger === 'popstate') {
+        console.log('back button Constrctor ==>', this.summary);
+        localStorage.setItem('summaryList',JSON.stringify(this.summary));
+      }
+    });
   }
 
   onDateChanged(event: IMyDateModel) {
