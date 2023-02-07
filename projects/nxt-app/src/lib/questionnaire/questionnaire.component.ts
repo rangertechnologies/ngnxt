@@ -562,7 +562,7 @@ export class QuestionnaireComponent implements OnInit {
       this.productList = products[0];
       console.log('productList',this.productList);
       if(localStorage.getItem('editiedProduct') != null){
-        this.productList[0].forEach(element => {
+        this.productList.forEach(element => {
           let localProdName = JSON.parse(localStorage.getItem('editiedProduct'));
           let localSelectedCoverage = JSON.parse(localStorage.getItem('selectedCoverage'))
           let localSelectedStartDate = JSON.parse(localStorage.getItem('selectedInsurenceStartDate'))
@@ -1318,7 +1318,7 @@ export class QuestionnaireComponent implements OnInit {
         this.recordId = cQuestion.Next_Question__c;
       }
       console.log('1260 this.productList',this.productList);
-      this.productList[0].forEach(element => {
+      this.productList.forEach(element => {
         if(element.Product_Name__c == 'Erwerbsunfähigkeitsversicherung' && this.productList[0].length == 1){
           if(this.removeTags(cQuestion.Question_Text__c) == 'Ist Ihre Arbeitsfähigkeit (im Beruf und/oder im Haushalt) heute eingeschränkt?' && this.inpValue == 'Ja'){
             let person = {fromPage:"splExistFromEmbi"};
@@ -1805,24 +1805,24 @@ export class QuestionnaireComponent implements OnInit {
     console.log('splCCBackClick = '+this.splCCBackClick);
     //console.log(this.questionItem);
     this.pop = true;
-    try {
-      console.log('style applying sathik');
+    // try {
+    //   console.log('style applying sathik');
       
     
-      // const htmlElement = window.document.getElementsByClassName("mydp");
-      // htmlElement
-      //   .item(0)
-      //   .setAttribute("style", "border-color:#87be1c;width:100%");
-       setTimeout(() => {
-        const elm = document.querySelector<HTMLElement>('.mydp')!;
-        elm.style.border = 'none';
-       }, 100);
+    //   // const htmlElement = window.document.getElementsByClassName("mydp");
+    //   // htmlElement
+    //   //   .item(0)
+    //   //   .setAttribute("style", "border-color:#87be1c;width:100%");
+    //    setTimeout(() => {
+    //     const elm = document.querySelector<HTMLElement>('.mydp')!;
+    //     elm.style.border = 'none';
+    //    }, 100);
        
         
-    } catch (error) {
-      console.log('catch error', error);
+    // } catch (error) {
+    //   console.log('catch error', error);
       
-    }
+    // }
 
     // if(!this.back){
     //   this.questionName.push(this.questionItem.Name)
