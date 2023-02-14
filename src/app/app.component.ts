@@ -13,7 +13,7 @@ export class AppComponent {
   showLoader = true;
 
   //fo my
-  fileTypes =['png','image/png'];
+  fileTypes =["pdf", "jpg","png", "jpeg","image/png", "application/pdf"];
 
   
 

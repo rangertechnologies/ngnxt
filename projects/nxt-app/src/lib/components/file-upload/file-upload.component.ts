@@ -8,15 +8,11 @@ import { Component, OnInit,Output,EventEmitter, Input ,ElementRef} from '@angula
 export class FileUploadComponent implements OnInit {
   @Output() uploaded = new EventEmitter<any>();
   @Input()  title: string = '';
-  @Input()  errorMesg: string ='';
-  @Input()  fileType: string[] = ['pdf', 'jpg','png', 'jpeg','imgage/png', 'application/pdf', 'image/jpeg', 'image/jpg'];
+  @Input()  fileSize: number = 3242880;
+  @Input()  fileType: string[] = ["pdf","png","image/png","application/pdf"];  // "pdf", "jpg","png", "jpeg","image/png", "application/pdf", "image/jpeg", "image/jpg"
   @Input()  isRequired = false;
   public fileExceededLimit: boolean = false;
-  public fileTypeIncorrect: boolean = false; //zak added for file upload
-  public updateButtonClicked: boolean = false; //zak added for file upload
-  public flyerToAttachPos: number = 0;
-  public flyerToDeletePos: number = 0;
-  public flyerToAttachPosstringForm: string = "";
+  public fileTypeIncorrect: boolean = false; 
     //File Upload 
     filesInUploading: any[] = [];
    
@@ -24,8 +20,8 @@ export class FileUploadComponent implements OnInit {
   
   ngOnInit() {}
   
-  onFileDropped($event:any, pos:any) {
-    this.prepareFilesList($event, pos);
+  onFileDropped($event:any) {
+    this.prepareFilesList($event);
     console.log('filedrop',$event);
     const dropData = $event;
     this.uploaded.emit(dropData);
@@ -33,26 +29,29 @@ export class FileUploadComponent implements OnInit {
        /**
    * handle file from browsing
    */
-       fileBrowseHandler(target:any, pos: any) { // Incase it was throwing error we remove the error as soon as the file is uploaded or selected
-        this.prepareFilesList(target.files, pos); 
+       fileBrowseHandler(target:any) { // Incase it was throwing error we remove the error as soon as the file is uploaded or selected
+        this.prepareFilesList(target.files); 
         console.log('click upload',target.files);
         const uploadedData = target.files;
-        this.uploaded.emit(uploadedData);
+        if(!this.fileExceededLimit && !this.fileTypeIncorrect ){
+          this.uploaded.emit(uploadedData);
+        }else{
+          this.uploaded.emit('Invalid file type or size');
+        }
       
       }
 
-  prepareFilesList(files: Array<any>, pos: any) {
+  prepareFilesList(files: Array<any>) {
     this.fileExceededLimit = false;
     this.fileTypeIncorrect = false;
+    console.log('fileTypes', this.fileType);
     // Check  if file uploaded is only of specific format
-    if(['pdf', 'png', 'jpg', 'jpeg', 'application/pdf', 'image/png', 'image/jpeg', 'image/jpg'].includes(files[0].type)){
+    if(this.fileType.includes(files[0].type)){
       //Check if file size is not more than specific size
-      if(files[0].size < 3242880){
+      if(files[0].size < this.fileSize){
         for (const item of files) {
           item.progress = 0;
-          this.flyerToAttachPos = pos;
-          this.flyerToAttachPosstringForm = this.flyerToAttachPos.toString();
-          this.filesInUploading.push({'item':item,'pos':pos}); // pos indicates the flyer's index position
+          this.filesInUploading.push({'item':item});
         }
         this.uploadFilesSimulator(0);
       }
