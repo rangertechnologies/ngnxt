@@ -1,6 +1,6 @@
 import { Component, OnInit, OnChanges, Input, Output, EventEmitter ,ViewEncapsulation} from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
-import { SalesforceService } from '../services/salesforce.service';
+import { SalesforceService } from '../../services/salesforce.service';
 import { IMyDateModel, IMyDpOptions } from 'mydatepicker';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { FormBuilder } from '@angular/forms';
@@ -15,7 +15,7 @@ Option,
 OptionValue,
 AttachmentWrapper,
 Attachment
-} from '../wrapper';
+} from '../../wrapper';
 
 import {
 TESTQUESTION,
@@ -26,7 +26,7 @@ RADIOQUESTION,
 CHECKQUESTION,
 BOOKQUESTION,
 TESTQB
-} from '../sample';
+} from '../../sample';
 
 @Component({
 selector: 'lib-questionnaire',

@@ -1,0 +1,20 @@
+<!--  common progress bar -->
+<div  class="check">
+    <span *ngIf="position === 'left'" class="left">{{value}}%</span>
+<div class="progress-bar-container"
+    [style.height.px]="height" 
+    [style.backgroundColor]="barColor" 
+    [style.borderRadius.px]="barRadius"
+    [style.width.%]="defaultWidth"
+    >
+    <div
+        [style.height.px]="height"
+        [style.background-color]="fillColor"
+        [style.width.%]="value"
+        [style.borderRadius.px]="radius"
+    >
+    <span class="progress-value" *ngIf="position === 'center'" [style.color]="textColor"  [style.font-size.px]="fontSize">{{value}}%</span>
+    </div>
+</div>
+   <span *ngIf="position === 'right'" class="right">{{value}}%</span>
+</div>

@@ -1,0 +1,48 @@
+<div class="form-row file-upload-section">
+    <div class="label-wrapper">
+        <label class="form-label">{{title}}<sup *ngIf="isRequired" class="required">*</sup></label>
+        <label *ngIf="isRequired" class="error-msg">required</label>
+        <label class="red-text" *ngIf="fileExceededLimit">File Limit Exceed</label>
+        <label class="red-text" *ngIf="fileTypeIncorrect">File Type Incorrect</label>
+      </div>
+    <div class="custom-file-upload container"  appDropzone (fileDropped)="onFileDropped($event,'1')">
+        <label class="file-upload">
+          <p class="upload-text-thick">
+            <span class="non-mobile-device">drag and drop here</span>
+            <span class="mobile-device">upload to take photo</span>
+          </p>
+          <p class="upload-text-thin">jpg, pdf & png</p> <!-- (change)="fileUpload($event, j)" -->
+          <input class="file-upload-input"  name="attachment" type="file" (change)="fileBrowseHandler($event.target,'1')" placeholder="upload here" accept="image/*, .pdf, .png, .jpg, .application/pdf" multiple>
+        </label>
+    </div>
+    <div class="files-list">
+        <div *ngFor="let file of filesInUploading; let i = index">
+          <div class="single-file" *ngIf="file.pos == '1'">
+            <div class="file-row">
+              <div class="file-icon">
+                <img src="https://www.shareicon.net/data/256x256/2015/08/11/83725_file_256x256.png" width="32" height="32" />
+                <!-- icon here -->
+              </div>
+              <div class="file-details">
+                <div class="info">
+                  <p class="name">
+                    {{ file?.item?.name }}
+                  </p>
+                  <p class="size">
+                    {{ formatBytes(file?.item?.size,2) }}
+                  </p>
+                </div>
+                <div class="delete" (click)="deleteFile(i)" *ngIf="file?.item?.progress == 100">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTuwGCC75anMHL_DVcA6f22SmOUoD2ER7I8Tg&usqp=CAU" width="15" height="15" />
+                    <!-- delete icon here -->
+                </div>
+              </div>
+            </div>
+              <div>
+                  <!-- progress bar here -->
+                <app-progress-bar  [position]="'right'" [height]="12" [fillColor]="'green'" [value]="file?.item?.progress"></app-progress-bar>
+              </div>
+          </div>
+        </div>
+      </div>
+</div>

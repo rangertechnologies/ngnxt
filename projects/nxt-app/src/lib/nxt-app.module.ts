@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { NxtAppComponent } from './nxt-app.component';
-import { QuestionnaireComponent } from './questionnaire/questionnaire.component';
+import { QuestionnaireComponent } from './pages/questionnaire/questionnaire.component';
 import { CommonModule } from "@angular/common";
 import { FormsModule,ReactiveFormsModule } from '@angular/forms';
 import { MyDatePickerModule } from 'mydatepicker';

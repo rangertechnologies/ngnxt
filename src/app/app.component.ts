@@ -10,6 +10,12 @@ import { ActivatedRoute, Params } from '@angular/router';
 export class AppComponent {
   title = 'Questionaire App';
   qbId = 'a033t00000Ta1FjAAJ123';
+  showLoader = true;
+
+  //fo my
+  fileTypes =['png','image/png'];
+
+  
 
   constructor(private route: ActivatedRoute) {
 
@@ -21,5 +27,9 @@ export class AppComponent {
       //console.log('id', params['id']);
       this.qbId = params['id'];
     });
+  }
+
+  handleUploadedData(data:any) {
+    console.log('Received uploaded data: ', data);
   }
 }
