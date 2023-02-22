@@ -23,7 +23,7 @@ input[type=text],[type=email],[type=number],[type=password],[type=password],[typ
     padding-left: 2px;
    }
 
-input[type=checkbox] {
+input[type=checkbox] , [type=radio]{
   width: 100%;
 }
 .red-border{
@@ -49,11 +49,11 @@ input[type=checkbox] {
 
 /* Hide the browser's default checkbox */
 .container input {
-  position: absolute;
+  /* position: absolute; */
   opacity: 0;
   cursor: pointer;
   height: 0;
-  width: 0;
+  /* width: 0; */
 }
 
 /* Create a custom checkbox */
