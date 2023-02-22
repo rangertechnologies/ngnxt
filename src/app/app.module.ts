@@ -9,6 +9,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ProgressBarComponent } from '../../projects/nxt-app/src/lib/components/progress-bar/progress-bar.component';
 import { FileUploadComponent } from '../../projects/nxt-app/src/lib/components/file-upload/file-upload.component';
 import { DropzoneDirective } from '../../projects/nxt-app/src/lib/directives/dropzone/dropzone.directive';
+import { InputComponent } from '../../projects/nxt-app/src/lib/components/input/input.component';
 
 
 @NgModule({
@@ -16,7 +17,8 @@ import { DropzoneDirective } from '../../projects/nxt-app/src/lib/directives/dro
     AppComponent,
     ProgressBarComponent,
     FileUploadComponent,
-    DropzoneDirective
+    DropzoneDirective,
+    InputComponent
   ],
   imports: [
     BrowserModule,

@@ -14,7 +14,7 @@ export class FileUploadComponent implements OnInit {
   public fileExceededLimit: boolean = false;
   public fileTypeIncorrect: boolean = false; 
     //File Upload 
-    filesInUploading: any[] = [];
+  filesInUploading: any[] = [];
    
     constructor(private el: ElementRef) {}
   

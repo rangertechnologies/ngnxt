@@ -14,7 +14,12 @@ export class AppComponent {
 
   //fo my
   fileTypes =["pdf", "jpg","png", "jpeg","image/png", "application/pdf"];
-
+  public countries: any[] = [
+    { name: "Afghanistan", code: "AF" },
+    { name: "Åland Islands", code: "AX" },
+    { name: "Albania", code: "AL" }
+  ];
+  checkedValues: string[] = [];
   
 
   constructor(private route: ActivatedRoute) {
@@ -31,5 +36,29 @@ export class AppComponent {
 
   handleUploadedData(data:any) {
     console.log('Received uploaded data: ', data);
+  }
+  onNameChange(name: any){
+    console.log('name is ',name);
+  }
+
+
+  onAgeChange(age: any){
+    console.log('age is ',age);
+  }
+  onEmailChange(email: any){
+    console.log('email is ',email);
+  }
+  onTelChange(tel:any){
+    console.log('telephone is ',tel);
+  }
+  radioChange(radio:any){
+    console.log('radio is ',radio);
+  }
+  checkChange(checkbox:string []){
+    this.checkedValues = checkbox;
+    // console.log('checkbox is ',this.checkedValues);
+  }
+  validation(val:any){
+   console.log('valid',val);
   }
 }

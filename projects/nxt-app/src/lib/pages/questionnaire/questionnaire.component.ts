@@ -174,18 +174,18 @@ export class QuestionnaireComponent implements OnInit {
   processQB() {
     //console.log(this.qbId);
     //console.log('Version in process is 8bf11efa7f91a391d957bf6b5078edc7e656b67c');
-    if (this.qbId) {
-      if (this.qbId.length == 18) {
+  //  if (this.qbId) {
+   //   if (this.qbId.length == 18) {
         //console.log('Before Calling readQuestionBook() using ' + this.qbId);
-        this.readQuestionBook(this.qbId);
+    //    this.readQuestionBook(this.qbId);
 
-      } else {
+    //  } else {
         //console.log('Setting the Question Directly for testing');
         this.questionItem = DTQUESTION;
         this.qbItem = TESTQB;
         this.processQuestion();
-      }
-    }
+     // }
+   // }
     // CATEGORIZATION
     //this.stepperCateg();
   }
@@ -226,9 +226,9 @@ export class QuestionnaireComponent implements OnInit {
     this.handleEvent.emit(this.qbItem.Next_Tracking_ID__c);
     this.recordId = null;
     var cQuestion: Question = new Question();
-    cQuestion = this.questionItem;
-    var typ = cQuestion.Type__c;
-    var quesValue = cQuestion.Question_Text__c;
+    cQuestion = this.questionItem;        //current questions
+    var typ = cQuestion.Type__c;         //current question type
+    var quesValue = cQuestion.Question_Text__c;   // current question when did the accedent habeen
     var mailformat = ('^[^.][a-zA-Z0-9!#$%&\'*+\-\/=?^_`{|}~]+[^.]@[^-][a-zA-Z0-9.-]+[^-]\.[a-zA-Z]{2,}$');
 
 
@@ -364,6 +364,7 @@ export class QuestionnaireComponent implements OnInit {
       this.questionItem.error = new ErrorWrapper();
       return;
     }
+    
     // Save the Answer in the DB
     this.answerWrap = new AnswerWrapper();
     this.answerWrap.abId = this.abItem.Id;
