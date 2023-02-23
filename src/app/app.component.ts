@@ -20,7 +20,11 @@ export class AppComponent {
     { name: "Albania", code: "AL" }
   ];
   checkedValues: string[] = [];
-  
+  dropdownOptions = [  { value: 'option1', label: 'Option 1' },  { value: 'option2', label: 'Option 2' },  { value: 'option3', label: 'Option 3' }];
+
+  selectedDate: Date = new Date();
+  minDate: Date = new Date('2000-01-01');
+  maxDate: Date = new Date('2030-12-31');
 
   constructor(private route: ActivatedRoute) {
 
@@ -60,5 +64,12 @@ export class AppComponent {
   }
   validation(val:any){
    console.log('valid',val);
+  }
+  slectedValue(val: any){
+    console.log('dropdown', val);
+
+  }
+  onDateChange(date: Date) {
+    console.log('Selected date:', date);
   }
 }
