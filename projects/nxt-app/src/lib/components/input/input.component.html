@@ -20,7 +20,7 @@
     (input)="validateOnInputs.includes('onInputChange') ? onInputChange($event) : ''"
     (focusout)="validateOnInputs.includes('onfocusout') ? onInputChange($event) : ''"
     (focus)="validateOnInputs.includes('onfocusin') ? onInputChange($event) : ''">
-    <span *ngIf="inputType === 'checkbox'" class="{{inputType === 'checkbox' || inputType === 'radio'  ? 'checkmark' : ''}}"></span>
+    <span *ngIf="inputType === 'checkbox'" class="{{inputType === 'checkbox'  ? 'checkmark' : ''}}"></span>
     <span  *ngIf="inputType === 'radio'" class="{{inputType === 'radio'  ? 'radio checkmark' : ''}}"></span>
    </label>
     <div *ngIf="isRequired && errorMessagePosition.includes('bottom')" class="error-message {{errorMessagePosition === 'bottom-left' ? '' : ''}} {{errorMessagePosition === 'bottom-center' ? 'center' : ''}} {{errorMessagePosition === 'bottom-right' ? 'right' : ''}}">This field is required.</div>
