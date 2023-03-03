@@ -1,7 +1,16 @@
+import { createRequire } from "module"; // Bring in the ability to create the 'require' method
+const require = createRequire(import.meta.url);
 const { gitDescribeSync } = require('git-describe');
 const { version } = require('../package.json');
 const { resolve, relative } = require('path');
 const { writeFileSync } = require('fs-extra');
+
+import forceDeploy from 'gulp-jsforce-deploy';
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 const gitInfo = gitDescribeSync({
     dirtyMark: false,
