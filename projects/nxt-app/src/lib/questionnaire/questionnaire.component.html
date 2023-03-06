@@ -8,55 +8,55 @@
 
 <div *ngIf="questionItem" class="questiondiv1">
   <div class="questiondiv2">
-    <div *ngIf="questionItem.Is_Title__c">
-      <h3 class="questionalign" [innerHTML]="getText(questionItem.Question_Text__c)">
-        {{questionItem.Question_Text__c}}
+    <div *ngIf="questionItem.RFAB__Is_Title__c">
+      <h3 class="questionalign" [innerHTML]="getText(questionItem.RFAB__Question_Text__c)">
+        {{questionItem.RFAB__Question_Text__c}}
       </h3>
     </div>
-    <div *ngIf="!questionItem.Is_Title__c" class="question-f-size">
-      <div [innerHTML]="getText(questionItem.Question_Text__c)">{{questionItem.Question_Text__c}}</div>
+    <div *ngIf="!questionItem.RFAB__Is_Title__c" class="question-f-size">
+      <div [innerHTML]="getText(questionItem.RFAB__Question_Text__c)">{{questionItem.RFAB__Question_Text__c}}</div>
     </div>
   </div>
 
-  <div *ngIf="questionItem.Additional_Rich__c">
+  <div *ngIf="questionItem.RFAB__Additional_Rich__c">
     <div class="info-alert ques-alert1">
       <i class="fa fa-info fa-3x iposition icolor" aria-hidden="true"></i>
       <div class="infodiv" [innerHTML]="innerhtml"></div>
     </div>
   </div>
 
-  <div *ngIf=" dropdownFlag " class="" [class]="'col-md-'+ questionItem.Size__c + ' paddingnone'">
+  <div *ngIf=" dropdownFlag " class="" [class]="'col-md-'+ questionItem.RFAB__Size__c + ' paddingnone'">
     <select class="custom-select mr-sm-2 dd-height" id="dropdown" [(ngModel)]="inpValue" (change)="clearError()"  style.border-color="{{this.questionItem.error ? 'red' :  (inpValue?.length > 0 ? '#87be1c' : '')}}"
       style.color="{{questionItem.error ? 'red'  : ''}}">
-      <option *ngFor="let opt of questionItem.Question_Options__r.records" class="option" value="{{opt.Value__c}}">{{opt.Value__c}}
+      <option *ngFor="let opt of questionItem.RFAB__Question_Options__r.records" class="option" value="{{opt.RFAB__Value__c}}">{{opt.RFAB__Value__c}}
       </option>
       <option value="." disabled hidden>Bitte treffen Sie eine Auswahl</option>
     </select>
   </div>
 
   <div *ngIf="radioFlag || dataFlag" class="">
-    <div *ngIf="this.questionItem.error" class="cond-div2">{{questionItem.Error_Message__c}}</div>
-    <div *ngFor="let opt of questionItem.Question_Options__r.records" class="radio col-md-6 optiondiv">
+    <div *ngIf="this.questionItem.error" class="cond-div2">{{questionItem.RFAB__Error_Message__c}}</div>
+    <div *ngFor="let opt of questionItem.RFAB__Question_Options__r.records" class="radio col-md-6 optiondiv">
       <label class="radiocontainer">
-        <input type="radio" [id]="opt.Id" [(ngModel)]="inpValue" name="inpValue" value="{{opt.Value__c}}"
-          (change)="optionChange(opt.Value__c)">
-        <span class="checkmark">{{opt.Value__c}}</span>
+        <input type="radio" [id]="opt.Id" [(ngModel)]="inpValue" name="inpValue" value="{{opt.RFAB__Value__c}}"
+          (change)="optionChange(opt.RFAB__Value__c)">
+        <span class="checkmark">{{opt.RFAB__Value__c}}</span>
       </label>
     </div>
   </div>
 
   <div *ngIf="checkboxFlag"  class="">
-    <div *ngIf="this.questionItem.error" class="cond-div2" >{{questionItem.Error_Message__c}}</div>
+    <div *ngIf="this.questionItem.error" class="cond-div2" >{{questionItem.RFAB__Error_Message__c}}</div>
     <div *ngFor="let item of optionValues" class="radio col-md-6 optiondiv">
       <label class="radiocontainer">
         <input type="checkbox" [id]="item.Id" [(ngModel)]="item.checked" (click)="clearError()">
-        <span>{{item.Value__c}}</span>
+        <span>{{item.RFAB__Value__c}}</span>
       </label>
     </div>
   </div>
 
   <div *ngIf="textFlag" class="col-md-12">
-    <div class="col-md-12" class="dis-flex" [class]="'col-md-'+ questionItem.Size__c + ' paddingnone'">
+    <div class="col-md-12" class="dis-flex" [class]="'col-md-'+ questionItem.RFAB__Size__c + ' paddingnone'">
       <input type="text" [(ngModel)]="inpValue" class="textBox1" id="text-input-id" required="" (focus)="clearError()"
         style.border-color="{{this.questionItem.error ? 'red' : (inpValue?.length > 0 ? '#87be1c' : '')}}"
         oninput="this.value=this.value.replace(/[^a-zA-Z0-9\s.:;,?]/g,'');" />
@@ -108,7 +108,7 @@
           <option value="">MM</option>
           <option [value]="minute" *ngFor="let minute of minutes">{{minute}}</option>
         </select>
-        <div *ngIf= "questionItem.X24_Hours__c == false">
+        <div *ngIf= "questionItem.RFAB__X24_Hours__c == false">
         <span class="colon"> : </span>
         <select name="AM/PM" class="datetime" [(ngModel)]="selectedMeridiem" id="meridiem">
           <option value="AM">AM</option>
@@ -179,8 +179,8 @@
             <div *ngIf="ques.error" class="cond-div2" >{{ques.Error_Message__c}}</div>
             <div *ngFor="let opt of ques.Question_Options__r.records" class="radio col-md-6 optiondiv" >
               <label class="radiocontainer">
-                <input type="radio" [id]="ques.Id" [(ngModel)]="ques.input" value="{{opt.Value__c}}" (change)="Dropdown($event); clearSQError(ques.Id)">
-                <span class="checkmark">{{opt.Value__c}}</span>
+                <input type="radio" [id]="ques.Id" [(ngModel)]="ques.input" value="{{opt.RFAB__Value__c}}" (change)="Dropdown($event); clearSQError(ques.Id)">
+                <span class="checkmark">{{opt.RFAB__Value__c}}</span>
               </label>
             </div>
           </div>
@@ -188,7 +188,7 @@
           <div *ngIf="ques.Type__c === 'Dropdown'"class="">
             <select class="custom-select mr-sm-2 dd-height" id="dropdown" [(ngModel)]="ques.input" (focus)="Dropdown($event); clearSQError(ques.Id)"style.border-color=" {{ques.error ? 'red'  : '#858585'}}"
 		        	style.color="{{ques.error ? 'red'  : ''}}" >
-              <option *ngFor="let opt of ques.Question_Options__r.records" class="option"  value="{{opt.Value__c}}">{{opt.Value__c}}
+              <option *ngFor="let opt of ques.Question_Options__r.records" class="option"  value="{{opt.RFAB__Value__c}}">{{opt.RFAB__Value__c}}
               </option>
               <option value="" disabled hidden >{{ques.Error_Message__c}}</option>
             </select>
@@ -202,27 +202,27 @@
   <div class="col-md-12 paddingZero">
     <div class="col-md-6" [style.visibility]="questionStack.length > 0 ? 'visible':'hidden'">
       <button class="btn btn-primary btn-lg btn-block btn-back-color"
-        (click)="handleBackClick()">{{qbItem.Back__c}}</button>
+        (click)="handleBackClick()">{{qbItem.RFAB__Back__c}}</button>
     </div>
     <div class="col-md-6">
-      <button class="btn btn-primary btn-lg btn-block btn-color" (click)="handleNextClick()">{{qbItem.Next__c}}</button>
+      <button class="btn btn-primary btn-lg btn-block btn-color" (click)="handleNextClick()">{{qbItem.RFAB__Next__c}}</button>
     </div>
   </div>
  </div>
 
  <div *ngIf="summary && summary.length > 0" class="col-md-12 questionalign">
-  <h3 class="summary-h">  {{qbItem.Summary_Text__c}}  </h3>
+  <h3 class="summary-h">  {{qbItem.RFAB__Summary_Text__c}}  </h3>
   <div *ngFor="let qa of summary" class="summarydiv">
     <div class="summary">
       
-      <div *ngIf = "!qbItem.Edit__c">
+      <div *ngIf = "!qbItem.RFAB__Edit__c">
       <a class="question" (click)="handleEditClick(qa.quesId)" [innerHTML]="getText(qa.quesValue)">{{qa.quesValue}}</a>
     </div>
 
-      <div *ngIf= "qbItem.Edit__c">
+      <div *ngIf= "qbItem.RFAB__Edit__c">
         <div class="question" [innerHTML]="getText(qa.quesValue)">{{qa.quesValue}}</div>
         <button class="edit" (click)="handleEditClick(qa.quesId)" >
-          <img src="">{{qbItem.Edit__c}}</button>
+          <img src="">{{qbItem.RFAB__Edit__c}}</button>
       </div>
 
       <div class="answer">  {{qa.ansValue}}   </div>
@@ -230,14 +230,14 @@
   </div>
 
   <div *ngIf="abItem">
-    <div class="" *ngIf="abItem.Status__c != 'Completed'" >
+    <div class="" *ngIf="abItem.RFAB__Status__c != 'Completed'" >
     <div class="col-md-6">
       <button class="btn btn-primary btn-lg btn-block btn-back-color"
-        (click)="handleBackClick()">{{qbItem.Back__c}}</button>
+        (click)="handleBackClick()">{{qbItem.RFAB__Back__c}}</button>
     </div>
     <div class="col-md-6">
       <button class="btn btn-primary btn-lg btn-block btn-color"
-        (click)="handleSubmitClick()">{{qbItem.Submit__c}}</button>
+        (click)="handleSubmitClick()">{{qbItem.RFAB__Submit__c}}</button>
     </div>
   </div>
 </div>

@@ -12,6 +12,7 @@ dotenv.config();
 const pageName = process.env.PAGE_NAME;
 const apiVersion = process.env.API_VERSION;
 const dev_resources = process.env.DEV_RESOURCE_NAME;
+const fusion_resources = process.env.FUSION_RESOURCE_NAME;
 const pkg_resources = process.env.PKG_RESOURCE_NAME;
 const baseHref = process.env.BASE_HREF;
 const devResources = process.env.DEV_RESOURCES_URL;
@@ -66,6 +67,13 @@ gulp.task('dev-staticresources', function () {
     .pipe(gulp.dest('package/staticresources/'));
 });
 
+gulp.task('fusion-staticresources', function () {
+  return gulp.src('./'+distPath+'/**')
+    .pipe(zip(`${fusion_resources}.resource`))
+    .pipe(file(`${fusion_resources}.resource-meta.xml`, resourcesMetaXML))
+    .pipe(gulp.dest('package/staticresources/'));
+});
+
 gulp.task('pkg-staticresources', function () {
   return gulp.src('./'+distPath+'/**')
     .pipe(zip(`${pkg_resources}.resource`))
@@ -80,6 +88,16 @@ gulp.task('dev-deploy', function () {
       username: process.env.DEV_USERNAME,
       password: process.env.DEV_PASSWORD,
       loginUrl: process.env.DEV_URL
+    }))
+});
+
+gulp.task('fusion-deploy', function () {
+  return gulp.src('./package/**', { base: "." })
+    .pipe(zip('package.zip'))
+    .pipe(forceDeploy({
+      username: process.env.FUSION_USERNAME,
+      password: process.env.FUSION_PASSWORD,
+      loginUrl: process.env.FUSION_URL
     }))
 });
 
@@ -104,4 +122,5 @@ gulp.task('prio-deploy', function () {
 });
 
 gulp.task('build-dev-static', gulp.series('create-package', 'dev-staticresources'))
+gulp.task('build-fusion-static', gulp.series('create-package', 'fusion-staticresources'))
 gulp.task('build-prod-static', gulp.series('create-package', 'pkg-staticresources'))

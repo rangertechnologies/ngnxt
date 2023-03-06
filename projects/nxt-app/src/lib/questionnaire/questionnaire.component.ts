@@ -131,6 +131,7 @@ export class QuestionnaireComponent implements OnInit {
    this.inpValue="";
     this.selectedMeridiem = "AM";
     this.processQB();
+    console.log('inside oninit');
   }
 
   ngOnChanges() {
@@ -172,11 +173,11 @@ export class QuestionnaireComponent implements OnInit {
   }
 
   processQB() {
-    //console.log(this.qbId);
-    //console.log('Version in process is 8bf11efa7f91a391d957bf6b5078edc7e656b67c');
+    console.log(this.qbId);
+    console.log('Version in process is 8bf11efa7f91a391d957bf6b5078edc7e656b67c');
     if (this.qbId) {
       if (this.qbId.length == 18) {
-        //console.log('Before Calling readQuestionBook() using ' + this.qbId);
+        console.log('Before Calling readQuestionBook() using ' + this.qbId);
         this.readQuestionBook(this.qbId);
 
       } else {
@@ -200,7 +201,7 @@ export class QuestionnaireComponent implements OnInit {
 
   //Summary Question Clickable Logic
   handleEditClick(value: string){
-    if(this.abItem.Status__c == 'Pending'){
+    if(this.abItem.RFAB__Status__c == 'Pending'){
       if(value == null){
       return;
       }
@@ -223,12 +224,12 @@ export class QuestionnaireComponent implements OnInit {
       return;
     }
     this.clearError();
-    this.handleEvent.emit(this.qbItem.Next_Tracking_ID__c);
+    this.handleEvent.emit(this.qbItem.RFAB__Next_Tracking_ID__c);
     this.recordId = null;
     var cQuestion: Question = new Question();
     cQuestion = this.questionItem;
-    var typ = cQuestion.Type__c;
-    var quesValue = cQuestion.Question_Text__c;
+    var typ = cQuestion.RFAB__Type__c;
+    var quesValue = cQuestion.RFAB__Question_Text__c;
     var mailformat = ('^[^.][a-zA-Z0-9!#$%&\'*+\-\/=?^_`{|}~]+[^.]@[^-][a-zA-Z0-9.-]+[^-]\.[a-zA-Z]{2,}$');
 
 
@@ -237,51 +238,53 @@ export class QuestionnaireComponent implements OnInit {
       this.inpValue = '';
       // Save all the selected options in the inpValue
       for (var ov of this.optionValues.filter(item => item.checked)) {
-        this.inpValue += ov.Value__c + '@@##$$';
-        this.recordId = ov.Next_Question__c;
+        console.log('rfab value is '+ov.RFAB__Value__c);
+        this.inpValue += ov.RFAB__Value__c + '@@##$$';
+        this.recordId = ov.RFAB__Next_Question__c;
       }
       this.inpValue = this.trimLastDummy(this.inpValue);
+      console.log('inpvalue is '+this.inpValue);
     }else if (this.emailFlag){
       if(this.inpValue && this.inpValue.match(mailformat)){
-          this.recordId = this.questionItem.Next_Question__c;
+          this.recordId = this.questionItem.RFAB__Next_Question__c;
         }else{
           this.questionItem.error = new ErrorWrapper();
         return;}
      }else if (this.bookFlag) {
       this.inpValue = '';
       var hasMissingInput = false;
-      for (var item of this.questionItem.Questions__r.records) {
-        if (!item.Is_Optional__c &&
-          ((item.Type__c != 'File' && !item.input) ||
-            (item.Type__c == 'File' && this.attachments.length == 0))) {
+      for (var item of this.questionItem.RFAB__Questions__r.records) {
+        if (!item.RFAB__Is_Optional__c &&
+          ((item.RFAB__Type__c != 'File' && !item.input) ||
+            (item.RFAB__Type__c == 'File' && this.attachments.length == 0))) {
           item.error = new ErrorWrapper();
           hasMissingInput = true;
         }
-        if(item.Type__c == 'Radio'){
+        if(item.RFAB__Type__c == 'Radio'){
           if(!item.input){
               item.error = new ErrorWrapper();
             hasMissingInput = true;
               }
         }
-        if (item.Type__c == 'Dropdown'  ){
+        if (item.RFAB__Type__c == 'Dropdown'  ){
           if(!item.input){
            item.input = "";
             item.error = new ErrorWrapper();
           hasMissingInput = true;
             }
         }
-        if (item.Type__c == 'Email'){
+        if (item.RFAB__Type__c == 'Email'){
           if(item.input && item.input.match(mailformat)){
-             this.recordId = cQuestion.Next_Question__c;
+             this.recordId = cQuestion.RFAB__Next_Question__c;
             }else{
               item.error = new ErrorWrapper();
               hasMissingInput = true;}
         }
-        if (item.Type__c == 'File' && this.attachments.length > 0) {
+        if (item.RFAB__Type__c == 'File' && this.attachments.length > 0) {
           for (var attachmentItem of this.attachments) {
             this.inpValue += attachmentItem.attachmentId + '@@##$$' + attachmentItem.attachmentName + ',';
             if (item.input == this.inpValue) {
-              this.recordId = cQuestion.Next_Question__c;
+              this.recordId = cQuestion.RFAB__Next_Question__c;
               //console.log('inside' + recordId);
             }
           }
@@ -310,13 +313,13 @@ export class QuestionnaireComponent implements OnInit {
        this.selectedMeridiem = this.getProperTime('AM', this.selectedMeridiem);
        //console.log(this.inpValue.length);
 
-       if(this.questionItem.X24_Hours__c === false){
+       if(this.questionItem.RFAB__X24_Hours__c === false){
           this.questionItem.input=  (this.selectedMeridiem === 'PM' && this.selectedHour != '12' ? (Number(this.selectedHour) + 12) : this.selectedHour) + ':' + this.selectedMinute;
          if(this.selectedMeridiem === 'AM' && this.selectedHour === '12'){
            this.questionItem.input = "00"+":"+this.selectedMinute;
          }
         this.inpValue =this.inpValue + 'T' + this.questionItem.input;
-       }if(this.questionItem.X24_Hours__c === true){
+       }if(this.questionItem.RFAB__X24_Hours__c === true){
          this.questionItem.input = this.selectedHour + ":" + this.selectedMinute;
          this.inpValue =this.inpValue + 'T' + this.questionItem.input;
        }
@@ -328,7 +331,7 @@ export class QuestionnaireComponent implements OnInit {
       }
     } else if (this.timeFlag && this.dtFlag && !this.dateFlag ) {
       this.date_TimeMap();
-      if(this.questionItem.X24_Hours__c === false){
+      if(this.questionItem.RFAB__X24_Hours__c === false){
         this.inpValue = (this.selectedMeridiem === 'PM' && this.selectedHour != '12' ? (Number(this.selectedHour) + 12) : this.selectedHour) + ':' + this.selectedMinute ;
       }else{
         this.inpValue=  this.selectedHour + ":" + this.selectedMinute;
@@ -359,7 +362,7 @@ export class QuestionnaireComponent implements OnInit {
    //console.log('before calling saveAnswer with ' + this.inpValue);
 
     // Check for the answer before saving to the DB
-    if (!this.questionItem.Is_Optional__c && !this.inpValue) {
+    if (!this.questionItem.RFAB__Is_Optional__c && !this.inpValue) {
       // Show error that the question must be answered
       this.questionItem.error = new ErrorWrapper();
       return;
@@ -377,7 +380,7 @@ export class QuestionnaireComponent implements OnInit {
   next(){
     var cQuestion: Question = new Question();
     cQuestion = this.questionItem;
-    var typ = cQuestion.Type__c;
+    var typ = cQuestion.RFAB__Type__c;
     // If no error then move to next steps
     if (this.questionItem.error) { return; }
 
@@ -385,44 +388,44 @@ export class QuestionnaireComponent implements OnInit {
 
     // CONDITIONAL vs OPTIONONLY & UNCONDITIONAL
     if (cQuestion.RecordType.Name == "CONDITIONAL") {
-      for (var cOpt of cQuestion.Question_Options__r.records) {
+      for (var cOpt of cQuestion.RFAB__Question_Options__r.records) {
         // Radio / Data
-        //console.log('Option => ' + cOpt.Value__c + ' matching with ' + ansVal);
-        if (cOpt.Value__c == this.inpValue) {
+        //console.log('Option => ' + cOpt.RFAB__Value__c + ' matching with ' + ansVal);
+        if (cOpt.RFAB__Value__c == this.inpValue) {
           //console.log('Match Found using ' + cOpt.Next_Question__c);
-          this.recordId = cOpt.Next_Question__c;
+          this.recordId = cOpt.RFAB__Next_Question__c;
           //console.log('inside'+ recordId);
         }
       }
       // Could be of type Data and existing value
       if (this.recordId && typ == "Data") {
-        this.recordId = cQuestion.Next_Question__c;
+        this.recordId = cQuestion.RFAB__Next_Question__c;
       }
     }
     //  OPTIONONLY logic
     else if (cQuestion.RecordType.Name == "OPTIONONLY") {
-      this.recordId = cQuestion.Next_Question__c;
+      this.recordId = cQuestion.RFAB__Next_Question__c;
     }
     //Unconditional  logic
     else if (cQuestion.RecordType.Name == "UNCONDITIONAL") {
       //console.log("inside unconditional");
       //inside Book Type
-      if (cQuestion.Type__c == "Book") {
+      if (cQuestion.RFAB__Type__c == "Book") {
         //console.log("inside book");
-        for (let opt of cQuestion.Questions__r.records) {
+        for (let opt of cQuestion.RFAB__Questions__r.records) {
           //console.log(opt.Type__c);
-           if (opt.Type__c == "Dropdown"||opt.Type__c == "Radio") {
-            for (var opt1 of opt.Question_Options__r.records) {
-              if (this.valueName == opt1.Value__c) {
-                this.recordId = opt1.Next_Question__c || cQuestion.Next_Question__c;
+           if (opt.RFAB__Type__c == "Dropdown"||opt.RFAB__Type__c == "Radio") {
+            for (var opt1 of opt.RFAB__Question_Options__r.records) {
+              if (this.valueName == opt1.RFAB__Value__c) {
+                this.recordId = opt1.RFAB__Next_Question__c || cQuestion.RFAB__Next_Question__c;
               }
             }
           } else {
-            this.recordId = cQuestion.Next_Question__c;
+            this.recordId = cQuestion.RFAB__Next_Question__c;
           }
         }
       } else {
-        this.recordId = cQuestion.Next_Question__c;
+        this.recordId = cQuestion.RFAB__Next_Question__c;
       }
     }
 
@@ -493,7 +496,7 @@ export class QuestionnaireComponent implements OnInit {
   }
 
   handleBackClick() {
-    this.handleEvent.emit(this.qbItem.Back_Tracking_ID__c);
+    this.handleEvent.emit(this.qbItem.RFAB__Back_Tracking_ID__c);
     this.answerCount--;
     this.updateProgress();
     // CATEGORIZATION
@@ -519,28 +522,28 @@ export class QuestionnaireComponent implements OnInit {
   private successupdateAB = (response) =>{
     //console.log(response);
    // console.log('status success')
-    this.abItem.Status__c = 'Completed'
+    this.abItem.RFAB__Status__c = 'Completed'
   }
   private failureupdateAB = (response) =>{
     //console.log('status failed')
   }
 
-  private readQuestionBook = (uuid: string) => this.sfService.remoteAction('NxtController.process',
+  private readQuestionBook = (uuid: string) => this.sfService.remoteAction('RFAB__NxtController.process',
     ['QuestionBook', 'read', uuid],
     this.successReadBook,
     this.failureReadBook);
 
   private successReadBook = (response) => {
 
-    //console.log(response)
+    // console.log(response)
     this.qbItem = response.questionbook;
     this.abItem = response.answerbook;
-    //console.log('readingQuestion using ' + this.qbItem.First_Question__c);
-    if(this.abItem.Status__c == 'Pending'){
-      this.readQuestion(this.qbItem.First_Question__c);
+    console.log('readingQuestion using ' + this.qbItem.RFAB__First_Question__c);
+    if(this.abItem.RFAB__Status__c == 'Pending'){
+      this.readQuestion(this.qbItem.RFAB__First_Question__c);
     }
 
-    if(this.abItem.Status__c == 'Completed'){
+    if(this.abItem.RFAB__Status__c == 'Completed'){
       this.readAnswerbook(this.abItem.Id);
          }
   }
@@ -556,10 +559,10 @@ export class QuestionnaireComponent implements OnInit {
 
     private successAnswerBookRead = (response) => {
      
-      if (this.abItem.Status__c =="Completed"){
-        for(var answer of this.abItem.Answers__r.records){
-          var av = answer.Answer_Long__c.split('@@##$$');
-          var answers={ quesValue:answer.Question_Rich_Text__c, ansValue:av};
+      if (this.abItem.RFAB__Status__c =="Completed"){
+        for(var answer of this.abItem.RFAB__Answers__r.records){
+          var av = answer.RFAB__Answer_Long__c.split('@@##$$');
+          var answers={ quesValue:answer.RFAB__Question_Rich_Text__c, ansValue:av};
           //console.log(answers)
           this.summary.push(answers);
         }
@@ -587,32 +590,32 @@ export class QuestionnaireComponent implements OnInit {
       this.answerWrap = new AnswerWrapper();
       this.optionValues = [];
       this.subQuestions = [];
-      this.resetFlag(this.questionItem.Type__c);
+      this.resetFlag(this.questionItem.RFAB__Type__c);
     }
     this.questionItem = response.question;
     this.currentQuestionId = this.questionItem.Id;
-    this.handlePage.emit(this.questionItem.Tracking_ID__c);
+    this.handlePage.emit(this.questionItem.RFAB__Tracking_ID__c);
     // Handle the subQuestion options
     if (response.sqOptions) {
       //var newRecords = [];
-      for (var q of this.questionItem.Questions__r.records) {
+      for (var q of this.questionItem.RFAB__Questions__r.records) {
         //console.log(q.Name);
         var sq = response.sqOptions[q.Id];
         if (sq) {
           //console.log('found options for subquestion ' + q.Name);
-          if (!q.Question_Options__r) {
-            q.Question_Options__r = sq.Question_Options__r;
+          if (!q.RFAB__Question_Options__r) {
+            q.RFAB__Question_Options__r = sq.Question_Options__r;
           }
         }
       }
     }
     this.processQuestion();
-    this.innerhtml = this.sanitizer.bypassSecurityTrustHtml(this.questionItem.Additional_Rich__c);
+    this.innerhtml = this.sanitizer.bypassSecurityTrustHtml(this.questionItem.RFAB__Additional_Rich__c);
     this.trackId();
   }
 
   trackId() {
-    var qtrackId = this.questionItem.Tracking_ID__c;
+    var qtrackId = this.questionItem.RFAB__Tracking_ID__c;
     //console.log('trackId-question'+qtrackId);
   }
 
@@ -628,7 +631,7 @@ export class QuestionnaireComponent implements OnInit {
     }
     this.answerWrap.ansNumber = this.questionStack.length + 1;
 
-    this.sfService.remoteAction('NxtController.process',
+    this.sfService.remoteAction('HomeController.process',
       ['Answer', 'create', JSON.stringify(this.answerWrap)],
       this.successSave,
       this.failureSave);
@@ -662,7 +665,7 @@ export class QuestionnaireComponent implements OnInit {
     //console.log('processing question ' + this.questionItem.Name + ' existing answers are ' + this.answerMap.size); // => ' + JSON.stringify(this.questionItem));
 
     // Set the Flags to show right fields
-    this.setFlag(this.questionItem.Type__c);
+    this.setFlag(this.questionItem.RFAB__Type__c);
 
     // Check the existing answer from answerMap
     if (this.answerMap.has(this.questionItem.Id)) {
@@ -682,10 +685,10 @@ export class QuestionnaireComponent implements OnInit {
     if (this.checkboxFlag) {
 
       // Set the Options for Checkbox
-      this.setOptions(this.questionItem.Question_Options__r.records);
+      this.setOptions(this.questionItem.RFAB__Question_Options__r.records);
     } else if (this.bookFlag) {
       // Set the SubQuestions
-      this.setSubQuestions(this.questionItem.Questions__r.records);
+      this.setSubQuestions(this.questionItem.RFAB__Questions__r.records);
      }
       else if (this.dtFlag) {
          this.selectedHour ="";
@@ -700,23 +703,23 @@ export class QuestionnaireComponent implements OnInit {
         if (this.selectedhourMap.has(this.questionItem.Id)){
           this.selectedMinute = this.selectedminuteMap.get(this.questionItem.Id)
         }
-        if(this.questionItem.X24_Hours__c === true  ){
+        if(this.questionItem.RFAB__X24_Hours__c === true  ){
             this.hours.push("13","14","15","16","17","18","19","20","21","22","23","00");
-             } if(this.questionItem.X24_Hours__c=== false){
+             } if(this.questionItem.RFAB__X24_Hours__c=== false){
                 this.hours = this.hours.slice(0,12);
               }if(this.dtFlag&& this.inpValue){
               var dtVal = this.inpValue.split('T');
               this.inpValue = dtVal[0];
               this.questionItem.input = dtVal[1];
             }
-            if(this.questionItem.Is_Date_Backward__c || this. questionItem.Is_Date_Forward__c){
-              if(this.questionItem.Is_Date_Backward__c === true){
+            if(this.questionItem.RFAB__Is_Date_Backward__c || this. questionItem.RFAB__Is_Date_Forward__c){
+              if(this.questionItem.RFAB__Is_Date_Backward__c === true){
                 this.myDatePickerOptions.disableSince =
                 { year: this.today.getFullYear(),
                    month: this.today.getMonth() + 1,
                    day: this.today.getDate() + 1 }
               }
-              if(this.questionItem.Is_Date_Forward__c === true){
+              if(this.questionItem.RFAB__Is_Date_Forward__c === true){
                 this.myDatePickerOptions.disableUntil ={ year: this.today.getFullYear(),
                   month: this.today.getMonth() +1,
                   day: this.today.getDate() }
@@ -725,7 +728,7 @@ export class QuestionnaireComponent implements OnInit {
             }
     else if (this.fileFlag) {
       // logic
-      this.allowedFileExtension = this.questionItem.Allowed_File_Extensions__c.split(';');
+      this.allowedFileExtension = this.questionItem.RFAB__Allowed_File_Extensions__c.split(';');
       //console.log(this.allowedFileExtension);
     }
   }
@@ -804,11 +807,11 @@ export class QuestionnaireComponent implements OnInit {
       var ov = new OptionValue();
       ov.Id = opt.Id;
       ov.Name = opt.Name;
-      ov.Value__c = opt.Value__c;
-      ov.Next_Question__c = opt.Next_Question__c;
+      ov.RFAB__Value__c = opt.RFAB__Value__c;
+      ov.RFAB__Next_Question__c = opt.Next_Question__c;
       ov.checked = false;
 
-      if (this.inpValue && this.inpValue.split('@@##$$').includes(opt.Value__c)) {
+      if (this.inpValue && this.inpValue.split('@@##$$').includes(opt.RFAB__Value__c)) {
         ov.checked = true;
       }
 
@@ -846,14 +849,14 @@ export class QuestionnaireComponent implements OnInit {
       var sQues = new Question();
       sQues.Id = ques.Id;
       sQues.Name = ques.Name;
-      sQues.Question__c = ques.Question__c;
-      sQues.Error_Message__c = ques.Error_Message__c;
-      sQues.Type__c = ques.Type__c;
-      sQues.Next_Question__c = ques.Next_Question__c;
-      sQues.Is_Optional__c = ques.Is_Optional__c;
-      sQues.Group__c = ques.Group__c;
-      sQues.Question_No__c = ques.Question_No__c;
-      sQues.Allowed_File_Extensions__c = ques.Allowed_File_Extensions__c;
+      sQues.RFAB__Question__c = ques.Question__c;
+      sQues.RFAB__Error_Message__c = ques.Error_Message__c;
+      sQues.RFAB__Type__c = ques.Type__c;
+      sQues.RFAB__Next_Question__c = ques.Next_Question__c;
+      sQues.RFAB__Is_Optional__c = ques.Is_Optional__c;
+      sQues.RFAB__Group__c = ques.Group__c;
+      sQues.RFAB__Question_No__c = ques.Question_No__c;
+      sQues.RFAB__Allowed_File_Extensions__c = ques.Allowed_File_Extensions__c;
       if(ques.Type__c =='File'){
       this.valueName1 = ques.Allowed_File_Extensions__c;
       //console.log(this.valueName1);
@@ -876,11 +879,11 @@ export class QuestionnaireComponent implements OnInit {
 
   optionChange(selValue) {
     let radioTrackingId: string = '';
-    for (var opt of this.questionItem.Question_Options__r.records) {
+    for (var opt of this.questionItem.RFAB__Question_Options__r.records) {
       //console.log('optionChange TrackingId'+opt.Tracking_ID__c);
-      if (opt.Value__c == selValue) {
+      if (opt.RFAB__Value__c == selValue) {
         //console.log('inside if'+opt.Tracking_ID__c)
-        radioTrackingId = opt.Tracking_ID__c;
+        radioTrackingId = opt.RFAB__Tracking_ID__c;
       }
     }
 
@@ -960,7 +963,7 @@ export class QuestionnaireComponent implements OnInit {
   }
 
   handleSubmitClick() {
-    this.handleEvent.emit(this.qbItem.Submit_Tracking_ID__c);
+    this.handleEvent.emit(this.qbItem.RFAB__Submit_Tracking_ID__c);
     this.updateAnswerBook(this.abItem.Id);
   }
 
@@ -997,7 +1000,7 @@ export class QuestionnaireComponent implements OnInit {
   // }
   // Update Function for the Progress Bar
   updateProgress() {
-    var width = 100 * (this.answerCount / this.qbItem.Total_Questions__c);
+    var width = 100 * (this.answerCount / this.qbItem.RFAB__Total_Questions__c);
     //console.log('Progress bar width => ' + width);
     this.progressStyle = Math.round(width) + '%';
     //$('#progress #bar').animate({'width':width + '%'});
