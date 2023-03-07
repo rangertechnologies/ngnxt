@@ -1,0 +1,28 @@
+<!-- <div *ngIf="isRequired && errorMessagePosition == 'top'" class="error-message">This field is required.</div>
+<div *ngIf="showError && errorMessagePosition == 'top'" class="error-message">{{errorMessage}}</div> -->
+   <label class="{{inputType === 'checkbox' || inputType === 'radio' ? 'container' : ''}}">{{label}} 
+      <span *ngIf="isRequired && errorMessagePosition == 'top'" class="error-message {{errorMessagePosition === 'top' ? 'top' : ''}}">This field is required.</span>
+      <span *ngIf="showError && errorMessagePosition == 'top'" class="error-message {{errorMessagePosition === 'top' ? 'top' : ''}}">{{errorMessage}}</span>
+    <input
+    [type]="inputType" 
+    [value]="value" 
+    [disabled]="disabled"
+    [required]="required"
+    [attr.minlength]="minlength"
+    [attr.maxlength]="maxlength"
+    [readOnly]="readOnly"
+    [pattern]="pattern"
+    [min]="min"
+    [max]="max ? max : ''"
+    [name]="name"
+    [attr.size]="size"
+    [placeholder] ="placeholder ? placeholder : '' "
+    (input)="validateOnInputs.includes('onInputChange') ? onInputChange($event) : ''"
+    (focusout)="validateOnInputs.includes('onfocusout') ? onInputChange($event) : ''"
+    (focus)="validateOnInputs.includes('onfocusin') ? onInputChange($event) : ''">
+    <span *ngIf="inputType === 'checkbox'" class="{{inputType === 'checkbox'  ? 'checkmark' : ''}}"></span>
+    <span  *ngIf="inputType === 'radio'" class="{{inputType === 'radio'  ? 'radio checkmark' : ''}}"></span>
+   </label>
+    <div *ngIf="isRequired && errorMessagePosition.includes('bottom')" class="error-message {{errorMessagePosition === 'bottom-left' ? '' : ''}} {{errorMessagePosition === 'bottom-center' ? 'center' : ''}} {{errorMessagePosition === 'bottom-right' ? 'right' : ''}}">This field is required.</div>
+    <div *ngIf="showError && errorMessagePosition.includes('bottom')" class="error-message {{errorMessagePosition === 'bottom-left' ? '' : ''}} {{errorMessagePosition === 'bottom-center' ? 'center' : ''}} {{errorMessagePosition === 'bottom-right' ? 'right' : ''}}">{{errorMessage}}</div>
+

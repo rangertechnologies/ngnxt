@@ -16,6 +16,7 @@ export class QuestionBook {
   RFAB__Total_Questions__c: number;
   RFAB__Summary_Text__c?: string;
   RFAB__Questions__r?: QuestionR;
+  RFAB__Progress_Bar__c: boolean;
 }
 
 export class Question {
