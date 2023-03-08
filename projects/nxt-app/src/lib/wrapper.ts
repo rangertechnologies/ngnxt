@@ -16,6 +16,11 @@ export class QuestionBook {
   RFAB__Total_Questions__c: number;
   RFAB__Summary_Text__c?: string;
   RFAB__Questions__r?: QuestionR;
+  RFAB__Progress_Bar__c: boolean;
+  RFAB__SubTitle__c: string;
+  RFAB__Question_Type__c: string;
+  RFAB__Possibilities__c: string;
+  RFAB__Summary_Sub_Text__c: string;
 }
 
 export class Question {
@@ -45,6 +50,46 @@ export class Question {
   input?: string;
   error?: ErrorWrapper;
   static RFAB__X24_Hours__c: boolean;
+  RFAB__Time_Text__c: string;
+  RFAB__Title__c: string;
+  RFAB__SubTitle__c: string;
+  RFAB__Sub_Text__c: string;
+  RFAB__Date_Text__c: string;
+}
+
+export class LocalQuestion {
+  Id: string;
+  Name: string;
+  RFAB__Allowed_File_Extensions__c :string;
+  RFAB__Question__c : string;
+  RFAB__Question_Text__c : string;
+  RFAB__Type__c: string;
+  RFAB__Title__c: string;
+  RFAB__SubTitle__c: string;
+  RFAB__Next_Question__c?: string;
+  RFAB__Is_Optional__c: boolean;
+  RFAB__Is_Title__c: boolean;
+  RFAB__X24_Hours__c: boolean;
+  RFAB__Error_Message__c: string;
+  RFAB__Is_Date_Backward__c : boolean;
+  RFAB__Is_Date_Forward__c : boolean;
+  RFAB__Time_Text__c : string;
+  RFAB__Date_Text__c : string;
+  RFAB__Group__c: string;
+  RFAB__Question_No__c?: string;
+  RFAB__Question_Options__r?: OptionR;
+  RFAB__Sub_Text__c : string;
+  RFAB__Size__c: number;
+  RFAB__Tracking_ID__c: string;
+  RFAB__Additional_Rich__c? : string;
+  RFAB__Questions__r?: QuestionR;
+  RecordType: {
+    Name: string;
+  };
+  input?: string;
+  error?: ErrorWrapper;
+  static RFAB__X24_Hours__c: boolean;
+  uniqueSubQId: string;
 }
 
 export class QuestionR {
@@ -83,6 +128,9 @@ export class Answer {
   Id: string;
   RFAB__Question_Rich_Text__c: string;
   RFAB__Answer_Long__c : string;
+  RFAB__Question_Type__c: string;
+  RFAB__Question_Ref__c: string;
+  RFAB__Question_Group_Text__c: string;
 }
 export class AnswerR {
   records?: Answer[];
@@ -96,6 +144,8 @@ export class AnswerWrapper {
   quesValue: string;
   qTyp: string;
   ansValue: string;
+  groupText: string;
+  squesValue: string;
 }
 
 export class ErrorWrapper {

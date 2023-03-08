@@ -26,6 +26,11 @@ RFAB__Submit_Tracking_ID__c: '12345',
 RFAB__First_Question__c: '1',
 RFAB__Title__c: 'Demo Unconditional',
 RFAB__Total_Questions__c: 3,
+RFAB__SubTitle__c: 'subTitle',
+RFAB__Question_Type__c:'type',
+RFAB__Possibilities__c: 'poss',
+RFAB__Summary_Sub_Text__c: 'subText',
+RFAB__Progress_Bar__c: true
 }
 // Text Question
 export const TESTQUESTION: Question = {
@@ -46,6 +51,11 @@ RFAB__Is_Date_Forward__c : false,
 RFAB__Group__c: 'Basic',
 RFAB__Size__c:1,
 RFAB__Question_No__c: '1',
+RFAB__Time_Text__c: 'hour',
+RFAB__Title__c: 'title',
+RFAB__SubTitle__c: 'subtitle',
+RFAB__Sub_Text__c: 'subtext',
+RFAB__Date_Text__c: 'datetext',
 RecordType: {
 Name: 'UNCONDITIONAL'
 },
@@ -70,6 +80,11 @@ RFAB__Is_Date_Forward__c : true  ,
 RFAB__Group__c: 'Basic',
 RFAB__Size__c:1,
 RFAB__Question_No__c: '1',
+RFAB__Time_Text__c: 'hour',
+RFAB__Title__c: 'title',
+RFAB__SubTitle__c: 'subtitle',
+RFAB__Sub_Text__c: 'subtext',
+RFAB__Date_Text__c: 'datetext',
 RecordType: {
 Name: 'UNCONDITIONAL'
 },
@@ -94,6 +109,11 @@ RFAB__Is_Date_Forward__c : false,
 RFAB__Group__c: 'Basic',
 RFAB__Size__c:1,
 RFAB__Question_No__c: '1',
+RFAB__Time_Text__c: 'hour',
+RFAB__Title__c: 'title',
+RFAB__SubTitle__c: 'subtitle',
+RFAB__Sub_Text__c: 'subtext',
+RFAB__Date_Text__c: 'datetext',
 RecordType: {
 Name: 'UNCONDITIONAL'
 },
@@ -118,6 +138,11 @@ RFAB__Is_Date_Forward__c : false,
 RFAB__Group__c: 'Basic',
 RFAB__Size__c:1,
 RFAB__Question_No__c: '1',
+RFAB__Time_Text__c: 'hour',
+RFAB__Title__c: 'title',
+RFAB__SubTitle__c: 'subtitle',
+RFAB__Sub_Text__c: 'subtext',
+RFAB__Date_Text__c: 'datetext',
 RecordType: {
 Name: 'UNCONDITIONAL'
 },
@@ -142,6 +167,11 @@ RFAB__Is_Date_Forward__c : false,
 RFAB__Group__c: 'Basic',
 RFAB__Size__c:1,
 RFAB__Question_No__c:'5',
+RFAB__Time_Text__c: 'hour',
+RFAB__Title__c: 'title',
+RFAB__SubTitle__c: 'subtitle',
+RFAB__Sub_Text__c: 'subtext',
+RFAB__Date_Text__c: 'datetext',
 RecordType: {
 Name: 'UNCONDITIONAL'
 },
@@ -191,6 +221,11 @@ RFAB__Is_Date_Forward__c : false,
 RFAB__Group__c: 'Basic',
 RFAB__Size__c:1,
 RFAB__Question_No__c:'6',
+RFAB__Time_Text__c: 'hour',
+RFAB__Title__c: 'title',
+RFAB__SubTitle__c: 'subtitle',
+RFAB__Sub_Text__c: 'subtext',
+RFAB__Date_Text__c: 'datetext',
 RecordType: {
 Name: 'CONDITIONAL'
 },
@@ -240,6 +275,11 @@ RFAB__Is_Date_Forward__c : false,
 RFAB__Group__c: 'Basic',
 RFAB__Size__c:1,
 RFAB__Question_No__c:'7',
+RFAB__Time_Text__c: 'hour',
+RFAB__Title__c: 'title',
+RFAB__SubTitle__c: 'subtitle',
+RFAB__Sub_Text__c: 'subtext',
+RFAB__Date_Text__c: 'datetext',
 RFAB__Questions__r: {
 records: [
 {
@@ -258,6 +298,11 @@ records: [
   RFAB__Is_Date_Backward__c : false,
   RFAB__Is_Date_Forward__c : false,
   RFAB__Group__c: 'Basic',
+  RFAB__Time_Text__c: 'hour',
+  RFAB__Title__c: 'title',
+  RFAB__SubTitle__c: 'subtitle',
+  RFAB__Sub_Text__c: 'subtext',
+  RFAB__Date_Text__c: 'datetext',
   RecordType: {
     Name: 'UNCONDITIONAL'
   },
@@ -303,6 +348,11 @@ records: [
   RFAB__Is_Date_Backward__c : false,
   RFAB__Is_Date_Forward__c : false,
   RFAB__Group__c: 'Basic',
+  RFAB__Time_Text__c: 'hour',
+  RFAB__Title__c: 'title',
+  RFAB__SubTitle__c: 'subtitle',
+  RFAB__Sub_Text__c: 'subtext',
+  RFAB__Date_Text__c: 'datetext',
   RecordType: {
     Name: 'UNCONDITIONAL'
   }
@@ -323,6 +373,11 @@ records: [
   RFAB__Is_Date_Forward__c : false,
   RFAB__Size__c:8,
   RFAB__Group__c: 'Basic',
+  RFAB__Time_Text__c: 'hour',
+  RFAB__Title__c: 'title',
+  RFAB__SubTitle__c: 'subtitle',
+  RFAB__Sub_Text__c: 'subtext',
+  RFAB__Date_Text__c: 'datetext',
   RecordType: {
     Name: 'UNCONDITIONAL'
   }
@@ -343,6 +398,11 @@ records: [
   RFAB__Allowed_File_Extensions__c : '.pdf',
   RFAB__Size__c:8,
   RFAB__Group__c: 'Basic',
+  RFAB__Time_Text__c: 'hour',
+  RFAB__Title__c: 'title',
+  RFAB__SubTitle__c: 'subtitle',
+  RFAB__Sub_Text__c: 'subtext',
+  RFAB__Date_Text__c: 'datetext', 
   RecordType: {
     Name: 'UNCONDITIONAL'
   }
@@ -363,6 +423,11 @@ records: [
   RFAB__Is_Date_Forward__c : false,
   RFAB__Size__c:4,
   RFAB__Group__c: 'Basic',
+  RFAB__Time_Text__c: 'hour',
+  RFAB__Title__c: 'title',
+  RFAB__SubTitle__c: 'subtitle',
+  RFAB__Sub_Text__c: 'subtext',
+  RFAB__Date_Text__c: 'datetext',
   RecordType: {
     Name: 'UNCONDITIONAL'
   }

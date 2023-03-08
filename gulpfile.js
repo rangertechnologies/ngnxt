@@ -1,11 +1,11 @@
-var forceDeploy = require('gulp-jsforce-deploy');
-var gulp = require('gulp');
-var del = require('del');
-var zip = require('gulp-zip');
-var rename = require("gulp-rename");
-var replace = require('gulp-replace');
-var file = require('gulp-file');
-var dotenv = require('dotenv');
+import forceDeploy from 'gulp-jsforce-deploy';
+import gulp from 'gulp';
+import {deleteAsync} from 'del';
+import zip from'gulp-zip';
+import rename from 'gulp-rename';
+import replace from'gulp-replace';
+import file from 'gulp-file';
+import dotenv from 'dotenv';
 dotenv.config();
 
 // define variables from process.env
@@ -51,8 +51,8 @@ const packageXML = `<?xml version="1.0" encoding="UTF-8"?>
 </Package>`;
 
 // Task to remove package folder
-gulp.task('rm', function () { return del(['./package']) });
-gulp.task('rmmap', function () { return del(['./dist/ngNxt/*.js.map']) });
+gulp.task('rm', function () { return deleteAsync(['./package']) });
+gulp.task('rmmap', function () { return deleteAsync(['./dist/ngNxt/*.js.map']) });
 
 gulp.task('create-package', function () {
   return gulp.src('./package', { allowEmpty: true })
