@@ -1,6 +1,7 @@
 {
   "name": "ng-nxt",
-  "version": "2.0.11",
+  "version": "2.0.21",
+  "type": "module",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -19,7 +20,6 @@
   "dependencies": {
     "@angular-devkit/core": "^14.2.2",
     "@angular/cdk": "~14.2.0",
-    "del": "^7.0.0",
     "domsanitizer": "^0.2.2",
     "dotenv": "^8.6.0",
     "gulp": "^4.0.2",

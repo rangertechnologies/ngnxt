@@ -1,0 +1,114 @@
+/* For file upload*/
+.file-upload-section .field-set{
+    flex: 1
+  }
+  
+  .files-list{
+    margin-block: 10px;
+  }
+  
+  .single-file{
+    border: 1px solid #BBBBBB;
+    display: flex;
+    flex-direction: column;
+    /* width: 100%; */
+    padding: 12px 10px 12px;
+    margin-top: 10px;
+  }
+  
+  .file-row{
+    display: flex;
+    gap: 10px;
+  }
+  
+  .file-icon{
+    flex: 1;
+    max-width: 32px;
+  }
+  
+  .file-details{
+    flex: 2;
+    display: flex;
+  }
+  
+  .file-details .delete{
+    margin-right: 5px;
+  }
+  
+  .files-list .info{
+    flex: 2;
+  }
+  
+  .fie-details app-progress{
+    width: 100%;
+  }
+  
+  .custom-file-upload{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1.8px dashed #aaa;;
+    cursor: pointer;
+    margin-block: 10px;
+  }
+  .uploaded.single-file{
+    padding: 10px 12px 4px;
+  }
+  
+  .custom-file-upload:focus-within{
+    border: 1.5px solid #5c91ff;
+  }
+  
+  .form-new .field-set label.file-upload{
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    cursor: pointer;
+    width: 100%;
+    padding-block: 30px;
+  }
+  
+  .fileover,
+  .fileover label{
+    transform: scale(1.02);
+  }
+  
+  .upload-text-thick{
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 20px;
+    color: black;
+    margin-top: 10px;
+    margin-bottom: 8px;
+  }
+  
+  .upload-text-thin{
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 20px;
+    text-align: center;
+    color: #404040;
+  }
+  
+  .file-upload input{
+    padding: 0;
+    margin: 0;
+    height: 0.1px;
+    width: 0.1px;
+  }
+
+  .non-mobile-device{
+    display: block;
+  }
+  
+.mobile-device{
+    display: none;
+  }
+
+.red-text{
+    font-weight: 500;
+    text-align: right;
+    font-size: 14px;
+    color: #ea3223;
+  }

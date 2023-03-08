@@ -8,6 +8,7 @@
 
 # compiled output
 /dist
+/.angular
 /tmp
 /out-tsc
 /package
@@ -54,3 +55,6 @@ Thumbs.db
 
 # Ignore files related to API keys
 .env
+
+
+.angular
