@@ -11,7 +11,7 @@ declare class Visualforce {
 
 export class SalesforceService {
     public getSFResource = (path: string) => `${window['_VfResources']}${path}`;
-    public getRNXTMethodName = () => `${window['_rnxtMethodName']}`;
+    public getRNXTMethodName = () => `${window['_rfabMethodName']}`;
 
     public remoteAction(methodName: string,
                         params: string[],
