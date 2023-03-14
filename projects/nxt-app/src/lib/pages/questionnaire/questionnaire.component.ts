@@ -1774,7 +1774,7 @@ export class QuestionnaireComponent implements OnInit {
         //this.numberFlag = true;
       } else if (typ == "Number") {
         this.numberFlag = true;
-      } else if (typ == "Alphanumeric") {
+      } else if (typ == "AlphaNumeric") {
         this.alphanumericFlag = true;
         /*if(this.inpValue.length === 0){
           this.inpValue='ES'
