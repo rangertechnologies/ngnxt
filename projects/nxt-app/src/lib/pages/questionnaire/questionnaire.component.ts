@@ -1876,7 +1876,7 @@ export class QuestionnaireComponent implements OnInit {
   //Dropdown quesId == inpId
   Dropdown(event) {
     //console.log(event.target.value);
-    this.valueName = event.target.value;
+    this.valueName = event;  // here when using the ng-select got event as value
   }
 
   setSubQuestions(records) {
@@ -2402,6 +2402,15 @@ Add(question: LocalQuestion){
     this.localSubQMap.set(this.questionItem.Id,arra);
     }  
     this.addFlag = true;
+  }
+  
+  handleLocationSelected(location: any) {
+    console.log('Selected location:', location);
+    // Handle the selected location data as needed
+  }
+  
+  selectedInput(input:any){
+    console.log('Selected input:', input);
   }
 
   }

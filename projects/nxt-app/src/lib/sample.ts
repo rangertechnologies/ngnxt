@@ -256,6 +256,8 @@ records: [
 }
 };
 
+export const GOOGLE_MAP_API_KEY = 'AIzaSyA18odJnD-pDsu7EVJ7WiXVM5sVvpjAQxw';
+
 // Book Question
 export const BOOKQUESTION: Question = {
 Id: '17',

@@ -417,12 +417,15 @@
           </div>
 
           <div *ngIf="ques.Type__c === 'Text'">
-              <input type="text" [(ngModel)]="ques.input" [ngClass]="{
+             <app-pick-location (locationSelected)="handleLocationSelected($event)"></app-pick-location>
+
+             <app-custom-input [value]="ques.input" [disabled]="true" [placeholder]="ques.Question__c "  (inputValue)="selectedInput($event)"></app-custom-input>
+              <!-- <input type="text" [(ngModel)]="ques.input" [ngClass]="{
                'dis-flex dt-line date-line bookText boxoutline myt-font1': qbItem.Progress_Bar__c,
                textBox: !qbItem.Progress_Bar__c
               }" id="text" [id]="ques.Id" required="" (focus)="clearSQError(ques.Id)"
               style.border-color="{{ ques.error ? 'red' : '' }}" placeholder="{{ ques.Question__c }}"
-              oninput="this.value=this.value.replace(/[^a-zA-Z0-9\s.:;,?]/g,'');" />
+              oninput="this.value=this.value.replace(/[^a-zA-Z0-9\s.:;,?]/g,'');" /> -->
             </div>
 
           <div *ngIf="ques.Type__c === 'Email'">
@@ -486,7 +489,11 @@
 
           <div *ngIf="ques.Type__c === 'Dropdown'" class="">
             <div class="dis-flex">
-            <select [ngClass]="{
+            <ng-select [(ngModel)]="ques.input" style="width: 100%;"  (change)="Dropdown($event); clearSQError(ques.Id)"
+                placeholder="---Select---">
+              <ng-option *ngFor="let opt of ques.Question_Options__r.records" value="{{ opt.Value__c }}">{{ opt.Value__c }}</ng-option>
+            </ng-select>
+            <!-- <select [ngClass]="{
                 'dt-line dpDown down myt-dropbox myt-border-r myt-font1': qbItem.Progress_Bar__c,
                 'custom-select': !qbItem.Progress_Bar__c
               }" class="custom-select mr-sm-2 dd-height" id="dropdown" [(ngModel)]="ques.input"
@@ -498,7 +505,7 @@
               <option *ngIf="ques.Error_Message__c" value="" disabled hidden>
                 {{ ques.Error_Message__c }}
               </option>
-            </select>
+            </select> -->
             </div>
             <i class="fa fa-check " aria-hidden="true" *ngIf="questionItem?.input?.length > 0"></i>
           </div>          
