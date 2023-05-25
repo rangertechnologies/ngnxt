@@ -58,6 +58,8 @@ export class QuestionnaireComponent implements OnInit {
 
   params: Params;
 
+  certifiedFlag:boolean =false;
+  certificateList:any[]=[];
   public deviceInfo = null;
   public abItem: AnswerBook;
   public qbItem: QuestionBook;
@@ -1877,6 +1879,25 @@ export class QuestionnaireComponent implements OnInit {
   Dropdown(event) {
     //console.log(event.target.value);
     this.valueName = event;  // here when using the ng-select got event as value
+    this.certificateList=[];
+    if(event == 'HC02'){
+      this.certifiedFlag = true;
+      this.certificateList.push(
+        'admin',
+        'developer',
+        'testing'
+      )
+    }else if(event == 'H10'){
+      this.certifiedFlag = true;
+      this.certificateList.push(
+        'fireFIghter',
+        'hazarer',
+        'testing'
+      )
+    }else{
+      this.certifiedFlag = false;
+    }
+    
   }
 
   setSubQuestions(records) {
@@ -2408,9 +2429,13 @@ Add(question: LocalQuestion){
     console.log('Selected location:', location);
     // Handle the selected location data as needed
   }
-  
+
   selectedInput(input:any){
     console.log('Selected input:', input);
+  }
+
+  handleTextareaValueChange(value :string){
+    console.log('Selected text-area text:', value);
   }
 
   }
