@@ -19,7 +19,6 @@ import { NgxSpinnerService } from "ngx-spinner";
 import { DeviceDetectorService } from 'ngx-device-detector';
 
 
-
 import {
   Question,
   QuestionBook,
@@ -43,6 +42,7 @@ import {
   BOOKQUESTION,
   TESTQB,
 } from "../../sample";
+import { from } from "rxjs";
 
 @Component({
   selector: "lib-questionnaire",
@@ -57,7 +57,6 @@ export class QuestionnaireComponent implements OnInit {
   @Output() handlePage: EventEmitter<any> = new EventEmitter();
 
   params: Params;
-
   certifiedFlag:boolean =false;
   certificateList:any[]=[];
   public deviceInfo = null;
@@ -2437,5 +2436,40 @@ Add(question: LocalQuestion){
   handleTextareaValueChange(value :string){
     console.log('Selected text-area text:', value);
   }
+  getData(data:any){
+   console.log('table data',data);
+  }
+
+  tableData: any[]= [
+    {
+      label: 'Fire Extinguisher',
+      imageSrc: 'https://media.istockphoto.com/id/943776434/vector/fire-extinguisher-icon-vector.jpg?s=612x612&w=0&k=20&c=KVaDxuV2TV7fdwn09Tg9HeF3MNyoJC5k2YqSAzpStDY=',
+      altText: 'extinguisher',
+      name: 'FireEstinguisher',
+      value: 'YES'
+    },
+    {
+      label: ' Fire Blanket',
+      imageSrc: 'https://media.istockphoto.com/id/943776434/vector/fire-extinguisher-icon-vector.jpg?s=612x612&w=0&k=20&c=KVaDxuV2TV7fdwn09Tg9HeF3MNyoJC5k2YqSAzpStDY=',
+      altText: 'fireBlanket',
+      name: 'fireBlanket',
+      value: 'YES'
+    },
+    {
+      label: 'Illumination',
+      imageSrc: 'https://media.istockphoto.com/id/943776434/vector/fire-extinguisher-icon-vector.jpg?s=612x612&w=0&k=20&c=KVaDxuV2TV7fdwn09Tg9HeF3MNyoJC5k2YqSAzpStDY=',
+      altText: 'fireBlailluminationnket',
+      name: 'illumination',
+      value: 'YES'
+    },
+    {
+      label: 'Ventilation',
+      imageSrc: 'https://media.istockphoto.com/id/943776434/vector/fire-extinguisher-icon-vector.jpg?s=612x612&w=0&k=20&c=KVaDxuV2TV7fdwn09Tg9HeF3MNyoJC5k2YqSAzpStDY=',
+      altText: 'Ventilation',
+      name: 'Ventilation',
+      value: 'YES'
+    }
+  ];
 
   }
+

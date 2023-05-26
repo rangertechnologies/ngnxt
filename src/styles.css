@@ -1076,6 +1076,11 @@ input:not(:focus) {
   border-bottom: 1px solid #eeeeee;
   border-radius: 0;
 }
+.table-input{
+  height: 32px; 
+  background: transparent;
+  border: none !important;
+}
 
  /* my changes  */
 

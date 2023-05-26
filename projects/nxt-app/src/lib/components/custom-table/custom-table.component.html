@@ -1,8 +1,8 @@
-<!-- <table class="table table-striped table-bordered">
+<table class="table table-striped table-bordered">
     <thead>
       <tr>
         <th>
-          Safety Precautions
+          {{ tableHeader }}
         </th>
         <th class="permission">
           YES
@@ -16,230 +16,32 @@
       </tr>
     </thead>
     <tbody id="safetyMeasuresTableBody">
-      <tr>
+      <tr *ngFor="let item of tableData">
         <td>
-          <img style="width: 35px; height: 32px; margin-right: 5px;" src="./../../../../../assets/images/8icons/fire exting.png" alt="extinguisher">
-          Fire Extinguisher
+          <img style="width: 35px; height: 32px; margin-right: 5px;" [src]="item.imageSrc" [alt]="item.altText">
+          {{ item.label }}
         </td>
         <td class="permission_yes">
-          <input type="radio" checked  name="FireEstinguisher" id="" value="YES" >
+          <input type="radio"  [checked]="item.value === 'YES'" [name]="item.name" value="YES" (change)="updateRadio(item,'YES')">
         </td>
         <td class="permission_no">
-          <input type="radio" name="FireEstinguisher" id="" value="NO" >
+          <input type="radio"  [checked]="item.value === 'NO'" [name]="item.name" value="NO" (change)="updateRadio(item,'NO')">
         </td>
         <td class="permission_na">
-          <input type="radio" name="FireEstinguisher" id="" value="NA" >
-        </td>
-      </tr>
-      <tr>
-        <td>
-          <img style="width: 35px; height: 32px; margin-right: 5px;" src="./../../../../../assets/images/16 icons/fireBlanket.png" alt="fireBlanket">
-          Fire Blanket
-        </td>
-        <td class="permission_yes">
-          <input type="radio" checked name="FireBlanket" id="" value="YES">
-        </td>
-        <td class="permission_no">
-          <input type="radio" name="FireBlanket" id="" value="NO">
-        </td>
-        <td class="permission_na">
-          <input type="radio" name="FireBlanket" id="" value="NA">
-        </td>
-      </tr>
-      <tr>
-        <td>
-          <img style="width: 35px; height: 32px; margin-right: 5px;" src="./../../../../../assets/images/16 icons/illumination.png" alt="illumination">
-          Illumination
-        </td>
-        <td class="permission_yes">
-          <input type="radio" checked name="Illumination" id="" value="YES">
-        </td>
-        <td class="permission_no">
-          <input type="radio" name="Illumination" id="" value="NO">
-        </td>
-        <td class="permission_na">
-          <input type="radio" name="Illumination" id="" value="NA">
-        </td>
-      </tr>
-      <tr>
-        <td>
-          <img style="width: 35px; height: 32px; margin-right: 5px;" src="./../../../../../assets/images/16 icons/ventilation.png" alt="ventilation">
-          Ventilation
-        </td>
-        <td class="permission_yes">
-          <input type="radio" checked name="Ventilation" id="" value="YES">
-        </td>
-        <td class="permission_no">
-          <input type="radio" name="Ventilation" id="" value="NO">
-        </td>
-        <td class="permission_na">
-          <input type="radio" name="Ventilation" id="" value="NA">
-        </td>
-      </tr>
-      <tr>
-        <td>
-          <img style="width: 35px; height: 32px; margin-right: 5px;" src="./../../../../../assets/images/16 icons/Signage & Barricade.png" alt="signage">
-          Signage & Barricade
-        </td>
-        <td class="permission_yes">
-          <input type="radio" checked name="SignageandBarricade" id="" value="YES">
-        </td>
-        <td class="permission_no">
-          <input type="radio" name="SignageandBarricade" id="" value="NO">
-        </td>
-        <td class="permission_na">
-          <input type="radio" name="SignageandBarricade" id="" value="NA">
-        </td>
-      </tr>
-      <tr>
-        <td>
-          <img style="width: 35px; height: 32px; margin-right: 5px;" src="./../../../../../assets/images/24icons/Cylinders & Tubing Safe.png" alt="cylinder">
-          Cylinders & Tubing Safe
-        </td>
-        <td class="permission_yes">
-          <input type="radio" checked name="CylindersandTubingSafe" id="" value="YES">
-        </td>
-        <td class="permission_no">
-          <input type="radio" name="CylindersandTubingSafe" id="" value="NO">
-        </td>
-        <td class="permission_na">
-          <input type="radio" name="CylindersandTubingSafe" id="" value="NA">
-        </td>
-      </tr>
-      <tr>
-        <td>
-          <img style="width: 35px; height: 32px; margin-right: 5px;" src="./../../../../../assets/images/8icons/flashback arrestor.png" alt="flashback">
-          Flashback Arrestor
-        </td>
-        <td class="permission_yes">
-          <input type="radio" checked name="FlashbackArrester" id="" value="YES">
-        </td>
-        <td class="permission_no">
-          <input type="radio" name="FlashbackArrester" id="" value="NO">
-        </td>
-        <td class="permission_na">
-          <input type="radio" name="FlashbackArrester" id="" value="NA">
-        </td>
-      </tr>
-      <tr>
-        <td>
-          <img style="width: 35px; height: 32px; margin-right: 5px;" src="./../../../../../assets/images/16 icons/pressureGauge.png" alt="pressureGauge">
-          Pressure Gauge
-        </td>
-        <td class="permission_yes">
-          <input type="radio" checked name="PressureGauge" id="" value="YES">
-        </td>
-        <td class="permission_no">
-          <input type="radio" name="PressureGauge" id="" value="NO">
-        </td>
-        <td class="permission_na">
-          <input type="radio" name="PressureGauge" id="" value="NA">
-        </td>
-      </tr>
-      <tr>
-        <td>
-          <img style="width: 35px; height: 32px; margin-right: 5px;" src="./../../../../../assets/images/8icons/cylindersOnTrolley.png" alt="cylindersOnTrolley">
-          Cylinders on Trolley
-        </td>
-        <td class="permission_yes">
-          <input type="radio" checked name="CylindersonTrolley" id="" value="YES">
-        </td>
-        <td class="permission_no">
-          <input type="radio" name="CylindersonTrolley" id="" value="NO">
-        </td>
-        <td class="permission_na">
-          <input type="radio" name="CylindersonTrolley" id="" value="NA">
-        </td>
-      </tr>
-      <tr>
-        <td>
-          <img style="width: 35px; height: 32px; margin-right: 5px;" src="./../../../../../assets/images/8icons/explosive atmosphere.png" alt="flamable">
-          Flammable/ Explosive Atmosphere
-        </td>
-        <td class="permission_yes">
-          <input type="radio" checked name="FlammableExplosiveAtmosphere" id="" value="YES">
-        </td>
-        <td class="permission_no">
-          <input type="radio" name="FlammableExplosiveAtmosphere" id="" value="NO">
-        </td>
-        <td class="permission_na">
-          <input type="radio" name="FlammableExplosiveAtmosphere" id="" value="NA">
-        </td>
-      </tr>
-      <tr>
-        <td>
-          <img style="width: 35px; height: 32px; margin-right: 5px;" src="./../../../../../assets/images/8icons/flammable.png" alt="flamable">
-          Flammable/ Combustible substance
-        </td>
-        <td class="permission_yes">
-          <input type="radio" checked name="FlammableCombustiblesubstance" id="" value="YES">
-        </td>
-        <td class="permission_no">
-          <input type="radio" name="FlammableCombustiblesubstance" id="" value="NO">
-        </td>
-        <td class="permission_na">
-          <input type="radio" name="FlammableCombustiblesubstance" id="" value="NA">
-        </td>
-      </tr>
-      <tr>
-        <td>
-          <img style="width: 35px; height: 32px; margin-right: 5px;" src="./../../../../../assets/images/8icons/welding .png" alt="welding">
-          Welding Equipment Inspected
-        </td>
-        <td class="permission_yes">
-          <input type="radio" checked name="WeldingEquipmentInspected" id="" value="YES">
-        </td>
-        <td class="permission_no">
-          <input type="radio" name="WeldingEquipmentInspected" id="" value="NO">
-        </td>
-        <td class="permission_na">
-          <input type="radio" name="WeldingEquipmentInspected" id="" value="NA">
-        </td>
-      </tr>
-      <tr>
-        <td>
-          <img style="width: 35px; height: 32px; margin-right: 5px;" src="./../../../../../assets/images/16 icons/aise clean.png" alt="safety">
-          Safe Access & Egress
-        </td>
-        <td class="permission_yes">
-          <input type="radio" checked name="SafeAccessEgress" id="" value="YES">
-        </td>
-        <td class="permission_no">
-          <input type="radio" name="SafeAccessEgress" id="" value="NO">
-        </td>
-        <td class="permission_na">
-          <input type="radio" name="SafeAccessEgress" id="" value="NA">
-        </td>
-      </tr>
-      <tr>
-        <td>
-          <img style="width: 35px; height: 32px; margin-right: 5px;" src="./../../../../../assets/images/8icons/housekeeping.png" alt="housekeeping">
-          Good Housekeeping
-        </td>
-        <td class="permission_yes">
-          <input type="radio" checked name="GoodHousekeeping" id="" value="YES"> 
-        </td>
-        <td class="permission_no">
-          <input type="radio" name="GoodHousekeeping" id="" value="NO">
-        </td>
-        <td class="permission_na">
-          <input type="radio" name="GoodHousekeeping" id="" value="NA">
+          <input type="radio"  [checked]="item.value === 'NA'" [name]="item.name" value="NA" (change)="updateRadio(item,'NA')">
         </td>
       </tr>
       <tr>
         <td>
           <b>Add More</b>
         </td>
-        <td>
-
-        </td>
-        <td>
-
-        </td>
-        <td style="text-align: center;cursor: pointer;" id="addSafety" #add (click)="Add_P_ROW(add)">
+        <td colspan="3" style="text-align: center; cursor: pointer;" id="addSafety" #add (click)="addRow()">
           +
         </td>
       </tr>
-
     </tbody>
-  </table> -->
+  </table>
+  
+
+
+

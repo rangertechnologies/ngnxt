@@ -17,7 +17,6 @@ export class DropdownWithFlagComponent implements OnInit {
   }
   ngOnChanges(){
     this.selectedValue = null;
-    console.log('ngonchanges',this.selectedValue);
   }
   
   onJobPerformerCertified(event:any){

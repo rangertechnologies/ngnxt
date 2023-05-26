@@ -420,6 +420,7 @@
              <app-pick-location (locationSelected)="handleLocationSelected($event)"></app-pick-location>
 
              <app-custom-text-area [value]="ques.input" [rows]="3" [placeholder]="ques.Question__c " (textareaValueChange)="handleTextareaValueChange($event)"></app-custom-text-area>
+             <app-custom-table [tableHeader]="'Safety Precautions'" [tableData]="tableData" (tableDataChange)="getData($event)"></app-custom-table>
               <!-- <input type="text" [(ngModel)]="ques.input" [ngClass]="{
                'dis-flex dt-line date-line bookText boxoutline myt-font1': qbItem.Progress_Bar__c,
                textBox: !qbItem.Progress_Bar__c
