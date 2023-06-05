@@ -55,7 +55,12 @@ export class Question {
   SubTitle__c: string;
   Sub_Text__c: string;
   Date_Text__c: string;
+  valueName?:string;
+  dropDownOnly?:boolean;
+  tableDataValue?:any[]; 
+  tableHeader?:string;
 }
+
 
 export class LocalQuestion {
   Id: string;

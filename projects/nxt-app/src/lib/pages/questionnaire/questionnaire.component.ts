@@ -57,8 +57,6 @@ export class QuestionnaireComponent implements OnInit {
   @Output() handlePage: EventEmitter<any> = new EventEmitter();
 
   params: Params;
-  certifiedFlag:boolean =false;
-  certificateList:any[]=[];
   public deviceInfo = null;
   public abItem: AnswerBook;
   public qbItem: QuestionBook;
@@ -130,6 +128,69 @@ export class QuestionnaireComponent implements OnInit {
   public innerhtml: any;
   public possibilities: any;
   public innerhtml1: any;
+
+  
+  tableData1: any[]= [
+    {
+      label: 'Fire Extinguisher',
+      imageSrc: 'https://media.istockphoto.com/id/943776434/vector/fire-extinguisher-icon-vector.jpg?s=612x612&w=0&k=20&c=KVaDxuV2TV7fdwn09Tg9HeF3MNyoJC5k2YqSAzpStDY=',
+      altText: 'extinguisher',
+      name: 'FireEstinguisher',
+      value: 'YES'
+    },
+    {
+      label: ' Fire Blanket',
+      imageSrc: 'https://media.istockphoto.com/id/943776434/vector/fire-extinguisher-icon-vector.jpg?s=612x612&w=0&k=20&c=KVaDxuV2TV7fdwn09Tg9HeF3MNyoJC5k2YqSAzpStDY=',
+      altText: 'fireBlanket',
+      name: 'fireBlanket',
+      value: 'YES'
+    },
+    {
+      label: 'Illumination',
+      imageSrc: 'https://media.istockphoto.com/id/943776434/vector/fire-extinguisher-icon-vector.jpg?s=612x612&w=0&k=20&c=KVaDxuV2TV7fdwn09Tg9HeF3MNyoJC5k2YqSAzpStDY=',
+      altText: 'fireBlailluminationnket',
+      name: 'illumination',
+      value: 'YES'
+    },
+    {
+      label: 'Ventilation',
+      imageSrc: 'https://media.istockphoto.com/id/943776434/vector/fire-extinguisher-icon-vector.jpg?s=612x612&w=0&k=20&c=KVaDxuV2TV7fdwn09Tg9HeF3MNyoJC5k2YqSAzpStDY=',
+      altText: 'Ventilation',
+      name: 'Ventilation',
+      value: 'YES'
+    }
+  ];
+  tableData2: any[]= [
+    {
+      label: 'Head Protection',
+      imageSrc: 'https://media.istockphoto.com/id/943776434/vector/fire-extinguisher-icon-vector.jpg?s=612x612&w=0&k=20&c=KVaDxuV2TV7fdwn09Tg9HeF3MNyoJC5k2YqSAzpStDY=',
+      altText: 'extinguisher',
+      name: 'check1',
+      value: 'YES'
+    },
+    {
+      label: 'Welding Hood',
+      imageSrc: 'https://media.istockphoto.com/id/943776434/vector/fire-extinguisher-icon-vector.jpg?s=612x612&w=0&k=20&c=KVaDxuV2TV7fdwn09Tg9HeF3MNyoJC5k2YqSAzpStDY=',
+      altText: 'fireBlanket',
+      name: 'check2',
+      value: 'YES'
+    },
+    {
+      label: 'Eye Protection',
+      imageSrc: 'https://media.istockphoto.com/id/943776434/vector/fire-extinguisher-icon-vector.jpg?s=612x612&w=0&k=20&c=KVaDxuV2TV7fdwn09Tg9HeF3MNyoJC5k2YqSAzpStDY=',
+      altText: 'Protection',
+      name: 'Protection',
+      value: 'YES'
+    },
+    {
+      label: 'Hearing Protection',
+      imageSrc: 'https://media.istockphoto.com/id/943776434/vector/fire-extinguisher-icon-vector.jpg?s=612x612&w=0&k=20&c=KVaDxuV2TV7fdwn09Tg9HeF3MNyoJC5k2YqSAzpStDY=',
+      altText: 'Hearing',
+      name: 'Hearing',
+      value: 'YES'
+    }
+  ];
+
   public hours: any[] = [
     "01",
     "02",
@@ -711,10 +772,6 @@ export class QuestionnaireComponent implements OnInit {
   }
 
   AnswerSave(){
-    //console.log('Inside the handleNextClick');
-    //console.log(this.bookFlag);
-    //console.log(this.questionItem);
-
     //this.updateProgress();
     if (this.currentQuestionId === null) {
       return;
@@ -823,27 +880,6 @@ export class QuestionnaireComponent implements OnInit {
             }
           }
 
-          //console.log('this.qbItem.Progress_Bar__c = '+this.qbItem.Progress_Bar__c);
-          //console.log('this.selDate = '+this.selDate);
-          //console.log('this.inpValue = '+this.inpValue);
-          //console.log('this.selectedHour = '+this.selectedHour);
-          //console.log('this.selectedMinute = '+this.selectedMinute);
-//MYT code
-         /* if (this.qbItem.Progress_Bar__c && this.inpValue && this.insuranceStartDate) {
-            var date1: any = this.inpValue.split(" ");
-            date1 = date1[0].split("/");
-            date1 = [date1[2], date1[1], date1[0]].join("-");
-            date1 = new Date(date1);
-            var date2: any = this.insuranceStartDate.split(" ");
-            date2 = new Date(date2[0]);
-            if (date1 < date2) {
-              this.questionItem.error = new ErrorWrapper();
-              this.questionItem.error.errorMsg =
-                "No es posible dar de alta la reclamación debido a que la fecha del incidente es anterior a la fecha de contratación de la póliza";
-              return;
-            }
-          }*/
-
           if (this.selDate === null || this.selDate === undefined || !this.inpValue || !this.selectedHour || !this.selectedMinute || !this.selectDate) {
             //console.log('Inside the null condition of input');
             this.questionItem.error = new ErrorWrapper();
@@ -908,27 +944,12 @@ export class QuestionnaireComponent implements OnInit {
 			  }
 			//console.log('testin values=='+item.input)
 		  }
-			 /* var loctown;
-			  for(let val of this.localaddress){
-                        loctown=val.town;
-			  
-			  if(this.selectedValue==loctown){
-				  //console.log('log'+loctown)
-				item.input=this.selectedValue;
-			  }
-              
-			  if (!item.input) {
-				  //console.log('error form')
-				item.error = new ErrorWrapper();
-				hasMissingInput = true;
-			  }
-			}
-		  }*/
 
         if (
           !item.Is_Optional__c &&
-          ((item.Type__c != "File" && !item.input && item.Type__c != 'Date' && item.Type__c != 'Time') ||
-            (item.Type__c == "File" && this.attachments.length == 0))
+        //  ((item.Type__c != "File" && !item.input && item.Type__c != 'Date' && item.Type__c != 'Time') ||
+         //   (item.Type__c == "File" && this.attachments.length == 0))
+         (item.Type__c == "File" && this.attachments.length == 0)
         ) {
           item.error = new ErrorWrapper();
           hasMissingInput = true;
@@ -1131,6 +1152,7 @@ export class QuestionnaireComponent implements OnInit {
     this.answerWrap.ansValue = this.inpValue;
     this.answerWrap.groupText = cQuestion.Group__c;
     this.answerWrap.ansValue = this.inpValue;
+    console.log('this.answerWrap.qTyp',this.answerWrap.qTyp);
    if(this.answerWrap.qTyp == "Alphanumeric"){
       this.answerWrap.ansValue = 'ES'+ this.inpValue;
       // console.log('Bank condition');
@@ -1726,13 +1748,9 @@ export class QuestionnaireComponent implements OnInit {
         var dtval0 = this.inpValue.split(" ");
         this.inpValue = dtVal[0];
         this.inpValue = dtval0[0];
-        //console.log('inp'+this.inpValue + '=='+dtVal[0])
-        //console.log('inp'+this.inpValue + '=='+dtval0[0])
 
         this.questionItem.input = dtVal[1];
         this.questionItem.input = dtval0[1];
-        //console.log('inpvalue'+this.questionItem.input +'==' +dtVal[1])
-        //console.log('inpvalue'+this.questionItem.input +'==' +dtval0[1])
       }
       if (
         this.questionItem.Is_Date_Backward__c ||
@@ -1874,30 +1892,58 @@ export class QuestionnaireComponent implements OnInit {
       this.optionValues.push(ov);
     }
   }
-  //Dropdown quesId == inpId
-  Dropdown(event) {
-    //console.log(event.target.value);
-    this.valueName = event;  // here when using the ng-select got event as value
-    this.certificateList=[];
-    if(event == 'HC02'){
-      this.certifiedFlag = true;
-      this.certificateList.push(
-        'admin',
-        'developer',
-        'testing'
-      )
-    }else if(event == 'H10'){
-      this.certifiedFlag = true;
-      this.certificateList.push(
-        'fireFIghter',
-        'hazarer',
-        'testing'
-      )
-    }else{
-      this.certifiedFlag = false;
+  Dropdown(event,ques?:any) {
+    ques.valueName = event;// here when using the ng-select got event as value
+    ques.isDependentPicklist = false;
+    for(var k=0 ;k<ques.Question_Options__r.records.length;k++){
+      // if the selected options's next question is available to push that question options in array to show the dependent dropdown with flag field 
+      if(event === ques.Question_Options__r.records[k].Value__c && ques.Question_Options__r.records[k].Next_Question__c != undefined){
+        this.sfService.remoteAction(
+          "NxtController.process",
+          ["Question", "read", ques.Question_Options__r.records[k].Next_Question__c],
+          (response: any) => {
+            //Handle response here
+            const question = response.question;
+            if(question.Type__c === 'Dropdown' && !ques.dropDownOnly){
+              ques.certificateList=[];
+              ques.certifiedFlag = true;
+              ques.isDependentPicklist = true;
+              for(var k=0 ;k<question.Question_Options__r.records.length;k++){
+                ques.certificateList.push(question.Question_Options__r.records[k].Value__c);
+              }
+            }
+            // for now we use the selected value as input value ,need to implement the dependent input field updation
+            else if(question.Type__c === 'Text'){
+              for(var i=0;i<this.subQuestions.length;i++){
+                if(this.subQuestions[i].Type__c === 'Text'){
+                 this.subQuestions[i].valueName = question.Question_Text__c.replace(/<\/?p>/g, '');
+                }
+             }
+            }
+            // for dependent dropdown only field 
+            else if(question.Type__c === 'Dropdown' && ques.dropDownOnly){
+              ques.certificateList=[];
+              for(var k=0 ;k<question.Question_Options__r.records.length;k++){
+                ques.certificateList.push(question.Question_Options__r.records[k].Value__c);
+              }
+            }
+           
+          },
+          (error: any) => {
+            // Handle the error 
+          }
+        );
+      }else{
+        // next question is not available in the selected option then uncheck the toggle ,remove the values and hide the dependent dropdown with flag field
+        ques.certifiedFlag = false;
+        ques.certificateList =[];
+        ques.isDependentPicklist = false;
+      }
     }
-    
+   
+      
   }
+
 
   setSubQuestions(records) {
     // console.log('inside setSubQuestions');
@@ -1968,6 +2014,22 @@ export class QuestionnaireComponent implements OnInit {
       }
 
       this.subQuestions.push(ques);
+      for(var i=0; i<this.subQuestions.length;i++){
+        // assign the data's for to check data table 
+        if(this.subQuestions[i].Name == 'QN-02251'){
+          this.subQuestions[i].tableDataValue = this.tableData1;
+          this.subQuestions[i].tableHeader = 'Safety Precautions';
+        }else{
+          this.subQuestions[i].tableDataValue =  this.tableData2;
+          this.subQuestions[i].tableHeader = 'Personal Protective Equipments';
+        }
+        // to show/hide the dependent dropdown only field using the dropDownOnly boolean
+        if(this.subQuestions[i].Size__c == 4){
+          this.subQuestions[i].dropDownOnly = true;
+        }else{
+          this.subQuestions[i].dropDownOnly = false;
+        }
+      }
       if(ans != ''){
         for(var an of (ans.split('$$@@##'))){
           var sQ = new Question();
@@ -2440,36 +2502,7 @@ Add(question: LocalQuestion){
    console.log('table data',data);
   }
 
-  tableData: any[]= [
-    {
-      label: 'Fire Extinguisher',
-      imageSrc: 'https://media.istockphoto.com/id/943776434/vector/fire-extinguisher-icon-vector.jpg?s=612x612&w=0&k=20&c=KVaDxuV2TV7fdwn09Tg9HeF3MNyoJC5k2YqSAzpStDY=',
-      altText: 'extinguisher',
-      name: 'FireEstinguisher',
-      value: 'YES'
-    },
-    {
-      label: ' Fire Blanket',
-      imageSrc: 'https://media.istockphoto.com/id/943776434/vector/fire-extinguisher-icon-vector.jpg?s=612x612&w=0&k=20&c=KVaDxuV2TV7fdwn09Tg9HeF3MNyoJC5k2YqSAzpStDY=',
-      altText: 'fireBlanket',
-      name: 'fireBlanket',
-      value: 'YES'
-    },
-    {
-      label: 'Illumination',
-      imageSrc: 'https://media.istockphoto.com/id/943776434/vector/fire-extinguisher-icon-vector.jpg?s=612x612&w=0&k=20&c=KVaDxuV2TV7fdwn09Tg9HeF3MNyoJC5k2YqSAzpStDY=',
-      altText: 'fireBlailluminationnket',
-      name: 'illumination',
-      value: 'YES'
-    },
-    {
-      label: 'Ventilation',
-      imageSrc: 'https://media.istockphoto.com/id/943776434/vector/fire-extinguisher-icon-vector.jpg?s=612x612&w=0&k=20&c=KVaDxuV2TV7fdwn09Tg9HeF3MNyoJC5k2YqSAzpStDY=',
-      altText: 'Ventilation',
-      name: 'Ventilation',
-      value: 'YES'
-    }
-  ];
+
 
   }
 

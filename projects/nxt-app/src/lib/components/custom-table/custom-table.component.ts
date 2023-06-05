@@ -8,8 +8,8 @@ declare var $: any;
 })
 export class CustomTableComponent implements OnInit {
   @Input() tableHeader: string='';
-  @Input() tableData: any[];
-  @Output() tableDataChange: EventEmitter<any> = new EventEmitter<any>();
+  @Input() tableData: tableItem [];
+  @Output() tableDataChange: EventEmitter<any[]> = new EventEmitter<any[]>();
 
   constructor() { }
 
@@ -25,43 +25,34 @@ export class CustomTableComponent implements OnInit {
       name: '',
       value: 'YES'
     };
-    this.tableData.push(newItem);
-    this.emitTableDataValue();
-
-       // Execute code after the view has been initialized
-       setTimeout(() => {
-        const lastIndex = this.tableData.length - 1;
-        const newRow = $('#safetyMeasuresTableBody tr').eq(lastIndex);
-        const labelCell = newRow.find('td').eq(0);
-
-       // Remove the text content while preserving the <img> tag
-        labelCell.contents().filter(function() {
-          return this.nodeType === 3; // Text node
-        }).remove();
-
-        const labelInput = $('<input type="text">');
-        labelInput.addClass('she-line-input table-input');
-        labelInput.appendTo(labelCell);
-      });
+    const updatedTableData = [...this.tableData, newItem];
+    this.tableData = updatedTableData;
+    this.emitTableDataValue(updatedTableData);
   }
 
   updateRadio(item: any, value: string): void {
     item.value = value;
-    this.emitTableDataValue();
+    this.emitTableDataValue(this.tableData);
   }
 
-  ngAfterViewInit(): void {
-    $('.table').on('input', '.she-line-input', (event) => {
-      const rowIndex = $(event.target).closest('tr').index();
-      const label = $(event.target).val().toString();
-      this.tableData[rowIndex].label = label;
-      this.emitTableDataValue();
-    });
-   
+  updateLabel(rowIndex: number, label: string): void {
+    this.tableData[rowIndex].label = label;
+    this.emitTableDataValue(this.tableData);
   }
 
- emitTableDataValue(): void {
-  this.tableDataChange.emit(this.tableData);
+  emitTableDataValue(updatedTableData: any[]): void {
+    this.tableDataChange.emit(updatedTableData);
+  }
+  
+
+ 
 }
+
+export interface tableItem {
+  label: string;
+  imageSrc:string
+  altText:string;
+  name: string;
+  value: string
 }
 

@@ -417,16 +417,26 @@
           </div>
 
           <div *ngIf="ques.Type__c === 'Text'">
-             <app-pick-location (locationSelected)="handleLocationSelected($event)"></app-pick-location>
-
-             <app-custom-text-area [value]="ques.input" [rows]="3" [placeholder]="ques.Question__c " (textareaValueChange)="handleTextareaValueChange($event)"></app-custom-text-area>
-             <app-custom-table [tableHeader]="'Safety Precautions'" [tableData]="tableData" (tableDataChange)="getData($event)"></app-custom-table>
+            <!-- for pick location -->
+             <app-pick-location *ngIf="ques.Question__c == 'Location'" (locationSelected)="handleLocationSelected($event)"></app-pick-location>
+             <!-- for disabled custom input -->
+             <app-custom-input *ngIf="ques.Question__c != 'Location'" [value]="ques.valueName"  [disabled]="true"  [placeholder]="ques.Question__c "  (inputValue)="selectedInput($event)"></app-custom-input>
+              <!-- old input  -->
+             <!-- <app-custom-text-area [value]="ques.input" [rows]="3" [placeholder]="ques.Question__c " (textareaValueChange)="handleTextareaValueChange($event)"></app-custom-text-area> -->
               <!-- <input type="text" [(ngModel)]="ques.input" [ngClass]="{
                'dis-flex dt-line date-line bookText boxoutline myt-font1': qbItem.Progress_Bar__c,
                textBox: !qbItem.Progress_Bar__c
               }" id="text" [id]="ques.Id" required="" (focus)="clearSQError(ques.Id)"
               style.border-color="{{ ques.error ? 'red' : '' }}" placeholder="{{ ques.Question__c }}"
               oninput="this.value=this.value.replace(/[^a-zA-Z0-9\s.:;,?]/g,'');" /> -->
+            </div>
+            <!-- for  text area   -->
+            <div *ngIf="ques.Type__c === 'TextArea'">
+              <app-custom-text-area [value]="ques.input" [rows]="3" [placeholder]="ques.Question__c " (textareaValueChange)="handleTextareaValueChange($event)"></app-custom-text-area>
+            </div>
+            <!-- for to data table we use 'data' type question  -->
+            <div *ngIf="ques.Type__c === 'Data'">
+              <app-custom-table [tableHeader]="ques.tableHeader" [tableData]="ques.tableDataValue" (tableDataChange)="getData($event)"></app-custom-table>
             </div>
 
           <div *ngIf="ques.Type__c === 'Email'">
@@ -490,10 +500,21 @@
 
           <div *ngIf="ques.Type__c === 'Dropdown'" class="">
             <div class="dis-flex">
-            <ng-select [(ngModel)]="ques.input" style="width: 100%;"  (change)="Dropdown($event); clearSQError(ques.Id)"
+              <!-- for common dropdown -->
+            <ng-select [(ngModel)]="ques.input" [id]="ques.Name" style="width: 100%;"   (change)="Dropdown($event,ques); clearSQError(ques.Id)"
                 placeholder="---Select---">
             <ng-option *ngFor="let opt of ques.Question_Options__r.records" value="{{ opt.Value__c }}">{{ opt.Value__c }}</ng-option>
-            </ng-select>
+            <ng-option *ngIf="ques.Error_Message__c" value="" disabled hidden>
+              {{ ques.Error_Message__c }}
+            </ng-option>
+            </ng-select> 
+            <!-- for dependent dropdown only -->
+            <ng-select *ngIf="ques.dropDownOnly"
+            style="margin-left: 36px; width: 205px; margin-bottom: 8px;" 
+            [items]="ques.certificateList"
+            placeholder="---Select---">
+          </ng-select>
+            <!-- old dropdown code-->
             <!-- <select [ngClass]="{
                 'dt-line dpDown down myt-dropbox myt-border-r myt-font1': qbItem.Progress_Bar__c,
                 'custom-select': !qbItem.Progress_Bar__c
@@ -508,8 +529,8 @@
               </option>
             </select> -->
             </div>
-            <app-custom-input [value]="valueName"  [disabled]="true"   (inputValue)="selectedInput($event)"></app-custom-input>
-            <app-dropdown-with-flag [certified]="certifiedFlag" [JobPerformerCertificates]="certificateList"></app-dropdown-with-flag>
+            <!-- dependent dropdown with flag -->
+            <app-dropdown-with-flag *ngIf="ques.isDependentPicklist && !ques.dropDownOnly"  [certified]="ques.certifiedFlag"  [JobPerformerCertificates]="ques.certificateList"></app-dropdown-with-flag>
             <i class="fa fa-check " aria-hidden="true" *ngIf="questionItem?.input?.length > 0"></i>
           </div>          
         </div>
