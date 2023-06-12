@@ -1,0 +1,14 @@
+<div class="she-title">
+    <label class="switch">
+      <input  class="switch-input" type="checkbox" disabled="true" [checked]="certified"/>
+      <span class="switch-label" data-on="Certified" data-off="Not Certified"></span> 
+      <span class="switch-handle"></span> 
+    </label> 
+    <ng-select *ngIf="certified"
+      style="margin-left: 36px; width: 205px; margin-bottom: 8px;" 
+      [items]="JobPerformerCertificates"
+      [(ngModel)]="selectedValue"
+      (change)="onJobPerformerCertified($event)"
+      placeholder="---Select---">
+    </ng-select>
+  </div>   

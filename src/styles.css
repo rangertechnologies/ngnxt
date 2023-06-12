@@ -1,3 +1,4 @@
+@import "~@ng-select/ng-select/themes/default.theme.css";
 /*General Nxt App stylings */
 .rusty{
     width: 235px;
@@ -442,6 +443,10 @@
     font-weight: bold ;
     color: #c5281c;
     text-align: center;
+  }
+
+.custom-select{
+    color: red;
   }
   
   
@@ -961,6 +966,125 @@
     margin:auto;
     width: 57%;
   }
+
+  /* my changes  */
+  /* ng-select */
+
+.ng-select.ng-select-single .ng-select-container{
+  height: 36px;
+  border: none;
+  border-bottom: 1px solid #eee;
+  border-radius: 0;
+}
+.ng-select-focused{
+  border:none !important;
+}
+.ng-dropdown-panel .ng-dropdown-panel-items .ng-option.ng-option-marked{
+  background:#48B7FF !important;
+  color:#fff !important;
+}
+select{
+  border-radius:0 !important;
+}
+.ng-select .ng-select-container{
+  border:none!important;
+  border-bottom:1px solid #eee!important;
+}
+
+
+.myt-font7{
+  padding-left: 2px !important;
+}
+.questiondiv2{
+  padding-left: 0 !important;
+  padding-bottom: 0 !important;
+}
+.form-group{
+  background: #ffffff;
+  padding: 40px;
+  border: 1px solid #e8e8e8;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+.question-f-size{
+  padding: 15px !important;
+  background: #F8F8F8;
+  color: #898989 !important;
+  border: 1px solid #e8e8e8;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  margin-left: 0 !important;
+  justify-content: left !important;
+  font-size: 15px !important;
+}
+.myt-font3{
+  padding-bottom: 5px;
+  padding-top: 5px;
+  padding-right: 15px;
+  color: #9a9a9a !important;
+  font-size: 14px !important;
+  font-weight: 400 !important;
+}
+input {
+  border: none;
+  outline: none;
+}
+
+input:focus {
+  border-bottom: 1px solid #007bff;
+}
+input:not(:focus) {
+  border-bottom: 1px solid #eeeeee;
+}
+
+.custom-select{
+  border: none;
+  background: #fff;
+  border-bottom: 1px solid #eeeeee !important;
+  border-radius: 0;
+  box-shadow: none;
+  height: 38px;
+  outline: none;
+  color:black;
+  font-size: 14px;
+  font-weight: 400;
+}
+
+
+.form-control {
+  -moz-border-radius: 2px;
+  -moz-box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
+  -webkit-border-radius: 2px;
+  -webkit-box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
+  background-color: #fafafa;
+  border-radius: 2px;
+  border: 1px solid #eeeeee;
+  box-shadow: none;
+  height: 38px;
+  color: rgba(0, 0, 0, 0.6);
+  font-size: 14px;
+}
+.form-control:focus {
+  background: #ffffff;
+  /* border: 1px solid #e0e0e0; */
+  box-shadow: none;
+}
+
+.she-line-input{
+  border: none;
+  background: #fff;
+  border-bottom: 1px solid #eeeeee;
+  border-radius: 0;
+}
+.table-input{
+  height: 32px; 
+  background: transparent;
+  border: none !important;
+}
+
+ /* my changes  */
+
+
   /* Media screen starts*/
   
   @media (max-width: 1090px){

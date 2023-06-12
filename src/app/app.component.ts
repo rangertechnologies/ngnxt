@@ -9,7 +9,8 @@ import { ActivatedRoute, Params } from '@angular/router';
 
 export class AppComponent {
   title = 'Questionaire App';
-  qbId = 'a0e8a00000GIcC0AAL';
+  // for testing purpose use this qbId  - qbId = 'a0e8a00000GIcC0AAL';
+  qbId = '';
 
   constructor(private route: ActivatedRoute) {
 
@@ -18,9 +19,12 @@ export class AppComponent {
   ngOnInit() {
     this.route.queryParams.subscribe((params: Params) => {
       //console.log('App params', params);
-      //console.log('id', params['id']);
-      this.qbId = params['id'];
+      if (params['id']) {
+       this.qbId = params['id'];
+      }
+      console.log('id', params['id']);
     });
+    
   }
 
   // handleUploadedData(data:any) {

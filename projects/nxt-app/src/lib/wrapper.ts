@@ -1,94 +1,99 @@
 export class QuestionBook {
   Id: number;
   Name: string;
-  RFAB__Category__c: string;
-  RFAB__Next__c : string;
-  RFAB__Cancel__c : string;
-  RFAB__Back__c : string;
-  RFAB__Submit__c : string;
-  RFAB__Edit__c : string;
-  RFAB__First_Question__c: string;
-  RFAB__Title__c: string;
-  RFAB__Next_Tracking_ID__c: string;
-  RFAB__Back_Tracking_ID__c: string;
-  RFAB__Cancel_Tracking_ID__c: string;
-  RFAB__Submit_Tracking_ID__c: string;
-  RFAB__Total_Questions__c: number;
-  RFAB__Summary_Text__c?: string;
-  RFAB__Questions__r?: QuestionR;
-  RFAB__Progress_Bar__c: boolean;
-  RFAB__SubTitle__c: string;
-  RFAB__Question_Type__c: string;
-  RFAB__Possibilities__c: string;
-  RFAB__Summary_Sub_Text__c: string;
+  Category__c: string;
+  Next__c : string;
+  Cancel__c : string;
+  Back__c : string;
+  Submit__c : string;
+  Edit__c : string;
+  First_Question__c: string;
+  Title__c: string;
+  Next_Tracking_ID__c: string;
+  Back_Tracking_ID__c: string;
+  Cancel_Tracking_ID__c: string;
+  Submit_Tracking_ID__c: string;
+  Total_Questions__c: number;
+  Summary_Text__c?: string;
+  Questions__r?: QuestionR;
+  Progress_Bar__c: boolean;
+  SubTitle__c: string;
+  Question_Type__c: string;
+  Possibilities__c: string;
+  Summary_Sub_Text__c: string;
 }
 
 export class Question {
   Id: string;
   Name: string;
-  RFAB__Allowed_File_Extensions__c :string;
-  RFAB__Question__c : string;
-  RFAB__Question_Text__c : string;
-  RFAB__Type__c: string;
-  RFAB__Next_Question__c?: string;
-  RFAB__Is_Optional__c: boolean;
-  RFAB__Is_Title__c: boolean;
-  RFAB__X24_Hours__c: boolean;
-  RFAB__Error_Message__c: string;
-  RFAB__Is_Date_Backward__c : boolean;
-  RFAB__Is_Date_Forward__c : boolean;
-  RFAB__Group__c: string;
-  RFAB__Question_No__c?: string;
-  RFAB__Question_Options__r?: OptionR;
-  RFAB__Size__c: number;
-  RFAB__Tracking_ID__c: string;
-  RFAB__Additional_Rich__c? : string;
-  RFAB__Questions__r?: QuestionR;
+  Allowed_File_Extensions__c :string;
+  Question__c : string;
+  Question_Text__c : string;
+  Type__c: string;
+  Next_Question__c?: string;
+  Is_Optional__c: boolean;
+  Is_Title__c: boolean;
+  X24_Hours__c: boolean;
+  Error_Message__c: string;
+  Is_Date_Backward__c : boolean;
+  Is_Date_Forward__c : boolean;
+  Group__c: string;
+  Question_No__c?: string;
+  Question_Options__r?: OptionR;
+  Size__c: number;
+  Tracking_ID__c: string;
+  Additional_Rich__c? : string;
+  Questions__r?: QuestionR;
   RecordType: {
     Name: string;
   };
   input?: string;
   error?: ErrorWrapper;
-  static RFAB__X24_Hours__c: boolean;
-  RFAB__Time_Text__c: string;
-  RFAB__Title__c: string;
-  RFAB__SubTitle__c: string;
-  RFAB__Sub_Text__c: string;
-  RFAB__Date_Text__c: string;
+  static X24_Hours__c: boolean;
+  Time_Text__c: string;
+  Title__c: string;
+  SubTitle__c: string;
+  Sub_Text__c: string;
+  Date_Text__c: string;
+  valueName?:string;
+  dropDownOnly?:boolean;
+  tableDataValue?:any[]; 
+  tableHeader?:string;
 }
+
 
 export class LocalQuestion {
   Id: string;
   Name: string;
-  RFAB__Allowed_File_Extensions__c :string;
-  RFAB__Question__c : string;
-  RFAB__Question_Text__c : string;
-  RFAB__Type__c: string;
-  RFAB__Title__c: string;
-  RFAB__SubTitle__c: string;
-  RFAB__Next_Question__c?: string;
-  RFAB__Is_Optional__c: boolean;
-  RFAB__Is_Title__c: boolean;
-  RFAB__X24_Hours__c: boolean;
-  RFAB__Error_Message__c: string;
-  RFAB__Is_Date_Backward__c : boolean;
-  RFAB__Is_Date_Forward__c : boolean;
-  RFAB__Time_Text__c : string;
-  RFAB__Date_Text__c : string;
-  RFAB__Group__c: string;
-  RFAB__Question_No__c?: string;
-  RFAB__Question_Options__r?: OptionR;
-  RFAB__Sub_Text__c : string;
-  RFAB__Size__c: number;
-  RFAB__Tracking_ID__c: string;
-  RFAB__Additional_Rich__c? : string;
-  RFAB__Questions__r?: QuestionR;
+  Allowed_File_Extensions__c :string;
+  Question__c : string;
+  Question_Text__c : string;
+  Type__c: string;
+  Title__c: string;
+  SubTitle__c: string;
+  Next_Question__c?: string;
+  Is_Optional__c: boolean;
+  Is_Title__c: boolean;
+  X24_Hours__c: boolean;
+  Error_Message__c: string;
+  Is_Date_Backward__c : boolean;
+  Is_Date_Forward__c : boolean;
+  Time_Text__c : string;
+  Date_Text__c : string;
+  Group__c: string;
+  Question_No__c?: string;
+  Question_Options__r?: OptionR;
+  Sub_Text__c : string;
+  Size__c: number;
+  Tracking_ID__c: string;
+  Additional_Rich__c? : string;
+  Questions__r?: QuestionR;
   RecordType: {
     Name: string;
   };
   input?: string;
   error?: ErrorWrapper;
-  static RFAB__X24_Hours__c: boolean;
+  static X24_Hours__c: boolean;
   uniqueSubQId: string;
 }
 
@@ -103,34 +108,34 @@ export class OptionR {
 export class Option {
   Id: string;
   Name: string;
-  RFAB__Value__c: string;
-  RFAB__Tracking_ID__c: string;
-  RFAB__Next_Question__c?: string;
+  Value__c: string;
+  Tracking_ID__c: string;
+  Next_Question__c?: string;
 }
 
 export class OptionValue {
   Id: string;
   Name: string;
-  RFAB__Value__c: string;
-  RFAB__Next_Question__c?: string;
+  Value__c: string;
+  Next_Question__c?: string;
   checked: boolean;
 }
 
 export class AnswerBook {
   Id: string;
-  RFAB__Question_Book__c: string;
-  RFAB__Status__c: string;
-  RFAB__Answers__r?: AnswerR;
+  Question_Book__c: string;
+  Status__c: string;
+  Answers__r?: AnswerR;
 
 }
 
 export class Answer {
   Id: string;
-  RFAB__Question_Rich_Text__c: string;
-  RFAB__Answer_Long__c : string;
-  RFAB__Question_Type__c: string;
-  RFAB__Question_Ref__c: string;
-  RFAB__Question_Group_Text__c: string;
+  Question_Rich_Text__c: string;
+  Answer_Long__c : string;
+  Question_Type__c: string;
+  Question_Ref__c: string;
+  Question_Group_Text__c: string;
 }
 export class AnswerR {
   records?: Answer[];

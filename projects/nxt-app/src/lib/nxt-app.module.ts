@@ -6,11 +6,31 @@ import { FormsModule,ReactiveFormsModule } from '@angular/forms';
 import { MyDatePickerModule } from 'mydatepicker';
 import { NgCircleProgressModule } from 'ng-circle-progress';
 import { NgxSpinnerModule } from "ngx-spinner";
+import { AgmCoreModule } from '@agm/core';
+import { GOOGLE_MAP_API_KEY } from '../lib/sample';
+import { PickLocationComponent } from './components/pick-location/pick-location.component';
+import { NgSelectModule } from '@ng-select/ng-select';
+import { CustomInputComponent } from './components/custom-input/custom-input.component';
+import { CustomTextAreaComponent } from './components/custom-text-area/custom-text-area.component';
+import { CustomTableComponent } from './components/custom-table/custom-table.component';
+import { DropdownWithFlagComponent } from './components/dropdown-with-flag/dropdown-with-flag.component';
 @NgModule({
-  declarations: [NxtAppComponent, QuestionnaireComponent],
+  declarations: [NxtAppComponent, 
+    QuestionnaireComponent,
+    PickLocationComponent,
+    CustomInputComponent,
+    CustomTextAreaComponent,
+    CustomTableComponent,
+    DropdownWithFlagComponent
+  ],
   imports: [
     CommonModule, FormsModule,
     MyDatePickerModule,
+    NgSelectModule,
+    AgmCoreModule.forRoot({
+      apiKey: GOOGLE_MAP_API_KEY,
+      libraries: ['geometry', 'places', 'visualization', 'drawing']
+    }),
     ReactiveFormsModule, NgxSpinnerModule,
     /*NgCircleProgressModule.forRoot({
       "backgroundPadding": -10,

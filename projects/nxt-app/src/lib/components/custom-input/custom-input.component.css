@@ -1,0 +1,5 @@
+
+  .form-control[disabled]{
+    border-radius:5px;
+    background-color: #e9ecef !important;
+  }
