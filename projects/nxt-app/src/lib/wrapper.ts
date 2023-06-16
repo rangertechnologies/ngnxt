@@ -57,6 +57,7 @@ export class Question {
   Date_Text__c: string;
   valueName?:string;
   dropDownOnly?:boolean;
+  isDependentPicklist?:boolean;
   tableDataValue?:any[]; 
   tableHeader?:string;
 }

@@ -278,6 +278,7 @@ export class QuestionnaireComponent implements OnInit {
   public currentQuestionId: string;
   public spinnerType: string;
   public spinnerName: string;
+  public nextValue:string ='';
 
   //search component
   public sampleAddress: any[] = [
@@ -909,6 +910,13 @@ export class QuestionnaireComponent implements OnInit {
           }
         //console.log('testin values=='+item.input)
         } 
+
+        // to replace the comma with - ( to process the address)
+        if(item.Type__c== "Text" && item.Question__c === 'Location'){
+            const inputValues = "answerString: " + item.input ;
+             item.input = inputValues;
+           // item.input.replace(/,/g, '-');
+        }
 
         if(item.Type__c== "Text" && item.Question__c === 'Código postal'){
           for(var loc of this.localaddress){
@@ -1894,52 +1902,52 @@ export class QuestionnaireComponent implements OnInit {
   }
   Dropdown(event,ques?:any) {
     ques.valueName = event;// here when using the ng-select got event as value
-    ques.isDependentPicklist = false;
-    for(var k=0 ;k<ques.Question_Options__r.records.length;k++){
-      // if the selected options's next question is available to push that question options in array to show the dependent dropdown with flag field 
-      if(event === ques.Question_Options__r.records[k].Value__c && ques.Question_Options__r.records[k].Next_Question__c != undefined){
-        this.sfService.remoteAction(
-          "NxtController.process",
-          ["Question", "read", ques.Question_Options__r.records[k].Next_Question__c],
-          (response: any) => {
-            //Handle response here
-            const question = response.question;
-            if(question.Type__c === 'Dropdown' && !ques.dropDownOnly){
-              ques.certificateList=[];
-              ques.certifiedFlag = true;
-              ques.isDependentPicklist = true;
-              for(var k=0 ;k<question.Question_Options__r.records.length;k++){
-                ques.certificateList.push(question.Question_Options__r.records[k].Value__c);
-              }
-            }
-            // for now we use the selected value as input value ,need to implement the dependent input field updation
-            else if(question.Type__c === 'Text'){
-              for(var i=0;i<this.subQuestions.length;i++){
-                if(this.subQuestions[i].Type__c === 'Text'){
-                 this.subQuestions[i].valueName = question.Question_Text__c.replace(/<\/?p>/g, '');
-                }
-             }
-            }
-            // for dependent dropdown only field 
-            else if(question.Type__c === 'Dropdown' && ques.dropDownOnly){
-              ques.certificateList=[];
-              for(var k=0 ;k<question.Question_Options__r.records.length;k++){
-                ques.certificateList.push(question.Question_Options__r.records[k].Value__c);
-              }
-            }
+   // ques.isDependentPicklist = false;
+    // for(var k=0 ;k<ques.Question_Options__r.records.length;k++){
+    //   // if the selected options's next question is available to push that question options in array to show the dependent dropdown with flag field 
+    //   if(event === ques.Question_Options__r.records[k].Value__c && ques.Question_Options__r.records[k].Next_Question__c != undefined){
+    //     this.sfService.remoteAction(
+    //       "NxtController.process",
+    //       ["Question", "read", ques.Question_Options__r.records[k].Next_Question__c],
+    //       (response: any) => {
+    //         //Handle response here
+    //         const question = response.question;
+    //         if(question.Type__c === 'Dropdown' && !ques.dropDownOnly){
+    //           ques.certificateList=[];
+    //           ques.certifiedFlag = true;
+    //           ques.isDependentPicklist = true;
+    //           for(var k=0 ;k<question.Question_Options__r.records.length;k++){
+    //             ques.certificateList.push(question.Question_Options__r.records[k].Value__c);
+    //             }
+    //           }
+    //         // for now we use the selected value as input value ,need to implement the dependent input field updation
+    //         else if(question.Type__c === 'Text'){
+    //           for(var i=0;i<this.subQuestions.length;i++){
+    //             if(this.subQuestions[i].Type__c === 'Text'){
+    //              this.subQuestions[i].valueName = question.Question_Text__c.replace(/<\/?p>/g, '');
+    //             }
+    //           }
+    //         }
+    //         // for dependent dropdown only field 
+    //         else if(question.Type__c === 'Dropdown' && ques.dropDownOnly){
+    //           ques.certificateList=[];
+    //           for(var k=0 ;k<question.Question_Options__r.records.length;k++){
+    //             ques.certificateList.push(question.Question_Options__r.records[k].Value__c);
+    //            }
+    //         }
            
-          },
-          (error: any) => {
-            // Handle the error 
-          }
-        );
-      }else{
-        // next question is not available in the selected option then uncheck the toggle ,remove the values and hide the dependent dropdown with flag field
-        ques.certifiedFlag = false;
-        ques.certificateList =[];
-        ques.isDependentPicklist = false;
-      }
-    }
+    //       },
+    //       (error: any) => {
+    //         // Handle the error 
+    //       }
+    //     );
+    //   }else{
+    //     // next question is not available in the selected option then uncheck the toggle ,remove the values and hide the dependent dropdown with flag field
+    //     ques.certifiedFlag = false;
+    //     ques.certificateList =[];
+    //     ques.isDependentPicklist = false;
+    //   }
+    // }
    
       
   }
@@ -1948,12 +1956,13 @@ export class QuestionnaireComponent implements OnInit {
   setSubQuestions(records) {
     // console.log('inside setSubQuestions');
     // console.log(records);
-
     var qaMap = new Map();
     // console.log(this.inpValue);
     if (this.inpValue) {
       var aIndex = 0;
-      if (this.inpValue.search(", ") == -1) {
+      if ((this.inpValue.search(", ") == -1) || (this.inpValue.search("answerString") != -1) ) {
+        const withoutAnswerString = this.inpValue.replace("answerString: ", "");
+        this.inpValue = withoutAnswerString;
         for (var ansStr of this.inpValue.split("@@##$$")) {
           aIndex++;
           qaMap.set(aIndex, ansStr);
@@ -2015,14 +2024,6 @@ export class QuestionnaireComponent implements OnInit {
 
       this.subQuestions.push(ques);
       for(var i=0; i<this.subQuestions.length;i++){
-        // assign the data's for to check data table 
-        if(this.subQuestions[i].Name == 'QN-02251'){
-          this.subQuestions[i].tableDataValue = this.tableData1;
-          this.subQuestions[i].tableHeader = 'Safety Precautions';
-        }else{
-          this.subQuestions[i].tableDataValue =  this.tableData2;
-          this.subQuestions[i].tableHeader = 'Personal Protective Equipments';
-        }
         // to show/hide the dependent dropdown only field using the dropDownOnly boolean
         if(this.subQuestions[i].Size__c == 4){
           this.subQuestions[i].dropDownOnly = true;
@@ -2486,13 +2487,19 @@ Add(question: LocalQuestion){
     this.addFlag = true;
   }
   
-  handleLocationSelected(location: any) {
-    console.log('Selected location:', location);
+  handleLocationSelected(location: any,ques:any) {
+    // for (let i = 0; i < this.subQuestions.length; i++) {
+    //   if (this.subQuestions[i].Question__c === 'Location') {
+    //     this.subQuestions[i].input = location;
+    //     break; // Exit the loop when location is found
+    //   }
+    // }
+    this.selectedInput(location,ques);
     // Handle the selected location data as needed
   }
 
-  selectedInput(input:any){
-    console.log('Selected input:', input);
+  selectedInput(input:any ,ques:any){ 
+    ques.input = input;
   }
 
   handleTextareaValueChange(value :string){
@@ -2502,7 +2509,22 @@ Add(question: LocalQuestion){
    console.log('table data',data);
   }
 
+  dependentChange(value:any){
+  this.nextValue = value;
+  }
 
-
+  // In the parent component class
+getTableData(ques: any): any[] {
+  // Return a new array to ensure each table instance has its own separate array
+  if (ques.Name === 'QN-02251') {
+    ques.tableDataValue = this.tableData1;
+    ques.tableHeader ='Safety Precautions';
+    return [...ques.tableDataValue];
+  } else {
+    ques.tableDataValue = this.tableData2;
+    ques.tableHeader ='Personal Protective Equipments';
+    return [...ques.tableDataValue];
+  }
+}
   }
 

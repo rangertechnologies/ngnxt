@@ -10,6 +10,7 @@ export class CustomTableComponent implements OnInit {
   @Input() tableHeader: string='';
   @Input() tableData: tableItem [];
   @Output() tableDataChange: EventEmitter<any[]> = new EventEmitter<any[]>();
+  @Input() tableIndex: number;
 
   constructor() { }
 

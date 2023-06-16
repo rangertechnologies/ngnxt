@@ -28,35 +28,35 @@ export class PickLocationComponent implements OnInit {
 
   ngOnInit(): void {
       //load Places Autocomplete
-      this.mapsAPILoader.load().then(() => {
-        this.geoCoder = new google.maps.Geocoder;
-        let autocomplete = new google.maps.places.Autocomplete(this.searchElementRef.nativeElement, {
-          types: []
-        });
-        autocomplete.addListener("place_changed", () => {
-          this.ngZone.run(() => {
-            //get the place result
-            const place: google.maps.places.PlaceResult = autocomplete.getPlace();
+      // this.mapsAPILoader.load().then(() => {
+      //   this.geoCoder = new google.maps.Geocoder;
+      //   let autocomplete = new google.maps.places.Autocomplete(this.searchElementRef.nativeElement, {
+      //     types: []
+      //   });
+      //   autocomplete.addListener("place_changed", () => {
+      //     this.ngZone.run(() => {
+      //       //get the place result
+      //       const place: google.maps.places.PlaceResult = autocomplete.getPlace();
   
-            //verify result
-            if (place.geometry === undefined || place.geometry === null) {
-              return;
-            }
+      //       //verify result
+      //       if (place.geometry === undefined || place.geometry === null) {
+      //         return;
+      //       }
   
-            //set latitude, longitude and zoom
-            this.latitude = place.geometry.location.lat();
-            this.longitude = place.geometry.location.lng();
-            this.zoom = 0;
-            const ADDR_PART1 = place.formatted_address.split(',')[0];
-            const addr = place.name === ADDR_PART1 ? place.formatted_address : place.name + ' ' + place.formatted_address;
-          // this.formGroup.patchValue({
-          //   location: addr,
-          // });
+      //       //set latitude, longitude and zoom
+      //       this.latitude = place.geometry.location.lat();
+      //       this.longitude = place.geometry.location.lng();
+      //       this.zoom = 0;
+      //       const ADDR_PART1 = place.formatted_address.split(',')[0];
+      //       const addr = place.name === ADDR_PART1 ? place.formatted_address : place.name + ' ' + place.formatted_address;
+      //     // this.formGroup.patchValue({
+      //     //   location: addr,
+      //     // });
 
-            // this.getAddress(this.latitude, this.longitude);
-          });
-        });
-      });
+      //       // this.getAddress(this.latitude, this.longitude);
+      //     });
+      //   });
+      // });
   }
 
   openMap() {

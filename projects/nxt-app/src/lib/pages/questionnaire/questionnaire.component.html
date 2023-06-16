@@ -355,7 +355,7 @@
         <div class="col-md-12" *ngIf="questionItem.error" style="font-size: 18px;
             color: red;">{{questionItem?.error?.errorMsg}}</div>
         <div class="myt-align3" [class]="'col-md-' + ques.Size__c + ' paddingnone'"
-          *ngFor="let ques of subQuestions">
+          *ngFor="let ques of subQuestions;let i = index">
           <div [ngClass]="{ down2: qbItem?.Progress_Bar__c }">
             <span class="dis-flex myt-font3 myt-font7">{{ ques?.Question__c }}</span>
           </div>
@@ -417,10 +417,10 @@
           </div>
 
           <div *ngIf="ques.Type__c === 'Text'">
-            <!-- for pick location -->
-             <app-pick-location *ngIf="ques.Question__c == 'Location'" (locationSelected)="handleLocationSelected($event)"></app-pick-location>
              <!-- for disabled custom input -->
-             <app-custom-input *ngIf="ques.Question__c != 'Location'" [value]="ques.valueName"  [disabled]="true"  [placeholder]="ques.Question__c "  (inputValue)="selectedInput($event)"></app-custom-input>
+             <app-custom-input  [value]="ques.input"  [disabled]="false"  [placeholder]="ques.Question__c "  (inputValue)="selectedInput($event,ques)"></app-custom-input>
+              <!-- for pick location -->
+              <app-pick-location *ngIf="ques.Question__c == 'Location'" (locationSelected)="handleLocationSelected($event,ques)"></app-pick-location>
               <!-- old input  -->
              <!-- <app-custom-text-area [value]="ques.input" [rows]="3" [placeholder]="ques.Question__c " (textareaValueChange)="handleTextareaValueChange($event)"></app-custom-text-area> -->
               <!-- <input type="text" [(ngModel)]="ques.input" [ngClass]="{
@@ -436,7 +436,7 @@
             </div>
             <!-- for to data table we use 'data' type question  -->
             <div *ngIf="ques.Type__c === 'Data'">
-              <app-custom-table [tableHeader]="ques.tableHeader" [tableData]="ques.tableDataValue" (tableDataChange)="getData($event)"></app-custom-table>
+              <app-custom-table [tableHeader]="ques.tableHeader" [tableData]="getTableData(ques)" [tableIndex]="i" (tableDataChange)="getData($event)"></app-custom-table>
             </div>
 
           <div *ngIf="ques.Type__c === 'Email'">
@@ -513,7 +513,7 @@
             style="margin-left: 36px; width: 205px; margin-bottom: 8px;" 
             [items]="ques.certificateList"
             placeholder="---Select---">
-          </ng-select>
+            </ng-select>
             <!-- old dropdown code-->
             <!-- <select [ngClass]="{
                 'dt-line dpDown down myt-dropbox myt-border-r myt-font1': qbItem.Progress_Bar__c,
@@ -530,7 +530,7 @@
             </select> -->
             </div>
             <!-- dependent dropdown with flag -->
-            <app-dropdown-with-flag *ngIf="ques.isDependentPicklist && !ques.dropDownOnly"  [certified]="ques.certifiedFlag"  [JobPerformerCertificates]="ques.certificateList"></app-dropdown-with-flag>
+            <app-dropdown-with-flag *ngIf="ques.isDependentPicklist && !ques.dropDownOnly"  [certified]="ques.certifiedFlag"  [JobPerformerCertificates]="ques.certificateList" (flagDropDownChange)="dependentChange($event)"></app-dropdown-with-flag>
             <i class="fa fa-check " aria-hidden="true" *ngIf="questionItem?.input?.length > 0"></i>
           </div>          
         </div>
