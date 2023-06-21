@@ -2514,6 +2514,9 @@ Add(question: LocalQuestion){
   this.nextValue = value;
   }
 
+  displayEndDate(dateSelected: any){
+    console.log('selected date', dateSelected);
+  }
 
   // In the parent component class
 getTableData(ques: any): any[] {

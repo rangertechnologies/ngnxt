@@ -1,4 +1,5 @@
 @import "~@ng-select/ng-select/themes/default.theme.css";
+@import '~ng-pick-datetime/assets/style/picker.min.css';
 /*General Nxt App stylings */
 .rusty{
     width: 235px;
@@ -19,7 +20,7 @@
     text-decoration: underline;
     margin-bottom: 1%;
     margin-left: 50%;
-    padding-left: 4% ;
+    /* padding-left: 4% ; */
     font-size: 16px;
     cursor: pointer;
     font-weight: bold;
@@ -100,12 +101,12 @@
   }
   
   #progress2{
-    display: block;
+    /* display: block;
     margin-top: -26px;
     margin-bottom: 6px;
-    background-color: #dedddd;
     width: 96%;
-    margin-left: 18px;
+    margin-left: 18px; */
+    background-color: #dedddd;
   }
   
   .circle{
@@ -339,7 +340,7 @@
   }
   
   .summary{
-    display: block ;
+    /* display: block ;
     border: 1px solid #e6e6e6 ;
     border-radius: 5px ;
     padding: 0.5em ;
@@ -349,7 +350,10 @@
     text-align: left ;
     cursor: pointer ;
     display: list-item ;
-    list-style-type: none;
+    list-style-type: none; */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
   
   .asum{
@@ -359,13 +363,16 @@
   }
   
   .question{
-    margin-left: 14rem;
+    /* margin-left: 14rem;
     background: #dedddd;
     color: #560d05 ;
     font-size: 15px;
     padding-bottom: 0px;
     padding-top: 3%;
-    text-align: left;
+    text-align: left; */
+    padding: 10px;
+    font-size: 14px;
+    color: #007bff;
   }
   .question1{
     margin-left: 14rem;
@@ -379,7 +386,7 @@
   
   
   .answer{
-    max-width: 55%;
+    /* max-width: 55%;
     margin-left: auto;
     margin-right: auto;
     color: #a3a2a2;
@@ -390,7 +397,10 @@
     word-wrap: break-word;
     text-align: left;
     background: #dedddd;
-    border-bottom: 1px solid #fff;
+    border-bottom: 1px solid #fff; */
+    display: flex;
+    align-items: baseline;
+    padding: 5px;
     
   }
   
@@ -1080,6 +1090,13 @@ input:not(:focus) {
   height: 32px; 
   background: transparent;
   border: none !important;
+}
+.error-msg {
+  color: #EC2E2E;
+  background-color: white;
+  border: none !important;
+  font-family: Rubik;
+  font-size: 12px;
 }
 
  /* my changes  */

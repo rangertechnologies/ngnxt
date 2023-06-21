@@ -2,8 +2,17 @@
     <label>{{label}}</label>
     <input type="date" [min]="minDate" [max]="maxDate" [required]="required" (change)="onDateChanged($event)">
 </div> -->
-<mat-form-field>
+<!-- <mat-form-field>
     <input matInput [matDatepicker]="picker" [placeholder]="placeholder" [min]="minDate" [max]="maxDate" [(ngModel)]="selectedDate" (dateChange)="onDateChange($event)">
     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
     <mat-datepicker #picker></mat-datepicker>
-</mat-form-field>
+</mat-form-field> -->
+
+<p>
+    <input [(ngModel)]="date" [owlDateTimeTrigger]="dt" [owlDateTime]="dt"
+           placeholder="DD/MM/YYYY HH:MM"
+           style="width: 100%; height: 35px; border: none; box-shadow: none; border-bottom: 1px solid #ccc;"
+           (dateTimeChange)="onDateChange($event)">
+    <owl-date-time #dt></owl-date-time>
+</p>
+  

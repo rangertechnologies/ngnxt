@@ -12,7 +12,7 @@
 }
 
 .edit{
-  background-color: #dedddd;
+  /* background-color: #dedddd;
   border: none;
   color: #c5281c;
   text-decoration: underline;
@@ -21,7 +21,15 @@
   padding-left: 4% ;
   font-size: 16px;
   cursor: pointer;
-  font-weight: bold;
+  font-weight: bold; */
+  background-color: #dedddd;
+  border: none;
+  color: #c5281c;
+  text-decoration: underline;
+  margin-left: 50%;
+  font-size: 16px;
+  vertical-align: super;
+  font-weight: 700;
 }
 
 .icon-edit{
@@ -104,12 +112,12 @@ display: none;
 }
 
 #progress2{
-  display: block;
+  /* display: block;
   margin-top: -26px;
   margin-bottom: 6px;
-  background-color: #dedddd;
   width: 96%;
-  margin-left: 18px;
+  margin-left: 18px; */
+  background-color: #dedddd;
 }
 
 .circle{
@@ -343,7 +351,7 @@ display: none;
 }
 
 .summary{
-  display: block ;
+  /* display: block ;
   border: 1px solid #e6e6e6 ;
   border-radius: 5px ;
   padding: 0.5em ;
@@ -353,7 +361,11 @@ display: none;
   text-align: left ;
   cursor: pointer ;
   display: list-item ;
-  list-style-type: none;
+  list-style-type: none; */
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  border-bottom: 2px solid #fff;
 }
 
 .asum{
@@ -363,13 +375,16 @@ display: none;
 }
 
 .question{
-  margin-left: 14rem;
+  /* margin-left: 14rem;
   background: #dedddd;
   color: #560d05 ;
   font-size: 15px;
   padding-bottom: 0px;
   padding-top: 3%;
-  text-align: left;
+  text-align: left; */
+  padding: 10px;
+  font-size: 14px;
+  color: #007bff;
 }
 .question1{
   margin-left: 14rem;
@@ -383,7 +398,7 @@ display: none;
 
 
 .answer{
-  max-width: 55%;
+  /* max-width: 55%;
   margin-left: auto;
   margin-right: auto;
   color: #a3a2a2;
@@ -394,7 +409,17 @@ display: none;
   word-wrap: break-word;
   text-align: left;
   background: #dedddd;
-  border-bottom: 1px solid #fff;
+  border-bottom: 1px solid #fff; */
+  display: flex;
+  align-items: baseline;
+  padding: 5px;
+  font-size: 14px;
+  font-weight: 400;
+  word-wrap: break-word;
+  padding-bottom: 10px;
+  width: 97%;
+  justify-content: space-between;
+  /* color: #a3a2a2; */
   
 }
 

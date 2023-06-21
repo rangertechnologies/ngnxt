@@ -1,5 +1,4 @@
 import { Component, OnInit,Input,Output,EventEmitter} from '@angular/core';
-import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 
 @Component({
   selector: 'app-custom-date-picker',
@@ -7,23 +6,15 @@ import { MatDatepickerInputEvent } from '@angular/material/datepicker';
   styleUrls: ['./custom-date-picker.component.css']
 })
 export class CustomDatePickerComponent implements OnInit {
-@Input() selectedDate: Date;
-@Input() label: string;
-@Input() minDate: Date;
-@Input() placeholder: string;
-@Input() maxDate: Date;
-@Input() required: boolean;
-@Output() dateChange: EventEmitter<Date> = new EventEmitter();
-defaultDate = new Date();
+  @Input() date: any;
+  @Output() dateChange: EventEmitter<any> = new EventEmitter<any>();
   constructor() { }
 
   ngOnInit(): void {
   }
 
-  onDateChange(event: MatDatepickerInputEvent<Date>) {
-    this.selectedDate = event.value;
-    this.dateChange.emit(this.selectedDate);
-    console.log(`Selected date: ${event.value}`);
+  onDateChange(event: any) {
+    this.dateChange.emit(event);
   }
 
 }

@@ -609,38 +609,36 @@
     <div *ngFor="let qa of summary" >
      
         <div [ngClass]="{ non:  qbItem.Progress_Bar__c }">
-          <div [ngClass]="{ summary: this.abItem.Status__c != 'Completed' && !qbItem.Progress_Bar__c }">
+          <div [ngClass]="{ summary:  !qbItem.Progress_Bar__c }">
          <!--  <div *ngIf="qbItem.Progress_Bar__c"
               [ngClass]="{ 'summary-groupText myt-font2': qbItem.Progress_Bar__c }" >
               {{ qa.groupText }}
             </div>
           -->
            <div *ngIf="!qbItem.Edit__c"
-              [ngClass]="{ 'question sum-ques myt-font3 myt-font8': this.abItem.Status__c != 'Completed' }">
+              [ngClass]="{ 'question': this.abItem.Status__c != 'Completed' }">
               <a [ngClass]="{ asum: this.abItem.Status__c === 'Completed' }" (click)="handleEditClick(qa.quesId)"
                 [innerHTML]="getText(qa.quesValue)">{{ qa.quesValue }}</a>
             </div>
             <div *ngIf="qbItem.Edit__c"
-              [ngClass]="{ 'sum-ques question myt-font3 myt-font8': this.abItem.Status__c != 'Completed' }">
-              <div [ngClass]="{ 'sum-ques1 question1 summary-completed myt-font3 myt-font8': this.abItem.Status__c === 'Completed' }"
+              [ngClass]="{ 'question': this.abItem.Status__c != 'Completed' }">
+              <div [ngClass]="{ 'question': this.abItem.Status__c === 'Completed' }"
                 [innerHTML]="getText(qa.quesValue)">
                 {{ qa.quesValue }}
               </div>
             </div>
-            <div *ngIf="qbItem.Edit__c && this.abItem.Status__c != 'Completed'" style="background: #dedddd;">
-              <button class="edit" (click)="handleEditClick(qa.quesId)">
-                <img *ngIf="deviceInfo.os === 'iOS'" src="https://rnxt.s3.amazonaws.com/MytIcon/icon-edit%402x.png" style="width:50%!important;" class="icon-editios"/>
-                <img *ngIf="deviceInfo.os !== 'iOS'" src="https://rnxt.s3.amazonaws.com/MytIcon/icon-edit%402x.png" class="icon-edit" />
-              </button>
-            </div>
-           
-            <div class="answer " >
-            
+            <div class="answer" >
                 <div *ngIf="qa.qTyp === 'File'">
                   <img src="https://rnxt.s3.amazonaws.com/MytIcon/icon-doc-img%401.png" class="icon-edit-summary" />
                   {{ qa.ansValue }}
                 </div>
                 <div *ngIf="qa.qTyp != 'File'">{{ qa.ansValue }}</div>
+                <div *ngIf="qbItem.Edit__c && this.abItem.Status__c != 'Completed'" style="background: #dedddd;">
+                  <button class="edit" (click)="handleEditClick(qa.quesId)">
+                    <img *ngIf="deviceInfo.os === 'iOS'" src="https://rnxt.s3.amazonaws.com/MytIcon/icon-edit%402x.png" style="width:50%!important;" class="icon-editios"/>
+                    <img *ngIf="deviceInfo.os !== 'iOS'" src="https://rnxt.s3.amazonaws.com/MytIcon/icon-edit%402x.png" class="icon-edit" />
+                  </button>
+                </div>
               
           </div>
         </div>
