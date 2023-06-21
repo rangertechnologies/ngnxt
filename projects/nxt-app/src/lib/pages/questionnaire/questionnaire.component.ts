@@ -1902,57 +1902,8 @@ export class QuestionnaireComponent implements OnInit {
     }
   }
   Dropdown(event,ques?:any) {
-    ques.valueName = event;// here when using the ng-select got event as value
-   // ques.isDependentPicklist = false;
-    // for(var k=0 ;k<ques.Question_Options__r.records.length;k++){
-    //   // if the selected options's next question is available to push that question options in array to show the dependent dropdown with flag field 
-    //   if(event === ques.Question_Options__r.records[k].Value__c && ques.Question_Options__r.records[k].Next_Question__c != undefined){
-    //     this.sfService.remoteAction(
-    //       "NxtController.process",
-    //       ["Question", "read", ques.Question_Options__r.records[k].Next_Question__c],
-    //       (response: any) => {
-    //         //Handle response here
-    //         const question = response.question;
-    //         if(question.Type__c === 'Dropdown' && !ques.dropDownOnly){
-    //           ques.certificateList=[];
-    //           ques.certifiedFlag = true;
-    //           ques.isDependentPicklist = true;
-    //           for(var k=0 ;k<question.Question_Options__r.records.length;k++){
-    //             ques.certificateList.push(question.Question_Options__r.records[k].Value__c);
-    //             }
-    //           }
-    //         // for now we use the selected value as input value ,need to implement the dependent input field updation
-    //         else if(question.Type__c === 'Text'){
-    //           for(var i=0;i<this.subQuestions.length;i++){
-    //             if(this.subQuestions[i].Type__c === 'Text'){
-    //              this.subQuestions[i].valueName = question.Question_Text__c.replace(/<\/?p>/g, '');
-    //             }
-    //           }
-    //         }
-    //         // for dependent dropdown only field 
-    //         else if(question.Type__c === 'Dropdown' && ques.dropDownOnly){
-    //           ques.certificateList=[];
-    //           for(var k=0 ;k<question.Question_Options__r.records.length;k++){
-    //             ques.certificateList.push(question.Question_Options__r.records[k].Value__c);
-    //            }
-    //         }
-           
-    //       },
-    //       (error: any) => {
-    //         // Handle the error 
-    //       }
-    //     );
-    //   }else{
-    //     // next question is not available in the selected option then uncheck the toggle ,remove the values and hide the dependent dropdown with flag field
-    //     ques.certifiedFlag = false;
-    //     ques.certificateList =[];
-    //     ques.isDependentPicklist = false;
-    //   }
-    // }
-   
-      
+    ques.input = event; // here when using the ng-select got event as value
   }
-
 
   setSubQuestions(records) {
     // console.log('inside setSubQuestions');

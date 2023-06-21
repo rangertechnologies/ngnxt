@@ -1,20 +1,7 @@
-<div *ngIf="!useNormalDropdown">
-    <label>{{ name }}</label>
-    <select class="dropdown"  (change)="onSelectionChange($event)">
-      <option *ngFor="let option of options" [selected]="option.value === selectedValue" value="{{option.value}}">{{option.label}}</option>
-    </select>
-  </div>
-<!-- 
-  <div *ngIf="!useNormalDropdown">
-    <mat-form-field appearance="fill">
-        <mat-label>{{ name }}</mat-label>
-      <mat-select [(ngModel)]="selectedValue">
-        <mat-option *ngFor="let option of options" value="option.value">{{option.label}}</mat-option>
-      </mat-select>
-    </mat-form-field>
-  </div> -->
-
- 
-
-
-
+<ng-select [(ngModel)]="selectedValue" 
+[placeholder]="placeholder"
+(change)="selectChange($event)"
+[id]="id"
+ >
+<ng-option *ngFor="let option of options" [value]="option.Value__c">{{ option.Value__c }}</ng-option>
+</ng-select>

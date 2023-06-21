@@ -415,7 +415,9 @@
               <!-- <i class="fa check-icon3" aria-hidden="true" *ngIf="questionItem?.input?.length > 0"></i> -->
             </div>
           </div>
+          <div *ngIf="ques.Type__c === 'DateTime'">
 
+          </div>
           <div *ngIf="ques.Type__c === 'Text'">
              <!-- for disabled custom input -->
              <app-custom-input  [value]="ques.input"  [disabled]="false"   [placeholder]="ques.Question__c "  (inputValue)="selectedInput($event,ques)"></app-custom-input>
@@ -433,6 +435,7 @@
             <!-- for  text area   -->
             <div *ngIf="ques.Type__c === 'TextArea'">
               <app-custom-text-area [value]="ques.input" [rows]="3" [placeholder]="ques.Question__c " (textareaValueChange)="handleTextareaValueChange($event)"></app-custom-text-area>
+              <app-custom-date-picker [date]="start_date" (dateChange)="displayEndDate($event)"></app-custom-date-picker>
             </div>
             <!-- for to data table we use 'data' type question  -->
             <div *ngIf="ques.Type__c === 'Data'">
@@ -499,21 +502,13 @@
           </div>
 
           <div *ngIf="ques.Type__c === 'Dropdown'" class="">
-            <div class="dis-flex">
               <!-- for common dropdown -->
-            <ng-select [(ngModel)]="ques.input" [id]="ques.Name" style="width: 100%;"   (change)="Dropdown($event,ques); clearSQError(ques.Id)"
-                placeholder="---Select---">
-            <ng-option *ngFor="let opt of ques.Question_Options__r.records" value="{{ opt.Value__c }}">{{ opt.Value__c }}</ng-option>
-            <ng-option *ngIf="ques.Error_Message__c"  value="" disabled hidden>
-              {{ ques.Error_Message__c }}
-            </ng-option>
-            </ng-select> 
-            <!-- for dependent dropdown only -->
-            <ng-select *ngIf="ques.dropDownOnly"
-            style="margin-left: 36px; width: 205px; margin-bottom: 8px;" 
-            [items]="ques.certificateList"
-            placeholder="---Select---">
-            </ng-select>
+              <app-custom-dropdown [options]="ques.Question_Options__r.records"
+                     [id]="ques.Name"
+                     [selectedValue]="ques.input"
+                     [placeholder]="'---Select---'"
+                     (valueChange)="Dropdown($event, ques); clearSQError(ques.Id)">
+              </app-custom-dropdown>
             <!-- old dropdown code-->
             <!-- <select [ngClass]="{
                 'dt-line dpDown down myt-dropbox myt-border-r myt-font1': qbItem.Progress_Bar__c,
@@ -528,7 +523,6 @@
                 {{ ques.Error_Message__c }}
               </option>
             </select> -->
-            </div>
             <!-- dependent dropdown with flag -->
             <app-dropdown-with-flag *ngIf="ques.isDependentPicklist && !ques.dropDownOnly"  [certified]="ques.certifiedFlag"  [JobPerformerCertificates]="ques.certificateList" (flagDropDownChange)="dependentChange($event)"></app-dropdown-with-flag>
             <i class="fa fa-check " aria-hidden="true" *ngIf="questionItem?.input?.length > 0"></i>
