@@ -418,7 +418,7 @@
 
           <div *ngIf="ques.Type__c === 'Text'">
              <!-- for disabled custom input -->
-             <app-custom-input  [value]="ques.input"  [disabled]="false"  [placeholder]="ques.Question__c "  (inputValue)="selectedInput($event,ques)"></app-custom-input>
+             <app-custom-input  [value]="ques.input"  [disabled]="false"   [placeholder]="ques.Question__c "  (inputValue)="selectedInput($event,ques)"></app-custom-input>
               <!-- for pick location -->
               <app-pick-location *ngIf="ques.Question__c == 'Location'" (locationSelected)="handleLocationSelected($event,ques)"></app-pick-location>
               <!-- old input  -->
@@ -504,7 +504,7 @@
             <ng-select [(ngModel)]="ques.input" [id]="ques.Name" style="width: 100%;"   (change)="Dropdown($event,ques); clearSQError(ques.Id)"
                 placeholder="---Select---">
             <ng-option *ngFor="let opt of ques.Question_Options__r.records" value="{{ opt.Value__c }}">{{ opt.Value__c }}</ng-option>
-            <ng-option *ngIf="ques.Error_Message__c" value="" disabled hidden>
+            <ng-option *ngIf="ques.Error_Message__c"  value="" disabled hidden>
               {{ ques.Error_Message__c }}
             </ng-option>
             </ng-select> 
@@ -574,17 +574,6 @@
   <!--List End-->
 
   <div class="flexer">
-    <div [ngClass]="{ 'col-md-6': !qbItem.Progress_Bar__c }">
-      <div>
-        <button [ngClass]="{
-            'rusty': qbItem.Progress_Bar__c,
-            'nxt-btn btn-primary btn-lg btn-block btn-back-color':
-              !qbItem.Progress_Bar__c
-          }" (click)="handleNextClick()">
-          {{ qbItem.Next__c }}
-        </button>
-      </div>
-    </div>
     <div class="backbutton" [ngClass]="{ 'col-md-6': !qbItem.Progress_Bar__c }"
       [style.visibility]="questionStack.length > 0 ? 'visible' : 'hidden'">
       <div [ngClass]="{}">
@@ -594,6 +583,17 @@
               !qbItem.Progress_Bar__c
           }" (click)="handleBackClick()">
           {{ qbItem?.Back__c }}
+        </button>
+      </div>
+    </div>
+    <div [ngClass]="{ 'col-md-6': !qbItem.Progress_Bar__c }">
+      <div>
+        <button [ngClass]="{
+            'rusty': qbItem.Progress_Bar__c,
+            'nxt-btn btn-primary btn-lg btn-block btn-back-color':
+              !qbItem.Progress_Bar__c
+          }" (click)="handleNextClick()">
+          {{ qbItem.Next__c }}
         </button>
       </div>
     </div>
@@ -732,8 +732,9 @@
         </button>
       </div>
     </div>
+  </div>
 
-    <div class="" *ngIf="abItem.Status__c != 'Completed'">
+    <div class="align-edit-submit" *ngIf="abItem.Status__c != 'Completed'">
       <div class="col-md-6">
         <button [ngClass]="{ 'btn-text2': qbItem.Progress_Bar__c,
                               'nxt-btn btn-primary btn-lg btn-block btn-back-color': !qbItem.Progress_Bar__c }" 
@@ -749,5 +750,4 @@
         </button>
       </div>
    </div>
-  </div>
 </div>

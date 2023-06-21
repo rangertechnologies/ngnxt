@@ -280,6 +280,7 @@ export class QuestionnaireComponent implements OnInit {
   public spinnerName: string;
   public nextValue:string ='';
 
+  start_date?: any;
   //search component
   public sampleAddress: any[] = [
     {
@@ -1359,9 +1360,9 @@ export class QuestionnaireComponent implements OnInit {
     );
 
   private successupdateAB = (response) => {
-    //console.log(response);
+    console.log(response);
     // //console.log('status success')
-    //this.abItem.Status__c = "Completed";
+    this.abItem.Status__c = "Completed";
   };
   private failureupdateAB = (response) => {
     //console.log('status failed')
@@ -2512,6 +2513,7 @@ Add(question: LocalQuestion){
   dependentChange(value:any){
   this.nextValue = value;
   }
+
 
   // In the parent component class
 getTableData(ques: any): any[] {
