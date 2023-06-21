@@ -9,6 +9,7 @@ export class CustomInputComponent implements OnInit {
   @Input() value: any | any[]; // input value
   @Input() disabled: boolean = false; // input disabled or not
   @Input() placeholder:string;
+  @Input() error:any;
   @Output() inputValue = new EventEmitter<any>(); 
   constructor() { }
 

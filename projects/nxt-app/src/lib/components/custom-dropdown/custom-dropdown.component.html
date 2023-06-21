@@ -4,4 +4,6 @@
 [id]="id"
  >
 <ng-option *ngFor="let option of options" [value]="option.Value__c">{{ option.Value__c }}</ng-option>
+<ng-option *ngIf="errorMessage"  value="" disabled hidden>{{ errorMessage }}</ng-option>
 </ng-select>
+<span *ngIf="error" class="error-msg">Required*</span>

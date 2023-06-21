@@ -11,6 +11,8 @@ export class CustomDropdownComponent implements OnInit {
   @Input() placeholder: string;
   @Input() selectedValue: string;
   @Input() id:string;
+  @Input() errorMessage: string;
+  @Input() error:any;
   @Output() valueChange: EventEmitter<string> = new EventEmitter<string>();
 
   constructor() { }

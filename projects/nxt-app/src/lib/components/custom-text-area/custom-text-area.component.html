@@ -6,3 +6,4 @@
     [placeholder]="placeholder"
     (input)="onTextareaChange($event)"
 ></textarea>
+<span *ngIf="error" class="error-msg">Required*</span>

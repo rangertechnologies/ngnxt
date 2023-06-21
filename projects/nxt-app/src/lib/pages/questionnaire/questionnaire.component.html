@@ -420,7 +420,7 @@
           </div>
           <div *ngIf="ques.Type__c === 'Text'">
              <!-- for disabled custom input -->
-             <app-custom-input  [value]="ques.input"  [disabled]="false"   [placeholder]="ques.Question__c "  (inputValue)="selectedInput($event,ques)"></app-custom-input>
+             <app-custom-input  [value]="ques.input"  [disabled]="false" [error]="ques.error"  [placeholder]="ques.Question__c "  (inputValue)="selectedInput($event,ques)"></app-custom-input>
               <!-- for pick location -->
               <app-pick-location *ngIf="ques.Question__c == 'Location'" (locationSelected)="handleLocationSelected($event,ques)"></app-pick-location>
               <!-- old input  -->
@@ -434,7 +434,7 @@
             </div>
             <!-- for  text area   -->
             <div *ngIf="ques.Type__c === 'TextArea'">
-              <app-custom-text-area [value]="ques.input" [rows]="3" [placeholder]="ques.Question__c " (textareaValueChange)="handleTextareaValueChange($event)"></app-custom-text-area>
+              <app-custom-text-area [value]="ques.input" [rows]="3" [error]="ques.error" [placeholder]="ques.Question__c " (textareaValueChange)="handleTextareaValueChange($event)"></app-custom-text-area>
               <app-custom-date-picker [date]="start_date" (dateChange)="displayEndDate($event)"></app-custom-date-picker>
             </div>
             <!-- for to data table we use 'data' type question  -->
@@ -507,6 +507,8 @@
                      [id]="ques.Name"
                      [selectedValue]="ques.input"
                      [placeholder]="'---Select---'"
+                     [errorMessage]="ques.Error_Message__c"
+                     [error]="ques.error"
                      (valueChange)="Dropdown($event, ques); clearSQError(ques.Id)">
               </app-custom-dropdown>
             <!-- old dropdown code-->

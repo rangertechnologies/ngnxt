@@ -5,3 +5,4 @@
 [placeholder]="placeholder"
 [disabled]="disabled"
 (input)="onInputChange($event)">
+<span *ngIf="error" class="error-msg">Required*</span>
