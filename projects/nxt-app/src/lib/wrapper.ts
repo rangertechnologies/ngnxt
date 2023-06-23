@@ -60,6 +60,8 @@ export class Question {
   isDependentPicklist?:boolean;
   tableDataValue?:any[]; 
   tableHeader?:string;
+  startDate?:any;
+  minDate?: any ;
 }
 
 

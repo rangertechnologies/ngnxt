@@ -416,7 +416,7 @@
             </div>
           </div>
           <div *ngIf="ques.Type__c === 'DateTime'">
-
+            <app-custom-date-picker [minDate]="ques.minDate" [date]="ques.input" (dateChange)="displayDate($event,ques)"></app-custom-date-picker>
           </div>
           <div *ngIf="ques.Type__c === 'Text'">
              <!-- for disabled custom input -->
@@ -435,7 +435,6 @@
             <!-- for  text area   -->
             <div *ngIf="ques.Type__c === 'TextArea'">
               <app-custom-text-area [value]="ques.input" [rows]="3" [error]="ques.error" [placeholder]="ques.Question__c " (textareaValueChange)="handleTextareaValueChange($event)"></app-custom-text-area>
-              <app-custom-date-picker [date]="start_date" (dateChange)="displayEndDate($event)"></app-custom-date-picker>
             </div>
             <!-- for to data table we use 'data' type question  -->
             <div *ngIf="ques.Type__c === 'Data'">

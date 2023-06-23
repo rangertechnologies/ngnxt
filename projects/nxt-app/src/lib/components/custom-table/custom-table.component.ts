@@ -19,7 +19,7 @@ export class CustomTableComponent implements OnInit {
 
 
   addRow(): void {
-    const newItem = {
+    const newItem: tableItem  = {
       label: '',
       imageSrc: 'https://media.istockphoto.com/id/943776434/vector/fire-extinguisher-icon-vector.jpg?s=612x612&w=0&k=20&c=KVaDxuV2TV7fdwn09Tg9HeF3MNyoJC5k2YqSAzpStDY=',
       altText: '',

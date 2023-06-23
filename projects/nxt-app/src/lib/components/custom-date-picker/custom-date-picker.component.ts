@@ -7,6 +7,8 @@ import { Component, OnInit,Input,Output,EventEmitter} from '@angular/core';
 })
 export class CustomDatePickerComponent implements OnInit {
   @Input() date: any;
+  @Input() minDate:any;
+  @Input() maxDate:any;
   @Output() dateChange: EventEmitter<any> = new EventEmitter<any>();
   constructor() { }
 

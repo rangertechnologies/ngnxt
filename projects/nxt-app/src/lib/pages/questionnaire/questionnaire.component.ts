@@ -17,6 +17,7 @@ import { UntypedFormBuilder } from "@angular/forms";
 import { NgxSpinnerService } from "ngx-spinner";
 //import { NgxIndexedDBService, IndexDetails} from 'ngx-indexed-db';
 import { DeviceDetectorService } from 'ngx-device-detector';
+import * as moment from 'moment';
 
 
 import {
@@ -894,7 +895,6 @@ export class QuestionnaireComponent implements OnInit {
           this.date_TimeMap();
       }
 
-
       if(item.Type__c== "Text" && item.Question__c === 'Población'){
           for(var loc of this.localaddress){
             if((this.selectedPostalcode == loc.zipCode)&&(this.selectedValue == loc.country)&&(this.selectedCity==loc.town)){
@@ -911,9 +911,8 @@ export class QuestionnaireComponent implements OnInit {
           }
         //console.log('testin values=='+item.input)
         } 
-
-        // to replace the comma with - ( to process the address)
-        if(item.Type__c== "Text" && item.Question__c === 'Location'){
+        
+        if( item.Type__c == "Text" && item.Question__c === 'Location' && item.input != undefined){
             const inputValues = "answerString: " + item.input ;
              item.input = inputValues;
            // item.input.replace(/,/g, '-');
@@ -998,7 +997,6 @@ export class QuestionnaireComponent implements OnInit {
           }
           // this.attachments = [];
         } //item.input == this.inpValue;
-
 
         this.inpValue += (item.input != undefined ? item.input : "") + "@@##$$";
         questionTxt += item.Question__c + "@@##$$";
@@ -1284,11 +1282,15 @@ export class QuestionnaireComponent implements OnInit {
             var newStr = '';
             for (var ansStr of ansWrap.ansValue.split('@@##$$')) {
               for (var ansStr1 of ansStr.split('$$@@##')) {
+                if(ansStr1.includes('answerString')){ //remove the answer string  
+                  const withoutAnswerString = ansStr1.replace("answerString: ", "");
+                  ansStr1 = withoutAnswerString;
+                }
                 if (ansStr1.length > 0) {
                   if (newStr.length == 0) {
                     newStr = ansStr1;
                   } else {
-                    newStr += ', ' + ansStr1;
+                    newStr += '; ' + ansStr1;  //comma(,) changed as semi colon(;) because of address contains comma(,) 
                     if(this.attachmentsMap.has(ansWrap.quesId)){
                       for(var att of this.attachmentsMap.get(ansWrap.quesId)){
                         newStr = newStr.replace(att.attachmentId,'');
@@ -1912,16 +1914,18 @@ export class QuestionnaireComponent implements OnInit {
     // console.log(this.inpValue);
     if (this.inpValue) {
       var aIndex = 0;
-      if ((this.inpValue.search(", ") == -1) || (this.inpValue.search("answerString") != -1) ) {
-        const withoutAnswerString = this.inpValue.replace("answerString: ", "");
+      // search changed as semi colon because of address contains comma 
+      if ((this.inpValue.search("; ") == -1) || (this.inpValue.search("answerString") != -1) ) {
+        const withoutAnswerString = this.inpValue.replace("answerString: ", ""); //remove the answer string
         this.inpValue = withoutAnswerString;
+        this.inpValue = this.inpValue + '@@##$$' ;
         for (var ansStr of this.inpValue.split("@@##$$")) {
           aIndex++;
           qaMap.set(aIndex, ansStr);
           //console.log('Setting the qaMap for ' + aIndex + ' with ' + ansStr);
         }
       } else {
-        for (var ansStr of this.inpValue.split(", ")) {
+        for (var ansStr of this.inpValue.split("; ")) {
           aIndex++;
           qaMap.set(aIndex, ansStr);
           //console.log('Setting the qaMap ' + aIndex + ' with ' + ansStr);
@@ -1951,7 +1955,6 @@ export class QuestionnaireComponent implements OnInit {
             // console.log(ques.input);
           }
         }
-
 
       if ((ques.Type__c === "Date") && (ques.Is_Date_Backward__c || ques.Is_Date_Forward__c)) {
         //console.log('Inside the date backward/forward cond');
@@ -2465,8 +2468,9 @@ Add(question: LocalQuestion){
   this.nextValue = value;
   }
 
-  displayEndDate(dateSelected: any){
-    console.log('selected date', dateSelected);
+  displayDate(dateSelected: any,ques:any){
+    // Parse the date string using moment and assign it to this.selectedDate
+    ques.input = moment(dateSelected.value._d , 'YYYY-MM-DD HH:mm:ss').format('YYYY-MM-DD HH:mm:ss').toString();
   }
 
   // In the parent component class
