@@ -30,7 +30,7 @@ export class PickLocationComponent implements OnInit {
       //load Places Autocomplete
       this.mapsAPILoader.load().then(() => {
         this.geoCoder = new google.maps.Geocoder;
-        let autocomplete = new google.maps.places.Autocomplete(this.searchElementRef.nativeElement, {
+        let autocomplete = new google.maps.places.Autocomplete(this.searchElementRef?.nativeElement, {
           types: []
         });
         autocomplete.addListener("place_changed", () => {

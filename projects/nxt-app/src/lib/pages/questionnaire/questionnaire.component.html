@@ -461,7 +461,7 @@
                   <i class="" aria-hidden="true"></i>
                 </span>
               </label>
-              <input id="file-upload" type="file" accept="{{ bookFlagAccept }}" (change)="uploadFile($event)" />
+              <input id="file-upload" type="file" accept="{{ bookFlagAccept }}" (change)="uploadFile($event,ques)" />
             </div>
 
             <ul *ngIf="
@@ -493,7 +493,7 @@
                     Adjuntar
                   </span>
                   <input name="attachment" type="file" placeholder="Ticket kaufen" multiple
-                    accept=".pdf, .png, .jpg, .jpeg, .heic, .application/pdf" (change)="uploadFile($event)"
+                    accept=".pdf, .png, .jpg, .jpeg, .heic, .application/pdf" (change)="uploadFile($event,ques)"
                     class="file-upload-btn">
                 </label>
               </div>
@@ -601,15 +601,41 @@
     <h1 class="header1 summarypadd" >{{ qbItem.SubTitle__c }}</h1>         
   <div id="progress2" *ngIf="!qbItem.Progress_Bar__c ">
   <div [ngClass]="{ 'full-summary': qbItem.Progress_Bar__c }">
-    <div *ngFor="let qa of summary" >
+    <div class="col-lg-12">
+      <div class="panel-group panel-group-joined" id="ePTW-details">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h4 class="panel-title">
+              <a data-toggle="collapse" data-parent="#ePTW-details" href="#collapseOne" class="collapsed">
+                PTW Details
+              </a>
+            </h4>
+          </div>
+          <div id="collapseOne" class="panel-collapse collapse">
+            <div class="panel-body">
+              <div class="row">
+                <ng-container *ngFor="let item of summaryData; let i = index">
+                  <ng-container *ngIf="i % 2 === 0">
+                    <div class="col-lg-6 m-b-30">
+                      <label>{{ getKey(item) }}</label>
+                      <p class="font-size">{{ getValue(item) || 'N/A' }}</p>
+                    </div>
+                    <div class="col-lg-6" *ngIf="summaryData[i + 1]">
+                      <label>{{ getKey(summaryData[i + 1]) }}</label>
+                      <p class="font-size">{{ getValue(summaryData[i + 1]) || 'N/A' }}</p>
+                    </div>
+                  </ng-container>
+                </ng-container>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- <div *ngFor="let qa of summary">
      
         <div [ngClass]="{ non:  qbItem.Progress_Bar__c }">
           <div [ngClass]="{ summary:  !qbItem.Progress_Bar__c }">
-         <!--  <div *ngIf="qbItem.Progress_Bar__c"
-              [ngClass]="{ 'summary-groupText myt-font2': qbItem.Progress_Bar__c }" >
-              {{ qa.groupText }}
-            </div>
-          -->
            <div *ngIf="!qbItem.Edit__c"
               [ngClass]="{ 'question': this.abItem.Status__c != 'Completed' }">
               <a [ngClass]="{ asum: this.abItem.Status__c === 'Completed' }" (click)="handleEditClick(qa.quesId)"
@@ -638,7 +664,7 @@
           </div>
         </div>
         </div>
-    </div>
+    </div> -->
     </div>
   </div>
 

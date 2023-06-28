@@ -129,7 +129,7 @@ export class QuestionnaireComponent implements OnInit {
   public innerhtml: any;
   public possibilities: any;
   public innerhtml1: any;
-
+  public summaryData =[];
   
   tableData1: any[]= [
     {
@@ -785,7 +785,18 @@ export class QuestionnaireComponent implements OnInit {
     this.recordId = null;
     var cQuestion: Question = new Question();
     cQuestion = this.questionItem;
-    var typ = cQuestion.Type__c;
+        // Create an array of objects to store the values
+        for (var i=0; i<this.questionItem.Questions__r.records.length;i++) {
+          if(this.questionItem.Questions__r.records[i].Question_Text__c){
+            var questionText = this.questionItem.Questions__r.records[i].Question_Text__c.replace(/<[^>]+>/g, ''); // Remove HTML tags from the Question_Text__c value
+          }else{
+            questionText = 'undefined';
+          }
+          const input = this.questionItem.Questions__r.records[i].input;
+          const obj = { [questionText]: input }; // Create an object with the questionText as the key and the input as the value
+          this.summaryData.push(obj); // Add the object to the data array
+        }
+         var typ = cQuestion.Type__c;
     // this.sques += cQuestion.Question__c + '@@##$$';
     var quesValue = cQuestion.Question_Text__c;
     var mailformat =
@@ -2089,7 +2100,7 @@ export class QuestionnaireComponent implements OnInit {
     }
   }
 
-  uploadFile(event) {
+  uploadFile(event,ques?:any) {
     //console.log('inside upload');
     this.clearError();
     this.fileTypeIncorrect = false;
@@ -2132,6 +2143,7 @@ export class QuestionnaireComponent implements OnInit {
         fileWrapper.fileName = local.attachment.name;
         fileWrapper.fileContent = fileContent;
         local.createAttachment(fileWrapper);
+        ques.input = fileWrapper.fileName;
       }
     };
     this.spinner.show(this.spinnerName);
@@ -2471,6 +2483,14 @@ Add(question: LocalQuestion){
   displayDate(dateSelected: any,ques:any){
     // Parse the date string using moment and assign it to this.selectedDate
     ques.input = moment(dateSelected.value._d , 'YYYY-MM-DD HH:mm:ss').format('YYYY-MM-DD HH:mm:ss').toString();
+  }
+
+  getKey(item: any): any {
+    return Object.keys(item)[0];
+  }
+  
+  getValue(item: any): any {
+    return Object.values(item)[0];
   }
 
   // In the parent component class
