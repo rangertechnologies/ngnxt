@@ -20,6 +20,7 @@ import { OwlMomentDateTimeModule } from 'ng-pick-datetime-moment';
 import { OWL_MOMENT_DATE_TIME_ADAPTER_OPTIONS } from 'ng-pick-datetime/date-time/adapter/moment-adapter/moment-date-time-adapter.class';
 import { CustomDatePickerComponent } from './components/custom-date-picker/custom-date-picker.component';
 import { CustomDropdownComponent } from './components/custom-dropdown/custom-dropdown.component';
+import { HttpClientModule } from '@angular/common/http';
 export const MY_CUSTOM_FORMATS = {
   fullPickerInput: 'DD/MM/YYYY HH:mm:ss',
   useUtc: true,
@@ -41,6 +42,7 @@ export const MY_CUSTOM_FORMATS = {
     CommonModule, FormsModule,
     MyDatePickerModule,
     OwlDateTimeModule,
+    HttpClientModule,
     OwlMomentDateTimeModule,
     NgSelectModule,
     AgmCoreModule.forRoot({

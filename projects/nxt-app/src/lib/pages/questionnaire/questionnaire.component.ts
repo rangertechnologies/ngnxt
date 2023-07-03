@@ -18,6 +18,9 @@ import { NgxSpinnerService } from "ngx-spinner";
 //import { NgxIndexedDBService, IndexDetails} from 'ngx-indexed-db';
 import { DeviceDetectorService } from 'ngx-device-detector';
 import * as moment from 'moment';
+import { HttpClient } from '@angular/common/http';
+
+
 
 
 import {
@@ -558,6 +561,7 @@ export class QuestionnaireComponent implements OnInit {
 
   constructor(
     private sfService: SalesforceService,
+    private http: HttpClient,
     private route: ActivatedRoute,
     private sanitizer: DomSanitizer,
     private spinner: NgxSpinnerService,
@@ -606,6 +610,13 @@ export class QuestionnaireComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.http.get('https://dummyjson.com/products/1')
+  .subscribe((data) => {
+    console.log(data); // The response data from the server
+  }, (error) => {
+    console.error('An error occurred:', error);
+  });
+
     this.deviceInfo = this.deviceService.getDeviceInfo();
     console.log('Inside the ngOnInit');
     // console.log("RNXT-Claim");
