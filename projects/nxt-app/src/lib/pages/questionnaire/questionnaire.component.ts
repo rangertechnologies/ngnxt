@@ -934,12 +934,10 @@ export class QuestionnaireComponent implements OnInit {
         //console.log('testin values=='+item.input)
         } 
         
-        if( item.Type__c == "Text" && item.Question__c === 'Location' && item.input != undefined){
+        if(item.Type__c === 'Location' && item.input != undefined){
             const inputValues = "answerString: " + item.input ;
              item.input = inputValues;
-           // item.input.replace(/,/g, '-');
         }
-
         if(item.Type__c== "Text" && item.Question__c === 'Código postal'){
           for(var loc of this.localaddress){
             if(loc.zipCode == this.selectedPostalcode){
@@ -2466,14 +2464,7 @@ Add(question: LocalQuestion){
   }
   
   handleLocationSelected(location: any,ques:any) {
-    // for (let i = 0; i < this.subQuestions.length; i++) {
-    //   if (this.subQuestions[i].Question__c === 'Location') {
-    //     this.subQuestions[i].input = location;
-    //     break; // Exit the loop when location is found
-    //   }
-    // }
-    this.selectedInput(location,ques);
-    // Handle the selected location data as needed
+    ques.input = location;
   }
 
   selectedInput(input:any ,ques:any){ 
