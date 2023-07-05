@@ -51,19 +51,18 @@
       </h3>
       </div>
     </div>
-    <div *ngIf="!questionItem.Is_Title__c" class="question-f-size additional">
+    <div *ngIf="!questionItem.Is_Title__c" [class]=" questionItem.isShengel ? 'header-style additional' : 'question-f-size additional'">
       <div [innerHTML]="getText(questionItem?.Question_Text__c)" >
         {{ questionItem?.Question_Text__c }}
       </div>
     </div>
 
-    <div *ngIf="questionItem.Type__c =='Book'">
+    <div *ngIf="questionItem.Type__c == 'Book'">
       <div *ngIf="questionItem.Question_No__c=='6'">
       <h3 class="myt-321" [innerHTML]="getText(questionItem?.Question_Text__c)">
-        {{questionItem?.Question_Text__c}}
+        {{ questionItem?.Question_Text__c }}
       </h3>
       </div>
-  
     </div>
 
     
@@ -350,7 +349,7 @@
 
 
   <div *ngIf="bookFlag">
-    <div class="form-group">
+    <div [class]="questionItem.isShengel ? 'form-group content-box' : 'form-group'">
       <div class="form-row">
         <div class="col-md-12" *ngIf="questionItem.error" style="font-size: 18px;
             color: red;">{{questionItem?.error?.errorMsg}}</div>
@@ -359,7 +358,6 @@
           <div [ngClass]="{ down2: qbItem?.Progress_Bar__c }">
             <span class="dis-flex myt-font3 myt-font7">{{ ques?.Question__c }}</span>
           </div>
-
           <div class="col-md-12 paddingZero myt-dateTimeNew" *ngIf="ques.Type__c === 'Time' || ques.Type__c === 'Date'">
             <!--<div class="col-md-12" *ngIf="questionItem.error" style="font-size: 18px;
             color: red;">{{questionItem.error.errorMsg}}</div>-->
@@ -420,7 +418,20 @@
           </div>
           <div *ngIf="ques.Type__c === 'Text'">
              <!-- for disabled custom input -->
-             <app-custom-input  [value]="ques.input"  [disabled]="false" [error]="ques.error"  [placeholder]="ques.Question__c "  (inputValue)="selectedInput($event,ques)"></app-custom-input>
+             <!-- <app-custom-input [from]="ques.isShengel"  [value]="ques.input"  [disabled]="false" [error]="ques.error"  [placeholder]="ques.Question__c "  (inputValue)="selectedInput($event,ques)"></app-custom-input> -->
+              <app-custom-input
+                  [fromShengel]="ques.isShengel"
+                  [value]="ques.input"
+                  [ngClassValue]="{
+                      'dis-flex dt-line date-line bookText boxoutline myt-font1': qbItem.Progress_Bar__c,
+                      textBox: !qbItem.Progress_Bar__c
+                  }"
+                  [idValue]="ques.Id"
+                  [focusEvent]="clearSQError(ques.Id)"
+                  [styleValue]="ques.error ? 'red' : ''"
+                  [placeholder]="ques.Question__c"
+                  (inputValue)="selectedInput($event,ques)">
+              </app-custom-input>
               <!-- old input  -->
              <!-- <app-custom-text-area [value]="ques.input" [rows]="3" [placeholder]="ques.Question__c " (textareaValueChange)="handleTextareaValueChange($event)"></app-custom-text-area> -->
               <!-- <input type="text" [(ngModel)]="ques.input" [ngClass]="{
@@ -443,10 +454,10 @@
               <app-custom-table [tableHeader]="ques.tableHeader" [tableData]="getTableData(ques)" [tableIndex]="i" (tableDataChange)="getData($event)"></app-custom-table>
             </div>
 
-          <div *ngIf="ques.Type__c === 'Email'">
-            <input type="email" [(ngModel)]="ques.input" [id]="ques.Id" required="" (focus)="clearSQError(ques.Id)"
-              style.border-color="{{ ques.error ? 'red' : '' }}" placeholder="{{ ques.Question__c }}" />
-          </div>
+            <div *ngIf="ques.Type__c === 'Email'">
+              <input type="email" [(ngModel)]="ques.input" [id]="ques.Id" required="" (focus)="clearSQError(ques.Id)"
+                style.border-color="{{ ques.error ? 'red' : '' }}" placeholder="{{ ques.Question__c }}" />
+            </div>
 
           <div *ngIf="ques.Type__c === 'File'">
             <div *ngIf="!qbItem.Progress_Bar__c">
@@ -543,7 +554,7 @@
             color: red;">{{questionItem?.error?.errorMsg}}</div>
         <div class="myt-align3" [class]="'col-md-' + ques.Size__c + ' paddingnone'"
           *ngFor="let ques of getLocalSubQuestions(questionItem.Id);let i = index">
-          <div >
+          <div>
             <span class="dis-flex myt-font3 myt-font7">{{ ques?.Question__c }}</span>
           </div>
 
@@ -562,7 +573,7 @@
           </div>
 
         </div>
-        <div class="" *ngIf=" addFlag ">
+        <div class="" *ngIf="addFlag">
           <button (click)="Add(getLocalSubQuestions(questionItem.Id))" class="btn"><i class="fa fa-plus" ></i>Add</button>
          </div>
       </div>

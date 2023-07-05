@@ -103,11 +103,11 @@ display: none;
   padding-top: 12px;
 }
 
-.question-f-size{
+.question-f-size {
   font-size: 0.7rem ;
 }
 
-.non{
+.non {
   background-color: #dedddd;
 }
 
@@ -1088,9 +1088,7 @@ background-color: #dedddd;
   .subTitle1{
     width: 95% !important;
   }
-  .additional{
-    
-    /*margin-left: -25%;*/
+  .additional {
     margin-left: 6% !important;
     padding: 0 !important;
     
