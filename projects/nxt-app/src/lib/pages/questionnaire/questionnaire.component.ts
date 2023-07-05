@@ -18,7 +18,7 @@ import { NgxSpinnerService } from "ngx-spinner";
 //import { NgxIndexedDBService, IndexDetails} from 'ngx-indexed-db';
 import { DeviceDetectorService } from 'ngx-device-detector';
 import * as moment from 'moment';
-import { HttpClient } from '@angular/common/http';
+import { DataService } from '../../services/data.service';
 
 
 
@@ -133,6 +133,7 @@ export class QuestionnaireComponent implements OnInit {
   public possibilities: any;
   public innerhtml1: any;
   public summaryData =[];
+  
   
   tableData1: any[]= [
     {
@@ -561,7 +562,7 @@ export class QuestionnaireComponent implements OnInit {
 
   constructor(
     private sfService: SalesforceService,
-    private http: HttpClient,
+    private dataService: DataService,
     private route: ActivatedRoute,
     private sanitizer: DomSanitizer,
     private spinner: NgxSpinnerService,
@@ -610,13 +611,6 @@ export class QuestionnaireComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.http.get('https://dummyjson.com/products/1')
-  .subscribe((data) => {
-    console.log(data); // The response data from the server
-  }, (error) => {
-    console.error('An error occurred:', error);
-  });
-
     this.deviceInfo = this.deviceService.getDeviceInfo();
     console.log('Inside the ngOnInit');
     // console.log("RNXT-Claim");
@@ -735,6 +729,7 @@ export class QuestionnaireComponent implements OnInit {
     if (this.qbId) {
       if (this.qbId.length == 18) {
         this.readQuestionBook(this.qbId);
+        this.fetchData();
       } else {
         //console.log('Inside the else part');
         //console.log('Setting the Question Directly for testing');
@@ -1398,6 +1393,16 @@ export class QuestionnaireComponent implements OnInit {
       this.failureReadBook
     );
  
+    fetchData(): void {
+      this.dataService.getData().subscribe(
+        (data) => {
+          console.log('data service data',data); // The response data from the server
+        },
+        (error) => {
+          console.error('An error occurred:', error);
+        }
+      );
+    }
 
   private successReadBook = (response) => {
     console.log('Inside the successReadBook');
