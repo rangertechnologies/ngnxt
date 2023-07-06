@@ -22,20 +22,20 @@
         <input type="text" [(ngModel)]="item.label" (ngModelChange)="updateLabel(i, item.label)" class="she-line-input table-input">
       </td>
       <td class="permission_yes">
-        <input type="radio"  [name]="'tableRadio_' + i " [ngModel]="item.value" value="YES" (change)="updateRadio(item, 'YES')">
+        <input type="radio"  [name]="'tableRadio_' + i + '_' + tableIndex " [ngModel]="item.value" value="YES" (change)="updateRadio(item, 'YES')">
       </td>
       <td class="permission_no">
-        <input type="radio"  [name]="'tableRadio_' + i " [ngModel]="item.value" value="NO" (change)="updateRadio(item, 'NO')">
+        <input type="radio"  [name]="'tableRadio_' + i + '_' + tableIndex " [ngModel]="item.value" value="NO" (change)="updateRadio(item, 'NO')">
       </td>
       <td class="permission_na">
-        <input type="radio"  [name]="'tableRadio_' + i " [ngModel]="item.value" value="NA" (change)="updateRadio(item, 'NA')">
+        <input type="radio"  [name]="'tableRadio_' + i + '_' + tableIndex " [ngModel]="item.value" value="NA" (change)="updateRadio(item, 'NA')">
       </td>
     </tr>
     <tr>
       <td>
         <b>Add More</b>
       </td>
-      <td colspan="3" style="text-align: center; cursor: pointer;" id="addSafety" #add (click)="addRow()">
+      <td colspan="3" style="text-align: center; cursor: pointer;" id="addSafety"  (click)="addRow()">
         +
       </td>
     </tr>

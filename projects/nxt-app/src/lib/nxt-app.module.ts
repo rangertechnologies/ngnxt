@@ -14,6 +14,19 @@ import { CustomInputComponent } from './components/custom-input/custom-input.com
 import { CustomTextAreaComponent } from './components/custom-text-area/custom-text-area.component';
 import { CustomTableComponent } from './components/custom-table/custom-table.component';
 import { DropdownWithFlagComponent } from './components/dropdown-with-flag/dropdown-with-flag.component';
+import { OwlDateTimeModule, OWL_DATE_TIME_FORMATS } from 'ng-pick-datetime';
+// import { OwlMomentDateTimeModule } from 'ng-pick-datetime/date-time/adapter/moment-adapter/moment-date-time.module';
+import { OwlMomentDateTimeModule } from 'ng-pick-datetime-moment';
+import { OWL_MOMENT_DATE_TIME_ADAPTER_OPTIONS } from 'ng-pick-datetime/date-time/adapter/moment-adapter/moment-date-time-adapter.class';
+import { CustomDatePickerComponent } from './components/custom-date-picker/custom-date-picker.component';
+import { CustomDropdownComponent } from './components/custom-dropdown/custom-dropdown.component';
+import { HttpClientModule } from '@angular/common/http';
+export const MY_CUSTOM_FORMATS = {
+  fullPickerInput: 'DD/MM/YYYY HH:mm:ss',
+  useUtc: true,
+  // monthYearLabel: 'DD/MM/YYYY',
+};
+
 @NgModule({
   declarations: [NxtAppComponent, 
     QuestionnaireComponent,
@@ -21,11 +34,16 @@ import { DropdownWithFlagComponent } from './components/dropdown-with-flag/dropd
     CustomInputComponent,
     CustomTextAreaComponent,
     CustomTableComponent,
-    DropdownWithFlagComponent
+    CustomDatePickerComponent,
+    DropdownWithFlagComponent,
+    CustomDropdownComponent
   ],
   imports: [
     CommonModule, FormsModule,
     MyDatePickerModule,
+    OwlDateTimeModule,
+    HttpClientModule,
+    OwlMomentDateTimeModule,
     NgSelectModule,
     AgmCoreModule.forRoot({
       apiKey: GOOGLE_MAP_API_KEY,
@@ -111,6 +129,12 @@ import { DropdownWithFlagComponent } from './components/dropdown-with-flag/dropd
         "showSubtitle": false})
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  exports: [NxtAppComponent, QuestionnaireComponent]
+  exports: [NxtAppComponent, 
+    QuestionnaireComponent
+  ],
+  providers: [
+    { provide: OWL_MOMENT_DATE_TIME_ADAPTER_OPTIONS, useValue: { useUtc: false } },
+    { provide: OWL_DATE_TIME_FORMATS, useValue: MY_CUSTOM_FORMATS },
+  ]
 })
 export class NxtAppModule { }

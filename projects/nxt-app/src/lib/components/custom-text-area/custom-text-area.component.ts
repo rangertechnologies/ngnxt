@@ -9,6 +9,7 @@ export class CustomTextAreaComponent implements OnInit {
   @Input() value: any | any[]; // input value
   @Input() placeholder:string;
   @Input() rows:Number; //The number of visible text lines for the control
+  @Input() error:any;
   @Output() textareaValueChange: EventEmitter<string> = new EventEmitter<string>(); 
 
   constructor() { }

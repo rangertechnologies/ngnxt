@@ -11,9 +11,7 @@ import { ProgressBarComponent } from '../../projects/nxt-app/src/lib/components/
 import { FileUploadComponent } from '../../projects/nxt-app/src/lib/components/file-upload/file-upload.component';
 import { DropzoneDirective } from '../../projects/nxt-app/src/lib/directives/dropzone/dropzone.directive';
 import { InputComponent } from '../../projects/nxt-app/src/lib/components/input/input.component';
-import { CustomDropdownComponent } from '../../projects/nxt-app/src/lib/components/custom-dropdown/custom-dropdown.component';
-import {MatSelectModule} from '@angular/material/select';
-import { CustomDatePickerComponent } from '../../projects/nxt-app/src/lib/components/custom-date-picker/custom-date-picker.component';
+import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
 import { MatNativeDateModule } from '@angular/material/core';
 import { AgmCoreModule } from '@agm/core';
@@ -26,9 +24,7 @@ import { GOOGLE_MAP_API_KEY } from '../../projects/nxt-app/src/lib/sample';
     ProgressBarComponent,
     FileUploadComponent,
     DropzoneDirective,
-    InputComponent,
-    CustomDropdownComponent,
-    CustomDatePickerComponent
+    InputComponent
   ],
   imports: [
     BrowserModule,
@@ -48,7 +44,6 @@ import { GOOGLE_MAP_API_KEY } from '../../projects/nxt-app/src/lib/sample';
     ]),
     BrowserAnimationsModule
   ],
-  providers: [],
   bootstrap: [ AppComponent ]
 })
 export class AppModule { }

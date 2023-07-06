@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 @Component({
   selector: 'app-dropdown-with-flag',
@@ -9,6 +9,7 @@ export class DropdownWithFlagComponent implements OnInit {
   @Input() certified:boolean= false;
   // @Input() getValue:string = '';
   @Input() JobPerformerCertificates: any[] = [];
+  @Output() flagDropDownChange: EventEmitter<any> = new EventEmitter<any>(); 
   selectedValue:string = '';
 
   constructor() { }
@@ -20,7 +21,7 @@ export class DropdownWithFlagComponent implements OnInit {
   }
   
   onJobPerformerCertified(event:any){
-     console.log('onJobPerformerCertified',event);
+     this.flagDropDownChange.emit(event);
   }
 
 }

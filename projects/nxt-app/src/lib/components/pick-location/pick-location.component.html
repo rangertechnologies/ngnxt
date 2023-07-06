@@ -1,5 +1,5 @@
 <div>
-    <!-- <label class="she-label">Location</label> -->
+     <!-- <label class="she-label">Location</label> -->
     <input class="she-line-input form-control" type="text" placeholder="Enter Location"
         (keydown.enter)="$event.preventDefault()" placeholder="Search Nearest Location" autocorrect="off"
         autocapitalize="off" spellcheck="off" type="text" #search [(ngModel)]="address"
@@ -9,25 +9,6 @@
         <i class="fa fa-location-arrow" aria-hidden="true">
         </i> Pick Location</a>
 </div>
-
- <!-- <div id="map" class="modal fade bs-add-review" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
-  aria-hidden="true">
-<div class="modal-dialog modal-lg">
-  <div class="modal-content">
-    <div class="modal-header">
-      <button type="button" class="close" data-dismiss="modal"  aria-hidden="true" style="color: #333">X</button>
-      <h4 class="modal-title" id="myLargeModalLabel">Pick Your Location</h4>
-    </div>
-    <div class="modal-body">
-      <agm-map [latitude]="latitude" [longitude]="longitude" [zoom]="zoom" (mapClick)="markerDragEnd($event)"
-        [fullscreenControl]="true">
-        <agm-marker [latitude]="latitude" [longitude]="longitude" [markerDraggable]="true"
-          (dragEnd)="markerDragEnd($event)"></agm-marker>
-      </agm-map>
-    </div>
-  </div>
-</div>
-</div> -->
 
 <div class="map-overlay" *ngIf="showModal">
   <div class="map-modal">

@@ -7,30 +7,23 @@ import { Component, OnInit,Input,Output,EventEmitter } from '@angular/core';
   styleUrls: ['./custom-dropdown.component.css']
 })
 export class CustomDropdownComponent implements OnInit {
-@Input() useNormalDropdown: boolean;  //  normal or mat select 
-@Input() name: string; // to name or label of the dropdown
-@Input() defaultValue : string; // defaualt selected value
-@Input() options: {value: string, label: string}[];  // dropdown options
-@Output() selectionChanged = new EventEmitter<string>(); // to pass the selected values 
-selectedValue: string;  // maintain  selected value
+  @Input() options: string[];
+  @Input() placeholder: string;
+  @Input() selectedValue: string;
+  @Input() progressBar: boolean;
+  @Input() id:string;
+  @Input() errorMessage: string;
+  @Input() error:any;
+  @Input() fromShengel: boolean = false;
+  @Output() valueChange: EventEmitter<string> = new EventEmitter<string>();
 
   constructor() { }
 
   ngOnInit(): void {
-    if (this.defaultValue) {
-      // if default value is there 
-      // to assign the defaul value to selected value 
-      // emit that default value to parent
-      this.selectedValue = this.defaultValue;
-      this.selectionChanged.emit(this.selectedValue);
-    }
   }
 
-  onSelectionChange(event: any) {
-    // assign the selected target value to slected value 
-    // emit the selected value to parent
-    this.selectedValue = event.target.value;
-    this.selectionChanged.emit(this.selectedValue);
+  selectChange(event:any){
+    this.valueChange.emit(event);
   }
 
 }

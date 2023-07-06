@@ -12,7 +12,7 @@
 }
 
 .edit{
-  background-color: #dedddd;
+  /* background-color: #dedddd;
   border: none;
   color: #c5281c;
   text-decoration: underline;
@@ -21,7 +21,15 @@
   padding-left: 4% ;
   font-size: 16px;
   cursor: pointer;
-  font-weight: bold;
+  font-weight: bold; */
+  background-color: #dedddd;
+  border: none;
+  color: #c5281c;
+  text-decoration: underline;
+  margin-left: 50%;
+  font-size: 16px;
+  vertical-align: super;
+  font-weight: 700;
 }
 
 .icon-edit{
@@ -51,6 +59,11 @@
   padding-top: 0px; 
   padding-bottom: 20px ; 
   padding-left: 11px; 
+}
+.align-edit-submit {
+ display: flex;
+ flex-direction: column;
+ align-items: center;
 }
 
 
@@ -90,22 +103,22 @@ display: none;
   padding-top: 12px;
 }
 
-.question-f-size{
+.question-f-size {
   font-size: 0.7rem ;
 }
 
-.non{
+.non {
   background-color: #dedddd;
 }
 
-#progress2{
+/* #progress2{
   display: block;
   margin-top: -26px;
   margin-bottom: 6px;
-  background-color: #dedddd;
   width: 96%;
   margin-left: 18px;
-}
+  background-color: #dedddd;
+} */
 
 .circle{
   margin-left: 25px;
@@ -338,7 +351,7 @@ display: none;
 }
 
 .summary{
-  display: block ;
+  /* display: block ;
   border: 1px solid #e6e6e6 ;
   border-radius: 5px ;
   padding: 0.5em ;
@@ -348,7 +361,11 @@ display: none;
   text-align: left ;
   cursor: pointer ;
   display: list-item ;
-  list-style-type: none;
+  list-style-type: none; */
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  border-bottom: 2px solid #fff;
 }
 
 .asum{
@@ -358,13 +375,16 @@ display: none;
 }
 
 .question{
-  margin-left: 14rem;
+  /* margin-left: 14rem;
   background: #dedddd;
   color: #560d05 ;
   font-size: 15px;
   padding-bottom: 0px;
   padding-top: 3%;
-  text-align: left;
+  text-align: left; */
+  padding: 10px;
+  font-size: 14px;
+  color: #007bff;
 }
 .question1{
   margin-left: 14rem;
@@ -378,7 +398,7 @@ display: none;
 
 
 .answer{
-  max-width: 55%;
+  /* max-width: 55%;
   margin-left: auto;
   margin-right: auto;
   color: #a3a2a2;
@@ -389,7 +409,17 @@ display: none;
   word-wrap: break-word;
   text-align: left;
   background: #dedddd;
-  border-bottom: 1px solid #fff;
+  border-bottom: 1px solid #fff; */
+  display: flex;
+  align-items: baseline;
+  padding: 5px;
+  font-size: 14px;
+  font-weight: 400;
+  word-wrap: break-word;
+  padding-bottom: 10px;
+  width: 97%;
+  justify-content: space-between;
+  /* color: #a3a2a2; */
   
 }
 
@@ -1058,9 +1088,7 @@ background-color: #dedddd;
   .subTitle1{
     width: 95% !important;
   }
-  .additional{
-    
-    /*margin-left: -25%;*/
+  .additional {
     margin-left: 6% !important;
     padding: 0 !important;
     
@@ -1619,6 +1647,164 @@ background-color: #dedddd;
 
   display: none;
 }
+
+
+.panel {
+  -moz-box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.1);
+  -webkit-box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.1);
+  border-radius: 0px;
+  border: none;
+  box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+}
+.panel .panel-body {
+  padding: 20px;
+}
+.panel-heading {
+  border-radius: 0;
+  border: none !important;
+  padding: 10px 20px;
+}
+.panel-default > .panel-heading {
+  background-color: #fafafa;
+  border-bottom: none;
+  color: #2a323c;
+  border: 1px solid #e3e3e3!important;
+}
+.panel-title {
+  margin-bottom: 0;
+  margin-top: 0;
+  font-family: 'Rubik', sans-serif;
+  font-weight: 400;
+}
+.panel-footer {
+  background: #fafafa;
+  border-top: 0;
+}
+.panel-color .panel-title {
+  color: #ffffff;
+}
+.panel-primary > .panel-heading {
+  background-color: #03a9f4;
+}
+.panel-success > .panel-heading {
+  background-color: #01ba9a;
+}
+.panel-info > .panel-heading {
+  background-color: #18bae2;
+}
+.panel-warning > .panel-heading {
+  background-color: #f8ca4e;
+}
+.panel-danger > .panel-heading {
+  background-color: #f62f37;
+}
+.panel-dark > .panel-heading {
+  background-color: #2a323c;
+  color: #ffffff;
+}
+.panel-fill {
+  border-radius: 3px;
+}
+.panel-fill .panel-heading {
+  background-color: transparent;
+  color: #ffffff;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.5) !important;
+}
+.panel-fill .panel-body {
+  color: rgba(255, 255, 255, 0.85);
+}
+.panel-fill.panel-default .panel-body {
+  color: #666;
+}
+.panel-fill.panel-default .panel-heading {
+  background-color: transparent;
+  color: #333333;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1) !important;
+}
+.panel-fill.panel-primary {
+  background-color: #03a9f4;
+}
+.panel-fill.panel-success {
+  background-color: #01ba9a;
+}
+.panel-fill.panel-info {
+  background-color: #18bae2;
+}
+.panel-fill.panel-warning {
+  background-color: #f8ca4e;
+}
+.panel-fill.panel-danger {
+  background-color: #f62f37;
+}
+.panel-fill.panel-dark {
+  background-color: #2a323c;
+}
+.panel-group .panel .panel-heading a[data-toggle=collapse].collapsed:before {
+  content: '\f0d7';
+}
+.panel-group .panel .panel-heading .accordion-toggle.collapsed:before {
+  content: '\f0d7';
+}
+.panel-group .panel .panel-heading a[data-toggle=collapse] {
+  display: block;
+}
+.panel-group .panel .panel-heading a[data-toggle=collapse]:before {
+  content: '\f0d8';
+  display: block;
+  float: right;
+  font-family: 'FontAwesome';
+  font-size: 14px;
+  text-align: right;
+  width: 25px;
+}
+.panel-group .panel .panel-heading .accordion-toggle {
+  display: block;
+}
+.panel-group .panel .panel-heading .accordion-toggle:before {
+  content: '\f068';
+  display: block;
+  float: right;
+  font-family: 'FontAwesome';
+  font-size: 14px;
+  text-align: right;
+  width: 25px;
+}
+.panel-group .panel .panel-heading + .panel-collapse .panel-body {
+  border-top: none!important;
+  border: 1px solid #e3e3e3;
+}
+.panel-group .panel-heading {
+  padding: 12px 26px;
+}
+.panel-group.panel-group-joined .panel + .panel {
+  border-top: 1px solid #eeeeee;
+  margin-top: 0;
+}
+.panel-group-joined .panel-group .panel + .panel {
+  border-top: 1px solid #eeeeee;
+  margin-top: 0;
+}
+
+.panel-body label {
+  color: #9a9a9a;
+  font-size: 14px;
+  font-weight: 400;
+  display: inline-block;
+  max-width: 100%;
+  margin-bottom: 5px;
+}
+.font-size { 
+  font-size: 14px;
+}
+.panel-title>.small, .panel-title>.small>a, .panel-title>a, .panel-title>small, .panel-title>small>a {
+  color: inherit;
+  text-decoration: none;
+}
+.panel-title {
+  font-size: 16px;
+}
+
 
 @media (min-width: 300px) and (max-width: 399px){
 .selbtngroup{

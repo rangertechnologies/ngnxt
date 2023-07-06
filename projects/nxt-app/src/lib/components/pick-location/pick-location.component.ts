@@ -1,4 +1,4 @@
-import { Component, ElementRef, EventEmitter, NgModule, NgZone, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, NgModule, NgZone, OnInit, Output, ViewChild } from '@angular/core';
 import { MapsAPILoader } from '@agm/core';
 declare var $: any;
 
@@ -11,12 +11,12 @@ export class PickLocationComponent implements OnInit {
   latitude = null;
   longitude = null;
   zoom: number = 10;
-  address: string;
   private geoCoder;
  // public formGroup: FormGroup;
   @ViewChild('search', { static: true })
   public searchElementRef: ElementRef;
   showModal: boolean = false;
+  @Input() address:string;
   @Output() locationSelected: EventEmitter<any> = new EventEmitter<any>();
 
   constructor(private mapsAPILoader: MapsAPILoader,private ngZone: NgZone) { 
@@ -30,7 +30,7 @@ export class PickLocationComponent implements OnInit {
       //load Places Autocomplete
       this.mapsAPILoader.load().then(() => {
         this.geoCoder = new google.maps.Geocoder;
-        let autocomplete = new google.maps.places.Autocomplete(this.searchElementRef.nativeElement, {
+        let autocomplete = new google.maps.places.Autocomplete(this.searchElementRef?.nativeElement, {
           types: []
         });
         autocomplete.addListener("place_changed", () => {

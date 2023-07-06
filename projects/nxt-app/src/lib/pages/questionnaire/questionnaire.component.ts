@@ -17,6 +17,10 @@ import { UntypedFormBuilder } from "@angular/forms";
 import { NgxSpinnerService } from "ngx-spinner";
 //import { NgxIndexedDBService, IndexDetails} from 'ngx-indexed-db';
 import { DeviceDetectorService } from 'ngx-device-detector';
+import * as moment from 'moment';
+import { DataService } from '../../services/data.service';
+
+
 
 
 import {
@@ -128,7 +132,8 @@ export class QuestionnaireComponent implements OnInit {
   public innerhtml: any;
   public possibilities: any;
   public innerhtml1: any;
-
+  public summaryData =[];
+  
   
   tableData1: any[]= [
     {
@@ -278,7 +283,9 @@ export class QuestionnaireComponent implements OnInit {
   public currentQuestionId: string;
   public spinnerType: string;
   public spinnerName: string;
+  public nextValue:string ='';
 
+  start_date?: any;
   //search component
   public sampleAddress: any[] = [
     {
@@ -555,6 +562,7 @@ export class QuestionnaireComponent implements OnInit {
 
   constructor(
     private sfService: SalesforceService,
+    private dataService: DataService,
     private route: ActivatedRoute,
     private sanitizer: DomSanitizer,
     private spinner: NgxSpinnerService,
@@ -721,6 +729,7 @@ export class QuestionnaireComponent implements OnInit {
     if (this.qbId) {
       if (this.qbId.length == 18) {
         this.readQuestionBook(this.qbId);
+        this.fetchData();
       } else {
         //console.log('Inside the else part');
         //console.log('Setting the Question Directly for testing');
@@ -763,6 +772,7 @@ export class QuestionnaireComponent implements OnInit {
         }
       }
       this.summary = [];
+      this.summaryData = [];
     }
   }
 
@@ -782,7 +792,18 @@ export class QuestionnaireComponent implements OnInit {
     this.recordId = null;
     var cQuestion: Question = new Question();
     cQuestion = this.questionItem;
-    var typ = cQuestion.Type__c;
+        // Create an array of objects to store the values
+        for (var i=0; i<this.questionItem.Questions__r.records.length;i++) {
+          if(this.questionItem.Questions__r.records[i].Question_Text__c){
+            var questionText = this.questionItem.Questions__r.records[i].Question_Text__c.replace(/<[^>]+>/g, ''); // Remove HTML tags from the Question_Text__c value
+          }else{
+            questionText = 'undefined';
+          }
+          const input = this.questionItem.Questions__r.records[i].input;
+          const obj = { [questionText]: input }; // Create an object with the questionText as the key and the input as the value
+          this.summaryData.push(obj); // Add the object to the data array
+        }
+         var typ = cQuestion.Type__c;
     // this.sques += cQuestion.Question__c + '@@##$$';
     var quesValue = cQuestion.Question_Text__c;
     var mailformat =
@@ -892,7 +913,6 @@ export class QuestionnaireComponent implements OnInit {
           this.date_TimeMap();
       }
 
-
       if(item.Type__c== "Text" && item.Question__c === 'Población'){
           for(var loc of this.localaddress){
             if((this.selectedPostalcode == loc.zipCode)&&(this.selectedValue == loc.country)&&(this.selectedCity==loc.town)){
@@ -909,7 +929,11 @@ export class QuestionnaireComponent implements OnInit {
           }
         //console.log('testin values=='+item.input)
         } 
-
+        
+        if(item.Type__c === 'Location' && item.input != undefined){
+            const inputValues = "answerString: " + item.input ;
+             item.input = inputValues;
+        }
         if(item.Type__c== "Text" && item.Question__c === 'Código postal'){
           for(var loc of this.localaddress){
             if(loc.zipCode == this.selectedPostalcode){
@@ -989,7 +1013,6 @@ export class QuestionnaireComponent implements OnInit {
           }
           // this.attachments = [];
         } //item.input == this.inpValue;
-
 
         this.inpValue += (item.input != undefined ? item.input : "") + "@@##$$";
         questionTxt += item.Question__c + "@@##$$";
@@ -1275,11 +1298,15 @@ export class QuestionnaireComponent implements OnInit {
             var newStr = '';
             for (var ansStr of ansWrap.ansValue.split('@@##$$')) {
               for (var ansStr1 of ansStr.split('$$@@##')) {
+                if(ansStr1.includes('answerString')){ //remove the answer string  
+                  const withoutAnswerString = ansStr1.replace("answerString: ", "");
+                  ansStr1 = withoutAnswerString;
+                }
                 if (ansStr1.length > 0) {
                   if (newStr.length == 0) {
                     newStr = ansStr1;
                   } else {
-                    newStr += ', ' + ansStr1;
+                    newStr += '; ' + ansStr1;  //comma(,) changed as semi colon(;) because of address contains comma(,) 
                     if(this.attachmentsMap.has(ansWrap.quesId)){
                       for(var att of this.attachmentsMap.get(ansWrap.quesId)){
                         newStr = newStr.replace(att.attachmentId,'');
@@ -1329,7 +1356,9 @@ export class QuestionnaireComponent implements OnInit {
       //console.log('summary true');
       this.summary = [];
     }
-    
+    if(this.summaryData){
+      this.summaryData =[];
+    }
 
     // Read the previous question from DB
     this.readQuestion(this.questionStack.pop());
@@ -1351,9 +1380,9 @@ export class QuestionnaireComponent implements OnInit {
     );
 
   private successupdateAB = (response) => {
-    //console.log(response);
+    console.log(response);
     // //console.log('status success')
-    //this.abItem.Status__c = "Completed";
+    this.abItem.Status__c = "Completed";
   };
   private failureupdateAB = (response) => {
     //console.log('status failed')
@@ -1367,6 +1396,16 @@ export class QuestionnaireComponent implements OnInit {
       this.failureReadBook
     );
  
+    fetchData(): void {
+      this.dataService.getData().subscribe(
+        (data) => {
+          console.log('data service data',data); // The response data from the server
+        },
+        (error) => {
+          console.error('An error occurred:', error);
+        }
+      );
+    }
 
   private successReadBook = (response) => {
     console.log('Inside the successReadBook');
@@ -1893,74 +1932,28 @@ export class QuestionnaireComponent implements OnInit {
     }
   }
   Dropdown(event,ques?:any) {
-    ques.valueName = event;// here when using the ng-select got event as value
-    ques.isDependentPicklist = false;
-    for(var k=0 ;k<ques.Question_Options__r.records.length;k++){
-      // if the selected options's next question is available to push that question options in array to show the dependent dropdown with flag field 
-      if(event === ques.Question_Options__r.records[k].Value__c && ques.Question_Options__r.records[k].Next_Question__c != undefined){
-        this.sfService.remoteAction(
-          "NxtController.process",
-          ["Question", "read", ques.Question_Options__r.records[k].Next_Question__c],
-          (response: any) => {
-            //Handle response here
-            const question = response.question;
-            if(question.Type__c === 'Dropdown' && !ques.dropDownOnly){
-              ques.certificateList=[];
-              ques.certifiedFlag = true;
-              ques.isDependentPicklist = true;
-              for(var k=0 ;k<question.Question_Options__r.records.length;k++){
-                ques.certificateList.push(question.Question_Options__r.records[k].Value__c);
-              }
-            }
-            // for now we use the selected value as input value ,need to implement the dependent input field updation
-            else if(question.Type__c === 'Text'){
-              for(var i=0;i<this.subQuestions.length;i++){
-                if(this.subQuestions[i].Type__c === 'Text'){
-                 this.subQuestions[i].valueName = question.Question_Text__c.replace(/<\/?p>/g, '');
-                }
-             }
-            }
-            // for dependent dropdown only field 
-            else if(question.Type__c === 'Dropdown' && ques.dropDownOnly){
-              ques.certificateList=[];
-              for(var k=0 ;k<question.Question_Options__r.records.length;k++){
-                ques.certificateList.push(question.Question_Options__r.records[k].Value__c);
-              }
-            }
-           
-          },
-          (error: any) => {
-            // Handle the error 
-          }
-        );
-      }else{
-        // next question is not available in the selected option then uncheck the toggle ,remove the values and hide the dependent dropdown with flag field
-        ques.certifiedFlag = false;
-        ques.certificateList =[];
-        ques.isDependentPicklist = false;
-      }
-    }
-   
-      
+    ques.input = event; // here when using the ng-select got event as value
   }
-
 
   setSubQuestions(records) {
     // console.log('inside setSubQuestions');
     // console.log(records);
-
     var qaMap = new Map();
     // console.log(this.inpValue);
     if (this.inpValue) {
       var aIndex = 0;
-      if (this.inpValue.search(", ") == -1) {
+      // search changed as semi colon because of address contains comma 
+      if ((this.inpValue.search("; ") == -1) || (this.inpValue.search("answerString") != -1) ) {
+        const withoutAnswerString = this.inpValue.replace("answerString: ", ""); //remove the answer string
+        this.inpValue = withoutAnswerString;
+        this.inpValue = this.inpValue + '@@##$$' ;
         for (var ansStr of this.inpValue.split("@@##$$")) {
           aIndex++;
           qaMap.set(aIndex, ansStr);
           //console.log('Setting the qaMap for ' + aIndex + ' with ' + ansStr);
         }
       } else {
-        for (var ansStr of this.inpValue.split(", ")) {
+        for (var ansStr of this.inpValue.split("; ")) {
           aIndex++;
           qaMap.set(aIndex, ansStr);
           //console.log('Setting the qaMap ' + aIndex + ' with ' + ansStr);
@@ -1991,7 +1984,6 @@ export class QuestionnaireComponent implements OnInit {
           }
         }
 
-
       if ((ques.Type__c === "Date") && (ques.Is_Date_Backward__c || ques.Is_Date_Forward__c)) {
         //console.log('Inside the date backward/forward cond');
         if (ques.Is_Date_Backward__c === true) {
@@ -2015,14 +2007,6 @@ export class QuestionnaireComponent implements OnInit {
 
       this.subQuestions.push(ques);
       for(var i=0; i<this.subQuestions.length;i++){
-        // assign the data's for to check data table 
-        if(this.subQuestions[i].Name == 'QN-02251'){
-          this.subQuestions[i].tableDataValue = this.tableData1;
-          this.subQuestions[i].tableHeader = 'Safety Precautions';
-        }else{
-          this.subQuestions[i].tableDataValue =  this.tableData2;
-          this.subQuestions[i].tableHeader = 'Personal Protective Equipments';
-        }
         // to show/hide the dependent dropdown only field using the dropDownOnly boolean
         if(this.subQuestions[i].Size__c == 4){
           this.subQuestions[i].dropDownOnly = true;
@@ -2133,7 +2117,7 @@ export class QuestionnaireComponent implements OnInit {
     }
   }
 
-  uploadFile(event) {
+  uploadFile(event,ques?:any) {
     //console.log('inside upload');
     this.clearError();
     this.fileTypeIncorrect = false;
@@ -2176,6 +2160,7 @@ export class QuestionnaireComponent implements OnInit {
         fileWrapper.fileName = local.attachment.name;
         fileWrapper.fileContent = fileContent;
         local.createAttachment(fileWrapper);
+        ques.input = fileWrapper.fileName;
       }
     };
     this.spinner.show(this.spinnerName);
@@ -2486,13 +2471,12 @@ Add(question: LocalQuestion){
     this.addFlag = true;
   }
   
-  handleLocationSelected(location: any) {
-    console.log('Selected location:', location);
-    // Handle the selected location data as needed
+  handleLocationSelected(location: any,ques:any) {
+    ques.input = location;
   }
 
-  selectedInput(input:any){
-    console.log('Selected input:', input);
+  selectedInput(input:any ,ques:any){ 
+    ques.input = input;
   }
 
   handleTextareaValueChange(value :string){
@@ -2502,7 +2486,35 @@ Add(question: LocalQuestion){
    console.log('table data',data);
   }
 
+  dependentChange(value:any){
+  this.nextValue = value;
+  }
 
+  displayDate(dateSelected: any,ques:any){
+    // Parse the date string using moment and assign it to this.selectedDate
+    ques.input = moment(dateSelected.value._d , 'YYYY-MM-DD HH:mm:ss').format('YYYY-MM-DD HH:mm:ss').toString();
+  }
 
+  getKey(item: any): any {
+    return Object.keys(item)[0];
+  }
+  
+  getValue(item: any): any {
+    return Object.values(item)[0];
+  }
+
+  // In the parent component class
+getTableData(ques: any): any[] {
+  // Return a new array to ensure each table instance has its own separate array
+  if (ques.Name === 'QN-02251') {
+    ques.tableDataValue = this.tableData1;
+    ques.tableHeader ='Safety Precautions';
+    return [...ques.tableDataValue];
+  } else {
+    ques.tableDataValue = this.tableData2;
+    ques.tableHeader ='Personal Protective Equipments';
+    return [...ques.tableDataValue];
+  }
+}
   }
 

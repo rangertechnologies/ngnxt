@@ -1,7 +1,18 @@
+<input *ngIf="!fromShengel" type="text" 
+       [(ngModel)]="value"
+       [ngClass]="ngClassValue"
+       [id]="idValue"
+       (focus)="focusEvent"
+       [style.border-color]="error ? 'red' : ''"
+       [placeholder]="placeholder"
+       (input)="onInputChange($event)" />
 
 
-
-<input [(ngModel)]="value" type="text" class="she-line-input form-control" 
+<input  *ngIf="fromShengel" class="input-shengel"
+[(ngModel)]="value"
+ type="text" 
+ class="she-line-input form-control" 
 [placeholder]="placeholder"
 [disabled]="disabled"
 (input)="onInputChange($event)">
+<span *ngIf="error" class="error-msg">Required*</span>
