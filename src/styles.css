@@ -455,9 +455,9 @@
     text-align: center;
   }
 
-.custom-select{
+/* .custom-select{
     color: red;
-  }
+  } */
   
   
   .myt-font10{
@@ -1047,21 +1047,11 @@ select{
 .input-shengel:focus {
   border-bottom: 1px solid #eeeeee;
 }
-/* input {
-  border: none;
-  outline: none;
-}
-input:focus {
-  border-bottom: 1px solid #007bff;
-}
-input:not(:focus) {
-  border-bottom: 1px solid #eeeeee;
-} */
 
-.custom-select{
+.shengel-custom-select{
   border: none;
   background: #fff;
-  border-bottom: 1px solid #eeeeee !important;
+  /* border-bottom: 1px solid #eeeeee !important; */
   border-radius: 0;
   box-shadow: none;
   height: 38px;
@@ -1070,7 +1060,6 @@ input:not(:focus) {
   font-size: 14px;
   font-weight: 400;
 }
-
 
 .form-control {
   -moz-border-radius: 2px;
@@ -1097,11 +1086,13 @@ input:not(:focus) {
   border-bottom: 1px solid #eeeeee;
   border-radius: 0;
 }
+
 .table-input{
   height: 32px; 
   background: transparent;
   border: none !important;
 }
+
 .error-msg {
   color: #EC2E2E;
   background-color: white;

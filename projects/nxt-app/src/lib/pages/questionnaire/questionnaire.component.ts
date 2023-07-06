@@ -772,6 +772,7 @@ export class QuestionnaireComponent implements OnInit {
         }
       }
       this.summary = [];
+      this.summaryData = [];
     }
   }
 
@@ -1355,7 +1356,9 @@ export class QuestionnaireComponent implements OnInit {
       //console.log('summary true');
       this.summary = [];
     }
-    
+    if(this.summaryData){
+      this.summaryData =[];
+    }
 
     // Read the previous question from DB
     this.readQuestion(this.questionStack.pop());

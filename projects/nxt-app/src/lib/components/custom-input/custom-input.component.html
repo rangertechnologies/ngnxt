@@ -3,7 +3,7 @@
        [ngClass]="ngClassValue"
        [id]="idValue"
        (focus)="focusEvent"
-       [style.border-color]="styleValue"
+       [style.border-color]="error ? 'red' : ''"
        [placeholder]="placeholder"
        (input)="onInputChange($event)" />
 

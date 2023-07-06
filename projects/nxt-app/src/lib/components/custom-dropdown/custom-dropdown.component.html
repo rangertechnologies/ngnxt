@@ -1,4 +1,20 @@
-<ng-select [(ngModel)]="selectedValue" 
+<select *ngIf="!fromShengel"
+  [ngClass]="{
+    'dt-line dpDown down myt-dropbox myt-border-r myt-font1': progressBar,
+    'custom-select': !progressBar
+  }" class="custom-select mr-sm-2 dd-height" 
+  [id]="id" 
+  [(ngModel)]="selectedValue"
+  (change)="selectChange($event.target.value);" 
+  [style.borderColor]="error ? 'red' : '#858585'"
+  [style.color]="error ? 'red' : ''">
+    <option *ngFor="let option of options" [value]="option.Value__c" class="option">{{ option.Value__c }}</option>
+    <option *ngIf="errorMessage" value="" disabled hidden>{{ errorMessage }}</option>
+</select>
+
+<ng-select  *ngIf="fromShengel"
+ class="shengel-custom-select"
+[(ngModel)]="selectedValue" 
 [placeholder]="placeholder"
 (change)="selectChange($event)"
 [id]="id"
@@ -6,4 +22,4 @@
 <ng-option *ngFor="let option of options" [value]="option.Value__c">{{ option.Value__c }}</ng-option>
 <ng-option *ngIf="errorMessage"  value="" disabled hidden>{{ errorMessage }}</ng-option>
 </ng-select>
-<span *ngIf="error" class="error-msg">Required*</span>
+<span *ngIf="error && fromShengel" class="error-msg">Required*</span>

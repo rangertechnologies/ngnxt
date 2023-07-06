@@ -62,7 +62,7 @@ export class Question {
   tableHeader?:string;
   startDate?:any;
   minDate?: any ;
-  isShengel?: boolean = false;
+  isShengel__c?: boolean;
 }
 
 

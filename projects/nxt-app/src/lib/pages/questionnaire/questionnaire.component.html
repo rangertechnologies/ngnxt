@@ -51,7 +51,7 @@
       </h3>
       </div>
     </div>
-    <div *ngIf="!questionItem.Is_Title__c" [class]=" questionItem.isShengel ? 'header-style additional' : 'question-f-size additional'">
+    <div *ngIf="!questionItem.Is_Title__c" [class]=" questionItem.isShengel__c ? 'header-style additional' : 'question-f-size additional'">
       <div [innerHTML]="getText(questionItem?.Question_Text__c)" >
         {{ questionItem?.Question_Text__c }}
       </div>
@@ -349,7 +349,7 @@
 
 
   <div *ngIf="bookFlag">
-    <div [class]="questionItem.isShengel ? 'form-group content-box' : 'form-group'">
+    <div [class]="questionItem.isShengel__c ? 'form-group content-box' : 'form-group'">
       <div class="form-row">
         <div class="col-md-12" *ngIf="questionItem.error" style="font-size: 18px;
             color: red;">{{questionItem?.error?.errorMsg}}</div>
@@ -420,7 +420,7 @@
              <!-- for disabled custom input -->
              <!-- <app-custom-input [from]="ques.isShengel"  [value]="ques.input"  [disabled]="false" [error]="ques.error"  [placeholder]="ques.Question__c "  (inputValue)="selectedInput($event,ques)"></app-custom-input> -->
               <app-custom-input
-                  [fromShengel]="ques.isShengel"
+                  [fromShengel]="ques.isShengel__c"
                   [value]="ques.input"
                   [ngClassValue]="{
                       'dis-flex dt-line date-line bookText boxoutline myt-font1': qbItem.Progress_Bar__c,
@@ -428,7 +428,7 @@
                   }"
                   [idValue]="ques.Id"
                   [focusEvent]="clearSQError(ques.Id)"
-                  [styleValue]="ques.error ? 'red' : ''"
+                  [error]="ques.error"
                   [placeholder]="ques.Question__c"
                   (inputValue)="selectedInput($event,ques)">
               </app-custom-input>
@@ -515,7 +515,8 @@
 
           <div *ngIf="ques.Type__c === 'Dropdown'" class="">
               <!-- for common dropdown -->
-              <app-custom-dropdown [options]="ques.Question_Options__r.records"
+              <app-custom-dropdown [fromShengel]="ques.isShengel__c"
+                     [options]="ques.Question_Options__r.records"
                      [id]="ques.Name"
                      [selectedValue]="ques.input"
                      [placeholder]="'---Select---'"

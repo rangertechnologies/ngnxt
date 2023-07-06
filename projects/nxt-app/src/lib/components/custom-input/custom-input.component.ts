@@ -15,12 +15,10 @@ export class CustomInputComponent implements OnInit {
   @Input() ngClassValue:any;
   @Input() idValue:any;
   @Input() focusEvent: any;
-  @Input() styleValue: any;
   @Output() inputValue = new EventEmitter<any>(); 
   constructor() { }
 
   ngOnInit(): void {
-    console.log('styleValue',this.styleValue);
   }
 
   onInputChange(input:any){

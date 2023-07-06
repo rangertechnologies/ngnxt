@@ -9,10 +9,14 @@
 </mat-form-field> -->
 
 <p>
-    <input [(ngModel)]="date" [owlDateTimeTrigger]="dt" [owlDateTime]="dt"  [min]="minDate"
-           placeholder="DD/MM/YYYY HH:MM"
-           style="width: 100%; height: 35px; border: none; box-shadow: none; border-bottom: 1px solid #ccc;"
-           (dateTimeChange)="onDateChange($event)">
+    <input  class="input-shengel"
+    [(ngModel)]="date" 
+    [owlDateTimeTrigger]="dt" 
+    [owlDateTime]="dt"  
+    [min]="minDate"
+    placeholder="DD/MM/YYYY HH:MM"
+    style="width: 100%; height: 35px; border: none; box-shadow: none; border-bottom: 1px solid #ccc;"
+    (dateTimeChange)="onDateChange($event)">
     <owl-date-time #dt></owl-date-time>
 </p>
   
