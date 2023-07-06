@@ -21,6 +21,7 @@ export class QuestionBook {
   Question_Type__c: string;
   Possibilities__c: string;
   Summary_Sub_Text__c: string;
+  isShengel__c?: boolean;
 }
 
 export class Question {

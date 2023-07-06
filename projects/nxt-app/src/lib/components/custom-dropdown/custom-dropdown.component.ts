@@ -20,7 +20,6 @@ export class CustomDropdownComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    console.log('from shengel',this.fromShengel);
   }
 
   selectChange(event:any){

@@ -45,13 +45,13 @@
   <!--Question alignment-->
   <div class="questiondiv2">
     <div *ngIf="questionItem.Is_Title__c">
-      <div *ngIf="questionItem.Type__c != 'Book'&&questionItem.Question_No__c!='6' && questionItem.Question_No__c!='9'"> 
+      <div *ngIf="questionItem.Type__c != 'Book' && questionItem.Question_No__c!='6' && questionItem.Question_No__c!='9'"> 
       <h3 class="questionalign  myt-font3 myt-align myt-text4" [innerHTML]="getText(questionItem?.Question_Text__c)">
         {{questionItem?.Question_Text__c}}
       </h3>
       </div>
     </div>
-    <div *ngIf="!questionItem.Is_Title__c" [class]=" questionItem.isShengel__c ? 'header-style additional' : 'question-f-size additional'">
+    <div *ngIf="!questionItem.Is_Title__c" [class]="qbItem.isShengel__c ? 'header-style additional' : 'question-f-size additional'">
       <div [innerHTML]="getText(questionItem?.Question_Text__c)" >
         {{ questionItem?.Question_Text__c }}
       </div>
@@ -349,7 +349,7 @@
 
 
   <div *ngIf="bookFlag">
-    <div [class]="questionItem.isShengel__c ? 'form-group content-box' : 'form-group'">
+    <div [class]="qbItem.isShengel__c ? 'form-group content-box' : 'form-group'">
       <div class="form-row">
         <div class="col-md-12" *ngIf="questionItem.error" style="font-size: 18px;
             color: red;">{{questionItem?.error?.errorMsg}}</div>
@@ -420,7 +420,7 @@
              <!-- for disabled custom input -->
              <!-- <app-custom-input [from]="ques.isShengel"  [value]="ques.input"  [disabled]="false" [error]="ques.error"  [placeholder]="ques.Question__c "  (inputValue)="selectedInput($event,ques)"></app-custom-input> -->
               <app-custom-input
-                  [fromShengel]="ques.isShengel__c"
+                  [fromShengel]="qbItem.isShengel__c"
                   [value]="ques.input"
                   [ngClassValue]="{
                       'dis-flex dt-line date-line bookText boxoutline myt-font1': qbItem.Progress_Bar__c,
@@ -494,9 +494,6 @@
                 <span class="uploading-file-name myt-font1 font-weight: normal;"> {{ attachment.attachmentName }}</span>
                 <img src="https://rnxt.s3.amazonaws.com/MytIcon/icon-delete%402x.png" class="deleteIcon"
                   (click)="deleteAttachment(attachment.attachmentId)" />
-
-
-
               </div>
               <div class="file-upload-box" style.border-color="{{ this.questionItem.error ? 'red' : '' }}">
                 <img src="https://rnxt.s3.amazonaws.com/MytIcon/icon-doc-img%402x.png" class="icon-edit1" />
@@ -515,7 +512,7 @@
 
           <div *ngIf="ques.Type__c === 'Dropdown'" class="">
               <!-- for common dropdown -->
-              <app-custom-dropdown [fromShengel]="ques.isShengel__c"
+              <app-custom-dropdown [fromShengel]="qbItem.isShengel__c"
                      [options]="ques.Question_Options__r.records"
                      [id]="ques.Name"
                      [selectedValue]="ques.input"
