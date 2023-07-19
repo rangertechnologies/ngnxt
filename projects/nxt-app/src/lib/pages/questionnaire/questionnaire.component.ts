@@ -723,12 +723,13 @@ export class QuestionnaireComponent implements OnInit {
   processQB() {
     //console.log('ProcessQB');
     //this.qbItem
-
     //console.log(this.qbId);
     //console.log('Version in process is 8bf11efa7f91a391d957bf6b5078edc7e656b67c');
+    this.qbId = 'a033t00000o5RC0AAM'
     if (this.qbId) {
       if (this.qbId.length == 18) {
-        this.readQuestionBook(this.qbId);
+       // this.readQuestionBook(this.qbId);
+        this.getQuestionBook(this.qbId);
         this.fetchData();
       } else {
         //console.log('Inside the else part');
@@ -755,7 +756,7 @@ export class QuestionnaireComponent implements OnInit {
       if (value == null) {
         return;
       }
-      this.readQuestion(value);
+      this.getQuestion(value);
       //console.log(' in side summaryopen'+ this.summary.length);
 
       //Assign question stack length from summary part
@@ -930,10 +931,10 @@ export class QuestionnaireComponent implements OnInit {
         //console.log('testin values=='+item.input)
         } 
         
-        if(item.Type__c === 'Location' && item.input != undefined){
-            const inputValues = "answerString: " + item.input ;
-             item.input = inputValues;
-        }
+        // if(item.Type__c === 'Location' && Array.isArray(item.input) && item.input.every((input) => input !== undefined)){
+        //     const inputValues = "answerString: " + item.input ;
+        //     item.input = inputValues;
+        // }
         if(item.Type__c== "Text" && item.Question__c === 'Código postal'){
           for(var loc of this.localaddress){
             if(loc.zipCode == this.selectedPostalcode){
@@ -1274,7 +1275,7 @@ export class QuestionnaireComponent implements OnInit {
 
     if (this.recordId) {
       //console.log('Before Calling readQuestion() using ' + recordId);
-      this.readQuestion(this.recordId);
+      this.getQuestion(this.recordId);
       this.pop = true;
     } else {
       this.pop = false;
@@ -1298,10 +1299,10 @@ export class QuestionnaireComponent implements OnInit {
             var newStr = '';
             for (var ansStr of ansWrap.ansValue.split('@@##$$')) {
               for (var ansStr1 of ansStr.split('$$@@##')) {
-                if(ansStr1.includes('answerString')){ //remove the answer string  
-                  const withoutAnswerString = ansStr1.replace("answerString: ", "");
-                  ansStr1 = withoutAnswerString;
-                }
+              //  if(ansStr1.includes('answerString')){ //remove the answer string  
+               //   const withoutAnswerString = ansStr1.replace("answerString: ", "");
+                //  ansStr1 = withoutAnswerString;
+              //  }
                 if (ansStr1.length > 0) {
                   if (newStr.length == 0) {
                     newStr = ansStr1;
@@ -1361,7 +1362,7 @@ export class QuestionnaireComponent implements OnInit {
     }
 
     // Read the previous question from DB
-    this.readQuestion(this.questionStack.pop());
+    this.getQuestion(this.questionStack.pop());
     //console.log(this.questionStack);
   }
 
@@ -1399,10 +1400,22 @@ export class QuestionnaireComponent implements OnInit {
     fetchData(): void {
       this.dataService.getData().subscribe(
         (data) => {
-          console.log('data service data',data); // The response data from the server
+         // console.log('data service data',data); // The response data from the server
         },
         (error) => {
-          console.error('An error occurred:', error);
+        //  console.error('An error occurred:', error);
+        }
+      );
+    }
+
+    getQuestionBook(qbId: any) {
+      this.dataService.getQuestionBook(qbId).subscribe(
+        (data) => {
+          this.successReadBook(data);
+          console.log('questionbook data',data);
+        },
+        (error) => {
+          this.failureReadBook(error);
         }
       );
     }
@@ -1414,13 +1427,14 @@ export class QuestionnaireComponent implements OnInit {
       this.qbItem = response.questionbook;
       this.abItem = response.answerbook;
     }
-    console.log('readingQuestion using ' + this.qbItem);
+   // console.log('readingQuestion using ' + this.qbItem);
     if (this.abItem?.Status__c == "Pending") {
       if (
         this.abItem.Answers__r == null ||
         this.abItem.Answers__r.records.length == 0
       ) {
-        this.readQuestion(this.qbItem.First_Question__c);
+       // this.readQuestion(this.qbItem.First_Question__c);
+        this.getQuestion(this.qbItem.First_Question__c)
       } else {
         // Populate the existing answers
         var lastQuestionId = "";
@@ -1469,7 +1483,7 @@ export class QuestionnaireComponent implements OnInit {
         this.questionStack.pop();
         //console.log(this.answerMap);
         // Read the last answered question
-        this.readQuestion(lastQuestionId);
+        this.getQuestion(lastQuestionId);
       }
     } else if (this.abItem?.Status__c == "Completed") {
       this.handleEvent.emit("Summaryupdated");
@@ -1588,6 +1602,18 @@ export class QuestionnaireComponent implements OnInit {
       this.successRead,
       this.failureRead
     );
+
+    getQuestion(questionId: any) {
+      this.dataService.getQuestion(questionId).subscribe(
+        (data) => {
+          this.successRead(data);
+          console.log('question data',data);
+        },
+        (error) => {
+          this.failureRead(error);
+        }
+      );
+    }
 
   private successRead = (response) => {
     // console.log('Inside the successRead new');
@@ -1943,9 +1969,9 @@ export class QuestionnaireComponent implements OnInit {
     if (this.inpValue) {
       var aIndex = 0;
       // search changed as semi colon because of address contains comma 
-      if ((this.inpValue.search("; ") == -1) || (this.inpValue.search("answerString") != -1) ) {
-        const withoutAnswerString = this.inpValue.replace("answerString: ", ""); //remove the answer string
-        this.inpValue = withoutAnswerString;
+      if ((this.inpValue.search("; ") == -1)) {
+       // const withoutAnswerString = this.inpValue.replace("answerString: ", ""); //remove the answer string
+       // this.inpValue = withoutAnswerString;
         this.inpValue = this.inpValue + '@@##$$' ;
         for (var ansStr of this.inpValue.split("@@##$$")) {
           aIndex++;

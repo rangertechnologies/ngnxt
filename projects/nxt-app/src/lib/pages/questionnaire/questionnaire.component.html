@@ -356,7 +356,7 @@
         <div class="myt-align3" [class]="'col-md-' + ques.Size__c + ' paddingnone'"
           *ngFor="let ques of subQuestions;let i = index">
           <div [ngClass]="{ down2: qbItem?.Progress_Bar__c }">
-            <span class="dis-flex myt-font3 myt-font7">{{ ques?.Question__c }}</span>
+            <span [class]="qbItem.isShengel__c ? 'dis-flex shengel-myt-font3 myt-font7'  : 'dis-flex myt-font3 myt-font7' ">{{ ques?.Question__c }}</span>
           </div>
           <div class="col-md-12 paddingZero myt-dateTimeNew" *ngIf="ques.Type__c === 'Time' || ques.Type__c === 'Date'">
             <!--<div class="col-md-12" *ngIf="questionItem.error" style="font-size: 18px;
