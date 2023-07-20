@@ -54,6 +54,7 @@
     "mydatepicker": "^9.0.2",
     "ng-circle-progress": "^1.6.0",
     "ng-lazyload-image": "^6.1.0",
+    "ng-packagr": "^16.1.0",
     "ng-pick-datetime": "^7.0.0",
     "ng-pick-datetime-moment": "^1.0.7",
     "ngx-device-detector": "^3.0.0",
