@@ -11,7 +11,7 @@ export class AppComponent {
   title = 'Questionaire App';
   // for testing purpose use this qbId  - qbId = 'a0e8a00000GIcC0AAL';
   qbId = '';
-
+  tkn = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZW1haWwiOiJyYXNoaWRAZW1hYXIudGVzdCIsInZhbGlkX2Zyb20iOjE2ODI5NTU3NjgwMzgsInZhbGlkX3RpbGwiOjE2ODI5NTkzNjgwMzh9.wLVgW7hAFXGTlAiNtm0dquAgVl0APWIdfz-t20_ngpU';
   constructor(private route: ActivatedRoute) {
 
   }

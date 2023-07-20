@@ -19,5 +19,8 @@
     {
       "path": "./projects/nxt-app/tsconfig.spec.json"
     }
-  ]
+  ],
+  "compilerOptions": {
+    "allowSyntheticDefaultImports": true,
+  }
 }

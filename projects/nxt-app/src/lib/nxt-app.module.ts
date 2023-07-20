@@ -15,8 +15,7 @@ import { CustomTextAreaComponent } from './components/custom-text-area/custom-te
 import { CustomTableComponent } from './components/custom-table/custom-table.component';
 import { DropdownWithFlagComponent } from './components/dropdown-with-flag/dropdown-with-flag.component';
 import { OwlDateTimeModule, OWL_DATE_TIME_FORMATS } from 'ng-pick-datetime';
-// import { OwlMomentDateTimeModule } from 'ng-pick-datetime/date-time/adapter/moment-adapter/moment-date-time.module';
-import { OwlMomentDateTimeModule } from 'ng-pick-datetime-moment';
+
 import { OWL_MOMENT_DATE_TIME_ADAPTER_OPTIONS } from 'ng-pick-datetime/date-time/adapter/moment-adapter/moment-date-time-adapter.class';
 import { CustomDatePickerComponent } from './components/custom-date-picker/custom-date-picker.component';
 import { CustomDropdownComponent } from './components/custom-dropdown/custom-dropdown.component';
@@ -43,7 +42,6 @@ export const MY_CUSTOM_FORMATS = {
     MyDatePickerModule,
     OwlDateTimeModule,
     HttpClientModule,
-    OwlMomentDateTimeModule,
     NgSelectModule,
     AgmCoreModule.forRoot({
       apiKey: GOOGLE_MAP_API_KEY,

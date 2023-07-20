@@ -17,11 +17,8 @@ import { UntypedFormBuilder } from "@angular/forms";
 import { NgxSpinnerService } from "ngx-spinner";
 //import { NgxIndexedDBService, IndexDetails} from 'ngx-indexed-db';
 import { DeviceDetectorService } from 'ngx-device-detector';
-import * as moment from 'moment';
+import * as moment from 'moment'; 
 import { DataService } from '../../services/data.service';
-
-
-
 
 import {
   Question,
@@ -57,6 +54,7 @@ import { from } from "rxjs";
 export class QuestionnaireComponent implements OnInit {
   @Input() qbId: string;
   @Input() insuranceStartDate: string;
+  @Input() tkn: string;
   @Output() handleEvent = new EventEmitter();
   @Output() handlePage: EventEmitter<any> = new EventEmitter();
 
@@ -725,11 +723,10 @@ export class QuestionnaireComponent implements OnInit {
     //this.qbItem
     //console.log(this.qbId);
     //console.log('Version in process is 8bf11efa7f91a391d957bf6b5078edc7e656b67c');
-    this.qbId = 'a033t00000o5RC0AAM'
     if (this.qbId) {
       if (this.qbId.length == 18) {
        // this.readQuestionBook(this.qbId);
-        this.getQuestionBook(this.qbId);
+        this.getQuestionBook(this.qbId, this.tkn);
         this.fetchData();
       } else {
         //console.log('Inside the else part');
@@ -1408,8 +1405,8 @@ export class QuestionnaireComponent implements OnInit {
       );
     }
 
-    getQuestionBook(qbId: any) {
-      this.dataService.getQuestionBook(qbId).subscribe(
+    getQuestionBook(qbId: any, tkn: any) {
+      this.dataService.getQuestionBook(qbId, tkn).subscribe(
         (data) => {
           this.successReadBook(data);
           console.log('questionbook data',data);
@@ -1727,7 +1724,7 @@ export class QuestionnaireComponent implements OnInit {
 
       this.currentName = this.questionItem.Name;
       this.pathquestion = this.questionName.indexOf(this.currentName);
-      this.possibilities = JSON.parse(this.qbItem.Possibilities__c);
+      this.possibilities = this.qbItem.Possibilities__c;
     }
 
     this.myDatePickerOptions;
