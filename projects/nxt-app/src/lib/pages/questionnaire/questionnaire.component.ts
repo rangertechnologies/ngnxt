@@ -54,6 +54,7 @@ import { from } from "rxjs";
 export class QuestionnaireComponent implements OnInit {
   @Input() qbId: string;
   @Input() insuranceStartDate: string;
+  @Input() serv: string;
   @Input() tkn: string;
   @Output() handleEvent = new EventEmitter();
   @Output() handlePage: EventEmitter<any> = new EventEmitter();
@@ -725,9 +726,7 @@ export class QuestionnaireComponent implements OnInit {
     //console.log('Version in process is 8bf11efa7f91a391d957bf6b5078edc7e656b67c');
     if (this.qbId) {
       if (this.qbId.length == 18) {
-       // this.readQuestionBook(this.qbId);
-        this.getQuestionBook(this.qbId, this.tkn);
-        this.fetchData();
+        this.readQuestionBook(this.qbId);
       } else {
         //console.log('Inside the else part');
         //console.log('Setting the Question Directly for testing');
@@ -753,7 +752,7 @@ export class QuestionnaireComponent implements OnInit {
       if (value == null) {
         return;
       }
-      this.getQuestion(value);
+      this.readQuestion(value);
       //console.log(' in side summaryopen'+ this.summary.length);
 
       //Assign question stack length from summary part
@@ -1272,7 +1271,7 @@ export class QuestionnaireComponent implements OnInit {
 
     if (this.recordId) {
       //console.log('Before Calling readQuestion() using ' + recordId);
-      this.getQuestion(this.recordId);
+      this.readQuestion(this.recordId);
       this.pop = true;
     } else {
       this.pop = false;
@@ -1359,7 +1358,7 @@ export class QuestionnaireComponent implements OnInit {
     }
 
     // Read the previous question from DB
-    this.getQuestion(this.questionStack.pop());
+    this.readQuestion(this.questionStack.pop());
     //console.log(this.questionStack);
   }
 
@@ -1369,13 +1368,23 @@ export class QuestionnaireComponent implements OnInit {
 
   //updating status once Q&A completed.
 
-  private updateAnswerBook = (uuid: string) =>
-    this.sfService.remoteAction(
-      "NxtController.process",
-      ["AnswerBook", "Update", uuid],
-      this.successupdateAB,
-      this.failureupdateAB
-    );
+  private updateAnswerBook = (uuid: string) => {
+    if(this.serv == "api") {
+      this.dataService.getAPIData(
+        this.tkn,
+        ["AnswerBook", "Update", uuid],
+        this.successupdateAB,
+        this.failureupdateAB
+      );
+    } else {
+      this.sfService.remoteAction(
+        "NxtController.process",
+        ["AnswerBook", "Update", uuid],
+        this.successupdateAB,
+        this.failureupdateAB
+      );
+    }
+  }
 
   private successupdateAB = (response) => {
     console.log(response);
@@ -1386,40 +1395,27 @@ export class QuestionnaireComponent implements OnInit {
     //console.log('status failed')
   };
 
-  private readQuestionBook = (uuid: string) =>
-    this.sfService.remoteAction(
-      "NxtController.process",
-      ["QuestionBook", "read", uuid],
-      this.successReadBook,
-      this.failureReadBook
-    );
- 
-    fetchData(): void {
-      this.dataService.getData().subscribe(
-        (data) => {
-         // console.log('data service data',data); // The response data from the server
-        },
-        (error) => {
-        //  console.error('An error occurred:', error);
-        }
+  private readQuestionBook = (uuid: string) => {
+    if(this.serv == "api") {
+      this.dataService.getAPIData(
+        this.tkn,
+        ["QuestionBook", "read", uuid],
+        this.successReadBook,
+        this.failureReadBook
+      );
+    } else {
+      this.sfService.remoteAction(
+        "NxtController.process",
+        ["QuestionBook", "read", uuid],
+        this.successReadBook,
+        this.failureReadBook
       );
     }
-
-    getQuestionBook(qbId: any, tkn: any) {
-      this.dataService.getQuestionBook(qbId, tkn).subscribe(
-        (data) => {
-          this.successReadBook(data);
-          console.log('questionbook data',data);
-        },
-        (error) => {
-          this.failureReadBook(error);
-        }
-      );
-    }
+  }
 
   private successReadBook = (response) => {
     console.log('Inside the successReadBook');
-    // console.log(response);
+    console.log(response);
     if(response != null || response != undefined){
       this.qbItem = response.questionbook;
       this.abItem = response.answerbook;
@@ -1430,8 +1426,7 @@ export class QuestionnaireComponent implements OnInit {
         this.abItem.Answers__r == null ||
         this.abItem.Answers__r.records.length == 0
       ) {
-       // this.readQuestion(this.qbItem.First_Question__c);
-        this.getQuestion(this.qbItem.First_Question__c)
+        this.readQuestion(this.qbItem.First_Question__c);
       } else {
         // Populate the existing answers
         var lastQuestionId = "";
@@ -1480,7 +1475,7 @@ export class QuestionnaireComponent implements OnInit {
         this.questionStack.pop();
         //console.log(this.answerMap);
         // Read the last answered question
-        this.getQuestion(lastQuestionId);
+        this.readQuestion(lastQuestionId);
       }
     } else if (this.abItem?.Status__c == "Completed") {
       this.handleEvent.emit("Summaryupdated");
@@ -1564,16 +1559,28 @@ export class QuestionnaireComponent implements OnInit {
   };
 
   private failureReadBook = (response) => {
+    console.log('Inside the failureReadBook');
     console.log(response);
   };
 
-  private readAnswerbook = (uuid: string) =>
-    this.sfService.remoteAction(
-      "NxtController.process",
-      ["AnswerBook", "read", uuid],
-      this.successAnswerBookRead,
-      this.failureAnswerBookRead
-    );
+  private readAnswerbook = (uuid: string) => {
+    if(this.serv = "api") {
+      this.dataService.getAPIData(
+        this.tkn,
+        ["AnswerBook", "read", uuid],
+        this.successAnswerBookRead,
+        this.failureAnswerBookRead
+      );
+    } else {
+      this.sfService.remoteAction(
+        "NxtController.process",
+        ["AnswerBook", "read", uuid],
+        this.successAnswerBookRead,
+        this.failureAnswerBookRead
+      );
+    }
+  }
+
 
   private successAnswerBookRead = (response) => {
     if (this.abItem?.Status__c == "Completed") {
@@ -1592,25 +1599,23 @@ export class QuestionnaireComponent implements OnInit {
     //console.log(response);
   };
 
-  private readQuestion = (uuid: string) =>
-    this.sfService.remoteAction(
-      "NxtController.process",
-      ["Question", "read", uuid],
-      this.successRead,
-      this.failureRead
-    );
-
-    getQuestion(questionId: any) {
-      this.dataService.getQuestion(questionId).subscribe(
-        (data) => {
-          this.successRead(data);
-          console.log('question data',data);
-        },
-        (error) => {
-          this.failureRead(error);
-        }
+  private readQuestion = (uuid: string) => {
+    if(this.serv == "api") {
+      this.dataService.getAPIData(
+        this.tkn,
+        ["Question", "read", uuid],
+        this.successRead,
+        this.failureRead
+      );
+    } else {
+      this.sfService.remoteAction(
+        "NxtController.process",
+        ["Question", "read", uuid],
+        this.successRead,
+        this.failureRead
       );
     }
+  }
 
   private successRead = (response) => {
     // console.log('Inside the successRead new');
@@ -1672,13 +1677,23 @@ export class QuestionnaireComponent implements OnInit {
     }
     this.answerWrap.ansNumber = this.questionStack.length + 1;
 
-    this.sfService.remoteAction(
-      "NxtController.process",
-      ["Answer", "create", JSON.stringify(this.answerWrap)],
-      this.successSave,
-      this.failureSave
-    );
+    if(this.serv == "api") {
+      this.dataService.getAPIData(
+        this.tkn,
+        ["Answer", "create", JSON.stringify(this.answerWrap)],
+        this.successSave,
+        this.failureSave
+      );
+    } else {
+      this.sfService.remoteAction(
+        "NxtController.process",
+        ["Answer", "create", JSON.stringify(this.answerWrap)],
+        this.successSave,
+        this.failureSave
+      );
+    }
   };
+
   htmlDecode(input) {
     var doc = new DOMParser().parseFromString(input, "text/html");
     return doc.documentElement.textContent;
@@ -2226,13 +2241,23 @@ export class QuestionnaireComponent implements OnInit {
     this.handleEvent.emit(this.qbItem.Cancel_Tracking_ID__c);
   }
 
-  private createAttachment = (fileWrapper: any) =>
-    this.sfService.remoteAction(
-      "NxtController.process",
-      ["Attachment", "create", JSON.stringify(fileWrapper)],
-      this.successAttachmentCreate,
-      this.failureAttachmentCreate
-    );
+  private createAttachment = (fileWrapper: any) => {
+    if(this.serv == "api") {
+      this.dataService.getAPIData(
+        this.tkn,
+        ["Attachment", "create", JSON.stringify(fileWrapper)],
+        this.successAttachmentCreate,
+        this.failureAttachmentCreate
+      );
+    } else {
+      this.sfService.remoteAction(
+        "NxtController.process",
+        ["Attachment", "create", JSON.stringify(fileWrapper)],
+        this.successAttachmentCreate,
+        this.failureAttachmentCreate
+      );
+    }
+  }
 
   deleteAttachment(attachmentId: string) {
     this.attachmentId = attachmentId;
@@ -2240,13 +2265,23 @@ export class QuestionnaireComponent implements OnInit {
     this.deleteSFAttachment(attachmentId);
   }
 
-  private deleteSFAttachment = (fileId: string) =>
-    this.sfService.remoteAction(
-      "NxtController.process",
-      ["Attachment", "delete", fileId],
-      this.successAttachmentDelete,
-      this.failureAttachmentDelete
-    );
+  private deleteSFAttachment = (fileId: string) => {
+    if(this.serv == "api") {
+      this.dataService.getAPIData(
+        this.tkn,
+        ["Attachment", "delete", fileId],
+        this.successAttachmentDelete,
+        this.failureAttachmentDelete
+      );
+    } else {
+      this.sfService.remoteAction(
+        "NxtController.process",
+        ["Attachment", "delete", fileId],
+        this.successAttachmentDelete,
+        this.failureAttachmentDelete
+      );
+    }
+  }
 
   getFileName(fileNamewithIdandType) {
     //truncate file path

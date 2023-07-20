@@ -11,7 +11,8 @@ export class AppComponent {
   title = 'Questionaire App';
   // for testing purpose use this qbId  - qbId = 'a0e8a00000GIcC0AAL';
   qbId = '';
-  tkn = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZW1haWwiOiJyYXNoaWRAZW1hYXIudGVzdCIsInZhbGlkX2Zyb20iOjE2ODI5NTU3NjgwMzgsInZhbGlkX3RpbGwiOjE2ODI5NTkzNjgwMzh9.wLVgW7hAFXGTlAiNtm0dquAgVl0APWIdfz-t20_ngpU';
+  serv = '';
+  tkn = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZW1haWwiOiJyYXNoaWRAZW1hYXIudGVzdCIsInZhbGlkX2Zyb20iOjE2ODQ5OTUyMTQwMDAsInZhbGlkX3RpbGwiOjE2ODQ5OTg4MTQwMDB9.aa5CzAcDiHLTnPlN0o8ui47NcDSnBEhjvEX9BBQXttU';
   constructor(private route: ActivatedRoute) {
 
   }
@@ -20,9 +21,13 @@ export class AppComponent {
     this.route.queryParams.subscribe((params: Params) => {
       //console.log('App params', params);
       if (params['id']) {
-       this.qbId = params['id'];
+        this.qbId = params['id'];
       }
       console.log('id', params['id']);
+
+      if (params['serv']) {
+        this.serv = params['serv'];
+      }
     });
     
   }
