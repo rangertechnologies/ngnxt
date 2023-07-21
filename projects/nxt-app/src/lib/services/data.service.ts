@@ -22,8 +22,9 @@ export class DataService {
       headers.append('Accept', 'application/json');
       headers.append('Access-Control-Allow-Origin', '*');
 
-      // Use Shengel Go Server IP/Domain
-      this.http.get('https://127.0.0.1:8000/nxt/api/process/?dataType=' + params[0] + '&operation=' + params[1] + '&param=' + params[2], { headers: headers , observe: 'response' })
+      // Use Shengel Go Server IP/Domain  https://dev-api.shengelgo.com
+
+      this.http.get('https://dev-api.shengelgo.com/nxt/api/process/?dataType=' + params[0] + '&operation=' + params[1] + '&param=' + params[2], { headers: headers , observe: 'response' })
         .subscribe(response => {
           if(response.status == 200) {
             resolve(response.body);
