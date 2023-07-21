@@ -10,8 +10,8 @@ import { ActivatedRoute, Params } from '@angular/router';
 export class AppComponent {
   title = 'Questionaire App';
   // for testing purpose use this qbId  - qbId = 'a0e8a00000GIcC0AAL';
-  qbId = '';
-  serv = '';
+  qbId = 'a0e8a00000GIcC0AAL';
+  serv = 'api';
   tkn = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZW1haWwiOiJyYXNoaWRAZW1hYXIudGVzdCIsInZhbGlkX2Zyb20iOjE2ODQ5OTUyMTQwMDAsInZhbGlkX3RpbGwiOjE2ODQ5OTg4MTQwMDB9.aa5CzAcDiHLTnPlN0o8ui47NcDSnBEhjvEX9BBQXttU';
   constructor(private route: ActivatedRoute) {
 
