@@ -200,7 +200,6 @@ export class QuestionnaireComponent implements OnInit {
     "02",
     "03",
     "04",
-    
     "05",
     "06",
     "07",
@@ -210,6 +209,7 @@ export class QuestionnaireComponent implements OnInit {
     "11",
     "12",
   ];
+
   public minutes: string[] = [
     "00",
     "01",
@@ -272,6 +272,7 @@ export class QuestionnaireComponent implements OnInit {
     "58",
     "59",
   ];
+
   public selectedHour: string = "";
   public selectedMinute: string = "";
   public selectedMeridiem: string = "";
@@ -285,259 +286,8 @@ export class QuestionnaireComponent implements OnInit {
   public nextValue:string ='';
 
   start_date?: any;
+
   //search component
-  public sampleAddress: any[] = [
-    {
-      townId: 1255360639,
-      countryId: 108,
-      provinceId: 32,
-      language: null,
-      country: "ESPAÑA",
-      province: "OURENSE",
-      town: "A ALBERGUERIA (LAZA)",
-      zipCode: "32622",
-    },
-    {
-      townId: 1429520775,
-      countryId: 108,
-      provinceId: 32,
-      language: null,
-      country: "ESPAÑA",
-      province: "OURENSE",
-      town: "A ALBERGUERIA (VILAR DE BARRIO)",
-      zipCode: "32705",
-    },
-    {
-      townId: 1366720421,
-      countryId: 108,
-      provinceId: 36,
-      language: null,
-      country: "ESPAÑA",
-      province: "PONTEVEDRA",
-      town: "A ALDEA (CEDEIRA)",
-      zipCode: "36812",
-    },
-    {
-      townId: 134118130,
-      countryId: 108,
-      provinceId: 27,
-      language: null,
-      country: "ESPAÑA",
-      province: "LUGO",
-      town: "A ALENCE (SANTA LUCIA)",
-      zipCode: "27677",
-    },
-    {
-      townId: 1061318571,
-      countryId: 108,
-      provinceId: 15,
-      language: null,
-      country: "ESPAÑA",
-      province: "A CORUÑA",
-      town: "A AMEIXENDA (CEE)",
-      zipCode: "15298",
-    },
-    {
-      townId: 933339845,
-      countryId: 108,
-      provinceId: 32,
-      language: null,
-      country: "ESPAÑA",
-      province: "OURENSE",
-      town: "A ASPRA",
-      zipCode: "32634",
-    },
-    {
-      townId: 1368030355,
-      countryId: 108,
-      provinceId: 15,
-      language: null,
-      country: "ESPAÑA",
-      province: "A CORUÑA",
-      town: "A ATALAIA (ASADOS)",
-      zipCode: "15984",
-    },
-    {
-      townId: 1972445078,
-      countryId: 108,
-      provinceId: 27,
-      language: null,
-      country: "ESPAÑA",
-      province: "LUGO",
-      town: "A BALSA (SANTA MARIA) (MURAS)",
-      zipCode: "27817",
-    },
-    {
-      townId: 2051563661,
-      countryId: 108,
-      provinceId: 32,
-      language: null,
-      country: "ESPAÑA",
-      province: "OURENSE",
-      town: "A BARCA DE BARBANTES",
-      zipCode: "32450",
-    },
-    {
-      townId: 1064234582,
-      countryId: 108,
-      provinceId: 15,
-      language: null,
-      country: "ESPAÑA",
-      province: "A CORUÑA",
-      town: "A BARCALA (CAMBRE)",
-      zipCode: "15660",
-    },
-    {
-      townId: 690098211,
-      countryId: 108,
-      provinceId: 36,
-      language: null,
-      country: "ESPAÑA",
-      province: "PONTEVEDRA",
-      town: "A BARCIA (MARCON)",
-      zipCode: "36158",
-    },
-    {
-      townId: 1699522641,
-      countryId: 108,
-      provinceId: 32,
-      language: null,
-      country: "ESPAÑA",
-      province: "OURENSE",
-      town: "A BARRA",
-      zipCode: "32152",
-    },
-    {
-      townId: 87846084,
-      countryId: 108,
-      provinceId: 27,
-      language: null,
-      country: "ESPAÑA",
-      province: "LUGO",
-      town: "A BASTIDA (SAN MIGUEL)",
-      zipCode: "27112",
-    },
-    {
-      townId: 1936403132,
-      countryId: 108,
-      provinceId: 32,
-      language: null,
-      country: "ESPAÑA",
-      province: "OURENSE",
-      town: "A BOGA",
-      zipCode: "32764",
-    },
-    {
-      townId: 1539222175,
-      countryId: 108,
-      provinceId: 32,
-      language: null,
-      country: "ESPAÑA",
-      province: "OURENSE",
-      town: "A BOLA (CAPITAL)",
-      zipCode: "32812",
-    },
-    {
-      townId: 1506169287,
-      countryId: 108,
-      provinceId: 32,
-      language: null,
-      country: "ESPAÑA",
-      province: "OURENSE",
-      town: "A BRANDELA",
-      zipCode: "32678",
-    },
-    {
-      townId: 387113846,
-      countryId: 108,
-      provinceId: 32,
-      language: null,
-      country: "ESPAÑA",
-      province: "OURENSE",
-      town: "A CAL (ALLARIZ)",
-      zipCode: "32669",
-    },
-    {
-      townId: 1056316633,
-      countryId: 108,
-      provinceId: 15,
-      language: null,
-      country: "ESPAÑA",
-      province: "A CORUÑA",
-      town: "A CAMUZA",
-      zipCode: "15113",
-    },
-    {
-      townId: 490413785,
-      countryId: 108,
-      provinceId: 32,
-      language: null,
-      country: "ESPAÑA",
-      province: "OURENSE",
-      town: "A CANLE",
-      zipCode: "32850",
-    },
-    {
-      townId: 1590159433,
-      countryId: 108,
-      provinceId: 15,
-      language: null,
-      country: "ESPAÑA",
-      province: "A CORUÑA",
-      town: "A CAPELA (SANTIAGO)",
-      zipCode: "15613",
-    },
-    {
-      townId: 1154101627,
-      countryId: 108,
-      provinceId: 36,
-      language: null,
-      country: "ESPAÑA",
-      province: "PONTEVEDRA",
-      town: "A CARBALLEIRA (LOURIZAN)",
-      zipCode: "36910",
-    },
-    {
-      townId: 1798804971,
-      countryId: 108,
-      provinceId: 32,
-      language: null,
-      country: "ESPAÑA",
-      province: "OURENSE",
-      town: "A CARBALLEIRA (NOGUEIRA DE RAMUIN)",
-      zipCode: "32448",
-    },
-    {
-      townId: 373795861,
-      countryId: 108,
-      provinceId: 32,
-      language: null,
-      country: "ESPAÑA",
-      province: "OURENSE",
-      town: "A CARBALLEIRA (SAN CIBRAO DAS VIÑAS)",
-      zipCode: "32901",
-    },
-    {
-      townId: 1813158371,
-      countryId: 108,
-      provinceId: 32,
-      language: null,
-      country: "ESPAÑA",
-      province: "OURENSE",
-      town: "A CARIDADE",
-      zipCode: "32618",
-    },
-    {
-      townId: 1950458200,
-      countryId: 108,
-      provinceId: 36,
-      language: null,
-      country: "ESPAÑA",
-      province: "PONTEVEDRA",
-      town: "A CARRASQUEIRA (BUEU)",
-      zipCode: "36939",
-    },
-  ];
   public tempoAddress: any[] = [];
   public selectedValue: string;
   public selectedPostalcode: string;
@@ -581,14 +331,14 @@ export class QuestionnaireComponent implements OnInit {
       //console.log('Inside the progressBar cond');
       this.inpValue =
         event.date.day + "/" + event.date.month + "/" + event.date.year;
-        if(this.questionItem.Type__c =="Book"){
+      if(this.questionItem.Type__c =="Book"){
         this.selectDate =  event.date.day + "/" + event.date.month + "/" + event.date.year;
-        }
+      }
     } else {
       //console.log('Inside the ELSE of progressBar cond');
       if(this.questionItem.Type__c =="Book"){
         this.selectDate =  event.date.day + "-" + event.date.month + "-" + event.date.year;
-        }
+      }
       this.inpValue =
         event.date.year + "-" + event.date.month + "-" + event.date.day;
     }
@@ -628,37 +378,35 @@ export class QuestionnaireComponent implements OnInit {
       this.allAddress.sort(function(a, b){
         return a.zipCode - b.zipCode
       });
+    } else if(this.deviceInfo.os === 'iOS'){
+        let openRequest = indexedDB.open("addressDB");
+        openRequest.onsuccess = (event) => {
+          const targetNew = event.target as IDBRequest;
+          let dbNew = targetNew.result;
+          const requestNew = dbNew.transaction('addressTable')
+                .objectStore('addressTable')
+                .get(1);
+          requestNew.onsuccess = ()=> {
+              const tempVar = requestNew.result;
+              this.localaddress = JSON.parse(tempVar.wholeAddressString);
+              this.allAddress=this.localaddress.filter((item, index) => {
+                if (this.localaddress.indexOf(item) == index){
+                  return item;
+                }
+              }); 
+              this.allAddress.sort(function(a, b){
+                return a.zipCode - b.zipCode
+              });
+        }
+      };
     }
-    else if(this.deviceInfo.os === 'iOS'){
-            let openRequest = indexedDB.open("addressDB");
-            openRequest.onsuccess = (event) => {
-              const targetNew = event.target as IDBRequest;
-              let dbNew = targetNew.result;
-              const requestNew = dbNew.transaction('addressTable')
-                   .objectStore('addressTable')
-                   .get(1);
-              requestNew.onsuccess = ()=> {
-                  const tempVar = requestNew.result;
-                  this.localaddress = JSON.parse(tempVar.wholeAddressString);
-                  this.allAddress=this.localaddress.filter((item, index) => {
-                    if (this.localaddress.indexOf(item) == index){
-                      return item;
-                    }
-                  }); 
-                  this.allAddress.sort(function(a, b){
-                    return a.zipCode - b.zipCode
-                  });
-
-              }
-            };
-      }
-   
   }
 
   ngOnChanges() {
     //console.log('inside Questionnaire ngOnChanges');
     this.processQB();
   }
+
   date_TimeMap() {
     this.selectedhourMap.set(this.questionItem.Id, this.selectedHour);
     this.selectedminuteMap.set(this.questionItem.Id, this.selectedMinute);
@@ -706,6 +454,7 @@ export class QuestionnaireComponent implements OnInit {
       },
     };
   }
+
   change() {
     const htmlElement = window.document.getElementsByClassName("mydp");
     if (this.selDate === null || this.inpValue.length === 0) {
@@ -1433,9 +1182,6 @@ export class QuestionnaireComponent implements OnInit {
 
         for (var ansObject of this.abItem.Answers__r.records) {
           lastQuestionId = ansObject.Question_Ref__c;
-           //console.log("Question: " + ansObject.Question_Rich_Text__c);
-           // //console.log("Answer: " + ansObject.Answer_Long__c);
-            //console.log("grouptext: " + ansObject.Question_Group_Text__c);
 
           this.questionStack.push(ansObject.Question_Ref__c);
 
@@ -1778,15 +1524,15 @@ export class QuestionnaireComponent implements OnInit {
       //console.log('Inise the expected bookFlag cond');
       //console.log('dtFlag = '+this.dtFlag);
       this.setSubQuestions(this.questionItem.Questions__r.records);
-    }else if (this.listFlag) {
+    } else if (this.listFlag) {
       // Set the LocalSubQuestions
       // console.log('inside list flag');
       // console.log(this.questionItem.Questions__r.records);
       // console.log(this.abItem.Questions__r.records);
       if(!this.localSubQMap.has(this.questionItem.Id)){
         this.setSubQuestions(this.questionItem.Questions__r.records);
-    } 
-  }else if (this.dtFlag) {
+      } 
+    } else if (this.dtFlag) {
       //console.log('Inise the unexpected dtFlag cond');
       this.selectedHour = "";
       this.selectedMinute = "";
@@ -1855,6 +1601,7 @@ export class QuestionnaireComponent implements OnInit {
         this.questionItem.Allowed_File_Extensions__c.split(";");
       //console.log(this.allowedFileExtension);
     }
+    
     if (this.qbItem.Progress_Bar__c === true) {
       this.updateProgress();
     }
@@ -2347,8 +2094,6 @@ export class QuestionnaireComponent implements OnInit {
     this.tempoAddress = [];
     if (this.selectedValue.length > 0) {
       for (var val of this.localaddress) {
-        //for (var val of this.sampleAddress) {
-          //console.log('this value1='+val)
         if (
           val.town.substring(0, this.selectedValue.length) == this.selectedValue
         ) {
@@ -2381,8 +2126,6 @@ export class QuestionnaireComponent implements OnInit {
       this.tempoAddress = [];
       if (this.selectedPostalcode.length > 0) {
         for (var val of this.allAddress) {
-          //for (var val of this.sampleAddress) {
-            //console.log('this value1='+val)
           if (val.zipCode.substring(0, this.selectedPostalcode.length) == this.selectedPostalcode) {
             //console.log(val.country)
             this.tempoAddress.push(val);
