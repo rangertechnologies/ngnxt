@@ -522,6 +522,32 @@ display: none;
   width: 59%;
   margin: auto;
 }
+.header-style {
+  padding: 15px !important;
+  background: #F8F8F8;
+  color: #898989 !important;
+  border: 1px solid #e8e8e8;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  margin-left: 0 !important;
+  justify-content: left !important;
+  font-size: 15px !important;
+}
+.form-group.content-box {
+  background: #ffffff;
+  padding: 40px;
+  border: 1px solid #e8e8e8;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+.shengel-myt-font3{
+  padding-bottom: 5px;
+  padding-top: 5px;
+  padding-right: 15px;
+  color: #9a9a9a !important;
+  font-size: 14px !important;
+  font-weight: 400 !important;
+}
 
 /*file upload start*/
 .file-upload-btn{

@@ -2293,7 +2293,7 @@ Add(question: LocalQuestion){
 
   displayDate(dateSelected: any,ques:any){
     // Parse the date string using moment and assign it to this.selectedDate
-    ques.input = dateSelected.value.format('YYYY-MM-DD HH:mm:ss');
+    ques.input = dateSelected.value;
   }
 
   getKey(item: any): any {
