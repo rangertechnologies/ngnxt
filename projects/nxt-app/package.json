@@ -1,6 +1,6 @@
 {
   "name": "nxt-app",
-  "version": "2.0.26",
+  "version": "2.0.27",
   "peerDependencies": {
     "@angular/common": "^14.2.3",
     "@angular/core": "^14.2.3"
