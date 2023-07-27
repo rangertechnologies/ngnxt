@@ -918,7 +918,7 @@ input[type="button"].btn-block{
 }
 
 /* / Hide the browser's default radio button / */
-.container input{
+.container-radio input{
   display: none;
   position: absolute;
   opacity: 0;
@@ -926,7 +926,7 @@ input[type="button"].btn-block{
 }
 
 /* / When the radio button is checked, add a blue background / */
-.container input:checked ~ .checkmark{
+.container-radio input:checked ~ .checkmark{
   background-color: #ffffff00;
 }
 
@@ -938,12 +938,12 @@ input[type="button"].btn-block{
 }
 
 /* / Show the indicator (dot/circle) when checked / */
-.container input:checked ~ .checkmark:after{
+.container-radio input:checked ~ .checkmark:after{
   display: block;
 }
 
 /* / Style the indicator (dot/circle) / */
-.container .checkmark:after{
+.container-radio .checkmark:after{
   top: 3px;
   left: 3px;
   width: 12px;
@@ -1969,6 +1969,15 @@ background-color: #dedddd;
 .summary-volver{
   display: none;
 }
+
+@media ((min-width: 1200px)){
+  .form-row {
+    display: flex;
+   -ms-flex-wrap: wrap;
+   flex-wrap: wrap;
+}
+}
+
 
 
 
