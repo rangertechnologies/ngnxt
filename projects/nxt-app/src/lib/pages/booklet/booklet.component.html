@@ -1,4 +1,4 @@
 <ngx-spinner [name]="spinnerName" [type]="spinnerType"></ngx-spinner>
-<div *ngFor="let qb of booklet.records">
+<div *ngFor="let qb of booklet">
     <questionnaire [serv]="serv" [qbId]=qb.Id [tkn]="tkn"></questionnaire>
 </div>

@@ -11,6 +11,7 @@ export class AppComponent {
   title = 'Questionaire App';
   // for testing purpose use this qbId  - qbId = 'a033t00000o5RC0AAM';
   qbId = '';
+  bookletId = '';
   serv = '';
   tkn = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZW1haWwiOiJyYXNoaWRAZW1hYXIudGVzdCIsInZhbGlkX2Zyb20iOjE2ODk4NDQzODYsInZhbGlkX3RpbGwiOjE2OTM0NDQzODZ9.MVdKw10WUnjiBkzUXSsAhDRdmpqgR6GzNMVDGp6rXMg';
   constructor(private route: ActivatedRoute) {
@@ -24,6 +25,11 @@ export class AppComponent {
         this.qbId = params['id'];
       }
       console.log('id', params['id']);
+
+      if (params['bookletId']) {
+        this.bookletId = params['bookletId'];
+      }
+      console.log('bookletId', params['bookletId']);
 
       if (params['serv']) {
         this.serv = params['serv'];

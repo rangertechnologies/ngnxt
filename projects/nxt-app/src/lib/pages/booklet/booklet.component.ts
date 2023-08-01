@@ -26,6 +26,8 @@ export class BookletComponent implements OnInit {
   @Output() handleEvent = new EventEmitter();
   @Output() handlePage: EventEmitter<any> = new EventEmitter();
 
+  public booklet: any[] = [];
+
   constructor(
     private sfService: SalesforceService,
     private dataService: DataService,
@@ -70,6 +72,11 @@ export class BookletComponent implements OnInit {
   }
 
   private successReadBooklet = (response) => {
+    console.log('Inside the successReadBooklet');
+    console.log(response);
+    if(response != null || response != undefined){
+        this.booklet = response.records;
+    }
 
   }
 
