@@ -1023,6 +1023,10 @@ background-color: #dedddd;
   margin:auto;
   width: 57%;
 }
+.questiondiv1.padd-bottom {
+  padding-bottom:6rem !important;
+  padding-top:2rem !important
+}
 /* Media screen starts*/
 
 @media (max-width: 1090px){

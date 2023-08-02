@@ -7,7 +7,7 @@
   </div>
 </div>
 
-<div *ngIf="questionItem" class="questiondiv1" style="padding-bottom:6rem !important;padding-top:2rem !important;">
+<div *ngIf="questionItem" [class]="qbItem.isShengel__c ? 'questiondiv1' : 'questiondiv1 padd-bottom'">
   <div *ngIf="questionItem.Title__c && qbItem.Progress_Bar__c">
         <h1 class="header1" > {{ questionItem?.Title__c }} </h1>
         <div class="header2">{{ questionItem?.SubTitle__c }}</div>
@@ -579,7 +579,7 @@
     </div>
   <!--List End-->
 
-  <div class="flexer">
+  <div *ngIf="individualBookButton" class="flexer">
     <div class="backbutton" [ngClass]="{ 'col-md-6': !qbItem.Progress_Bar__c }"
       [style.visibility]="questionStack.length > 0 ? 'visible' : 'hidden'">
       <div [ngClass]="{}">

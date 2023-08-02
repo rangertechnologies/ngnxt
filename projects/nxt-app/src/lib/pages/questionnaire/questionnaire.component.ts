@@ -308,6 +308,7 @@ export class QuestionnaireComponent implements OnInit {
   public addFlag: boolean = true;
 
   public myDatePickerOptions: IMyDpOptions = {};
+  individualBookButton: boolean;
 
   constructor(
     private sfService: SalesforceService,
@@ -361,6 +362,13 @@ export class QuestionnaireComponent implements OnInit {
 
   ngOnInit() {
     this.deviceInfo = this.deviceService.getDeviceInfo();
+    this.route.queryParams.subscribe((params: Params) => {
+      if (params['id']) {
+        this.individualBookButton = true;
+      }else if(params['bookletId']){
+        this.individualBookButton = false;
+      }
+    });
     console.log('Inside the ngOnInit');
     // console.log("RNXT-Claim");
     this.inpValue = "";
