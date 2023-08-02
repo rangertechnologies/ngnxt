@@ -130,7 +130,8 @@ import { BookletComponent } from './pages/booklet/booklet.component';
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   exports: [NxtAppComponent, 
-    QuestionnaireComponent
+    QuestionnaireComponent,
+    BookletComponent
   ]
   // providers: [
   //   { provide: OWL_MOMENT_DATE_TIME_ADAPTER_OPTIONS, useValue: { useUtc: false } },
