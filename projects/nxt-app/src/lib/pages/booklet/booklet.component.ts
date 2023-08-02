@@ -28,13 +28,19 @@ export class BookletComponent implements OnInit {
 
   public booklet: any[] = [];
 
+  public spinnerName: string;
+  public spinnerType:string;
+
   constructor(
     private sfService: SalesforceService,
     private dataService: DataService,
     private route: ActivatedRoute,
     private sanitizer: DomSanitizer,
     el: ElementRef
-  ) { }
+  ) { 
+    this.spinnerName = "sp1";
+    this.spinnerType = "ball-spin-clockwise";
+  }
 
   ngOnInit(): void {
     this.processBooklet();
