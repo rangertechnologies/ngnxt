@@ -15,7 +15,6 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
 import { MatNativeDateModule } from '@angular/material/core';
 //import { AgmCoreModule } from '@agm/core';
-import { GoogleMapsModule } from '@angular/google-maps';
 import { GOOGLE_MAP_API_KEY } from '../../projects/nxt-app/src/lib/sample';
 
 
@@ -35,8 +34,6 @@ import { GOOGLE_MAP_API_KEY } from '../../projects/nxt-app/src/lib/sample';
     MatInputModule,
     MatNativeDateModule,
     MatDatepickerModule,
-    MatSelectModule,
-    GoogleMapsModule,
   //  AgmCoreModule.forRoot({
    //   apiKey: GOOGLE_MAP_API_KEY,
    //   libraries: ['geometry', 'places', 'visualization', 'drawing']

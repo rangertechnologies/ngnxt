@@ -21,6 +21,7 @@ import { CustomDatePickerComponent } from './components/custom-date-picker/custo
 import { CustomDropdownComponent } from './components/custom-dropdown/custom-dropdown.component';
 import { HttpClientModule } from '@angular/common/http';
 import { BookletComponent } from './pages/booklet/booklet.component';
+import { GoogleMapsModule } from '@angular/google-maps';
 // export const MY_CUSTOM_FORMATS = {
 //   fullPickerInput: 'DD/MM/YYYY HH:mm:ss',
 //   useUtc: true,
@@ -45,6 +46,7 @@ import { BookletComponent } from './pages/booklet/booklet.component';
     OwlNativeDateTimeModule,
     HttpClientModule,
     NgSelectModule,
+    GoogleMapsModule,
     //AgmCoreModule.forRoot({
     //  apiKey: GOOGLE_MAP_API_KEY,
     //  libraries: ['geometry', 'places', 'visualization', 'drawing']
