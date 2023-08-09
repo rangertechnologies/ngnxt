@@ -21,6 +21,7 @@ import { CustomDatePickerComponent } from './components/custom-date-picker/custo
 import { CustomDropdownComponent } from './components/custom-dropdown/custom-dropdown.component';
 import { HttpClientModule } from '@angular/common/http';
 import { BookletComponent } from './pages/booklet/booklet.component';
+import { SearchBoxComponent } from './components/search-box/search-box.component';
 // export const MY_CUSTOM_FORMATS = {
 //   fullPickerInput: 'DD/MM/YYYY HH:mm:ss',
 //   useUtc: true,
@@ -36,7 +37,8 @@ import { BookletComponent } from './pages/booklet/booklet.component';
     CustomDatePickerComponent,
     DropdownWithFlagComponent,
     CustomDropdownComponent,
-    BookletComponent
+    BookletComponent,
+    SearchBoxComponent
   ],
   imports: [
     CommonModule, FormsModule,

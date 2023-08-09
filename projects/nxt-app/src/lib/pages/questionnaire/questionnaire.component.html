@@ -13,6 +13,10 @@
         <div class="header2">{{ questionItem?.SubTitle__c }}</div>
   </div>
 
+  <div>
+    <lib-search-box placeHolderText="type anything..."></lib-search-box>
+  </div>
+
   <div [ngClass]="{ questiondiv2: !qbItem?.Progress_Bar__c }">
     <div [ngClass]="{ bgColor: qbItem?.Progress_Bar__c }">
       <div id="progress" *ngIf="qbItem?.Progress_Bar__c">
@@ -106,7 +110,7 @@
       </option>
       <option value="." disabled hidden>Bitte treffen Sie eine Auswahl</option>
     </select>
-  </div>
+    </div>
   </div>
 
   <div *ngIf="radioFlag || dataFlag" class="">
