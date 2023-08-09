@@ -24,10 +24,10 @@ export class CustomDropdownComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.options = [];
     console.log('inside oninit of custom-dropdown of ' + this.id);
     // console.log(this.apiMeta);
     if(this.apiMeta !== undefined) {
+      this.options = [];
       let apiObj: APIMeta = JSON.parse(this.apiMeta);
 
       this.apiResponse(apiObj.endpoint).subscribe((apiResponse) => {
