@@ -518,6 +518,7 @@
               <!-- for common dropdown -->
               <app-custom-dropdown [fromShengel]="qbItem.isShengel__c"
                      [options]="ques.Question_Options__r.records"
+                     [apiMeta]="ques.Sub_Text__c"
                      [id]="ques.Name"
                      [selectedValue]="ques.input"
                      [placeholder]="'---Select---'"

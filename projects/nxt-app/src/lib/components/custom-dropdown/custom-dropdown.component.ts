@@ -1,5 +1,7 @@
 import { Component, OnInit,Input,Output,EventEmitter } from '@angular/core';
-
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { APIMeta } from '../../interfaces/apimeta';
 
 @Component({
   selector: 'app-custom-dropdown',
@@ -9,6 +11,7 @@ import { Component, OnInit,Input,Output,EventEmitter } from '@angular/core';
 export class CustomDropdownComponent implements OnInit {
   @Input() options: string[];
   @Input() placeholder: string;
+  @Input() apiMeta: string;
   @Input() selectedValue: string;
   @Input() progressBar: boolean;
   @Input() id:string;
@@ -17,9 +20,29 @@ export class CustomDropdownComponent implements OnInit {
   @Input() fromShengel: boolean = false;
   @Output() valueChange: EventEmitter<string> = new EventEmitter<string>();
 
-  constructor() { }
+  constructor(private http: HttpClient) { 
+  }
 
   ngOnInit(): void {
+    this.options = [];
+    console.log('inside oninit of custom-dropdown of ' + this.id);
+    // console.log(this.apiMeta);
+    let apiObj: APIMeta = JSON.parse(this.apiMeta);
+
+    this.apiResponse(apiObj.endpoint).subscribe((apiResponse) => {
+      let responses = apiResponse[apiObj.variable];
+      let results = [];
+      for (let i = 0; i < responses.length; i++) {
+        var resp = responses[i];
+        // console.log(resp);
+        results.push(resp[apiObj.field]);
+      }
+      this.options = results;
+    })
+  }
+
+  public apiResponse(endpoint: string): Observable<any> {
+    return this.http.get(endpoint);
   }
 
   selectChange(event:any){
