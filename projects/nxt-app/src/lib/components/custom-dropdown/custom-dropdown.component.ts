@@ -27,18 +27,20 @@ export class CustomDropdownComponent implements OnInit {
     this.options = [];
     console.log('inside oninit of custom-dropdown of ' + this.id);
     // console.log(this.apiMeta);
-    let apiObj: APIMeta = JSON.parse(this.apiMeta);
+    if(this.apiMeta !== undefined) {
+      let apiObj: APIMeta = JSON.parse(this.apiMeta);
 
-    this.apiResponse(apiObj.endpoint).subscribe((apiResponse) => {
-      let responses = apiResponse[apiObj.variable];
-      let results = [];
-      for (let i = 0; i < responses.length; i++) {
-        var resp = responses[i];
-        // console.log(resp);
-        results.push(resp[apiObj.field]);
-      }
-      this.options = results;
-    })
+      this.apiResponse(apiObj.endpoint).subscribe((apiResponse) => {
+        let responses = apiResponse[apiObj.variable];
+        let results = [];
+        for (let i = 0; i < responses.length; i++) {
+          var resp = responses[i];
+          // console.log(resp);
+          results.push(resp[apiObj.field]);
+        }
+        this.options = results;
+      })
+    }
   }
 
   public apiResponse(endpoint: string): Observable<any> {
