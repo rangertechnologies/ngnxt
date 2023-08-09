@@ -14,7 +14,7 @@
         style="max-height: 100vh;border: 1px solid #d2d4d6;overflow: scroll;" 
         class="suggestions-container">
         <div *ngFor="let item of finalResults" (click)='clickItem(item)' class="hoover">
-            <div class="grid-x align-middle" style="padding: 1rem" *ngIf="item.uuid != null">
+            <div class="grid-x align-middle" style="padding: 1rem" *ngIf="item.id != null">
                 <div class="cell shrink" style="width: 60px; margin-right: 1.6rem;">
                     <img [src]="item.thumbnail" style="width: 60px;" alt="">
                 </div>

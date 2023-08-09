@@ -16,6 +16,7 @@ import { ActivatedRoute, Params } from "@angular/router";
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { ItemsList } from "@ng-select/ng-select/lib/items-list";
+import { ConsoleService } from "@ng-select/ng-select/lib/console.service";
 
 @Component({
   selector: 'lib-search-box',
@@ -51,11 +52,11 @@ export class SearchBoxComponent implements OnInit {
   clearList(){
     setTimeout(()=> {
       this.finalResults = [];
-    }, 500);
+    }, 1000);
   }
 
   getSourceDataLocal(event) { //to get results list from backend API whenever key is up after the entering atleast one key
-    if(event.target.value.length > 0){
+    if(event.target.value.length > 2){
       this.showSuggestion=true;
       this.finalResults=[];
       this.searchKeyWord = event.target.value;
@@ -75,8 +76,11 @@ export class SearchBoxComponent implements OnInit {
   public getSourceData = (keyword: string) => {
     this.apiResponse('ok').subscribe((apiResponse) => {
       let results=[];
-      for(Object responseItem: apiResponse.products) {
-        console.log(responseItem);
+      for (let i = 0; i < apiResponse.products.length; i++) {
+        if(apiResponse.products[i].title.indexOf(keyword) >= 0) {
+          console.log('pushing ' + apiResponse.products[i].title);
+          results.push(apiResponse.products[i]);
+        }
       }
       this.noResult = !(results.length > 1);
       this.finalResults = results;
