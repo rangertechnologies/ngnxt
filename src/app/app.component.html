@@ -11,7 +11,9 @@
     </header>
   </div>
   <p class="slds-p-horizontal_small">
-    <lib-questionnaire [qbId]="qbId"></lib-questionnaire>
+    <lib-questionnaire [serv]="serv" [qbId]="qbId" [tkn]="tkn"></lib-questionnaire>
+
+    <lib-booklet [serv]="serv" [bookletId]="bookletId" [tkn]="tkn"></lib-booklet>
   </p>
 </article>
 

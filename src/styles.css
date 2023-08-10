@@ -326,7 +326,7 @@
   }
   
   .paddingnone{
-    padding-top: 0% ;
+    /* padding-top: 0% ; */
     padding-bottom: 0% ;
   }
   
@@ -871,7 +871,7 @@
   }
   
   /* / Hide the browser's default radio button / */
-  .container input{
+  .container-radio input{
     display: none;
     position: absolute;
     opacity: 0;
@@ -879,7 +879,7 @@
   }
   
   /* / When the radio button is checked, add a blue background / */
-  .container input:checked ~ .checkmark{
+  .container-radio input:checked ~ .checkmark{
     background-color: #ffffff00;
   }
   
@@ -891,12 +891,12 @@
   }
   
   /* / Show the indicator (dot/circle) when checked / */
-  .container input:checked ~ .checkmark:after{
+  .container-radio input:checked ~ .checkmark:after{
     display: block;
   }
   
   /* / Style the indicator (dot/circle) / */
-  .container .checkmark:after{
+  .container-radio .checkmark:after{
     top: 3px;
     left: 3px;
     width: 12px;
@@ -1001,10 +1001,6 @@ select{
   border-bottom:1px solid #eee!important;
 }
 
-
-.myt-font7{
-  padding-left: 2px !important;
-}
 .questiondiv2{
   padding-left: 0 !important;
   padding-bottom: 0 !important;
@@ -1029,10 +1025,11 @@ select{
   justify-content: left !important;
   font-size: 15px !important;
 }
-.myt-font3{
+.shengel-myt-font3{
   padding-bottom: 5px;
   padding-top: 5px;
   padding-right: 15px;
+  padding-left: 2px !important;
   color: #9a9a9a !important;
   font-size: 14px !important;
   font-weight: 400 !important;

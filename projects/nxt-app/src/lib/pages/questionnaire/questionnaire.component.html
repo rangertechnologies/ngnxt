@@ -7,10 +7,14 @@
   </div>
 </div>
 
-<div *ngIf="questionItem" class="questiondiv1" style="padding-bottom:6rem !important;padding-top:2rem !important;">
+<div *ngIf="questionItem" [class]="qbItem.isShengel__c ? 'questiondiv1' : 'questiondiv1 padd-bottom'">
   <div *ngIf="questionItem.Title__c && qbItem.Progress_Bar__c">
         <h1 class="header1" > {{ questionItem?.Title__c }} </h1>
         <div class="header2">{{ questionItem?.SubTitle__c }}</div>
+  </div>
+
+  <div>
+    <lib-search-box placeHolderText="type anything..."></lib-search-box>
   </div>
 
   <div [ngClass]="{ questiondiv2: !qbItem?.Progress_Bar__c }">
@@ -106,7 +110,7 @@
       </option>
       <option value="." disabled hidden>Bitte treffen Sie eine Auswahl</option>
     </select>
-  </div>
+    </div>
   </div>
 
   <div *ngIf="radioFlag || dataFlag" class="">
@@ -353,10 +357,10 @@
       <div class="form-row">
         <div class="col-md-12" *ngIf="questionItem.error" style="font-size: 18px;
             color: red;">{{questionItem?.error?.errorMsg}}</div>
-        <div class="myt-align3" [class]="'col-md-' + ques.Size__c + ' paddingnone'"
+        <div [class]="qbItem.isShengel__c ? '' : 'myt-align3'" [class]="qbItem.isShengel__c ? 'col-lg-' + ques.Size__c + ' paddingnone' : 'col-md-' + ques.Size__c + ' paddingnone'"
           *ngFor="let ques of subQuestions;let i = index">
           <div [ngClass]="{ down2: qbItem?.Progress_Bar__c }">
-            <span class="dis-flex myt-font3 myt-font7">{{ ques?.Question__c }}</span>
+            <span [class]="qbItem.isShengel__c ? 'dis-flex shengel-myt-font3 myt-font7'  : 'dis-flex myt-font3 myt-font7' ">{{ ques?.Question__c }}</span>
           </div>
           <div class="col-md-12 paddingZero myt-dateTimeNew" *ngIf="ques.Type__c === 'Time' || ques.Type__c === 'Date'">
             <!--<div class="col-md-12" *ngIf="questionItem.error" style="font-size: 18px;
@@ -511,31 +515,17 @@
           </div>
 
           <div *ngIf="ques.Type__c === 'Dropdown'" class="">
-              <!-- for common dropdown -->
-              <app-custom-dropdown [fromShengel]="qbItem.isShengel__c"
-                     [options]="ques.Question_Options__r.records"
-                     [id]="ques.Name"
-                     [selectedValue]="ques.input"
-                     [placeholder]="'---Select---'"
-                     [errorMessage]="ques.Error_Message__c"
-                     [error]="ques.error"
-                     (valueChange)="Dropdown($event, ques); clearSQError(ques.Id)">
-              </app-custom-dropdown>
-            <!-- old dropdown code-->
-            <!-- <select [ngClass]="{
-                'dt-line dpDown down myt-dropbox myt-border-r myt-font1': qbItem.Progress_Bar__c,
-                'custom-select': !qbItem.Progress_Bar__c
-              }" class="custom-select mr-sm-2 dd-height" id="dropdown" [(ngModel)]="ques.input"
-              (change)="Dropdown($event); clearSQError(ques.Id)"
-              style.border-color=" {{ ques.error ? 'red ' : '#858585' }}" style.color="{{ ques.error ? 'red' : '' }}">
-              <option *ngFor="let opt of ques.Question_Options__r.records" class="option" value="{{ opt.Value__c }}">
-                {{ opt.Value__c }}
-              </option>
-              <option *ngIf="ques.Error_Message__c" value="" disabled hidden>
-                {{ ques.Error_Message__c }}
-              </option>
-            </select> -->
-            <!-- dependent dropdown with flag -->
+            <!-- for common dropdown -->
+            <app-custom-dropdown [fromShengel]="qbItem.isShengel__c"
+                    [options]="ques.Question_Options__r.records"
+                    [apiMeta]="ques.Sub_Text__c"
+                    [id]="ques.Name"
+                    [selectedValue]="ques.input"
+                    [placeholder]="'---Select---'"
+                    [errorMessage]="ques.Error_Message__c"
+                    [error]="ques.error"
+                    (valueChange)="Dropdown($event, ques); clearSQError(ques.Id)">
+            </app-custom-dropdown>
             <app-dropdown-with-flag *ngIf="ques.isDependentPicklist && !ques.dropDownOnly"  [certified]="ques.certifiedFlag"  [JobPerformerCertificates]="ques.certificateList" (flagDropDownChange)="dependentChange($event)"></app-dropdown-with-flag>
             <i class="fa fa-check " aria-hidden="true" *ngIf="questionItem?.input?.length > 0"></i>
           </div>          
@@ -579,7 +569,7 @@
     </div>
   <!--List End-->
 
-  <div class="flexer">
+  <div *ngIf="individualBookButton" class="flexer">
     <div class="backbutton" [ngClass]="{ 'col-md-6': !qbItem.Progress_Bar__c }"
       [style.visibility]="questionStack.length > 0 ? 'visible' : 'hidden'">
       <div [ngClass]="{}">

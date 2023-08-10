@@ -17,11 +17,8 @@ import { UntypedFormBuilder } from "@angular/forms";
 import { NgxSpinnerService } from "ngx-spinner";
 //import { NgxIndexedDBService, IndexDetails} from 'ngx-indexed-db';
 import { DeviceDetectorService } from 'ngx-device-detector';
-import * as moment from 'moment';
+import * as moment from 'moment'; 
 import { DataService } from '../../services/data.service';
-
-
-
 
 import {
   Question,
@@ -57,6 +54,8 @@ import { from } from "rxjs";
 export class QuestionnaireComponent implements OnInit {
   @Input() qbId: string;
   @Input() insuranceStartDate: string;
+  @Input() serv: string;
+  @Input() tkn: string;
   @Output() handleEvent = new EventEmitter();
   @Output() handlePage: EventEmitter<any> = new EventEmitter();
 
@@ -201,7 +200,6 @@ export class QuestionnaireComponent implements OnInit {
     "02",
     "03",
     "04",
-    
     "05",
     "06",
     "07",
@@ -211,6 +209,7 @@ export class QuestionnaireComponent implements OnInit {
     "11",
     "12",
   ];
+
   public minutes: string[] = [
     "00",
     "01",
@@ -273,6 +272,7 @@ export class QuestionnaireComponent implements OnInit {
     "58",
     "59",
   ];
+
   public selectedHour: string = "";
   public selectedMinute: string = "";
   public selectedMeridiem: string = "";
@@ -286,259 +286,8 @@ export class QuestionnaireComponent implements OnInit {
   public nextValue:string ='';
 
   start_date?: any;
+
   //search component
-  public sampleAddress: any[] = [
-    {
-      townId: 1255360639,
-      countryId: 108,
-      provinceId: 32,
-      language: null,
-      country: "ESPAÑA",
-      province: "OURENSE",
-      town: "A ALBERGUERIA (LAZA)",
-      zipCode: "32622",
-    },
-    {
-      townId: 1429520775,
-      countryId: 108,
-      provinceId: 32,
-      language: null,
-      country: "ESPAÑA",
-      province: "OURENSE",
-      town: "A ALBERGUERIA (VILAR DE BARRIO)",
-      zipCode: "32705",
-    },
-    {
-      townId: 1366720421,
-      countryId: 108,
-      provinceId: 36,
-      language: null,
-      country: "ESPAÑA",
-      province: "PONTEVEDRA",
-      town: "A ALDEA (CEDEIRA)",
-      zipCode: "36812",
-    },
-    {
-      townId: 134118130,
-      countryId: 108,
-      provinceId: 27,
-      language: null,
-      country: "ESPAÑA",
-      province: "LUGO",
-      town: "A ALENCE (SANTA LUCIA)",
-      zipCode: "27677",
-    },
-    {
-      townId: 1061318571,
-      countryId: 108,
-      provinceId: 15,
-      language: null,
-      country: "ESPAÑA",
-      province: "A CORUÑA",
-      town: "A AMEIXENDA (CEE)",
-      zipCode: "15298",
-    },
-    {
-      townId: 933339845,
-      countryId: 108,
-      provinceId: 32,
-      language: null,
-      country: "ESPAÑA",
-      province: "OURENSE",
-      town: "A ASPRA",
-      zipCode: "32634",
-    },
-    {
-      townId: 1368030355,
-      countryId: 108,
-      provinceId: 15,
-      language: null,
-      country: "ESPAÑA",
-      province: "A CORUÑA",
-      town: "A ATALAIA (ASADOS)",
-      zipCode: "15984",
-    },
-    {
-      townId: 1972445078,
-      countryId: 108,
-      provinceId: 27,
-      language: null,
-      country: "ESPAÑA",
-      province: "LUGO",
-      town: "A BALSA (SANTA MARIA) (MURAS)",
-      zipCode: "27817",
-    },
-    {
-      townId: 2051563661,
-      countryId: 108,
-      provinceId: 32,
-      language: null,
-      country: "ESPAÑA",
-      province: "OURENSE",
-      town: "A BARCA DE BARBANTES",
-      zipCode: "32450",
-    },
-    {
-      townId: 1064234582,
-      countryId: 108,
-      provinceId: 15,
-      language: null,
-      country: "ESPAÑA",
-      province: "A CORUÑA",
-      town: "A BARCALA (CAMBRE)",
-      zipCode: "15660",
-    },
-    {
-      townId: 690098211,
-      countryId: 108,
-      provinceId: 36,
-      language: null,
-      country: "ESPAÑA",
-      province: "PONTEVEDRA",
-      town: "A BARCIA (MARCON)",
-      zipCode: "36158",
-    },
-    {
-      townId: 1699522641,
-      countryId: 108,
-      provinceId: 32,
-      language: null,
-      country: "ESPAÑA",
-      province: "OURENSE",
-      town: "A BARRA",
-      zipCode: "32152",
-    },
-    {
-      townId: 87846084,
-      countryId: 108,
-      provinceId: 27,
-      language: null,
-      country: "ESPAÑA",
-      province: "LUGO",
-      town: "A BASTIDA (SAN MIGUEL)",
-      zipCode: "27112",
-    },
-    {
-      townId: 1936403132,
-      countryId: 108,
-      provinceId: 32,
-      language: null,
-      country: "ESPAÑA",
-      province: "OURENSE",
-      town: "A BOGA",
-      zipCode: "32764",
-    },
-    {
-      townId: 1539222175,
-      countryId: 108,
-      provinceId: 32,
-      language: null,
-      country: "ESPAÑA",
-      province: "OURENSE",
-      town: "A BOLA (CAPITAL)",
-      zipCode: "32812",
-    },
-    {
-      townId: 1506169287,
-      countryId: 108,
-      provinceId: 32,
-      language: null,
-      country: "ESPAÑA",
-      province: "OURENSE",
-      town: "A BRANDELA",
-      zipCode: "32678",
-    },
-    {
-      townId: 387113846,
-      countryId: 108,
-      provinceId: 32,
-      language: null,
-      country: "ESPAÑA",
-      province: "OURENSE",
-      town: "A CAL (ALLARIZ)",
-      zipCode: "32669",
-    },
-    {
-      townId: 1056316633,
-      countryId: 108,
-      provinceId: 15,
-      language: null,
-      country: "ESPAÑA",
-      province: "A CORUÑA",
-      town: "A CAMUZA",
-      zipCode: "15113",
-    },
-    {
-      townId: 490413785,
-      countryId: 108,
-      provinceId: 32,
-      language: null,
-      country: "ESPAÑA",
-      province: "OURENSE",
-      town: "A CANLE",
-      zipCode: "32850",
-    },
-    {
-      townId: 1590159433,
-      countryId: 108,
-      provinceId: 15,
-      language: null,
-      country: "ESPAÑA",
-      province: "A CORUÑA",
-      town: "A CAPELA (SANTIAGO)",
-      zipCode: "15613",
-    },
-    {
-      townId: 1154101627,
-      countryId: 108,
-      provinceId: 36,
-      language: null,
-      country: "ESPAÑA",
-      province: "PONTEVEDRA",
-      town: "A CARBALLEIRA (LOURIZAN)",
-      zipCode: "36910",
-    },
-    {
-      townId: 1798804971,
-      countryId: 108,
-      provinceId: 32,
-      language: null,
-      country: "ESPAÑA",
-      province: "OURENSE",
-      town: "A CARBALLEIRA (NOGUEIRA DE RAMUIN)",
-      zipCode: "32448",
-    },
-    {
-      townId: 373795861,
-      countryId: 108,
-      provinceId: 32,
-      language: null,
-      country: "ESPAÑA",
-      province: "OURENSE",
-      town: "A CARBALLEIRA (SAN CIBRAO DAS VIÑAS)",
-      zipCode: "32901",
-    },
-    {
-      townId: 1813158371,
-      countryId: 108,
-      provinceId: 32,
-      language: null,
-      country: "ESPAÑA",
-      province: "OURENSE",
-      town: "A CARIDADE",
-      zipCode: "32618",
-    },
-    {
-      townId: 1950458200,
-      countryId: 108,
-      provinceId: 36,
-      language: null,
-      country: "ESPAÑA",
-      province: "PONTEVEDRA",
-      town: "A CARRASQUEIRA (BUEU)",
-      zipCode: "36939",
-    },
-  ];
   public tempoAddress: any[] = [];
   public selectedValue: string;
   public selectedPostalcode: string;
@@ -559,6 +308,7 @@ export class QuestionnaireComponent implements OnInit {
   public addFlag: boolean = true;
 
   public myDatePickerOptions: IMyDpOptions = {};
+  individualBookButton: boolean;
 
   constructor(
     private sfService: SalesforceService,
@@ -582,14 +332,14 @@ export class QuestionnaireComponent implements OnInit {
       //console.log('Inside the progressBar cond');
       this.inpValue =
         event.date.day + "/" + event.date.month + "/" + event.date.year;
-        if(this.questionItem.Type__c =="Book"){
+      if(this.questionItem.Type__c =="Book"){
         this.selectDate =  event.date.day + "/" + event.date.month + "/" + event.date.year;
-        }
+      }
     } else {
       //console.log('Inside the ELSE of progressBar cond');
       if(this.questionItem.Type__c =="Book"){
         this.selectDate =  event.date.day + "-" + event.date.month + "-" + event.date.year;
-        }
+      }
       this.inpValue =
         event.date.year + "-" + event.date.month + "-" + event.date.day;
     }
@@ -612,6 +362,13 @@ export class QuestionnaireComponent implements OnInit {
 
   ngOnInit() {
     this.deviceInfo = this.deviceService.getDeviceInfo();
+    this.route.queryParams.subscribe((params: Params) => {
+      if (params['id']) {
+        this.individualBookButton = true;
+      }else if(params['bookletId']){
+        this.individualBookButton = false;
+      }
+    });
     console.log('Inside the ngOnInit');
     // console.log("RNXT-Claim");
     this.inpValue = "";
@@ -629,37 +386,35 @@ export class QuestionnaireComponent implements OnInit {
       this.allAddress.sort(function(a, b){
         return a.zipCode - b.zipCode
       });
+    } else if(this.deviceInfo.os === 'iOS'){
+        let openRequest = indexedDB.open("addressDB");
+        openRequest.onsuccess = (event) => {
+          const targetNew = event.target as IDBRequest;
+          let dbNew = targetNew.result;
+          const requestNew = dbNew.transaction('addressTable')
+                .objectStore('addressTable')
+                .get(1);
+          requestNew.onsuccess = ()=> {
+              const tempVar = requestNew.result;
+              this.localaddress = JSON.parse(tempVar.wholeAddressString);
+              this.allAddress=this.localaddress.filter((item, index) => {
+                if (this.localaddress.indexOf(item) == index){
+                  return item;
+                }
+              }); 
+              this.allAddress.sort(function(a, b){
+                return a.zipCode - b.zipCode
+              });
+        }
+      };
     }
-    else if(this.deviceInfo.os === 'iOS'){
-            let openRequest = indexedDB.open("addressDB");
-            openRequest.onsuccess = (event) => {
-              const targetNew = event.target as IDBRequest;
-              let dbNew = targetNew.result;
-              const requestNew = dbNew.transaction('addressTable')
-                   .objectStore('addressTable')
-                   .get(1);
-              requestNew.onsuccess = ()=> {
-                  const tempVar = requestNew.result;
-                  this.localaddress = JSON.parse(tempVar.wholeAddressString);
-                  this.allAddress=this.localaddress.filter((item, index) => {
-                    if (this.localaddress.indexOf(item) == index){
-                      return item;
-                    }
-                  }); 
-                  this.allAddress.sort(function(a, b){
-                    return a.zipCode - b.zipCode
-                  });
-
-              }
-            };
-      }
-   
   }
 
   ngOnChanges() {
     //console.log('inside Questionnaire ngOnChanges');
     this.processQB();
   }
+
   date_TimeMap() {
     this.selectedhourMap.set(this.questionItem.Id, this.selectedHour);
     this.selectedminuteMap.set(this.questionItem.Id, this.selectedMinute);
@@ -707,6 +462,7 @@ export class QuestionnaireComponent implements OnInit {
       },
     };
   }
+
   change() {
     const htmlElement = window.document.getElementsByClassName("mydp");
     if (this.selDate === null || this.inpValue.length === 0) {
@@ -723,13 +479,11 @@ export class QuestionnaireComponent implements OnInit {
   processQB() {
     //console.log('ProcessQB');
     //this.qbItem
-
     //console.log(this.qbId);
     //console.log('Version in process is 8bf11efa7f91a391d957bf6b5078edc7e656b67c');
     if (this.qbId) {
       if (this.qbId.length == 18) {
         this.readQuestionBook(this.qbId);
-        this.fetchData();
       } else {
         //console.log('Inside the else part');
         //console.log('Setting the Question Directly for testing');
@@ -930,10 +684,10 @@ export class QuestionnaireComponent implements OnInit {
         //console.log('testin values=='+item.input)
         } 
         
-        if(item.Type__c === 'Location' && item.input != undefined){
-            const inputValues = "answerString: " + item.input ;
-             item.input = inputValues;
-        }
+        // if(item.Type__c === 'Location' && Array.isArray(item.input) && item.input.every((input) => input !== undefined)){
+        //     const inputValues = "answerString: " + item.input ;
+        //     item.input = inputValues;
+        // }
         if(item.Type__c== "Text" && item.Question__c === 'Código postal'){
           for(var loc of this.localaddress){
             if(loc.zipCode == this.selectedPostalcode){
@@ -1298,10 +1052,10 @@ export class QuestionnaireComponent implements OnInit {
             var newStr = '';
             for (var ansStr of ansWrap.ansValue.split('@@##$$')) {
               for (var ansStr1 of ansStr.split('$$@@##')) {
-                if(ansStr1.includes('answerString')){ //remove the answer string  
-                  const withoutAnswerString = ansStr1.replace("answerString: ", "");
-                  ansStr1 = withoutAnswerString;
-                }
+              //  if(ansStr1.includes('answerString')){ //remove the answer string  
+               //   const withoutAnswerString = ansStr1.replace("answerString: ", "");
+                //  ansStr1 = withoutAnswerString;
+              //  }
                 if (ansStr1.length > 0) {
                   if (newStr.length == 0) {
                     newStr = ansStr1;
@@ -1371,13 +1125,23 @@ export class QuestionnaireComponent implements OnInit {
 
   //updating status once Q&A completed.
 
-  private updateAnswerBook = (uuid: string) =>
-    this.sfService.remoteAction(
-      "NxtController.process",
-      ["AnswerBook", "Update", uuid],
-      this.successupdateAB,
-      this.failureupdateAB
-    );
+  private updateAnswerBook = (uuid: string) => {
+    if(this.serv == "api") {
+      this.dataService.getAPIData(
+        this.tkn,
+        ["AnswerBook", "Update", uuid],
+        this.successupdateAB,
+        this.failureupdateAB
+      );
+    } else {
+      this.sfService.remoteAction(
+        "NxtController.process",
+        ["AnswerBook", "Update", uuid],
+        this.successupdateAB,
+        this.failureupdateAB
+      );
+    }
+  }
 
   private successupdateAB = (response) => {
     console.log(response);
@@ -1388,33 +1152,32 @@ export class QuestionnaireComponent implements OnInit {
     //console.log('status failed')
   };
 
-  private readQuestionBook = (uuid: string) =>
-    this.sfService.remoteAction(
-      "NxtController.process",
-      ["QuestionBook", "read", uuid],
-      this.successReadBook,
-      this.failureReadBook
-    );
- 
-    fetchData(): void {
-      this.dataService.getData().subscribe(
-        (data) => {
-          console.log('data service data',data); // The response data from the server
-        },
-        (error) => {
-          console.error('An error occurred:', error);
-        }
+  private readQuestionBook = (uuid: string) => {
+    if(this.serv == "api") {
+      this.dataService.getAPIData(
+        this.tkn,
+        ["QuestionBook", "read", uuid],
+        this.successReadBook,
+        this.failureReadBook
+      );
+    } else {
+      this.sfService.remoteAction(
+        "NxtController.process",
+        ["QuestionBook", "read", uuid],
+        this.successReadBook,
+        this.failureReadBook
       );
     }
+  }
 
   private successReadBook = (response) => {
     console.log('Inside the successReadBook');
-    // console.log(response);
+    console.log(response);
     if(response != null || response != undefined){
       this.qbItem = response.questionbook;
       this.abItem = response.answerbook;
     }
-    console.log('readingQuestion using ' + this.qbItem);
+   // console.log('readingQuestion using ' + this.qbItem);
     if (this.abItem?.Status__c == "Pending") {
       if (
         this.abItem.Answers__r == null ||
@@ -1427,9 +1190,6 @@ export class QuestionnaireComponent implements OnInit {
 
         for (var ansObject of this.abItem.Answers__r.records) {
           lastQuestionId = ansObject.Question_Ref__c;
-           //console.log("Question: " + ansObject.Question_Rich_Text__c);
-           // //console.log("Answer: " + ansObject.Answer_Long__c);
-            //console.log("grouptext: " + ansObject.Question_Group_Text__c);
 
           this.questionStack.push(ansObject.Question_Ref__c);
 
@@ -1553,16 +1313,28 @@ export class QuestionnaireComponent implements OnInit {
   };
 
   private failureReadBook = (response) => {
+    console.log('Inside the failureReadBook');
     console.log(response);
   };
 
-  private readAnswerbook = (uuid: string) =>
-    this.sfService.remoteAction(
-      "NxtController.process",
-      ["AnswerBook", "read", uuid],
-      this.successAnswerBookRead,
-      this.failureAnswerBookRead
-    );
+  private readAnswerbook = (uuid: string) => {
+    if(this.serv = "api") {
+      this.dataService.getAPIData(
+        this.tkn,
+        ["AnswerBook", "read", uuid],
+        this.successAnswerBookRead,
+        this.failureAnswerBookRead
+      );
+    } else {
+      this.sfService.remoteAction(
+        "NxtController.process",
+        ["AnswerBook", "read", uuid],
+        this.successAnswerBookRead,
+        this.failureAnswerBookRead
+      );
+    }
+  }
+
 
   private successAnswerBookRead = (response) => {
     if (this.abItem?.Status__c == "Completed") {
@@ -1581,13 +1353,23 @@ export class QuestionnaireComponent implements OnInit {
     //console.log(response);
   };
 
-  private readQuestion = (uuid: string) =>
-    this.sfService.remoteAction(
-      "NxtController.process",
-      ["Question", "read", uuid],
-      this.successRead,
-      this.failureRead
-    );
+  private readQuestion = (uuid: string) => {
+    if(this.serv == "api") {
+      this.dataService.getAPIData(
+        this.tkn,
+        ["Question", "read", uuid],
+        this.successRead,
+        this.failureRead
+      );
+    } else {
+      this.sfService.remoteAction(
+        "NxtController.process",
+        ["Question", "read", uuid],
+        this.successRead,
+        this.failureRead
+      );
+    }
+  }
 
   private successRead = (response) => {
     // console.log('Inside the successRead new');
@@ -1649,13 +1431,23 @@ export class QuestionnaireComponent implements OnInit {
     }
     this.answerWrap.ansNumber = this.questionStack.length + 1;
 
-    this.sfService.remoteAction(
-      "NxtController.process",
-      ["Answer", "create", JSON.stringify(this.answerWrap)],
-      this.successSave,
-      this.failureSave
-    );
+    if(this.serv == "api") {
+      this.dataService.getAPIData(
+        this.tkn,
+        ["Answer", "create", JSON.stringify(this.answerWrap)],
+        this.successSave,
+        this.failureSave
+      );
+    } else {
+      this.sfService.remoteAction(
+        "NxtController.process",
+        ["Answer", "create", JSON.stringify(this.answerWrap)],
+        this.successSave,
+        this.failureSave
+      );
+    }
   };
+
   htmlDecode(input) {
     var doc = new DOMParser().parseFromString(input, "text/html");
     return doc.documentElement.textContent;
@@ -1701,7 +1493,7 @@ export class QuestionnaireComponent implements OnInit {
 
       this.currentName = this.questionItem.Name;
       this.pathquestion = this.questionName.indexOf(this.currentName);
-      this.possibilities = JSON.parse(this.qbItem.Possibilities__c);
+      this.possibilities = this.qbItem.Possibilities__c;
     }
 
     this.myDatePickerOptions;
@@ -1740,15 +1532,15 @@ export class QuestionnaireComponent implements OnInit {
       //console.log('Inise the expected bookFlag cond');
       //console.log('dtFlag = '+this.dtFlag);
       this.setSubQuestions(this.questionItem.Questions__r.records);
-    }else if (this.listFlag) {
+    } else if (this.listFlag) {
       // Set the LocalSubQuestions
       // console.log('inside list flag');
       // console.log(this.questionItem.Questions__r.records);
       // console.log(this.abItem.Questions__r.records);
       if(!this.localSubQMap.has(this.questionItem.Id)){
         this.setSubQuestions(this.questionItem.Questions__r.records);
-    } 
-  }else if (this.dtFlag) {
+      } 
+    } else if (this.dtFlag) {
       //console.log('Inise the unexpected dtFlag cond');
       this.selectedHour = "";
       this.selectedMinute = "";
@@ -1817,6 +1609,7 @@ export class QuestionnaireComponent implements OnInit {
         this.questionItem.Allowed_File_Extensions__c.split(";");
       //console.log(this.allowedFileExtension);
     }
+    
     if (this.qbItem.Progress_Bar__c === true) {
       this.updateProgress();
     }
@@ -1943,9 +1736,9 @@ export class QuestionnaireComponent implements OnInit {
     if (this.inpValue) {
       var aIndex = 0;
       // search changed as semi colon because of address contains comma 
-      if ((this.inpValue.search("; ") == -1) || (this.inpValue.search("answerString") != -1) ) {
-        const withoutAnswerString = this.inpValue.replace("answerString: ", ""); //remove the answer string
-        this.inpValue = withoutAnswerString;
+      if ((this.inpValue.search("; ") == -1)) {
+       // const withoutAnswerString = this.inpValue.replace("answerString: ", ""); //remove the answer string
+       // this.inpValue = withoutAnswerString;
         this.inpValue = this.inpValue + '@@##$$' ;
         for (var ansStr of this.inpValue.split("@@##$$")) {
           aIndex++;
@@ -2203,13 +1996,23 @@ export class QuestionnaireComponent implements OnInit {
     this.handleEvent.emit(this.qbItem.Cancel_Tracking_ID__c);
   }
 
-  private createAttachment = (fileWrapper: any) =>
-    this.sfService.remoteAction(
-      "NxtController.process",
-      ["Attachment", "create", JSON.stringify(fileWrapper)],
-      this.successAttachmentCreate,
-      this.failureAttachmentCreate
-    );
+  private createAttachment = (fileWrapper: any) => {
+    if(this.serv == "api") {
+      this.dataService.getAPIData(
+        this.tkn,
+        ["Attachment", "create", JSON.stringify(fileWrapper)],
+        this.successAttachmentCreate,
+        this.failureAttachmentCreate
+      );
+    } else {
+      this.sfService.remoteAction(
+        "NxtController.process",
+        ["Attachment", "create", JSON.stringify(fileWrapper)],
+        this.successAttachmentCreate,
+        this.failureAttachmentCreate
+      );
+    }
+  }
 
   deleteAttachment(attachmentId: string) {
     this.attachmentId = attachmentId;
@@ -2217,13 +2020,23 @@ export class QuestionnaireComponent implements OnInit {
     this.deleteSFAttachment(attachmentId);
   }
 
-  private deleteSFAttachment = (fileId: string) =>
-    this.sfService.remoteAction(
-      "NxtController.process",
-      ["Attachment", "delete", fileId],
-      this.successAttachmentDelete,
-      this.failureAttachmentDelete
-    );
+  private deleteSFAttachment = (fileId: string) => {
+    if(this.serv == "api") {
+      this.dataService.getAPIData(
+        this.tkn,
+        ["Attachment", "delete", fileId],
+        this.successAttachmentDelete,
+        this.failureAttachmentDelete
+      );
+    } else {
+      this.sfService.remoteAction(
+        "NxtController.process",
+        ["Attachment", "delete", fileId],
+        this.successAttachmentDelete,
+        this.failureAttachmentDelete
+      );
+    }
+  }
 
   getFileName(fileNamewithIdandType) {
     //truncate file path
@@ -2289,8 +2102,6 @@ export class QuestionnaireComponent implements OnInit {
     this.tempoAddress = [];
     if (this.selectedValue.length > 0) {
       for (var val of this.localaddress) {
-        //for (var val of this.sampleAddress) {
-          //console.log('this value1='+val)
         if (
           val.town.substring(0, this.selectedValue.length) == this.selectedValue
         ) {
@@ -2323,8 +2134,6 @@ export class QuestionnaireComponent implements OnInit {
       this.tempoAddress = [];
       if (this.selectedPostalcode.length > 0) {
         for (var val of this.allAddress) {
-          //for (var val of this.sampleAddress) {
-            //console.log('this value1='+val)
           if (val.zipCode.substring(0, this.selectedPostalcode.length) == this.selectedPostalcode) {
             //console.log(val.country)
             this.tempoAddress.push(val);
@@ -2492,7 +2301,7 @@ Add(question: LocalQuestion){
 
   displayDate(dateSelected: any,ques:any){
     // Parse the date string using moment and assign it to this.selectedDate
-    ques.input = moment(dateSelected.value._d , 'YYYY-MM-DD HH:mm:ss').format('YYYY-MM-DD HH:mm:ss').toString();
+    ques.input = moment(dateSelected.value , 'YYYY-MM-DD HH:mm:ss').format('YYYY-MM-DD HH:mm:ss').toString();
   }
 
   getKey(item: any): any {

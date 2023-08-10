@@ -66,6 +66,11 @@
  align-items: center;
 }
 
+.questiondiv2{
+  padding-left: 0 !important;
+  padding-bottom: 0 !important;
+}
+
 
 
 @media screen and (min-width: 689px) {
@@ -337,7 +342,7 @@ display: none;
 }
 
 .paddingnone{
-  padding-top: 0% ;
+  /* padding-top: 0% ; */
   padding-bottom: 0% ;
 }
 
@@ -521,6 +526,33 @@ display: none;
 .sum-ques1{
   width: 59%;
   margin: auto;
+}
+.header-style {
+  padding: 15px !important;
+  background: #F8F8F8;
+  color: #898989 !important;
+  border: 1px solid #e8e8e8;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  margin-left: 0 !important;
+  justify-content: left !important;
+  font-size: 15px !important;
+}
+.form-group.content-box {
+  background: #ffffff;
+  padding: 40px;
+  border: 1px solid #e8e8e8;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+.shengel-myt-font3{
+  padding-bottom: 5px;
+  padding-top: 5px;
+  padding-right: 15px;
+  padding-left: 2px !important;
+  color: #9a9a9a !important;
+  font-size: 14px !important;
+  font-weight: 400 !important;
 }
 
 /*file upload start*/
@@ -886,7 +918,7 @@ input[type="button"].btn-block{
 }
 
 /* / Hide the browser's default radio button / */
-.container input{
+.container-radio input{
   display: none;
   position: absolute;
   opacity: 0;
@@ -894,7 +926,7 @@ input[type="button"].btn-block{
 }
 
 /* / When the radio button is checked, add a blue background / */
-.container input:checked ~ .checkmark{
+.container-radio input:checked ~ .checkmark{
   background-color: #ffffff00;
 }
 
@@ -906,12 +938,12 @@ input[type="button"].btn-block{
 }
 
 /* / Show the indicator (dot/circle) when checked / */
-.container input:checked ~ .checkmark:after{
+.container-radio input:checked ~ .checkmark:after{
   display: block;
 }
 
 /* / Style the indicator (dot/circle) / */
-.container .checkmark:after{
+.container-radio .checkmark:after{
   top: 3px;
   left: 3px;
   width: 12px;
@@ -990,6 +1022,10 @@ background-color: #dedddd;
 .town-drop{
   margin:auto;
   width: 57%;
+}
+.questiondiv1.padd-bottom {
+  padding-bottom:6rem !important;
+  padding-top:2rem !important
 }
 /* Media screen starts*/
 
@@ -1937,4 +1973,15 @@ background-color: #dedddd;
 .summary-volver{
   display: none;
 }
+
+@media ((min-width: 1200px)){
+  .form-row {
+    display: flex;
+   -ms-flex-wrap: wrap;
+   flex-wrap: wrap;
+}
+}
+
+
+
 

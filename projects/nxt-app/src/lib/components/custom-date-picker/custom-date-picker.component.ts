@@ -6,13 +6,15 @@ import { Component, OnInit,Input,Output,EventEmitter} from '@angular/core';
   styleUrls: ['./custom-date-picker.component.css']
 })
 export class CustomDatePickerComponent implements OnInit {
-  @Input() date: any;
+  @Input() date: string;
   @Input() minDate:any;
   @Input() maxDate:any;
   @Output() dateChange: EventEmitter<any> = new EventEmitter<any>();
+  dateSelected:any
   constructor() { }
 
   ngOnInit(): void {
+   this.dateSelected = new Date(this.date);
   }
 
   onDateChange(event: any) {

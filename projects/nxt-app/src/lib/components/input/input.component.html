@@ -1,6 +1,6 @@
 <!-- <div *ngIf="isRequired && errorMessagePosition == 'top'" class="error-message">This field is required.</div>
 <div *ngIf="showError && errorMessagePosition == 'top'" class="error-message">{{errorMessage}}</div> -->
-   <label class="{{inputType === 'checkbox' || inputType === 'radio' ? 'container' : ''}}">{{label}} 
+   <label class="{{inputType === 'checkbox' || inputType === 'radio' ? 'container-radio' : ''}}">{{label}} 
       <span *ngIf="isRequired && errorMessagePosition == 'top'" class="error-message {{errorMessagePosition === 'top' ? 'top' : ''}}">This field is required.</span>
       <span *ngIf="showError && errorMessagePosition == 'top'" class="error-message {{errorMessagePosition === 'top' ? 'top' : ''}}">{{errorMessage}}</span>
     <input

@@ -48,7 +48,7 @@ export class Question {
   RecordType: {
     Name: string;
   };
-  input?: string;
+  input?: any;
   error?: ErrorWrapper;
   static X24_Hours__c: boolean;
   Time_Text__c: string;

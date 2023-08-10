@@ -1,0 +1,33 @@
+<div id="autocomplete-input">
+    <input #auto id="searchbox-style" 
+            (blur)="clearList()" 
+            [(ngModel)]="filterName" 
+            type="text" 
+            name="name" 
+            (placeholder)="placeHolderText" 
+            style="margin: 0 !important;" 
+            class="searchInput" 
+            (focusin)="getSourceDataLocal($event)" 
+            (input)="getSourceDataLocal($event)">
+    <div id="selectList" style="position: absolute;position: absolute;background: white;z-index: 2;">
+    <div *ngIf="finalResults.length > 1 && showSuggestion" 
+        style="max-height: 100vh;border: 1px solid #d2d4d6;overflow: scroll;" 
+        class="suggestions-container">
+        <div *ngFor="let item of finalResults" (click)='clickItem(item)' class="hoover">
+            <div class="grid-x align-middle" style="padding: 1rem" *ngIf="item.id != null">
+                <div class="cell shrink" style="width: 60px; margin-right: 1.6rem;">
+                    <img [src]="item.thumbnail" style="width: 60px;" alt="">
+                </div>
+                <div class="cell auto" style="text-align: left; padding-left: 20px;">
+                    <h4 >{{item.title}}</h4>
+                    <div class="show-for-medium" style=" white-space: nowrap;
+                    overflow: hidden;text-overflow: ellipsis;" > {{item.description}}
+                    </div>
+                    <div *ngIf="item.price"  class="drop-list">
+                        {{item.price.toFixed(2)}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
