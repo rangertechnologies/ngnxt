@@ -18,10 +18,9 @@
  .fa-location-arrow:before {
     content: "\f124";
   }
-
-agm-map {
-    height: 300px;
-}
+  ::ng-deep .map-container {
+    width: auto;
+  }
 
   /* .modal .modal-dialog .modal-content {
     border-radius: 2px;

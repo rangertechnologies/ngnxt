@@ -1,8 +1,8 @@
 <div>
      <!-- <label class="she-label">Location</label> -->
-    <input class="she-line-input form-control" type="text" placeholder="Enter Location"
+    <input #search class="she-line-input form-control" type="text" placeholder="Enter Location"
         (keydown.enter)="$event.preventDefault()" placeholder="Search Nearest Location" autocorrect="off"
-        autocapitalize="off" spellcheck="off" type="text" #search [(ngModel)]="address"
+        autocapitalize="off" spellcheck="off" type="text"  [(ngModel)]="address"
         >
         <a (click)="openMap()"
         style="color:#48B7FF;position:relative;top:5px;cursor: pointer;">

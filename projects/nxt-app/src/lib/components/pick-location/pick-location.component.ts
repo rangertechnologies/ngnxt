@@ -15,7 +15,7 @@ export class PickLocationComponent implements OnInit {
   private geoCoder;
  // public formGroup: FormGroup;
   @ViewChild('search', { static: true })
-  public searchElementRef: ElementRef;
+  public searchElementRef: ElementRef<HTMLInputElement>;
   showModal: boolean = false;
   @Input() address:string;
   @Output() locationSelected: EventEmitter<any> = new EventEmitter<any>();
@@ -33,6 +33,8 @@ export class PickLocationComponent implements OnInit {
 
   ngOnInit(): void {
       this.initAutocomplete();
+      console.log('lattitude',this.latitude);
+      console.log('this.longitude',this.longitude);
   }
 
   initAutocomplete(): void {
@@ -106,6 +108,9 @@ export class PickLocationComponent implements OnInit {
 
   openMap() {
     this.showModal = true;
+    if(this.address){
+      console.log('address',this.searchElementRef);
+    }
     if (!(this.latitude && this.longitude)) {
       this.setCurrentLocation();
     }
