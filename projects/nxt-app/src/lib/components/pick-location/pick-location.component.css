@@ -18,9 +18,9 @@
  .fa-location-arrow:before {
     content: "\f124";
   }
-  ::ng-deep .map-container {
-    width: auto;
-  }
+  .map-container {
+    width: auto !important;
+}
 
   /* .modal .modal-dialog .modal-content {
     border-radius: 2px;

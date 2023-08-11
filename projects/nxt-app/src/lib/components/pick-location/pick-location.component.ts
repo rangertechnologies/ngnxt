@@ -19,6 +19,10 @@ export class PickLocationComponent implements OnInit {
   showModal: boolean = false;
   @Input() address:string;
   @Output() locationSelected: EventEmitter<any> = new EventEmitter<any>();
+  navigatorGeolocation: any;
+  markerPosition: { lat: any; lng: any; };
+  center: { lat: any; lng: any; };
+  markerOptions: { draggable: boolean; animation: google.maps.Animation; };
  // center: google.maps.LatLngLiteral = { lat: 37.7749, lng: -122.4194 };
 
   constructor(
@@ -33,8 +37,6 @@ export class PickLocationComponent implements OnInit {
 
   ngOnInit(): void {
       this.initAutocomplete();
-      console.log('lattitude',this.latitude);
-      console.log('this.longitude',this.longitude);
   }
 
   initAutocomplete(): void {
@@ -80,11 +82,18 @@ export class PickLocationComponent implements OnInit {
       navigator.geolocation.getCurrentPosition((position) => {
         this.latitude = position.coords.latitude;
         this.longitude = position.coords.longitude;
+      this.markerOptions = {
+          draggable: true,
+          animation: google.maps.Animation.DROP
+        };
+        this.markerPosition = { lat: this.latitude, lng: this.longitude };
+        this.center = { lat: this.latitude, lng: this.longitude };
         this.zoom = 0;
         this.getAddress(this.latitude, this.longitude);
       });
     }
   }
+
 
   getAddress(latitude: number, longitude: number) {
     if (this.geoCoder) {
@@ -93,7 +102,7 @@ export class PickLocationComponent implements OnInit {
         console.log('status',status);
         if (status === 'OK') {
           if (results[0]) {
-            this.zoom = 18;
+           // this.zoom = 18;
             this.address = results[0].formatted_address;
             this.locationSelected.emit(this.address);
           } else {
@@ -108,8 +117,8 @@ export class PickLocationComponent implements OnInit {
 
   openMap() {
     this.showModal = true;
-    if(this.address){
-      console.log('address',this.searchElementRef);
+    if(!this.address){
+      this.latitude = this.longitude = null;
     }
     if (!(this.latitude && this.longitude)) {
       this.setCurrentLocation();

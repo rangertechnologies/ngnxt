@@ -24,7 +24,7 @@
       (dragEnd)="markerDragEnd($event)"></agm-marker>
     </agm-map> -->
     <google-map [latitude]="latitude"  [longitude]="longitude" [zoom]="zoom" (mapClick)="onMapClick($event)">
-      <google-map-marker [latitude]="latitude" [longitude]="longitude" [draggable]="true" (dragEnd)="onMarkerDragEnd($event)"></google-map-marker>
+      <map-marker [position]="markerPosition" [options]="markerOptions" (dragEnd)="onMarkerDragEnd($event)"></map-marker>
     </google-map>
     </div>
   </div>
