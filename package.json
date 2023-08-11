@@ -1,6 +1,6 @@
 {
   "name": "ng-nxt",
-  "version": "2.0.21",
+  "version": "2.0.27",
   "type": "module",
   "scripts": {
     "ng": "ng",
