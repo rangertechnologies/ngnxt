@@ -1,4 +1,7 @@
+<!-- Spinner -->
 <ngx-spinner [name]="spinnerName" [type]="spinnerType"></ngx-spinner>
+
+<!-- Back Processing -->
 <div *ngIf="backicon == false" >
   <div class="backicon" [style.visibility]="questionStack.length >0 ? 'visible' : 'hidden'">
     <button (click)="handleBackClick()" [class]=" abItem?.Status__c == 'Completed' ? 'summary-volver':'app-back1'">
@@ -7,52 +10,49 @@
   </div>
 </div>
 
+<!-- Question Hanlding -->
 <div *ngIf="questionItem" [class]="qbItem.isShengel__c ? 'questiondiv1' : 'questiondiv1 padd-bottom'">
+  <!-- Progress Bar & Title -->
   <div *ngIf="questionItem.Title__c && qbItem.Progress_Bar__c">
-        <h1 class="header1" > {{ questionItem?.Title__c }} </h1>
-        <div class="header2">{{ questionItem?.SubTitle__c }}</div>
+    <h1 class="header1">{{ questionItem?.Title__c }}</h1>
+    <div class="header2">{{ questionItem?.SubTitle__c }}</div>
   </div>
-<!-- we use below component for search box-->
-  <!-- <div>
-    <lib-search-box placeHolderText="type anything..."></lib-search-box>
-  </div> -->
 
+  <!-- Progress & Grouping -->
   <div [ngClass]="{ questiondiv2: !qbItem?.Progress_Bar__c }">
+    <!-- Pie Chart Progress -->
     <div [ngClass]="{ bgColor: qbItem?.Progress_Bar__c }">
       <div id="progress" *ngIf="qbItem?.Progress_Bar__c">
-        
         <circle-progress class="titlebar" [percent]="this.percent" [radius]="40" [space]="-4" [outerStrokeWidth]="4"
         [innerStrokeWidth]="4" [outerStrokeColor]="'#e0b1b0'" [innerStrokeColor]="'#e7e8ea'" [animation]="true" [backgroundPadding]= "0"
         [backgroundColor]= "'#dd2e13'" [backgroundGradientStopColor]="'#f9bfbd'" [titleColor]="'#f3eded'" 
         class="ng-star-inserted" [title]="this.percent+'%'" [showSubtitle]="false" [showBackground]="true" [animationDuration]="300"
         [startFromZero]="false" [responsive]="false" >
-      </circle-progress>
-       </div>
+        </circle-progress>
+      </div>
     </div>
+
+    <!-- Show the Group/Module related to the Progress -->
     <div *ngIf="questionItem.Group__c && qbItem.Progress_Bar__c"
         [ngClass]="{ questionalign: !qbItem?.Progress_Bar__c }">
-        <div class="largeTitle">
-          <h3 class="myt-font6 myt-text3">
-            {{ questionItem?.Group__c }}
-          </h3>
-          <div *ngIf="questionItem.Sub_Text__c != '¿En qué país ocurrió?'" class="myt-font5 myt-text1">{{questionItem?.Sub_Text__c}}</div>
-          <div *ngIf="questionItem.Sub_Text__c === '¿En qué país ocurrió?'" class="myt-font10 myt-text2">{{questionItem?.Sub_Text__c}}</div>
-          <!--<div
-            *ngIf="questionItem.Additional_Rich__c && qbItem.Progress_Bar__c"
-          >
-            <div [innerHTML]="innerhtml"></div>
-          </div>-->
-        </div>
+      <div class="largeTitle">
+        <h3 class="myt-font6 myt-text3">
+          {{ questionItem?.Group__c }}
+        </h3>
+        <div *ngIf="questionItem.Sub_Text__c != '¿En qué país ocurrió?'" class="myt-font5 myt-text1">{{questionItem?.Sub_Text__c}}</div>
+        <div *ngIf="questionItem.Sub_Text__c === '¿En qué país ocurrió?'" class="myt-font10 myt-text2">{{questionItem?.Sub_Text__c}}</div>
       </div>
+    </div>
   </div>
 
-  <!--Question alignment-->
+  <!-- Question Handling -->
   <div class="questiondiv2">
+    <!-- Title -->
     <div *ngIf="questionItem.Is_Title__c">
       <div *ngIf="questionItem.Type__c != 'Book' && questionItem.Question_No__c!='6' && questionItem.Question_No__c!='9'"> 
-      <h3 class="questionalign  myt-font3 myt-align myt-text4" [innerHTML]="getText(questionItem?.Question_Text__c)">
-        {{questionItem?.Question_Text__c}}
-      </h3>
+        <h3 class="questionalign  myt-font3 myt-align myt-text4" [innerHTML]="getText(questionItem?.Question_Text__c)">
+          {{questionItem?.Question_Text__c}}
+        </h3>
       </div>
     </div>
     <div *ngIf="!questionItem.Is_Title__c" [class]="qbItem.isShengel__c ? 'header-style additional' : 'question-f-size additional'">
@@ -61,32 +61,31 @@
       </div>
     </div>
 
+    <!-- This should be removed with Custom Styling - MR - 11AUG23 -->
     <div *ngIf="questionItem.Type__c == 'Book'">
       <div *ngIf="questionItem.Question_No__c=='6'">
-      <h3 class="myt-321" [innerHTML]="getText(questionItem?.Question_Text__c)">
-        {{ questionItem?.Question_Text__c }}
-      </h3>
+        <h3 class="myt-321" [innerHTML]="getText(questionItem?.Question_Text__c)">
+          {{ questionItem?.Question_Text__c }}
+        </h3>
       </div>
     </div>
-
     
-    <div *ngIf="questionItem.Type__c =='File'">
+    <!-- This should be removed with Custom Styling - MR - 11AUG23 -->
+    <div *ngIf="questionItem.Type__c == 'File' ">
       <div *ngIf="questionItem.Question_No__c=='9'">
-      <h3 class="myt-345" [innerHTML]="getText(questionItem?.Question_Text__c)">
-        {{questionItem?.Question_Text__c}}
-      </h3>
+        <h3 class="myt-345" [innerHTML]="getText(questionItem?.Question_Text__c)">
+          {{questionItem?.Question_Text__c}}
+        </h3>
       </div>
-  
     </div>
-
-    
-
   </div>
+
+  <!-- Additional Info -->
+  <!-- The below code can be written effectively nested ngIf for Rich Text & Other onw for Progress Bar -->
   <div *ngIf="questionItem.Additional_Rich__c && qbItem.Progress_Bar__c" >
-        <div
-         class="additional " [innerHTML]="innerhtml">
-        </div>
-    
+    <div
+      class="additional " [innerHTML]="innerhtml">
+    </div>
   </div>
   <div *ngIf="questionItem.Additional_Rich__c && !qbItem.Progress_Bar__c">
     <div class="info-alert ques-alert1">
@@ -95,54 +94,56 @@
     </div>
   </div>
 
-
-
+  <!-- Dropdown-->
   <div *ngIf="dropdownFlag" >
     <div class="dis-flex">
-    <select   [ngClass]="{
-        'dt-line myt-align3 myt-align2 dpDown dropbox down1 myt-dropbox myt-border-r myt-font1': qbItem?.Progress_Bar__c,
-        'custom-select': !qbItem?.Progress_Bar__c
-      }" class="mr-sm-2 dd-height dropbox "  id="dropdown" [(ngModel)]="inpValue" (change)="clearError()" style.border-color="{{
-        this.questionItem?.error ? 'red' : inpValue?.length > 0 ? '#fff' : ''
-      }}" style.color="{{ questionItem?.error ? 'red' : '' }}" style="margin-left: 21.5rem !important;">
-      <option *ngFor="let opt of questionItem.Question_Options__r.records" class="option" value="{{ opt.Value__c }}">
-        {{ opt.Value__c }}
-      </option>
-      <option value="." disabled hidden>Bitte treffen Sie eine Auswahl</option>
-    </select>
+      <select 
+        [ngClass]="{
+          'dt-line myt-align3 myt-align2 dpDown dropbox down1 myt-dropbox myt-border-r myt-font1': qbItem?.Progress_Bar__c,
+          'custom-select': !qbItem?.Progress_Bar__c
+        }" class="mr-sm-2 dd-height dropbox "  id="dropdown" [(ngModel)]="inpValue" (change)="clearError()" style.border-color="{{
+          this.questionItem?.error ? 'red' : inpValue?.length > 0 ? '#fff' : ''
+        }}" style.color="{{ questionItem?.error ? 'red' : '' }}" style="margin-left: 21.5rem !important;">
+        <option *ngFor="let opt of questionItem.Question_Options__r.records" class="option" value="{{ opt.Value__c }}">
+          {{ opt.Value__c }}
+        </option>
+        <option value="." disabled hidden>Bitte treffen Sie eine Auswahl</option>
+      </select>
     </div>
   </div>
 
+  <!-- Radio -->
   <div *ngIf="radioFlag || dataFlag" class="">
     <div *ngIf="this.questionItem.error" class="cond-div2">
       {{ questionItem?.Error_Message__c }}
     </div>
     <div class="dis-flex">
-    <div *ngFor="let opt of questionItem.Question_Options__r.records" class="radio radioOption" >
-      
-      <label class="radiocontainer container  myt-font4">{{ opt.Value__c }}
-        <input type="radio" [id]="opt.Id" [(ngModel)]="inpValue" name="inpValue" value="{{ opt.Value__c }}"
-          (change)="optionChange(opt.Value__c)" />
-        <span class="checkmark"></span>
-      </label>
+      <div *ngFor="let opt of questionItem.Question_Options__r.records" class="radio radioOption" >
+        <label class="radiocontainer container  myt-font4">{{ opt.Value__c }}
+          <input type="radio" [id]="opt.Id" [(ngModel)]="inpValue" name="inpValue" value="{{ opt.Value__c }}"
+            (change)="optionChange(opt.Value__c)" />
+          <span class="checkmark"></span>
+        </label>
+      </div>
     </div>
   </div>
-  </div>
 
+  <!-- Checkbox -->
   <div *ngIf="checkboxFlag" class="">
     <div *ngIf="this.questionItem.error" class="cond-div2">
       {{ questionItem?.Error_Message__c }}
     </div>
     <div class="dis-flex">
-    <div *ngFor="let item of optionValues" class="radio col-md-6 optiondiv">
-      <label class=" container1 " >{{ item.Value__c }}
-        <input type="checkbox" [id]="item.Id" [(ngModel)]="item.checked" (click)="clearError()" />
-        <span class='checkmark1'></span>
-      </label>
+      <div *ngFor="let item of optionValues" class="radio col-md-6 optiondiv">
+        <label class=" container1 " >{{ item.Value__c }}
+          <input type="checkbox" [id]="item.Id" [(ngModel)]="item.checked" (click)="clearError()" />
+          <span class='checkmark1'></span>
+        </label>
+      </div>
     </div>
   </div>
-  </div>
 
+  <!-- Text -->
   <div *ngIf="textFlag" class="col-md-12 myt-book1">
     <div class="col-md-12" class="dis-flex myt-align1" [class]="'col-md-' + questionItem?.Size__c + ' paddingnone'">
       <input type="text" [(ngModel)]="inpValue" [ngClass]="{
@@ -159,6 +160,7 @@
     </div>
   </div>
 
+  <!-- Text Area -->
   <div *ngIf="taFlag" class="col-md-12">
     <div class="dis-flex">
       <textarea class="ta-input" id="ta-input-id" [(ngModel)]="inpValue" (click)="clearError()" style.border-color="{{
@@ -192,48 +194,14 @@
   </div>
   <!-- END-->
 
-
-
+  <!-- AlphaNumeric -->
   <div *ngIf="alphanumericFlag" class="col-md-12"> <!--UI not completed-->
     <div style="position:relative;">
       <input type=text placeholder="0 of 0" style="padding:5px 5px 5px 150px;" id="youridhere"/>
-      <!-- <label for="youridhere" style="position:absolute;left:10px;font-weight:bold;font-size:0.8em;color:#444;top:9px;">Get this label to appear</label> -->
     </div>
-    <!--  <div class="book">
-      <div style="position:relative;">
-        <input placeholder="00 0000 0000 0000 0000 0000" type="Text" [ngClass]="{ boxoutline: qbItem?.Progress_Bar__c }"
-          [(ngModel)]="inpValue" id="number-input-id" (ngModelChange)="CCOnChange($event)" required="" maxlength="27"
-          oninput="this.value=this.value.replace(/[a-zA-Z]/,'')"
-          autocomplete="off" 
-          (focus)="clearError()" style="width:-webkit-fill-available; background-color: #dedddd;padding-left:30px;" style.border-color="{{
-            (this.questionItem?.error || this.notValidAccNum)
-              ? 'red'
-              : inpValue?.length > 0
-              ? '#87be1c'
-              : ''
-          }}" />
-          <!--<input *ngIf="deviceInfo.os !== 'Android'" placeholder="00 0000 0000 0000 0000 0000" type="Text" [ngClass]="{ boxoutline: qbItem.Progress_Bar__c }"
-          [(ngModel)]="inpValue" id="number-input-id" (ngModelChange)="CCOnChange($event)" required="" maxlength="27"
-          (keypress)="inputValidate($event)"
-          autocomplete="off" 
-          (focus)="clearError()" style="width:-webkit-fill-available; background-color: #dedddd;padding-left:30px;" style.border-color="{{
-            (this.questionItem.error || this.notValidAccNum)
-              ? 'red'
-              : inpValue?.length > 0
-              ? '#87be1c'
-              : ''
-          }}" />
-        <label class="ES-style">ES</label>
-      </div>
-      <div *ngIf="notValidAccNum">
-        {{ questionItem?.Error_Message__c }}
-      </div>
-      <i class="fa fa-check" aria-hidden="true" style="color: #87be1c; margin-left: -2rem; z-index: 1; padding: 5px;"
-        *ngIf="inpValue?.length > 35"></i>
-    </div>-->
   </div>
 
-
+  <!-- Email -->
   <div *ngIf="emailFlag" class="col-md-12">
     <div class="dis-flex">
       <input type="email" [ngClass]="{ boxoutline: qbItem?.Progress_Bar__c }" [(ngModel)]="inpValue" id="email-input-id"
@@ -249,9 +217,13 @@
     </div>
   </div>
 
+  <!-- DateTime -->
   <div *ngIf="dtFlag" class="col-md-12 paddingZero myt-time1" >
+    <!-- Error Handling -->
     <div class="col-md-12" *ngIf="questionItem.error" style="font-size: 18px;
     color: red;">{{questionItem?.error?.errorMsg}}</div>
+
+    <!-- Date -->
     <div *ngIf="dateFlag">
       <div class="col-md-12 paddingBottom">
         <label class="date-time colorf">{{ questionItem?.Date_Text__c }}</label>
@@ -259,14 +231,11 @@
           <my-date-picker name="mydate" [options]="myDatePickerOptions" id="date" style="font-size: 18px !important;" (dateChanged)="onDateChanged($event)"
             [(ngModel)]="selDate" class="date-picker" placeholder="Seleccione fecha" (focus)="clearError()">
           </my-date-picker>
-          <!-- <i class="fa check-icon2" id="check-icon" aria-hidden="true" *ngIf="
-              inpValue?.length === 8 ||
-              inpValue?.length === 9 ||
-              inpValue?.length === 15
-            "></i> -->
         </div>
       </div>
     </div>
+
+    <!-- Time -->
     <div *ngIf="timeFlag">
       <div class="col-md-12 paddingBottom">
         <label class="date-time colorf">{{ questionItem?.Time_Text__c }}</label>
@@ -305,6 +274,7 @@
     </div>
   </div>
 
+  <!-- Attachment / File -->
   <div *ngIf="fileFlag">
     <div *ngIf="!qbItem.Progress_Bar__c">
       <div class="info-alert" style.border-color="{{ this.questionItem?.error ? 'red' : '' }}">
@@ -330,6 +300,7 @@
       </li>
     </ul>
 
+    <!-- Attachment Progress -->
     <div *ngIf="qbItem.Progress_Bar__c">
       <div *ngFor="let attachment of attachments" class="file-uploading-box">
         <!--<img src="https://rnxt.s3.amazonaws.com/MytIcon/icon-doc-img%402x.png" class="icon-edit1" />-->
@@ -351,7 +322,7 @@
     </div>
   </div>
 
-
+  <!-- Book -->
   <div *ngIf="bookFlag">
     <div [class]="qbItem.isShengel__c ? 'form-group content-box' : 'form-group'">
       <div class="form-row">
@@ -363,8 +334,6 @@
             <span [class]="qbItem.isShengel__c ? 'dis-flex shengel-myt-font3 myt-font7'  : 'dis-flex myt-font3 myt-font7' ">{{ ques?.Question__c }}</span>
           </div>
           <div class="col-md-12 paddingZero myt-dateTimeNew" *ngIf="ques.Type__c === 'Time' || ques.Type__c === 'Date'">
-            <!--<div class="col-md-12" *ngIf="questionItem.error" style="font-size: 18px;
-            color: red;">{{questionItem.error.errorMsg}}</div>-->
             <div *ngIf="ques.Type__c === 'Date'">
               <div class="col-md-12 paddingBottom">
                 <label class="date-time colorf">{{ questionItem?.Date_Text__c }}</label>
@@ -372,11 +341,6 @@
                   <my-date-picker name="mydate" [options]="myDatePickerOptions" id="date" style="font-size: 18px !important;" (dateChanged)="onDateChanged($event)"
                     [(ngModel)]="selDate" class="date-picker" placeholder="Seleccione fecha"  (focus)="clearError()" >
                   </my-date-picker>
-                  <!-- <i class="fa check-icon2" id="check-icon" aria-hidden="true" *ngIf="
-                      inpValue?.length === 8 ||
-                      inpValue?.length === 9 ||
-                      inpValue?.length === 15
-                    "></i> -->
                 </div>
               </div>
             </div>
@@ -409,21 +373,17 @@
                       <option value="AM">AM</option>
                       <option value="PM">PM</option>
                     </select>
-                    <!-- <div [ngClass]="{'': qbItem.Progress_Bar__c, 'dateandTime': !qbItem.Progress_Bar__c}"></div> -->
                   </div>
                 </div>
               </div>
               </div>
-              <!-- <i class="fa check-icon3" aria-hidden="true" *ngIf="questionItem?.input?.length > 0"></i> -->
             </div>
           </div>
           <div *ngIf="ques.Type__c === 'DateTime'">
             <app-custom-date-picker [minDate]="ques.minDate" [date]="ques.input" (dateChange)="displayDate($event,ques)"></app-custom-date-picker>
           </div>
           <div *ngIf="ques.Type__c === 'Text'">
-             <!-- for disabled custom input -->
-             <!-- <app-custom-input [from]="ques.isShengel"  [value]="ques.input"  [disabled]="false" [error]="ques.error"  [placeholder]="ques.Question__c "  (inputValue)="selectedInput($event,ques)"></app-custom-input> -->
-              <app-custom-input
+            <app-custom-input
                   [fromShengel]="qbItem.isShengel__c"
                   [value]="ques.input"
                   [ngClassValue]="{
@@ -435,33 +395,25 @@
                   [error]="ques.error"
                   [placeholder]="ques.Question__c"
                   (inputValue)="selectedInput($event,ques)">
-              </app-custom-input>
-              <!-- old input  -->
-             <!-- <app-custom-text-area [value]="ques.input" [rows]="3" [placeholder]="ques.Question__c " (textareaValueChange)="handleTextareaValueChange($event)"></app-custom-text-area> -->
-              <!-- <input type="text" [(ngModel)]="ques.input" [ngClass]="{
-               'dis-flex dt-line date-line bookText boxoutline myt-font1': qbItem.Progress_Bar__c,
-               textBox: !qbItem.Progress_Bar__c
-              }" id="text" [id]="ques.Id" required="" (focus)="clearSQError(ques.Id)"
-              style.border-color="{{ ques.error ? 'red' : '' }}" placeholder="{{ ques.Question__c }}"
-              oninput="this.value=this.value.replace(/[^a-zA-Z0-9\s.:;,?]/g,'');" /> -->
-            </div>
-            <div *ngIf="ques.Type__c === 'Location'">
-              <!-- for pick location -->
-              <app-pick-location [address]="ques.input" (locationSelected)="handleLocationSelected($event,ques)"></app-pick-location>
-            </div>
-            <!-- for  text area   -->
-            <div *ngIf="ques.Type__c === 'TextArea'">
-              <app-custom-text-area [value]="ques.input" [rows]="3" [error]="ques.error" [placeholder]="ques.Question__c " (textareaValueChange)="handleTextareaValueChange($event)"></app-custom-text-area>
-            </div>
-            <!-- for to data table we use 'data' type question  -->
-            <div *ngIf="ques.Type__c === 'Data'">
-              <app-custom-table [tableHeader]="ques.tableHeader" [tableData]="getTableData(ques)" [tableIndex]="i" (tableDataChange)="getData($event)"></app-custom-table>
-            </div>
+            </app-custom-input>
+          </div>
+          <div *ngIf="ques.Type__c === 'Location'">
+            <!-- for pick location -->
+            <app-pick-location [address]="ques.input" (locationSelected)="handleLocationSelected($event,ques)"></app-pick-location>
+          </div>
+          <!-- for  text area   -->
+          <div *ngIf="ques.Type__c === 'TextArea'">
+            <app-custom-text-area [value]="ques.input" [rows]="3" [error]="ques.error" [placeholder]="ques.Question__c " (textareaValueChange)="handleTextareaValueChange($event)"></app-custom-text-area>
+          </div>
+          <!-- for to data table we use 'data' type question  -->
+          <div *ngIf="ques.Type__c === 'Data'">
+            <app-custom-table [tableHeader]="ques.tableHeader" [tableData]="getTableData(ques)" [tableIndex]="i" (tableDataChange)="getData($event)"></app-custom-table>
+          </div>
 
-            <div *ngIf="ques.Type__c === 'Email'">
-              <input type="email" [(ngModel)]="ques.input" [id]="ques.Id" required="" (focus)="clearSQError(ques.Id)"
-                style.border-color="{{ ques.error ? 'red' : '' }}" placeholder="{{ ques.Question__c }}" />
-            </div>
+          <div *ngIf="ques.Type__c === 'Email'">
+            <input type="email" [(ngModel)]="ques.input" [id]="ques.Id" required="" (focus)="clearSQError(ques.Id)"
+              style.border-color="{{ ques.error ? 'red' : '' }}" placeholder="{{ ques.Question__c }}" />
+          </div>
 
           <div *ngIf="ques.Type__c === 'File'">
             <div *ngIf="!qbItem.Progress_Bar__c">
@@ -514,6 +466,7 @@
             </div>
           </div>
 
+          <!-- Dropdown -->
           <div *ngIf="ques.Type__c === 'Dropdown'" class="">
             <!-- for common dropdown -->
             <app-custom-dropdown [fromShengel]="qbItem.isShengel__c"
@@ -545,8 +498,6 @@
           <div>
             <span class="dis-flex myt-font3 myt-font7">{{ ques?.Question__c }}</span>
           </div>
-
-
           <div *ngIf="ques.Type__c === 'Text'">
             <input type="text" [(ngModel)]="ques.input" [ngClass]="{
              'dis-flex dt-line date-line bookText boxoutline myt-font1': qbItem.Progress_Bar__c,
@@ -554,22 +505,19 @@
             }" id="text" [id]="ques.uniqueSubQId" required="" (focus)="clearLocalSubQuesError(ques)"
             style.border-color="{{ ques.error ? 'red' : '' }}" placeholder="{{ ques.Question__c }}"
             oninput="this.value=this.value.replace(/[^a-zA-Z0-9\s.:;,?]/g,'');" />
-            <!-- <div>
-              <button (click)="addInputBox(ques, i)" class="btn"><i class="fa fa-plus" ></i>Add</button>
-              <button (click)="removeAddress(ques.uniqueSubQId, ques.Name)" class="btn"><i class="fa fa-trash"></i> Remove</button>
-            </div> -->
           </div>
-
         </div>
         <div class="" *ngIf="addFlag">
           <button (click)="Add(getLocalSubQuestions(questionItem.Id))" class="btn"><i class="fa fa-plus" ></i>Add</button>
          </div>
       </div>
     </div>
-    </div>
+  </div>
   <!--List End-->
 
+  <!-- Actions -->
   <div *ngIf="individualBookButton" class="flexer">
+    <!-- Backward / Back -->
     <div class="backbutton" [ngClass]="{ 'col-md-6': !qbItem.Progress_Bar__c }"
       [style.visibility]="questionStack.length > 0 ? 'visible' : 'hidden'">
       <div [ngClass]="{}">
@@ -582,6 +530,8 @@
         </button>
       </div>
     </div>
+
+    <!-- Forward / Next -->
     <div [ngClass]="{ 'col-md-6': !qbItem.Progress_Bar__c }">
       <div>
         <button [ngClass]="{
@@ -596,6 +546,7 @@
   </div>
 </div>
 
+<!-- Summary -->
 <div *ngIf="summary && summary.length > 0" height="100% !important" class="col-md-12" [ngClass]="{
               'col-md-12':!qbItem.Progress_Bar__c
                }">
@@ -668,7 +619,6 @@
     </div>
   </div>
 
-
   <div id="progress2" *ngIf="qbItem.Progress_Bar__c ">
     <div [ngClass]="{'bgColor summary-top' : qbItem.Progress_Bar__c }" >
       <div id="progress-summary" *ngIf="qbItem.Progress_Bar__c">
@@ -679,7 +629,6 @@
         [startFromZero]="false" [responsive]="false" >
       </circle-progress>
       
-
       <div *ngIf="qbItem.Summary_Text__c && qbItem.Progress_Bar__c" 
       [ngClass]="{ summaryTitle: qbItem.Progress_Bar__c }">
         <h3 class="subTitle" >{{ qbItem.Summary_Text__c }}</h3>
@@ -697,15 +646,9 @@
       <!-- <p>Informe de daño</p> -->
     </div>
     <div *ngFor="let qa of summary" >
-     
         <div [ngClass]="{ non:  qbItem.Progress_Bar__c }">
           <div [ngClass]="{ summary: this.abItem.Status__c != 'Completed' && !qbItem.Progress_Bar__c }">
-         <!--  <div *ngIf="qbItem.Progress_Bar__c"
-              [ngClass]="{ 'summary-groupText myt-font2': qbItem.Progress_Bar__c }" >
-              {{ qa.groupText }}
-            </div>
-          -->
-           <div *ngIf="!qbItem.Edit__c"
+            <div *ngIf="!qbItem.Edit__c"
               [ngClass]="{ 'question sum-ques myt-font3 myt-font8': this.abItem.Status__c != 'Completed' }">
               <a [ngClass]="{ asum: this.abItem.Status__c === 'Completed' }" (click)="handleEditClick(qa.quesId)"
                 [innerHTML]="getText(qa.quesValue)">{{ qa.quesValue }}</a>
@@ -725,22 +668,21 @@
             </div>
            
             <div class="answer " >
-            
-                <div *ngIf="qa.qTyp === 'File'">
-                  <img src="https://rnxt.s3.amazonaws.com/MytIcon/icon-doc-img%401.png" class="icon-edit-summary" />
-                  {{ qa.ansValue }}
-                </div>
-                <div *ngIf="qa.qTyp != 'File'">{{ qa.ansValue }}</div>
-              
+              <div *ngIf="qa.qTyp === 'File'">
+                <img src="https://rnxt.s3.amazonaws.com/MytIcon/icon-doc-img%401.png" class="icon-edit-summary" />
+                {{ qa.ansValue }}
+              </div>
+              <div *ngIf="qa.qTyp != 'File'">
+                {{ qa.ansValue }}
+              </div>
+            </div>
           </div>
         </div>
-        </div>
-    </div>
+      </div>
     </div>
   </div>
 
-
-
+  <!-- Answer Book -->
   <div class="flexer1" *ngIf="abItem">
     <div class="" *ngIf="abItem.Status__c == 'Completed'">
       <div class="col-md-12">
@@ -753,20 +695,22 @@
     </div>
   </div>
 
-    <div class="align-edit-submit" *ngIf="abItem.Status__c != 'Completed'">
-      <div class="col-md-6">
-        <button [ngClass]="{ 'btn-text2': qbItem.Progress_Bar__c,
-                              'nxt-btn btn-primary btn-lg btn-block btn-back-color': !qbItem.Progress_Bar__c }" 
-          (click)="handleSubmitClick()">
-          {{ qbItem.Submit__c }}
-        </button>
-      </div>
-      <div class="col-md-6">
-        <button [ngClass]="{'grey': qbItem.Progress_Bar__c,
-                             'nxt-btn btn-primary btn-lg btn-block btn-back-color': !qbItem.Progress_Bar__c}" 
-                (click)="handleBackClickNew()">
-          {{ qbItem.Edit__c }}
-        </button>
-      </div>
-   </div>
+  <!-- Group Actions -->
+  <div class="align-edit-submit" *ngIf="abItem.Status__c != 'Completed'">
+    <div class="col-md-6">
+      <button [ngClass]="{ 'btn-text2': qbItem.Progress_Bar__c,
+                            'nxt-btn btn-primary btn-lg btn-block btn-back-color': !qbItem.Progress_Bar__c }" 
+        (click)="handleSubmitClick()">
+        {{ qbItem.Submit__c }}
+      </button>
+    </div>
+    <div class="col-md-6">
+      <button [ngClass]="{'grey': qbItem.Progress_Bar__c,
+                            'nxt-btn btn-primary btn-lg btn-block btn-back-color': !qbItem.Progress_Bar__c}" 
+              (click)="handleBackClickNew()">
+        {{ qbItem.Edit__c }}
+      </button>
+    </div>
+  </div>
+
 </div>
