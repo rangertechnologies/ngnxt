@@ -6,8 +6,8 @@
     "declaration": true,
     "inlineSources": true,
     "types": [
-      "googlemaps"
-    ],
+      "google.maps"
+    ], 
     "lib": [
       "dom",
       "es2018"

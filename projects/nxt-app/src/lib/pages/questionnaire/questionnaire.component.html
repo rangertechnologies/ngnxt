@@ -12,10 +12,10 @@
         <h1 class="header1" > {{ questionItem?.Title__c }} </h1>
         <div class="header2">{{ questionItem?.SubTitle__c }}</div>
   </div>
-
-  <div>
+<!-- we use below component for search box-->
+  <!-- <div>
     <lib-search-box placeHolderText="type anything..."></lib-search-box>
-  </div>
+  </div> -->
 
   <div [ngClass]="{ questiondiv2: !qbItem?.Progress_Bar__c }">
     <div [ngClass]="{ bgColor: qbItem?.Progress_Bar__c }">

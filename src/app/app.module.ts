@@ -14,7 +14,7 @@ import { InputComponent } from '../../projects/nxt-app/src/lib/components/input/
 import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
 import { MatNativeDateModule } from '@angular/material/core';
-import { AgmCoreModule } from '@agm/core';
+//import { AgmCoreModule } from '@agm/core';
 import { GOOGLE_MAP_API_KEY } from '../../projects/nxt-app/src/lib/sample';
 
 
@@ -34,11 +34,10 @@ import { GOOGLE_MAP_API_KEY } from '../../projects/nxt-app/src/lib/sample';
     MatInputModule,
     MatNativeDateModule,
     MatDatepickerModule,
-    MatSelectModule,
-    AgmCoreModule.forRoot({
-      apiKey: GOOGLE_MAP_API_KEY,
-      libraries: ['geometry', 'places', 'visualization', 'drawing']
-    }),
+  //  AgmCoreModule.forRoot({
+   //   apiKey: GOOGLE_MAP_API_KEY,
+   //   libraries: ['geometry', 'places', 'visualization', 'drawing']
+   // }),
     RouterModule.forRoot([
       {path: '**', component: AppComponent}
     ]),

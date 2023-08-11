@@ -18,9 +18,8 @@
  .fa-location-arrow:before {
     content: "\f124";
   }
-
-agm-map {
-    height: 300px;
+  .map-container {
+    width: auto !important;
 }
 
   /* .modal .modal-dialog .modal-content {

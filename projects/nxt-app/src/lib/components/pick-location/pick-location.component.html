@@ -1,8 +1,8 @@
 <div>
      <!-- <label class="she-label">Location</label> -->
-    <input class="she-line-input form-control" type="text" placeholder="Enter Location"
+    <input #search class="she-line-input form-control" type="text" placeholder="Enter Location"
         (keydown.enter)="$event.preventDefault()" placeholder="Search Nearest Location" autocorrect="off"
-        autocapitalize="off" spellcheck="off" type="text" #search [(ngModel)]="address"
+        autocapitalize="off" spellcheck="off" type="text"  [(ngModel)]="address"
         >
         <a (click)="openMap()"
         style="color:#48B7FF;position:relative;top:5px;cursor: pointer;">
@@ -18,11 +18,14 @@
         <button class="close-button" (click)="closeModal()">X</button>
       </div>
       <!-- Modal content goes here -->
-    <agm-map [latitude]="latitude" [longitude]="longitude" [zoom]="zoom" (mapClick)="markerDragEnd($event)"
+    <!-- <agm-map [latitude]="latitude" [longitude]="longitude" [zoom]="zoom" (mapClick)="markerDragEnd($event)"
     [fullscreenControl]="true">
     <agm-marker [latitude]="latitude" [longitude]="longitude" [markerDraggable]="true"
       (dragEnd)="markerDragEnd($event)"></agm-marker>
-    </agm-map>
+    </agm-map> -->
+    <google-map [latitude]="latitude"  [longitude]="longitude" [zoom]="zoom" (mapClick)="onMapClick($event)">
+      <map-marker [position]="markerPosition" [options]="markerOptions" (dragEnd)="onMarkerDragEnd($event)"></map-marker>
+    </google-map>
     </div>
   </div>
 </div>

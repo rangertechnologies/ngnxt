@@ -6,7 +6,7 @@ import { FormsModule,ReactiveFormsModule } from '@angular/forms';
 import { MyDatePickerModule } from 'mydatepicker';
 import { NgCircleProgressModule } from 'ng-circle-progress';
 import { NgxSpinnerModule } from "ngx-spinner";
-import { AgmCoreModule } from '@agm/core';
+//import { AgmCoreModule } from '@agm/core';
 import { GOOGLE_MAP_API_KEY } from '../lib/sample';
 import { PickLocationComponent } from './components/pick-location/pick-location.component';
 import { NgSelectModule } from '@ng-select/ng-select';
@@ -21,6 +21,7 @@ import { CustomDatePickerComponent } from './components/custom-date-picker/custo
 import { CustomDropdownComponent } from './components/custom-dropdown/custom-dropdown.component';
 import { HttpClientModule } from '@angular/common/http';
 import { BookletComponent } from './pages/booklet/booklet.component';
+import { GoogleMapsModule } from '@angular/google-maps';
 import { SearchBoxComponent } from './components/search-box/search-box.component';
 // export const MY_CUSTOM_FORMATS = {
 //   fullPickerInput: 'DD/MM/YYYY HH:mm:ss',
@@ -47,10 +48,11 @@ import { SearchBoxComponent } from './components/search-box/search-box.component
     OwlNativeDateTimeModule,
     HttpClientModule,
     NgSelectModule,
-    AgmCoreModule.forRoot({
-      apiKey: GOOGLE_MAP_API_KEY,
-      libraries: ['geometry', 'places', 'visualization', 'drawing']
-    }),
+    GoogleMapsModule,
+    //AgmCoreModule.forRoot({
+    //  apiKey: GOOGLE_MAP_API_KEY,
+    //  libraries: ['geometry', 'places', 'visualization', 'drawing']
+  //  }),
     ReactiveFormsModule, NgxSpinnerModule,
     /*NgCircleProgressModule.forRoot({
       "backgroundPadding": -10,

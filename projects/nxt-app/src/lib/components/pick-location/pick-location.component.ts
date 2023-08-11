@@ -1,5 +1,6 @@
 import { Component, ElementRef, EventEmitter, Input, NgModule, NgZone, OnInit, Output, ViewChild } from '@angular/core';
-import { MapsAPILoader } from '@agm/core';
+//import { MapsAPILoader } from '@agm/core';
+import { GoogleMap } from '@angular/google-maps';
 declare var $: any;
 
 @Component({
@@ -14,12 +15,20 @@ export class PickLocationComponent implements OnInit {
   private geoCoder;
  // public formGroup: FormGroup;
   @ViewChild('search', { static: true })
-  public searchElementRef: ElementRef;
+  public searchElementRef: ElementRef<HTMLInputElement>;
   showModal: boolean = false;
   @Input() address:string;
   @Output() locationSelected: EventEmitter<any> = new EventEmitter<any>();
+  navigatorGeolocation: any;
+  markerPosition: { lat: any; lng: any; };
+  center: { lat: any; lng: any; };
+  markerOptions: { draggable: boolean; animation: google.maps.Animation; };
+ // center: google.maps.LatLngLiteral = { lat: 37.7749, lng: -122.4194 };
 
-  constructor(private mapsAPILoader: MapsAPILoader,private ngZone: NgZone) { 
+  constructor(
+   // private mapsAPILoader: MapsAPILoader,
+    private ngZone: NgZone) { 
+      this.geoCoder = new google.maps.Geocoder();
     // this.formGroup = this.formBuilder.group({
     //   location: [''] // Add any initial value or leave it empty
     // });
@@ -27,49 +36,44 @@ export class PickLocationComponent implements OnInit {
   }
 
   ngOnInit(): void {
-      //load Places Autocomplete
-      this.mapsAPILoader.load().then(() => {
-        this.geoCoder = new google.maps.Geocoder;
-        let autocomplete = new google.maps.places.Autocomplete(this.searchElementRef?.nativeElement, {
-          types: []
-        });
-        autocomplete.addListener("place_changed", () => {
-          this.ngZone.run(() => {
-            //get the place result
-            const place: google.maps.places.PlaceResult = autocomplete.getPlace();
-  
-            //verify result
-            if (place.geometry === undefined || place.geometry === null) {
-              return;
-            }
-  
-            //set latitude, longitude and zoom
-            this.latitude = place.geometry.location.lat();
-            this.longitude = place.geometry.location.lng();
-            this.zoom = 0;
-            const ADDR_PART1 = place.formatted_address.split(',')[0];
-            const addr = place.name === ADDR_PART1 ? place.formatted_address : place.name + ' ' + place.formatted_address;
-          // this.formGroup.patchValue({
-          //   location: addr,
-          // });
-
-            // this.getAddress(this.latitude, this.longitude);
-          });
-        });
-      });
+      this.initAutocomplete();
   }
 
-  openMap() {
-    this.showModal = true;
-   // $("#map").modal('show');
-    console.log('lat-lan', typeof this.latitude, typeof this.longitude);
-    if (!(this.latitude && this.longitude)) {
-      this.setCurrentLocation();
+  initAutocomplete(): void {
+    if (this.geoCoder) {
+      const autocomplete = new google.maps.places.Autocomplete(this.searchElementRef?.nativeElement, {
+        types: []
+      });
+      autocomplete.addListener('place_changed', () => {
+        this.ngZone.run(() => {
+          const place: google.maps.places.PlaceResult = autocomplete.getPlace();
+
+          if (place.geometry === undefined || place.geometry === null) {
+            return;
+          }
+
+          this.latitude = place.geometry.location.lat();
+          this.longitude = place.geometry.location.lng();
+          this.zoom = 18;
+          this.address = place.formatted_address;
+          this.locationSelected.emit(this.address);
+        });
+      });
     }
   }
 
-  closeModal() {
-    this.showModal = false;
+  onMarkerDragEnd(event: google.maps.MapMouseEvent): void {
+    console.log('onMarkerDragEnd',event);
+    this.latitude = event.latLng.lat();
+    this.longitude = event.latLng.lng();
+    this.getAddress(this.latitude, this.longitude);
+  }
+
+  onMapClick(event: google.maps.MapMouseEvent): void {
+    console.log('onMapClick',event);
+    this.latitude = event.latLng.lat();
+    this.longitude = event.latLng.lng();
+    this.getAddress(this.latitude, this.longitude);
   }
 
 
@@ -78,38 +82,57 @@ export class PickLocationComponent implements OnInit {
       navigator.geolocation.getCurrentPosition((position) => {
         this.latitude = position.coords.latitude;
         this.longitude = position.coords.longitude;
+      this.markerOptions = {
+          draggable: true,
+          animation: google.maps.Animation.DROP
+        };
+        this.markerPosition = { lat: this.latitude, lng: this.longitude };
+        this.center = { lat: this.latitude, lng: this.longitude };
         this.zoom = 0;
         this.getAddress(this.latitude, this.longitude);
       });
     }
   }
 
-  getAddress(latitude, longitude) {
-    this.geoCoder.geocode({ 'location': { lat: latitude, lng: longitude } }, (results, status) => {
-      console.log(results);
-      console.log(status);
-      if (status === 'OK') {
-        if (results[0]) {
-          this.zoom = 18;
-          this.address = results[0].formatted_address;
-          this.locationSelected.emit(this.address);
-        //  this.formGroup.patchValue({
-        //  location: this.address,
-        //  });
+
+  getAddress(latitude: number, longitude: number) {
+    if (this.geoCoder) {
+      this.geoCoder.geocode({ location: { lat: latitude, lng: longitude } }, (results, status) => {
+        console.log('results',results);
+        console.log('status',status);
+        if (status === 'OK') {
+          if (results[0]) {
+           // this.zoom = 18;
+            this.address = results[0].formatted_address;
+            this.locationSelected.emit(this.address);
+          } else {
+            console.log('No results found');
+          }
         } else {
-          console.log('No results found');
+          console.log('Geocoder failed due to: ' + status);
         }
-      } else {
-        console.log('Geocoder failed due to: ' + status);
-      }
-    });
+      });
+    }
   }
 
-  markerDragEnd($event: any) {
-    console.log($event);
-    this.latitude = $event.coords.lat;
-    this.longitude = $event.coords.lng;
-    this.getAddress(this.latitude, this.longitude);
+  openMap() {
+    this.showModal = true;
+    if(!this.address){
+      this.latitude = this.longitude = null;
+    }
+    if (!(this.latitude && this.longitude)) {
+      this.setCurrentLocation();
+    }
+   // $("#map").modal('show');
+  //  console.log('lat-lan', typeof this.latitude, typeof this.longitude);
+    // if (!(this.latitude && this.longitude)) {
+    //   this.setCurrentLocation();
+    // }
   }
+
+  closeModal() {
+    this.showModal = false;
+  }
+
 
 }
