@@ -6,7 +6,9 @@
   </div>
 </div>
 
+<!-- Questions Processing -->
 <div *ngIf="questionItem" class="questiondiv1">
+  <!-- Title -->
   <div class="questiondiv2">
     <div *ngIf="questionItem.Is_Title__c">
       <h3 class="questionalign" [innerHTML]="getText(questionItem.Question_Text__c)">
@@ -18,6 +20,7 @@
     </div>
   </div>
 
+  <!-- Additional Info -->
   <div *ngIf="questionItem.Additional_Rich__c">
     <div class="info-alert ques-alert1">
       <i class="fa fa-info fa-3x iposition icolor" aria-hidden="true"></i>
@@ -25,6 +28,7 @@
     </div>
   </div>
 
+  <!-- Dropdown -->
   <div *ngIf=" dropdownFlag " class="" [class]="'col-md-'+ questionItem.Size__c + ' paddingnone'">
     <select class="custom-select mr-sm-2 dd-height" id="dropdown" [(ngModel)]="inpValue" (change)="clearError()"  style.border-color="{{this.questionItem.error ? 'red' :  (inpValue?.length > 0 ? '#87be1c' : '')}}"
       style.color="{{questionItem.error ? 'red'  : ''}}">
@@ -34,6 +38,7 @@
     </select>
   </div>
 
+  <!-- Radio -->
   <div *ngIf="radioFlag || dataFlag" class="">
     <div *ngIf="this.questionItem.error" class="cond-div2">{{questionItem.Error_Message__c}}</div>
     <div *ngFor="let opt of questionItem.Question_Options__r.records" class="radio col-md-6 optiondiv">
@@ -45,6 +50,7 @@
     </div>
   </div>
 
+  <!-- Checkbox -->
   <div *ngIf="checkboxFlag"  class="">
     <div *ngIf="this.questionItem.error" class="cond-div2" >{{questionItem.Error_Message__c}}</div>
     <div *ngFor="let item of optionValues" class="radio col-md-6 optiondiv">
@@ -55,6 +61,7 @@
     </div>
   </div>
 
+  <!-- Text -->
   <div *ngIf="textFlag" class="col-md-12">
     <div class="col-md-12" class="dis-flex" [class]="'col-md-'+ questionItem.Size__c + ' paddingnone'">
       <input type="text" [(ngModel)]="inpValue" class="textBox1" id="text-input-id" required="" (focus)="clearError()"
@@ -64,6 +71,7 @@
     </div>
   </div>
 
+  <!-- Text Area -->
   <div *ngIf="taFlag" class="col-md-12">
     <div class="dis-flex">
       <textarea class="ta-input"  id="ta-input-id" [(ngModel)]="inpValue"  (click)="clearError()"
@@ -73,6 +81,7 @@
     </div>
   </div>
 
+  <!-- Email -->
   <div *ngIf="emailFlag" class="col-md-12">
     <div class="dis-flex">
       <input type="email" [(ngModel)]="inpValue" id="email-input-id" required="" (focus)="clearError()"
@@ -82,45 +91,50 @@
     </div>
   </div>
 
+  <!-- DateTime -->
   <div class="col-md-12 paddingZero" *ngIf="dtFlag" >
+    <!-- Date -->
     <div *ngIf="dateFlag">
-    <div class="col-md-6 paddingBottom">
-      <label class="date-time colorf">Datum</label>
-      <div class="dis-flex">
-        <my-date-picker name="mydate" [options]="myDatePickerOptions" id="date" (dateChanged)="onDateChanged($event)"
-          [(ngModel)]="selDate" class="date-picker"
-		  (focus)="clearError()">
-        </my-date-picker>
-        <i class="fa fa-check check-icon2" id="check-icon" aria-hidden="true" *ngIf="inpValue?.length === 8 || inpValue?.length === 9 || inpValue?.length === 15 "></i>
+      <div class="col-md-6 paddingBottom">
+        <label class="date-time colorf">Datum</label>
+        <div class="dis-flex">
+          <my-date-picker name="mydate" [options]="myDatePickerOptions" id="date" (dateChanged)="onDateChanged($event)"
+            [(ngModel)]="selDate" class="date-picker"
+        (focus)="clearError()">
+          </my-date-picker>
+          <i class="fa fa-check check-icon2" id="check-icon" aria-hidden="true" *ngIf="inpValue?.length === 8 || inpValue?.length === 9 || inpValue?.length === 15 "></i>
+        </div>
       </div>
     </div>
-  </div>
-  <div *ngIf="timeFlag">
-    <div class="col-md-6 paddingTop">
-      <label class="date-time colorf">Zeit</label>
-      <div class="dateandTime" id="dateandTime" [style.border-color]="questionItem.error ? 'red' :(questionItem?.input?.length > 0) ? '#87be1c': ''"  (focus)="clearSQError">
-        <select name="hours" class="datetime showHour" [(ngModel)]="selectedHour" id="hour" (focus)="clearError()">
-          <option value="">HH</option>
-          <option [value]="hour" *ngFor="let hour of hours">{{hour}}</option>
-        </select>
-        <span class="colon"> : </span>
-        <select name="minutes" class="datetime" [(ngModel)]="selectedMinute" id="minute" (focus)="clearError()" >
-          <option value="">MM</option>
-          <option [value]="minute" *ngFor="let minute of minutes">{{minute}}</option>
-        </select>
-        <div *ngIf= "questionItem.X24_Hours__c == false">
-        <span class="colon"> : </span>
-        <select name="AM/PM" class="datetime" [(ngModel)]="selectedMeridiem" id="meridiem">
-          <option value="AM">AM</option>
-          <option value="PM">PM</option>
-        </select>
+
+    <!-- Time -->
+    <div *ngIf="timeFlag">
+      <div class="col-md-6 paddingTop">
+        <label class="date-time colorf">Zeit</label>
+        <div class="dateandTime" id="dateandTime" [style.border-color]="questionItem.error ? 'red' :(questionItem?.input?.length > 0) ? '#87be1c': ''"  (focus)="clearSQError">
+          <select name="hours" class="datetime showHour" [(ngModel)]="selectedHour" id="hour" (focus)="clearError()">
+            <option value="">HH</option>
+            <option [value]="hour" *ngFor="let hour of hours">{{hour}}</option>
+          </select>
+          <span class="colon"> : </span>
+          <select name="minutes" class="datetime" [(ngModel)]="selectedMinute" id="minute" (focus)="clearError()" >
+            <option value="">MM</option>
+            <option [value]="minute" *ngFor="let minute of minutes">{{minute}}</option>
+          </select>
+          <div *ngIf= "questionItem.X24_Hours__c == false">
+            <span class="colon"> : </span>
+            <select name="AM/PM" class="datetime" [(ngModel)]="selectedMeridiem" id="meridiem">
+              <option value="AM">AM</option>
+              <option value="PM">PM</option>
+            </select>
+          </div>
+        </div>
       </div>
-      </div>
+      <i class="fa fa-check check-icon3" aria-hidden="true" *ngIf="questionItem?.input?.length > 0"></i>
     </div>
-    <i class="fa fa-check check-icon3" aria-hidden="true" *ngIf="questionItem?.input?.length > 0"></i>
   </div>
 
-</div>
+  <!-- Attachment/File -->
   <div *ngIf="fileFlag">
     <div class="info-alert ques-alert2" style.border-color="{{this.questionItem.error ? 'red' : ''}}">
       <label class="picture-upload" for="file-upload" >
@@ -140,12 +154,12 @@
     </li>
   </ul>
 
+  <!-- Book Questions -->
   <div *ngIf="bookFlag">
     <div class="form-group">
       <div class="form-row">
         <div class="questionalign" [class]="'col-md-'+ ques.Size__c + ' paddingnone'" *ngFor="let ques of subQuestions">
           <span class="colorf">{{ques.Question__c}}</span>
-
           <div *ngIf="ques.Type__c === 'Text'">
             <input type="text" [(ngModel)]="ques.input"  class="textBox" id="text" [id]="ques.Id" required="" (focus)="clearSQError(ques.Id)"
               style.border-color="{{ques.error ? 'red' : ''}}" placeholder="{{ques.Question__c}}"
@@ -199,6 +213,7 @@
     </div>
   </div>
 
+  <!-- Buttons -->
   <div class="col-md-12 paddingZero">
     <div class="col-md-6" [style.visibility]="questionStack.length > 0 ? 'visible':'hidden'">
       <button class="btn btn-primary btn-lg btn-block btn-back-color"
@@ -208,23 +223,21 @@
       <button class="btn btn-primary btn-lg btn-block btn-color" (click)="handleNextClick()">{{qbItem.Next__c}}</button>
     </div>
   </div>
- </div>
+</div>
 
- <div *ngIf="summary && summary.length > 0" class="col-md-12 questionalign">
+<!-- Summary -->
+<div *ngIf="summary && summary.length > 0" class="col-md-12 questionalign">
   <h3 class="summary-h">  {{qbItem.Summary_Text__c}}  </h3>
   <div *ngFor="let qa of summary" class="summarydiv">
     <div class="summary">
-      
       <div *ngIf = "!qbItem.Edit__c">
-      <a class="question" (click)="handleEditClick(qa.quesId)" [innerHTML]="getText(qa.quesValue)">{{qa.quesValue}}</a>
-    </div>
-
+        <a class="question" (click)="handleEditClick(qa.quesId)" [innerHTML]="getText(qa.quesValue)">{{qa.quesValue}}</a>
+      </div>
       <div *ngIf= "qbItem.Edit__c">
         <div class="question" [innerHTML]="getText(qa.quesValue)">{{qa.quesValue}}</div>
         <button class="edit" (click)="handleEditClick(qa.quesId)" >
           <img src="">{{qbItem.Edit__c}}</button>
       </div>
-
       <div class="answer">  {{qa.ansValue}}   </div>
     </div>
   </div>
