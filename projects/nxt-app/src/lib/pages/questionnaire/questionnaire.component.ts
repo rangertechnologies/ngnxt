@@ -777,39 +777,38 @@ export class QuestionnaireComponent implements OnInit {
       }
       this.inpValue = this.trimLastDummy(this.inpValue);
       questionTxt = questionTxt ? this.trimLastDummy(questionTxt) : questionTxt;
-    } else if (this.listFlag) {
-    this.inpValue = '';
-    var hasMissingInput = false;
-    if(this.localSubQMap.has(this.questionItem.Id)){
-      this.subAnsMap = new Map();
-      for (var localQues of this.localSubQMap.get(this.questionItem.Id)){
-       
-          if(!localQues.input){
-            localQues.error = new ErrorWrapper();
-            hasMissingInput = true;
-              }
-        if(!this.subAnsMap.has(localQues.Id)){
-          // console.log('inside ans map')
-          this.subAnsMap.set(localQues.Id,localQues.input);
-        } else {
-          // console.log('inside ans map else')
-          this.subAnsMap.set(localQues.Id,this.subAnsMap.get(localQues.Id) + '$$@@##'+localQues.input);
+    } 
+    else if (this.listFlag) {
+      this.inpValue = '';
+      var hasMissingInput = false;
+      if(this.localSubQMap.has(this.questionItem.Id)){
+        this.subAnsMap = new Map();
+        for (var localQues of this.localSubQMap.get(this.questionItem.Id)) {
+            if(!localQues.input) {
+              localQues.error = new ErrorWrapper();
+              hasMissingInput = true;
+            }
+          if(!this.subAnsMap.has(localQues.Id)){
+            // console.log('inside ans map')
+            this.subAnsMap.set(localQues.Id,localQues.input);
+          } else {
+            // console.log('inside ans map else')
+            this.subAnsMap.set(localQues.Id,this.subAnsMap.get(localQues.Id) + '$$@@##'+localQues.input);
+          }
         }
+
+        if (hasMissingInput) {
+          //console.log('file two')
+          return;
+        }
+        this.subAnsMap.forEach((value, key) => {
+          // console.log('inside Map' );
+          // console.log(value);
+          this.inpValue += (value != undefined ? value : '') + '@@##$$';
+        });
+        this.inpValue = this.trimLastDummy(this.inpValue);
       }
-      if (hasMissingInput) {
-        //console.log('file two')
-        return;
-      }
-      this.subAnsMap.forEach((value, key) => {
-        // console.log('inside Map' );
-        // console.log(value);
-        this.inpValue += (value != undefined ? value : '') + '@@##$$';
-       });
-       this.inpValue = this.trimLastDummy(this.inpValue);
     }
-   }
-    
-    
     else if (this.dropdownFlag) {
       if (this.inpValue.length <= 1) {
         this.inpValue = ".";
